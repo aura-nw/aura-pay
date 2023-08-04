@@ -27,10 +27,24 @@ To run the application locally on your development machine, follow these steps:
 - Flutter: A cross-platform framework for building mobile applications.
 
 - Clean Architecture: A software design pattern that separates concerns and enforces separation of concerns.
+  
+- Flutter Secure Storage :
+    - KeyStore System (Android): Securely stores private keys and cryptographic keys.
+    - KeyChain Service (iOS): Securely stores sensitive data in the iOS keychain.
 
-- KeyStore System (Android): Securely stores private keys and cryptographic keys.
 
-- KeyChain Service (iOS): Securely stores sensitive data in the iOS keychain.
+### Clean Architecture :
+https://github.com/aura-nw/Pyxis-Mobile/blob/main/docs/images/CleanArchitechture.png
+For more info, please take a look to [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+
+### Flutter Secure Storage: [read more](https://pub.dev/packages/flutter_secure_storage)
+https://github.com/aura-nw/Pyxis-Mobile/blob/main/docs/images/flutter_storage.png?raw=true
+
+#### KeyStore System (Android)
+https://github.com/aura-nw/Pyxis-Mobile/blob/main/docs/images/Android_KeyStore_system.png
+
+#### KeyChain Service (iOS)
+https://github.com/aura-nw/Pyxis-Mobile/blob/main/docs/images/iOS_Keychain_service.png
 
 ## License
 
