@@ -44,7 +44,7 @@ class AppLocalizationManager{
 
 
   Future<void> load()async{
-    const String languageFolder = 'packages/aura_wallet/assets/language/';
+    const String languageFolder = 'packages/pyxis_mobile/assets/language/';
 
     List<String> supportedLanguage = ['en','vi'];
 

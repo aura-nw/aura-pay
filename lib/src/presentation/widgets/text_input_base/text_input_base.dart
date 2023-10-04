@@ -1,5 +1,5 @@
-import 'package:pyxis_mobile/src/application/wrappers/app_theme/app_theme.dart';
-import 'package:pyxis_mobile/src/application/wrappers/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +12,8 @@ abstract class TextInputWidgetBase extends StatefulWidget {
   final TextEditingController? controller;
   final ConstraintManager? constraintManager;
   final String? hintText;
-  final void Function(String,bool)? onChanged;
-  final void Function(String,bool)? onSubmit;
+  final void Function(String, bool)? onChanged;
+  final void Function(String, bool)? onSubmit;
   final int? maxLine;
   final int? minLine;
   final int? maxLength;
@@ -91,9 +91,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: theme.neutralColor22,
-            ),
+            border: Border.all(),
           ),
           child: child,
         ),
@@ -109,16 +107,15 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
           controller: _controller,
           style: AppTypoGraPhy.caption14.copyWith(
             fontWeight: FontWeight.w600,
-            color: theme.lightColor,
           ),
           enabled: widget.enable,
           autofocus: widget.autoFocus,
           maxLines: widget.maxLine,
           maxLength: widget.maxLength,
           minLines: widget.minLine,
-          onSubmitted: (value){
-            if(widget.onSubmit!=null){
-              widget.onSubmit!(value,errorMessage.isEmptyOrNull);
+          onSubmitted: (value) {
+            if (widget.onSubmit != null) {
+              widget.onSubmit!(value, errorMessage.isEmptyOrNull);
             }
           },
           focusNode: widget.focusNode,
@@ -126,7 +123,6 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
           scrollPadding: widget.scrollPadding,
           scrollController: widget.scrollController,
           scrollPhysics: widget.physics,
-          cursorColor: theme.neutralColor5,
           inputFormatters: widget.inputFormatter,
           keyboardType: widget.keyBoardType,
           onChanged: (value) {
@@ -136,7 +132,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
               }
             }
 
-            widget.onChanged?.call(value,errorMessage.isEmptyOrNull);
+            widget.onChanged?.call(value, errorMessage.isEmptyOrNull);
           },
           decoration: InputDecoration(
             hintText: widget.hintText,
@@ -144,7 +140,6 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
             contentPadding: EdgeInsets.zero,
             hintStyle: AppTypoGraPhy.caption14.copyWith(
               fontWeight: FontWeight.w600,
-              color: theme.neutralColor6,
             ),
           ),
         ),
@@ -157,9 +152,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
                   ),
                   Text(
                     errorMessage ?? '',
-                    style: AppTypoGraPhy.body1.copyWith(
-                      color: theme.basicColorRed6,
-                    ),
+                    style: AppTypoGraPhy.body1.copyWith(),
                   ),
                 ],
               )

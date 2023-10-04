@@ -2,41 +2,7 @@ import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
-enum AppRoutes {
-  splash,
-  setupWallet,
-  importWallet,
-  createWallet,
-  home,
-  sentTransaction,
-  scanQR,
-  contract,
-}
-
-extension AppRoutesMapper on AppRoutes {
-  String get path {
-    switch (this) {
-      case AppRoutes.splash:
-        return _Path.splash;
-      case AppRoutes.setupWallet:
-        return _Path.setupWallet;
-      case AppRoutes.importWallet:
-        return _Path.importWallet;
-      case AppRoutes.createWallet:
-        return _Path.createWallet;
-      case AppRoutes.home:
-        return _Path.home;
-      case AppRoutes.sentTransaction:
-        return _Path.sentTransaction;
-      case AppRoutes.scanQR:
-        return _Path.scanQR;
-      case AppRoutes.contract:
-        return _Path.contract;
-    }
-  }
-}
-
-class _Path {
+class RoutePath {
   static const String _base = '/';
   static const String splash = _base;
   static const String setupWallet = '${_base}setup';
@@ -53,7 +19,7 @@ class AppNavigator {
 
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case _Path.splash:
+      case RoutePath.splash:
         return _defaultRoute(
           const SplashScreen(),
           settings,
@@ -66,18 +32,18 @@ class AppNavigator {
     }
   }
 
-  static Future? push<T>(AppRoutes route, [T? arguments]) =>
-      state?.pushNamed(route.path, arguments: arguments);
+  static Future? push<T>(String route, [T? arguments]) =>
+      state?.pushNamed(route, arguments: arguments);
 
-  static Future? replaceWith<T>(AppRoutes route, [T? arguments]) =>
-      state?.pushReplacementNamed(route.path, arguments: arguments);
+  static Future? replaceWith<T>(String route, [T? arguments]) =>
+      state?.pushReplacementNamed(route, arguments: arguments);
 
   static void pop<T>([T? arguments]) => state?.pop(arguments);
 
   static void popToFirst() => state?.popUntil((route) => route.isFirst);
 
-  static void replaceAllWith(AppRoutes route) =>
-      state?.pushNamedAndRemoveUntil(route.path, (route) => route.isFirst);
+  static void replaceAllWith(String route) =>
+      state?.pushNamedAndRemoveUntil(route, (route) => route.isFirst);
 
   static NavigatorState? get state => navigatorKey.currentState;
 

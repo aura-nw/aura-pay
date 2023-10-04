@@ -38,8 +38,10 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   #aura_sdk:
-  aura_sdk:
-    path: ../SDK_Support/aura-mobile-sdk/flutter/aura_sdk
+  aura_wallet_core:
+    git:
+      url: https://github.com/aura-nw/aura-wallet-core.git
+      ref: core_wallet
 
   #core
   base_response:

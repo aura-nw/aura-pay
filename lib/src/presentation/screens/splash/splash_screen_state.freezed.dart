@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SplashScreenState {
   SplashScreenStatus get status => throw _privateConstructorUsedError;
-  AuraWallet? get auraWallet => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SplashScreenStateCopyWith<SplashScreenState> get copyWith =>
@@ -30,7 +29,7 @@ abstract class $SplashScreenStateCopyWith<$Res> {
           SplashScreenState value, $Res Function(SplashScreenState) then) =
       _$SplashScreenStateCopyWithImpl<$Res, SplashScreenState>;
   @useResult
-  $Res call({SplashScreenStatus status, AuraWallet? auraWallet});
+  $Res call({SplashScreenStatus status});
 }
 
 /// @nodoc
@@ -54,10 +53,6 @@ class _$SplashScreenStateCopyWithImpl<$Res, $Val extends SplashScreenState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as SplashScreenStatus,
-      auraWallet: freezed == auraWallet
-          ? _value.auraWallet
-          : auraWallet // ignore: cast_nullable_to_non_nullable
-              as AuraWallet?,
     ) as $Val);
   }
 }
@@ -70,7 +65,7 @@ abstract class _$$_SplashScreenStateCopyWith<$Res>
       __$$_SplashScreenStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({SplashScreenStatus status, AuraWallet? auraWallet});
+  $Res call({SplashScreenStatus status});
 }
 
 /// @nodoc
@@ -92,10 +87,6 @@ class __$$_SplashScreenStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as SplashScreenStatus,
-      auraWallet: freezed == auraWallet
-          ? _value.auraWallet
-          : auraWallet // ignore: cast_nullable_to_non_nullable
-              as AuraWallet?,
     ));
   }
 }
@@ -104,17 +95,15 @@ class __$$_SplashScreenStateCopyWithImpl<$Res>
 
 class _$_SplashScreenState implements _SplashScreenState {
   const _$_SplashScreenState(
-      {this.status = SplashScreenStatus.starting, this.auraWallet});
+      {this.status = SplashScreenStatus.starting});
 
   @override
   @JsonKey()
   final SplashScreenStatus status;
-  @override
-  final AuraWallet? auraWallet;
 
   @override
   String toString() {
-    return 'SplashScreenState(status: $status, auraWallet: $auraWallet)';
+    return 'SplashScreenState(status: $status)';
   }
 
   @override
@@ -122,13 +111,11 @@ class _$_SplashScreenState implements _SplashScreenState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SplashScreenState &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.auraWallet, auraWallet) ||
-                other.auraWallet == auraWallet));
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, auraWallet);
+  int get hashCode => Object.hash(runtimeType, status);
 
   @JsonKey(ignore: true)
   @override
@@ -140,13 +127,10 @@ class _$_SplashScreenState implements _SplashScreenState {
 
 abstract class _SplashScreenState implements SplashScreenState {
   const factory _SplashScreenState(
-      {final SplashScreenStatus status,
-      final AuraWallet? auraWallet}) = _$_SplashScreenState;
+      {final SplashScreenStatus status}) = _$_SplashScreenState;
 
   @override
   SplashScreenStatus get status;
-  @override
-  AuraWallet? get auraWallet;
   @override
   @JsonKey(ignore: true)
   _$$_SplashScreenStateCopyWith<_$_SplashScreenState> get copyWith =>

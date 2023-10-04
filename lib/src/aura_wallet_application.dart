@@ -1,13 +1,13 @@
-import 'package:pyxis_mobile/src/application/wrappers/app_global_state/app_global_cubit.dart';
-import 'package:pyxis_mobile/src/application/wrappers/app_global_state/app_global_state.dart';
-import 'package:pyxis_mobile/src/application/wrappers/app_theme/cubit/app_theme_cubit.dart';
-import 'package:pyxis_mobile/src/application/wrappers/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'application/wrappers/localization/app_translations_delegate.dart';
+import 'application/global/app_global_state/app_global_cubit.dart';
+import 'application/global/app_global_state/app_global_state.dart';
+import 'application/global/app_theme/cubit/theme_cubit.dart';
+import 'application/global/localization/app_translations_delegate.dart';
+import 'application/global/localization/localization_manager.dart';
 
 class AuraWalletApplication extends StatefulWidget {
   const AuraWalletApplication({Key? key}) : super(key: key);
@@ -37,6 +37,8 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
         break;
       case AppLifecycleState.paused:
         break;
+      case AppLifecycleState.hidden:
+        break;
     }
   }
 
@@ -58,7 +60,7 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
       child: MaterialApp(
         navigatorKey: AppNavigator.navigatorKey,
         onGenerateRoute: AppNavigator.onGenerateRoute,
-        initialRoute: AppRoutes.splash.path,
+        initialRoute: RoutePath.splash,
         debugShowCheckedModeBanner: false,
         title: 'Aura Wallet',
         locale: AppLocalizationManager.instance.locale,
@@ -91,10 +93,10 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                     listener: (context, state) {
                       switch(state.status){
                         case AppGlobalStatus.authorized:
-                          AppNavigator.replaceAllWith(AppRoutes.home);
+                          AppNavigator.replaceAllWith(RoutePath.home);
                           break;
                         case AppGlobalStatus.unauthorized:
-                          AppNavigator.replaceAllWith(AppRoutes.setupWallet);
+                          AppNavigator.replaceAllWith(RoutePath.setupWallet);
                           break;
                       }
                     },

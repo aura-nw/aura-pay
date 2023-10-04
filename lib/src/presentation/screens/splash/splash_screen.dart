@@ -1,10 +1,9 @@
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/application/wrappers/app_global_state/app_global_cubit.dart';
-import 'package:pyxis_mobile/src/application/wrappers/app_global_state/app_global_state.dart';
-import 'package:pyxis_mobile/src/application/wrappers/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
-import 'package:pyxis_mobile/src/core/constants/asset_key.dart';
-import 'package:pyxis_mobile/src/core/screen_loader_mixin.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'splash_screen_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'splash_screen_cubit.dart';
@@ -17,7 +16,7 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with ScreenLoaderMixin {
+class _SplashScreenState extends State<SplashScreen> {
   final SplashScreenCubit _cubit = getIt.get<SplashScreenCubit>();
 
   @override
@@ -29,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> with ScreenLoaderMixin {
   }
 
   @override
-  Widget builder(BuildContext context) {
+  Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (theme) {
         return BlocProvider.value(
@@ -39,30 +38,25 @@ class _SplashScreenState extends State<SplashScreen> with ScreenLoaderMixin {
             listener: (context, state) {
               switch (state.status) {
                 case SplashScreenStatus.starting:
-                  showLoading();
                   break;
                 case SplashScreenStatus.loadWalletSuccess:
                   AppGlobalCubit.of(context).changeState(
-                    AppGlobalState(
+                    const AppGlobalState(
                       status: AppGlobalStatus.authorized,
-                      auraWallet: state.auraWallet,
                     ),
                   );
-                  AppNavigator.replaceWith(AppRoutes.home);
-                  hideLoading();
+                  AppNavigator.replaceWith(RoutePath.home);
                   break;
                 case SplashScreenStatus.loadWalletNull:
-                  hideLoading();
-                  AppNavigator.replaceWith(AppRoutes.setupWallet);
+                  AppNavigator.replaceWith(RoutePath.setupWallet);
                   break;
               }
             },
-            child: Scaffold(
-              backgroundColor: theme.darkColor,
-              body: const Center(
+            child: const Scaffold(
+              body: Center(
                 child: Image(
                   image: AssetImage(
-                    ImageKey.logo,
+                    AssetImagePath.logo,
                   ),
                 ),
               ),

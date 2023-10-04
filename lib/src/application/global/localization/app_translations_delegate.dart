@@ -15,7 +15,6 @@ class AppTranslationsDelegate
   Future<AppLocalizationManager> load(Locale locale) {
     AppLocalizationManager localization = AppLocalizationManager.instance;
     localization.setCurrentLocale(locale);
-
     return SynchronousFuture<AppLocalizationManager>(localization);
   }
 

@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AppGlobalState {
   AppGlobalStatus get status => throw _privateConstructorUsedError;
-  AuraWallet? get auraWallet => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppGlobalStateCopyWith<AppGlobalState> get copyWith =>
@@ -30,7 +29,7 @@ abstract class $AppGlobalStateCopyWith<$Res> {
           AppGlobalState value, $Res Function(AppGlobalState) then) =
       _$AppGlobalStateCopyWithImpl<$Res, AppGlobalState>;
   @useResult
-  $Res call({AppGlobalStatus status, AuraWallet? auraWallet});
+  $Res call({AppGlobalStatus status});
 }
 
 /// @nodoc
@@ -54,10 +53,6 @@ class _$AppGlobalStateCopyWithImpl<$Res, $Val extends AppGlobalState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AppGlobalStatus,
-      auraWallet: freezed == auraWallet
-          ? _value.auraWallet
-          : auraWallet // ignore: cast_nullable_to_non_nullable
-              as AuraWallet?,
     ) as $Val);
   }
 }
@@ -70,7 +65,7 @@ abstract class _$$_AppGlobalStateCopyWith<$Res>
       __$$_AppGlobalStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AppGlobalStatus status, AuraWallet? auraWallet});
+  $Res call({AppGlobalStatus status});
 }
 
 /// @nodoc
@@ -92,10 +87,6 @@ class __$$_AppGlobalStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AppGlobalStatus,
-      auraWallet: freezed == auraWallet
-          ? _value.auraWallet
-          : auraWallet // ignore: cast_nullable_to_non_nullable
-              as AuraWallet?,
     ));
   }
 }
@@ -104,17 +95,15 @@ class __$$_AppGlobalStateCopyWithImpl<$Res>
 
 class _$_AppGlobalState implements _AppGlobalState {
   const _$_AppGlobalState(
-      {this.status = AppGlobalStatus.unauthorized, this.auraWallet});
+      {this.status = AppGlobalStatus.unauthorized});
 
   @override
   @JsonKey()
   final AppGlobalStatus status;
-  @override
-  final AuraWallet? auraWallet;
 
   @override
   String toString() {
-    return 'AppGlobalState(status: $status, auraWallet: $auraWallet)';
+    return 'AppGlobalState(status: $status)';
   }
 
   @override
@@ -122,13 +111,11 @@ class _$_AppGlobalState implements _AppGlobalState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppGlobalState &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.auraWallet, auraWallet) ||
-                other.auraWallet == auraWallet));
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, auraWallet);
+  int get hashCode => Object.hash(runtimeType, status);
 
   @JsonKey(ignore: true)
   @override
@@ -139,13 +126,10 @@ class _$_AppGlobalState implements _AppGlobalState {
 
 abstract class _AppGlobalState implements AppGlobalState {
   const factory _AppGlobalState(
-      {final AppGlobalStatus status,
-      final AuraWallet? auraWallet}) = _$_AppGlobalState;
+      {final AppGlobalStatus status,}) = _$_AppGlobalState;
 
   @override
   AppGlobalStatus get status;
-  @override
-  AuraWallet? get auraWallet;
   @override
   @JsonKey(ignore: true)
   _$$_AppGlobalStateCopyWith<_$_AppGlobalState> get copyWith =>
