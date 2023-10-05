@@ -7,6 +7,6 @@ class AppLocalizationProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return builder(AppLocalizationManager.of(context),context);
+    return builder(AppLocalizationManager.instance,context);
   }
 }

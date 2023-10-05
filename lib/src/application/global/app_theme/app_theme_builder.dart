@@ -13,7 +13,8 @@ class AppThemeBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppThemeCubit,AppTheme>(
+    return BlocSelector<AppThemeCubit, AppTheme , AppTheme>(
+      selector: (state) => state,
       builder: (context, state) {
         return builder(state);
       },

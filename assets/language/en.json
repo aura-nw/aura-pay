@@ -1,79 +1,21 @@
 {
-  "common_widget_button_retry" : "Retry",
+  "on_boarding_get_started_screen_title" : "The go-to platform for multi-signature asset management on the Interchain",
+  "on_boarding_get_started_screen_button_title" : "Get Started",
+  "on_boarding_get_started_screen_term_of_service" : "Term of Services",
+  "on_boarding_get_started_screen_privacy_policy" : "Privacy Policy",
+  "on_boarding_get_started_screen_privacy_policy_title_region_one" : "By clicking Get Started, you agree to our and you have read our ${privacy_policy}",
+  "on_boarding_get_started_screen_privacy_policy_title_region_two" : "and you have read our",
 
+  "on_boarding_choice_option_screen_create_smart_account_title" : "Create new smart account",
+  "on_boarding_choice_option_screen_create_smart_account_content" : "Pyxis will cover the initial fee to activate your account",
+  "on_boarding_choice_option_screen_import_exist_account_title" : "Import existing account",
+  "on_boarding_choice_option_screen_import_exist_account_content" : "Add an existing account into Pyxis using private key or passphrase",
+  "on_boarding_choice_option_screen_recover_account_title" : "Recover account",
+  "on_boarding_choice_option_screen_recover_account_content" : "You lost both your phone and your private key",
+  "on_boarding_choice_option_screen_divider_text" : "Or",
 
-  "dialog_message_button_default_title" : "Close",
-  "dialog_message_default_title" : "Notification",
-
-  "splash_wallet_setup" : "Wallet Setup",
-  "splash_button_using_seed_phrase" : "Import Using Seed Phrase",
-  "splash_button_create_new_wallet" : "Create a New Wallet",
-
-  "import_wallet_appbar_title" : "Import From Seed",
-  "import_wallet_seed_phrase" : "Seed Phrase",
-  "import_wallet_hint_seed_phrase" : "Input seed phrase",
-  "import_wallet_button_import" : "Import",
-
-  "create_wallet_appbar_title" : "Create Wallet",
-  "create_wallet_seed_phrase" : "Seed Phrase",
-  "create_wallet_address" : "Address",
-  "create_wallet_private_key" : "Private Key",
-  "create_wallet_button_start" : "Start",
-
-  "home_bottom_navigation_bar_wallet" : "Wallet",
-  "home_bottom_navigation_bar_setting" : "Setting",
-
-  "home_wallet_appbar" : "Aura Wallet",
-  "home_wallet_button_sent" : "Send",
-  "home_wallet_button_received" : "Receive",
-  "home_wallet_tab_transaction" : "Transaction",
-  "home_wallet_tab_contract" : "Contract",
-  "home_wallet_tab_block" : "Block",
-  "home_wallet_status" : "Status",
-  "home_wallet_status_success" : "Success",
-  "home_wallet_status_fail" : "Fail",
-  "home_wallet_transaction_widget_TXHASH" : "TX HASH",
-  "home_wallet_transaction_widget_amount" : "Amount",
-  "home_wallet_transaction_widget_fee" : "Fee",
-  "home_wallet_transaction_widget_height" : "Height",
-  "home_wallet_transaction_widget_time" : "Created time",
-  "home_wallet_transaction_widget_type" : "Type",
-  "home_wallet_block_widget_time" : "Created time",
-  "home_wallet_block_widget_height" : "Height",
-  "home_wallet_block_widget_proposer" : "Proposer",
-  "home_wallet_block_widget_txs" : "Txs",
-  "home_wallet_receive_widget_scan_title" : "Scan address to Receive payment",
-
-  "home_setting_app_bar_title": "Setting",
-  "home_setting_logout_button_title": "Logout",
-
-
-  "send_transaction_app_bar_title" : "Send Transaction",
-  "send_transaction_amount" : "Amount",
-  "send_transaction_receive_address" : "Receive Address",
-  "send_transaction_memo" : "Memo",
-  "send_transaction_fee" : "Fee Gas",
-  "send_transaction_fee_low" : "Low",
-  "send_transaction_fee_medium" : "Medium",
-  "send_transaction_fee_high" : "High",
-  "send_transaction_button_send_transaction" : "Send transaction",
-  "send_transaction_empty_error_message" : "${title} is not empty!",
-  "send_transaction_amount_valid_message" : "Amount is not valid",
-  "send_transaction_error_title" : "Send Transaction Error",
-  "send_transaction_error_default" : "Send transaction error\nUnknown error!",
-  "send_transaction_success_default" : "Send transaction successfully!",
-  "send_transaction_success_title" : "Successfully",
-
-
-  "scan_qr_app_bar_title" : "Scan QR",
-
-
-  "execute_contract_app_bar_title" : "Execute Contract",
-  "execute_contract_button_execute" : "Execute",
-  "execute_contract_contract_address" : "Contract Address",
-  "execute_contract_execute_message" : "Execute message",
-  "execute_contract_empty_error_message" : "${title} is not empty!",
-  "execute_contract_execute_valid_message" : "Execute message is not valid",
-  "execute_contract_message" : "Execute smart contract processing"
-
+  "on_boarding_setup_passcode_screen_create_title" : "Create your Passcode",
+  "on_boarding_setup_passcode_screen_create_content" : "Set a app passcode to protects your data and funds",
+  "on_boarding_setup_passcode_screen_confirm_title" : "Confirm your passcode",
+  "on_boarding_setup_passcode_screen_confirm_not_match" : "Passcode does not match"
 }

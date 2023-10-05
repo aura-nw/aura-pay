@@ -23,7 +23,7 @@ class PyxisMobileDevConfig implements PyxisMobileConfig {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load(fileName: 'assets/.env');
+  await dotenv.load(fileName: 'assets/.env.dev');
 
   final PyxisMobileConfig config = PyxisMobileDevConfig(
     baseUrl: dotenv.env.baseUrl,

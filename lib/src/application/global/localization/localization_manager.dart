@@ -4,98 +4,112 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/domain/use_case/localization_use_case.dart';
 
-class AppLocalizationManager{
-  static AppLocalizationManager ?_appLocalizationManager;
+class AppLocalizationManager {
+  final LocalizationUseCase _localizationUseCase =
+      getIt.get<LocalizationUseCase>();
+
+  ///region create instance
+  /// Create lazy singleton -- instance of [AppLocalizationManager]
+  static AppLocalizationManager? _appLocalizationManager;
 
   AppLocalizationManager._init();
 
-  factory AppLocalizationManager(){
-    _appLocalizationManager??= AppLocalizationManager._init();
+  factory AppLocalizationManager() {
+    _appLocalizationManager ??= AppLocalizationManager._init();
 
     return _appLocalizationManager!;
   }
 
   static AppLocalizationManager get instance => AppLocalizationManager();
 
-  final Map<String,Map<String,String>> _localize = {};
+  ///endregion
 
-  Locale locale = const Locale('vi');
+  ///region localization map
+  final Map<String, Map<String, String>> _localize = {};
 
-  Map<String,String> get _currentLocalize => _localize[locale.languageCode] ?? <String,String>{};
+  Locale _locale = const Locale('vi');
 
+  Map<String, String> get _currentLocalize =>
+      _localize[_locale.languageCode] ?? <String, String>{};
 
-  static AppLocalizationManager of(BuildContext context){
-    return Localizations.of<AppLocalizationManager>(context, AppLocalizationManager)!;
+  ///endregion
+
+  Locale getAppLocale() {
+    return _locale;
   }
 
-
-  bool isSupportLocale(Locale locale){
+  bool isSupportLocale(Locale locale) {
     return _localize.containsKey(locale.languageCode);
   }
 
-  void setCurrentLocale(Locale locale){
-    if(isSupportLocale(locale)){
-      locale = locale;
+  void setCurrentLocale(Locale locale) {
+    if (isSupportLocale(locale)) {
+      _locale = locale;
     }
   }
 
-  List<String> get supportedLang => _localize.entries.map((e) => e.key).toList();
+  List<String> get supportedLang =>
+      _localize.entries.map((e) => e.key).toList();
 
+  Future<void> load() async {
+    ///Get instance locale from storage - just fake
+    String storageLocale = 'vi';
 
-  Future<void> load()async{
-    const String languageFolder = 'packages/pyxis_mobile/assets/language/';
+    ///Get support locale
+    try {
+      final List<String> supportLocales =
+          await _localizationUseCase.getSupportLocale();
 
-    List<String> supportedLanguage = ['en','vi'];
-
-    await Future.wait(supportedLanguage.map((langCode) async{
-      String loader = '';
-      try{
-        loader = await rootBundle.loadString('$languageFolder$langCode.json');
-      }catch(e){
-        loader = await rootBundle.loadString('$languageFolder${'vi.json'}');
+      if (supportLocales.contains(storageLocale)) {
+        setCurrentLocale(Locale(storageLocale));
+      } else {
+        _initLocale();
       }
-      _localize[langCode] = Map<String,String>.from(jsonDecode(loader) as Map<String,dynamic>);
-    }));
+    } catch (e) {
+      _initLocale();
+    }
 
-    _initLocale();
+    ///Get language from locale
+    _localize[_locale.languageCode] =
+        await _localizationUseCase.getLocalLanguage(
+      locale: _locale.languageCode,
+    );
   }
-
 
   ///set lang from server
-  void loadFromJson(Map<String, Map<String, String>> json) {
-    json.forEach((key, value) {
-      if(_localize[key.toLowerCase()]!=null){
-        _localize[key.toLowerCase()]!.addAll(value);
-      }else{
-        _localize[key.toLowerCase()] = value;
-      }
-    });
-  }
+  // void loadFromJson(Map<String, Map<String, String>> json) {
+  //   json.forEach((key, value) {
+  //     if (_localize[key.toLowerCase()] != null) {
+  //       _localize[key.toLowerCase()]!.addAll(value);
+  //     } else {
+  //       _localize[key.toLowerCase()] = value;
+  //     }
+  //   });
+  // }
 
-  void _initLocale(){
+  void _initLocale() {
     String localeName = Platform.localeName;
 
     Locale deviceLocale;
 
-    if(localeName.toLowerCase() == 'vi' || localeName.toLowerCase() == 'vi_vn'){
+    if (localeName.toLowerCase() == 'vi' ||
+        localeName.toLowerCase() == 'vi_vn') {
       deviceLocale = const Locale('vi');
-    }else{
+    } else {
       deviceLocale = const Locale('en');
     }
 
-    if(isSupportLocale(deviceLocale)){
-      locale = deviceLocale;
-    }else{
-      locale = const Locale('en');
+    if (isSupportLocale(deviceLocale)) {
+      _locale = deviceLocale;
+    } else {
+      _locale = const Locale('en');
     }
-
   }
 
-  Locale getAppLocale() {
-    return locale;
-  }
-
+  ///region translate
   String translate(String key) {
     return _currentLocalize[key] ?? key;
   }
@@ -116,4 +130,5 @@ class AppLocalizationManager{
     return key;
   }
 
+  ///endregion fu
 }

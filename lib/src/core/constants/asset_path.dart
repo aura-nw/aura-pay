@@ -1,12 +1,16 @@
-const String _baseAsset = 'packages/aura_wallet/assets/';
+const String _baseAsset = 'packages/pyxis_mobile/assets/';
 
-final class AssetImagePath{
-  static const String _baseImagePath = '${_baseAsset}image/';
-  static const String logo = '${_baseImagePath}aura_logo.png';
+final class AssetLogoPath{
+  static const String _baseImagePath = '${_baseAsset}logo/';
+  static const String logo = '${_baseImagePath}logo_pyxis.svg';
+  static const String logoTransparent = '${_baseImagePath}logo_pyxis_transparent.svg';
 }
 
-final class AssetIconKey{
+final class AssetIconPath{
   static const String _baseIconPath = '${_baseAsset}icon/';
+  static const String onBoardingCreateAccountSelected = '${_baseIconPath}ic_onboarding_create_account_selected.svg';
+  static const String onBoardingImportAccount = '${_baseIconPath}ic_onboarding_import_account.svg';
+  static const String onBoardingRecoverAccount = '${_baseIconPath}ic_onboarding_recover_account.svg';
 }
 
 final class LocalizationPath{

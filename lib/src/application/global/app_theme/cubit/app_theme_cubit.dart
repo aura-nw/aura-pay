@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'app_theme_iml.dart';
 
 class AppThemeCubit extends Cubit<AppTheme> {
-  AppThemeCubit({AppTheme? theme}) : super(theme ?? AppLightTheme());
+  AppThemeCubit({AppTheme? theme}) : super(theme ?? DefaultAppTheme());
 
   void initTheme()async{
 

@@ -1,0 +1,134 @@
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/language_key.dart';
+import 'package:pyxis_mobile/src/core/constants/spacing.dart';
+import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
+
+class OnBoardingGetStartedScreen extends StatelessWidget {
+  const OnBoardingGetStartedScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppThemeBuilder(
+      builder: (appTheme) {
+        return Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Spacing.spacingUnit24,
+              vertical: Spacing.spacingUnit32,
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        AssetLogoPath.logo,
+                      ),
+                      const SizedBox(
+                        height: Spacing.spacingUnit32,
+                      ),
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return Text(
+                            localization.translate(
+                              LanguageKey.onBoardingGetStartedScreenTitle,
+                            ),
+                            textAlign: TextAlign.center,
+                            style: AppTypoGraPhy.body03.copyWith(
+                              color: appTheme.contentColor700,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                AppLocalizationProvider(
+                  builder: (localization, _) {
+                    return PrimaryAppButton(
+                      text: localization.translate(
+                        LanguageKey.onBoardingGetStartedScreenButtonTitle,
+                      ),
+                      onPress: () =>
+                          AppNavigator.replaceWith(RoutePath.choiceOption),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: Spacing.spacingUnit12,
+                ),
+                AppLocalizationProvider(
+                  builder: (localization, _) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: Spacing.spacingUnit12),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: localization.translate(
+                                LanguageKey
+                                    .onBoardingGetStartedScreenPrivacyPolicyTitleRegionOne,
+                              ),
+                              style: AppTypoGraPhy.body01.copyWith(
+                                color: appTheme.contentColor700,
+                              ),
+                            ),
+                            TextSpan(
+                              text: localization.translate(
+                                LanguageKey
+                                    .onBoardingGetStartedScreenTermOfService,
+                              ),
+                              style: AppTypoGraPhy.body01.copyWith(
+                                color: appTheme.contentColorBrand,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  /// Open URL or show term service screen
+                                },
+                            ),
+                            TextSpan(
+                              text: localization.translate(
+                                LanguageKey
+                                    .onBoardingGetStartedScreenPrivacyPolicyTitleRegionTwo,
+                              ),
+                              style: AppTypoGraPhy.body01.copyWith(
+                                color: appTheme.contentColor700,
+                              ),
+                            ),
+                            TextSpan(
+                              text: localization.translate(
+                                LanguageKey
+                                    .onBoardingGetStartedScreenPrivacyPolicy,
+                              ),
+                              style: AppTypoGraPhy.body01.copyWith(
+                                color: appTheme.contentColorBrand,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  /// Open URL or show privacy policy screen
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

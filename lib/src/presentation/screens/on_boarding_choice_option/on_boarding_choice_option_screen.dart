@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/language_key.dart';
+import 'package:pyxis_mobile/src/core/constants/spacing.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/widgets/choice_option_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
+
+// ignore: must_be_immutable
+class OnBoardingChoiceOptionScreen extends StatelessWidget {
+  OnBoardingChoiceOptionScreen({super.key});
+
+  int _selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppThemeBuilder(
+      builder: (appTheme) {
+        return Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Spacing.spacingUnit24,
+              vertical: Spacing.spacingUnit32,
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: SvgPicture.asset(
+                      AssetLogoPath.logo,
+                    ),
+                  ),
+                ),
+                StatefulBuilder(
+                  builder: (context, setState) {
+                    return AppLocalizationProvider(
+                      builder: (localization, _) {
+                        return Column(
+                          children: [
+                            ChoiceOptionWidget(
+                              theme: appTheme,
+                              isSelected: _selectedIndex == 0,
+                              iconPath: AssetIconPath.onBoardingCreateAccountSelected,
+                              title: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenCreateSmartAccountTitle,
+                              ),
+                              content: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenCreateSmartAccountContent,
+                              ),
+                              onPress: (){
+                                // setState(() {
+                                //   _selectedIndex = 0;
+                                // });
+                                AppNavigator.push(RoutePath.setupPasscode);
+                              },
+                            ),
+                            const SizedBox(
+                              height: Spacing.spacingUnit12,
+                            ),
+                            HoLiZonTalDividerWithTextWidget(
+                              text: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenDividerText,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: Spacing.spacingUnit12,
+                            ),
+                            ChoiceOptionWidget(
+                              theme: appTheme,
+                              isSelected: _selectedIndex == 1,
+                              iconPath: AssetIconPath.onBoardingImportAccount,
+                              title: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenImportExistAccountTitle,
+                              ),
+                              content: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenImportExistAccountContent,
+                              ),
+                              onPress: () => setState(() {
+                                _selectedIndex = 1;
+                              }),
+                            ),
+                            const SizedBox(
+                              height: Spacing.spacingUnit24,
+                            ),
+                            ChoiceOptionWidget(
+                              theme: appTheme,
+                              isSelected: _selectedIndex == 2,
+                              iconPath: AssetIconPath.onBoardingRecoverAccount,
+                              title: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenRecoverAccountTitle,
+                              ),
+                              content: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenRecoverAccountContent,
+                              ),
+                              onPress: () => setState(() {
+                                _selectedIndex = 2;
+                              }),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

@@ -59,11 +59,14 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
       },
       child: MaterialApp(
         navigatorKey: AppNavigator.navigatorKey,
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
         onGenerateRoute: AppNavigator.onGenerateRoute,
         initialRoute: RoutePath.splash,
         debugShowCheckedModeBanner: false,
         title: 'Aura Wallet',
-        locale: AppLocalizationManager.instance.locale,
+        locale: AppLocalizationManager.instance.getAppLocale(),
         localizationsDelegates: const [
           AppTranslationsDelegate(),
           GlobalMaterialLocalizations.delegate,
@@ -91,12 +94,13 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                   BlocListener<AppGlobalCubit,AppGlobalState>(
                     listenWhen: (previous, current) => current.status != previous.status,
                     listener: (context, state) {
+                      print(state.status);
                       switch(state.status){
                         case AppGlobalStatus.authorized:
-                          AppNavigator.replaceAllWith(RoutePath.home);
+                          // AppNavigator.replaceAllWith(RoutePath.home);
                           break;
                         case AppGlobalStatus.unauthorized:
-                          AppNavigator.replaceAllWith(RoutePath.setupWallet);
+                          AppNavigator.replaceAllWith(RoutePath.getStarted);
                           break;
                       }
                     },

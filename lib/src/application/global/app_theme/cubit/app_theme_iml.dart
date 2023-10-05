@@ -1,36 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 
-class AppLightTheme implements AppTheme {
-  AppLightTheme();
+final class DefaultAppTheme implements AppTheme {
+  DefaultAppTheme();
 
   @override
-  Color backgroundColor = const Color(0xffFFFFFF);
+  Color borderColorGray = const Color(0xffdedee3);
 
   @override
-  Color errorTextColor = const Color(0xffDA3345);
+  Color primaryColor400 = const Color(0xff9994ff);
 
   @override
-  Color linkColor = const Color(0xff8580FF);
+  Color primaryColor50 = const Color(0xffdddbff);
 
   @override
-  Color primaryButtonColor =  const Color(0xff706CD6);
+  Color primaryColor500 = const Color(0xff8580ff);
 
   @override
-  Color primaryButtonTextColor = const Color(0xffFFFFFF);
+  Color primaryColor800 = const Color(0xff454385);
 
   @override
-  Color primaryColor = const Color(0xff706CD6);
+  Color surfaceColorGray = const Color(0xffececee);
 
   @override
-  Color primaryTextColor = const Color(0xff5B5B67);
+  Color surfaceColorWhite = const Color(0xffffffff);
 
   @override
-  Color secondaryTextColor = const Color(0xff828292);
+  Color surfaceGrayColorLight = const Color(0xfff7f7f8);
 
   @override
-  Color secondaryButtonTextColor = const Color(0xff5B5B67);
+  Color tertiaryColor900 = const Color(0xff45475c);
 
   @override
-  Color selectedTextColor = const Color(0xff706CD6);
+  Color contentColor700 = const Color(0xff5b5b67);
+
+  @override
+  Color contentColorBlack = const Color(0xff474752);
+
+  @override
+  Color contentColorBrand = const Color(0xff8580ff);
+
+  @override
+  Color contentColorWhite = const Color(0xffffffff);
 }

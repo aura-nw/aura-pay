@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
@@ -22,9 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await _cubit.starting();
-    });
+    _cubit.starting();
   }
 
   @override
@@ -45,19 +44,17 @@ class _SplashScreenState extends State<SplashScreen> {
                       status: AppGlobalStatus.authorized,
                     ),
                   );
-                  AppNavigator.replaceWith(RoutePath.home);
                   break;
                 case SplashScreenStatus.loadWalletNull:
-                  AppNavigator.replaceWith(RoutePath.setupWallet);
+                  AppNavigator.replaceWith(RoutePath.getStarted);
                   break;
               }
             },
-            child: const Scaffold(
+            child: Scaffold(
+              backgroundColor: theme.primaryColor500,
               body: Center(
-                child: Image(
-                  image: AssetImage(
-                    AssetImagePath.logo,
-                  ),
+                child: SvgPicture.asset(
+                  AssetLogoPath.logoTransparent,
                 ),
               ),
             ),

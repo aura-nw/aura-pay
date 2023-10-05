@@ -9,7 +9,7 @@ final class LocalizationUseCase {
     return _repository.getSupportLocale();
   }
 
-  Future<Map<String, dynamic>> getLocalLanguage({
+  Future<Map<String, String>> getLocalLanguage({
     required String locale,
   }) async {
     return _repository.getLocalLanguage(

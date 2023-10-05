@@ -1,4 +1,8 @@
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/cubit/theme_cubit.dart';
+import 'package:pyxis_mobile/src/core/constants/border_constant.dart';
+import 'package:pyxis_mobile/src/core/constants/spacing.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +19,7 @@ extension BorderRadiusX on BorderRadius {
       );
 }
 
-class AppButton extends StatelessWidget {
+class _AppButton extends StatelessWidget {
   final String text;
   final Widget? leading;
   final TextStyle textStyle;
@@ -33,7 +37,7 @@ class AppButton extends StatelessWidget {
 
   final void Function()? onPress;
 
-  AppButton({
+  _AppButton({
     Key? key,
     required this.text,
     this.onPress,
@@ -46,19 +50,20 @@ class AppButton extends StatelessWidget {
     bool? disabled,
     EdgeInsets? padding,
     BorderRadius? borderRadius,
-    TextStyle? textStyle,
+    required this.textStyle,
   })  : assert(color == null || gradient == null),
         loading = loading ?? false,
         disabled = (disabled ?? false) || (loading ?? false),
-        padding = padding ?? const EdgeInsets.all(16),
-        borderRadius = borderRadius ?? BorderRadius.circular(16),
-        textStyle = textStyle ?? AppTypoGraPhy.button16,
+        padding = padding ?? const EdgeInsets.all(Spacing.spacingUnit16),
+        borderRadius =
+            borderRadius ?? BorderRadius.circular(BorderConstant.borderRound),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final AppTheme theme = AppThemeCubit.of(context).state;
     return Material(
-      color: Colors.white,
+      color: theme.surfaceColorWhite,
       borderRadius: borderRadius,
       clipBehavior: Clip.antiAlias,
       child: Ink(
@@ -67,8 +72,8 @@ class AppButton extends StatelessWidget {
           gradient: disabled ? null : gradient,
         ),
         child: InkWell(
-          splashColor: Colors.white10,
-          highlightColor: Colors.white10,
+          splashColor: theme.primaryColor50,
+          highlightColor: theme.primaryColor50,
           onTap: disabled ? null : onPress,
           child: Container(
             constraints:
@@ -78,7 +83,8 @@ class AppButton extends StatelessWidget {
             child: loading
                 ? SizedBox.square(
                     dimension: 19.2,
-                    child: CircularProgressIndicator(color: textStyle.color))
+                    child: CircularProgressIndicator(color: textStyle.color),
+                  )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -93,6 +99,40 @@ class AppButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+final class PrimaryAppButton extends StatelessWidget {
+  final String text;
+  final bool? isDisable;
+  final VoidCallback? onPress;
+  final double? minWidth;
+
+  const PrimaryAppButton({
+    super.key,
+    required this.text,
+    this.isDisable,
+    this.onPress,
+    this.minWidth,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppThemeBuilder(
+      builder: (theme) {
+        return _AppButton(
+          text: text,
+          disabled: isDisable,
+          onPress: onPress,
+          color: theme.primaryColor500,
+          disableColor: theme.primaryColor50,
+          minWidth: minWidth,
+          textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
+            color: theme.contentColorWhite,
+          ),
+        );
+      },
     );
   }
 }

@@ -1,17 +1,18 @@
 import 'package:pyxis_mobile/src/core/app_routes.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
 
 class RoutePath {
   static const String _base = '/';
   static const String splash = _base;
-  static const String setupWallet = '${_base}setup';
-  static const String importWallet = '$setupWallet/import';
-  static const String createWallet = '$setupWallet/create';
-  static const String home = '${_base}home';
-  static const String sentTransaction = '$home/sent_transaction';
-  static const String scanQR = '$home/scan_QR';
-  static const String contract = '$home/contract';
+  static const String _onBoarding = '${_base}onboarding';
+  static const String getStarted = '$_onBoarding/get_started';
+  static const String choiceOption = '$_onBoarding/choice_option';
+  static const String setupPasscode = '$_onBoarding/setup_passwcode';
 }
 
 class AppNavigator {
@@ -22,6 +23,21 @@ class AppNavigator {
       case RoutePath.splash:
         return _defaultRoute(
           const SplashScreen(),
+          settings,
+        );
+      case RoutePath.getStarted:
+        return _defaultRoute(
+          const OnBoardingGetStartedScreen(),
+          settings,
+        );
+      case RoutePath.choiceOption:
+        return _defaultRoute(
+          OnBoardingChoiceOptionScreen(),
+          settings,
+        );
+      case RoutePath.setupPasscode:
+        return _defaultRoute(
+          const OnBoardingSetupPasscodeScreen(),
           settings,
         );
       default:

@@ -5,6 +5,15 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
   SplashScreenCubit() : super(const SplashScreenState());
 
   Future<void> starting() async {
-
+    await Future.delayed(
+      const Duration(
+        seconds: 1,
+      ),
+    );
+    emit(
+      state.copyWith(
+        status: SplashScreenStatus.loadWalletNull,
+      ),
+    );
   }
 }

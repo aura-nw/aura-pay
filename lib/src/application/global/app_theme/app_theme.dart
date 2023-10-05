@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 
 interface class AppTheme {
-  late Color primaryColor;
-  late Color backgroundColor;
+  /// Primary color
+  late Color primaryColor400;
+  late Color primaryColor50;
+  late Color primaryColor500;
+  late Color primaryColor800;
 
-  late Color primaryTextColor;
-  late Color secondaryTextColor;
-  late Color selectedTextColor;
-  late Color errorTextColor;
-  late Color primaryButtonTextColor;
+  ///
+  late Color borderColorGray;
+  late Color surfaceColorGray;
+  late Color surfaceGrayColorLight;
+  late Color surfaceColorWhite;
+  late Color tertiaryColor900;
 
-  late Color primaryButtonColor;
-  late Color secondaryButtonTextColor;
-
-  late Color linkColor;
+  ///
+  late Color contentColor700;
+  late Color contentColorBlack;
+  late Color contentColorBrand;
+  late Color contentColorWhite;
 }

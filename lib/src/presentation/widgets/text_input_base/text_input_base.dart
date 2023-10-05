@@ -1,5 +1,7 @@
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/core/constants/border_constant.dart';
+import 'package:pyxis_mobile/src/core/constants/spacing.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +9,8 @@ import 'package:flutter/services.dart';
 
 import 'text_input_manager.dart';
 
-@immutable
-abstract class TextInputWidgetBase extends StatefulWidget {
+///region text input base
+sealed class TextInputWidgetBase<T> extends StatefulWidget {
   final TextEditingController? controller;
   final ConstraintManager? constraintManager;
   final String? hintText;
@@ -48,11 +50,12 @@ abstract class TextInputWidgetBase extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return TextInputWidgetBaseState<TextInputWidgetBase>();
+    return _TextInputWidgetBaseState<TextInputWidgetBase<T>>();
   }
 }
 
-class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
+class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
+    extends State<T> {
   late TextEditingController _controller;
 
   String? errorMessage;
@@ -79,19 +82,23 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
                 children: [
                   buildLabel(theme)!,
                   const SizedBox(
-                    height: 12,
+                    height: Spacing.spacingUnit12,
                   ),
                 ],
               )
             : const SizedBox(),
         Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 8,
+            horizontal: Spacing.spacingUnit12,
+            vertical: Spacing.spacingUnit8,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(),
+            border: Border(
+              bottom: BorderSide(
+                color: theme.borderColorGray,
+                width: BorderConstant.border01,
+              ),
+            ),
           ),
           child: child,
         ),
@@ -105,9 +112,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
       children: [
         TextField(
           controller: _controller,
-          style: AppTypoGraPhy.caption14.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
+          style: AppTypoGraPhy.bodyMedium01,
           enabled: widget.enable,
           autofocus: widget.autoFocus,
           maxLines: widget.maxLine,
@@ -138,9 +143,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
             hintText: widget.hintText,
             border: InputBorder.none,
             contentPadding: EdgeInsets.zero,
-            hintStyle: AppTypoGraPhy.caption14.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+            hintStyle: AppTypoGraPhy.body03,
           ),
         ),
         errorMessage.isNotNullOrEmpty
@@ -148,11 +151,11 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 8,
+                    height: Spacing.spacingUnit8,
                   ),
                   Text(
-                    errorMessage ?? '',
-                    style: AppTypoGraPhy.body1.copyWith(),
+                    errorMessage!,
+                    style: AppTypoGraPhy.body01,
                   ),
                 ],
               )
@@ -217,5 +220,60 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
     }
     setState(() {});
     return true;
+  }
+}
+
+///endregion
+
+final class TextInputNormalWidget extends TextInputWidgetBase {
+  final String? label;
+  final bool isRequired;
+
+  const TextInputNormalWidget({
+    this.label,
+    this.isRequired = false,
+    super.autoFocus,
+    super.constraintManager,
+    super.scrollController,
+    super.enable,
+    super.inputFormatter,
+    super.focusNode,
+    super.controller,
+    super.hintText,
+    super.scrollPadding,
+    super.keyBoardType,
+    super.maxLength,
+    super.onSubmit,
+    super.maxLine,
+    super.minLine,
+    super.onChanged,
+    super.physics,
+    super.key,
+  });
+}
+
+final class TextInputNormalState
+    extends _TextInputWidgetBaseState<TextInputNormalWidget> {
+  @override
+  Widget? buildLabel(AppTheme theme) {
+    if (widget.label.isEmptyOrNull) {
+      return null;
+    }
+
+    if (widget.isRequired) {
+      return Text(
+        '${widget.label!} *',
+        style: AppTypoGraPhy.utilityLabelSm.copyWith(
+          color: theme.contentColor700,
+        ),
+      );
+    }
+
+    return Text(
+      widget.label!,
+      style: AppTypoGraPhy.utilityLabelSm.copyWith(
+        color: theme.contentColor700,
+      ),
+    );
   }
 }
