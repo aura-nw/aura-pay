@@ -1,20 +1,20 @@
 import 'package:base_response/base_response.dart';
 
 extension ExceptionMapper on AppError {
-  AuraWalletException get toAuraWalletException => AuraWalletException(
+  PyxisException get toAuraWalletException => PyxisException(
         code: code,
         message: message ?? 'Unknown error',
       );
 }
 
-class AuraWalletException {
+class PyxisException {
   final int code;
   final String message;
 
-  const AuraWalletException({required this.code, required this.message});
+  const PyxisException({required this.code, required this.message});
 
   @override
   String toString() {
-    return '[$code] $message';
+    return 'Pyxis exception : [$code] $message';
   }
 }

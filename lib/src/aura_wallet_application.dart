@@ -94,7 +94,6 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                   BlocListener<AppGlobalCubit,AppGlobalState>(
                     listenWhen: (previous, current) => current.status != previous.status,
                     listener: (context, state) {
-                      print(state.status);
                       switch(state.status){
                         case AppGlobalStatus.authorized:
                           // AppNavigator.replaceAllWith(RoutePath.home);

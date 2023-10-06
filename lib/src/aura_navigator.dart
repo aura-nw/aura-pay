@@ -12,7 +12,7 @@ class RoutePath {
   static const String _onBoarding = '${_base}onboarding';
   static const String getStarted = '$_onBoarding/get_started';
   static const String choiceOption = '$_onBoarding/choice_option';
-  static const String setupPasscode = '$_onBoarding/setup_passwcode';
+  static const String setupPasscode = '$_onBoarding/setup_passcode';
 }
 
 class AppNavigator {
