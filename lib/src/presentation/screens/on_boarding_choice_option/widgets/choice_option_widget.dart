@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
-import 'package:pyxis_mobile/src/core/constants/border_constant.dart';
-import 'package:pyxis_mobile/src/core/constants/spacing.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 
 class ChoiceOptionWidget extends StatelessWidget {
@@ -30,13 +29,13 @@ class ChoiceOptionWidget extends StatelessWidget {
       onTap: onPress,
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: Spacing.spacingUnit12,
-          vertical: Spacing.spacingUnit16,
+          horizontal: Spacing.spacing04,
+          vertical: Spacing.spacing05,
         ),
         decoration: BoxDecoration(
           color: isSelected ? theme.primaryColor50 : null,
           borderRadius: BorderRadius.circular(
-            BorderConstant.border04,
+            BorderRadiusSize.borderRadius02,
           ),
         ),
         child: Row(
@@ -45,7 +44,7 @@ class ChoiceOptionWidget extends StatelessWidget {
               iconPath,
             ),
             const SizedBox(
-              width: Spacing.spacingUnit8,
+              width: Spacing.spacing03,
             ),
             Expanded(
               child: Column(
@@ -60,7 +59,7 @@ class ChoiceOptionWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: Spacing.spacingUnit4,
+                    height: Spacing.spacing02,
                   ),
                   Text(
                     content,

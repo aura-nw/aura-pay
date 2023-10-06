@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
-import 'package:pyxis_mobile/src/core/constants/spacing.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 
 typedef KeyboardTapCallback = void Function(String text);
@@ -49,8 +49,8 @@ class _KeyboardNumberWidgetState extends State<KeyboardNumberWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: Spacing.spacingUnit32,
-        vertical: Spacing.spacingUnit24,
+        horizontal: Spacing.spacing08,
+        vertical: Spacing.spacing07,
       ),
       alignment: Alignment.center,
       child: Column(
@@ -116,8 +116,8 @@ class _KeyboardNumberWidgetState extends State<KeyboardNumberWidget> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: Spacing.spacingUnit52,
-        height: Spacing.spacingUnit68,
+        width: Spacing.spacing10,
+        height: Spacing.spacing11,
         child: AppThemeBuilder(
           builder: (theme) {
             return Text(

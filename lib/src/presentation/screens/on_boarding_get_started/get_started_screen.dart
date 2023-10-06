@@ -6,7 +6,7 @@ import 'package:pyxis_mobile/src/application/global/localization/app_localizatio
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
-import 'package:pyxis_mobile/src/core/constants/spacing.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 
@@ -20,8 +20,8 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.spacingUnit24,
-              vertical: Spacing.spacingUnit32,
+              horizontal: Spacing.spacing07,
+              vertical: Spacing.spacing08,
             ),
             child: Column(
               children: [
@@ -33,7 +33,7 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                         AssetLogoPath.logo,
                       ),
                       const SizedBox(
-                        height: Spacing.spacingUnit32,
+                        height: Spacing.spacing08,
                       ),
                       AppLocalizationProvider(
                         builder: (localization, _) {
@@ -63,13 +63,14 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(
-                  height: Spacing.spacingUnit12,
+                  height: Spacing.spacing04,
                 ),
                 AppLocalizationProvider(
                   builder: (localization, _) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: Spacing.spacingUnit12),
+                        horizontal: Spacing.spacing04,
+                      ),
                       child: RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(

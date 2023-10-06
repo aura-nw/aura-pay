@@ -5,7 +5,7 @@ import 'package:pyxis_mobile/src/application/global/localization/app_localizatio
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
-import 'package:pyxis_mobile/src/core/constants/spacing.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/widgets/choice_option_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 
@@ -22,8 +22,8 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.spacingUnit24,
-              vertical: Spacing.spacingUnit32,
+              horizontal: Spacing.spacing07,
+              vertical: Spacing.spacing08,
             ),
             child: Column(
               children: [
@@ -60,7 +60,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                               },
                             ),
                             const SizedBox(
-                              height: Spacing.spacingUnit12,
+                              height: Spacing.spacing04,
                             ),
                             HoLiZonTalDividerWithTextWidget(
                               text: localization.translate(
@@ -69,7 +69,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(
-                              height: Spacing.spacingUnit12,
+                              height: Spacing.spacing04,
                             ),
                             ChoiceOptionWidget(
                               theme: appTheme,
@@ -88,7 +88,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                               }),
                             ),
                             const SizedBox(
-                              height: Spacing.spacingUnit24,
+                              height: Spacing.spacing07,
                             ),
                             ChoiceOptionWidget(
                               theme: appTheme,

@@ -1,7 +1,6 @@
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
-import 'package:pyxis_mobile/src/core/constants/border_constant.dart';
-import 'package:pyxis_mobile/src/core/constants/spacing.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:flutter/material.dart';
@@ -82,21 +81,21 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
                 children: [
                   buildLabel(theme)!,
                   const SizedBox(
-                    height: Spacing.spacingUnit12,
+                    height: Spacing.spacing04,
                   ),
                 ],
               )
             : const SizedBox(),
         Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: Spacing.spacingUnit12,
-            vertical: Spacing.spacingUnit8,
+            horizontal: Spacing.spacing0,
+            vertical: Spacing.spacing02,
           ),
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: theme.borderColorGray,
-                width: BorderConstant.border01,
+                color: theme.borderColorGrayDefault,
+                width: BorderSize.border02,
               ),
             ),
           ),
@@ -151,7 +150,7 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: Spacing.spacingUnit8,
+                    height: Spacing.spacing03,
                   ),
                   Text(
                     errorMessage!,

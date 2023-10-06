@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
-import 'package:pyxis_mobile/src/core/constants/spacing.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/widgets/input_password_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/key_board_number_widget.dart';
@@ -50,7 +50,7 @@ class _OnBoardingSetupPasscodeScreenState
                           },
                         ),
                         const SizedBox(
-                          height: Spacing.spacingUnit12,
+                          height: Spacing.spacing04,
                         ),
                         AppLocalizationProvider(
                           builder: (localization, _) {
@@ -66,7 +66,7 @@ class _OnBoardingSetupPasscodeScreenState
                           },
                         ),
                         const SizedBox(
-                          height: Spacing.spacingUnit52,
+                          height: Spacing.spacing10,
                         ),
                         InputPasswordWidget(
                           length: 6,
@@ -91,7 +91,7 @@ class _OnBoardingSetupPasscodeScreenState
                           },
                         ),
                         const SizedBox(
-                          height: Spacing.spacingUnit52,
+                          height: Spacing.spacing10,
                         ),
                         InputPasswordWidget(
                           length: 6,

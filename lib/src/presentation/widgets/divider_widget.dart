@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
-import 'package:pyxis_mobile/src/core/constants/border_constant.dart';
-import 'package:pyxis_mobile/src/core/constants/spacing.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 
 class HoLiZonTalDividerWidget extends StatelessWidget {
@@ -35,17 +34,17 @@ class HoLiZonTalDividerWithTextWidget extends StatelessWidget {
       builder: (appTheme) {
         return Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: Spacing.spacingUnit8,
-            vertical: Spacing.spacingUnit4,
+            horizontal: Spacing.spacing03,
+            vertical: Spacing.spacing02,
           ),
           child: Row(
             children: [
               Expanded(
                 child: Container(
-                  color: appTheme.borderColorGray,
-                  height: BorderConstant.border01,
+                  color: appTheme.surfaceColorGrayDark,
+                  height: Spacing.spacing0,
                   margin: const EdgeInsets.only(
-                    right: Spacing.spacingUnit12,
+                    right: Spacing.spacing04,
                   ),
                 ),
               ),
@@ -57,10 +56,10 @@ class HoLiZonTalDividerWithTextWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  color: appTheme.borderColorGray,
-                  height: BorderConstant.border01,
+                  color: appTheme.surfaceColorGrayDark,
+                  height: Spacing.spacing0,
                   margin: const EdgeInsets.only(
-                    left: Spacing.spacingUnit12,
+                    left: Spacing.spacing04,
                   ),
                 ),
               ),

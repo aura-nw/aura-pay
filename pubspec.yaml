@@ -66,3 +66,38 @@ flutter:
     - assets/logo/
     - assets/icon/
     - assets/language/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: font/Inter/Inter-VariableFont_slnt,wght.ttf
+        - asset: font/Inter/static/Inter-Black.ttf
+        - asset: font/Inter/static/Inter-Bold.ttf
+        - asset: font/Inter/static/Inter-ExtraBold.ttf
+        - asset: font/Inter/static/Inter-Light.ttf
+        - asset: font/Inter/static/Inter-Medium.ttf
+        - asset: font/Inter/static/Inter-Regular.ttf
+        - asset: font/Inter/static/Inter-SemiBold.ttf
+        - asset:
+            font/Inter/static/Inter-Thin.ttf
+    - family: Be_Vietnam_Pro
+      fonts:
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-Black.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-BlackItalic.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-Bold.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-BoldItalic.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-ExtraBold.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-ExtraBoldItalic.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-ExtraLight.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-ExtraLightItalic.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-Italic.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-Light.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-LightItalic.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-Medium.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-MediumItalic.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-Regular.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-SemiBold.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-SemiBoldItalic.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-Thin.ttf
+        - asset: font/Be_Vietnam_Pro/BeVietnamPro-ThinItalic.ttf
+

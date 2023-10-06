@@ -1,8 +1,7 @@
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/cubit/theme_cubit.dart';
-import 'package:pyxis_mobile/src/core/constants/border_constant.dart';
-import 'package:pyxis_mobile/src/core/constants/spacing.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:flutter/material.dart';
 
@@ -54,9 +53,9 @@ class _AppButton extends StatelessWidget {
   })  : assert(color == null || gradient == null),
         loading = loading ?? false,
         disabled = (disabled ?? false) || (loading ?? false),
-        padding = padding ?? const EdgeInsets.all(Spacing.spacingUnit16),
+        padding = padding ?? const EdgeInsets.all(Spacing.spacing05),
         borderRadius =
-            borderRadius ?? BorderRadius.circular(BorderConstant.borderRound),
+            borderRadius ?? BorderRadius.circular(BorderRadiusSize.borderRadiusRound),
         super(key: key);
 
   @override
@@ -125,7 +124,7 @@ final class PrimaryAppButton extends StatelessWidget {
           text: text,
           disabled: isDisable,
           onPress: onPress,
-          color: theme.primaryColor500,
+          color: theme.primaryDefault,
           disableColor: theme.primaryColor50,
           minWidth: minWidth,
           textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
