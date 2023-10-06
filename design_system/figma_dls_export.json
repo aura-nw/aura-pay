@@ -1,0 +1,4476 @@
+{
+    "version": "1.0.4",
+    "metadata": {},
+    "collections": [
+        {
+            "name": "[ Color ] - Context",
+            "modes": [
+                {
+                    "name": "Value",
+                    "variables": [
+                        {
+                            "name": "Primary/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/500"
+                            }
+                        },
+                        {
+                            "name": "Primary/10",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/10"
+                            }
+                        },
+                        {
+                            "name": "Primary/25",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/25"
+                            }
+                        },
+                        {
+                            "name": "Primary/50",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/50"
+                            }
+                        },
+                        {
+                            "name": "Primary/100",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/100"
+                            }
+                        },
+                        {
+                            "name": "Primary/200",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/200"
+                            }
+                        },
+                        {
+                            "name": "Primary/300",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/300"
+                            }
+                        },
+                        {
+                            "name": "Primary/400",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/400"
+                            }
+                        },
+                        {
+                            "name": "Primary/500",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/500"
+                            }
+                        },
+                        {
+                            "name": "Primary/600",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/600"
+                            }
+                        },
+                        {
+                            "name": "Primary/700",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/700"
+                            }
+                        },
+                        {
+                            "name": "Primary/800",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/800"
+                            }
+                        },
+                        {
+                            "name": "Primary/900",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Indigo/900"
+                            }
+                        },
+                        {
+                            "name": "Secondary/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Secondary/500"
+                            }
+                        },
+                        {
+                            "name": "Secondary/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 244,
+                                "b": 235,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Secondary/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 229,
+                                "b": 208,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Secondary/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 253,
+                                "g": 203,
+                                "b": 161,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Secondary/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 253,
+                                "g": 178,
+                                "b": 113,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Secondary/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 252,
+                                "g": 152,
+                                "b": 66,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Secondary/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 252,
+                                "g": 125,
+                                "b": 17,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Secondary/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 201,
+                                "g": 100,
+                                "b": 14,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Secondary/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 151,
+                                "g": 76,
+                                "b": 10,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Secondary/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 100,
+                                "g": 50,
+                                "b": 7,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Secondary/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 51,
+                                "g": 25,
+                                "b": 4,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Tertiary/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Tertiary/500"
+                            }
+                        },
+                        {
+                            "name": "Tertiary/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 237,
+                                "g": 239,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Tertiary/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 232,
+                                "g": 234,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Tertiary/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 222,
+                                "g": 225,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Tertiary/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 211,
+                                "g": 216,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Tertiary/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 201,
+                                "g": 207,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Tertiary/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 191,
+                                "g": 198,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Tertiary/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 160,
+                                "g": 166,
+                                "b": 214,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Tertiary/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 130,
+                                "g": 135,
+                                "b": 173,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Tertiary/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 99,
+                                "g": 103,
+                                "b": 133,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Tertiary/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 69,
+                                "g": 71,
+                                "b": 92,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Info/Light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Cyan/100"
+                            }
+                        },
+                        {
+                            "name": "Info/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Cyan/400"
+                            }
+                        },
+                        {
+                            "name": "Info/Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Cyan/500"
+                            }
+                        },
+                        {
+                            "name": "Success/S Light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Green/50"
+                            }
+                        },
+                        {
+                            "name": "Success/Light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Green/100"
+                            }
+                        },
+                        {
+                            "name": "Success/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Green/200"
+                            }
+                        },
+                        {
+                            "name": "Success/Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Green/400"
+                            }
+                        },
+                        {
+                            "name": "Warning/S Light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Orange/50"
+                            }
+                        },
+                        {
+                            "name": "Warning/Light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Orange/100"
+                            }
+                        },
+                        {
+                            "name": "Warning/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Orange/300"
+                            }
+                        },
+                        {
+                            "name": "Warning/Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Orange/400"
+                            }
+                        },
+                        {
+                            "name": "Danger/S Light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Red/50"
+                            }
+                        },
+                        {
+                            "name": "Danger/Light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Red/100"
+                            }
+                        },
+                        {
+                            "name": "Danger/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Red/300"
+                            }
+                        },
+                        {
+                            "name": "Danger/Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Red/500"
+                            }
+                        },
+                        {
+                            "name": "Danger/S Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Red/600"
+                            }
+                        },
+                        {
+                            "name": "Unknown/Light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/300"
+                            }
+                        },
+                        {
+                            "name": "Unknown/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/500"
+                            }
+                        },
+                        {
+                            "name": "Unknown/Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/700"
+                            }
+                        },
+                        {
+                            "name": "Surface/White",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/White"
+                            }
+                        },
+                        {
+                            "name": "Surface/Gray light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/25"
+                            }
+                        },
+                        {
+                            "name": "Surface/Gray default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/50"
+                            }
+                        },
+                        {
+                            "name": "Surface/Gray dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/100"
+                            }
+                        },
+                        {
+                            "name": "Surface/Black",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/950"
+                            }
+                        },
+                        {
+                            "name": "Surface/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Gray light"
+                            }
+                        },
+                        {
+                            "name": "Surface/Success",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Success/Light"
+                            }
+                        },
+                        {
+                            "name": "Surface/Success dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Success/Dark"
+                            }
+                        },
+                        {
+                            "name": "Surface/Danger",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Danger/Light"
+                            }
+                        },
+                        {
+                            "name": "Surface/Danger dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Danger/Dark"
+                            }
+                        },
+                        {
+                            "name": "Surface/Warning",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Warning/Light"
+                            }
+                        },
+                        {
+                            "name": "Surface/Warning dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Warning/Dark"
+                            }
+                        },
+                        {
+                            "name": "Surface/Unknown",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Unknown/Light"
+                            }
+                        },
+                        {
+                            "name": "Surface/Brand light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/25"
+                            }
+                        },
+                        {
+                            "name": "Surface/Brand semi light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/50"
+                            }
+                        },
+                        {
+                            "name": "Surface/Brand",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/Default"
+                            }
+                        },
+                        {
+                            "name": "Surface/Brand dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/700"
+                            }
+                        },
+                        {
+                            "name": "Border/White",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/White"
+                            }
+                        },
+                        {
+                            "name": "Border/Gray light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/50"
+                            }
+                        },
+                        {
+                            "name": "Border/Gray default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/100"
+                            }
+                        },
+                        {
+                            "name": "Border/Gray dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/200"
+                            }
+                        },
+                        {
+                            "name": "Border/Black",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/Black"
+                            }
+                        },
+                        {
+                            "name": "Border/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Border/Gray default"
+                            }
+                        },
+                        {
+                            "name": "Border/Success light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Success/S Light"
+                            }
+                        },
+                        {
+                            "name": "Border/Success",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Success/Default"
+                            }
+                        },
+                        {
+                            "name": "Border/Success dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Success/S Dark"
+                            }
+                        },
+                        {
+                            "name": "Border/Danger light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Danger/S Light"
+                            }
+                        },
+                        {
+                            "name": "Border/Danger",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Danger/Default"
+                            }
+                        },
+                        {
+                            "name": "Border/Danger dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Danger/S Dark"
+                            }
+                        },
+                        {
+                            "name": "Border/Warning light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Warning/S Light"
+                            }
+                        },
+                        {
+                            "name": "Border/Warning",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Warning/Default"
+                            }
+                        },
+                        {
+                            "name": "Border/Warning dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Warning/S Dark"
+                            }
+                        },
+                        {
+                            "name": "Border/Unknown",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Unknown/Default"
+                            }
+                        },
+                        {
+                            "name": "Border/Brand s light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/25"
+                            }
+                        },
+                        {
+                            "name": "Border/Brand light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/200"
+                            }
+                        },
+                        {
+                            "name": "Border/Brand",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/500"
+                            }
+                        },
+                        {
+                            "name": "Border/Brand dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/600"
+                            }
+                        },
+                        {
+                            "name": "Warning/S Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Orange/500"
+                            }
+                        },
+                        {
+                            "name": "Success/S Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Green/500"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "[ Color ] - Foundations",
+            "modes": [
+                {
+                    "name": "Value",
+                    "variables": [
+                        {
+                            "name": "Content/White",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/White"
+                            }
+                        },
+                        {
+                            "name": "Content/200",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/200"
+                            }
+                        },
+                        {
+                            "name": "Content/300",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/300"
+                            }
+                        },
+                        {
+                            "name": "Content/500",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/500"
+                            }
+                        },
+                        {
+                            "name": "Content/700",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/700"
+                            }
+                        },
+                        {
+                            "name": "Content/Black",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/800"
+                            }
+                        },
+                        {
+                            "name": "Content/Opacity 1",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Black opacity 7"
+                            }
+                        },
+                        {
+                            "name": "Content/Brand light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/200"
+                            }
+                        },
+                        {
+                            "name": "Content/Brand",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/500"
+                            }
+                        },
+                        {
+                            "name": "Content/Brand dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/700"
+                            }
+                        },
+                        {
+                            "name": "Content/Sussess",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Success/Dark"
+                            }
+                        },
+                        {
+                            "name": "Content/Danger",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Danger/Dark"
+                            }
+                        },
+                        {
+                            "name": "Content/Warning",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Warning/Dark"
+                            }
+                        },
+                        {
+                            "name": "Content/Unknown",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Unknown/Dark"
+                            }
+                        },
+                        {
+                            "name": "Body/Backgroud",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/White"
+                            }
+                        },
+                        {
+                            "name": "Body/Brand",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Brand"
+                            }
+                        },
+                        {
+                            "name": "Body/Overlay",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Black opacity 5"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "[ Units ] - Base",
+            "modes": [
+                {
+                    "name": "Mode 1",
+                    "variables": [
+                        {
+                            "name": "Units/0px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 0
+                        },
+                        {
+                            "name": "Units/1px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 1
+                        },
+                        {
+                            "name": "Units/2px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 2
+                        },
+                        {
+                            "name": "Units/4px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 4
+                        },
+                        {
+                            "name": "Units/6px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 6
+                        },
+                        {
+                            "name": "Units/8px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 8
+                        },
+                        {
+                            "name": "Units/10px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 10
+                        },
+                        {
+                            "name": "Units/12px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 12
+                        },
+                        {
+                            "name": "Units/14px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 14
+                        },
+                        {
+                            "name": "Units/16px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 16
+                        },
+                        {
+                            "name": "Units/18px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 18
+                        },
+                        {
+                            "name": "Units/20px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 20
+                        },
+                        {
+                            "name": "Units/22px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 22
+                        },
+                        {
+                            "name": "Units/24px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 24
+                        },
+                        {
+                            "name": "Units/26px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 26
+                        },
+                        {
+                            "name": "Units/28px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 28
+                        },
+                        {
+                            "name": "Units/30px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 30
+                        },
+                        {
+                            "name": "Units/32px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 32
+                        },
+                        {
+                            "name": "Units/34px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 34
+                        },
+                        {
+                            "name": "Units/36px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 36
+                        },
+                        {
+                            "name": "Units/38px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 38
+                        },
+                        {
+                            "name": "Units/40px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 40
+                        },
+                        {
+                            "name": "Units/42px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 42
+                        },
+                        {
+                            "name": "Units/46px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 46
+                        },
+                        {
+                            "name": "Units/48px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 48
+                        },
+                        {
+                            "name": "Units/52px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 52
+                        },
+                        {
+                            "name": "Units/64px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 64
+                        },
+                        {
+                            "name": "Units/68px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 68
+                        },
+                        {
+                            "name": "Units/72px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 72
+                        },
+                        {
+                            "name": "Units/80px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 80
+                        },
+                        {
+                            "name": "Units/84px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 84
+                        },
+                        {
+                            "name": "Units/96px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 96
+                        },
+                        {
+                            "name": "Units/128px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 128
+                        },
+                        {
+                            "name": "Units/160px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 160
+                        },
+                        {
+                            "name": "Units/192px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 192
+                        },
+                        {
+                            "name": "Units/224px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 224
+                        },
+                        {
+                            "name": "Units/256px",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 256
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Components",
+            "modes": [
+                {
+                    "name": "Light",
+                    "variables": [
+                        {
+                            "name": "Buttons/Soild/Primary/Content/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/White"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Content/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Soild/Primary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Content/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Soild/Primary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Content/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Soild/Primary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Background/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/600"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Background/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/700"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Background/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Soild/Primary/Background/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Background/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Primary/200"
+                            }
+                        },
+                        {
+                            "name": "Input/Background color",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/White"
+                            }
+                        },
+                        {
+                            "name": "Input/Background disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Border/Gray light"
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Content",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/700"
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Placeholder",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/300"
+                            }
+                        },
+                        {
+                            "name": "Divider/Color",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Border/Gray default"
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/300"
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Border/Color/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Input/_Base/Border/Default"
+                            }
+                        },
+                        {
+                            "name": "Table/Color",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Background/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Input/Background color"
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Border/Color/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Input/_Base/Border/Focus"
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Border/Color/Danger",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Border/Danger"
+                            }
+                        },
+                        {
+                            "name": "Toats/Color 2",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Border/Color/Success",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Border/Success"
+                            }
+                        },
+                        {
+                            "name": "Navbar/Color 3",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Background/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Input/Background disable"
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Padding/sm",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Foundations",
+                                "name": "Spacing/04"
+                            }
+                        },
+                        {
+                            "name": "Tooltip/Color 4",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Padding/Default",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Foundations",
+                                "name": "Spacing/06"
+                            }
+                        },
+                        {
+                            "name": "Link/Color 5",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Padding/lg",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Foundations",
+                                "name": "Spacing/08"
+                            }
+                        },
+                        {
+                            "name": "Card/Soild/Background/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Gray default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Border/Color/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Border/Color/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Border/Color/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Primary/Border/Color/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Icon/Color",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Primary/Content/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/Brand"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Primary/Content/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/Brand dark"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Primary/Content/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Ghost/Primary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Primary/Content/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/Brand light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Primary/Background/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Primary/Background/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Primary/Background/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Primary/Background/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Card/Soild/Content/Title",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/Black"
+                            }
+                        },
+                        {
+                            "name": "Card/Soild/Content/Description",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/500"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Content/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/Brand dark"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Content/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Outline/Primary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Content/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Outline/Primary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Content/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/Brand light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Background/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Background/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Brand light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Background/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Background/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Border/Color/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Border/Brand"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Border/Color/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Outline/Primary/Border/Color/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Border/Color/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Outline/Primary/Border/Color/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Primary/Border/Color/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Border/Brand light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Content/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/700"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Content/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/500"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Content/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Outline/Secondary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Content/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/200"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Background/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Background/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Gray light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Background/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Background/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Border/Color/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Border/Gray dark"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Border/Color/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Outline/Secondary/Border/Color/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Border/Color/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Outline/Secondary/Border/Color/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Outline/Secondary/Border/Color/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Border/Gray light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Content/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/Brand dark"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Content/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Soild/Secondary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Content/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Soild/Secondary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Content/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/Brand light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Background/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Brand light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Background/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Brand semi light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Background/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Soild/Secondary/Background/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Background/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Brand light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Border/Color/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Border/Color/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Border/Color/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Secondary/Border/Color/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Secondary/Content/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/700"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Secondary/Content/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/500"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Secondary/Content/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Ghost/Secondary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Secondary/Content/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/200"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Secondary/Background/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Secondary/Background/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Secondary/Background/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Secondary/Background/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Tertiary/Content/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/500"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Tertiary/Content/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/300"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Tertiary/Content/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Ghost/Tertiary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Tertiary/Content/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/200"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Tertiary/Background/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Tertiary/Background/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Tertiary/Background/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Ghost/Tertiary/Background/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Content/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/500"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Content/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Soild/Tertiary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Content/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Soild/Tertiary/Content/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Content/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Foundations",
+                                "name": "Content/200"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Background/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Gray default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Background/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Gray dark"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Background/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "Components",
+                                "name": "Buttons/Soild/Tertiary/Background/Default"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Background/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Gray light"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Border/Color/Default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Border/Color/Hover",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Border/Color/Focus",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        },
+                        {
+                            "name": "Buttons/Soild/Tertiary/Border/Color/Disable",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Transparent"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "[ Color ] - Base",
+            "modes": [
+                {
+                    "name": "value",
+                    "variables": [
+                        {
+                            "name": "Gray/White",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/25",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 247,
+                                "g": 247,
+                                "b": 248,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 236,
+                                "g": 236,
+                                "b": 238,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 222,
+                                "g": 222,
+                                "b": 227,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 192,
+                                "g": 192,
+                                "b": 200,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 174,
+                                "g": 174,
+                                "b": 183,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 152,
+                                "g": 152,
+                                "b": 164,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 130,
+                                "g": 130,
+                                "b": 146,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 107,
+                                "g": 107,
+                                "b": 122,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 91,
+                                "g": 91,
+                                "b": 103,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 71,
+                                "g": 71,
+                                "b": 82,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 52,
+                                "g": 52,
+                                "b": 60,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/950",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 36,
+                                "g": 36,
+                                "b": 41,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Gray/Black",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 19,
+                                "g": 19,
+                                "b": 22,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Blue/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 235,
+                                "g": 243,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Blue/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 207,
+                                "g": 226,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Blue/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 158,
+                                "g": 197,
+                                "b": 254,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Blue/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 109,
+                                "g": 168,
+                                "b": 254,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Blue/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 59,
+                                "g": 139,
+                                "b": 253,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Blue/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 109,
+                                "b": 254,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Blue/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 87,
+                                "b": 202,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Blue/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 3,
+                                "g": 66,
+                                "b": 152,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Blue/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 3,
+                                "g": 44,
+                                "b": 101,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Blue/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 3,
+                                "g": 22,
+                                "b": 51,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/10",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 250,
+                                "g": 250,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/25",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 241,
+                                "g": 240,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 221,
+                                "g": 219,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 211,
+                                "g": 209,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 192,
+                                "g": 189,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 172,
+                                "g": 169,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 153,
+                                "g": 148,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 133,
+                                "g": 128,
+                                "b": 255,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 112,
+                                "g": 108,
+                                "b": 214,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 90,
+                                "g": 87,
+                                "b": 173,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 69,
+                                "g": 67,
+                                "b": 133,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Indigo/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 48,
+                                "g": 46,
+                                "b": 92,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Purple/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 241,
+                                "g": 236,
+                                "b": 249,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Purple/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 226,
+                                "g": 217,
+                                "b": 242,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Purple/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 197,
+                                "g": 179,
+                                "b": 227,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Purple/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 169,
+                                "g": 142,
+                                "b": 215,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Purple/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 140,
+                                "g": 104,
+                                "b": 201,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Purple/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 110,
+                                "g": 66,
+                                "b": 188,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Purple/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 89,
+                                "g": 53,
+                                "b": 150,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Purple/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 67,
+                                "g": 40,
+                                "b": 113,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Purple/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 44,
+                                "g": 26,
+                                "b": 75,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Purple/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 22,
+                                "g": 13,
+                                "b": 38,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Pink/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 250,
+                                "g": 234,
+                                "b": 242,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Pink/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 246,
+                                "g": 214,
+                                "b": 230,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Pink/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 238,
+                                "g": 173,
+                                "b": 206,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Pink/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 228,
+                                "g": 132,
+                                "b": 181,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Pink/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 220,
+                                "g": 91,
+                                "b": 157,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Pink/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 212,
+                                "g": 49,
+                                "b": 132,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Pink/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 169,
+                                "g": 39,
+                                "b": 106,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Pink/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 127,
+                                "g": 30,
+                                "b": 79,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Pink/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 85,
+                                "g": 19,
+                                "b": 53,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Pink/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 43,
+                                "g": 10,
+                                "b": 26,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Red/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 252,
+                                "g": 238,
+                                "b": 239,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Red/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 247,
+                                "g": 215,
+                                "b": 218,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Red/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 240,
+                                "g": 174,
+                                "b": 181,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Red/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 232,
+                                "g": 133,
+                                "b": 143,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Red/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 225,
+                                "g": 92,
+                                "b": 106,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Red/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 218,
+                                "g": 51,
+                                "b": 69,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Red/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 175,
+                                "g": 40,
+                                "b": 55,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Red/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 131,
+                                "g": 31,
+                                "b": 41,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Red/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 87,
+                                "g": 20,
+                                "b": 28,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Red/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 44,
+                                "g": 11,
+                                "b": 14,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Orange/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 244,
+                                "b": 235,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Orange/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 229,
+                                "b": 208,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Orange/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 253,
+                                "g": 203,
+                                "b": 161,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Orange/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 253,
+                                "g": 178,
+                                "b": 113,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Orange/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 252,
+                                "g": 152,
+                                "b": 66,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Orange/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 252,
+                                "g": 125,
+                                "b": 17,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Orange/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 201,
+                                "g": 100,
+                                "b": 14,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Orange/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 151,
+                                "g": 76,
+                                "b": 10,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Orange/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 100,
+                                "g": 50,
+                                "b": 7,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Orange/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 51,
+                                "g": 25,
+                                "b": 4,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Yellow/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 249,
+                                "b": 229,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Yellow/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 243,
+                                "b": 205,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Yellow/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 230,
+                                "b": 155,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Yellow/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 218,
+                                "b": 105,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Yellow/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 205,
+                                "b": 55,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Yellow/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 255,
+                                "g": 193,
+                                "b": 0,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Yellow/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 204,
+                                "g": 154,
+                                "b": 0,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Yellow/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 153,
+                                "g": 116,
+                                "b": 1,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Yellow/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 102,
+                                "g": 77,
+                                "b": 2,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Yellow/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 51,
+                                "g": 39,
+                                "b": 1,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Green/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 216,
+                                "g": 248,
+                                "b": 232,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Green/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 186,
+                                "g": 243,
+                                "b": 216,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Green/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 134,
+                                "g": 234,
+                                "b": 187,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Green/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 71,
+                                "g": 225,
+                                "b": 150,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Green/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 29,
+                                "g": 201,
+                                "b": 117,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Green/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 21,
+                                "g": 148,
+                                "b": 84,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Green/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 17,
+                                "g": 117,
+                                "b": 67,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Green/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 8,
+                                "g": 93,
+                                "b": 50,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Green/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 5,
+                                "g": 62,
+                                "b": 34,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Green/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 2,
+                                "g": 31,
+                                "b": 17,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Teal/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 225,
+                                "g": 239,
+                                "b": 232,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Teal/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 211,
+                                "g": 244,
+                                "b": 234,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Teal/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 168,
+                                "g": 233,
+                                "b": 213,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Teal/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 125,
+                                "g": 223,
+                                "b": 193,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Teal/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 83,
+                                "g": 212,
+                                "b": 172,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Teal/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 47,
+                                "g": 201,
+                                "b": 151,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Teal/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 37,
+                                "g": 161,
+                                "b": 121,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Teal/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 122,
+                                "b": 93,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Teal/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 80,
+                                "b": 61,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Teal/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 3,
+                                "g": 40,
+                                "b": 31,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Cyan/50",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 231,
+                                "g": 250,
+                                "b": 253,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Cyan/100",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 204,
+                                "g": 244,
+                                "b": 251,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Cyan/200",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 151,
+                                "g": 235,
+                                "b": 248,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Cyan/300",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 96,
+                                "g": 224,
+                                "b": 244,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Cyan/400",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 15,
+                                "g": 214,
+                                "b": 241,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Cyan/500",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 203,
+                                "b": 237,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Cyan/600",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 163,
+                                "b": 190,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Cyan/700",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 122,
+                                "b": 142,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Cyan/800",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 82,
+                                "b": 95,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Cyan/900",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 40,
+                                "b": 47,
+                                "a": 1
+                            }
+                        },
+                        {
+                            "name": "Opacity/Transparent",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0
+                            }
+                        },
+                        {
+                            "name": "Opacity/Black opacity 1",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.1
+                            }
+                        },
+                        {
+                            "name": "Opacity/Black opacity 2",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.2
+                            }
+                        },
+                        {
+                            "name": "Opacity/Black opacity 3",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.3
+                            }
+                        },
+                        {
+                            "name": "Opacity/Black opacity 4",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.4
+                            }
+                        },
+                        {
+                            "name": "Opacity/Black opacity 5",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.5
+                            }
+                        },
+                        {
+                            "name": "Opacity/Black opacity 6",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.6
+                            }
+                        },
+                        {
+                            "name": "Opacity/Black opacity 7",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.7
+                            }
+                        },
+                        {
+                            "name": "Opacity/Black opacity 8",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.8
+                            }
+                        },
+                        {
+                            "name": "Opacity/Black opacity 9",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0,
+                                "a": 0.9
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "[ Units ] - Foundations",
+            "modes": [
+                {
+                    "name": "Mode 1",
+                    "variables": [
+                        {
+                            "name": "Spacing/none",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/0px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/01",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/2px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/02",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/4px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/03",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/8px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/04",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/12px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/05",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/16px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/06",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/20px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/07",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/24px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/08",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/32px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/09",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/40px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/10",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/48px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/11",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/64px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/12",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/80px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/13",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/96px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/14",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/128px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/15",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/160px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/16",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/192px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/17",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/224px"
+                            }
+                        },
+                        {
+                            "name": "Spacing/18",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/256px"
+                            }
+                        },
+                        {
+                            "name": "Border radius/None",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Foundations",
+                                "name": "Spacing/none"
+                            }
+                        },
+                        {
+                            "name": "Border radius/Round",
+                            "type": "number",
+                            "isAlias": false,
+                            "value": 99999
+                        },
+                        {
+                            "name": "Border radius/01",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/2px"
+                            }
+                        },
+                        {
+                            "name": "Border radius/02",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/4px"
+                            }
+                        },
+                        {
+                            "name": "Border radius/03",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/8px"
+                            }
+                        },
+                        {
+                            "name": "Border radius/04",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/16px"
+                            }
+                        },
+                        {
+                            "name": "Border radius/05",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/24px"
+                            }
+                        },
+                        {
+                            "name": "Border radius/06",
+                            "type": "number",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Units ] - Base",
+                                "name": "Units/32px"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Typography",
+            "modes": [
+                {
+                    "name": "Style",
+                    "variables": [
+                        {
+                            "name": "Body/01",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 10,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PERCENT",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Body/02",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 12,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Body/03",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 14,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Body/04",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 16,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PERCENT",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Body/medium-01",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 10,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Medium",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Body/medium-02",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 12,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Medium",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Body/medium-03",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 14,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Medium",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PERCENT",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Body/medium-04",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 16,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Medium",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PERCENT",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Utility/label-sm",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 12,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Medium",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Utility/label-default",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 14,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Medium",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Utility/label-lg",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 16,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Medium",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PERCENT",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Utility/helper-sm",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 10,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Utility/helper-default",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 12,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Utility/helper-lg",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 16,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PERCENT",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Utility/code-01",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 14,
+                                "fontFamily": "IBM Plex Mono",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Utility/code-02",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 16,
+                                "fontFamily": "IBM Plex Mono",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Heading/01",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 14,
+                                "fontFamily": "Be Vietnam Pro",
+                                "fontWeight": "SemiBold",
+                                "lineHeight": 129.99999523162842,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Heading/02",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 16,
+                                "fontFamily": "Be Vietnam Pro",
+                                "fontWeight": "SemiBold",
+                                "lineHeight": 129.99999523162842,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Heading/03",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 18,
+                                "fontFamily": "Be Vietnam Pro",
+                                "fontWeight": "SemiBold",
+                                "lineHeight": 129.99999523162842,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Heading/04",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 28,
+                                "fontFamily": "Be Vietnam Pro",
+                                "fontWeight": "SemiBold",
+                                "lineHeight": 129.99999523162842,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Heading/05",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 32,
+                                "fontFamily": "Be Vietnam Pro",
+                                "fontWeight": "Bold",
+                                "lineHeight": 120.00000476837158,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Heading/06",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 42,
+                                "fontFamily": "Be Vietnam Pro",
+                                "fontWeight": "Bold",
+                                "lineHeight": 114.99999761581421,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Heading/07",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 54,
+                                "fontFamily": "Be Vietnam Pro",
+                                "fontWeight": "Bold",
+                                "lineHeight": 114.99999761581421,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Link/body-compact-01",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 14,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "UNDERLINE"
+                            }
+                        },
+                        {
+                            "name": "Link/body-compact-02",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 16,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "UNDERLINE"
+                            }
+                        },
+                        {
+                            "name": "Link/body-01",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 14,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "UNDERLINE"
+                            }
+                        },
+                        {
+                            "name": "Link/body-02",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 16,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Regular",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "UNDERLINE"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Effects",
+            "modes": [
+                {
+                    "name": "Style",
+                    "variables": [
+                        {
+                            "name": "Input/hover",
+                            "type": "effect",
+                            "isAlias": false,
+                            "value": {
+                                "effects": [
+                                    {
+                                        "type": "DROP_SHADOW",
+                                        "color": {
+                                            "r": 208,
+                                            "g": 213,
+                                            "b": 221,
+                                            "a": 0.5
+                                        },
+                                        "offset": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "radius": 0,
+                                        "spread": 2
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Input/focus",
+                            "type": "effect",
+                            "isAlias": false,
+                            "value": {
+                                "effects": [
+                                    {
+                                        "type": "DROP_SHADOW",
+                                        "color": {
+                                            "r": 133,
+                                            "g": 128,
+                                            "b": 255,
+                                            "a": 0.3
+                                        },
+                                        "offset": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "radius": 0,
+                                        "spread": 2
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Input/danger",
+                            "type": "effect",
+                            "isAlias": false,
+                            "value": {
+                                "effects": [
+                                    {
+                                        "type": "DROP_SHADOW",
+                                        "color": {
+                                            "r": 225,
+                                            "g": 92,
+                                            "b": 106,
+                                            "a": 0.3
+                                        },
+                                        "offset": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "radius": 0,
+                                        "spread": 2
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Input/success",
+                            "type": "effect",
+                            "isAlias": false,
+                            "value": {
+                                "effects": [
+                                    {
+                                        "type": "DROP_SHADOW",
+                                        "color": {
+                                            "r": 75,
+                                            "g": 159,
+                                            "b": 118,
+                                            "a": 0.4
+                                        },
+                                        "offset": {
+                                            "x": 0,
+                                            "y": 0
+                                        },
+                                        "radius": 0,
+                                        "spread": 2
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
