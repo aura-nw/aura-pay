@@ -2,6 +2,7 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pyxis_mobile/src/core/constants/typography.dart';
 
 import 'application/global/app_global_state/app_global_cubit.dart';
 import 'application/global/app_global_state/app_global_state.dart';
@@ -61,6 +62,7 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
         navigatorKey: AppNavigator.navigatorKey,
         theme: ThemeData(
           useMaterial3: true,
+          fontFamily: AppTypoGraPhy.interFontFamily,
         ),
         onGenerateRoute: AppNavigator.onGenerateRoute,
         initialRoute: RoutePath.splash,
