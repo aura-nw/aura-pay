@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
               backgroundColor: theme.primaryColor500,
               body: Center(
                 child: SvgPicture.asset(
-                  AssetLogoPath.logoTransparent,
+                  AssetLogoPath.logoTransparentWithName,
                 ),
               ),
             ),

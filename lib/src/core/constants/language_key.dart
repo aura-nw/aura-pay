@@ -1,4 +1,4 @@
-class LanguageKey {
+sealed class LanguageKey {
   ///region onboarding get started
   static const String onBoardingGetStartedScreenTitle = 'on_boarding_get_started_screen_title';
   static const String onBoardingGetStartedScreenButtonTitle = 'on_boarding_get_started_screen_button_title';
@@ -24,4 +24,25 @@ class LanguageKey {
   static const String onBoardingSetupPasscodeScreenConfirmTitle= "on_boarding_setup_passcode_screen_confirm_title";
   static const String onBoardingSetupPasscodeScreenConfirmNotMatch= "on_boarding_setup_passcode_screen_confirm_not_match";
   ///endregion
+
+  ///region create new account
+  static const String onBoardingCreateNewSmartAccountScreenTitleRegionOne= "on_boarding_create_new_smart_account_screen_title_region_one";
+  static const String onBoardingCreateNewSmartAccountScreenTitleRegionTwo= "on_boarding_create_new_smart_account_screen_title_region_two";
+  static const String onBoardingCreateNewSmartAccountScreenTextFieldTitle= "on_boarding_create_new_smart_account_screen_text_field_title";
+  static const String onBoardingCreateNewSmartAccountScreenButtonTitle  = "on_boarding_create_new_smart_account_screen_button_title";
+  static const String onBoardingCreateNewSmartAccountScreenDialogLoadingTitle = "on_boarding_create_new_smart_account_screen_dialog_loading_title";
+  ///endregion
+
+  ///region scan fee
+  static const String onBoardingScanFeeScreenTitleRegionOne = "on_boarding_scan_fee_screen_title_region_one";
+  static const String onBoardingScanFeeScreenTitleRegionTwo = "on_boarding_scan_fee_screen_title_region_two";
+  static const String onBoardingScanFeeScreenContentRegionOne = "on_boarding_scan_fee_screen_content_region_one";
+  static const String onBoardingScanFeeScreenContentRegionTwo = "on_boarding_scan_fee_screen_content_region_two";
+  static const String onBoardingScanFeeScreenContentRegionThree = "on_boarding_scan_fee_screen_content_region_three";
+  static const String onBoardingScanFeeScreenButtonTitle = "on_boarding_scan_fee_screen_button_title";
+  static const String onBoardingScanFeeScreenDialogLoadingContent = "on_boarding_scan_fee_screen_dialog_loading_content";
+  static const String onBoardingScanFeeScreenDialogWarningTitle= "on_boarding_scan_fee_screen_dialog_warning_title";
+  static const String onBoardingScanFeeScreenDialogWarningContent = "on_boarding_scan_fee_screen_dialog_warning_content";
+  static const String onBoardingScanFeeScreenDialogWarningButtonTitle = "on_boarding_scan_fee_screen_dialog_warning_button_title";
+  ///
 }

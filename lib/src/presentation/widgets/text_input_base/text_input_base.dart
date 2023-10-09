@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'text_input_manager.dart';
 
 ///region text input base
-sealed class TextInputWidgetBase<T> extends StatefulWidget {
+sealed class TextInputWidgetBase extends StatefulWidget {
   final TextEditingController? controller;
   final ConstraintManager? constraintManager;
   final String? hintText;
@@ -49,7 +49,7 @@ sealed class TextInputWidgetBase<T> extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _TextInputWidgetBaseState<TextInputWidgetBase<T>>();
+    return _TextInputWidgetBaseState<TextInputWidgetBase>();
   }
 }
 
@@ -81,7 +81,7 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
                 children: [
                   buildLabel(theme)!,
                   const SizedBox(
-                    height: Spacing.spacing04,
+                    height: BoxSize.boxSize03,
                   ),
                 ],
               )
@@ -95,10 +95,11 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
             border: Border(
               bottom: BorderSide(
                 color: theme.borderColorGrayDefault,
-                width: BorderSize.border02,
+                width: BorderSize.border01,
               ),
             ),
           ),
+          alignment: Alignment.center,
           child: child,
         ),
       ],
@@ -150,7 +151,7 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: Spacing.spacing03,
+                    height: BoxSize.boxSize03,
                   ),
                   Text(
                     errorMessage!,
@@ -249,6 +250,9 @@ final class TextInputNormalWidget extends TextInputWidgetBase {
     super.physics,
     super.key,
   });
+
+  @override
+  State<StatefulWidget> createState() => TextInputNormalState();
 }
 
 final class TextInputNormalState
@@ -260,10 +264,22 @@ final class TextInputNormalState
     }
 
     if (widget.isRequired) {
-      return Text(
-        '${widget.label!} *',
-        style: AppTypoGraPhy.utilityLabelSm.copyWith(
-          color: theme.contentColor700,
+      return RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: widget.label,
+              style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                color: theme.contentColor700,
+              ),
+            ),
+            TextSpan(
+              text: ' *',
+              style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                color: theme.contentColorDanger,
+              ),
+            ),
+          ],
         ),
       );
     }

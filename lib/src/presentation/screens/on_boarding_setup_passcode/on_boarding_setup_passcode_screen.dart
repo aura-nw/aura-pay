@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/widgets/input_password_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/key_board_number_widget.dart';
 
 class OnBoardingSetupPasscodeScreen extends StatefulWidget {
@@ -26,7 +30,13 @@ class _OnBoardingSetupPasscodeScreenState
     return AppThemeBuilder(
       builder: (appTheme) {
         return Scaffold(
-          appBar: AppBar(),
+          backgroundColor: appTheme.bodyColorBackground,
+          appBar: AppBarStepWidget(
+            appTheme: appTheme,
+            onViewMoreInformationTap: (){
+
+            },
+          ),
           body: Column(
             children: [
               Expanded(
@@ -104,26 +114,56 @@ class _OnBoardingSetupPasscodeScreenState
                 ),
               ),
               KeyboardNumberWidget(
-                onKeyboardTap: (text) {
-                  setState(() {
-                    _fillIndex++;
-                  });
-                  if (_fillIndex == 5) {
-                    _fillIndex = -1;
-                    _pageController.animateToPage(
-                      1,
-                      duration: const Duration(
-                        milliseconds: 300,
-                      ),
-                      curve: Curves.bounceIn,
-                    );
-                  }
-                },
+                rightIcon: SvgPicture.asset(
+                  AssetIconPath.commonClear,
+                ),
+                rightButtonFn: _onClearPassword,
+                onKeyboardTap: _onKeyBoardTap,
               ),
             ],
           ),
         );
       },
     );
+  }
+
+  void _onClearPassword(){
+    if(_fillIndex < 0) return;
+
+    _fillIndex--;
+
+    setState(() {
+
+    });
+  }
+
+  void _onKeyBoardTap(String text){
+    if(_pageController.page == 0){
+      /// create password
+      setState(() {
+        _fillIndex++;
+      });
+      if (_fillIndex == 5) {
+        _fillIndex = -1;
+        _pageController.animateToPage(
+          1,
+          duration: const Duration(
+            milliseconds: 300,
+          ),
+          curve: Curves.bounceIn,
+        );
+      }
+    }else{
+      /// confirm password
+      setState(() {
+        _fillIndex++;
+      });
+
+      if (_fillIndex == 5) {
+        _fillIndex = -1;
+        AppNavigator.push(RoutePath.pickAccountName);
+      }
+    }
+
   }
 }

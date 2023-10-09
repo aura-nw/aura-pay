@@ -36,6 +36,8 @@ class _AppButton extends StatelessWidget {
 
   final void Function()? onPress;
 
+  final AppTheme theme;
+
   _AppButton({
     Key? key,
     required this.text,
@@ -49,18 +51,18 @@ class _AppButton extends StatelessWidget {
     bool? disabled,
     EdgeInsets? padding,
     BorderRadius? borderRadius,
+    required this.theme,
     required this.textStyle,
   })  : assert(color == null || gradient == null),
         loading = loading ?? false,
         disabled = (disabled ?? false) || (loading ?? false),
         padding = padding ?? const EdgeInsets.all(Spacing.spacing05),
-        borderRadius =
-            borderRadius ?? BorderRadius.circular(BorderRadiusSize.borderRadiusRound),
+        borderRadius = borderRadius ??
+            BorderRadius.circular(BorderRadiusSize.borderRadiusRound),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final AppTheme theme = AppThemeCubit.of(context).state;
     return Material(
       color: theme.surfaceColorWhite,
       borderRadius: borderRadius,
@@ -130,6 +132,7 @@ final class PrimaryAppButton extends StatelessWidget {
           textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
             color: theme.contentColorWhite,
           ),
+          theme: theme,
         );
       },
     );

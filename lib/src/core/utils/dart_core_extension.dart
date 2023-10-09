@@ -25,7 +25,7 @@ extension StringExtensions on String? {
     if (isEmptyOrNull) return '';
     if (this!.length < 32) return this!;
 
-    return '${this!.substring(0, 6)}....${this!.substring(this!.length - 5, this!.length)}';
+    return '${this!.substring(0, 11)}....${this!.substring(this!.length - 15, this!.length)}';
   }
 }
 

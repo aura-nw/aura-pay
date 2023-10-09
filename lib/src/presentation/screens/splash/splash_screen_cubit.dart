@@ -7,7 +7,7 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
   Future<void> starting() async {
     await Future.delayed(
       const Duration(
-        seconds: 1,
+        seconds: 2,
       ),
     );
     emit(

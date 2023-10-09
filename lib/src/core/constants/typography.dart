@@ -130,4 +130,12 @@ class AppTypoGraPhy {
     height: 1.15,
     fontFamily: beVietNamPro,
   );
+
+
+  /// Special text style
+  static const TextStyle keyboardStyle = TextStyle(
+    fontSize: 26,
+    fontFamily: interFontFamily,
+    fontWeight: FontWeight.w400,
+  );
 }

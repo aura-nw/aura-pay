@@ -33,9 +33,9 @@ class ChoiceOptionWidget extends StatelessWidget {
           vertical: Spacing.spacing05,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? theme.primaryColor50 : null,
+          color: isSelected ? theme.surfaceColorBrandLight : null,
           borderRadius: BorderRadius.circular(
-            BorderRadiusSize.borderRadius02,
+            BorderRadiusSize.borderRadius04,
           ),
         ),
         child: Row(
@@ -44,7 +44,7 @@ class ChoiceOptionWidget extends StatelessWidget {
               iconPath,
             ),
             const SizedBox(
-              width: Spacing.spacing03,
+              width: BoxSize.boxSize04,
             ),
             Expanded(
               child: Column(
@@ -54,17 +54,17 @@ class ChoiceOptionWidget extends StatelessWidget {
                     title,
                     style: AppTypoGraPhy.heading01.copyWith(
                       color: isSelected
-                          ? theme.contentColorBrand
-                          : theme.contentColorBlack,
+                          ? theme.contentColorBrandDark
+                          : theme.contentColor700,
                     ),
                   ),
                   const SizedBox(
-                    height: Spacing.spacing02,
+                    height: BoxSize.boxSize02,
                   ),
                   Text(
                     content,
                     style: AppTypoGraPhy.body02.copyWith(
-                      color: theme.contentColor700,
+                      color: theme.contentColor500,
                     ),
                   ),
                 ],

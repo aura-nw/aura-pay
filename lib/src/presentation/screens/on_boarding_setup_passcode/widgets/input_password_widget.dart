@@ -24,10 +24,10 @@ class InputPasswordWidget extends StatelessWidget {
           (index) {
             bool isFill = fillIndex >= 0 && index <= fillIndex;
             return Container(
-              height: Spacing.spacing04,
-              width: Spacing.spacing04,
+              height: BoxSize.boxSize04,
+              width: BoxSize.boxSize04,
               margin: const EdgeInsets.only(
-                right: Spacing.spacing05,
+                right: Spacing.spacing06,
               ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,

@@ -1,5 +1,7 @@
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,8 @@ class RoutePath {
   static const String getStarted = '$_onBoarding/get_started';
   static const String choiceOption = '$_onBoarding/choice_option';
   static const String setupPasscode = '$_onBoarding/setup_passcode';
+  static const String pickAccountName = '$_onBoarding/pick_account_name';
+  static const String scanQrFee = '$_onBoarding/scan_qr_fee';
 }
 
 class AppNavigator {
@@ -38,6 +42,19 @@ class AppNavigator {
       case RoutePath.setupPasscode:
         return _defaultRoute(
           const OnBoardingSetupPasscodeScreen(),
+          settings,
+        );
+      case RoutePath.pickAccountName:
+        return _defaultRoute(
+          const OnBoardingPickAccountScreen(),
+          settings,
+        );
+      case RoutePath.scanQrFee:
+        final String rawAddress = settings.arguments as String;
+        return _defaultRoute(
+          OnBoardingScanFeeScreen(
+            rawAddress: rawAddress,
+          ),
           settings,
         );
       default:

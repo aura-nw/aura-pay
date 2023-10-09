@@ -6,35 +6,16 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 typedef KeyboardTapCallback = void Function(String text);
 
 class KeyboardNumberWidget extends StatefulWidget {
-  /// Color of the text [default = Colors.black]
-  final Color textColor;
-
-  /// Display a custom right icon
-  final Icon? rightIcon;
-
-  /// Action to trigger when right button is pressed
-  final Function()? rightButtonFn;
-
-  /// Display a custom left icon
-  final Icon? leftIcon;
-
-  /// Action to trigger when left button is pressed
-  final Function()? leftButtonFn;
-
-  /// Callback when an item is pressed
+  final Widget? rightIcon;
+  final VoidCallback ?rightButtonFn;
   final KeyboardTapCallback onKeyboardTap;
-
-  /// Main axis alignment [default = MainAxisAlignment.spaceEvenly]
   final MainAxisAlignment mainAxisAlignment;
 
   const KeyboardNumberWidget({
     Key? key,
     required this.onKeyboardTap,
-    this.textColor = Colors.black,
     this.rightButtonFn,
     this.rightIcon,
-    this.leftButtonFn,
-    this.leftIcon,
     this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
   }) : super(key: key);
 
@@ -82,25 +63,24 @@ class _KeyboardNumberWidgetState extends State<KeyboardNumberWidget> {
           ButtonBar(
             alignment: widget.mainAxisAlignment,
             children: <Widget>[
-              InkWell(
-                borderRadius: BorderRadius.circular(45),
-                onTap: widget.leftButtonFn,
-                child: Container(
-                  alignment: Alignment.center,
-                  width: 50,
-                  height: 50,
-                  child: widget.leftIcon,
-                ),
+              Container(
+                alignment: Alignment.center,
+                width: Spacing.spacing10,
+                height: Spacing.spacing10,
               ),
               _calcButton('0'),
               InkWell(
-                  borderRadius: BorderRadius.circular(45),
-                  onTap: widget.rightButtonFn,
-                  child: Container(
-                      alignment: Alignment.center,
-                      width: 50,
-                      height: 50,
-                      child: widget.rightIcon))
+                borderRadius: BorderRadius.circular(
+                  BorderRadiusSize.borderRadius06,
+                ),
+                onTap: widget.rightButtonFn,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: BoxSize.boxSize10,
+                  height: BoxSize.boxSize10,
+                  child: widget.rightIcon,
+                ),
+              )
             ],
           ),
         ],
@@ -110,21 +90,22 @@ class _KeyboardNumberWidgetState extends State<KeyboardNumberWidget> {
 
   Widget _calcButton(String value) {
     return InkWell(
-      borderRadius: BorderRadius.circular(45),
+      borderRadius: BorderRadius.circular(
+        BorderRadiusSize.borderRadius06,
+      ),
       onTap: () {
         widget.onKeyboardTap(value);
       },
       child: Container(
         alignment: Alignment.center,
-        width: Spacing.spacing10,
-        height: Spacing.spacing11,
+        width: BoxSize.boxSize10,
+        height: BoxSize.boxSize11,
         child: AppThemeBuilder(
           builder: (theme) {
             return Text(
               value,
-              style: AppTypoGraPhy.heading04.copyWith(
+              style: AppTypoGraPhy.keyboardStyle.copyWith(
                 color: theme.contentColor700,
-                fontWeight: FontWeight.w400,
               ),
             );
           },

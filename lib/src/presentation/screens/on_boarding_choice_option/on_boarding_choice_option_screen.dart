@@ -20,6 +20,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
     return AppThemeBuilder(
       builder: (appTheme) {
         return Scaffold(
+          backgroundColor: appTheme.bodyColorBackground,
           body: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: Spacing.spacing07,
@@ -30,7 +31,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                 Expanded(
                   child: Center(
                     child: SvgPicture.asset(
-                      AssetLogoPath.logo,
+                      AssetLogoPath.logoWithName,
                     ),
                   ),
                 ),
@@ -60,7 +61,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                               },
                             ),
                             const SizedBox(
-                              height: Spacing.spacing04,
+                              height: BoxSize.boxSize04,
                             ),
                             HoLiZonTalDividerWithTextWidget(
                               text: localization.translate(
@@ -69,7 +70,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(
-                              height: Spacing.spacing04,
+                              height: BoxSize.boxSize04,
                             ),
                             ChoiceOptionWidget(
                               theme: appTheme,
@@ -88,7 +89,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                               }),
                             ),
                             const SizedBox(
-                              height: Spacing.spacing07,
+                              height: BoxSize.boxSize07,
                             ),
                             ChoiceOptionWidget(
                               theme: appTheme,

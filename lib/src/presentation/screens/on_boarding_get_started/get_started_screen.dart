@@ -18,6 +18,7 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
     return AppThemeBuilder(
       builder: (appTheme) {
         return Scaffold(
+          backgroundColor: appTheme.bodyColorBackground,
           body: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: Spacing.spacing07,
@@ -25,15 +26,18 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
             ),
             child: Column(
               children: [
+                const SizedBox(
+                  height: BoxSize.boxSize13,
+                ),
                 Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SvgPicture.asset(
-                        AssetLogoPath.logo,
+                        AssetLogoPath.logoWithName,
                       ),
                       const SizedBox(
-                        height: Spacing.spacing08,
+                        height: BoxSize.boxSize06,
                       ),
                       AppLocalizationProvider(
                         builder: (localization, _) {
@@ -43,11 +47,12 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                             ),
                             textAlign: TextAlign.center,
                             style: AppTypoGraPhy.body03.copyWith(
-                              color: appTheme.contentColor700,
+                              color: appTheme.contentColor500,
                             ),
                           );
                         },
                       ),
+
                     ],
                   ),
                 ),
@@ -63,7 +68,7 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(
-                  height: Spacing.spacing04,
+                  height: BoxSize.boxSize04,
                 ),
                 AppLocalizationProvider(
                   builder: (localization, _) {
@@ -81,7 +86,7 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                                     .onBoardingGetStartedScreenPrivacyPolicyTitleRegionOne,
                               ),
                               style: AppTypoGraPhy.body01.copyWith(
-                                color: appTheme.contentColor700,
+                                color: appTheme.contentColor500,
                               ),
                             ),
                             TextSpan(
@@ -103,7 +108,7 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                                     .onBoardingGetStartedScreenPrivacyPolicyTitleRegionTwo,
                               ),
                               style: AppTypoGraPhy.body01.copyWith(
-                                color: appTheme.contentColor700,
+                                color: appTheme.contentColor500,
                               ),
                             ),
                             TextSpan(

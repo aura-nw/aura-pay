@@ -3,14 +3,31 @@ const String _baseAsset = 'packages/pyxis_mobile/assets/';
 final class AssetLogoPath{
   static const String _baseImagePath = '${_baseAsset}logo/';
   static const String logo = '${_baseImagePath}logo_pyxis.svg';
+  static const String logoWithName = '${_baseImagePath}logo_pyxis_with_name.svg';
   static const String logoTransparent = '${_baseImagePath}logo_pyxis_transparent.svg';
+  static const String logoTransparentWithName = '${_baseImagePath}logo_pyxis_transparent_with_name.svg';
 }
 
 final class AssetIconPath{
   static const String _baseIconPath = '${_baseAsset}icon/';
+
+  ///onboarding
   static const String onBoardingCreateAccountSelected = '${_baseIconPath}ic_onboarding_create_account_selected.svg';
   static const String onBoardingImportAccount = '${_baseIconPath}ic_onboarding_import_account.svg';
   static const String onBoardingRecoverAccount = '${_baseIconPath}ic_onboarding_recover_account.svg';
+  static const String onBoardingActiveStep = '${_baseIconPath}ic_onboarding_active_step.svg';
+  static const String onBoardingDisableStep = '${_baseIconPath}ic_onboarding_disable_step.svg';
+  static const String onBoardingSuccessDisableStep = '${_baseIconPath}ic_onboarding_success_disable_step.svg';
+  static const String onBoardingSuccessStep = '${_baseIconPath}ic_onboarding_success_step.svg';
+
+  ///common
+  static const String commonCopy = '${_baseIconPath}ic_common_copy.svg';
+  static const String commonArrowBack = '${_baseIconPath}ic_common_arrow_back.svg';
+  static const String commonClear = '${_baseIconPath}ic_common_clear.svg';
+  static const String commonInformation = '${_baseIconPath}ic_common_information.svg';
+  static const String commonLogoSmall = '${_baseIconPath}ic_common_logo_small.svg';
+  static const String commonLogo = '${_baseIconPath}ic_common_logo.svg';
+  static const String commonWarning = '${_baseIconPath}ic_common_dialog_warning.svg';
 }
 
 final class LocalizationPath{

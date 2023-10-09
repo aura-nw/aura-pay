@@ -1,14 +1,18 @@
-abstract interface class LocalStorageRepository {
-  Future<void> saveValue<T>({
-    required String key,
-    required T value,
+abstract interface class LocalStorageRepository<K,V> {
+  Future<void> saveValue({
+    required K key,
+    required V value,
   });
 
   Future<bool> constantKey({
-    required String key,
+    required K key,
   });
 
-  Future<T?> getValue<T>({
-    required String key,
+  Future<V> getValue<T>({
+    required K key,
+  });
+
+  Future<void> deleteValue({
+    required K key,
   });
 }

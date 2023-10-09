@@ -4,16 +4,23 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 
 class HoLiZonTalDividerWidget extends StatelessWidget {
-  const HoLiZonTalDividerWidget({super.key});
+  final Color? dividerColor;
+  final double? width;
+
+  const HoLiZonTalDividerWidget({this.dividerColor, this.width, super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppThemeBuilder(
-      builder: (p0) {
-        return Row(
-          children: [
-            Container(),
-          ],
+      builder: (appTheme) {
+        return Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.spacing03,
+            vertical: Spacing.spacing02,
+          ),
+          color: dividerColor ?? appTheme.surfaceColorGrayDark,
+          height: BoxSize.boxSize0,
+          width: width,
         );
       },
     );
@@ -22,10 +29,12 @@ class HoLiZonTalDividerWidget extends StatelessWidget {
 
 class HoLiZonTalDividerWithTextWidget extends StatelessWidget {
   final String text;
+  final Color? dividerColor;
 
   const HoLiZonTalDividerWithTextWidget({
     super.key,
     required this.text,
+    this.dividerColor,
   });
 
   @override
@@ -41,8 +50,8 @@ class HoLiZonTalDividerWithTextWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  color: appTheme.surfaceColorGrayDark,
-                  height: Spacing.spacing0,
+                  color: dividerColor ?? appTheme.surfaceColorGrayDark,
+                  height: BoxSize.boxSize0,
                   margin: const EdgeInsets.only(
                     right: Spacing.spacing04,
                   ),
@@ -56,8 +65,8 @@ class HoLiZonTalDividerWithTextWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  color: appTheme.surfaceColorGrayDark,
-                  height: Spacing.spacing0,
+                  color: dividerColor ?? appTheme.surfaceColorGrayDark,
+                  height: BoxSize.boxSize0,
                   margin: const EdgeInsets.only(
                     left: Spacing.spacing04,
                   ),
