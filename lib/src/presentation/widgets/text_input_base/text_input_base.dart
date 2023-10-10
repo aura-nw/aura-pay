@@ -1,5 +1,7 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
@@ -19,6 +21,7 @@ sealed class TextInputWidgetBase extends StatefulWidget {
   final int? minLine;
   final int? maxLength;
   final bool enable;
+  final bool obscureText;
   final bool autoFocus;
   final FocusNode? focusNode;
   final EdgeInsets scrollPadding;
@@ -39,6 +42,7 @@ sealed class TextInputWidgetBase extends StatefulWidget {
     this.maxLine,
     this.enable = true,
     this.autoFocus = false,
+    this.obscureText = false,
     this.focusNode,
     this.scrollPadding = const EdgeInsets.symmetric(),
     this.scrollController,
@@ -59,6 +63,8 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
 
   String? errorMessage;
 
+  late FocusNode _focusNode;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -68,6 +74,7 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
     return null;
   }
 
+  ///region build input form builder
   Widget inputFormBuilder(
     BuildContext context,
     Widget child,
@@ -94,57 +101,13 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: theme.borderColorGrayDefault,
+                color: _borderColorBuilder(theme),
                 width: BorderSize.border01,
               ),
             ),
           ),
           alignment: Alignment.center,
           child: child,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTextInput(AppTheme theme) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextField(
-          controller: _controller,
-          style: AppTypoGraPhy.bodyMedium01,
-          enabled: widget.enable,
-          autofocus: widget.autoFocus,
-          maxLines: widget.maxLine,
-          maxLength: widget.maxLength,
-          minLines: widget.minLine,
-          onSubmitted: (value) {
-            if (widget.onSubmit != null) {
-              widget.onSubmit!(value, errorMessage.isEmptyOrNull);
-            }
-          },
-          focusNode: widget.focusNode,
-          showCursor: true,
-          scrollPadding: widget.scrollPadding,
-          scrollController: widget.scrollController,
-          scrollPhysics: widget.physics,
-          inputFormatters: widget.inputFormatter,
-          keyboardType: widget.keyBoardType,
-          onChanged: (value) {
-            if (widget.constraintManager != null) {
-              if (widget.constraintManager!.isValidOnChanged) {
-                validate();
-              }
-            }
-
-            widget.onChanged?.call(value, errorMessage.isEmptyOrNull);
-          },
-          decoration: InputDecoration(
-            hintText: widget.hintText,
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.zero,
-            hintStyle: AppTypoGraPhy.body03,
-          ),
         ),
         errorMessage.isNotNullOrEmpty
             ? Column(
@@ -155,7 +118,9 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
                   ),
                   Text(
                     errorMessage!,
-                    style: AppTypoGraPhy.body01,
+                    style: AppTypoGraPhy.body02.copyWith(
+                      color: theme.contentColorDanger,
+                    ),
                   ),
                 ],
               )
@@ -164,8 +129,66 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
     );
   }
 
+  ///endregion
+
+  ///region build text input base
+  Widget _buildTextInput(AppTheme theme) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: _controller,
+            style: AppTypoGraPhy.bodyMedium01,
+            enabled: widget.enable,
+            autofocus: widget.autoFocus,
+            maxLines: widget.maxLine,
+            maxLength: widget.maxLength,
+            minLines: widget.minLine,
+            obscureText: widget.obscureText,
+            onSubmitted: (value) {
+              if (widget.onSubmit != null) {
+                widget.onSubmit!(value, errorMessage.isEmptyOrNull);
+              }
+            },
+            focusNode: _focusNode,
+            showCursor: true,
+            scrollPadding: widget.scrollPadding,
+            scrollController: widget.scrollController,
+            scrollPhysics: widget.physics,
+            inputFormatters: widget.inputFormatter,
+            keyboardType: widget.keyBoardType,
+            onChanged: (value) {
+              if (widget.constraintManager != null) {
+                if (widget.constraintManager!.isValidOnChanged) {
+                  validate();
+                }
+              }
+
+              widget.onChanged?.call(value, errorMessage.isEmptyOrNull);
+            },
+            decoration: InputDecoration(
+              hintText: widget.hintText,
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.zero,
+              hintStyle: AppTypoGraPhy.body03,
+            ),
+          ),
+        ),
+        if (errorMessage.isNotNullOrEmpty) ...[
+          const SizedBox(
+            width: BoxSize.boxSize04,
+          ),
+          SvgPicture.asset(
+            AssetIconPath.commonInputError,
+          ),
+        ]
+      ],
+    );
+  }
+
+  ///endregion
+
   @override
-  @mustCallSuper
   Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (theme) {
@@ -180,10 +203,47 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
 
   String value() => _controller.text;
 
+  late bool isFocus;
+
+  Color _borderColorBuilder(AppTheme theme) {
+    Color color = theme.borderColorGrayDefault;
+    if (isFocus) {
+      color = theme.borderColorBrand;
+    }
+
+    if (errorMessage.isEmptyOrNull) {
+      if (isFocus) return color;
+
+      color = theme.borderColorGrayDefault;
+    } else {
+      color = theme.borderColorDanger;
+    }
+
+    return color;
+  }
+
+  void _addFocusListener() {
+    if (_focusNode.hasFocus) {
+      isFocus = true;
+    } else {
+      isFocus = false;
+    }
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
+
+    _focusNode = widget.focusNode ?? FocusNode(canRequestFocus: true);
+
+    isFocus = widget.autoFocus ? true : false;
+
+    _focusNode.addListener(_addFocusListener);
   }
 
   @override
@@ -191,6 +251,7 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
     if (widget.controller == null) {
       _controller.dispose();
     }
+    _focusNode.removeListener(_addFocusListener);
     super.dispose();
   }
 
@@ -225,6 +286,7 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
 
 ///endregion
 
+///region text input normal
 final class TextInputNormalWidget extends TextInputWidgetBase {
   final String? label;
   final bool isRequired;
@@ -232,6 +294,7 @@ final class TextInputNormalWidget extends TextInputWidgetBase {
   const TextInputNormalWidget({
     this.label,
     this.isRequired = false,
+    super.obscureText,
     super.autoFocus,
     super.constraintManager,
     super.scrollController,
@@ -292,3 +355,113 @@ final class TextInputNormalState
     );
   }
 }
+
+///endregion
+
+///region text input icon
+final class TextInputNormalIconWidget extends TextInputWidgetBase {
+  final String? label;
+  final bool isRequired;
+  final String iconPath;
+  final VoidCallback? onIconTap;
+
+  const TextInputNormalIconWidget({
+    this.label,
+    this.isRequired = false,
+    required this.iconPath,
+    this.onIconTap,
+    super.obscureText,
+    super.autoFocus,
+    super.constraintManager,
+    super.scrollController,
+    super.enable,
+    super.inputFormatter,
+    super.focusNode,
+    super.controller,
+    super.hintText,
+    super.scrollPadding,
+    super.keyBoardType,
+    super.maxLength,
+    super.onSubmit,
+    super.maxLine,
+    super.minLine,
+    super.onChanged,
+    super.physics,
+    super.key,
+  });
+
+  @override
+  State<StatefulWidget> createState() => TextInputNormalIconState();
+}
+
+final class TextInputNormalIconState
+    extends _TextInputWidgetBaseState<TextInputNormalIconWidget> {
+  @override
+  Widget? buildLabel(AppTheme theme) {
+    if (widget.label.isEmptyOrNull) {
+      return null;
+    }
+
+    if (widget.isRequired) {
+      return RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: widget.label,
+              style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                color: theme.contentColor700,
+              ),
+            ),
+            TextSpan(
+              text: ' *',
+              style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                color: theme.contentColorDanger,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Text(
+      widget.label!,
+      style: AppTypoGraPhy.utilityLabelSm.copyWith(
+        color: theme.contentColor700,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AppThemeBuilder(
+      builder: (theme) {
+        return inputFormBuilder(
+          context,
+          Row(
+            children: [
+              Expanded(
+                child: _buildTextInput(theme),
+              ),
+              const SizedBox(
+                width: BoxSize.boxSize04  ,
+              ),
+              GestureDetector(
+                onTap: widget.onIconTap,
+                behavior: HitTestBehavior.opaque,
+                child: Padding(
+                  padding: const EdgeInsets.all(
+                    Spacing.spacing02,
+                  ),
+                  child: SvgPicture.asset(widget.iconPath),
+                ),
+              ),
+            ],
+          ),
+          theme,
+        );
+      },
+    );
+  }
+}
+
+///endregion

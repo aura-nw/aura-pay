@@ -84,9 +84,9 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                                 LanguageKey
                                     .onBoardingChoiceOptionScreenImportExistAccountContent,
                               ),
-                              onPress: () => setState(() {
-                                _selectedIndex = 1;
-                              }),
+                              onPress: () {
+                                AppNavigator.push(RoutePath.importFirstPage);
+                              }
                             ),
                             const SizedBox(
                               height: BoxSize.boxSize07,

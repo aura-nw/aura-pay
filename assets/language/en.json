@@ -36,5 +36,25 @@
   "on_boarding_scan_fee_screen_dialog_loading_content" : "Checking balance",
   "on_boarding_scan_fee_screen_dialog_warning_title" : "Insufficient gas fee",
   "on_boarding_scan_fee_screen_dialog_warning_content" : "Please send a fee to the address or rechecking balance",
-  "on_boarding_scan_fee_screen_dialog_warning_button_title" : "Dismiss"
+  "on_boarding_scan_fee_screen_dialog_warning_button_title" : "Dismiss",
+
+  "on_boarding_import_account_screen_title_region_one" : "Import",
+  "on_boarding_import_account_screen_title_region_two" : "Smart account",
+  "on_boarding_import_account_screen_account_type" : "Account type",
+  "on_boarding_import_account_screen_smart_account_type" : "Pyxis smart account",
+  "on_boarding_import_account_screen_normal_account_type" : "Normal wallet",
+  "on_boarding_import_account_screen_select_type" : "Select type",
+  "on_boarding_import_account_screen_select_type_private" : "Import by private key",
+  "on_boarding_import_account_screen_select_type_pass_phrase" : "Import by passphrase",
+  "on_boarding_import_account_screen_private_key" : "Private key",
+  "on_boarding_import_account_screen_pass_phrase" : "Passphrase",
+  "on_boarding_import_account_screen_button_title" : "Next",
+  "on_boarding_import_account_screen_invalid_private_key" : "Invalid private key",
+  "on_boarding_import_account_screen_invalid_passphrase" : "Invalid passphrase",
+  "on_boarding_import_account_screen_dialog_loading_title" : "Loading accounts",
+
+
+  "on_boarding_import_account_select_account_screen_dialog_importing_title" : "Import accounts",
+  "on_boarding_import_account_screen_select_all" : "Select all",
+  "on_boarding_import_account_screen_un_select_all" : "Unselect all"
 }

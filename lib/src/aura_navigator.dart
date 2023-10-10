@@ -7,6 +7,7 @@ import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart'
 import 'package:flutter/material.dart';
 
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
+import 'presentation/screens/on_boarding_import/on_boarding_import_screen.dart';
 
 class RoutePath {
   static const String _base = '/';
@@ -17,6 +18,7 @@ class RoutePath {
   static const String setupPasscode = '$_onBoarding/setup_passcode';
   static const String pickAccountName = '$_onBoarding/pick_account_name';
   static const String scanQrFee = '$_onBoarding/scan_qr_fee';
+  static const String importFirstPage = '$_onBoarding/import_first_page';
 }
 
 class AppNavigator {
@@ -55,6 +57,11 @@ class AppNavigator {
           OnBoardingScanFeeScreen(
             rawAddress: rawAddress,
           ),
+          settings,
+        );
+      case RoutePath.importFirstPage:
+        return _defaultRoute(
+          const OnBoardingImportScreen(),
           settings,
         );
       default:

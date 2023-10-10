@@ -19,6 +19,8 @@ final class AssetIconPath{
   static const String onBoardingDisableStep = '${_baseIconPath}ic_onboarding_disable_step.svg';
   static const String onBoardingSuccessDisableStep = '${_baseIconPath}ic_onboarding_success_disable_step.svg';
   static const String onBoardingSuccessStep = '${_baseIconPath}ic_onboarding_success_step.svg';
+  static const String onBoardingImportAccountCheck= '${_baseIconPath}ic_onboarding_import_account_check.svg';
+  static const String onBoardingImportAccountInformation = '${_baseIconPath}ic_onboarding_import_account_information.svg';
 
   ///common
   static const String commonCopy = '${_baseIconPath}ic_common_copy.svg';
@@ -28,6 +30,13 @@ final class AssetIconPath{
   static const String commonLogoSmall = '${_baseIconPath}ic_common_logo_small.svg';
   static const String commonLogo = '${_baseIconPath}ic_common_logo.svg';
   static const String commonWarning = '${_baseIconPath}ic_common_dialog_warning.svg';
+  static const String commonArrowDown = '${_baseIconPath}ic_common_arrow_down.svg';
+  static const String commonEyeActive = '${_baseIconPath}ic_common_eye_active.svg';
+  static const String commonEyeHide = '${_baseIconPath}ic_common_eye_hide.svg';
+  static const String commonRadioUnCheck = '${_baseIconPath}ic_common_radio_uncheck.svg';
+  static const String commonRadioCheck = '${_baseIconPath}ic_common_radio_check.svg';
+  static const String commonClose = '${_baseIconPath}ic_common_close.svg';
+  static const String commonInputError = '${_baseIconPath}ic_common_input_error.svg';
 }
 
 final class LocalizationPath{
