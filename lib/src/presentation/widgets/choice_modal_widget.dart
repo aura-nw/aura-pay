@@ -130,8 +130,12 @@ class _ChoiceModalWidgetState<T> extends State<ChoiceModalWidget<T>> {
     switch (widget.modalType) {
       case ChoiceModalType.single:
         return isSelected
-            ? SvgPicture.asset(AssetIconPath.commonRadioCheck)
-            : SvgPicture.asset(AssetIconPath.commonRadioUnCheck);
+            ? SvgPicture.asset(
+                AssetIconPath.commonRadioActive,
+              )
+            : SvgPicture.asset(
+                AssetIconPath.commonRadioUnCheck,
+              );
       case ChoiceModalType.multi:
         return const SizedBox();
     }

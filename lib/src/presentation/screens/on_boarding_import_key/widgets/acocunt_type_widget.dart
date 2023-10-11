@@ -63,7 +63,7 @@ final class _AccountTypeWidget extends StatelessWidget {
                   topRight: Radius.circular(BorderRadiusSize.borderRadius03),
                 ),
                 child: SvgPicture.asset(
-                  AssetIconPath.onBoardingImportAccountCheck,
+                  AssetIconPath.onBoardingImportKeyCheck,
                 ),
               ),
             )
@@ -104,7 +104,7 @@ class _AccountTypeChoiceWidgetState extends State<AccountTypeChoiceWidget> {
             builder: (localization, _) {
               return _AccountTypeWidget(
                 type: localization.translate(
-                    LanguageKey.onBoardingImportAccountScreenSmartAccountType),
+                    LanguageKey.onBoardingImportKeyScreenSmartAccountType),
                 appTheme: widget.appTheme,
                 onTap: () {
                   _onSelectedType(0);
@@ -120,7 +120,7 @@ class _AccountTypeChoiceWidgetState extends State<AccountTypeChoiceWidget> {
             builder: (localization, _) {
               return _AccountTypeWidget(
                 type: localization.translate(
-                    LanguageKey.onBoardingImportAccountScreenNormalAccountType),
+                    LanguageKey.onBoardingImportKeyScreenNormalAccountType),
                 appTheme: widget.appTheme,
                 onTap: () {
                   _onSelectedType(1);

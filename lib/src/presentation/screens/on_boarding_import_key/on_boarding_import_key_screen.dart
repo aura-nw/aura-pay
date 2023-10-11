@@ -15,16 +15,16 @@ import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input
 
 import 'widgets/acocunt_type_widget.dart';
 
-class OnBoardingImportScreen extends StatefulWidget {
-  const OnBoardingImportScreen({super.key});
+class OnBoardingImportKeyScreen extends StatefulWidget {
+  const OnBoardingImportKeyScreen({super.key});
 
   @override
-  State<OnBoardingImportScreen> createState() =>
-      _OnBoardingImportScreenState();
+  State<OnBoardingImportKeyScreen> createState() =>
+      _OnBoardingImportKeyScreenState();
 }
 
-class _OnBoardingImportScreenState
-    extends State<OnBoardingImportScreen> {
+class _OnBoardingImportKeyScreenState
+    extends State<OnBoardingImportKeyScreen> {
   bool _passWordIsHide = true;
 
   /// Default import type
@@ -63,7 +63,7 @@ class _OnBoardingImportScreenState
                                 TextSpan(
                                   text: localization.translate(
                                     LanguageKey
-                                        .onBoardingImportAccountScreenTitleRegionOne,
+                                        .onBoardingImportKeyScreenTitleRegionOne,
                                   ),
                                   style: AppTypoGraPhy.heading05.copyWith(
                                     color: appTheme.contentColorBlack,
@@ -72,7 +72,7 @@ class _OnBoardingImportScreenState
                                 TextSpan(
                                   text: ' ${localization.translate(
                                     LanguageKey
-                                        .onBoardingImportAccountScreenTitleRegionTwo,
+                                        .onBoardingImportKeyScreenTitleRegionTwo,
                                   )}',
                                   style: AppTypoGraPhy.heading05.copyWith(
                                     color: appTheme.contentColorBrand,
@@ -93,7 +93,7 @@ class _OnBoardingImportScreenState
                               Text(
                                 localization.translate(
                                   LanguageKey
-                                      .onBoardingImportAccountScreenAccountType,
+                                      .onBoardingImportKeyScreenAccountType,
                                 ),
                               ),
                               const SizedBox(
@@ -101,7 +101,7 @@ class _OnBoardingImportScreenState
                               ),
                               SvgPicture.asset(
                                 AssetIconPath
-                                    .onBoardingImportAccountInformation,
+                                    .onBoardingImportKeyInformation,
                               ),
                             ],
                           );
@@ -122,9 +122,9 @@ class _OnBoardingImportScreenState
                           return ChoiceSelectWidget<String>(
                             data: [
                               localization.translate(LanguageKey
-                                  .onBoardingImportAccountScreenSelectTypePrivate),
+                                  .onBoardingImportKeyScreenSelectTypePrivate),
                               localization.translate(LanguageKey
-                                  .onBoardingImportAccountScreenSelectTypePassPhrase),
+                                  .onBoardingImportKeyScreenSelectTypePassPhrase),
                             ],
                             builder: (selectedOptions) {
                               if (selectedOptions.isEmpty) {
@@ -161,11 +161,11 @@ class _OnBoardingImportScreenState
                             },
                             modalTitle: localization.translate(
                               LanguageKey
-                                  .onBoardingImportAccountScreenSelectType,
+                                  .onBoardingImportKeyScreenSelectType,
                             ),
                             label: localization.translate(
                               LanguageKey
-                                  .onBoardingImportAccountScreenSelectType,
+                                  .onBoardingImportKeyScreenSelectType,
                             ),
                             selectedData: [],
                             onChange: _onSelectTypeChange,
@@ -189,14 +189,14 @@ class _OnBoardingImportScreenState
                                   )..custom(
                                       errorMessage: localization.translate(
                                           LanguageKey
-                                              .onBoardingImportAccountScreenInvalidPrivateKey),
+                                              .onBoardingImportKeyScreenInvalidPrivateKey),
                                       customValid: (value) {
                                         return false;
                                       },
                                     ),
                                   label: localization.translate(
                                     LanguageKey
-                                        .onBoardingImportAccountScreenPrivateKey,
+                                        .onBoardingImportKeyScreenPrivateKey,
                                   ),
                                   obscureText: _passWordIsHide,
                                   onIconTap: () {
@@ -220,7 +220,7 @@ class _OnBoardingImportScreenState
                                   )..custom(
                                       errorMessage: localization.translate(
                                         LanguageKey
-                                            .onBoardingImportAccountScreenInvalidPassPhrase,
+                                            .onBoardingImportKeyScreenInvalidPassPhrase,
                                       ),
                                       customValid: (value) {
                                         return false;
@@ -228,7 +228,7 @@ class _OnBoardingImportScreenState
                                     ),
                                   label: localization.translate(
                                     LanguageKey
-                                        .onBoardingImportAccountScreenPassPhrase,
+                                        .onBoardingImportKeyScreenPassPhrase,
                                   ),
                                   obscureText: _passWordIsHide,
                                   onIconTap: () {
@@ -246,7 +246,7 @@ class _OnBoardingImportScreenState
                   builder: (localization, _) {
                     return PrimaryAppButton(
                       text: localization.translate(
-                        LanguageKey.onBoardingImportAccountScreenButtonTitle,
+                        LanguageKey.onBoardingImportKeyScreenButtonTitle,
                       ),
                       onPress: () {
                         bool isValid =

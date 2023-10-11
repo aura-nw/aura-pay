@@ -7,7 +7,7 @@ import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart'
 import 'package:flutter/material.dart';
 
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
-import 'presentation/screens/on_boarding_import/on_boarding_import_screen.dart';
+import 'presentation/screens/on_boarding_import_key/on_boarding_import_key_screen.dart';
 
 class RoutePath {
   static const String _base = '/';
@@ -61,7 +61,7 @@ class AppNavigator {
         );
       case RoutePath.importFirstPage:
         return _defaultRoute(
-          const OnBoardingImportScreen(),
+          const OnBoardingImportKeyScreen(),
           settings,
         );
       default:

@@ -75,7 +75,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                             ChoiceOptionWidget(
                               theme: appTheme,
                               isSelected: _selectedIndex == 1,
-                              iconPath: AssetIconPath.onBoardingImportAccount,
+                              iconPath: AssetIconPath.onBoardingImportKey,
                               title: localization.translate(
                                 LanguageKey
                                     .onBoardingChoiceOptionScreenImportExistAccountTitle,

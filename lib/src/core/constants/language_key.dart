@@ -51,19 +51,19 @@ sealed class LanguageKey {
   ///endregion
 
   ///region import account first page
-  static const String onBoardingImportAccountScreenTitleRegionOne = "on_boarding_import_account_screen_title_region_one";
-  static const String onBoardingImportAccountScreenTitleRegionTwo = "on_boarding_import_account_screen_title_region_two";
-  static const String onBoardingImportAccountScreenAccountType = "on_boarding_import_account_screen_account_type";
-  static const String onBoardingImportAccountScreenSmartAccountType = "on_boarding_import_account_screen_smart_account_type";
-  static const String onBoardingImportAccountScreenNormalAccountType = "on_boarding_import_account_screen_normal_account_type";
-  static const String onBoardingImportAccountScreenSelectType = "on_boarding_import_account_screen_select_type";
-  static const String onBoardingImportAccountScreenSelectTypePrivate = "on_boarding_import_account_screen_select_type_private";
-  static const String onBoardingImportAccountScreenSelectTypePassPhrase = "on_boarding_import_account_screen_select_type_pass_phrase";
-  static const String onBoardingImportAccountScreenPrivateKey = "on_boarding_import_account_screen_private_key";
-  static const String onBoardingImportAccountScreenPassPhrase = "on_boarding_import_account_screen_pass_phrase";
-  static const String onBoardingImportAccountScreenButtonTitle = "on_boarding_import_account_screen_button_title";
-  static const String onBoardingImportAccountScreenInvalidPrivateKey = "on_boarding_import_account_screen_invalid_private_key";
-  static const String onBoardingImportAccountScreenInvalidPassPhrase = "on_boarding_import_account_screen_invalid_passphrase";
-  static const String onBoardingImportAccountScreenDialogLoadingTitle = "on_boarding_import_account_screen_dialog_loading_title";
+  static const String onBoardingImportKeyScreenTitleRegionOne = "on_boarding_import_key_screen_title_region_one";
+  static const String onBoardingImportKeyScreenTitleRegionTwo = "on_boarding_import_key_screen_title_region_two";
+  static const String onBoardingImportKeyScreenAccountType = "on_boarding_import_key_screen_account_type";
+  static const String onBoardingImportKeyScreenSmartAccountType = "on_boarding_import_key_screen_smart_account_type";
+  static const String onBoardingImportKeyScreenNormalAccountType = "on_boarding_import_key_screen_normal_account_type";
+  static const String onBoardingImportKeyScreenSelectType = "on_boarding_import_key_screen_select_type";
+  static const String onBoardingImportKeyScreenSelectTypePrivate = "on_boarding_import_key_screen_select_type_private";
+  static const String onBoardingImportKeyScreenSelectTypePassPhrase = "on_boarding_import_key_screen_select_type_pass_phrase";
+  static const String onBoardingImportKeyScreenPrivateKey = "on_boarding_import_key_screen_private_key";
+  static const String onBoardingImportKeyScreenPassPhrase = "on_boarding_import_key_screen_pass_phrase";
+  static const String onBoardingImportKeyScreenButtonTitle = "on_boarding_import_key_screen_button_title";
+  static const String onBoardingImportKeyScreenInvalidPrivateKey = "on_boarding_import_key_screen_invalid_private_key";
+  static const String onBoardingImportKeyScreenInvalidPassPhrase = "on_boarding_import_key_screen_invalid_passphrase";
+  static const String onBoardingImportKeyScreenDialogLoadingTitle = "on_boarding_import_key_screen_dialog_loading_title";
   ///endregion
 }

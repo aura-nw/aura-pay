@@ -13,14 +13,14 @@ final class AssetIconPath{
 
   ///onboarding
   static const String onBoardingCreateAccountSelected = '${_baseIconPath}ic_onboarding_create_account_selected.svg';
-  static const String onBoardingImportAccount = '${_baseIconPath}ic_onboarding_import_account.svg';
+  static const String onBoardingImportKey = '${_baseIconPath}ic_onboarding_import_account.svg';
   static const String onBoardingRecoverAccount = '${_baseIconPath}ic_onboarding_recover_account.svg';
   static const String onBoardingActiveStep = '${_baseIconPath}ic_onboarding_active_step.svg';
   static const String onBoardingDisableStep = '${_baseIconPath}ic_onboarding_disable_step.svg';
   static const String onBoardingSuccessDisableStep = '${_baseIconPath}ic_onboarding_success_disable_step.svg';
   static const String onBoardingSuccessStep = '${_baseIconPath}ic_onboarding_success_step.svg';
-  static const String onBoardingImportAccountCheck= '${_baseIconPath}ic_onboarding_import_account_check.svg';
-  static const String onBoardingImportAccountInformation = '${_baseIconPath}ic_onboarding_import_account_information.svg';
+  static const String onBoardingImportKeyCheck= '${_baseIconPath}ic_onboarding_import_account_check.svg';
+  static const String onBoardingImportKeyInformation = '${_baseIconPath}ic_onboarding_import_account_information.svg';
 
   ///common
   static const String commonCopy = '${_baseIconPath}ic_common_copy.svg';
@@ -34,6 +34,7 @@ final class AssetIconPath{
   static const String commonEyeActive = '${_baseIconPath}ic_common_eye_active.svg';
   static const String commonEyeHide = '${_baseIconPath}ic_common_eye_hide.svg';
   static const String commonRadioUnCheck = '${_baseIconPath}ic_common_radio_uncheck.svg';
+  static const String commonRadioActive = '${_baseIconPath}ic_common_radio_active.svg';
   static const String commonRadioCheck = '${_baseIconPath}ic_common_radio_check.svg';
   static const String commonClose = '${_baseIconPath}ic_common_close.svg';
   static const String commonInputError = '${_baseIconPath}ic_common_input_error.svg';
