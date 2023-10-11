@@ -74,6 +74,7 @@ class _OnBoardingPickAccountScreenState
                         height: BoxSize.boxSize08,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SvgPicture.asset(
                             AssetIconPath.commonLogo,

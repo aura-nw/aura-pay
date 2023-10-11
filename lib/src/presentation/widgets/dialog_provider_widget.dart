@@ -6,6 +6,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
 
 abstract interface class _DialogProviderWidget extends StatelessWidget {
   const _DialogProviderWidget({super.key});
@@ -69,15 +70,23 @@ final class _LoadingDialog extends _DialogProviderWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SvgPicture.asset(AssetIconPath.commonLogoSmall),
         const SizedBox(
-          height: BoxSize.boxSize08,
+          height: BoxSize.boxSize07,
+        ),
+        AppLoadingWidget(
+          appTheme: appTheme,
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize09,
         ),
         Text(
           content,
           style: AppTypoGraPhy.body02.copyWith(
             color: appTheme.contentColor500,
           ),
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize07,
         ),
       ],
     );
@@ -209,6 +218,10 @@ sealed class DialogProvider {
           ),
           canBack: false,
           appTheme: appTheme,
+          insetPadding: const EdgeInsets.symmetric(
+            horizontal: Spacing.spacing06,
+            vertical: Spacing.spacing04,
+          )
         );
       },
     );

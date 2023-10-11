@@ -88,7 +88,7 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
                 children: [
                   buildLabel(theme)!,
                   const SizedBox(
-                    height: BoxSize.boxSize03,
+                    height: BoxSize.boxSize01,
                   ),
                 ],
               )
@@ -96,7 +96,7 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
         Container(
           padding: const EdgeInsets.symmetric(
             horizontal: Spacing.spacing0,
-            vertical: Spacing.spacing02,
+            vertical: Spacing.spacing01,
           ),
           decoration: BoxDecoration(
             border: Border(

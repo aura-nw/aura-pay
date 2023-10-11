@@ -85,6 +85,9 @@ sealed class BoxSize {
   static const double boxSize16 = _SizeBase.unit192;
   static const double boxSize17 = _SizeBase.unit224;
   static const double boxSize18 = _SizeBase.unit256;
+
+
+  static const double boxSizeIndicator = _SizeBase.unit6;
 }
 
 sealed class BorderRadiusSize {
