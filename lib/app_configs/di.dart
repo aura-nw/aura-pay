@@ -1,6 +1,5 @@
-import 'package:pyxis_mobile/src/data/repository/localization_repository_impl.dart';
-import 'package:pyxis_mobile/src/domain/repository/localization_repository.dart';
-import 'package:pyxis_mobile/src/domain/use_case/localization_use_case.dart';
+import 'package:data/data.dart';
+import 'package:domain/domain.dart';
 
 import 'pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen_cubit.dart';

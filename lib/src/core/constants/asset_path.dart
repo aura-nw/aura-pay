@@ -1,6 +1,6 @@
 const String _baseAsset = 'packages/pyxis_mobile/assets/';
 
-final class AssetLogoPath{
+sealed class AssetLogoPath{
   static const String _baseImagePath = '${_baseAsset}logo/';
   static const String logo = '${_baseImagePath}logo_pyxis.svg';
   static const String logoWithName = '${_baseImagePath}logo_pyxis_with_name.svg';
@@ -8,7 +8,7 @@ final class AssetLogoPath{
   static const String logoTransparentWithName = '${_baseImagePath}logo_pyxis_transparent_with_name.svg';
 }
 
-final class AssetIconPath{
+sealed class AssetIconPath{
   static const String _baseIconPath = '${_baseAsset}icon/';
 
   ///onboarding
@@ -38,14 +38,4 @@ final class AssetIconPath{
   static const String commonRadioCheck = '${_baseIconPath}ic_common_radio_check.svg';
   static const String commonClose = '${_baseIconPath}ic_common_close.svg';
   static const String commonInputError = '${_baseIconPath}ic_common_input_error.svg';
-}
-
-final class LocalizationPath{
-  static const String _baseLocalizationPath = '${_baseAsset}language/';
-
-  static String localizationFullPath(String locale){
-    return '$_baseLocalizationPath$locale.json';
-  }
-
-  static String defaultLocalizationFullPath = localizationFullPath('vi');
 }

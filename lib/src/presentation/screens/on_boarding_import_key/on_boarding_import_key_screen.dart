@@ -23,8 +23,7 @@ class OnBoardingImportKeyScreen extends StatefulWidget {
       _OnBoardingImportKeyScreenState();
 }
 
-class _OnBoardingImportKeyScreenState
-    extends State<OnBoardingImportKeyScreen> {
+class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen> {
   bool _passWordIsHide = true;
 
   /// Default import type
@@ -100,8 +99,7 @@ class _OnBoardingImportKeyScreenState
                                 width: BoxSize.boxSize03,
                               ),
                               SvgPicture.asset(
-                                AssetIconPath
-                                    .onBoardingImportKeyInformation,
+                                AssetIconPath.onBoardingImportKeyInformation,
                               ),
                             ],
                           );
@@ -160,12 +158,10 @@ class _OnBoardingImportKeyScreenState
                               );
                             },
                             modalTitle: localization.translate(
-                              LanguageKey
-                                  .onBoardingImportKeyScreenSelectType,
+                              LanguageKey.onBoardingImportKeyScreenSelectType,
                             ),
                             label: localization.translate(
-                              LanguageKey
-                                  .onBoardingImportKeyScreenSelectType,
+                              LanguageKey.onBoardingImportKeyScreenSelectType,
                             ),
                             selectedData: [],
                             onChange: _onSelectTypeChange,

@@ -32,6 +32,7 @@ dependencies:
   shimmer: ^3.0.0
   flutter_svg: ^2.0.7
   qr_flutter: ^4.1.0
+  fluttertoast: ^8.2.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -45,10 +46,10 @@ dependencies:
       ref: core_wallet
 
   #core
-  base_response:
-    path: cores/base_response
-  base_exception_wrapper:
-    path: cores/base_exception_wrapper
+  data:
+    path: cores/data
+  domain:
+    path: cores/domain
 
 dev_dependencies:
   flutter_test:

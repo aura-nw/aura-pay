@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:io';
-import 'package:flutter/services.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/domain/use_case/localization_use_case.dart';
 
 class AppLocalizationManager {
   final LocalizationUseCase _localizationUseCase =

@@ -1,4 +1,4 @@
-import 'package:base_response/base_response.dart';
+import 'package:domain/domain.dart';
 
 extension ExceptionMapper on AppError {
   PyxisException get toAuraWalletException => PyxisException(
