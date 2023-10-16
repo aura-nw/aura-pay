@@ -76,4 +76,15 @@ sealed class LanguageKey {
   static const String onBoardingImportSelectAccountScreenUnSelectAll = "on_boarding_import_select_account_screen_unselect_all";
   static const String onBoardingImportSelectAccountScreenButtonTitle = "on_boarding_import_select_account_screen_button_title";
   ///endregion
+
+  ///region recover choice
+  static const String onBoardingRecoverChoiceScreenTitleRegionOne = "on_boarding_recover_choice_screen_title_region_one";
+  static const String onBoardingRecoverChoiceScreenTitleRegionTwo = "on_boarding_recover_choice_screen_title_region_two";
+  static const String onBoardingRecoverChoiceScreenContent = "on_boarding_recover_choice_screen_content";
+  static const String onBoardingRecoverChoiceScreenGoogleOptionTitle = "on_boarding_recover_choice_screen_google_option_title";
+  static const String onBoardingRecoverChoiceScreenGoogleOptionContent = "on_boarding_recover_choice_screen_google_option_content";
+  static const String onBoardingRecoverChoiceScreenBackupOptionTitle = "on_boarding_recover_choice_screen_backup_option_title";
+  static const String onBoardingRecoverChoiceScreenBackupOptionContent = "on_boarding_recover_choice_screen_backup_option_content";
+  static const String onBoardingRecoverChoiceScreenButtonTitle = "on_boarding_recover_choice_screen_button_title";
+  ///
 }

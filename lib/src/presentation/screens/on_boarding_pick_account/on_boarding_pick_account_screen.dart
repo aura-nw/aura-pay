@@ -49,8 +49,9 @@ class _OnBoardingPickAccountScreenState
                         builder: (localization, _) {
                           return RichText(
                             text: TextSpan(
-                              style: AppTypoGraPhy.heading06
-                                  .copyWith(color: appTheme.contentColorBlack),
+                              style: AppTypoGraPhy.heading05.copyWith(
+                                color: appTheme.contentColorBlack,
+                              ),
                               children: [
                                 TextSpan(
                                   text: localization.translate(

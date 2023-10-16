@@ -2,6 +2,7 @@ import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
@@ -20,6 +21,7 @@ class RoutePath {
   static const String pickAccountName = '$_onBoarding/pick_account_name';
   static const String scanQrFee = '$_onBoarding/scan_qr_fee';
   static const String importFirstPage = '$_onBoarding/import_first_page';
+  static const String recoverChoice = '$_onBoarding/recover_choice';
 }
 
 class AppNavigator {
@@ -70,6 +72,14 @@ class AppNavigator {
         final String passWord = settings.arguments as String;
         return _defaultRoute(
           OnBoardingImportKeyScreen(
+            passWord: passWord,
+          ),
+          settings,
+        );
+      case RoutePath.recoverChoice:
+        final String passWord = settings.arguments as String;
+        return _defaultRoute(
+          OnBoardingRecoverChoiceScreen(
             passWord: passWord,
           ),
           settings,

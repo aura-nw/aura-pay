@@ -60,5 +60,14 @@
   "on_boarding_import_select_account_screen_dialog_importing_title" : "Importing account",
   "on_boarding_import_select_account_screen_select_all" : "Select all",
   "on_boarding_import_select_account_screen_unselect_all" : "Unselect all",
-  "on_boarding_import_select_account_screen_button_title" : "Import"
+  "on_boarding_import_select_account_screen_button_title" : "Import",
+
+  "on_boarding_recover_choice_screen_title_region_one" : "Recover",
+  "on_boarding_recover_choice_screen_title_region_two" : "smart account",
+  "on_boarding_recover_choice_screen_content" : "Select the method to recover account",
+  "on_boarding_recover_choice_screen_google_option_title" : "Using google account",
+  "on_boarding_recover_choice_screen_google_option_content" : "Powered by W Web3auth",
+  "on_boarding_recover_choice_screen_backup_option_title" : "Using backup address",
+  "on_boarding_recover_choice_screen_backup_option_content" : "Get the guideline from Pyxis",
+  "on_boarding_recover_choice_screen_button_title" : "Next"
 }

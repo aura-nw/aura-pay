@@ -79,7 +79,7 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen> {
                                     LanguageKey
                                         .onBoardingImportKeyScreenTitleRegionOne,
                                   ),
-                                  style: AppTypoGraPhy.heading05.copyWith(
+                                  style: AppTypoGraPhy.heading06.copyWith(
                                     color: appTheme.contentColorBlack,
                                   ),
                                 ),

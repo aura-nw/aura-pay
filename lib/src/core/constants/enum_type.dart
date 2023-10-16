@@ -25,3 +25,8 @@ enum OnboardingType{
   import,
   recover,
 }
+
+enum RecoverOptionType{
+  google,
+  backupAddress,
+}

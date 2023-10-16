@@ -96,21 +96,24 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                               height: BoxSize.boxSize07,
                             ),
                             ChoiceOptionWidget(
-                              theme: appTheme,
-                              isSelected: _selectedIndex == 2,
-                              iconPath: AssetIconPath.onBoardingRecoverAccount,
-                              title: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenRecoverAccountTitle,
-                              ),
-                              content: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenRecoverAccountContent,
-                              ),
-                              onPress: () => setState(() {
-                                _selectedIndex = 2;
-                              }),
-                            ),
+                                theme: appTheme,
+                                isSelected: _selectedIndex == 2,
+                                iconPath:
+                                    AssetIconPath.onBoardingRecoverAccount,
+                                title: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenRecoverAccountTitle,
+                                ),
+                                content: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenRecoverAccountContent,
+                                ),
+                                onPress: () {
+                                  AppNavigator.push(
+                                    RoutePath.setupPasscode,
+                                    OnboardingType.recover,
+                                  );
+                                }),
                           ],
                         );
                       },

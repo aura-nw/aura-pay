@@ -195,14 +195,27 @@ class _OnBoardingSetupPasscodeScreenState
         }
 
         _fillIndex = -1;
+
+        String passWord = _password.join();
+
         switch (widget.onboardingType) {
           case OnboardingType.create:
-            AppNavigator.push(RoutePath.pickAccountName);
+            AppNavigator.push(
+              RoutePath.pickAccountName,
+              passWord,
+            );
             break;
           case OnboardingType.import:
-            AppNavigator.push(RoutePath.importFirstPage);
+            AppNavigator.push(
+              RoutePath.importFirstPage,
+              passWord,
+            );
             break;
           case OnboardingType.recover:
+            AppNavigator.push(
+              RoutePath.recoverChoice,
+              passWord,
+            );
             break;
         }
       }

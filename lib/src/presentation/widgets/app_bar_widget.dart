@@ -53,13 +53,54 @@ abstract interface class _AppBarBase extends StatelessWidget
   Widget titleBuilder(BuildContext context, AppTheme appTheme);
 
   @override
-  Size get preferredSize =>
-      Size.fromHeight(
+  Size get preferredSize => Size.fromHeight(
         (kToolbarHeight) +
             (bottomBuilder(appTheme)?.preferredSize.height ??
                 BoxSize.boxSizeNone),
       );
 }
+
+///region appbar normal widget
+final class NormalAppBarWidget extends _AppBarBase {
+  final VoidCallback onViewMoreInformationTap;
+
+  const NormalAppBarWidget({
+    required this.onViewMoreInformationTap,
+    required super.appTheme,
+    super.onBack,
+    super.key,
+  });
+
+  @override
+  List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme) {
+    return [
+      GestureDetector(
+        onTap: onViewMoreInformationTap,
+        behavior: HitTestBehavior.opaque,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.spacing04,
+          ),
+          child: SvgPicture.asset(
+            AssetIconPath.commonInformation,
+          ),
+        ),
+      ),
+    ];
+  }
+
+  @override
+  PreferredSizeWidget? bottomBuilder(AppTheme appTheme) {
+    return null;
+  }
+
+  @override
+  Widget titleBuilder(BuildContext context, AppTheme appTheme) {
+    return const SizedBox();
+  }
+}
+
+///endregion
 
 ///region appbar step widget
 final class AppBarStepWidget extends _AppBarBase {
@@ -126,7 +167,7 @@ final class _StepWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
           stepLength,
-              (index) {
+          (index) {
             List<Widget> build = List.empty(growable: true);
             if (currentStep > index) {
               build.add(

@@ -21,6 +21,8 @@ sealed class AssetIconPath{
   static const String onBoardingSuccessStep = '${_baseIconPath}ic_onboarding_success_step.svg';
   static const String onBoardingImportKeyCheck= '${_baseIconPath}ic_onboarding_import_account_check.svg';
   static const String onBoardingImportKeyInformation = '${_baseIconPath}ic_onboarding_import_account_information.svg';
+  static const String onBoardingRecoverChoiceGoogle = '${_baseIconPath}ic_onboarding_recover_choice_google.svg';
+  static const String onBoardingRecoverChoiceBackupAddress = '${_baseIconPath}ic_onboarding_recover_choice_backup_address.svg';
 
   ///common
   static const String commonCopy = '${_baseIconPath}ic_common_copy.svg';
