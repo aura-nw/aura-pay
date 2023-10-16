@@ -1,4 +1,5 @@
 import 'package:pyxis_mobile/src/core/app_routes.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
@@ -42,13 +43,19 @@ class AppNavigator {
           settings,
         );
       case RoutePath.setupPasscode:
+        final OnboardingType type = settings.arguments as OnboardingType;
         return _defaultRoute(
-          const OnBoardingSetupPasscodeScreen(),
+          OnBoardingSetupPasscodeScreen(
+            onboardingType: type,
+          ),
           settings,
         );
       case RoutePath.pickAccountName:
+        final String passWord = settings.arguments as String;
         return _defaultRoute(
-          const OnBoardingPickAccountScreen(),
+          OnBoardingPickAccountScreen(
+            passWord: passWord,
+          ),
           settings,
         );
       case RoutePath.scanQrFee:
@@ -60,8 +67,11 @@ class AppNavigator {
           settings,
         );
       case RoutePath.importFirstPage:
+        final String passWord = settings.arguments as String;
         return _defaultRoute(
-          const OnBoardingImportKeyScreen(),
+          OnBoardingImportKeyScreen(
+            passWord: passWord,
+          ),
           settings,
         );
       default:

@@ -4,9 +4,10 @@ import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/widgets/choice_option_widget.dart';
+import 'widgets/choice_option_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 
 // ignore: must_be_immutable
@@ -44,7 +45,8 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                             ChoiceOptionWidget(
                               theme: appTheme,
                               isSelected: _selectedIndex == 0,
-                              iconPath: AssetIconPath.onBoardingCreateAccountSelected,
+                              iconPath:
+                                  AssetIconPath.onBoardingCreateAccountSelected,
                               title: localization.translate(
                                 LanguageKey
                                     .onBoardingChoiceOptionScreenCreateSmartAccountTitle,
@@ -53,11 +55,11 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                                 LanguageKey
                                     .onBoardingChoiceOptionScreenCreateSmartAccountContent,
                               ),
-                              onPress: (){
-                                // setState(() {
-                                //   _selectedIndex = 0;
-                                // });
-                                AppNavigator.push(RoutePath.setupPasscode);
+                              onPress: () {
+                                AppNavigator.push(
+                                  RoutePath.setupPasscode,
+                                  OnboardingType.create,
+                                );
                               },
                             ),
                             const SizedBox(
@@ -73,21 +75,23 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                               height: BoxSize.boxSize04,
                             ),
                             ChoiceOptionWidget(
-                              theme: appTheme,
-                              isSelected: _selectedIndex == 1,
-                              iconPath: AssetIconPath.onBoardingImportKey,
-                              title: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenImportExistAccountTitle,
-                              ),
-                              content: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenImportExistAccountContent,
-                              ),
-                              onPress: () {
-                                AppNavigator.push(RoutePath.importFirstPage);
-                              }
-                            ),
+                                theme: appTheme,
+                                isSelected: _selectedIndex == 1,
+                                iconPath: AssetIconPath.onBoardingImportKey,
+                                title: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenImportExistAccountTitle,
+                                ),
+                                content: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenImportExistAccountContent,
+                                ),
+                                onPress: () {
+                                  AppNavigator.push(
+                                    RoutePath.setupPasscode,
+                                    OnboardingType.import,
+                                  );
+                                }),
                             const SizedBox(
                               height: BoxSize.boxSize07,
                             ),

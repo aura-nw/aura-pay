@@ -4,15 +4,21 @@ import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/widgets/input_password_widget.dart';
+import 'widgets/input_password_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/key_board_number_widget.dart';
 
 class OnBoardingSetupPasscodeScreen extends StatefulWidget {
-  const OnBoardingSetupPasscodeScreen({super.key});
+  final OnboardingType onboardingType;
+
+  const OnBoardingSetupPasscodeScreen({
+    required this.onboardingType,
+    super.key,
+  });
 
   @override
   State<OnBoardingSetupPasscodeScreen> createState() =>
@@ -25,6 +31,11 @@ class _OnBoardingSetupPasscodeScreenState
 
   final PageController _pageController = PageController();
 
+  final List<String> _password = [];
+  final List<String> _confirmPassword = [];
+
+  bool _wrongConfirmPassword = false;
+
   @override
   Widget build(BuildContext context) {
     return AppThemeBuilder(
@@ -33,9 +44,7 @@ class _OnBoardingSetupPasscodeScreenState
           backgroundColor: appTheme.bodyColorBackground,
           appBar: AppBarStepWidget(
             appTheme: appTheme,
-            onViewMoreInformationTap: (){
-
-            },
+            onViewMoreInformationTap: () {},
           ),
           body: Column(
             children: [
@@ -108,6 +117,26 @@ class _OnBoardingSetupPasscodeScreenState
                           appTheme: appTheme,
                           fillIndex: _fillIndex,
                         ),
+                        if (_wrongConfirmPassword) ...[
+                          const SizedBox(
+                            height: Spacing.spacing04,
+                          ),
+                          AppLocalizationProvider(
+                            builder: (localization, _) {
+                              return Text(
+                                localization.translate(
+                                  LanguageKey
+                                      .onBoardingSetupPasscodeScreenConfirmNotMatch,
+                                ),
+                                style: AppTypoGraPhy.utilityHelperSm.copyWith(
+                                  color: appTheme.contentColorDanger,
+                                ),
+                                textAlign: TextAlign.center,
+                              );
+                            },
+                          ),
+                        ] else
+                          const SizedBox()
                       ],
                     ),
                   ],
@@ -127,22 +156,21 @@ class _OnBoardingSetupPasscodeScreenState
     );
   }
 
-  void _onClearPassword(){
-    if(_fillIndex < 0) return;
+  void _onClearPassword() {
+    if (_fillIndex < 0) return;
 
     _fillIndex--;
 
-    setState(() {
-
-    });
+    setState(() {});
   }
 
-  void _onKeyBoardTap(String text){
-    if(_pageController.page == 0){
+  void _onKeyBoardTap(String text) {
+    if (_pageController.page == 0) {
       /// create password
-      setState(() {
-        _fillIndex++;
-      });
+      _fillIndex++;
+
+      _password.add(text);
+
       if (_fillIndex == 5) {
         _fillIndex = -1;
         _pageController.animateToPage(
@@ -153,17 +181,32 @@ class _OnBoardingSetupPasscodeScreenState
           curve: Curves.bounceIn,
         );
       }
-    }else{
+    } else {
       /// confirm password
-      setState(() {
-        _fillIndex++;
-      });
+      _fillIndex++;
 
+      _confirmPassword.add(text);
       if (_fillIndex == 5) {
+        if (_confirmPassword.join() != _password.join()) {
+          /// show unMatch wrong
+          _wrongConfirmPassword = true;
+        } else {
+          _wrongConfirmPassword = false;
+        }
+
         _fillIndex = -1;
-        AppNavigator.push(RoutePath.pickAccountName);
+        switch (widget.onboardingType) {
+          case OnboardingType.create:
+            AppNavigator.push(RoutePath.pickAccountName);
+            break;
+          case OnboardingType.import:
+            AppNavigator.push(RoutePath.importFirstPage);
+            break;
+          case OnboardingType.recover:
+            break;
+        }
       }
     }
-
+    setState(() {});
   }
 }

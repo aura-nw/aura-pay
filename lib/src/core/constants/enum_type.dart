@@ -19,3 +19,9 @@ enum ImportWalletType{
   privateKey,
   passPhrase,
 }
+
+enum OnboardingType{
+  create,
+  import,
+  recover,
+}

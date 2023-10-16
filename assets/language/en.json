@@ -54,7 +54,11 @@
   "on_boarding_import_key_screen_dialog_loading_title" : "Loading accounts",
 
 
-  "on_boarding_import_select_account_screen_dialog_importing_title" : "Import accounts",
+  "on_boarding_import_select_account_screen_title_region_one" : "Import",
+  "on_boarding_import_select_account_screen_title_region_two" : "Smart account",
+  "on_boarding_import_select_account_screen_content" : "Select the wallet you want to import",
+  "on_boarding_import_select_account_screen_dialog_importing_title" : "Importing account",
   "on_boarding_import_select_account_screen_select_all" : "Select all",
-  "on_boarding_import_select_account_screen_unselect_all" : "Unselect all"
+  "on_boarding_import_select_account_screen_unselect_all" : "Unselect all",
+  "on_boarding_import_select_account_screen_button_title" : "Import"
 }

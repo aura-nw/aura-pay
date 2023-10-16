@@ -12,7 +12,9 @@ import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_base.dart';
 
 class OnBoardingPickAccountScreen extends StatefulWidget {
-  const OnBoardingPickAccountScreen({super.key});
+  final String passWord;
+
+  const OnBoardingPickAccountScreen({required this.passWord, super.key});
 
   @override
   State<OnBoardingPickAccountScreen> createState() =>

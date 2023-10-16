@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 
 class OnBoardingImportSelectAccountScreen extends StatefulWidget {
-  const OnBoardingImportSelectAccountScreen({super.key});
+  final String passWord;
+
+  const OnBoardingImportSelectAccountScreen({
+    required this.passWord,
+    super.key,
+  });
 
   @override
   State<OnBoardingImportSelectAccountScreen> createState() =>
@@ -34,12 +40,9 @@ class _OnBoardingImportSelectAccountScreenState
                 Expanded(
                   child: Column(
                     children: [
-
                       Expanded(
                         child: ListView(
-                          children: [
-
-                          ],
+                          children: [],
                         ),
                       ),
                     ],
@@ -47,7 +50,12 @@ class _OnBoardingImportSelectAccountScreenState
                 ),
                 AppLocalizationProvider(
                   builder: (localization, _) {
-                    return PrimaryAppButton(text: 'text');
+                    return PrimaryAppButton(
+                      text: localization.translate(
+                        LanguageKey
+                            .onBoardingImportSelectAccountScreenButtonTitle,
+                      ),
+                    );
                   },
                 ),
               ],

@@ -66,4 +66,14 @@ sealed class LanguageKey {
   static const String onBoardingImportKeyScreenInvalidPassPhrase = "on_boarding_import_key_screen_invalid_passphrase";
   static const String onBoardingImportKeyScreenDialogLoadingTitle = "on_boarding_import_key_screen_dialog_loading_title";
   ///endregion
+
+  ///region import account second page
+  static const String onBoardingImportSelectAccountScreenTitleRegionOne = "on_boarding_import_select_account_screen_title_region_one";
+  static const String onBoardingImportSelectAccountScreenTitleRegionTwo = "on_boarding_import_select_account_screen_title_region_two";
+  static const String onBoardingImportSelectAccountScreenContent = "on_boarding_import_select_account_screen_content";
+  static const String onBoardingImportSelectAccountScreenDialogImportingTitle = "on_boarding_import_select_account_screen_dialog_importing_title";
+  static const String onBoardingImportSelectAccountScreenSelectAll = "on_boarding_import_select_account_screen_select_all";
+  static const String onBoardingImportSelectAccountScreenUnSelectAll = "on_boarding_import_select_account_screen_unselect_all";
+  static const String onBoardingImportSelectAccountScreenButtonTitle = "on_boarding_import_select_account_screen_button_title";
+  ///endregion
 }

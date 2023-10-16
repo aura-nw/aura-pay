@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
@@ -16,7 +17,9 @@ import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input
 import 'widgets/acocunt_type_widget.dart';
 
 class OnBoardingImportKeyScreen extends StatefulWidget {
-  const OnBoardingImportKeyScreen({super.key});
+  final String passWord;
+
+  const OnBoardingImportKeyScreen({required this.passWord, super.key});
 
   @override
   State<OnBoardingImportKeyScreen> createState() =>
@@ -29,9 +32,21 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen> {
   /// Default import type
   ImportWalletType type = ImportWalletType.privateKey;
 
+  final Map<ImportWalletType, String> _options = {
+    ImportWalletType.privateKey: AppLocalizationManager.instance.translate(
+      LanguageKey.onBoardingImportKeyScreenSelectTypePrivate,
+    ),
+    ImportWalletType.passPhrase: AppLocalizationManager.instance.translate(
+      LanguageKey.onBoardingImportKeyScreenSelectTypePassPhrase,
+    ),
+  };
+
   final GlobalKey<TextInputNormalIconState> _inputPrivateGlobalKey =
       GlobalKey();
-  final GlobalKey _inputPassPhraseGlobalKey = GlobalKey();
+  final GlobalKey<TextInputNormalIconState> _inputPassPhraseGlobalKey =
+      GlobalKey();
+
+  final List<MapEntry<ImportWalletType, String>> _selectedOptions = [];
 
   @override
   Widget build(BuildContext context) {
@@ -117,19 +132,15 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen> {
                       ),
                       AppLocalizationProvider(
                         builder: (localization, _) {
-                          return ChoiceSelectWidget<String>(
-                            data: [
-                              localization.translate(LanguageKey
-                                  .onBoardingImportKeyScreenSelectTypePrivate),
-                              localization.translate(LanguageKey
-                                  .onBoardingImportKeyScreenSelectTypePassPhrase),
-                            ],
+                          return ChoiceSelectWidget<
+                              MapEntry<ImportWalletType, String>>(
+                            data: _options.entries.toList(),
                             builder: (selectedOptions) {
                               if (selectedOptions.isEmpty) {
                                 return const SizedBox();
                               }
                               return Text(
-                                selectedOptions[0],
+                                selectedOptions[0].value,
                                 style: AppTypoGraPhy.body03.copyWith(
                                     color: appTheme.contentColorUnKnow),
                               );
@@ -139,7 +150,7 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    option,
+                                    option.value,
                                     style: AppTypoGraPhy.utilityLabelDefault
                                         .copyWith(
                                       color: appTheme.contentColorBlack,
@@ -149,7 +160,7 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen> {
                                     height: BoxSize.boxSize03,
                                   ),
                                   Text(
-                                    option,
+                                    option.value,
                                     style: AppTypoGraPhy.body02.copyWith(
                                       color: appTheme.contentColor500,
                                     ),
@@ -163,7 +174,7 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen> {
                             label: localization.translate(
                               LanguageKey.onBoardingImportKeyScreenSelectType,
                             ),
-                            selectedData: [],
+                            selectedData: _selectedOptions,
                             onChange: _onSelectTypeChange,
                           );
                         },
@@ -245,11 +256,23 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen> {
                         LanguageKey.onBoardingImportKeyScreenButtonTitle,
                       ),
                       onPress: () {
-                        bool isValid =
-                            _inputPrivateGlobalKey.currentState?.validate() ??
+                        switch (type) {
+                          case ImportWalletType.privateKey:
+                            bool isValid = _inputPrivateGlobalKey.currentState
+                                    ?.validate() ??
                                 false;
 
-                        if (isValid) {}
+                            if (isValid) {}
+                            break;
+                          case ImportWalletType.passPhrase:
+                            bool isValid = _inputPassPhraseGlobalKey
+                                    .currentState
+                                    ?.validate() ??
+                                false;
+
+                            if (isValid) {}
+                            break;
+                        }
                       },
                     );
                   },
@@ -262,11 +285,16 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen> {
     );
   }
 
-  void _onSelectTypeChange(List<String> selectedData) {
+  void _onSelectTypeChange(
+      List<MapEntry<ImportWalletType, String>> selectedData) {
     if (selectedData.isEmpty) return;
 
+    _selectedOptions.clear();
+
+    _selectedOptions.addAll(selectedData);
+
     setState(() {
-      type = ImportWalletType.privateKey;
+      type = selectedData[0].key;
     });
   }
 }
