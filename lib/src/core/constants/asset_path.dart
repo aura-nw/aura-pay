@@ -1,11 +1,16 @@
 const String _baseAsset = 'packages/pyxis_mobile/assets/';
 
 sealed class AssetLogoPath{
-  static const String _baseImagePath = '${_baseAsset}logo/';
-  static const String logo = '${_baseImagePath}logo_pyxis.svg';
-  static const String logoWithName = '${_baseImagePath}logo_pyxis_with_name.svg';
-  static const String logoTransparent = '${_baseImagePath}logo_pyxis_transparent.svg';
-  static const String logoTransparentWithName = '${_baseImagePath}logo_pyxis_transparent_with_name.svg';
+  static const String _baseLogoPath = '${_baseAsset}logo/';
+  static const String logo = '${_baseLogoPath}logo_pyxis.svg';
+  static const String logoWithName = '${_baseLogoPath}logo_pyxis_with_name.svg';
+  static const String logoTransparent = '${_baseLogoPath}logo_pyxis_transparent.svg';
+  static const String logoTransparentWithName = '${_baseLogoPath}logo_pyxis_transparent_with_name.svg';
+}
+
+sealed class AssetImagePath{
+  static const String _baseImagePath = '${_baseAsset}image/';
+  static const String onBoardingRecoverBackupAddress = '${_baseImagePath}img_on_boarding_recover_backup_address.svg';
 }
 
 sealed class AssetIconPath{

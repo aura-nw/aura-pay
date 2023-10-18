@@ -69,5 +69,25 @@
   "on_boarding_recover_choice_screen_google_option_content" : "Powered by W Web3auth",
   "on_boarding_recover_choice_screen_backup_option_title" : "Using backup address",
   "on_boarding_recover_choice_screen_backup_option_content" : "Get the guideline from Pyxis",
-  "on_boarding_recover_choice_screen_button_title" : "Next"
+  "on_boarding_recover_choice_screen_button_title" : "Next",
+  "on_boarding_recover_choice_screen_dialog_select_not_found_title" : "No account found!",
+  "on_boarding_recover_choice_screen_dialog_select_not_found_content" : "The selected google account is not connected to any smart account on Pyxis. Please use other google account or method to recovery.",
+  "on_boarding_recover_choice_screen_dialog_select_not_found_button_title" : "Confirm",
+
+  "on_boarding_recover_select_account_screen_title_region_one" : "Recover",
+  "on_boarding_recover_select_account_screen_title_region_two" : "smart account",
+  "on_boarding_recover_select_account_screen_content" : "Select an account to recover.",
+  "on_boarding_recover_select_account_screen_button_title" : "Recover",
+
+  "on_boarding_recover_request_reviewing_screen_title_region_one" : "Request",
+  "on_boarding_recover_request_reviewing_screen_title_region_two" : "in reviewing",
+  "on_boarding_recover_request_reviewing_screen_content" : "Your recovery request will be reviewed within 48 hours to verify that this address belongs to you.",
+  "on_boarding_recover_request_reviewing_screen_notify_button_title" : "Notify me",
+  "on_boarding_recover_request_reviewing_screen_back_button_title" : "Back to home",
+
+  "on_boarding_recover_backup_address_screen_title_region_one" : "Using",
+  "on_boarding_recover_backup_address_screen_title_region_two" : "backup address",
+  "on_boarding_recover_backup_address_screen_content" : "In this method, visit the website on your PC and follow the instructions.",
+  "on_boarding_recover_backup_address_screen_share_link_title" : "Share link address",
+  "on_boarding_recover_backup_address_screen_button_title" : "Show device public key"
 }

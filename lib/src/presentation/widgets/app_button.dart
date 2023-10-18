@@ -1,22 +1,8 @@
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
-import 'package:pyxis_mobile/src/application/global/app_theme/cubit/theme_cubit.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:flutter/material.dart';
-
-extension RadiusX on Radius {
-  Radius subtract(double value) => Radius.elliptical(x - value, y - value);
-}
-
-extension BorderRadiusX on BorderRadius {
-  BorderRadius subtractBy(double value) => copyWith(
-        topLeft: topLeft.subtract(1),
-        topRight: topRight.subtract(1),
-        bottomLeft: bottomLeft.subtract(1),
-        bottomRight: bottomRight.subtract(1),
-      );
-}
 
 class _AppButton extends StatelessWidget {
   final String text;
@@ -38,11 +24,14 @@ class _AppButton extends StatelessWidget {
 
   final AppTheme theme;
 
+  final Color? borderColor;
+
   _AppButton({
     Key? key,
     required this.text,
     this.onPress,
     this.color,
+    this.borderColor,
     this.disableColor,
     this.gradient,
     this.minWidth,
@@ -71,6 +60,11 @@ class _AppButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: disabled ? disableColor : color,
           gradient: disabled ? null : gradient,
+          border: borderColor != null
+              ? Border.all(
+                  color: borderColor!,
+                )
+              : null,
         ),
         child: InkWell(
           splashColor: theme.primaryColor50,
@@ -133,6 +127,43 @@ final class PrimaryAppButton extends StatelessWidget {
             color: theme.contentColorWhite,
           ),
           theme: theme,
+        );
+      },
+    );
+  }
+}
+
+final class BorderAppButton extends StatelessWidget {
+  final String text;
+  final bool? isDisable;
+  final VoidCallback? onPress;
+  final double? minWidth;
+  final Color? borderColor;
+
+  const BorderAppButton({
+    super.key,
+    required this.text,
+    this.isDisable,
+    this.onPress,
+    this.minWidth,
+    this.borderColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppThemeBuilder(
+      builder: (theme) {
+        return _AppButton(
+          text: text,
+          disabled: isDisable,
+          onPress: onPress,
+          color: theme.primaryDefault,
+          minWidth: minWidth,
+          textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
+            color: theme.contentColorWhite,
+          ),
+          theme: theme,
+          borderColor: borderColor ?? theme.borderColorBrand,
         );
       },
     );

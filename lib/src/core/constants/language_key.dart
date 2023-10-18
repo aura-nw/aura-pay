@@ -86,5 +86,32 @@ sealed class LanguageKey {
   static const String onBoardingRecoverChoiceScreenBackupOptionTitle = "on_boarding_recover_choice_screen_backup_option_title";
   static const String onBoardingRecoverChoiceScreenBackupOptionContent = "on_boarding_recover_choice_screen_backup_option_content";
   static const String onBoardingRecoverChoiceScreenButtonTitle = "on_boarding_recover_choice_screen_button_title";
+  static const String onBoardingRecoverChoiceScreenDialogSelectNotFoundTitle = "on_boarding_recover_choice_screen_dialog_select_not_found_title";
+  static const String onBoardingRecoverChoiceScreenDialogSelectNotFoundContent = "on_boarding_recover_choice_screen_dialog_select_not_found_content";
+  static const String onBoardingRecoverChoiceScreenDialogSelectNotFoundButtonTitle = "on_boarding_recover_choice_screen_dialog_select_not_found_button_title";
   ///
+
+  ///region recover select
+  static const String onBoardingRecoverSelectAccountScreenTitleRegionOne = "on_boarding_recover_select_account_screen_title_region_one";
+  static const String onBoardingRecoverSelectAccountScreenTitleRegionTwo = "on_boarding_recover_select_account_screen_title_region_two";
+  static const String onBoardingRecoverSelectAccountScreenContent = "on_boarding_recover_select_account_screen_content";
+  static const String onBoardingRecoverSelectAccountScreenButtonTitle = "on_boarding_recover_select_account_screen_button_title";
+  ///
+
+  ///region recover request review
+  static const String onBoardingRecoverRequestReviewingScreenTitleRegionOne = "on_boarding_recover_request_reviewing_screen_title_region_one";
+  static const String onBoardingRecoverRequestReviewingScreenTitleRegionTwo = "on_boarding_recover_request_reviewing_screen_title_region_two";
+  static const String onBoardingRecoverRequestReviewingScreenContent = "on_boarding_recover_request_reviewing_screen_content";
+  static const String onBoardingRecoverRequestReviewingScreenNotifyButtonTitle = "on_boarding_recover_request_reviewing_screen_notify_button_title";
+  static const String onBoardingRecoverRequestReviewingScreenBackButtonTitle = "on_boarding_recover_request_reviewing_screen_back_button_title";
+  ///
+
+  ///region recover backup address
+  static const String onBoardingRecoverBackupAddressScreenTitleRegionOne = "on_boarding_recover_backup_address_screen_title_region_one";
+  static const String onBoardingRecoverBackupAddressScreenTitleRegionTwo = "on_boarding_recover_backup_address_screen_title_region_two";
+  static const String onBoardingRecoverBackupAddressScreenContent = "on_boarding_recover_backup_address_screen_content";
+  static const String onBoardingRecoverBackupAddressScreenShareLinkTitle = "on_boarding_recover_backup_address_screen_share_link_title";
+  static const String onBoardingRecoverBackupAddressScreenButtonTitle = "on_boarding_recover_backup_address_screen_button_title";
+  ///
+
 }
