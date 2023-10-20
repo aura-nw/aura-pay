@@ -89,5 +89,13 @@
   "on_boarding_recover_backup_address_screen_title_region_two" : "backup address",
   "on_boarding_recover_backup_address_screen_content" : "In this method, visit the website on your PC and follow the instructions.",
   "on_boarding_recover_backup_address_screen_share_link_title" : "Share link address",
-  "on_boarding_recover_backup_address_screen_button_title" : "Show device public key"
+  "on_boarding_recover_backup_address_screen_button_title" : "Show device public key",
+
+
+  "on_boarding_recover_backup_address_done_screen_title_region_one" : "Using",
+  "on_boarding_recover_backup_address_done_screen_title_region_two" : "backup address",
+  "on_boarding_recover_backup_address_done_screen_public_key_label" : "Device public key",
+  "on_boarding_recover_backup_address_done_screen_content" : "This is the public key generated from your new device. The recovery process will replace the key from the old device with this new one.",
+  "on_boarding_recover_backup_address_done_screen_button_copy_title" : "Copy device public key",
+  "on_boarding_recover_backup_address_done_screen_button_done_title" : "Done"
 }

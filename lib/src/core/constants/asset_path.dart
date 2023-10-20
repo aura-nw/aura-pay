@@ -31,6 +31,7 @@ sealed class AssetIconPath{
 
   ///common
   static const String commonCopy = '${_baseIconPath}ic_common_copy.svg';
+  static const String commonCopyActive = '${_baseIconPath}ic_common_copy_active.svg';
   static const String commonArrowBack = '${_baseIconPath}ic_common_arrow_back.svg';
   static const String commonClear = '${_baseIconPath}ic_common_clear.svg';
   static const String commonInformation = '${_baseIconPath}ic_common_information.svg';

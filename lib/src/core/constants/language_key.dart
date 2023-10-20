@@ -114,4 +114,12 @@ sealed class LanguageKey {
   static const String onBoardingRecoverBackupAddressScreenButtonTitle = "on_boarding_recover_backup_address_screen_button_title";
   ///
 
+  ///region recover backup address done
+  static const String onBoardingRecoverBackupAddressDoneScreenTitleRegionOne = "on_boarding_recover_backup_address_done_screen_title_region_one";
+  static const String onBoardingRecoverBackupAddressDoneScreenTitleRegionTwo = "on_boarding_recover_backup_address_done_screen_title_region_two";
+  static const String onBoardingRecoverBackupAddressDoneScreenPublicKeyLabel = "on_boarding_recover_backup_address_done_screen_public_key_label";
+  static const String onBoardingRecoverBackupAddressDoneScreenContent = "on_boarding_recover_backup_address_done_screen_content";
+  static const String onBoardingRecoverBackupAddressDoneScreenButtonCopyTitle = "on_boarding_recover_backup_address_done_screen_button_copy_title";
+  static const String onBoardingRecoverBackupAddressDoneScreenButtonDoneTitle = "on_boarding_recover_backup_address_done_screen_button_done_title";
+  ///
 }

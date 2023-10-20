@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppTypoGraPhy {
+sealed class AppTypoGraPhy {
   static const String interFontFamily = 'Inter';
   static const String beVietNamPro = 'Be Vietnam Pro';
 

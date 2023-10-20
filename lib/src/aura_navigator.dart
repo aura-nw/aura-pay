@@ -2,7 +2,11 @@ import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup/on_boarding_recover_backup_address_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup_done/on_boarding_recover_backup_address_done_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_request_reviewing/on_boarding_recover_request_reviewing_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_screem.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
@@ -11,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
 import 'presentation/screens/on_boarding_import_key/on_boarding_import_key_screen.dart';
 
-class RoutePath {
+sealed class RoutePath {
   static const String _base = '/';
   static const String splash = _base;
   static const String _onBoarding = '${_base}onboarding';
@@ -22,6 +26,11 @@ class RoutePath {
   static const String scanQrFee = '$_onBoarding/scan_qr_fee';
   static const String importFirstPage = '$_onBoarding/import_first_page';
   static const String recoverChoice = '$_onBoarding/recover_choice';
+  static const String recoverSelectAccount =
+      '$_onBoarding/recover_select_account';
+  static const String recoverReviewing = '$_onBoarding/recover_reviewing';
+  static const String recoverBackup = '$_onBoarding/recover_backup';
+  static const String recoverBackupDone = '$_onBoarding/recover_backup_done';
 }
 
 class AppNavigator {
@@ -82,6 +91,26 @@ class AppNavigator {
           OnBoardingRecoverChoiceScreen(
             passWord: passWord,
           ),
+          settings,
+        );
+      case RoutePath.recoverSelectAccount:
+        return _defaultRoute(
+          const OnBoardingRecoverSelectAccountScreen(),
+          settings,
+        );
+      case RoutePath.recoverReviewing:
+        return _defaultRoute(
+          const OnBoardingRecoverRequestReviewingScreen(),
+          settings,
+        );
+      case RoutePath.recoverBackup:
+        return _defaultRoute(
+          const OnBoardingRecoverBackupAddressScreen(),
+          settings,
+        );
+      case RoutePath.recoverBackupDone:
+        return _defaultRoute(
+          const OnBoardingRecoverBackupDoneAddressScreen(),
           settings,
         );
       default:

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
@@ -95,7 +97,18 @@ class _OnBoardingRecoverChoiceScreenState
                     children: [
                       PickRecoverOptionWidget(
                         appTheme: appTheme,
-                        onSelect: (recoverType) {},
+                        onSelect: (recoverType) {
+                          switch (recoverType) {
+                            case RecoverOptionType.backupAddress:
+                              AppNavigator.push(RoutePath.recoverBackup);
+                              break;
+                            case RecoverOptionType.google:
+                              AppNavigator.push(
+                                RoutePath.recoverSelectAccount,
+                              );
+                              break;
+                          }
+                        },
                       )
                     ],
                   ),

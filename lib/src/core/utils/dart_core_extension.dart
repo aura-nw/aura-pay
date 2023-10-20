@@ -93,6 +93,35 @@ extension ListExtensions<T> on List<T>? {
   }
 }
 
+extension IntExtension on int {
+  String get toHours {
+    int h = this ~/ 3600;
+
+    String hourLeft = h.toString().length < 2 ? "0$h" : h.toString();
+    return hourLeft;
+  }
+
+  String get toMinutes {
+    int h = this ~/ 3600;
+
+    int m = ((this - h * 3600)) ~/ 60;
+
+    String minuteLeft = m.toString().length < 2 ? "0$m" : m.toString();
+    return minuteLeft;
+  }
+
+  String get toSeconds {
+    int h = this ~/ 3600;
+
+    int m = ((this - h * 3600)) ~/ 60;
+
+    int s = this - (h * 3600) - (m * 60);
+
+    String secondsLeft = s.toString().length < 2 ? "0$s" : s.toString();
+    return secondsLeft;
+  }
+}
+
 extension TruncateDoubles on double {
   double truncateToDecimalPlaces(int fractionalDigits) =>
       (this * pow(10, fractionalDigits)).truncate() / pow(10, fractionalDigits);

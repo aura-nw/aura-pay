@@ -20,52 +20,41 @@ class SmartAccountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(
-        Spacing.spacing04,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          BorderRadiusSize.borderRadius04,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CircularAvatarWidget(
+          image: NetworkImage(
+            avatar,
+          ),
+          radius: BorderRadiusSize.borderRadius05,
         ),
-        color: appTheme.surfaceColorBrandLight,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CircularAvatarWidget(
-            image: NetworkImage(
-              avatar,
-            ),
-            radius: BorderRadiusSize.borderRadiusRound,
-          ),
-          const SizedBox(
-            width: BoxSize.boxSize05,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  smartAccountName,
-                  style: AppTypoGraPhy.utilityLabelDefault.copyWith(
-                    color: appTheme.contentColorBlack,
-                  ),
+        const SizedBox(
+          width: BoxSize.boxSize05,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                smartAccountName,
+                style: AppTypoGraPhy.utilityLabelDefault.copyWith(
+                  color: appTheme.contentColorBlack,
                 ),
-                const SizedBox(
-                  height: BoxSize.boxSize02,
+              ),
+              const SizedBox(
+                height: BoxSize.boxSize02,
+              ),
+              Text(
+                smartAccountAddress,
+                style: AppTypoGraPhy.body02.copyWith(
+                  color: appTheme.contentColor500,
                 ),
-                Text(
-                  smartAccountAddress,
-                  style: AppTypoGraPhy.body02.copyWith(
-                    color: appTheme.contentColor500,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -37,7 +37,7 @@ class SmartAccountWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             BorderRadiusSize.borderRadius04,
           ),
-          color: appTheme.surfaceColorBrandLight,
+          color: isSelected ? appTheme.surfaceColorBrandLight : null,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,7 @@ class SmartAccountWidget extends StatelessWidget {
               image: NetworkImage(
                 avatar,
               ),
-              radius: BorderRadiusSize.borderRadiusRound,
+              radius: BorderRadiusSize.borderRadius05,
             ),
             const SizedBox(
               width: BoxSize.boxSize05,

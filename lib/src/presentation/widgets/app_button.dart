@@ -60,6 +60,7 @@ class _AppButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: disabled ? disableColor : color,
           gradient: disabled ? null : gradient,
+          borderRadius: borderRadius,
           border: borderColor != null
               ? Border.all(
                   color: borderColor!,
@@ -157,13 +158,46 @@ final class BorderAppButton extends StatelessWidget {
           text: text,
           disabled: isDisable,
           onPress: onPress,
-          color: theme.primaryDefault,
           minWidth: minWidth,
           textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
-            color: theme.contentColorWhite,
+            color: theme.contentColorBrand,
           ),
           theme: theme,
           borderColor: borderColor ?? theme.borderColorBrand,
+        );
+      },
+    );
+  }
+}
+
+final class TextAppButton extends StatelessWidget {
+  final String text;
+  final bool? isDisable;
+  final VoidCallback? onPress;
+  final double? minWidth;
+
+  const TextAppButton({
+    super.key,
+    required this.text,
+    this.isDisable,
+    this.onPress,
+    this.minWidth,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppThemeBuilder(
+      builder: (theme) {
+        return _AppButton(
+          text: text,
+          disabled: isDisable,
+          onPress: onPress,
+          color: theme.bodyColorBackground,
+          minWidth: minWidth,
+          textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
+            color: theme.contentColor700,
+          ),
+          theme: theme,
         );
       },
     );

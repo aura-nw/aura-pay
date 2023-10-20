@@ -6,8 +6,14 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 class HoLiZonTalDividerWidget extends StatelessWidget {
   final Color? dividerColor;
   final double? width;
+  final double? height;
 
-  const HoLiZonTalDividerWidget({this.dividerColor, this.width, super.key});
+  const HoLiZonTalDividerWidget({
+    this.dividerColor,
+    this.width,
+    this.height,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class HoLiZonTalDividerWidget extends StatelessWidget {
             vertical: Spacing.spacing02,
           ),
           color: dividerColor ?? appTheme.surfaceColorGrayDark,
-          height: BoxSize.boxSize0,
+          height: height ?? BoxSize.boxSize0,
           width: width,
         );
       },
