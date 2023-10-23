@@ -13,7 +13,7 @@ Future<void> initDependency(
 ) async {
   Dio dio = Dio(
     BaseOptions(
-      baseUrl: config.baseUrl + config.configs!.apiVersion,
+      baseUrl: config.baseUrl + config.apiVersion,
       connectTimeout: const Duration(
         milliseconds: 60000,
       ),
