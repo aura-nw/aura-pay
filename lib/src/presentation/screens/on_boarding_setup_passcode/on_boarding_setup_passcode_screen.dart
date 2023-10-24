@@ -198,6 +198,8 @@ class _OnBoardingSetupPasscodeScreenState
 
         String passWord = _password.join();
 
+        if(_wrongConfirmPassword) return;
+
         switch (widget.onboardingType) {
           case OnboardingType.create:
             AppNavigator.push(

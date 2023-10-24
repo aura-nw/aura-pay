@@ -1,3 +1,6 @@
+import 'package:domain/src/domain/entities/google_account.dart';
+
 abstract class AuthRepository{
-  Future<bool> onLogin();
+  Future<GoogleAccount?> signInWithGoogle();
+  Future<bool> signOut();
 }

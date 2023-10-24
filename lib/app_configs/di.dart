@@ -1,5 +1,6 @@
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen_cubit.dart';
@@ -11,7 +12,7 @@ final getIt = GetIt.instance;
 Future<void> initDependency(
   PyxisMobileConfig config,
 ) async {
-  Dio dio = Dio(
+  final Dio dio = Dio(
     BaseOptions(
       baseUrl: config.baseUrl + config.configs!.apiVersion,
       connectTimeout: const Duration(
@@ -24,6 +25,13 @@ Future<void> initDependency(
     ),
   );
 
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+    signInOption: SignInOption.standard,
+    scopes: [
+      'email',
+    ],
+  );
+
   getIt.registerFactory<Dio>(
     () => dio,
   );
@@ -33,6 +41,11 @@ Future<void> initDependency(
   );
 
   ///Api service
+  getIt.registerLazySingleton(
+    () => AuthApiService(
+      googleSignIn,
+    ),
+  );
 
   ///Repository
   getIt.registerLazySingleton<LocalizationRepository>(

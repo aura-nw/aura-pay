@@ -6,6 +6,6 @@ class AuthUseCase {
   const AuthUseCase(this._repository);
 
   Future<void> onLogin()async{
-    await _repository.onLogin();
+    await _repository.signInWithGoogle();
   }
 }

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/widgets/pick_recover_option_widget.dart';
+import 'widgets/pick_recover_option_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 
 class OnBoardingRecoverChoiceScreen extends StatefulWidget {
   final String passWord;
@@ -130,6 +133,24 @@ class _OnBoardingRecoverChoiceScreenState
           ),
         );
       },
+    );
+  }
+
+  void _showWarningDialog(AppTheme appTheme) {
+    /// Need to fix these text messages after apply business
+    DialogProvider.showWarningDialog(
+      context,
+      title: AppLocalizationManager.instance.translate(
+        LanguageKey.onBoardingScanFeeScreenDialogWarningTitle,
+      ),
+      message: AppLocalizationManager.instance.translate(
+        LanguageKey.onBoardingScanFeeScreenDialogWarningContent,
+      ),
+      buttonTitle: AppLocalizationManager.instance.translate(
+        LanguageKey.onBoardingScanFeeScreenDialogWarningButtonTitle,
+      ),
+      onButtonTap: () => AppNavigator.pop(),
+      appTheme: appTheme,
     );
   }
 }

@@ -22,6 +22,8 @@ class AppLocalizationManager {
 
   static AppLocalizationManager get instance => AppLocalizationManager();
 
+  static AppLocalizationManager of(BuildContext context) => Localizations.of(context, AppLocalizationManager);
+
   ///endregion
 
   ///region localization map
