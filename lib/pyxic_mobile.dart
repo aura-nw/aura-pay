@@ -6,7 +6,7 @@ import 'src/aura_wallet_application.dart';
 
 void start(PyxisMobileConfig config) async {
   await di.initDependency(config);
-
   await AppLocalizationManager.instance.load();
+
   runApp(const AuraWalletApplication());
 }
