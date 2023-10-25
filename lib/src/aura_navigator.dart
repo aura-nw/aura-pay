@@ -1,5 +1,6 @@
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup/on_boarding_recover_backup_address_screen.dart';
@@ -31,6 +32,8 @@ sealed class RoutePath {
   static const String recoverReviewing = '$_onBoarding/recover_reviewing';
   static const String recoverBackup = '$_onBoarding/recover_backup';
   static const String recoverBackupDone = '$_onBoarding/recover_backup_done';
+
+  static const String home = '${_base}home';
 }
 
 class AppNavigator {
@@ -111,6 +114,11 @@ class AppNavigator {
       case RoutePath.recoverBackupDone:
         return _defaultRoute(
           const OnBoardingRecoverBackupDoneAddressScreen(),
+          settings,
+        );
+      case RoutePath.home:
+        return _defaultRoute(
+          const HomeScreen(),
           settings,
         );
       default:

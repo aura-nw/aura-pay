@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
@@ -76,12 +77,14 @@ final class _AccountTypeWidget extends StatelessWidget {
 }
 
 final class AccountTypeChoiceWidget extends StatefulWidget {
-  final void Function(int) onSelected;
+  final void Function(PyxisWalletType) onSelected;
   final AppTheme appTheme;
+  final PyxisWalletType defaultType;
 
   const AccountTypeChoiceWidget({
     required this.onSelected,
     required this.appTheme,
+    this.defaultType = PyxisWalletType.smartAccount,
     super.key,
   });
 
@@ -91,7 +94,14 @@ final class AccountTypeChoiceWidget extends StatefulWidget {
 }
 
 class _AccountTypeChoiceWidgetState extends State<AccountTypeChoiceWidget> {
-  int _selectedIndex = 0;
+  ///Default account type
+  late PyxisWalletType _selectedIndex;
+
+  @override
+  void initState() {
+    _selectedIndex = widget.defaultType;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +117,9 @@ class _AccountTypeChoiceWidgetState extends State<AccountTypeChoiceWidget> {
                     LanguageKey.onBoardingImportKeyScreenSmartAccountType),
                 appTheme: widget.appTheme,
                 onTap: () {
-                  _onSelectedType(0);
+                  _onSelectedType(PyxisWalletType.smartAccount);
                 },
-                isSelected: _selectedIndex == 0,
+                isSelected: _selectedIndex == PyxisWalletType.smartAccount,
               );
             },
           ),
@@ -123,9 +133,9 @@ class _AccountTypeChoiceWidgetState extends State<AccountTypeChoiceWidget> {
                     LanguageKey.onBoardingImportKeyScreenNormalAccountType),
                 appTheme: widget.appTheme,
                 onTap: () {
-                  _onSelectedType(1);
+                  _onSelectedType(PyxisWalletType.normalWallet);
                 },
-                isSelected: _selectedIndex == 1,
+                isSelected: _selectedIndex == PyxisWalletType.normalWallet,
               );
             },
           ),
@@ -134,7 +144,7 @@ class _AccountTypeChoiceWidgetState extends State<AccountTypeChoiceWidget> {
     );
   }
 
-  void _onSelectedType(int type) {
+  void _onSelectedType(PyxisWalletType type) {
     if (_selectedIndex == type) return;
 
     _selectedIndex = type;

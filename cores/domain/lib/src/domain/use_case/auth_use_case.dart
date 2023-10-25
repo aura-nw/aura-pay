@@ -1,11 +1,15 @@
-import 'package:domain/src/domain/repository/auth_repository.dart';
+import 'package:domain/domain.dart';
 
 class AuthUseCase {
   final AuthRepository _repository;
 
   const AuthUseCase(this._repository);
 
-  Future<void> onLogin()async{
-    await _repository.signInWithGoogle();
+  Future<GoogleAccount?> onLogin()async{
+    return await _repository.signInWithGoogle();
+  }
+
+  Future<bool> onLogout()async{
+    return _repository.signOut();
   }
 }

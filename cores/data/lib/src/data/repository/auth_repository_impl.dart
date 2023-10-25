@@ -13,6 +13,8 @@ class AuthRepositoryImpl implements AuthRepository {
     final GoogleSignInAccount? googleAccount =
         await _authApiService.loginWithGoogle();
 
+    if (googleAccount != null) {}
+
     return googleAccount?.toDto.toEntities;
   }
 

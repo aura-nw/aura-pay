@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +11,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return AppThemeBuilder(
+      builder: (appTheme) {
+        return const Scaffold(
+          body: Center(
+            child: Text('Home Page'),
+          ),
+        );
+      },
+    );
   }
 }

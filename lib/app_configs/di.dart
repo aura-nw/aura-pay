@@ -1,6 +1,9 @@
+import 'package:aura_wallet_core/aura_wallet_core.dart';
+import 'package:aura_wallet_core/config_options/environment_options.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
 
 import 'pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen_cubit.dart';
@@ -32,6 +35,10 @@ Future<void> initDependency(
     ],
   );
 
+  final AuraWalletCore coreWallet = AuraWalletCore.create(
+    environment: AuraEnvironment.testNet,
+  );
+
   getIt.registerFactory<Dio>(
     () => dio,
   );
@@ -47,9 +54,19 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<WalletService>(
+    () => WalletService(coreWallet),
+  );
+
   ///Repository
   getIt.registerLazySingleton<LocalizationRepository>(
     () => LocalizationRepositoryImpl(),
+  );
+
+  getIt.registerLazySingleton<WalletRepository>(
+    () => WalletRepositoryImpl(
+      getIt.get<WalletService>(),
+    ),
   );
 
   ///Use case
@@ -59,8 +76,20 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton(
+    () => WalletUseCase(
+      getIt.get<WalletRepository>(),
+    ),
+  );
+
   ///Bloc
   getIt.registerFactory<SplashScreenCubit>(
     () => SplashScreenCubit(),
+  );
+
+  getIt.registerFactory<OnBoardingPickAccountBloc>(
+    () => OnBoardingPickAccountBloc(
+      getIt.get<WalletUseCase>(),
+    ),
   );
 }

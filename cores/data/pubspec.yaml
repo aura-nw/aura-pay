@@ -12,6 +12,10 @@ dependencies:
     sdk: flutter
   domain:
     path: ../domain
+  aura_wallet_core:
+    git:
+      url: https://github.com/aura-nw/aura-wallet-core.git
+      ref: core_wallet
   google_sign_in: ^6.1.5
 
 dev_dependencies:

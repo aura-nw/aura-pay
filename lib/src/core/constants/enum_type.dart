@@ -15,6 +15,11 @@ enum ChoiceModalSize{
   high,
 }
 
+enum PyxisWalletType{
+  smartAccount,
+  normalWallet,
+}
+
 enum ImportWalletType{
   privateKey,
   passPhrase,

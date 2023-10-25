@@ -46,7 +46,6 @@ class _$AppGlobalStateCopyWithImpl<$Res, $Val extends AppGlobalState>
   @override
   $Res call({
     Object? status = null,
-    Object? auraWallet = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -58,31 +57,30 @@ class _$AppGlobalStateCopyWithImpl<$Res, $Val extends AppGlobalState>
 }
 
 /// @nodoc
-abstract class _$$_AppGlobalStateCopyWith<$Res>
+abstract class _$$AppGlobalStateImplCopyWith<$Res>
     implements $AppGlobalStateCopyWith<$Res> {
-  factory _$$_AppGlobalStateCopyWith(
-          _$_AppGlobalState value, $Res Function(_$_AppGlobalState) then) =
-      __$$_AppGlobalStateCopyWithImpl<$Res>;
+  factory _$$AppGlobalStateImplCopyWith(_$AppGlobalStateImpl value,
+          $Res Function(_$AppGlobalStateImpl) then) =
+      __$$AppGlobalStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({AppGlobalStatus status});
 }
 
 /// @nodoc
-class __$$_AppGlobalStateCopyWithImpl<$Res>
-    extends _$AppGlobalStateCopyWithImpl<$Res, _$_AppGlobalState>
-    implements _$$_AppGlobalStateCopyWith<$Res> {
-  __$$_AppGlobalStateCopyWithImpl(
-      _$_AppGlobalState _value, $Res Function(_$_AppGlobalState) _then)
+class __$$AppGlobalStateImplCopyWithImpl<$Res>
+    extends _$AppGlobalStateCopyWithImpl<$Res, _$AppGlobalStateImpl>
+    implements _$$AppGlobalStateImplCopyWith<$Res> {
+  __$$AppGlobalStateImplCopyWithImpl(
+      _$AppGlobalStateImpl _value, $Res Function(_$AppGlobalStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? status = null,
-    Object? auraWallet = freezed,
   }) {
-    return _then(_$_AppGlobalState(
+    return _then(_$AppGlobalStateImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -93,9 +91,8 @@ class __$$_AppGlobalStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AppGlobalState implements _AppGlobalState {
-  const _$_AppGlobalState(
-      {this.status = AppGlobalStatus.unauthorized});
+class _$AppGlobalStateImpl implements _AppGlobalState {
+  const _$AppGlobalStateImpl({this.status = AppGlobalStatus.unauthorized});
 
   @override
   @JsonKey()
@@ -110,7 +107,7 @@ class _$_AppGlobalState implements _AppGlobalState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AppGlobalState &&
+            other is _$AppGlobalStateImpl &&
             (identical(other.status, status) || other.status == status));
   }
 
@@ -120,18 +117,19 @@ class _$_AppGlobalState implements _AppGlobalState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AppGlobalStateCopyWith<_$_AppGlobalState> get copyWith =>
-      __$$_AppGlobalStateCopyWithImpl<_$_AppGlobalState>(this, _$identity);
+  _$$AppGlobalStateImplCopyWith<_$AppGlobalStateImpl> get copyWith =>
+      __$$AppGlobalStateImplCopyWithImpl<_$AppGlobalStateImpl>(
+          this, _$identity);
 }
 
 abstract class _AppGlobalState implements AppGlobalState {
-  const factory _AppGlobalState(
-      {final AppGlobalStatus status,}) = _$_AppGlobalState;
+  const factory _AppGlobalState({final AppGlobalStatus status}) =
+      _$AppGlobalStateImpl;
 
   @override
   AppGlobalStatus get status;
   @override
   @JsonKey(ignore: true)
-  _$$_AppGlobalStateCopyWith<_$_AppGlobalState> get copyWith =>
+  _$$AppGlobalStateImplCopyWith<_$AppGlobalStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

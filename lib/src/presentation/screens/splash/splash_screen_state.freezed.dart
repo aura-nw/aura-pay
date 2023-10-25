@@ -46,7 +46,6 @@ class _$SplashScreenStateCopyWithImpl<$Res, $Val extends SplashScreenState>
   @override
   $Res call({
     Object? status = null,
-    Object? auraWallet = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -58,31 +57,30 @@ class _$SplashScreenStateCopyWithImpl<$Res, $Val extends SplashScreenState>
 }
 
 /// @nodoc
-abstract class _$$_SplashScreenStateCopyWith<$Res>
+abstract class _$$SplashScreenStateImplCopyWith<$Res>
     implements $SplashScreenStateCopyWith<$Res> {
-  factory _$$_SplashScreenStateCopyWith(_$_SplashScreenState value,
-          $Res Function(_$_SplashScreenState) then) =
-      __$$_SplashScreenStateCopyWithImpl<$Res>;
+  factory _$$SplashScreenStateImplCopyWith(_$SplashScreenStateImpl value,
+          $Res Function(_$SplashScreenStateImpl) then) =
+      __$$SplashScreenStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({SplashScreenStatus status});
 }
 
 /// @nodoc
-class __$$_SplashScreenStateCopyWithImpl<$Res>
-    extends _$SplashScreenStateCopyWithImpl<$Res, _$_SplashScreenState>
-    implements _$$_SplashScreenStateCopyWith<$Res> {
-  __$$_SplashScreenStateCopyWithImpl(
-      _$_SplashScreenState _value, $Res Function(_$_SplashScreenState) _then)
+class __$$SplashScreenStateImplCopyWithImpl<$Res>
+    extends _$SplashScreenStateCopyWithImpl<$Res, _$SplashScreenStateImpl>
+    implements _$$SplashScreenStateImplCopyWith<$Res> {
+  __$$SplashScreenStateImplCopyWithImpl(_$SplashScreenStateImpl _value,
+      $Res Function(_$SplashScreenStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? status = null,
-    Object? auraWallet = freezed,
   }) {
-    return _then(_$_SplashScreenState(
+    return _then(_$SplashScreenStateImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -93,9 +91,8 @@ class __$$_SplashScreenStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SplashScreenState implements _SplashScreenState {
-  const _$_SplashScreenState(
-      {this.status = SplashScreenStatus.starting});
+class _$SplashScreenStateImpl implements _SplashScreenState {
+  const _$SplashScreenStateImpl({this.status = SplashScreenStatus.starting});
 
   @override
   @JsonKey()
@@ -110,7 +107,7 @@ class _$_SplashScreenState implements _SplashScreenState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SplashScreenState &&
+            other is _$SplashScreenStateImpl &&
             (identical(other.status, status) || other.status == status));
   }
 
@@ -120,19 +117,19 @@ class _$_SplashScreenState implements _SplashScreenState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SplashScreenStateCopyWith<_$_SplashScreenState> get copyWith =>
-      __$$_SplashScreenStateCopyWithImpl<_$_SplashScreenState>(
+  _$$SplashScreenStateImplCopyWith<_$SplashScreenStateImpl> get copyWith =>
+      __$$SplashScreenStateImplCopyWithImpl<_$SplashScreenStateImpl>(
           this, _$identity);
 }
 
 abstract class _SplashScreenState implements SplashScreenState {
-  const factory _SplashScreenState(
-      {final SplashScreenStatus status}) = _$_SplashScreenState;
+  const factory _SplashScreenState({final SplashScreenStatus status}) =
+      _$SplashScreenStateImpl;
 
   @override
   SplashScreenStatus get status;
   @override
   @JsonKey(ignore: true)
-  _$$_SplashScreenStateCopyWith<_$_SplashScreenState> get copyWith =>
+  _$$SplashScreenStateImplCopyWith<_$SplashScreenStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
