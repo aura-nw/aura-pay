@@ -89,14 +89,14 @@ sealed class LanguageKey {
   static const String onBoardingRecoverChoiceScreenDialogSelectNotFoundTitle = "on_boarding_recover_choice_screen_dialog_select_not_found_title";
   static const String onBoardingRecoverChoiceScreenDialogSelectNotFoundContent = "on_boarding_recover_choice_screen_dialog_select_not_found_content";
   static const String onBoardingRecoverChoiceScreenDialogSelectNotFoundButtonTitle = "on_boarding_recover_choice_screen_dialog_select_not_found_button_title";
-  ///
+  ///endregion
 
   ///region recover select
   static const String onBoardingRecoverSelectAccountScreenTitleRegionOne = "on_boarding_recover_select_account_screen_title_region_one";
   static const String onBoardingRecoverSelectAccountScreenTitleRegionTwo = "on_boarding_recover_select_account_screen_title_region_two";
   static const String onBoardingRecoverSelectAccountScreenContent = "on_boarding_recover_select_account_screen_content";
   static const String onBoardingRecoverSelectAccountScreenButtonTitle = "on_boarding_recover_select_account_screen_button_title";
-  ///
+  ///endregion
 
   ///region recover request review
   static const String onBoardingRecoverRequestReviewingScreenTitleRegionOne = "on_boarding_recover_request_reviewing_screen_title_region_one";
@@ -104,7 +104,7 @@ sealed class LanguageKey {
   static const String onBoardingRecoverRequestReviewingScreenContent = "on_boarding_recover_request_reviewing_screen_content";
   static const String onBoardingRecoverRequestReviewingScreenNotifyButtonTitle = "on_boarding_recover_request_reviewing_screen_notify_button_title";
   static const String onBoardingRecoverRequestReviewingScreenBackButtonTitle = "on_boarding_recover_request_reviewing_screen_back_button_title";
-  ///
+  ///endregion
 
   ///region recover backup address
   static const String onBoardingRecoverBackupAddressScreenTitleRegionOne = "on_boarding_recover_backup_address_screen_title_region_one";
@@ -112,7 +112,7 @@ sealed class LanguageKey {
   static const String onBoardingRecoverBackupAddressScreenContent = "on_boarding_recover_backup_address_screen_content";
   static const String onBoardingRecoverBackupAddressScreenShareLinkTitle = "on_boarding_recover_backup_address_screen_share_link_title";
   static const String onBoardingRecoverBackupAddressScreenButtonTitle = "on_boarding_recover_backup_address_screen_button_title";
-  ///
+  ///endregion
 
   ///region recover backup address done
   static const String onBoardingRecoverBackupAddressDoneScreenTitleRegionOne = "on_boarding_recover_backup_address_done_screen_title_region_one";
@@ -122,4 +122,13 @@ sealed class LanguageKey {
   static const String onBoardingRecoverBackupAddressDoneScreenButtonCopyTitle = "on_boarding_recover_backup_address_done_screen_button_copy_title";
   static const String onBoardingRecoverBackupAddressDoneScreenButtonDoneTitle = "on_boarding_recover_backup_address_done_screen_button_done_title";
   ///
+
+  ///region relogin
+  static const String reLoginScreenTitle = "re_login_screen_title";
+  static const String reLoginScreenForgetPassword = "re_login_screen_forget_password";
+  static const String reLoginScreenDialogForgetPasswordTitle = "re_login_screen_dialog_forget_password_title";
+  static const String reLoginScreenDialogForgetPasswordContentRegionOne = "re_login_screen_dialog_forget_password_content_region_one";
+  static const String reLoginScreenDialogForgetPasswordContentRegionTwo = "re_login_screen_dialog_forget_password_content_region_two";
+  static const String reLoginScreenWrongCountDownTitle = "re_login_screen_wrong_count_down_title";
+  ///endregion
 }

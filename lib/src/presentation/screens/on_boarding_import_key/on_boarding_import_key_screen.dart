@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
@@ -14,6 +15,7 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/choice_select_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_base.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_manager.dart';
 
@@ -337,6 +339,16 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen> {
           ),
         );
       },
+    );
+  }
+
+  void _showLoadingDialog(AppTheme appTheme) {
+    DialogProvider.showLoadingDialog(
+      context,
+      content: AppLocalizationManager.of(context).translate(
+        LanguageKey.onBoardingImportKeyScreenDialogLoadingTitle,
+      ),
+      appTheme: appTheme,
     );
   }
 }

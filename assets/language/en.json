@@ -97,5 +97,12 @@
   "on_boarding_recover_backup_address_done_screen_public_key_label" : "Device public key",
   "on_boarding_recover_backup_address_done_screen_content" : "This is the public key generated from your new device. The recovery process will replace the key from the old device with this new one.",
   "on_boarding_recover_backup_address_done_screen_button_copy_title" : "Copy device public key",
-  "on_boarding_recover_backup_address_done_screen_button_done_title" : "Done"
+  "on_boarding_recover_backup_address_done_screen_button_done_title" : "Done",
+
+  "re_login_screen_title" : "Welcome Back!",
+  "re_login_screen_forget_password" : "Forget your passcode?",
+  "re_login_screen_dialog_forget_password_title" : "Forget your passcode?",
+  "re_login_screen_dialog_forget_password_content_region_one" : "You can delete Pyxis app and re-install. REMIND that all the current smart account/ wallet will be",
+  "re_login_screen_dialog_forget_password_content_region_one_two" : "removed from this app permanently.",
+  "re_login_screen_wrong_count_down_title" : "Lock in ${time}"
 }

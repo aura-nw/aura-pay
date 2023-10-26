@@ -36,7 +36,7 @@ sealed class RoutePath {
   static const String home = '${_base}home';
 }
 
-class AppNavigator {
+sealed class AppNavigator {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   static Route onGenerateRoute(RouteSettings settings) {

@@ -161,6 +161,16 @@ class _OnBoardingSetupPasscodeScreenState
 
     _fillIndex--;
 
+    if(_pageController.page == 0){
+
+      if(_password.isEmpty) return;
+      _password.removeLast();
+    }else{
+
+      if(_confirmPassword.isEmpty) return;
+      _confirmPassword.removeLast();
+    }
+
     setState(() {});
   }
 
@@ -194,11 +204,15 @@ class _OnBoardingSetupPasscodeScreenState
           _wrongConfirmPassword = false;
         }
 
-        _fillIndex = -1;
-
         String passWord = _password.join();
 
-        if(_wrongConfirmPassword) return;
+        if(_wrongConfirmPassword) {
+          setState(() {});
+
+          return;
+        }
+
+        _fillIndex = -1;
 
         switch (widget.onboardingType) {
           case OnboardingType.create:

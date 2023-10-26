@@ -31,27 +31,24 @@ class OnBoardingPickAccountBloc
       );
 
       /// call api check fee gas
-      // final String walletBalance = await wallet.checkWalletBalance();
-      //
-      // if (walletBalance == "0") {
-      //   emit(
-      //     state.copyWith(
-      //       status: OnBoardingPickAccountStatus.onCheckAddressUnEnoughFee,
-      //     ),
-      //   );
-      // } else {
-      //   await _walletUseCase.importWallet(
-      //     privateKeyOrPassPhrase: wallet.privateKey!,
-      //     walletName: state.accountName,
-      //   );
-      //
-      //   emit(
-      //     state.copyWith(
-      //       status: OnBoardingPickAccountStatus.onCheckAddressEnoughFee,
-      //       walletAddress: wallet.bech32Address,
-      //     ),
-      //   );
-      // }
+
+      await Future.delayed(const Duration(
+         milliseconds: 1200,
+      ));
+
+      bool isFreeFee = false;
+
+      if(isFreeFee){
+        emit(state.copyWith(
+          status: OnBoardingPickAccountStatus.onCheckAddressEnoughFee,
+        ));
+
+      }else{
+        emit(state.copyWith(
+          status: OnBoardingPickAccountStatus.onCheckAddressUnEnoughFee,
+          walletAddress: wallet.bech32Address,
+        ));
+      }
     } catch (e) {
       emit(
         state.copyWith(

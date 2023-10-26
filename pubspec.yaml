@@ -24,6 +24,7 @@ dependencies:
   permission_handler: ^10.2.0
   get_it: ^7.6.0
   intl: ^0.18.0
+  crypto: ^3.0.3
 
   #state management:
   flutter_bloc: ^8.1.3

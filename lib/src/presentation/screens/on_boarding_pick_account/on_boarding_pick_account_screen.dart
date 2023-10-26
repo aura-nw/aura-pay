@@ -165,7 +165,7 @@ class _OnBoardingPickAccountScreenState
                                 LanguageKey
                                     .onBoardingCreateNewSmartAccountScreenButtonTitle,
                               ),
-                              isDisable: isDisable,
+                              isDisable: !isDisable,
                               onPress: () {
                                 _bloc.add(
                                   const OnBoardingPickAccountOnSubmitEvent(),

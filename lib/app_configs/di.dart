@@ -4,6 +4,7 @@ import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_bloc.dart';
 
 import 'pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen_cubit.dart';
@@ -90,6 +91,12 @@ Future<void> initDependency(
   getIt.registerFactory<OnBoardingPickAccountBloc>(
     () => OnBoardingPickAccountBloc(
       getIt.get<WalletUseCase>(),
+    ),
+  );
+
+  getIt.registerFactoryParam<OnBoardingScanFeeBloc, String, dynamic>(
+    (smartAccountAddress, param2) => OnBoardingScanFeeBloc(
+      smartAccountAddress: smartAccountAddress,
     ),
   );
 }
