@@ -11,21 +11,49 @@ class OnBoardingRecoverChoiceBloc
       : super(
           const OnBoardingRecoverChoiceState(
               status: OnBoardingRecoverChoiceStatus.none),
-        ){
+        ) {
     on(_onLoginWithGoogle);
   }
 
-  void _onLoginWithGoogle(OnBoardingRecoverChoiceEvent event, Emitter<OnBoardingRecoverChoiceState> emit)async{
+  void _onLoginWithGoogle(OnBoardingRecoverChoiceEvent event,
+      Emitter<OnBoardingRecoverChoiceState> emit) async {
+    emit(
+      state.copyWith(
+        status: OnBoardingRecoverChoiceStatus.onLogin,
+      ),
+    );
+
     ///
     ///
-    final account = await _authUseCase.onLogin();
+    try {
+      final account = await _authUseCase.onLogin();
 
-    if(account != null){
-      /// send account information to server get all smart account
 
-      /// if empty show error to user
-      /// else direct and show smart accounts for user select.
+      if (account != null) {
+        String ?accessToken = await _authUseCase.getCurrentAccessToken();
+
+        emit(
+          state.copyWith(
+            status: OnBoardingRecoverChoiceStatus.loginSuccess,
+            accessToken: accessToken,
+          ),
+        );
+
+        /// send account information to server get all smart account
+
+        /// if empty show error to user
+        /// else direct and show smart accounts for user select.
+      }
+
+      /// if false. handle some exception
+    } catch (e) {
+      print(e.toString());
+      emit(
+        state.copyWith(
+          status: OnBoardingRecoverChoiceStatus.loginFailure,
+          errorMessage: e.toString(),
+        ),
+      );
     }
-    /// if false. handle some exception
   }
 }

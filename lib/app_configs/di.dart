@@ -5,6 +5,7 @@ import 'package:domain/domain.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_bloc.dart';
 
 import 'pyxis_mobile_config.dart';
@@ -32,8 +33,11 @@ Future<void> initDependency(
 
   final GoogleSignIn googleSignIn = GoogleSignIn(
     signInOption: SignInOption.standard,
+    clientId:
+        config.googleClientId,
     scopes: [
       'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
     ],
   );
 
@@ -71,6 +75,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      getIt.get<AuthApiService>(),
+    ),
+  );
+
   ///Use case
   getIt.registerLazySingleton<LocalizationUseCase>(
     () => LocalizationUseCase(
@@ -81,6 +91,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton(
     () => WalletUseCase(
       getIt.get<WalletRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton(
+    () => AuthUseCase(
+      getIt.get<AuthRepository>(),
     ),
   );
 
@@ -104,6 +120,11 @@ Future<void> initDependency(
   getIt.registerFactoryParam<OnBoardingScanFeeBloc, String, dynamic>(
     (smartAccountAddress, param2) => OnBoardingScanFeeBloc(
       smartAccountAddress: smartAccountAddress,
+    ),
+  );
+  getIt.registerFactory<OnBoardingRecoverChoiceBloc>(
+    () => OnBoardingRecoverChoiceBloc(
+      getIt.get<AuthUseCase>(),
     ),
   );
 }

@@ -22,13 +22,13 @@ class AuraWalletApplication extends StatefulWidget {
 
 class _AuraWalletApplicationState extends State<AuraWalletApplication>
     with WidgetsBindingObserver {
+  PyxisMobileConfig config = getIt.get<PyxisMobileConfig>();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
-
-  PyxisMobileConfig config = getIt.get<PyxisMobileConfig>();
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {

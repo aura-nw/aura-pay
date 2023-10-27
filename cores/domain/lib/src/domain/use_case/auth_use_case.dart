@@ -12,4 +12,8 @@ class AuthUseCase {
   Future<bool> onLogout()async{
     return _repository.signOut();
   }
+
+  Future<String?> getCurrentAccessToken()async{
+    return _repository.getCurrentAccessToken();
+  }
 }

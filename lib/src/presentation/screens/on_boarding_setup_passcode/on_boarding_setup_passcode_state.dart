@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'on_boarding_setup_passcode_state.freezed.dart';
+
 enum OnBoardingSetupPasscodeStatus {
   init,
   createPasscodeSuccess,
@@ -8,9 +10,9 @@ enum OnBoardingSetupPasscodeStatus {
 }
 
 @freezed
-class OnBoardingSetupPasscodeState {
-  const OnBoardingSetupPasscodeState({
+class OnBoardingSetupPasscodeState with _$OnBoardingSetupPasscodeState{
+  const factory OnBoardingSetupPasscodeState({
     @Default(OnBoardingSetupPasscodeStatus.init)
-    required OnBoardingSetupPasscodeStatus status,
-  });
+    OnBoardingSetupPasscodeStatus status,
+  }) = _OnBoardingSetupPasscodeState;
 }

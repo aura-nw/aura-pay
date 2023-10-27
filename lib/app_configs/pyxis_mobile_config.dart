@@ -12,8 +12,6 @@ class PyxisMobileConfig {
 
   Map<String, dynamic> get appConfigs => jsonDecode(configs['APP_CONFIG']);
 
-  String get horoScopeUrl => configs['horoScope'];
-
   String get coinId => configs['coinId'];
   String get chainId => configs['chainId'];
   String get apiVersion => appConfigs['api_version'];
@@ -22,4 +20,5 @@ class PyxisMobileConfig {
   String get baseUrl => configs['BASE_URL'];
 
   String get appName => configs['APP_NAME'];
+  String get googleClientId => configs['GOOGLE_CLIENT_ID'];
 }

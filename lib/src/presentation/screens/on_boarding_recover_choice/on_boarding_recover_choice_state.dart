@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'on_boarding_recover_choice_state.freezed.dart';
+
 enum OnBoardingRecoverChoiceStatus {
   none,
   onLogin,
@@ -8,9 +10,11 @@ enum OnBoardingRecoverChoiceStatus {
 }
 
 @freezed
-class OnBoardingRecoverChoiceState {
-  const OnBoardingRecoverChoiceState({
+class OnBoardingRecoverChoiceState with _$OnBoardingRecoverChoiceState{
+  const factory OnBoardingRecoverChoiceState({
     @Default(OnBoardingRecoverChoiceStatus.none)
-    required OnBoardingRecoverChoiceStatus status,
-  });
+    OnBoardingRecoverChoiceStatus status,
+    String ?errorMessage,
+    String ?accessToken,
+  }) = _OnBoardingRecoverChoiceState;
 }

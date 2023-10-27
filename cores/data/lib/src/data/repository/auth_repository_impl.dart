@@ -24,4 +24,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return googleAccount != null;
   }
+
+  @override
+  Future<String?> getCurrentAccessToken() async{
+    return _authApiService.getCurrentAccessToken();
+  }
 }
