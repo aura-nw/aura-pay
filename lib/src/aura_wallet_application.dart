@@ -1,3 +1,6 @@
+import 'package:get_it/get_it.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +27,8 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
+
+  PyxisMobileConfig config = getIt.get<PyxisMobileConfig>();
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -53,8 +58,9 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: (){
-        if(WidgetsBinding.instance.focusManager.primaryFocus?.hasFocus ?? false){
+      onTap: () {
+        if (WidgetsBinding.instance.focusManager.primaryFocus?.hasFocus ??
+            false) {
           WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
         }
       },
@@ -67,7 +73,7 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
         onGenerateRoute: AppNavigator.onGenerateRoute,
         initialRoute: RoutePath.splash,
         debugShowCheckedModeBanner: false,
-        title: 'Aura Wallet',
+        title: config.appName,
         locale: AppLocalizationManager.instance.getAppLocale(),
         localizationsDelegates: const [
           AppTranslationsDelegate(),
@@ -93,10 +99,11 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
             child: Builder(builder: (context) {
               return MultiBlocListener(
                 listeners: [
-                  BlocListener<AppGlobalCubit,AppGlobalState>(
-                    listenWhen: (previous, current) => current.status != previous.status,
+                  BlocListener<AppGlobalCubit, AppGlobalState>(
+                    listenWhen: (previous, current) =>
+                        current.status != previous.status,
                     listener: (context, state) {
-                      switch(state.status){
+                      switch (state.status) {
                         case AppGlobalStatus.authorized:
                           // AppNavigator.replaceAllWith(RoutePath.home);
                           break;
