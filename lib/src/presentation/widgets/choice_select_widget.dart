@@ -21,6 +21,7 @@ class ChoiceSelectWidget<T> extends StatefulWidget {
   final ChoiceModalSize modalSize;
   final VoidCallback? onCloseModal;
   final void Function(List<T>)? onChange;
+  final bool Function(List<T>, T) isSelected;
 
   const ChoiceSelectWidget({
     required this.data,
@@ -35,6 +36,7 @@ class ChoiceSelectWidget<T> extends StatefulWidget {
     this.modalSize = ChoiceModalSize.small,
     this.onCloseModal,
     this.onChange,
+    required this.isSelected,
   });
 
   @override
@@ -179,16 +181,19 @@ class _ChoiceSelectWidgetState<T> extends State<ChoiceSelectWidget<T>> {
           onClose: widget.onCloseModal,
           selectedData: _selectedOption,
           appTheme: theme,
+          isSelected: widget.isSelected,
         );
       },
     );
+
+    if (selectData == null) return;
 
     setState(() {});
 
     _selectedOption.clear();
 
     _selectedOption.addAll(
-      selectData ?? [],
+      selectData,
     );
 
     widget.onChange?.call(_selectedOption);

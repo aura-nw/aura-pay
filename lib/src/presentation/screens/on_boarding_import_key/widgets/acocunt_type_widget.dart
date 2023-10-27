@@ -104,6 +104,12 @@ class _AccountTypeChoiceWidgetState extends State<AccountTypeChoiceWidget> {
   }
 
   @override
+  void didUpdateWidget(covariant AccountTypeChoiceWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _selectedIndex = widget.defaultType;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

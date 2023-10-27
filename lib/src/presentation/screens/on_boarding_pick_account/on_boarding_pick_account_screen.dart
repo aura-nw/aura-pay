@@ -37,6 +37,22 @@ class _OnBoardingPickAccountScreenState
   final OnBoardingPickAccountBloc _bloc =
       getIt.get<OnBoardingPickAccountBloc>();
 
+  late final TextEditingController _accountNameController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// set default name account
+    _accountNameController = TextEditingController()..text = 'Account 1';
+
+    _bloc.add(
+      OnBoardingPickAccountOnPickAccountChangeEvent(
+        accountName: _accountNameController.text.trim(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppThemeBuilder(
@@ -138,6 +154,7 @@ class _OnBoardingPickAccountScreenState
                                         LanguageKey
                                             .onBoardingCreateNewSmartAccountScreenTextFieldTitle,
                                       ),
+                                      controller: _accountNameController,
                                       isRequired: true,
                                       onChanged: (value, isValid) {
                                         _bloc.add(

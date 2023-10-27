@@ -3,6 +3,7 @@ import 'package:aura_wallet_core/config_options/environment_options.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_bloc.dart';
 
@@ -90,6 +91,12 @@ Future<void> initDependency(
 
   getIt.registerFactory<OnBoardingPickAccountBloc>(
     () => OnBoardingPickAccountBloc(
+      getIt.get<WalletUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<OnBoardingImportKeyBloc>(
+    () => OnBoardingImportKeyBloc(
       getIt.get<WalletUseCase>(),
     ),
   );

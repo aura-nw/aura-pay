@@ -15,6 +15,7 @@ class ChoiceModalWidget<T> extends StatefulWidget {
   final Widget Function(T) builder;
   final ChoiceModalType modalType;
   final AppTheme appTheme;
+  final bool Function(List<T>,T) isSelected;
 
   const ChoiceModalWidget({
     required this.data,
@@ -24,6 +25,7 @@ class ChoiceModalWidget<T> extends StatefulWidget {
     this.modalType = ChoiceModalType.single,
     required this.selectedData,
     required this.appTheme,
+    required this.isSelected,
     super.key,
   });
 
@@ -68,7 +70,9 @@ class _ChoiceModalWidgetState<T> extends State<ChoiceModalWidget<T>> {
                 onTap: () {
                   if (widget.onClose == null) {
                     AppNavigator.pop(_selectedOptions);
-                  } else {}
+                  } else {
+                    widget.onClose!();
+                  }
                 },
                 child: Container(
                   padding: const EdgeInsets.all(
@@ -125,7 +129,7 @@ class _ChoiceModalWidgetState<T> extends State<ChoiceModalWidget<T>> {
   }
 
   Widget _selectBoxBuilder(T item) {
-    final bool isSelected = _selectedOptions.contains(item);
+    final bool isSelected =  widget.isSelected(_selectedOptions,item);
 
     switch (widget.modalType) {
       case ChoiceModalType.single:

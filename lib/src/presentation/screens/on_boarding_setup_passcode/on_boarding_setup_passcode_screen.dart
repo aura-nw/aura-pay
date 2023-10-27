@@ -234,6 +234,18 @@ class _OnBoardingSetupPasscodeScreenState
             );
             break;
         }
+
+        _pageController.animateToPage(
+          1,
+          duration: const Duration(
+            milliseconds: 300,
+          ),
+          curve: Curves.bounceIn,
+        );
+
+        _confirmPassword.clear();
+
+        _password.clear();
       }
     }
     setState(() {});

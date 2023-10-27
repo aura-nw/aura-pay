@@ -7,6 +7,7 @@ enum OnBoardingImportKeyStatus {
   init,
   onLoading,
   onImportAccountError,
+  onImportAccountSuccess,
 }
 
 @freezed

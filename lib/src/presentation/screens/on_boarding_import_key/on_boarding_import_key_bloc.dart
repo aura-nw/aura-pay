@@ -59,19 +59,31 @@ class OnBoardingImportKeyBloc
     OnBoardingImportKeyOnSubmitEvent event,
     Emitter<OnBoardingImportKeyState> emit,
   ) async {
-    emit(state.copyWith(
-      status: OnBoardingImportKeyStatus.onLoading,
-    ));
+    emit(
+      state.copyWith(
+        status: OnBoardingImportKeyStatus.onLoading,
+      ),
+    );
     try {
-      // await _walletUseCase.importWallet(
-      //   privateKeyOrPassPhrase: state.key,
-      //   walletName: 'walletName',
-      // );
+      await _walletUseCase.importWallet(
+        privateKeyOrPassPhrase: state.key,
+
+        /// Set Default account name
+        walletName: 'Account 1',
+      );
+
+      emit(
+        state.copyWith(
+          status: OnBoardingImportKeyStatus.onImportAccountSuccess,
+        ),
+      );
     } catch (e) {
-      emit(state.copyWith(
-        errorMessage: e.toString(),
-        status: OnBoardingImportKeyStatus.onImportAccountError,
-      ));
+      emit(
+        state.copyWith(
+          errorMessage: e.toString(),
+          status: OnBoardingImportKeyStatus.onImportAccountError,
+        ),
+      );
     }
   }
 }
