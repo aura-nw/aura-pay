@@ -283,7 +283,10 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                                 .translate(LanguageKey
                                                     .onBoardingImportKeyScreenInvalidPrivateKey),
                                             customValid: (value) {
-                                              return false;
+                                              return AuraWalletHelper
+                                                  .checkPrivateKey(
+                                                value.trim(),
+                                              );
                                             },
                                           ),
                                         label: localization.translate(
