@@ -480,6 +480,15 @@
                             }
                         },
                         {
+                            "name": "Surface/Opacity black default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Black opacity 5"
+                            }
+                        },
+                        {
                             "name": "Surface/Disable",
                             "type": "color",
                             "isAlias": true,
@@ -856,6 +865,15 @@
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Opacity/Black opacity 7"
+                            }
+                        },
+                        {
+                            "name": "Content/Opacity 2",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/White opacity 7"
                             }
                         },
                         {
@@ -2302,73 +2320,73 @@
                             "name": "Indigo/10",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#FAFAFF"
+                            "value": "#F6F5FE"
                         },
                         {
                             "name": "Indigo/25",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#F1F0FF"
+                            "value": "#EDECFE"
                         },
                         {
                             "name": "Indigo/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#DDDBFF"
+                            "value": "#DDDBFD"
                         },
                         {
                             "name": "Indigo/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#D3D1FF"
+                            "value": "#D3D1FC"
                         },
                         {
                             "name": "Indigo/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#C0BDFF"
+                            "value": "#BFBDFB"
                         },
                         {
                             "name": "Indigo/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#ACA9FF"
+                            "value": "#ABA9FA"
                         },
                         {
                             "name": "Indigo/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#9994FF"
+                            "value": "#9894F8"
                         },
                         {
                             "name": "Indigo/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#8580FF"
+                            "value": "#8480F7"
                         },
                         {
                             "name": "Indigo/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#706CD6"
+                            "value": "#6F6CCF"
                         },
                         {
                             "name": "Indigo/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#5A57AD"
+                            "value": "#5A57A8"
                         },
                         {
                             "name": "Indigo/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#454385"
+                            "value": "#454381"
                         },
                         {
                             "name": "Indigo/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#302E5C"
+                            "value": "#302E59"
                         },
                         {
                             "name": "Purple/50",
@@ -2909,6 +2927,60 @@
                             "type": "color",
                             "isAlias": false,
                             "value": "#000000E6"
+                        },
+                        {
+                            "name": "Opacity/White opacity 1",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF1A"
+                        },
+                        {
+                            "name": "Opacity/White opacity 2",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF33"
+                        },
+                        {
+                            "name": "Opacity/White opacity 3",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF4D"
+                        },
+                        {
+                            "name": "Opacity/White opacity 4",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF66"
+                        },
+                        {
+                            "name": "Opacity/White opacity 5",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF80"
+                        },
+                        {
+                            "name": "Opacity/White opacity 6",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF99"
+                        },
+                        {
+                            "name": "Opacity/White opacity 7",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFFB3"
+                        },
+                        {
+                            "name": "Opacity/White opacity 8",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFFCC"
+                        },
+                        {
+                            "name": "Opacity/White opacity 9",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFFE6"
                         }
                     ]
                 }
