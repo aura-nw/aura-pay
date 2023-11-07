@@ -171,6 +171,8 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
               border: InputBorder.none,
               contentPadding: EdgeInsets.zero,
               hintStyle: AppTypoGraPhy.body03,
+              /// This line may be fix in the future.
+              counterText: '',
             ),
           ),
         ),

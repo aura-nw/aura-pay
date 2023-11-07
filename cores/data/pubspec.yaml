@@ -16,6 +16,11 @@ dependencies:
     git:
       url: https://github.com/aura-nw/aura-wallet-core.git
       ref: core_wallet
+  flutter_secure_storage:
+    git:
+      path: flutter_secure_storage
+      url: https://github.com/aura-nw/flutter_secure_storage.git
+      ref: feature/biometric_mobile
   google_sign_in: ^6.1.5
 
 dev_dependencies:

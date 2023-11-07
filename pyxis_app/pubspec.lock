@@ -70,7 +70,7 @@ packages:
     description:
       path: "."
       ref: core_wallet
-      resolved-ref: "39f99cb304b69307a76897d8f657b5d96b875516"
+      resolved-ref: "4e964ab5d6b7079f8ff190ce3cb59dcdbf1f1b8b"
       url: "https://github.com/aura-nw/aura-wallet-core.git"
     source: git
     version: "0.0.1"
