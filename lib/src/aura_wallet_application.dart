@@ -1,4 +1,3 @@
-import 'package:get_it/get_it.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';

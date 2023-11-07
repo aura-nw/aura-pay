@@ -51,10 +51,10 @@ class _SplashScreenState extends State<SplashScreen> {
               }
             },
             child: Scaffold(
-              backgroundColor: theme.primaryColor500,
+              backgroundColor: theme.surfaceColorBlack,
               body: Center(
                 child: SvgPicture.asset(
-                  AssetLogoPath.logoTransparentWithName,
+                  AssetLogoPath.logoDark,
                 ),
               ),
             ),

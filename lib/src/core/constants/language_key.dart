@@ -1,4 +1,6 @@
 sealed class LanguageKey {
+  static const String globalPyxisTitle = 'global_pyxis_title';
+
   ///region onboarding get started
   static const String onBoardingGetStartedScreenTitle = 'on_boarding_get_started_screen_title';
   static const String onBoardingGetStartedScreenButtonTitle = 'on_boarding_get_started_screen_button_title';
@@ -10,6 +12,7 @@ sealed class LanguageKey {
   ///endregion
 
   ///region onboarding choice option
+  static const String onBoardingChoiceOptionScreenTitle = 'on_boarding_choice_option_screen_title';
   static const String onBoardingChoiceOptionScreenCreateSmartAccountTitle = 'on_boarding_choice_option_screen_create_smart_account_title';
   static const String onBoardingChoiceOptionScreenCreateSmartAccountContent = 'on_boarding_choice_option_screen_create_smart_account_content';
   static const String onBoardingChoiceOptionScreenImportExistAccountTitle = 'on_boarding_choice_option_screen_import_exist_account_title';

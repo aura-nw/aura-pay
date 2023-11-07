@@ -5,19 +5,19 @@ final class DefaultAppTheme implements AppTheme {
   DefaultAppTheme();
 
   @override
-  Color borderColorBrand = const Color(0xff8580FF);
+  Color borderColorBrand = const Color(0xff8480F7);
 
   @override
   Color borderColorBlack = const Color(0xff131316);
 
   @override
-  Color borderColorBrandDark = const Color(0xff706CD6);
+  Color borderColorBrandDark = const Color(0xff6F6CCF);
 
   @override
-  Color borderColorBrandLight = const Color(0xffC0BDFF);
+  Color borderColorBrandLight = const Color(0xffBFBDFB);
 
   @override
-  Color borderColorBrandSLight = const Color(0xfff1f0ff);
+  Color borderColorBrandSLight = const Color(0xffEDECFE);
 
   @override
   Color borderColorDanger = const Color(0xffE8858F);
@@ -41,13 +41,13 @@ final class DefaultAppTheme implements AppTheme {
   Color borderColorGrayLight = const Color(0xffECECEE);
 
   @override
-  Color borderColorSuccess = const Color(0xffA4CFBB);
+  Color borderColorSuccess = const Color(0xff86EABB);
 
   @override
-  Color borderColorSuccessDark = const Color(0xff228754);
+  Color borderColorSuccessDark = const Color(0xff159454);
 
   @override
-  Color borderColorSuccessLight = const Color(0xffE1EFE8);
+  Color borderColorSuccessLight = const Color(0xffD8F8E8);
 
   @override
   Color borderColorUnKnow = const Color(0xff828292);
@@ -89,43 +89,43 @@ final class DefaultAppTheme implements AppTheme {
   Color infoLight = const Color(0xffCCF4FB);
 
   @override
-  Color primaryColor10 = const Color(0xfffafaff);
+  Color primaryColor10 = const Color(0xffF6F5FE);
 
   @override
-  Color primaryColor100 = const Color(0xffD3D1FF);
+  Color primaryColor100 = const Color(0xffD3D1FC);
 
   @override
-  Color primaryColor200 = const Color(0xffC0BDFF);
+  Color primaryColor200 = const Color(0xffBFBDFB);
 
   @override
-  Color primaryColor25 = const Color(0xfff1f0ff);
+  Color primaryColor25 = const Color(0xffEDECFE);
 
   @override
-  Color primaryColor300 = const Color(0xffACA9FF);
+  Color primaryColor300 = const Color(0xffABA9FA);
 
   @override
-  Color primaryColor400 = const Color(0xff9994FF);
+  Color primaryColor400 = const Color(0xff9894F8);
 
   @override
-  Color primaryColor50 = const Color(0xffDDDBFF);
+  Color primaryColor50 = const Color(0xffDDDBFD);
 
   @override
-  Color primaryColor500 = const Color(0xff8580FF);
+  Color primaryColor500 = const Color(0xff8480F7);
 
   @override
-  Color primaryColor600 = const Color(0xff706CD6);
+  Color primaryColor600 = const Color(0xff6F6CCF);
 
   @override
-  Color primaryColor700 = const Color(0xff5A57AD);
+  Color primaryColor700 = const Color(0xff5A57A8);
 
   @override
-  Color primaryColor800 = const Color(0xff454385);
+  Color primaryColor800 = const Color(0xff454381);
 
   @override
-  Color primaryColor900 = const Color(0xff302E5C);
+  Color primaryColor900 = const Color(0xff302E59);
 
   @override
-  Color primaryDefault = const Color(0xff8580FF);
+  Color primaryDefault = const Color(0xff8480F7);
 
   @override
   Color secondaryDefault = const Color(0xfffc7d11);
@@ -161,34 +161,34 @@ final class DefaultAppTheme implements AppTheme {
   Color secondary900 = const Color(0xff331904);
 
   @override
-  Color successColorDark = const Color(0xff4B9F76);
+  Color successColorDark = const Color(0xff1DC975);
 
   @override
-  Color successColorDefault = const Color(0xffA4CFBB);
+  Color successColorDefault = const Color(0xff86EABB);
 
   @override
-  Color successColorLight = const Color(0xffD2E7DD);
+  Color successColorLight = const Color(0xffBAF3D8);
 
   @override
-  Color successColorSDark = const Color(0xff228754);
+  Color successColorSDark = const Color(0xff159454);
 
   @override
-  Color successColorSLight = const Color(0xffE1EFE8);
+  Color successColorSLight = const Color(0xffD8F8E8);
 
   @override
   Color surfaceColorBlack = const Color(0xff242429);
 
   @override
-  Color surfaceColorBrand = const Color(0xff8580FF);
+  Color surfaceColorBrand = const Color(0xff8480F7);
 
   @override
-  Color surfaceColorBrandDark = const Color(0xff5A57AD);
+  Color surfaceColorBrandDark = const Color(0xff5A57A8);
 
   @override
-  Color surfaceColorBrandLight = const Color(0xfff1f0ff);
+  Color surfaceColorBrandLight = const Color(0xffEDECFE);
 
   @override
-  Color surfaceColorBrandSemiLight = const Color(0xffDDDBFF);
+  Color surfaceColorBrandSemiLight = const Color(0xffDDDBFD);
 
   @override
   Color surfaceColorDanger = const Color(0xffF7D7DA);
@@ -209,10 +209,10 @@ final class DefaultAppTheme implements AppTheme {
   Color surfaceColorGrayLight = const Color(0xffF7F7F8);
 
   @override
-  Color surfaceColorSuccess = const Color(0xffD2E7DD);
+  Color surfaceColorSuccess = const Color(0xffBAF3D8);
 
   @override
-  Color surfaceColorSuccessDark = const Color(0xff4B9F76);
+  Color surfaceColorSuccessDark = const Color(0xff1DC975);
 
   @override
   Color surfaceColorUnKnow = const Color(0xffAEAEB7);
@@ -284,7 +284,7 @@ final class DefaultAppTheme implements AppTheme {
   Color warningColorSLight = const Color(0xffFFF4EB);
 
   @override
-  Color bodyColorBrand = const Color(0xff8580FF);
+  Color bodyColorBrand = const Color(0xff8480F7);
 
   @override
   Color bodyColorOverlay = const Color.fromRGBO(0, 0, 0, 0.5);
@@ -308,22 +308,25 @@ final class DefaultAppTheme implements AppTheme {
   Color contentColorBlack = const Color(0xff474752);
 
   @override
-  Color contentColorBrand = const Color(0xff8580FF);
+  Color contentColorBrand = const Color(0xff8480F7);
 
   @override
-  Color contentColorBrandDark = const Color(0xff5A57AD);
+  Color contentColorBrandDark = const Color(0xff5A57A8);
 
   @override
-  Color contentColorBrandLight = const Color(0xffC0BDFF);
+  Color contentColorBrandLight = const Color(0xffBFBDFB);
 
   @override
-  Color contentColorDanger = const Color(0xffAF2837);
+  Color contentColorDanger = const Color(0xffDA3345);
 
   @override
   Color contentColorOpacity1 = const Color.fromRGBO(0, 0, 0, 0.7);
 
   @override
-  Color contentColorSuccess = const Color(0xff228754);
+  Color contentColorOpacity2 = const Color.fromRGBO(255, 255, 255, 0.7);
+
+  @override
+  Color contentColorSuccess = const Color(0xff1DC975);
 
   @override
   Color contentColorUnKnow = const Color(0xff5B5B67);
