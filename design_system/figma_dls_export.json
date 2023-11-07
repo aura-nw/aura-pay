@@ -138,111 +138,61 @@
                             "name": "Secondary/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 244,
-                                "b": 235,
-                                "a": 1
-                            }
+                            "value": "#FFF4EB"
                         },
                         {
                             "name": "Secondary/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 229,
-                                "b": 208,
-                                "a": 1
-                            }
+                            "value": "#FFE5D0"
                         },
                         {
                             "name": "Secondary/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 253,
-                                "g": 203,
-                                "b": 161,
-                                "a": 1
-                            }
+                            "value": "#FDCBA1"
                         },
                         {
                             "name": "Secondary/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 253,
-                                "g": 178,
-                                "b": 113,
-                                "a": 1
-                            }
+                            "value": "#FDB271"
                         },
                         {
                             "name": "Secondary/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 252,
-                                "g": 152,
-                                "b": 66,
-                                "a": 1
-                            }
+                            "value": "#FC9842"
                         },
                         {
                             "name": "Secondary/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 252,
-                                "g": 125,
-                                "b": 17,
-                                "a": 1
-                            }
+                            "value": "#FC7D11"
                         },
                         {
                             "name": "Secondary/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 201,
-                                "g": 100,
-                                "b": 14,
-                                "a": 1
-                            }
+                            "value": "#C9640E"
                         },
                         {
                             "name": "Secondary/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 151,
-                                "g": 76,
-                                "b": 10,
-                                "a": 1
-                            }
+                            "value": "#974C0A"
                         },
                         {
                             "name": "Secondary/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 100,
-                                "g": 50,
-                                "b": 7,
-                                "a": 1
-                            }
+                            "value": "#643207"
                         },
                         {
                             "name": "Secondary/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 51,
-                                "g": 25,
-                                "b": 4,
-                                "a": 1
-                            }
+                            "value": "#331904"
                         },
                         {
                             "name": "Tertiary/Default",
@@ -257,111 +207,61 @@
                             "name": "Tertiary/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 237,
-                                "g": 239,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#EDEFFF"
                         },
                         {
                             "name": "Tertiary/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 232,
-                                "g": 234,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#E8EAFF"
                         },
                         {
                             "name": "Tertiary/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 222,
-                                "g": 225,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#DEE1FF"
                         },
                         {
                             "name": "Tertiary/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 211,
-                                "g": 216,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#D3D8FF"
                         },
                         {
                             "name": "Tertiary/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 201,
-                                "g": 207,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#C9CFFF"
                         },
                         {
                             "name": "Tertiary/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 191,
-                                "g": 198,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#BFC6FF"
                         },
                         {
                             "name": "Tertiary/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 160,
-                                "g": 166,
-                                "b": 214,
-                                "a": 1
-                            }
+                            "value": "#A0A6D6"
                         },
                         {
                             "name": "Tertiary/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 130,
-                                "g": 135,
-                                "b": 173,
-                                "a": 1
-                            }
+                            "value": "#8287AD"
                         },
                         {
                             "name": "Tertiary/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 99,
-                                "g": 103,
-                                "b": 133,
-                                "a": 1
-                            }
+                            "value": "#636785"
                         },
                         {
                             "name": "Tertiary/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 69,
-                                "g": 71,
-                                "b": 92,
-                                "a": 1
-                            }
+                            "value": "#45475C"
                         },
                         {
                             "name": "Info/Light",
@@ -577,6 +477,15 @@
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Gray/950"
+                            }
+                        },
+                        {
+                            "name": "Surface/Opacity black default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Black opacity 5"
                             }
                         },
                         {
@@ -956,6 +865,15 @@
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Opacity/Black opacity 7"
+                            }
+                        },
+                        {
+                            "name": "Content/Opacity 2",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/White opacity 7"
                             }
                         },
                         {
@@ -1429,12 +1347,7 @@
                             "name": "Table/Color",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 255,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#FFFFFF"
                         },
                         {
                             "name": "Input/Input/Background/Default",
@@ -1467,12 +1380,7 @@
                             "name": "Toats/Color 2",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 255,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#FFFFFF"
                         },
                         {
                             "name": "Input/Input/Border/Color/Success",
@@ -1487,12 +1395,7 @@
                             "name": "Navbar/Color 3",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 255,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#FFFFFF"
                         },
                         {
                             "name": "Input/Input/Background/Disable",
@@ -1516,12 +1419,7 @@
                             "name": "Tooltip/Color 4",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 255,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#FFFFFF"
                         },
                         {
                             "name": "Input/Input/Padding/Default",
@@ -1536,12 +1434,7 @@
                             "name": "Link/Color 5",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 255,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#FFFFFF"
                         },
                         {
                             "name": "Input/Input/Padding/lg",
@@ -1601,12 +1494,7 @@
                             "name": "Icon/Color",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 255,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#FFFFFF"
                         },
                         {
                             "name": "Buttons/Ghost/Primary/Content/Default",
@@ -2288,1387 +2176,811 @@
                             "name": "Gray/White",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 255,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#FFFFFF"
                         },
                         {
                             "name": "Gray/25",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 247,
-                                "g": 247,
-                                "b": 248,
-                                "a": 1
-                            }
+                            "value": "#F7F7F8"
                         },
                         {
                             "name": "Gray/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 236,
-                                "g": 236,
-                                "b": 238,
-                                "a": 1
-                            }
+                            "value": "#ECECEE"
                         },
                         {
                             "name": "Gray/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 222,
-                                "g": 222,
-                                "b": 227,
-                                "a": 1
-                            }
+                            "value": "#DEDEE3"
                         },
                         {
                             "name": "Gray/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 192,
-                                "g": 192,
-                                "b": 200,
-                                "a": 1
-                            }
+                            "value": "#C0C0C8"
                         },
                         {
                             "name": "Gray/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 174,
-                                "g": 174,
-                                "b": 183,
-                                "a": 1
-                            }
+                            "value": "#AEAEB7"
                         },
                         {
                             "name": "Gray/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 152,
-                                "g": 152,
-                                "b": 164,
-                                "a": 1
-                            }
+                            "value": "#9898A4"
                         },
                         {
                             "name": "Gray/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 130,
-                                "g": 130,
-                                "b": 146,
-                                "a": 1
-                            }
+                            "value": "#828292"
                         },
                         {
                             "name": "Gray/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 107,
-                                "g": 107,
-                                "b": 122,
-                                "a": 1
-                            }
+                            "value": "#6B6B7A"
                         },
                         {
                             "name": "Gray/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 91,
-                                "g": 91,
-                                "b": 103,
-                                "a": 1
-                            }
+                            "value": "#5B5B67"
                         },
                         {
                             "name": "Gray/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 71,
-                                "g": 71,
-                                "b": 82,
-                                "a": 1
-                            }
+                            "value": "#474752"
                         },
                         {
                             "name": "Gray/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 52,
-                                "g": 52,
-                                "b": 60,
-                                "a": 1
-                            }
+                            "value": "#34343C"
                         },
                         {
                             "name": "Gray/950",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 36,
-                                "g": 36,
-                                "b": 41,
-                                "a": 1
-                            }
+                            "value": "#242429"
                         },
                         {
                             "name": "Gray/Black",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 19,
-                                "g": 19,
-                                "b": 22,
-                                "a": 1
-                            }
+                            "value": "#131316"
                         },
                         {
                             "name": "Blue/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 235,
-                                "g": 243,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#EBF3FF"
                         },
                         {
                             "name": "Blue/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 207,
-                                "g": 226,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#CFE2FF"
                         },
                         {
                             "name": "Blue/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 158,
-                                "g": 197,
-                                "b": 254,
-                                "a": 1
-                            }
+                            "value": "#9EC5FE"
                         },
                         {
                             "name": "Blue/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 109,
-                                "g": 168,
-                                "b": 254,
-                                "a": 1
-                            }
+                            "value": "#6DA8FE"
                         },
                         {
                             "name": "Blue/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 59,
-                                "g": 139,
-                                "b": 253,
-                                "a": 1
-                            }
+                            "value": "#3B8BFD"
                         },
                         {
                             "name": "Blue/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 109,
-                                "b": 254,
-                                "a": 1
-                            }
+                            "value": "#006DFE"
                         },
                         {
                             "name": "Blue/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 87,
-                                "b": 202,
-                                "a": 1
-                            }
+                            "value": "#0057CA"
                         },
                         {
                             "name": "Blue/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 3,
-                                "g": 66,
-                                "b": 152,
-                                "a": 1
-                            }
+                            "value": "#034298"
                         },
                         {
                             "name": "Blue/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 3,
-                                "g": 44,
-                                "b": 101,
-                                "a": 1
-                            }
+                            "value": "#032C65"
                         },
                         {
                             "name": "Blue/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 3,
-                                "g": 22,
-                                "b": 51,
-                                "a": 1
-                            }
+                            "value": "#031633"
                         },
                         {
                             "name": "Indigo/10",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 250,
-                                "g": 250,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#F6F5FE"
                         },
                         {
                             "name": "Indigo/25",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 241,
-                                "g": 240,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#EDECFE"
                         },
                         {
                             "name": "Indigo/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 221,
-                                "g": 219,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#DDDBFD"
                         },
                         {
                             "name": "Indigo/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 211,
-                                "g": 209,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#D3D1FC"
                         },
                         {
                             "name": "Indigo/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 192,
-                                "g": 189,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#BFBDFB"
                         },
                         {
                             "name": "Indigo/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 172,
-                                "g": 169,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#ABA9FA"
                         },
                         {
                             "name": "Indigo/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 153,
-                                "g": 148,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#9894F8"
                         },
                         {
                             "name": "Indigo/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 133,
-                                "g": 128,
-                                "b": 255,
-                                "a": 1
-                            }
+                            "value": "#8480F7"
                         },
                         {
                             "name": "Indigo/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 112,
-                                "g": 108,
-                                "b": 214,
-                                "a": 1
-                            }
+                            "value": "#6F6CCF"
                         },
                         {
                             "name": "Indigo/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 90,
-                                "g": 87,
-                                "b": 173,
-                                "a": 1
-                            }
+                            "value": "#5A57A8"
                         },
                         {
                             "name": "Indigo/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 69,
-                                "g": 67,
-                                "b": 133,
-                                "a": 1
-                            }
+                            "value": "#454381"
                         },
                         {
                             "name": "Indigo/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 48,
-                                "g": 46,
-                                "b": 92,
-                                "a": 1
-                            }
+                            "value": "#302E59"
                         },
                         {
                             "name": "Purple/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 241,
-                                "g": 236,
-                                "b": 249,
-                                "a": 1
-                            }
+                            "value": "#F1ECF9"
                         },
                         {
                             "name": "Purple/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 226,
-                                "g": 217,
-                                "b": 242,
-                                "a": 1
-                            }
+                            "value": "#E2D9F2"
                         },
                         {
                             "name": "Purple/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 197,
-                                "g": 179,
-                                "b": 227,
-                                "a": 1
-                            }
+                            "value": "#C5B3E3"
                         },
                         {
                             "name": "Purple/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 169,
-                                "g": 142,
-                                "b": 215,
-                                "a": 1
-                            }
+                            "value": "#A98ED7"
                         },
                         {
                             "name": "Purple/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 140,
-                                "g": 104,
-                                "b": 201,
-                                "a": 1
-                            }
+                            "value": "#8C68C9"
                         },
                         {
                             "name": "Purple/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 110,
-                                "g": 66,
-                                "b": 188,
-                                "a": 1
-                            }
+                            "value": "#6E42BC"
                         },
                         {
                             "name": "Purple/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 89,
-                                "g": 53,
-                                "b": 150,
-                                "a": 1
-                            }
+                            "value": "#593596"
                         },
                         {
                             "name": "Purple/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 67,
-                                "g": 40,
-                                "b": 113,
-                                "a": 1
-                            }
+                            "value": "#432871"
                         },
                         {
                             "name": "Purple/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 44,
-                                "g": 26,
-                                "b": 75,
-                                "a": 1
-                            }
+                            "value": "#2C1A4B"
                         },
                         {
                             "name": "Purple/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 22,
-                                "g": 13,
-                                "b": 38,
-                                "a": 1
-                            }
+                            "value": "#160D26"
                         },
                         {
                             "name": "Pink/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 250,
-                                "g": 234,
-                                "b": 242,
-                                "a": 1
-                            }
+                            "value": "#FAEAF2"
                         },
                         {
                             "name": "Pink/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 246,
-                                "g": 214,
-                                "b": 230,
-                                "a": 1
-                            }
+                            "value": "#F6D6E6"
                         },
                         {
                             "name": "Pink/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 238,
-                                "g": 173,
-                                "b": 206,
-                                "a": 1
-                            }
+                            "value": "#EEADCE"
                         },
                         {
                             "name": "Pink/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 228,
-                                "g": 132,
-                                "b": 181,
-                                "a": 1
-                            }
+                            "value": "#E484B5"
                         },
                         {
                             "name": "Pink/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 220,
-                                "g": 91,
-                                "b": 157,
-                                "a": 1
-                            }
+                            "value": "#DC5B9D"
                         },
                         {
                             "name": "Pink/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 212,
-                                "g": 49,
-                                "b": 132,
-                                "a": 1
-                            }
+                            "value": "#D43184"
                         },
                         {
                             "name": "Pink/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 169,
-                                "g": 39,
-                                "b": 106,
-                                "a": 1
-                            }
+                            "value": "#A9276A"
                         },
                         {
                             "name": "Pink/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 127,
-                                "g": 30,
-                                "b": 79,
-                                "a": 1
-                            }
+                            "value": "#7F1E4F"
                         },
                         {
                             "name": "Pink/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 85,
-                                "g": 19,
-                                "b": 53,
-                                "a": 1
-                            }
+                            "value": "#551335"
                         },
                         {
                             "name": "Pink/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 43,
-                                "g": 10,
-                                "b": 26,
-                                "a": 1
-                            }
+                            "value": "#2B0A1A"
                         },
                         {
                             "name": "Red/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 252,
-                                "g": 238,
-                                "b": 239,
-                                "a": 1
-                            }
+                            "value": "#FCEEEF"
                         },
                         {
                             "name": "Red/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 247,
-                                "g": 215,
-                                "b": 218,
-                                "a": 1
-                            }
+                            "value": "#F7D7DA"
                         },
                         {
                             "name": "Red/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 240,
-                                "g": 174,
-                                "b": 181,
-                                "a": 1
-                            }
+                            "value": "#F0AEB5"
                         },
                         {
                             "name": "Red/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 232,
-                                "g": 133,
-                                "b": 143,
-                                "a": 1
-                            }
+                            "value": "#E8858F"
                         },
                         {
                             "name": "Red/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 225,
-                                "g": 92,
-                                "b": 106,
-                                "a": 1
-                            }
+                            "value": "#E15C6A"
                         },
                         {
                             "name": "Red/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 218,
-                                "g": 51,
-                                "b": 69,
-                                "a": 1
-                            }
+                            "value": "#DA3345"
                         },
                         {
                             "name": "Red/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 175,
-                                "g": 40,
-                                "b": 55,
-                                "a": 1
-                            }
+                            "value": "#AF2837"
                         },
                         {
                             "name": "Red/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 131,
-                                "g": 31,
-                                "b": 41,
-                                "a": 1
-                            }
+                            "value": "#831F29"
                         },
                         {
                             "name": "Red/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 87,
-                                "g": 20,
-                                "b": 28,
-                                "a": 1
-                            }
+                            "value": "#57141C"
                         },
                         {
                             "name": "Red/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 44,
-                                "g": 11,
-                                "b": 14,
-                                "a": 1
-                            }
+                            "value": "#2C0B0E"
                         },
                         {
                             "name": "Orange/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 244,
-                                "b": 235,
-                                "a": 1
-                            }
+                            "value": "#FFF4EB"
                         },
                         {
                             "name": "Orange/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 229,
-                                "b": 208,
-                                "a": 1
-                            }
+                            "value": "#FFE5D0"
                         },
                         {
                             "name": "Orange/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 253,
-                                "g": 203,
-                                "b": 161,
-                                "a": 1
-                            }
+                            "value": "#FDCBA1"
                         },
                         {
                             "name": "Orange/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 253,
-                                "g": 178,
-                                "b": 113,
-                                "a": 1
-                            }
+                            "value": "#FDB271"
                         },
                         {
                             "name": "Orange/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 252,
-                                "g": 152,
-                                "b": 66,
-                                "a": 1
-                            }
+                            "value": "#FC9842"
                         },
                         {
                             "name": "Orange/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 252,
-                                "g": 125,
-                                "b": 17,
-                                "a": 1
-                            }
+                            "value": "#FC7D11"
                         },
                         {
                             "name": "Orange/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 201,
-                                "g": 100,
-                                "b": 14,
-                                "a": 1
-                            }
+                            "value": "#C9640E"
                         },
                         {
                             "name": "Orange/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 151,
-                                "g": 76,
-                                "b": 10,
-                                "a": 1
-                            }
+                            "value": "#974C0A"
                         },
                         {
                             "name": "Orange/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 100,
-                                "g": 50,
-                                "b": 7,
-                                "a": 1
-                            }
+                            "value": "#643207"
                         },
                         {
                             "name": "Orange/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 51,
-                                "g": 25,
-                                "b": 4,
-                                "a": 1
-                            }
+                            "value": "#331904"
                         },
                         {
                             "name": "Yellow/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 249,
-                                "b": 229,
-                                "a": 1
-                            }
+                            "value": "#FFF9E5"
                         },
                         {
                             "name": "Yellow/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 243,
-                                "b": 205,
-                                "a": 1
-                            }
+                            "value": "#FFF3CD"
                         },
                         {
                             "name": "Yellow/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 230,
-                                "b": 155,
-                                "a": 1
-                            }
+                            "value": "#FFE69B"
                         },
                         {
                             "name": "Yellow/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 218,
-                                "b": 105,
-                                "a": 1
-                            }
+                            "value": "#FFDA69"
                         },
                         {
                             "name": "Yellow/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 205,
-                                "b": 55,
-                                "a": 1
-                            }
+                            "value": "#FFCD37"
                         },
                         {
                             "name": "Yellow/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 255,
-                                "g": 193,
-                                "b": 0,
-                                "a": 1
-                            }
+                            "value": "#FFC100"
                         },
                         {
                             "name": "Yellow/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 204,
-                                "g": 154,
-                                "b": 0,
-                                "a": 1
-                            }
+                            "value": "#CC9A00"
                         },
                         {
                             "name": "Yellow/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 153,
-                                "g": 116,
-                                "b": 1,
-                                "a": 1
-                            }
+                            "value": "#997401"
                         },
                         {
                             "name": "Yellow/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 102,
-                                "g": 77,
-                                "b": 2,
-                                "a": 1
-                            }
+                            "value": "#664D02"
                         },
                         {
                             "name": "Yellow/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 51,
-                                "g": 39,
-                                "b": 1,
-                                "a": 1
-                            }
+                            "value": "#332701"
                         },
                         {
                             "name": "Green/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 216,
-                                "g": 248,
-                                "b": 232,
-                                "a": 1
-                            }
+                            "value": "#D8F8E8"
                         },
                         {
                             "name": "Green/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 186,
-                                "g": 243,
-                                "b": 216,
-                                "a": 1
-                            }
+                            "value": "#BAF3D8"
                         },
                         {
                             "name": "Green/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 134,
-                                "g": 234,
-                                "b": 187,
-                                "a": 1
-                            }
+                            "value": "#86EABB"
                         },
                         {
                             "name": "Green/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 71,
-                                "g": 225,
-                                "b": 150,
-                                "a": 1
-                            }
+                            "value": "#47E196"
                         },
                         {
                             "name": "Green/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 29,
-                                "g": 201,
-                                "b": 117,
-                                "a": 1
-                            }
+                            "value": "#1DC975"
                         },
                         {
                             "name": "Green/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 21,
-                                "g": 148,
-                                "b": 84,
-                                "a": 1
-                            }
+                            "value": "#159454"
                         },
                         {
                             "name": "Green/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 17,
-                                "g": 117,
-                                "b": 67,
-                                "a": 1
-                            }
+                            "value": "#117543"
                         },
                         {
                             "name": "Green/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 8,
-                                "g": 93,
-                                "b": 50,
-                                "a": 1
-                            }
+                            "value": "#085D32"
                         },
                         {
                             "name": "Green/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 5,
-                                "g": 62,
-                                "b": 34,
-                                "a": 1
-                            }
+                            "value": "#053E22"
                         },
                         {
                             "name": "Green/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 2,
-                                "g": 31,
-                                "b": 17,
-                                "a": 1
-                            }
+                            "value": "#021F11"
                         },
                         {
                             "name": "Teal/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 225,
-                                "g": 239,
-                                "b": 232,
-                                "a": 1
-                            }
+                            "value": "#E1EFE8"
                         },
                         {
                             "name": "Teal/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 211,
-                                "g": 244,
-                                "b": 234,
-                                "a": 1
-                            }
+                            "value": "#D3F4EA"
                         },
                         {
                             "name": "Teal/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 168,
-                                "g": 233,
-                                "b": 213,
-                                "a": 1
-                            }
+                            "value": "#A8E9D5"
                         },
                         {
                             "name": "Teal/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 125,
-                                "g": 223,
-                                "b": 193,
-                                "a": 1
-                            }
+                            "value": "#7DDFC1"
                         },
                         {
                             "name": "Teal/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 83,
-                                "g": 212,
-                                "b": 172,
-                                "a": 1
-                            }
+                            "value": "#53D4AC"
                         },
                         {
                             "name": "Teal/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 47,
-                                "g": 201,
-                                "b": 151,
-                                "a": 1
-                            }
+                            "value": "#2FC997"
                         },
                         {
                             "name": "Teal/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 37,
-                                "g": 161,
-                                "b": 121,
-                                "a": 1
-                            }
+                            "value": "#25A179"
                         },
                         {
                             "name": "Teal/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 122,
-                                "b": 93,
-                                "a": 1
-                            }
+                            "value": "#007A5D"
                         },
                         {
                             "name": "Teal/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 80,
-                                "b": 61,
-                                "a": 1
-                            }
+                            "value": "#00503D"
                         },
                         {
                             "name": "Teal/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 3,
-                                "g": 40,
-                                "b": 31,
-                                "a": 1
-                            }
+                            "value": "#03281F"
                         },
                         {
                             "name": "Cyan/50",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 231,
-                                "g": 250,
-                                "b": 253,
-                                "a": 1
-                            }
+                            "value": "#E7FAFD"
                         },
                         {
                             "name": "Cyan/100",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 204,
-                                "g": 244,
-                                "b": 251,
-                                "a": 1
-                            }
+                            "value": "#CCF4FB"
                         },
                         {
                             "name": "Cyan/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 151,
-                                "g": 235,
-                                "b": 248,
-                                "a": 1
-                            }
+                            "value": "#97EBF8"
                         },
                         {
                             "name": "Cyan/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 96,
-                                "g": 224,
-                                "b": 244,
-                                "a": 1
-                            }
+                            "value": "#60E0F4"
                         },
                         {
                             "name": "Cyan/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 15,
-                                "g": 214,
-                                "b": 241,
-                                "a": 1
-                            }
+                            "value": "#0FD6F1"
                         },
                         {
                             "name": "Cyan/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 203,
-                                "b": 237,
-                                "a": 1
-                            }
+                            "value": "#00CBED"
                         },
                         {
                             "name": "Cyan/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 163,
-                                "b": 190,
-                                "a": 1
-                            }
+                            "value": "#00A3BE"
                         },
                         {
                             "name": "Cyan/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 122,
-                                "b": 142,
-                                "a": 1
-                            }
+                            "value": "#007A8E"
                         },
                         {
                             "name": "Cyan/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 82,
-                                "b": 95,
-                                "a": 1
-                            }
+                            "value": "#00525F"
                         },
                         {
                             "name": "Cyan/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 40,
-                                "b": 47,
-                                "a": 1
-                            }
+                            "value": "#00282F"
                         },
                         {
                             "name": "Opacity/Transparent",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0,
-                                "a": 0
-                            }
+                            "value": "#00000000"
                         },
                         {
                             "name": "Opacity/Black opacity 1",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0,
-                                "a": 0.1
-                            }
+                            "value": "#0000001A"
                         },
                         {
                             "name": "Opacity/Black opacity 2",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0,
-                                "a": 0.2
-                            }
+                            "value": "#00000033"
                         },
                         {
                             "name": "Opacity/Black opacity 3",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0,
-                                "a": 0.3
-                            }
+                            "value": "#0000004D"
                         },
                         {
                             "name": "Opacity/Black opacity 4",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0,
-                                "a": 0.4
-                            }
+                            "value": "#00000066"
                         },
                         {
                             "name": "Opacity/Black opacity 5",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0,
-                                "a": 0.5
-                            }
+                            "value": "#00000080"
                         },
                         {
                             "name": "Opacity/Black opacity 6",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0,
-                                "a": 0.6
-                            }
+                            "value": "#00000099"
                         },
                         {
                             "name": "Opacity/Black opacity 7",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0,
-                                "a": 0.7
-                            }
+                            "value": "#000000B3"
                         },
                         {
                             "name": "Opacity/Black opacity 8",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0,
-                                "a": 0.8
-                            }
+                            "value": "#000000CC"
                         },
                         {
                             "name": "Opacity/Black opacity 9",
                             "type": "color",
                             "isAlias": false,
-                            "value": {
-                                "r": 0,
-                                "g": 0,
-                                "b": 0,
-                                "a": 0.9
-                            }
+                            "value": "#000000E6"
+                        },
+                        {
+                            "name": "Opacity/White opacity 1",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF1A"
+                        },
+                        {
+                            "name": "Opacity/White opacity 2",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF33"
+                        },
+                        {
+                            "name": "Opacity/White opacity 3",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF4D"
+                        },
+                        {
+                            "name": "Opacity/White opacity 4",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF66"
+                        },
+                        {
+                            "name": "Opacity/White opacity 5",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF80"
+                        },
+                        {
+                            "name": "Opacity/White opacity 6",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF99"
+                        },
+                        {
+                            "name": "Opacity/White opacity 7",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFFB3"
+                        },
+                        {
+                            "name": "Opacity/White opacity 8",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFFCC"
+                        },
+                        {
+                            "name": "Opacity/White opacity 9",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFFE6"
                         }
                     ]
                 }
