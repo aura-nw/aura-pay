@@ -8,7 +8,7 @@ abstract interface class LocalStorageRepository<K,V> {
     required K key,
   });
 
-  Future<V> getValue<T>({
+  Future<V?> getValue<T>({
     required K key,
   });
 

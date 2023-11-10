@@ -34,10 +34,25 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SvgPicture.asset(
-                        AssetLogoPath.logoWithName,
+                        AssetLogoPath.logo,
                       ),
                       const SizedBox(
                         height: BoxSize.boxSize06,
+                      ),
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return Text(
+                            localization.translate(
+                              LanguageKey.globalPyxisTitle,
+                            ),
+                            style: AppTypoGraPhy.heading04.copyWith(
+                              color: appTheme.contentColorBlack,
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: BoxSize.boxSize03,
                       ),
                       AppLocalizationProvider(
                         builder: (localization, _) {
@@ -52,7 +67,6 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                           );
                         },
                       ),
-
                     ],
                   ),
                 ),

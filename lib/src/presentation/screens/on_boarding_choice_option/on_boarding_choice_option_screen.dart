@@ -7,6 +7,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'widgets/choice_option_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 
@@ -30,10 +31,44 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: Center(
-                    child: SvgPicture.asset(
-                      AssetLogoPath.logoWithName,
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        AssetLogoPath.logo,
+                      ),
+                      const SizedBox(
+                        height: BoxSize.boxSize06,
+                      ),
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return Text(
+                            localization.translate(
+                              LanguageKey.globalPyxisTitle,
+                            ),
+                            style: AppTypoGraPhy.heading04.copyWith(
+                              color: appTheme.contentColorBlack,
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: BoxSize.boxSize03,
+                      ),
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return Text(
+                            localization.translate(
+                              LanguageKey.onBoardingChoiceOptionScreenTitle,
+                            ),
+                            style: AppTypoGraPhy.body03.copyWith(
+                              color: appTheme.contentColor500,
+                            ),
+                            textAlign: TextAlign.center,
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
                 StatefulBuilder(

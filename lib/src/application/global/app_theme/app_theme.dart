@@ -123,6 +123,7 @@ interface class AppTheme {
   late Color contentColor700;
   late Color contentColorBlack;
   late Color contentColorOpacity1;
+  late Color contentColorOpacity2;
   late Color contentColorBrandLight;
   late Color contentColorBrand;
   late Color contentColorBrandDark;

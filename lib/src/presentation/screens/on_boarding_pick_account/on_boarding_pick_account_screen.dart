@@ -164,6 +164,7 @@ class _OnBoardingPickAccountScreenState
                                         );
                                       },
                                       hintText: 'Input account name',
+                                      maxLength: 255,
                                     );
                                   },
                                 ),

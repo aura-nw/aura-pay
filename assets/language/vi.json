@@ -1,4 +1,6 @@
 {
+  "global_pyxis_title" : "Pyxis",
+
   "on_boarding_get_started_screen_title" : "The go-to platform for multi-signature asset management on the Interchain",
   "on_boarding_get_started_screen_button_title" : "Get Started",
   "on_boarding_get_started_screen_term_of_service" : "Term of Services",
@@ -6,6 +8,7 @@
   "on_boarding_get_started_screen_privacy_policy_title_region_one" : "By clicking Get Started, you agree to our and you have read our ${privacy_policy}",
   "on_boarding_get_started_screen_privacy_policy_title_region_two" : "and you have read our",
 
+  "on_boarding_choice_option_screen_title" : "The go-to platform for multi-signature asset management on the Interchain",
   "on_boarding_choice_option_screen_create_smart_account_title" : "Create new smart account",
   "on_boarding_choice_option_screen_create_smart_account_content" : "Pyxis will cover the initial fee to activate your account",
   "on_boarding_choice_option_screen_import_exist_account_title" : "Import existing account",
