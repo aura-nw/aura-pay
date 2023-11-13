@@ -33,12 +33,6 @@ Future<void> initDependency(
 
   final GoogleSignIn googleSignIn = GoogleSignIn(
     signInOption: SignInOption.standard,
-    clientId:
-        config.googleClientId,
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
   );
 
   final AuraWalletCore coreWallet = AuraWalletCore.create(
