@@ -1,5 +1,6 @@
 {
   "global_pyxis_title" : "Pyxis",
+  "global_pyxis_copy_message" : "Copy ${value} success",
 
   "on_boarding_get_started_screen_title" : "The go-to platform for multi-signature asset management on the Interchain",
   "on_boarding_get_started_screen_button_title" : "Get Started",

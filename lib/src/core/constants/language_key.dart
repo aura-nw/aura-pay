@@ -1,5 +1,6 @@
 sealed class LanguageKey {
   static const String globalPyxisTitle = 'global_pyxis_title';
+  static const String globalPyxisCopyMessage = 'global_pyxis_copy_message';
 
   ///region onboarding get started
   static const String onBoardingGetStartedScreenTitle = 'on_boarding_get_started_screen_title';
