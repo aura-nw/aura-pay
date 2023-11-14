@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
@@ -105,8 +107,9 @@ class PickRecoverOptionWidget extends StatefulWidget {
 }
 
 class _PickRecoverOptionWidgetState extends State<PickRecoverOptionWidget> {
+  /// Fake for deploy test flight
   ///Default type
-  RecoverOptionType type = RecoverOptionType.google;
+  RecoverOptionType type = RecoverOptionType.backupAddress;
 
   @override
   Widget build(BuildContext context) {
@@ -114,25 +117,26 @@ class _PickRecoverOptionWidgetState extends State<PickRecoverOptionWidget> {
       builder: (localization, _) {
         return Column(
           children: [
-            _PickRecoverOptionItemWidget(
-              content: localization.translate(
-                LanguageKey.onBoardingRecoverChoiceScreenGoogleOptionContent,
+            if (Platform.isAndroid)
+              _PickRecoverOptionItemWidget(
+                content: localization.translate(
+                  LanguageKey.onBoardingRecoverChoiceScreenGoogleOptionContent,
+                ),
+                title: localization.translate(
+                  LanguageKey.onBoardingRecoverChoiceScreenGoogleOptionTitle,
+                ),
+                iconPath: AssetIconPath.onBoardingRecoverChoiceGoogle,
+                appTheme: widget.appTheme,
+                isSelected: type == RecoverOptionType.google,
+                onTap: () {
+                  widget.onSelect(
+                    RecoverOptionType.google,
+                  );
+                  setState(() {
+                    type = RecoverOptionType.google;
+                  });
+                },
               ),
-              title: localization.translate(
-                LanguageKey.onBoardingRecoverChoiceScreenGoogleOptionTitle,
-              ),
-              iconPath: AssetIconPath.onBoardingRecoverChoiceGoogle,
-              appTheme: widget.appTheme,
-              isSelected: type == RecoverOptionType.google,
-              onTap: () {
-                widget.onSelect(
-                  RecoverOptionType.google,
-                );
-                setState(() {
-                  type = RecoverOptionType.google;
-                });
-              },
-            ),
             const SizedBox(
               height: BoxSize.boxSize02,
             ),

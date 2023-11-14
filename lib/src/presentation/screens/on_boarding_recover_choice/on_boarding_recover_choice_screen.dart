@@ -35,7 +35,8 @@ class OnBoardingRecoverChoiceScreen extends StatefulWidget {
 
 class _OnBoardingRecoverChoiceScreenState
     extends State<OnBoardingRecoverChoiceScreen> with CustomFlutterToast {
-  RecoverOptionType selectedType = RecoverOptionType.google;
+  /// Fake for deploy test flight
+  RecoverOptionType selectedType = RecoverOptionType.backupAddress;
 
   final OnBoardingRecoverChoiceBloc _bloc =
       getIt.get<OnBoardingRecoverChoiceBloc>();
