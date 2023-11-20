@@ -30,7 +30,7 @@ abstract interface class AuraSmartAccount {
   }
 
   /// Generate a smart account address.
-  /// This method has to pass two parameters include:, [pubKey] as List<int>, [salt] as List<int>?,
+  /// This method has to pass two parameters include: [pubKey] as List<int>, [salt] as List<int>?,
   /// Response a [QueryGenerateAccountResponse]
   /// It can throw [GrpcError]
   Future<QueryGenerateAccountResponse> generateSmartAccount({
@@ -39,10 +39,12 @@ abstract interface class AuraSmartAccount {
   });
 
   /// Active a smart account
+  /// This method has to pass two parameters include: [smartAccountAddress] as String, [pubKey] as List<int>, [salt] as List<int>?,
   /// It can throw [GrpcError]
   Future<MsgActivateAccountResponse> activeSmartAccount({
+    required String walletAddress,
     required String smartAccountAddress,
-    required List<int> pubKey,
+    required List<int> initPubKey,
     List<int>? salt,
 
   });

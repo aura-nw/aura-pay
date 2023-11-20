@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_smart_account/src/core/constants/aura_network_information.dart';
 import 'package:aura_smart_account/src/core/definitions/grpc_client_channel.dart';
@@ -69,8 +71,9 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
   @override
   Future<MsgActivateAccountResponse> activeSmartAccount({
+    required String walletAddress,
     required String smartAccountAddress,
-    required List<int> pubKey,
+    required List<int> initPubKey,
     List<int>? salt,
   }) async {
     // Create msg MsgActivateAccount.
@@ -82,28 +85,45 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       salt: salt,
       publicKey: Any.create()
         ..typeUrl = pubKeyTypeUrl
-        ..value = pubKey,
+        ..value = initPubKey,
     );
 
     // Create query account request
     final auth.QueryAccountRequest queryAccountRequest =
         auth.QueryAccountRequest(
-      address: smartAccountAddress,
+      address: walletAddress,
     );
 
-    // Get account
+    final auth.QueryAccountResponse account =
+        await queryAuthClient.account(queryAccountRequest);
+
+    // create account request with smart account address
+    queryAccountRequest.clearAddress();
+    queryAccountRequest.address = smartAccountAddress;
+
+    // Get smart account
     final auth.QueryAccountResponse accountResponse =
         await queryAuthClient.account(queryAccountRequest);
 
-    // create smart account
-    final aura.SmartAccount smartAccount = aura.SmartAccount.create();
+    // create signer data
+    final aura.SmartAccount smartAccount = aura.SmartAccount.create()
+      ..address = accountResponse.account.value.toString();
+
+    final Map<String, dynamic> singerData = {
+      'chain_id': '',
+      'accountNumber': smartAccount.accountNumber,
+      'sequence': smartAccount.sequence,
+    };
 
     // create broadcast tx request
-    tx.BroadcastTxRequest broadcastTxRequest = tx.BroadcastTxRequest();
+    tx.BroadcastTxRequest broadcastTxRequest = tx.BroadcastTxRequest(
+      mode: tx.BroadcastMode.BROADCAST_MODE_ASYNC,
+    );
 
     // Broadcast TxBytes
     final tx.BroadcastTxResponse broadcastTxResponse =
         await serviceClient.broadcastTx(broadcastTxRequest);
+
 
     if (broadcastTxResponse.txResponse.code == 0) {
       return aura.MsgActivateAccountResponse(
