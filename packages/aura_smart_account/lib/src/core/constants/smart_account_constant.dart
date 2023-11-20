@@ -1,0 +1,14 @@
+import 'dart:convert';
+
+const String pubKeyTypeUrl = '/cosmos.crypto.secp256k1.PubKey';
+
+final List<int> initMsgDefault = utf8.encode(
+  jsonEncode(
+    {
+      'plugin_manager_addr':
+          'aura1mjq9u2pteesx4wr4u3ddnxhxcspyz2yk7rt4snq820la0cwpruvs0qkhk8',
+    },
+  ),
+);
+
+const int codeId = 726;
