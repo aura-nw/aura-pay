@@ -1,5 +1,7 @@
 library aura_smart_account;
 
+import 'dart:typed_data';
+
 import 'package:aura_smart_account/src/aura_smart_account_impl.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart';
@@ -39,13 +41,19 @@ abstract interface class AuraSmartAccount {
   });
 
   /// Active a smart account
-  /// This method has to pass two parameters include: [smartAccountAddress] as String, [pubKey] as List<int>, [salt] as List<int>?,
-  /// It can throw [GrpcError]
+  /// This method has to pass seven parameters include: [userPrivateKey] as Uint8List,
+  /// [smartAccountAddress] as String,
+  /// [salt] as List<int>,
+  /// [memo] as String?,
+  /// [fee] as String,
+  /// [gasLimit] as int,
+  /// It can throw [GrpcError] or [Exception]
   Future<MsgActivateAccountResponse> activeSmartAccount({
-    required String walletAddress,
+    required Uint8List userPrivateKey,
     required String smartAccountAddress,
-    required List<int> initPubKey,
     List<int>? salt,
-
+    String? memo,
+    required String fee,
+    required int gasLimit,
   });
 }

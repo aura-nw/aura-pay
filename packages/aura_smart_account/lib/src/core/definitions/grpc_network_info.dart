@@ -1,14 +1,20 @@
 import 'package:grpc/grpc_or_grpcweb.dart';
 
-class GrpcClientChannel {
+class AuraNetworkInfo {
   final String host;
   final int port;
   final bool grpcTransportSecure;
+  final String chainId;
+  final String bech32Hrp;
+  final String denom;
 
-  const GrpcClientChannel({
+  const AuraNetworkInfo({
     required this.host,
     this.port = 9092,
     this.grpcTransportSecure = false,
+    required this.chainId,
+    required this.bech32Hrp,
+    required this.denom,
   });
 
   GrpcOrGrpcWebClientChannel getChannel() {

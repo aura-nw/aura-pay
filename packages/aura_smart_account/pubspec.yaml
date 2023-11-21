@@ -13,6 +13,8 @@ dependencies:
   protobuf: ^2.0.0
   grpc: ^3.2.4
   pointycastle: ^3.7.3
+  hex: ^0.2.0
+  bech32: ^0.2.0
 
 dev_dependencies:
   flutter_test:
