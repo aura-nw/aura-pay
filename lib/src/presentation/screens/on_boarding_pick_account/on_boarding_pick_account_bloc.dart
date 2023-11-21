@@ -1,4 +1,6 @@
-import 'package:domain/domain.dart' show WalletUseCase;
+import 'dart:typed_data';
+
+import 'package:domain/domain.dart' show WalletUseCase, SmartAccountUseCase;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'on_boarding_pick_account_event.dart';
 import 'on_boarding_pick_account_state.dart';
@@ -6,8 +8,9 @@ import 'on_boarding_pick_account_state.dart';
 class OnBoardingPickAccountBloc
     extends Bloc<OnBoardingPickAccountEvent, OnBoardingPickAccountState> {
   final WalletUseCase _walletUseCase;
+  final SmartAccountUseCase _smartAccountUseCase;
 
-  OnBoardingPickAccountBloc(this._walletUseCase)
+  OnBoardingPickAccountBloc(this._walletUseCase, this._smartAccountUseCase)
       : super(
           const OnBoardingPickAccountState(),
         ) {
@@ -30,20 +33,21 @@ class OnBoardingPickAccountBloc
         walletName: state.accountName,
       );
 
-      /// call api check fee gas
+      /// Create a smart account address
+      final String smartAccount =
+          await _smartAccountUseCase.generateSmartAccount(
+        pubKey: Uint8List(0),
+      );
 
-      await Future.delayed(const Duration(
-         milliseconds: 1200,
-      ));
+      /// call api check fee gas
 
       bool isFreeFee = false;
 
-      if(isFreeFee){
+      if (isFreeFee) {
         emit(state.copyWith(
           status: OnBoardingPickAccountStatus.onCheckAddressEnoughFee,
         ));
-
-      }else{
+      } else {
         emit(state.copyWith(
           status: OnBoardingPickAccountStatus.onCheckAddressUnEnoughFee,
           walletAddress: wallet.bech32Address,

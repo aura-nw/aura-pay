@@ -45,6 +45,8 @@ dependencies:
     git:
       url: https://github.com/aura-nw/aura-wallet-core.git
       ref: core_wallet
+  aura_smart_account:
+    path: ./packages/aura_smart_account
 
   #3-party
   google_sign_in: ^6.1.5

@@ -8,8 +8,6 @@ import 'package:aura_smart_account/src/proto/cosmos/tx/signing/v1beta1/export.da
 import 'package:aura_smart_account/src/proto/cosmos/tx/v1beta1/export.dart'
     as tx;
 import 'package:aura_smart_account/src/proto/google/protobuf/export.dart';
-
-import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'wallet_helper.dart';
 
 typedef AccountDeserializer = Account Function(Any);

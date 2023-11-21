@@ -57,8 +57,8 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
   @override
   Future<QueryGenerateAccountResponse> generateSmartAccount({
-    required List<int> pubKey,
-    List<int>? salt,
+    required Uint8List pubKey,
+    Uint8List? salt,
   }) async {
     // Create query account request.
     final aura.QueryGenerateAccountRequest request =
@@ -79,7 +79,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
   Future<MsgActivateAccountResponse> activeSmartAccount({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
-    List<int>? salt,
+    Uint8List? salt,
     String? memo,
     required String fee,
     required int gasLimit,

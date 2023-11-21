@@ -1,9 +1,9 @@
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 
-final class WalletService {
+final class WalletProvider {
   final AuraWalletCore _auraWalletCore;
 
-  const WalletService(this._auraWalletCore);
+  const WalletProvider(this._auraWalletCore);
 
   Future<AuraWallet> createWallet({
     required String walletName,

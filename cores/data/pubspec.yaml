@@ -21,6 +21,8 @@ dependencies:
       path: flutter_secure_storage
       url: https://github.com/aura-nw/flutter_secure_storage.git
       ref: feature/biometric_mobile
+  aura_smart_account:
+    path: ../../packages/aura_smart_account
   google_sign_in: ^6.1.5
 
 dev_dependencies:

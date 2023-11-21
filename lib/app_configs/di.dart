@@ -1,3 +1,4 @@
+import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:aura_wallet_core/config_options/environment_options.dart';
 import 'package:data/data.dart';
@@ -39,6 +40,10 @@ Future<void> initDependency(
     environment: AuraEnvironment.testNet,
   );
 
+  final AuraSmartAccount auraSmartAccount = AuraSmartAccount.create(
+    AuraSmartAccountEnvironment.serenity,
+  );
+
   getIt.registerFactory<Dio>(
     () => dio,
   );
@@ -54,8 +59,16 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerLazySingleton<WalletService>(
-    () => WalletService(coreWallet),
+  ///Provider
+
+  getIt.registerLazySingleton<WalletProvider>(
+    () => WalletProvider(coreWallet),
+  );
+
+  getIt.registerLazySingleton<SmartAccountProvider>(
+    () => SmartAccountProvider(
+      auraSmartAccount,
+    ),
   );
 
   ///Repository
@@ -65,13 +78,19 @@ Future<void> initDependency(
 
   getIt.registerLazySingleton<WalletRepository>(
     () => WalletRepositoryImpl(
-      getIt.get<WalletService>(),
+      getIt.get<WalletProvider>(),
     ),
   );
 
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       getIt.get<AuthApiService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<SmartAccountRepository>(
+    () => SmartAccountRepositoryImpl(
+      getIt.get<SmartAccountProvider>(),
     ),
   );
 
@@ -91,6 +110,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton(
     () => AuthUseCase(
       getIt.get<AuthRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<SmartAccountUseCase>(
+    () => SmartAccountUseCase(
+      getIt.get<SmartAccountRepository>(),
     ),
   );
 

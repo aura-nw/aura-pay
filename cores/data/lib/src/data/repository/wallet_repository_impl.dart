@@ -1,9 +1,9 @@
 import 'package:aura_wallet_core/aura_wallet_core.dart';
-import 'package:data/src/data/resource/remote/wallet_service.dart';
+import 'package:data/src/data/resource/provider/provider.dart';
 import 'package:domain/domain.dart';
 
 final class WalletRepositoryImpl implements WalletRepository {
-  final WalletService _walletService;
+  final WalletProvider _walletService;
 
   const WalletRepositoryImpl(this._walletService);
 
