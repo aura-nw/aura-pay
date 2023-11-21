@@ -36,7 +36,7 @@ class OnBoardingPickAccountBloc
       /// Create a smart account address
       final String smartAccount =
           await _smartAccountUseCase.generateSmartAccount(
-        pubKey: Uint8List(0),
+        pubKey: wallet.publicKey,
       );
 
       /// call api check fee gas
@@ -50,7 +50,7 @@ class OnBoardingPickAccountBloc
       } else {
         emit(state.copyWith(
           status: OnBoardingPickAccountStatus.onCheckAddressUnEnoughFee,
-          walletAddress: wallet.bech32Address,
+          walletAddress: smartAccount,
         ));
       }
     } catch (e) {

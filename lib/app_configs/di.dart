@@ -127,6 +127,7 @@ Future<void> initDependency(
   getIt.registerFactory<OnBoardingPickAccountBloc>(
     () => OnBoardingPickAccountBloc(
       getIt.get<WalletUseCase>(),
+      getIt.get<SmartAccountUseCase>(),
     ),
   );
 

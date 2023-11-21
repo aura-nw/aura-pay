@@ -11,9 +11,10 @@ import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
 import 'package:aura_smart_account/src/proto/cosmos/base/v1beta1/coin.pb.dart';
 import 'package:aura_smart_account/src/proto/cosmos/tx/v1beta1/export.dart'
     as tx;
-import 'package:aura_smart_account/src/proto/google/protobuf/export.dart';
+import 'package:aura_smart_account/src/proto/google/protobuf/export.dart' as pb;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
+import 'package:protobuf/protobuf.dart';
 
 import 'core/constants/smart_account_constant.dart';
 import 'core/helpers/aura_smart_account_helper.dart';
@@ -63,7 +64,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     // Create query account request.
     final aura.QueryGenerateAccountRequest request =
         aura.QueryGenerateAccountRequest(
-      publicKey: Any.create()
+      publicKey: pb.Any.create()
         ..typeUrl = AuraSmartAccountConstant.pubKeyTypeUrl
         ..value = pubKey,
       salt: salt,
@@ -89,13 +90,12 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     );
 
     // Create msg MsgActivateAccount.
-    final aura.MsgActivateAccount msgActivateAccountRequest =
-        aura.MsgActivateAccount(
+    final GeneratedMessage msgActivateAccountRequest = aura.MsgActivateAccount(
       codeId: $fixnum.Int64(AuraSmartAccountConstant.codeId),
       initMsg: AuraSmartAccountConstant.initMsgDefault,
       accountAddress: smartAccountAddress,
       salt: salt,
-      publicKey: Any.create()
+      publicKey: pb.Any.create()
         ..typeUrl = AuraSmartAccountConstant.pubKeyTypeUrl
         ..value = pubKey,
     );
@@ -128,7 +128,10 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       privateKey: userPrivateKey,
       queryClient: queryAuthClient,
       messages: [
-        msgActivateAccountRequest as Any,
+        pb.Any.pack(
+          msgActivateAccountRequest,
+          typeUrlPrefix: '',
+        ),
       ],
       signerData: smartAccount,
       chainId: auraNetworkInfo.chainId,
