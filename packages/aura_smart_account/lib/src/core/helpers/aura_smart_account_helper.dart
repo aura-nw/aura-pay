@@ -32,14 +32,13 @@ sealed class AuraSmartAccountHelper {
     required tx.Fee fee,
     String? memo,
   }) async {
-
     if (!fee.hasGasLimit()) {
       throw Exception('Invalid fees: invalid gas amount specified');
     }
 
     // get user Address from privateKey
     final Uint8List userAddressBytes =
-    WalletHelper.getBech32AddressFromPublicKey(
+        WalletHelper.getBech32AddressFromPublicKey(
       WalletHelper.getPublicKeyFromPrivateKey(
         privateKey,
       ),
@@ -70,6 +69,7 @@ sealed class AuraSmartAccountHelper {
       signerInfos: [
         tx.SignerInfo(
           publicKey: account.pubKey(),
+          sequence: signerData.sequence,
           modeInfo: tx.ModeInfo(
             single: tx.ModeInfo_Single(
               mode: signing.SignMode.SIGN_MODE_DIRECT,
