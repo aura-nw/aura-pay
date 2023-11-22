@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenLoaderMixin{
     );
 
     _auraSmartAccount = AuraSmartAccount.create(
-      AuraSmartAccountEnvironment.serenity,
+      AuraSmartAccountEnvironment.test,
     );
     super.initState();
   }
@@ -138,6 +138,8 @@ class _MyHomePageState extends State<MyHomePage> with ScreenLoaderMixin{
       );
 
       _smartAccountAddress = smartAccountResponse.address;
+
+      dev.log('Smart account address = $_smartAccountAddress');
     } catch (e, s) {
       _error = e.toString();
 
