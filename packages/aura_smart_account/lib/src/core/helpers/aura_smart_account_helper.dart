@@ -63,7 +63,7 @@ sealed class AuraSmartAccountHelper {
     // Get tx Body Bytes
     final Uint8List txBodyBytes = txBody.writeToBuffer();
 
-    // Create auth Infor
+    // Create auth Info
     final tx.AuthInfo authInfo = tx.AuthInfo(
       fee: tx.Fee.create(),
       signerInfos: [

@@ -9,6 +9,8 @@ import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.da
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
     as auth;
 import 'package:aura_smart_account/src/proto/cosmos/base/v1beta1/coin.pb.dart';
+import 'package:aura_smart_account/src/proto/cosmos/crypto/secp256k1/export.dart'
+    as secp256;
 import 'package:aura_smart_account/src/proto/cosmos/tx/v1beta1/export.dart'
     as tx;
 import 'package:aura_smart_account/src/proto/google/protobuf/export.dart' as pb;
@@ -34,8 +36,10 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
   /// Create client
   void _createClient(AuraSmartAccountEnvironment environment) {
-    auraNetworkInfo = AuraNetWorkInformationConstant.serenityChannel;
+    auraNetworkInfo = AuraNetWorkInformationConstant.testChannel;
     switch (environment) {
+      case AuraSmartAccountEnvironment.test:
+        auraNetworkInfo = AuraNetWorkInformationConstant.testChannel;
       case AuraSmartAccountEnvironment.serenity:
         auraNetworkInfo = AuraNetWorkInformationConstant.serenityChannel;
       case AuraSmartAccountEnvironment.euphoria:
@@ -61,12 +65,15 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     required Uint8List pubKey,
     Uint8List? salt,
   }) async {
+    // Generate a pub key from user pub key
+    final Uint8List pubKeyGenerate = _generateSmartAccountPubKeyFromUserPubKey(pubKey);
+
     // Create query account request.
     final aura.QueryGenerateAccountRequest request =
         aura.QueryGenerateAccountRequest(
       publicKey: pb.Any.create()
         ..typeUrl = AuraSmartAccountConstant.pubKeyTypeUrl
-        ..value = pubKey,
+        ..value = pubKeyGenerate,
       salt: salt,
       initMsg: AuraSmartAccountConstant.initMsgDefault,
       codeId: $fixnum.Int64(AuraSmartAccountConstant.codeId),
@@ -89,6 +96,9 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       userPrivateKey,
     );
 
+    // Generate a pub key from user pub key
+    final Uint8List pubKeyGenerate = _generateSmartAccountPubKeyFromUserPubKey(pubKey);
+
     // Create msg MsgActivateAccount.
     final GeneratedMessage msgActivateAccountRequest = aura.MsgActivateAccount(
       codeId: $fixnum.Int64(AuraSmartAccountConstant.codeId),
@@ -97,7 +107,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       salt: salt,
       publicKey: pb.Any.create()
         ..typeUrl = AuraSmartAccountConstant.pubKeyTypeUrl
-        ..value = pubKey,
+        ..value = pubKeyGenerate,
     );
 
     // Get account from smart account
@@ -157,5 +167,15 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     }
 
     throw broadcastTxResponse.txResponse.rawLog;
+  }
+
+  Uint8List _generateSmartAccountPubKeyFromUserPubKey(Uint8List pubKey){
+    secp256.PubKey secp256PubKey = secp256.PubKey.create()..key = pubKey;
+
+    final Uint8List pubKeyGenerate = Uint8List.fromList(
+      secp256PubKey.writeToBuffer(),
+    );
+
+    return pubKeyGenerate;
   }
 }
