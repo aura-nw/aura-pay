@@ -7,10 +7,12 @@ import 'package:aura_smart_account/src/proto/cosmos/tx/signing/v1beta1/export.da
     as signing;
 import 'package:aura_smart_account/src/proto/cosmos/tx/v1beta1/export.dart'
     as tx;
-import 'package:aura_smart_account/src/proto/google/protobuf/export.dart';
+import 'package:aura_smart_account/src/proto/google/protobuf/export.dart' as pb;
+import 'package:aura_smart_account/src/proto/cosmos/crypto/secp256k1/export.dart'
+    as secp256;
 import 'wallet_helper.dart';
 
-typedef AccountDeserializer = Account Function(Any);
+typedef AccountDeserializer = Account Function(pb.Any);
 
 sealed class AuraSmartAccountHelper {
   static final Map<String, AccountDeserializer> _deserializerAccounts = {
@@ -26,7 +28,7 @@ sealed class AuraSmartAccountHelper {
     required String bech32Hrp,
     required Uint8List privateKey,
     required auth.QueryClient queryClient,
-    required List<Any> messages,
+    required List<pb.Any> messages,
     required SmartAccount signerData,
     required String chainId,
     required tx.Fee fee,
@@ -36,12 +38,15 @@ sealed class AuraSmartAccountHelper {
       throw Exception('Invalid fees: invalid gas amount specified');
     }
 
+    // get public key from private key
+    final Uint8List publicKey = WalletHelper.getPublicKeyFromPrivateKey(
+      privateKey,
+    );
+
     // get user Address from privateKey
     final Uint8List userAddressBytes =
         WalletHelper.getBech32AddressFromPublicKey(
-      WalletHelper.getPublicKeyFromPrivateKey(
-        privateKey,
-      ),
+      publicKey,
     );
     final String userAddress = WalletHelper.encodeBech32Address(
       bech32Hrp,
@@ -53,6 +58,16 @@ sealed class AuraSmartAccountHelper {
       address: userAddress,
       queryClient: queryClient,
     );
+
+    //
+    pb.Any pubKey = account.pubKey();
+    if (pubKey.value.isNotEmpty != true) {
+      final secp256Key = secp256.PubKey.create()..key = publicKey;
+      pubKey = pb.Any.pack(
+        secp256Key,
+        typeUrlPrefix: '',
+      );
+    }
 
     // Create txBody
     final tx.TxBody txBody = tx.TxBody(
@@ -68,7 +83,7 @@ sealed class AuraSmartAccountHelper {
       fee: tx.Fee.create(),
       signerInfos: [
         tx.SignerInfo(
-          publicKey: account.pubKey(),
+          publicKey: pubKey,
           sequence: signerData.sequence,
           modeInfo: tx.ModeInfo(
             single: tx.ModeInfo_Single(
