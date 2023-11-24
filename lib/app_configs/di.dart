@@ -134,11 +134,13 @@ Future<void> initDependency(
   getIt.registerFactory<OnBoardingImportKeyBloc>(
     () => OnBoardingImportKeyBloc(
       getIt.get<WalletUseCase>(),
+      getIt.get<SmartAccountUseCase>(),
     ),
   );
 
   getIt.registerFactoryParam<OnBoardingScanFeeBloc, String, dynamic>(
     (smartAccountAddress, param2) => OnBoardingScanFeeBloc(
+      getIt.get<SmartAccountUseCase>(),
       smartAccountAddress: smartAccountAddress,
     ),
   );

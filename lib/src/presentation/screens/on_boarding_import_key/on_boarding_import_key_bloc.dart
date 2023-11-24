@@ -1,13 +1,16 @@
+import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'on_boarding_import_key_event.dart';
 import 'on_boarding_import_key_state.dart';
 
 class OnBoardingImportKeyBloc
     extends Bloc<OnBoardingImportKeyEvent, OnBoardingImportKeyState> {
   final WalletUseCase _walletUseCase;
+  final SmartAccountUseCase _smartAccountUseCase;
 
-  OnBoardingImportKeyBloc(this._walletUseCase)
+  OnBoardingImportKeyBloc(this._walletUseCase,this._smartAccountUseCase)
       : super(
           const OnBoardingImportKeyState(),
         ) {
@@ -65,12 +68,19 @@ class OnBoardingImportKeyBloc
       ),
     );
     try {
-      await _walletUseCase.importWallet(
-        privateKeyOrPassPhrase: state.key,
+      switch(state.pyxisWalletType){
+        case PyxisWalletType.smartAccount:
 
-        /// Set Default account name
-        walletName: 'Account 1',
-      );
+          break;
+        case PyxisWalletType.normalWallet:
+          await _walletUseCase.importWallet(
+            privateKeyOrPassPhrase: state.key,
+
+            /// Set Default account name
+            walletName: 'Account 1',
+          );
+          break;
+      }
 
       emit(
         state.copyWith(

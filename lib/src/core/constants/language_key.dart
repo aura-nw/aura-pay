@@ -127,7 +127,7 @@ sealed class LanguageKey {
   static const String onBoardingRecoverBackupAddressDoneScreenButtonDoneTitle = "on_boarding_recover_backup_address_done_screen_button_done_title";
   ///
 
-  ///region relogin
+  ///region re login
   static const String reLoginScreenTitle = "re_login_screen_title";
   static const String reLoginScreenForgetPassword = "re_login_screen_forget_password";
   static const String reLoginScreenDialogForgetPasswordTitle = "re_login_screen_dialog_forget_password_title";
@@ -135,4 +135,15 @@ sealed class LanguageKey {
   static const String reLoginScreenDialogForgetPasswordContentRegionTwo = "re_login_screen_dialog_forget_password_content_region_two";
   static const String reLoginScreenWrongCountDownTitle = "re_login_screen_wrong_count_down_title";
   ///endregion
+
+  ///region home page
+  static const String homePageSendToken = 'home_page_send_token';
+  static const String homePageReceiveToken = 'home_page_receive_token';
+  static const String homePageNFTs = 'home_page_nft';
+  static const String homePageTxLimit = 'home_page_tx_limit';
+  static const String homePageStake = 'home_page_tx_stake';
+  static const String homeTotalTokensValue = 'home_page_total_token_value';
+  static const String homePageNoTokenFoundTitle = 'home_page_no_token_found_title';
+  static const String homePageNoTokenFoundContent = 'home_page_no_token_found_content';
+  ///
 }

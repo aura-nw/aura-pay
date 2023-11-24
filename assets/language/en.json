@@ -108,5 +108,14 @@
   "re_login_screen_dialog_forget_password_title" : "Forget your passcode?",
   "re_login_screen_dialog_forget_password_content_region_one" : "You can delete Pyxis app and re-install. REMIND that all the current smart account/ wallet will be",
   "re_login_screen_dialog_forget_password_content_region_one_two" : "removed from this app permanently.",
-  "re_login_screen_wrong_count_down_title" : "Lock in ${time}"
+  "re_login_screen_wrong_count_down_title" : "Lock in ${time}",
+
+  "home_page_send_token" : "Send",
+  "home_page_receive_token" : "Receive",
+  "home_page_nft" : "NFTs",
+  "home_page_tx_limit" : "Txs limit",
+  "home_page_tx_stake" : "Stake",
+  "home_page_total_token_value" : "Total tokens value",
+  "home_page_no_token_found_title" : "No token found!",
+  "home_page_no_token_found_content" : "All tokens of this smart account is shown here"
 }

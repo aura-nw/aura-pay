@@ -44,4 +44,12 @@ sealed class AssetIconPath{
   static const String commonRadioCheck = '${_baseIconPath}ic_common_radio_check.svg';
   static const String commonClose = '${_baseIconPath}ic_common_close.svg';
   static const String commonInputError = '${_baseIconPath}ic_common_input_error.svg';
+
+  /// Home page
+  static const String homeNoTokenFound = '${_baseIconPath}ic_home_no_token_found.svg';
+  static const String homeSendToken= '${_baseIconPath}ic_home_send_token.svg';
+  static const String homeReceiveToken= '${_baseIconPath}ic_home_receive_token.svg';
+  static const String homeStake= '${_baseIconPath}ic_home_stake.svg';
+  static const String homeTxLimit= '${_baseIconPath}ic_home_tx_limit.svg';
+  static const String homeNFTs= '${_baseIconPath}ic_home_nfts.svg';
 }
