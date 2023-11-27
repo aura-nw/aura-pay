@@ -26,7 +26,6 @@ sealed class AuraSmartAccountHelper {
 
   static Future<tx.Tx> sign({
     required Uint8List privateKey,
-    required auth.QueryClient queryClient,
     required List<pb.Any> messages,
     required SmartAccount signerData,
     required String chainId,
@@ -37,7 +36,18 @@ sealed class AuraSmartAccountHelper {
       throw Exception('Invalid fees: invalid gas amount specified');
     }
 
+    final Uint8List publicKey = WalletHelper.getPublicKeyFromPrivateKey(
+      privateKey,
+    );
+
     pb.Any pubKey = signerData.pubKey;
+
+    final secp256Key = secp256.PubKey.create()..key = publicKey;
+
+    pubKey = pb.Any.pack(
+      secp256Key,
+      typeUrlPrefix: '',
+    );
 
     // Create txBody
     final tx.TxBody txBody = tx.TxBody(
@@ -120,7 +130,7 @@ sealed class AuraSmartAccountHelper {
     return _deserializerAccounts[key]!.call(response.account);
   }
 
-  static Uint8List generateSmartAccountPubKeyFromUserPubKey(Uint8List pubKey){
+  static Uint8List generateSmartAccountPubKeyFromUserPubKey(Uint8List pubKey) {
     secp256.PubKey secp256PubKey = secp256.PubKey.create()..key = pubKey;
 
     final Uint8List pubKeyGenerate = Uint8List.fromList(

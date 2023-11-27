@@ -22,6 +22,8 @@ import 'core/constants/smart_account_constant.dart';
 import 'core/helpers/aura_smart_account_helper.dart';
 import 'core/helpers/wallet_helper.dart';
 
+import 'dart:developer' as dev;
+
 /// [AuraSmartAccountImpl] class is implementation of [AuraSmartAccount]
 class AuraSmartAccountImpl implements AuraSmartAccount {
   late AuraNetworkInfo auraNetworkInfo;
@@ -110,7 +112,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         ..value = pubKeyGenerate,
     );
 
-    print('create message done');
+    dev.log('create message done');
 
     // Get account from smart account
     final Account accountResponse = await AuraSmartAccountHelper.getAccount(
@@ -118,7 +120,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       queryClient: queryAuthClient,
     );
 
-    print('Get smart account done');
+    dev.log('Get smart account done');
 
     // create signer data
     final aura.SmartAccount smartAccount = aura.SmartAccount.create()
@@ -127,7 +129,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       ..accountNumber = accountResponse.accountNumber()
       ..sequence = accountResponse.sequence();
 
-    print('create smart account done');
+    dev.log('create smart account done');
 
     // Create fee
     final tx.Fee feeSign = tx.Fee.create()
@@ -140,12 +142,11 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         ),
       );
 
-    print('create fee done');
+    dev.log('create fee done');
 
     // Create tx
     final tx.Tx txSign = await AuraSmartAccountHelper.sign(
       privateKey: userPrivateKey,
-      queryClient: queryAuthClient,
       messages: [
         pb.Any.pack(
           msgActivateAccountRequest,
@@ -160,7 +161,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
     final Uint8List txBytes = txSign.writeToBuffer();
 
-    print('create tx done ${txBytes}');
+    dev.log('create tx done ${txBytes}');
 
     // create broadcast tx request
     tx.BroadcastTxRequest broadcastTxRequest = tx.BroadcastTxRequest(
@@ -168,21 +169,24 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       txBytes: txBytes,
     );
 
-    print('create tx request done');
+    dev.log('create tx request done');
 
     // Broadcast TxBytes
     final tx.BroadcastTxResponse broadcastTxResponse =
         await serviceClient.broadcastTx(broadcastTxRequest);
 
-    print('Response status = ${broadcastTxResponse.txResponse.code}');
+    dev.log('Response status = ${broadcastTxResponse.txResponse.code}');
 
-    print('Response data = ${broadcastTxResponse.txResponse.data}');
-
-
-    print('Tx hash = ${broadcastTxResponse.txResponse.txhash}');
+    dev.log('Response data = ${broadcastTxResponse.txResponse.data}');
 
 
-    print('Response raw log = ${broadcastTxResponse.txResponse.rawLog}');
+    dev.log('Tx hash = ${broadcastTxResponse.txResponse.txhash}');
+
+
+    dev.log('Response raw log = ${broadcastTxResponse.txResponse.rawLog}');
+
+
+    dev.log('Response tx log = ${broadcastTxResponse.txResponse.tx.typeUrl} -- ${broadcastTxResponse.txResponse.tx.value}');
 
     if (broadcastTxResponse.txResponse.code == 0) {
       return aura.MsgActivateAccountResponse(
