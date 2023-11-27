@@ -136,13 +136,19 @@ sealed class LanguageKey {
   static const String reLoginScreenWrongCountDownTitle = "re_login_screen_wrong_count_down_title";
   ///endregion
 
+  static const String homeScreenBottomNavigatorBarHome = 'home_screen_bottom_navigator_bar_home';
+  static const String homeScreenBottomNavigatorBarAccounts = 'home_screen_bottom_navigator_bar_accounts';
+  static const String homeScreenBottomNavigatorBarHistory = 'home_screen_bottom_navigator_bar_history';
+  static const String homeScreenBottomNavigatorBarSetting = 'home_screen_bottom_navigator_bar_setting';
+
   ///region home page
   static const String homePageSendToken = 'home_page_send_token';
   static const String homePageReceiveToken = 'home_page_receive_token';
   static const String homePageNFTs = 'home_page_nft';
   static const String homePageTxLimit = 'home_page_tx_limit';
   static const String homePageStake = 'home_page_tx_stake';
-  static const String homeTotalTokensValue = 'home_page_total_token_value';
+  static const String homePageTotalTokensValue = 'home_page_total_token_value';
+  static const String homePageTokenPrefix = 'home_page_token_prefix';
   static const String homePageNoTokenFoundTitle = 'home_page_no_token_found_title';
   static const String homePageNoTokenFoundContent = 'home_page_no_token_found_content';
   ///

@@ -110,6 +110,11 @@
   "re_login_screen_dialog_forget_password_content_region_one_two" : "removed from this app permanently.",
   "re_login_screen_wrong_count_down_title" : "Lock in ${time}",
 
+  "home_screen_bottom_navigator_bar_home" : "Home",
+  "home_screen_bottom_navigator_bar_accounts" : "Accounts",
+  "home_screen_bottom_navigator_bar_history" : "History",
+  "home_screen_bottom_navigator_bar_setting" : "Setting",
+
   "home_page_send_token" : "Send",
   "home_page_receive_token" : "Receive",
   "home_page_nft" : "NFTs",
@@ -117,5 +122,6 @@
   "home_page_tx_stake" : "Stake",
   "home_page_total_token_value" : "Total tokens value",
   "home_page_no_token_found_title" : "No token found!",
-  "home_page_no_token_found_content" : "All tokens of this smart account is shown here"
+  "home_page_no_token_found_content" : "All tokens of this smart account is shown here",
+  "home_page_token_prefix" : "$"
 }
