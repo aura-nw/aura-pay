@@ -76,8 +76,9 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                       text: localization.translate(
                         LanguageKey.onBoardingGetStartedScreenButtonTitle,
                       ),
-                      onPress: () =>
-                          AppNavigator.replaceWith(RoutePath.choiceOption),
+                      onPress: () => AppNavigator.replaceWith(
+                        RoutePath.choiceOption,
+                      ),
                     );
                   },
                 ),

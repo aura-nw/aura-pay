@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:aura_wallet_core/config_options/environment_options.dart';
@@ -41,7 +43,7 @@ Future<void> initDependency(
   );
 
   final AuraSmartAccount auraSmartAccount = AuraSmartAccount.create(
-    AuraSmartAccountEnvironment.serenity,
+    AuraSmartAccountEnvironment.test,
   );
 
   getIt.registerFactory<Dio>(
@@ -138,10 +140,13 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<OnBoardingScanFeeBloc, String, dynamic>(
-    (smartAccountAddress, param2) => OnBoardingScanFeeBloc(
+  getIt.registerFactoryParam<OnBoardingScanFeeBloc, String,
+      Map<String, Uint8List>>(
+    (smartAccountAddress, accountRaw) => OnBoardingScanFeeBloc(
       getIt.get<SmartAccountUseCase>(),
       smartAccountAddress: smartAccountAddress,
+      privateKey: accountRaw['privateKey']!,
+      salt: accountRaw['salt']!,
     ),
   );
   getIt.registerFactory<OnBoardingRecoverChoiceBloc>(

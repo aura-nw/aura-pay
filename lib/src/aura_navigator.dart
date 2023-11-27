@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
@@ -73,10 +75,16 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.scanQrFee:
-        final String rawAddress = settings.arguments as String;
+        final Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        final String rawAddress = arguments['smart_account_address'];
+        final Uint8List privateKey = arguments['privateKey'];
+        final Uint8List salt = arguments['salt'];
         return _defaultRoute(
           OnBoardingScanFeeScreen(
             rawAddress: rawAddress,
+            privateKey: privateKey,
+            salt: salt,
           ),
           settings,
         );

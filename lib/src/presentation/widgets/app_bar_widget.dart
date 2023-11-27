@@ -10,32 +10,40 @@ abstract interface class _AppBarBase extends StatelessWidget
     implements PreferredSizeWidget {
   final VoidCallback? onBack;
   final AppTheme appTheme;
+  final double? leadingWidth;
 
-  const _AppBarBase({this.onBack, required this.appTheme, super.key});
+  const _AppBarBase({
+    this.leadingWidth,
+    this.onBack,
+    required this.appTheme,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          if (onBack == null) {
-            AppNavigator.pop();
-          } else {
-            onBack!.call();
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Spacing.spacing04,
+      leading: leadingBuilder(context, appTheme) ??
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              if (onBack == null) {
+                AppNavigator.pop();
+              } else {
+                onBack!.call();
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.spacing04,
+              ),
+              child: SvgPicture.asset(
+                AssetIconPath.commonArrowBack,
+                height: BoxSize.boxSize07,
+                width: BoxSize.boxSize07,
+              ),
+            ),
           ),
-          child: SvgPicture.asset(
-            AssetIconPath.commonArrowBack,
-            height: BoxSize.boxSize07,
-            width: BoxSize.boxSize07,
-          ),
-        ),
-      ),
+      leadingWidth: leadingWidth,
       title: titleBuilder(context, appTheme),
       centerTitle: true,
       bottom: bottomBuilder(appTheme),
@@ -45,6 +53,8 @@ abstract interface class _AppBarBase extends StatelessWidget
       elevation: 0,
     );
   }
+
+  Widget? leadingBuilder(BuildContext context, AppTheme appTheme);
 
   List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme);
 
@@ -98,6 +108,11 @@ final class NormalAppBarWidget extends _AppBarBase {
   Widget titleBuilder(BuildContext context, AppTheme appTheme) {
     return const SizedBox();
   }
+
+  @override
+  Widget? leadingBuilder(BuildContext context, AppTheme appTheme) {
+    return null;
+  }
 }
 
 ///endregion
@@ -145,6 +160,11 @@ final class AppBarStepWidget extends _AppBarBase {
         ),
       ),
     ];
+  }
+
+  @override
+  Widget? leadingBuilder(BuildContext context, AppTheme appTheme) {
+    return null;
   }
 }
 
@@ -219,3 +239,59 @@ final class _StepWidget extends StatelessWidget {
 }
 
 ///endregion
+
+///region home app bar
+class HomeAppBarWidget extends _AppBarBase {
+  final VoidCallback onNotificationTap;
+
+  const HomeAppBarWidget({
+    required super.appTheme,
+    super.key,
+    required this.onNotificationTap,
+    super.leadingWidth = BoxSize.boxSize14,
+  });
+
+  @override
+  List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme) {
+    return [
+      GestureDetector(
+        onTap: onNotificationTap,
+        behavior: HitTestBehavior.opaque,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.spacing05,
+          ),
+          child: SvgPicture.asset(
+            AssetIconPath.homeAppBarNotification,
+          ),
+        ),
+      ),
+    ];
+  }
+
+  @override
+  PreferredSizeWidget? bottomBuilder(AppTheme appTheme) {
+    return null;
+  }
+
+  @override
+  Widget titleBuilder(BuildContext context, AppTheme appTheme) {
+    return const SizedBox();
+  }
+
+  @override
+  Widget? leadingBuilder(BuildContext context, AppTheme appTheme) {
+    return Row(
+      children: [
+        const SizedBox(
+          width: BoxSize.boxSize05,
+        ),
+        SvgPicture.asset(
+          AssetIconPath.homeAppBarLogo,
+        ),
+      ],
+    );
+  }
+}
+
+///
