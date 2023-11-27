@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
@@ -21,9 +23,13 @@ import 'on_boarding_scan_fee_state.dart';
 
 class OnBoardingScanFeeScreen extends StatefulWidget {
   final String rawAddress;
+  final Uint8List privateKey;
+  final Uint8List salt;
 
   const OnBoardingScanFeeScreen({
     required this.rawAddress,
+    required this.privateKey,
+    required this.salt,
     super.key,
   });
 
@@ -40,6 +46,10 @@ class _OnBoardingScanFeeScreenState extends State<OnBoardingScanFeeScreen>
   void initState() {
     _bloc = getIt.get<OnBoardingScanFeeBloc>(
       param1: widget.rawAddress,
+      param2: <String, Uint8List>{
+        'privateKey': widget.privateKey,
+        'salt': widget.salt,
+      },
     );
     super.initState();
   }
@@ -69,6 +79,7 @@ class _OnBoardingScanFeeScreenState extends State<OnBoardingScanFeeScreen>
                   _showLoadingDialog(appTheme);
                   break;
                 case OnBoardingScanFeeStatus.onActiveAccountError:
+                  AppNavigator.pop();
                   showToast(state.errorMessage!);
                   break;
                 case OnBoardingScanFeeStatus.onActiveAccountSuccess:

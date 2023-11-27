@@ -66,7 +66,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     Uint8List? salt,
   }) async {
     // Generate a pub key from user pub key
-    final Uint8List pubKeyGenerate = _generateSmartAccountPubKeyFromUserPubKey(pubKey);
+    final Uint8List pubKeyGenerate =  AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(pubKey);
 
     // Create query account request.
     final aura.QueryGenerateAccountRequest request =
@@ -97,10 +97,10 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     );
 
     // Generate a pub key from user pub key
-    final Uint8List pubKeyGenerate = _generateSmartAccountPubKeyFromUserPubKey(pubKey);
+    final Uint8List pubKeyGenerate = AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(pubKey);
 
     // Create msg MsgActivateAccount.
-    final GeneratedMessage msgActivateAccountRequest = aura.MsgActivateAccount(
+    final aura.MsgActivateAccount msgActivateAccountRequest = aura.MsgActivateAccount(
       codeId: $fixnum.Int64(AuraSmartAccountConstant.codeId),
       initMsg: AuraSmartAccountConstant.initMsgDefault,
       accountAddress: smartAccountAddress,
@@ -110,11 +110,15 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         ..value = pubKeyGenerate,
     );
 
+    print('create message done');
+
     // Get account from smart account
     final Account accountResponse = await AuraSmartAccountHelper.getAccount(
       address: smartAccountAddress,
       queryClient: queryAuthClient,
     );
+
+    print('Get smart account done');
 
     // create signer data
     final aura.SmartAccount smartAccount = aura.SmartAccount.create()
@@ -123,9 +127,12 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       ..accountNumber = accountResponse.accountNumber()
       ..sequence = accountResponse.sequence();
 
+    print('create smart account done');
+
     // Create fee
     final tx.Fee feeSign = tx.Fee.create()
       ..gasLimit = $fixnum.Int64(gasLimit)
+      ..payer = smartAccountAddress
       ..amount.add(
         Coin(
           denom: auraNetworkInfo.denom,
@@ -133,8 +140,10 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         ),
       );
 
+    print('create fee done');
+
     // Create tx
-    final tx.Tx txSignBytes = await AuraSmartAccountHelper.sign(
+    final tx.Tx txSign = await AuraSmartAccountHelper.sign(
       privateKey: userPrivateKey,
       queryClient: queryAuthClient,
       messages: [
@@ -145,20 +154,35 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       ],
       signerData: smartAccount,
       chainId: auraNetworkInfo.chainId,
-      bech32Hrp: auraNetworkInfo.bech32Hrp,
       memo: memo,
       fee: feeSign,
     );
 
+    final Uint8List txBytes = txSign.writeToBuffer();
+
+    print('create tx done ${txBytes}');
+
     // create broadcast tx request
     tx.BroadcastTxRequest broadcastTxRequest = tx.BroadcastTxRequest(
       mode: tx.BroadcastMode.BROADCAST_MODE_ASYNC,
-      txBytes: txSignBytes.writeToBuffer(),
+      txBytes: txBytes,
     );
+
+    print('create tx request done');
 
     // Broadcast TxBytes
     final tx.BroadcastTxResponse broadcastTxResponse =
         await serviceClient.broadcastTx(broadcastTxRequest);
+
+    print('Response status = ${broadcastTxResponse.txResponse.code}');
+
+    print('Response data = ${broadcastTxResponse.txResponse.data}');
+
+
+    print('Tx hash = ${broadcastTxResponse.txResponse.txhash}');
+
+
+    print('Response raw log = ${broadcastTxResponse.txResponse.rawLog}');
 
     if (broadcastTxResponse.txResponse.code == 0) {
       return aura.MsgActivateAccountResponse(
@@ -167,15 +191,5 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     }
 
     throw broadcastTxResponse.txResponse.rawLog;
-  }
-
-  Uint8List _generateSmartAccountPubKeyFromUserPubKey(Uint8List pubKey){
-    secp256.PubKey secp256PubKey = secp256.PubKey.create()..key = pubKey;
-
-    final Uint8List pubKeyGenerate = Uint8List.fromList(
-      secp256PubKey.writeToBuffer(),
-    );
-
-    return pubKeyGenerate;
   }
 }

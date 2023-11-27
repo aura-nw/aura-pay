@@ -25,7 +25,6 @@ sealed class AuraSmartAccountHelper {
   };
 
   static Future<tx.Tx> sign({
-    required String bech32Hrp,
     required Uint8List privateKey,
     required auth.QueryClient queryClient,
     required List<pb.Any> messages,
@@ -38,36 +37,7 @@ sealed class AuraSmartAccountHelper {
       throw Exception('Invalid fees: invalid gas amount specified');
     }
 
-    // get public key from private key
-    final Uint8List publicKey = WalletHelper.getPublicKeyFromPrivateKey(
-      privateKey,
-    );
-
-    // get user Address from privateKey
-    final Uint8List userAddressBytes =
-        WalletHelper.getBech32AddressFromPublicKey(
-      publicKey,
-    );
-    final String userAddress = WalletHelper.encodeBech32Address(
-      bech32Hrp,
-      userAddressBytes,
-    );
-
-    // get account from user address
-    Account account = await getAccount(
-      address: userAddress,
-      queryClient: queryClient,
-    );
-
-    //
-    pb.Any pubKey = account.pubKey();
-    if (pubKey.value.isNotEmpty != true) {
-      final secp256Key = secp256.PubKey.create()..key = publicKey;
-      pubKey = pb.Any.pack(
-        secp256Key,
-        typeUrlPrefix: '',
-      );
-    }
+    pb.Any pubKey = signerData.pubKey;
 
     // Create txBody
     final tx.TxBody txBody = tx.TxBody(
@@ -80,7 +50,7 @@ sealed class AuraSmartAccountHelper {
 
     // Create auth Info
     final tx.AuthInfo authInfo = tx.AuthInfo(
-      fee: tx.Fee.create(),
+      fee: fee,
       signerInfos: [
         tx.SignerInfo(
           publicKey: pubKey,
@@ -110,7 +80,7 @@ sealed class AuraSmartAccountHelper {
 
     // Create signature
     final Uint8List signature = WalletHelper.createSignature(
-      makeSignDocToBytes,
+      Uint8List.fromList(makeSignDocToBytes),
       privateKey,
     );
 
@@ -148,5 +118,15 @@ sealed class AuraSmartAccountHelper {
         .singleWhere((element) => response.account.typeUrl.contains(element));
 
     return _deserializerAccounts[key]!.call(response.account);
+  }
+
+  static Uint8List generateSmartAccountPubKeyFromUserPubKey(Uint8List pubKey){
+    secp256.PubKey secp256PubKey = secp256.PubKey.create()..key = pubKey;
+
+    final Uint8List pubKeyGenerate = Uint8List.fromList(
+      secp256PubKey.writeToBuffer(),
+    );
+
+    return pubKeyGenerate;
   }
 }

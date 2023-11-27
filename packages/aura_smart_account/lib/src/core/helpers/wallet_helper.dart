@@ -30,7 +30,7 @@ sealed class WalletHelper {
   static Uint8List createSignature(
       Uint8List hashedMessage, Uint8List privateKey) {
     final ecPrivateKey = ECPrivateKey(
-      BigInt.parse(HEX.encoder.convert(privateKey), radix: 16),
+      BigInt.parse(HEX.encode(privateKey), radix: 16),
       ECCurve_secp256k1(),
     );
 

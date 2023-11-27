@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart' show WalletUseCase, SmartAccountUseCase;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'on_boarding_pick_account_event.dart';
@@ -33,11 +36,24 @@ class OnBoardingPickAccountBloc
         walletName: state.accountName,
       );
 
+      final Random random = Random.secure();
+
+      final int salt = random.nextInt(10000);
+
+      final Uint8List saltBytes = Uint8List.fromList(
+        utf8.encode(
+          salt.toString(),
+        ),
+      );
+
       /// Create a smart account address
       final String smartAccount =
           await _smartAccountUseCase.generateSmartAccount(
         pubKey: wallet.publicKey,
+        salt: saltBytes,
       );
+
+      print('Smart account address -- $smartAccount');
 
       /// call api check fee gas
 
@@ -48,10 +64,16 @@ class OnBoardingPickAccountBloc
           status: OnBoardingPickAccountStatus.onCheckAddressEnoughFee,
         ));
       } else {
-        emit(state.copyWith(
-          status: OnBoardingPickAccountStatus.onCheckAddressUnEnoughFee,
-          walletAddress: smartAccount,
-        ));
+        emit(
+          state.copyWith(
+            status: OnBoardingPickAccountStatus.onCheckAddressUnEnoughFee,
+            smartAccountAddress: smartAccount,
+            userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(
+              wallet.privateKey!,
+            ),
+            saltBytes: saltBytes,
+          ),
+        );
       }
     } catch (e) {
       emit(

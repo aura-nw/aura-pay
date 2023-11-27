@@ -12,9 +12,13 @@ class OnBoardingScanFeeBloc
   OnBoardingScanFeeBloc(
     this._smartAccountUseCase, {
     required String smartAccountAddress,
+    required Uint8List privateKey,
+    required Uint8List salt,
   }) : super(
           OnBoardingScanFeeState(
             smartAccountAddress: smartAccountAddress,
+            privateKey: privateKey,
+            salt: salt,
           ),
         ) {
     on(_onCheckingBalance);
@@ -34,23 +38,8 @@ class OnBoardingScanFeeBloc
       bool isEnoughBalance = true;
 
       if (isEnoughBalance) {
-        /// call active smart account
-        emit(
-          state.copyWith(
-            status: OnBoardingScanFeeStatus.onActiveAccount,
-          ),
-        );
-
-        await Future.delayed(
-          const Duration(
-            seconds: 2,
-          ),
-        );
-
-        emit(
-          state.copyWith(
-            status: OnBoardingScanFeeStatus.onActiveAccountSuccess,
-          ),
+        add(
+          const OnBoardingScanFeeOnActiveSmartAccountEvent(),
         );
       } else {
         /// show error message for user
@@ -82,9 +71,10 @@ class OnBoardingScanFeeBloc
       );
 
       await _smartAccountUseCase.activeSmartAccount(
-        userPrivateKey: Uint8List(0),
+        userPrivateKey: state.privateKey,
         smartAccountAddress: state.smartAccountAddress,
-        fee: '0.0025',
+        salt: state.salt,
+        fee: '0.025',
         gasLimit: 400000,
         memo: 'Active smart account',
       );
@@ -95,6 +85,7 @@ class OnBoardingScanFeeBloc
         ),
       );
     } catch (e) {
+      print(e.toString());
       emit(
         state.copyWith(
           status: OnBoardingScanFeeStatus.onActiveAccountError,

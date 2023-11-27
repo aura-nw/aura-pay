@@ -78,7 +78,11 @@ class _OnBoardingPickAccountScreenState
 
                   AppNavigator.push(
                     RoutePath.scanQrFee,
-                    state.walletAddress,
+                    {
+                      'smart_account_address': state.smartAccountAddress,
+                      'privateKey': state.userPrivateKey!,
+                      'salt': state.saltBytes,
+                    },
                   );
                   break;
                 case OnBoardingPickAccountStatus.onCheckAddressError:
