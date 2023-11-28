@@ -318,21 +318,21 @@
                             }
                         },
                         {
-                            "name": "Success/Dark",
-                            "type": "color",
-                            "isAlias": true,
-                            "value": {
-                                "collection": "[ Color ] - Base",
-                                "name": "Green/400"
-                            }
-                        },
-                        {
                             "name": "Warning/S Light",
                             "type": "color",
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Orange/50"
+                            }
+                        },
+                        {
+                            "name": "Success/Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Green/400"
                             }
                         },
                         {
@@ -477,6 +477,15 @@
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Gray/950"
+                            }
+                        },
+                        {
+                            "name": "Surface/Opacity black 01",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Black opacity 0-5"
                             }
                         },
                         {
@@ -904,12 +913,21 @@
                             }
                         },
                         {
-                            "name": "Content/Sussess",
+                            "name": "Content/Sussess light",
                             "type": "color",
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
                                 "name": "Success/Dark"
+                            }
+                        },
+                        {
+                            "name": "Content/Sussess",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Success/S Dark"
                             }
                         },
                         {
@@ -963,7 +981,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Opacity/Black opacity 5"
+                                "name": "Opacity/Black opacity 8"
                             }
                         }
                     ]
@@ -1416,10 +1434,13 @@
                             }
                         },
                         {
-                            "name": "Tooltip/Color 4",
+                            "name": "Tooltip/Fill",
                             "type": "color",
-                            "isAlias": false,
-                            "value": "#FFFFFF"
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Surface/Black"
+                            }
                         },
                         {
                             "name": "Input/Input/Padding/Default",
@@ -2182,7 +2203,7 @@
                             "name": "Gray/25",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#F7F7F8"
+                            "value": "#F4F4F6"
                         },
                         {
                             "name": "Gray/50",
@@ -2875,6 +2896,12 @@
                             "value": "#00000000"
                         },
                         {
+                            "name": "Opacity/Black opacity 0-5",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#0000000D"
+                        },
+                        {
                             "name": "Opacity/Black opacity 1",
                             "type": "color",
                             "isAlias": false,
@@ -2927,6 +2954,12 @@
                             "type": "color",
                             "isAlias": false,
                             "value": "#000000E6"
+                        },
+                        {
+                            "name": "Opacity/White opacity 0-5",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF0D"
                         },
                         {
                             "name": "Opacity/White opacity 1",
