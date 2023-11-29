@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:aura_smart_account/src/core/constants/smart_account_constant.dart';
 import 'package:aura_smart_account/src/core/definitions/account.dart';
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
     as auth;
@@ -26,28 +27,18 @@ sealed class AuraSmartAccountHelper {
 
   static Future<tx.Tx> sign({
     required Uint8List privateKey,
+    required Uint8List pubKey,
     required List<pb.Any> messages,
     required SmartAccount signerData,
     required String chainId,
     required tx.Fee fee,
     String? memo,
   }) async {
-    if (!fee.hasGasLimit()) {
-      throw Exception('Invalid fees: invalid gas amount specified');
-    }
 
-    final Uint8List publicKey = WalletHelper.getPublicKeyFromPrivateKey(
-      privateKey,
-    );
-
-    pb.Any pubKey = signerData.pubKey;
-
-    final secp256Key = secp256.PubKey.create()..key = publicKey;
-
-    pubKey = pb.Any.pack(
-      secp256Key,
-      typeUrlPrefix: '',
-    );
+    // Create pub key
+    pb.Any pubKeyAny = pb.Any.create()
+      ..value = pubKey
+      ..typeUrl = AuraSmartAccountConstant.pubKeyTypeUrl;
 
     // Create txBody
     final tx.TxBody txBody = tx.TxBody(
@@ -63,7 +54,7 @@ sealed class AuraSmartAccountHelper {
       fee: fee,
       signerInfos: [
         tx.SignerInfo(
-          publicKey: pubKey,
+          publicKey: pubKeyAny,
           sequence: signerData.sequence,
           modeInfo: tx.ModeInfo(
             single: tx.ModeInfo_Single(
@@ -110,26 +101,26 @@ sealed class AuraSmartAccountHelper {
     required String address,
     required auth.QueryClient queryClient,
   }) async {
+    // Create ath account request
     final auth.QueryAccountRequest queryAccountRequest =
         auth.QueryAccountRequest(
       address: address,
     );
 
+    // Get account
     final auth.QueryAccountResponse response =
         await queryClient.account(queryAccountRequest);
 
-    if (!response.hasAccount()) {
-      throw Exception(
-        'Account $address does not exist on chain',
-      );
-    }
-
+    // Get Account from key
     final String key = _deserializerAccounts.keys
         .singleWhere((element) => response.account.typeUrl.contains(element));
 
     return _deserializerAccounts[key]!.call(response.account);
   }
 
+  /// Add prefix to user pub key
+  /// It return a smart account pub key;
+  /// See more at here [https://github.com/aura-nw/pyxis-smart-account/blob/main/ts/sdk/scripts/deploy.js#L143-L149]
   static Uint8List generateSmartAccountPubKeyFromUserPubKey(Uint8List pubKey) {
     secp256.PubKey secp256PubKey = secp256.PubKey.create()..key = pubKey;
 

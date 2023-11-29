@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class AuraSmartAccountConstant{
+sealed class AuraSmartAccountConstant{
   static String pubKeyTypeUrl = '/cosmos.crypto.secp256k1.PubKey';
 
   static final List<int> initMsgDefault = utf8.encode(
@@ -13,4 +13,7 @@ class AuraSmartAccountConstant{
   );
 
   static int codeId = 726;
+
+  static int errorCodeDefault = 727;
+  static int errorBroadcast = 728;
 }

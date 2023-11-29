@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:aura_smart_account/src/aura_smart_account_impl.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
+import 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart';
 import 'package:grpc/grpc.dart';
 
@@ -14,6 +15,7 @@ export 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.da
         QueryParamsResponse,
         MsgActivateAccountResponse,
         MsgRecoverResponse;
+export 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
 
 /// AuraSmartAccount is an interface. It define some methods to support for aura smart account
 /// See more [https://github.com/aura-nw/aura/tree/main/proto/aura/smartaccount/]
@@ -23,9 +25,10 @@ abstract interface class AuraSmartAccount {
   /// final AuraSmartAccount auraSmartAccount = AuraSmartAccount.create(AuraSmartAccountEnvironment)
   /// This method has to pass a [AuraSmartAccountEnvironment] parameter.
   /// [AuraSmartAccountEnvironment] include three kinds.
-  /// The first one: [AuraSmartAccountEnvironment.serenity] for test net.
-  /// The second one: [AuraSmartAccountEnvironment.euphoria] for euphoria.
-  /// The third one: [AuraSmartAccountEnvironment.production] for production.
+  /// The first one: [AuraSmartAccountEnvironment.test] for test net.
+  /// The second one: [AuraSmartAccountEnvironment.serenity] for serenity net.
+  /// The third one: [AuraSmartAccountEnvironment.euphoria] for euphoria.
+  /// The fourth one: [AuraSmartAccountEnvironment.production] for production.
   /// After that, you can call all of methods below.
   factory AuraSmartAccount.create(AuraSmartAccountEnvironment environment) {
     return AuraSmartAccountImpl(environment);
@@ -34,7 +37,7 @@ abstract interface class AuraSmartAccount {
   /// Generate a smart account address.
   /// This method has to pass two parameters include: [pubKey] as Uint8List, [salt] as Uint8List?,
   /// Response a [QueryGenerateAccountResponse]
-  /// It can throw [GrpcError]
+  /// It can throw [AuraSmartAccountError]
   Future<QueryGenerateAccountResponse> generateSmartAccount({
     required Uint8List pubKey,
     Uint8List? salt,
@@ -48,7 +51,7 @@ abstract interface class AuraSmartAccount {
   /// [fee] as String,
   /// [gasLimit] as int,
   /// Response a [MsgActivateAccountResponse]
-  /// It can throw [GrpcError] or [Exception]
+  /// It can throw [AuraSmartAccountError]
   Future<MsgActivateAccountResponse> activeSmartAccount({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,

@@ -77,7 +77,7 @@ packages:
     description:
       path: "."
       ref: core_wallet
-      resolved-ref: "67aaeb30b78354fb9d9e90ba5968bc437038787f"
+      resolved-ref: "6a433d3ac9e960e9c1de9f665aedca6b3eb096e3"
       url: "https://github.com/aura-nw/aura-wallet-core.git"
     source: git
     version: "0.0.1"
@@ -818,10 +818,10 @@ packages:
     dependency: transitive
     description:
       name: walletconnect_flutter_v2
-      sha256: "00005750b01c5b924fc028e329bee5a77f79691c8c537709536e8ef27360510a"
+      sha256: c08b229a16f153e9bded310c4ee35f7240a39c9ff6742f9e0414b0433f27aa50
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.9"
+    version: "2.1.10"
   watcher:
     dependency: transitive
     description:
