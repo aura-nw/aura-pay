@@ -5,11 +5,15 @@ import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/account_manager_action_form.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/remove_account_form_widget.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/rename_account_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'widgets/account_item_widget.dart';
 import 'widgets/account_manager_form_widget.dart';
@@ -22,7 +26,7 @@ class AccountsPage extends StatefulWidget {
   State<AccountsPage> createState() => _AccountsPageState();
 }
 
-class _AccountsPageState extends State<AccountsPage> {
+class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
   @override
   Widget build(BuildContext context) {
     return AppThemeBuilder(
@@ -177,10 +181,55 @@ class _AccountsPageState extends State<AccountsPage> {
         appTheme: appTheme,
         onRemove: () {
           AppNavigator.pop();
+
+          _showRemoveDialog(
+            appTheme,
+            account.address,
+          );
         },
-        onRenameAddress: () {},
+        onRenameAddress: () async {
+          AppNavigator.pop();
+
+          _showRenameDialog(
+            appTheme,
+            account.address,
+          );
+        },
         onShareAddress: () {},
         onViewOnAuraScan: () {},
+      ),
+    );
+  }
+
+  void _showRenameDialog(AppTheme appTheme, String address) {
+    DialogProvider.showCustomDialog(
+      context,
+      appTheme: appTheme,
+      canBack: true,
+      widget: RenameAccountFormWidget(
+        appTheme: appTheme,
+        address: address,
+        onConfirm: (newName) {
+          AppNavigator.pop();
+
+          showSuccessToast(
+            AppLocalizationManager.of(context).translate(
+              LanguageKey.accountsPageRenameAccountSuccess,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _showRemoveDialog(AppTheme appTheme, String address) {
+    DialogProvider.showCustomDialog(
+      context,
+      appTheme: appTheme,
+      canBack: true,
+      widget: RemoveAccountFormWidget(
+        appTheme: appTheme,
+        address: address,
       ),
     );
   }

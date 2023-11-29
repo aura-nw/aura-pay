@@ -62,7 +62,7 @@ class AccountManagerActionForm extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: BoxSize.boxSize06,
+                  height: BoxSize.boxSize07,
                 ),
                 _buildOptions(
                   AssetIconPath.accountsShare,
@@ -70,7 +70,7 @@ class AccountManagerActionForm extends StatelessWidget {
                   onTap: onShareAddress,
                 ),
                 const SizedBox(
-                  height: BoxSize.boxSize06,
+                  height: BoxSize.boxSize08,
                 ),
                 _buildOptions(
                   AssetIconPath.accountsRename,
@@ -78,7 +78,7 @@ class AccountManagerActionForm extends StatelessWidget {
                   onTap: onRenameAddress,
                 ),
                 const SizedBox(
-                  height: BoxSize.boxSize06,
+                  height: BoxSize.boxSize07,
                 ),
                 _buildOptions(
                   AssetIconPath.accountsViewOnAuraScan,
@@ -93,7 +93,7 @@ class AccountManagerActionForm extends StatelessWidget {
           ),
           const HoLiZonTalDividerWidget(),
           const SizedBox(
-            height: BoxSize.boxSize05,
+            height: BoxSize.boxSize07,
           ),
           GestureDetector(
             behavior: HitTestBehavior.opaque,

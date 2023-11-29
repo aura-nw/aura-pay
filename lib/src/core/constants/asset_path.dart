@@ -44,6 +44,7 @@ sealed class AssetIconPath{
   static const String commonRadioCheck = '${_baseIconPath}ic_common_radio_check.svg';
   static const String commonClose = '${_baseIconPath}ic_common_close.svg';
   static const String commonInputError = '${_baseIconPath}ic_common_input_error.svg';
+  static const String commonCheckSuccess = '${_baseIconPath}ic_common_check_success.svg';
   static const String commonSmartAccountAvatarDefault= '${_baseIconPath}ic_common_smart_account_avatar_default.svg';
 
   /// Home screen
@@ -80,6 +81,7 @@ sealed class AssetIconPath{
   static const String accountsMore = '${_baseIconPath}ic_accounts_more.svg';
   static const String accountsCheck = '${_baseIconPath}ic_accounts_check.svg';
   static const String accountsRemove = '${_baseIconPath}ic_accounts_remove.svg';
+  static const String accountsRemoveWarning = '${_baseIconPath}ic_accounts_remove_warning.svg';
   static const String accountsRename = '${_baseIconPath}ic_accounts_rename.svg';
   static const String accountsShare = '${_baseIconPath}ic_accounts_share.svg';
   static const String accountsRecoverSmartAccount = '${_baseIconPath}ic_accounts_recover_smart_account.svg';

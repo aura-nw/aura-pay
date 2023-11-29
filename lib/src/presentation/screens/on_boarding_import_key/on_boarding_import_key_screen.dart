@@ -302,10 +302,14 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                                 .translate(LanguageKey
                                                     .onBoardingImportKeyScreenInvalidPrivateKey),
                                             customValid: (value) {
-                                              return AuraWalletHelper
-                                                  .checkPrivateKey(
-                                                value.trim(),
-                                              );
+                                              try{
+                                                return AuraWalletHelper
+                                                    .checkPrivateKey(
+                                                  value.trim(),
+                                                );
+                                              }catch(e){
+                                                return false;
+                                              }
                                             },
                                           ),
                                         label: localization.translate(
@@ -346,11 +350,14 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                                   .onBoardingImportKeyScreenInvalidPassPhrase,
                                             ),
                                             customValid: (value) {
-                                              final isValid = AuraWalletHelper
-                                                  .checkMnemonic(
-                                                mnemonic: value.trim(),
-                                              );
-                                              return isValid;
+                                              try{
+                                                return AuraWalletHelper
+                                                    .checkMnemonic(
+                                                  mnemonic: value.trim(),
+                                                );
+                                              }catch(e){
+                                                return false;
+                                              }
                                             },
                                           ),
                                         label: localization.translate(

@@ -19,7 +19,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
     return AppThemeBuilder(
       builder: (appTheme) {
         return Scaffold(
-          appBar: AppBarWithOnlyTitle(
+          appBar: AppBarWithTitle(
             appTheme: appTheme,
             titleKey: LanguageKey.sendTransactionAppBarTitle,
           ),

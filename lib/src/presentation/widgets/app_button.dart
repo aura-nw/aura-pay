@@ -104,6 +104,7 @@ final class PrimaryAppButton extends StatelessWidget {
   final bool? isDisable;
   final VoidCallback? onPress;
   final double? minWidth;
+  final Color ?backGroundColor;
 
   const PrimaryAppButton({
     super.key,
@@ -111,6 +112,7 @@ final class PrimaryAppButton extends StatelessWidget {
     this.isDisable,
     this.onPress,
     this.minWidth,
+    this.backGroundColor,
   });
 
   @override
@@ -121,7 +123,7 @@ final class PrimaryAppButton extends StatelessWidget {
           text: text,
           disabled: isDisable,
           onPress: onPress,
-          color: theme.primaryDefault,
+          color: backGroundColor ?? theme.primaryDefault,
           disableColor: theme.primaryColor50,
           minWidth: minWidth,
           textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
@@ -140,6 +142,7 @@ final class BorderAppButton extends StatelessWidget {
   final VoidCallback? onPress;
   final double? minWidth;
   final Color? borderColor;
+  final Color? textColor;
 
   const BorderAppButton({
     super.key,
@@ -148,6 +151,7 @@ final class BorderAppButton extends StatelessWidget {
     this.onPress,
     this.minWidth,
     this.borderColor,
+    this.textColor,
   });
 
   @override
@@ -160,7 +164,7 @@ final class BorderAppButton extends StatelessWidget {
           onPress: onPress,
           minWidth: minWidth,
           textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
-            color: theme.contentColorBrand,
+            color: textColor ?? theme.contentColorBrand,
           ),
           theme: theme,
           borderColor: borderColor ?? theme.borderColorBrand,
