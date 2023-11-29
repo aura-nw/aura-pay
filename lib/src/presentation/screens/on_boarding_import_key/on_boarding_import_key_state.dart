@@ -18,6 +18,7 @@ class OnBoardingImportKeyState with _$OnBoardingImportKeyState {
     @Default(PyxisWalletType.smartAccount) PyxisWalletType pyxisWalletType,
     @Default(false) bool isReadySubmit,
     @Default('') String key,
+    @Default('') String walletAddress,
     String? errorMessage,
   }) = _OnBoardingImportKeyState;
 }

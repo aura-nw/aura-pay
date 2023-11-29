@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
@@ -23,11 +25,13 @@ import 'on_boarding_scan_fee_state.dart';
 
 class OnBoardingScanFeeScreen extends StatefulWidget {
   final String rawAddress;
+  final String accountName;
   final Uint8List privateKey;
   final Uint8List salt;
 
   const OnBoardingScanFeeScreen({
     required this.rawAddress,
+    required this.accountName,
     required this.privateKey,
     required this.salt,
     super.key,
@@ -45,7 +49,10 @@ class _OnBoardingScanFeeScreenState extends State<OnBoardingScanFeeScreen>
   @override
   void initState() {
     _bloc = getIt.get<OnBoardingScanFeeBloc>(
-      param1: widget.rawAddress,
+      param1: <String, String>{
+        'smartAccountAddress': widget.rawAddress,
+        'accountName': widget.accountName,
+      },
       param2: <String, Uint8List>{
         'privateKey': widget.privateKey,
         'salt': widget.salt,
@@ -83,7 +90,19 @@ class _OnBoardingScanFeeScreenState extends State<OnBoardingScanFeeScreen>
                   showToast(state.errorMessage!);
                   break;
                 case OnBoardingScanFeeStatus.onActiveAccountSuccess:
-                  AppNavigator.replaceAllWith(RoutePath.home);
+                  AppGlobalCubit.of(context).changeState(
+                    AppGlobalState(
+                      status: AppGlobalStatus.authorized,
+                      accounts: [
+                        GlobalActiveAccount(
+                          address: state.smartAccountAddress,
+                          accountName: state.accountName,
+                        ),
+                      ],
+                    ),
+                  );
+
+                  AppNavigator.pop();
                   break;
               }
             },

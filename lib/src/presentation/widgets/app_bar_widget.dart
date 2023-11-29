@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 
 abstract interface class _AppBarBase extends StatelessWidget
@@ -290,6 +292,98 @@ class HomeAppBarWidget extends _AppBarBase {
           AssetIconPath.homeAppBarLogo,
         ),
       ],
+    );
+  }
+}
+
+///
+
+/// region app bar with title
+class AppBarWithTitle extends _AppBarBase {
+  final String titleKey;
+
+  const AppBarWithTitle({
+    required super.appTheme,
+    super.key,
+    super.onBack,
+    required this.titleKey,
+  });
+
+  @override
+  List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme) {
+    return null;
+  }
+
+  @override
+  PreferredSizeWidget? bottomBuilder(AppTheme appTheme) {
+    return null;
+  }
+
+  @override
+  Widget? leadingBuilder(BuildContext context, AppTheme appTheme) {
+    return null;
+  }
+
+  @override
+  Widget titleBuilder(BuildContext context, AppTheme appTheme) {
+    return AppLocalizationProvider(
+      builder: (localization, _) {
+        return Text(
+          localization.translate(
+            titleKey,
+          ),
+          style: AppTypoGraPhy.heading03.copyWith(
+            color: appTheme.contentColorBlack,
+          ),
+        );
+      },
+    );
+  }
+}
+
+///
+
+
+
+/// region app bar with title non leading
+class AppBarWithOnlyTitle extends _AppBarBase {
+  final String titleKey;
+
+  const AppBarWithOnlyTitle({
+    required super.appTheme,
+    super.key,
+    super.onBack,
+    required this.titleKey,
+  });
+
+  @override
+  List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme) {
+    return null;
+  }
+
+  @override
+  PreferredSizeWidget? bottomBuilder(AppTheme appTheme) {
+    return null;
+  }
+
+  @override
+  Widget? leadingBuilder(BuildContext context, AppTheme appTheme) {
+    return const SizedBox();
+  }
+
+  @override
+  Widget titleBuilder(BuildContext context, AppTheme appTheme) {
+    return AppLocalizationProvider(
+      builder: (localization, _) {
+        return Text(
+          localization.translate(
+            titleKey,
+          ),
+          style: AppTypoGraPhy.heading03.copyWith(
+            color: appTheme.contentColorBlack,
+          ),
+        );
+      },
     );
   }
 }

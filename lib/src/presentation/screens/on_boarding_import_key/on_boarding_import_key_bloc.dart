@@ -62,6 +62,9 @@ class OnBoardingImportKeyBloc
     OnBoardingImportKeyOnSubmitEvent event,
     Emitter<OnBoardingImportKeyState> emit,
   ) async {
+
+    if(state.pyxisWalletType == PyxisWalletType.smartAccount) return;
+
     emit(
       state.copyWith(
         status: OnBoardingImportKeyStatus.onLoading,
@@ -73,20 +76,19 @@ class OnBoardingImportKeyBloc
 
           break;
         case PyxisWalletType.normalWallet:
-          await _walletUseCase.importWallet(
+          final wallet = await _walletUseCase.importWallet(
             privateKeyOrPassPhrase: state.key,
-
             /// Set Default account name
             walletName: 'Account 1',
           );
+          emit(
+            state.copyWith(
+              status: OnBoardingImportKeyStatus.onImportAccountSuccess,
+              walletAddress: wallet.bech32Address
+            ),
+          );
           break;
       }
-
-      emit(
-        state.copyWith(
-          status: OnBoardingImportKeyStatus.onImportAccountSuccess,
-        ),
-      );
     } catch (e) {
       emit(
         state.copyWith(

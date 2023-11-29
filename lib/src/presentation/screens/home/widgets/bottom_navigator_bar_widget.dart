@@ -9,9 +9,15 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 
 class BottomNavigatorBarWidget extends StatefulWidget {
   final AppTheme appTheme;
+  final int currentIndex;
+  final void Function(int) onTabSelect;
+  final VoidCallback onScanTap;
 
   const BottomNavigatorBarWidget({
+    required this.currentIndex,
     required this.appTheme,
+    required this.onScanTap,
+    required this.onTabSelect,
     super.key,
   });
 
@@ -56,26 +62,46 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
         children: [
           _buildItem(
             AssetIconPath.homeBottomNavigatorBarHome,
-            AssetIconPath.homeBottomNavigatorBarHome,
+            AssetIconPath.homeBottomNavigatorBarHomeActive,
             LanguageKey.homeScreenBottomNavigatorBarHome,
+            () {
+              widget.onTabSelect(0);
+            },
+            widget.currentIndex == 0,
           ),
           _buildItem(
             AssetIconPath.homeBottomNavigatorBarAccount,
-            AssetIconPath.homeBottomNavigatorBarAccount,
+            AssetIconPath.homeBottomNavigatorBarAccountActive,
             LanguageKey.homeScreenBottomNavigatorBarAccounts,
+            () {
+              widget.onTabSelect(1);
+            },
+            widget.currentIndex == 1,
           ),
-          SvgPicture.asset(
-            AssetIconPath.homeBottomNavigatorBarScan,
+          GestureDetector(
+            onTap: widget.onScanTap,
+            behavior: HitTestBehavior.opaque,
+            child: SvgPicture.asset(
+              AssetIconPath.homeBottomNavigatorBarScan,
+            ),
           ),
           _buildItem(
             AssetIconPath.homeBottomNavigatorBarHistory,
-            AssetIconPath.homeBottomNavigatorBarHistory,
+            AssetIconPath.homeBottomNavigatorBarHistoryActive,
             LanguageKey.homeScreenBottomNavigatorBarHistory,
+            () {
+              widget.onTabSelect(2);
+            },
+            widget.currentIndex == 2,
           ),
           _buildItem(
             AssetIconPath.homeBottomNavigatorBarSetting,
-            AssetIconPath.homeBottomNavigatorBarSetting,
+            AssetIconPath.homeBottomNavigatorBarSettingActive,
             LanguageKey.homeScreenBottomNavigatorBarSetting,
+            () {
+              widget.onTabSelect(3);
+            },
+            widget.currentIndex == 3,
           ),
         ],
       ),
@@ -86,31 +112,39 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
     String iconPath,
     String activeIconPath,
     String labelPath,
+    VoidCallback onTap,
+    bool isSelected,
   ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SvgPicture.asset(
-          iconPath,
-        ),
-        const SizedBox(
-          height: BoxSize.boxSize04,
-        ),
-        AppLocalizationProvider(
-          builder: (localization, _) {
-            return Text(
-              localization.translate(
-                labelPath,
-              ),
-              style: AppTypoGraPhy.bodyMedium01.copyWith(
-                color: widget.appTheme.contentColor500,
-              ),
-            );
-          },
-        ),
-      ],
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(
+            isSelected ? activeIconPath : iconPath,
+          ),
+          const SizedBox(
+            height: BoxSize.boxSize04,
+          ),
+          AppLocalizationProvider(
+            builder: (localization, _) {
+              return Text(
+                localization.translate(
+                  labelPath,
+                ),
+                style: AppTypoGraPhy.bodyMedium01.copyWith(
+                  color: isSelected
+                      ? widget.appTheme.contentColorBrandDark
+                      : widget.appTheme.contentColor500,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

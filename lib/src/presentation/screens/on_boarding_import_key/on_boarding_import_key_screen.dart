@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
@@ -78,7 +80,24 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                 case OnBoardingImportKeyStatus.onImportAccountSuccess:
                   AppNavigator.pop();
 
-                  AppNavigator.replaceAllWith(RoutePath.home);
+                  switch (state.pyxisWalletType) {
+                    case PyxisWalletType.smartAccount:
+                      break;
+                    case PyxisWalletType.normalWallet:
+                      AppGlobalCubit.of(context).changeState(
+                        AppGlobalState(
+                          status: AppGlobalStatus.authorized,
+                          accounts: [
+                            GlobalActiveAccount(
+                              address: state.walletAddress,
+                              // Default account name when use import account with normal wallet type.
+                              accountName: 'Account 1',
+                            )
+                          ],
+                        ),
+                      );
+                      break;
+                  }
                   break;
                 case OnBoardingImportKeyStatus.onLoading:
                   _showLoadingDialog(appTheme);

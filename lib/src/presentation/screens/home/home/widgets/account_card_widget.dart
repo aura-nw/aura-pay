@@ -4,17 +4,22 @@ import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 
 class AccountCardWidget extends StatelessWidget {
   final String accountName;
   final String address;
   final AppTheme appTheme;
+  final VoidCallback onShowMoreAccount;
+  final void Function(String) onCopy;
 
   const AccountCardWidget({
     required this.address,
     required this.accountName,
     super.key,
     required this.appTheme,
+    required this.onShowMoreAccount,
+    required this.onCopy,
   });
 
   @override
@@ -38,7 +43,7 @@ class AccountCardWidget extends StatelessWidget {
       child: Row(
         children: [
           SvgPicture.asset(
-            AssetIconPath.homeSmartAccountAvatarDefault,
+            AssetIconPath.commonSmartAccountAvatarDefault,
           ),
           const SizedBox(
             width: BoxSize.boxSize05,
@@ -59,13 +64,19 @@ class AccountCardWidget extends StatelessWidget {
                     const SizedBox(
                       width: BoxSize.boxSize04,
                     ),
-                    SvgPicture.asset(
-                      AssetIconPath.homeCopy,
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => onCopy(
+                        address,
+                      ),
+                      child: SvgPicture.asset(
+                        AssetIconPath.homeCopy,
+                      ),
                     ),
                   ],
                 ),
                 Text(
-                  address,
+                  address.addressView,
                   style: AppTypoGraPhy.body02.copyWith(
                     color: appTheme.contentColor300,
                   ),
@@ -76,8 +87,12 @@ class AccountCardWidget extends StatelessWidget {
           const SizedBox(
             width: BoxSize.boxSize05,
           ),
-          SvgPicture.asset(
-            AssetIconPath.homeArrowDown,
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: onShowMoreAccount,
+            child: SvgPicture.asset(
+              AssetIconPath.homeArrowDown,
+            ),
           ),
         ],
       ),

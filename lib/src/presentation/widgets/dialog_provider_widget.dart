@@ -221,7 +221,27 @@ sealed class DialogProvider {
           insetPadding: const EdgeInsets.symmetric(
             horizontal: Spacing.spacing06,
             vertical: Spacing.spacing04,
-          )
+          ),
+        );
+      },
+    );
+  }
+
+  static Future<T?> showCustomDialog<T>(
+    BuildContext context, {
+    required AppTheme appTheme,
+    required Widget widget,
+    EdgeInsets? insetPadding,
+    bool canBack = false,
+  }) {
+    return showDialog<T>(
+      context: context,
+      builder: (context) {
+        return _mainDialog(
+          widget,
+          appTheme: appTheme,
+          insetPadding: insetPadding,
+          canBack: canBack,
         );
       },
     );

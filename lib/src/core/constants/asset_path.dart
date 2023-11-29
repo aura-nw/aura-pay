@@ -44,13 +44,18 @@ sealed class AssetIconPath{
   static const String commonRadioCheck = '${_baseIconPath}ic_common_radio_check.svg';
   static const String commonClose = '${_baseIconPath}ic_common_close.svg';
   static const String commonInputError = '${_baseIconPath}ic_common_input_error.svg';
+  static const String commonSmartAccountAvatarDefault= '${_baseIconPath}ic_common_smart_account_avatar_default.svg';
 
   /// Home screen
+  static const String homeBottomNavigatorBarHomeActive = '${_baseIconPath}ic_home_bottom_navigator_bar_home_active.svg';
   static const String homeBottomNavigatorBarHome = '${_baseIconPath}ic_home_bottom_navigator_bar_home.svg';
   static const String homeBottomNavigatorBarAccount = '${_baseIconPath}ic_home_bottom_navigator_bar_account.svg';
+  static const String homeBottomNavigatorBarAccountActive = '${_baseIconPath}ic_home_bottom_navigator_bar_account_active.svg';
   static const String homeBottomNavigatorBarHistory = '${_baseIconPath}ic_home_bottom_navigator_bar_history.svg';
+  static const String homeBottomNavigatorBarHistoryActive = '${_baseIconPath}ic_home_bottom_navigator_bar_history_active.svg';
   static const String homeBottomNavigatorBarScan = '${_baseIconPath}ic_home_bottom_navigator_bar_scan.svg';
   static const String homeBottomNavigatorBarSetting = '${_baseIconPath}ic_home_bottom_navigator_bar_setting.svg';
+  static const String homeBottomNavigatorBarSettingActive = '${_baseIconPath}ic_home_bottom_navigator_bar_setting_active.svg';
 
   ///endregion
 
@@ -64,9 +69,23 @@ sealed class AssetIconPath{
   static const String homeAppBar= '${_baseIconPath}ic_home_nfts.svg';
   static const String homeAppBarLogo= '${_baseIconPath}ic_home_app_bar_logo.svg';
   static const String homeAppBarNotification= '${_baseIconPath}ic_home_app_bar_notification.svg';
-  static const String homeSmartAccountAvatarDefault= '${_baseIconPath}ic_home_smart_account_avatar_default.svg';
   static const String homeCopy= '${_baseIconPath}ic_home_copy.svg';
   static const String homeArrowDown= '${_baseIconPath}ic_home_arrow_down.svg';
 
   ///endregion
+
+  ///region accounts page
+
+
+  static const String accountsMore = '${_baseIconPath}ic_accounts_more.svg';
+  static const String accountsCheck = '${_baseIconPath}ic_accounts_check.svg';
+  static const String accountsRemove = '${_baseIconPath}ic_accounts_remove.svg';
+  static const String accountsRename = '${_baseIconPath}ic_accounts_rename.svg';
+  static const String accountsShare = '${_baseIconPath}ic_accounts_share.svg';
+  static const String accountsRecoverSmartAccount = '${_baseIconPath}ic_accounts_recover_smart_account.svg';
+  static const String accountsImportExistingAccount = '${_baseIconPath}ic_accounts_import_existing_account.svg';
+  static const String accountsCreateNewSmartAccount = '${_baseIconPath}ic_accounts_create_new_smart_account.svg';
+  static const String accountsViewOnAuraScan = '${_baseIconPath}ic_account_view_on_aura_scan.svg';
+
+  /// endregion
 }

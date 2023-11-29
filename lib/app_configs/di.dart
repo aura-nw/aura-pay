@@ -140,11 +140,12 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<OnBoardingScanFeeBloc, String,
+  getIt.registerFactoryParam<OnBoardingScanFeeBloc, Map<String,String>,
       Map<String, Uint8List>>(
-    (smartAccountAddress, accountRaw) => OnBoardingScanFeeBloc(
+    (smartAccount, accountRaw) => OnBoardingScanFeeBloc(
       getIt.get<SmartAccountUseCase>(),
-      smartAccountAddress: smartAccountAddress,
+      smartAccountAddress: smartAccount['smartAccountAddress']!,
+      accountName: smartAccount['accountName']!,
       privateKey: accountRaw['privateKey']!,
       salt: accountRaw['salt']!,
     ),

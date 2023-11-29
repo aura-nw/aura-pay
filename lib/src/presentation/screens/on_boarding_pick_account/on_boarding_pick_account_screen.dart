@@ -82,6 +82,7 @@ class _OnBoardingPickAccountScreenState
                       'smart_account_address': state.smartAccountAddress,
                       'privateKey': state.userPrivateKey!,
                       'salt': state.saltBytes,
+                      'accountName' : state.accountName,
                     },
                   );
                   break;

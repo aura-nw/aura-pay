@@ -14,11 +14,13 @@ class OnBoardingScanFeeBloc
     required String smartAccountAddress,
     required Uint8List privateKey,
     required Uint8List salt,
+    required String accountName,
   }) : super(
           OnBoardingScanFeeState(
             smartAccountAddress: smartAccountAddress,
             privateKey: privateKey,
             salt: salt,
+            accountName: accountName,
           ),
         ) {
     on(_onCheckingBalance);
@@ -74,7 +76,7 @@ class OnBoardingScanFeeBloc
         userPrivateKey: state.privateKey,
         smartAccountAddress: state.smartAccountAddress,
         salt: state.salt,
-        fee: '0.025',
+        fee: '2500',
         gasLimit: 400000,
         memo: 'Active smart account',
       );
@@ -85,7 +87,6 @@ class OnBoardingScanFeeBloc
         ),
       );
     } catch (e) {
-      print(e.toString());
       emit(
         state.copyWith(
           status: OnBoardingScanFeeStatus.onActiveAccountError,

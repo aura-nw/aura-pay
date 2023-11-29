@@ -152,4 +152,39 @@ sealed class LanguageKey {
   static const String homePageNoTokenFoundTitle = 'home_page_no_token_found_title';
   static const String homePageNoTokenFoundContent = 'home_page_no_token_found_content';
   ///
+
+  ///region accounts page
+  static const String accountsPageAppBarTitle = 'accounts_page_app_bar_title';
+  static const String accountsPageCreateNewSmartAccount = 'accounts_page_create_new_smart_account';
+  static const String accountsPageImportExistingAccount = 'accounts_page_import_existing_account';
+  static const String accountsPageRecoverAccount = 'accounts_page_recover_account';
+  static const String accountsPageUsing = 'accounts_page_using';
+  static const String accountsPageAllAccounts = 'accounts_page_all_accounts';
+  static const String accountsPageSmartAccountLabel = 'accounts_page_smart_account_label';
+  static const String accountsPageImported = 'accounts_page_imported';
+  static const String accountsPageSendAddress = 'accounts_page_send_address';
+  static const String accountsPageRenameAccount = 'accounts_page_rename_account';
+  static const String accountsPageRenameAccountHint = 'accounts_page_rename_account_hint';
+  static const String accountsPageRenameAccountMakeMemorable = 'accounts_page_rename_account_make_memorable';
+  static const String accountsPageRenameAccountConfirm = 'accounts_page_rename_confirm';
+  static const String accountsPageRenameAccountSuccess = 'accounts_page_rename_success';
+  static const String accountsPageViewOnAuraScan = 'accounts_page_view_on_aura_scan';
+  static const String accountsPageRemove = 'accounts_page_remove';
+  static const String accountsPageRemoveTitle = 'accounts_page_remove_title';
+  static const String accountsPageRemoveContent = 'accounts_page_remove_content';
+  static const String accountsPageRemoveCancelTitle = 'accounts_page_remove_cancel_title';
+  static const String accountsPageRemoveRemoveTitle = 'accounts_page_remove_remove_title';
+  static const String accountsPageRemoveAccountSuccess = 'accounts_page_remove_account_success';
+  ///
+
+  ///region send transaction
+  static const String sendTransactionAppBarTitle = 'send_transaction_app_bar_title';
+  static const String sendTransactionSendFrom = 'send_transaction_send_from';
+  static const String sendTransactionRecipientLabel = 'send_transaction_recipient_label';
+  static const String sendTransactionRecipientHint = 'send_transaction_recipient_hint';
+  static const String sendTransactionAmount = 'send_transaction_amount';
+  static const String sendTransactionBalance = 'send_transaction_balance';
+  static const String sendTransactionAmountMax = 'send_transaction_amount_max';
+  static const String sendTransactionButtonNextTitle= 'send_transaction_button_next_title';
+  ///
 }

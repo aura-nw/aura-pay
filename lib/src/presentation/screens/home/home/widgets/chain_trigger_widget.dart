@@ -5,12 +5,23 @@ import 'package:pyxis_mobile/src/application/global/localization/app_localizatio
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/constants/typography.dart';
 
 class ChainTriggerWidget extends StatelessWidget {
   final AppTheme appTheme;
+  final VoidCallback onSendTap;
+  final VoidCallback onReceiveTap;
+  final VoidCallback onNFTsTap;
+  final VoidCallback onTXsLimitTap;
+  final VoidCallback onStakeTap;
 
   const ChainTriggerWidget({
     required this.appTheme,
+    required this.onNFTsTap,
+    required this.onSendTap,
+    required this.onReceiveTap,
+    required this.onTXsLimitTap,
+    required this.onStakeTap,
     super.key,
   });
 
@@ -43,21 +54,33 @@ class ChainTriggerWidget extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _triggerBuilder(
-                  AssetIconPath.homeSendToken,
-                  LanguageKey.homePageSendToken,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: onSendTap,
+                  child: _triggerBuilder(
+                    AssetIconPath.homeSendToken,
+                    LanguageKey.homePageSendToken,
+                  ),
                 ),
               ),
               Expanded(
-                child: _triggerBuilder(
-                  AssetIconPath.homeReceiveToken,
-                  LanguageKey.homePageReceiveToken,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: onReceiveTap,
+                  child: _triggerBuilder(
+                    AssetIconPath.homeReceiveToken,
+                    LanguageKey.homePageReceiveToken,
+                  ),
                 ),
               ),
               Expanded(
-                child: _triggerBuilder(
-                  AssetIconPath.homeNFTs,
-                  LanguageKey.homePageNFTs,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: onNFTsTap,
+                  child: _triggerBuilder(
+                    AssetIconPath.homeNFTs,
+                    LanguageKey.homePageNFTs,
+                  ),
                 ),
               ),
             ],
@@ -69,15 +92,23 @@ class ChainTriggerWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: _triggerBuilder(
-                  AssetIconPath.homeTxLimit,
-                  LanguageKey.homePageTxLimit,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: onTXsLimitTap,
+                  child: _triggerBuilder(
+                    AssetIconPath.homeTxLimit,
+                    LanguageKey.homePageTxLimit,
+                  ),
                 ),
               ),
               Expanded(
-                child: _triggerBuilder(
-                  AssetIconPath.homeStake,
-                  LanguageKey.homePageStake,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: onStakeTap,
+                  child: _triggerBuilder(
+                    AssetIconPath.homeStake,
+                    LanguageKey.homePageStake,
+                  ),
                 ),
               ),
               const Expanded(
@@ -107,6 +138,9 @@ class ChainTriggerWidget extends StatelessWidget {
             return Text(
               localization.translate(
                 triggerPath,
+              ),
+              style: AppTypoGraPhy.bodyMedium02.copyWith(
+                color: appTheme.contentColorBlack,
               ),
             );
           },

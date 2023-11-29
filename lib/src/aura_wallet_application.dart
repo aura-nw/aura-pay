@@ -104,7 +104,9 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                     listener: (context, state) {
                       switch (state.status) {
                         case AppGlobalStatus.authorized:
-                          // AppNavigator.replaceAllWith(RoutePath.home);
+                          AppNavigator.replaceAllWith(
+                            RoutePath.home,
+                          );
                           break;
                         case AppGlobalStatus.unauthorized:
                           AppNavigator.replaceAllWith(RoutePath.getStarted);

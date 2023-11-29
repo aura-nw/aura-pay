@@ -22,5 +22,6 @@ class OnBoardingScanFeeState with _$OnBoardingScanFeeState {
     required String smartAccountAddress,
     required Uint8List privateKey,
     required Uint8List salt,
+    required String accountName,
   }) = _OnBoardingScanFeeState;
 }

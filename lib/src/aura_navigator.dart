@@ -11,6 +11,7 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_request_reviewing/on_boarding_recover_request_reviewing_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,7 @@ sealed class RoutePath {
   static const String recoverBackupDone = '$_onBoarding/recover_backup_done';
 
   static const String home = '${_base}home';
+  static const String sendTransaction = '$home/send_transaction';
 }
 
 sealed class AppNavigator {
@@ -78,11 +80,13 @@ sealed class AppNavigator {
         final Map<String, dynamic> arguments =
             settings.arguments as Map<String, dynamic>;
         final String rawAddress = arguments['smart_account_address'];
+        final String accountName = arguments['accountName'];
         final Uint8List privateKey = arguments['privateKey'];
         final Uint8List salt = arguments['salt'];
         return _defaultRoute(
           OnBoardingScanFeeScreen(
             rawAddress: rawAddress,
+            accountName: accountName,
             privateKey: privateKey,
             salt: salt,
           ),
@@ -127,6 +131,11 @@ sealed class AppNavigator {
       case RoutePath.home:
         return _defaultRoute(
           const HomeScreen(),
+          settings,
+        );
+      case RoutePath.sendTransaction:
+        return _defaultRoute(
+          const SendTransactionScreen(),
           settings,
         );
       default:
