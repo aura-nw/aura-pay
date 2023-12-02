@@ -18,6 +18,7 @@ typedef AccountDeserializer = Account Function(pb.Any);
 sealed class AuraSmartAccountHelper {
   static final Map<String, AccountDeserializer> _deserializerAccounts = {
     'BaseAccount': BaseAccount.fromAny,
+    'SmartAccount': BaseAccount.fromAny,
     'ModuleAccount': ModuleAccount.fromAny,
     'BaseVestingAccount': BaseVestingAccount.fromAny,
     'DelayedVestingAccount': DelayedVestingAccount.fromAny,
