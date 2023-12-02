@@ -13,7 +13,11 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (p0) {
-        return const Scaffold();
+        return const Scaffold(
+          body: Center(
+            child: Text('History page'),
+          ),
+        );
       },
     );
   }

@@ -151,6 +151,7 @@ sealed class LanguageKey {
   static const String homePageTokenPrefix = 'home_page_token_prefix';
   static const String homePageNoTokenFoundTitle = 'home_page_no_token_found_title';
   static const String homePageNoTokenFoundContent = 'home_page_no_token_found_content';
+  static const String homePageReceiveShareAddress = 'home_page_receive_share_address';
   ///
 
   ///region accounts page
@@ -190,4 +191,43 @@ sealed class LanguageKey {
   static const String sendTransactionAmountMax = 'send_transaction_amount_max';
   static const String sendTransactionButtonNextTitle= 'send_transaction_button_next_title';
   ///
+
+  ///region signed in create new account
+  static const String signedInCreateNewSmartAccountScreenTitleRegionOne = "signed_in_create_new_smart_account_screen_title_region_one";
+  static const String signedInCreateNewSmartAccountScreenTitleRegionTwo = "signed_in_create_new_smart_account_screen_title_region_two";
+  static const String signedInCreateNewSmartAccountScreenTextFieldTitle = "signed_in_create_new_smart_account_screen_text_field_title";
+  static const String signedInCreateNewSmartAccountScreenButtonTitle = "signed_in_create_new_smart_account_screen_button_title";
+  static const String signedInCreateNewSmartAccountScreenDialogLoadingTitle = "signed_in_create_new_smart_account_screen_dialog_loading_title";
+
+  ///endregion
+
+  ///region signed in scan fee
+  static const String signedInScanFeeScreenTitleRegionOne = "signed_in_scan_fee_screen_title_region_one";
+  static const String signedInScanFeeScreenTitleRegionTwo = "signed_in_scan_fee_screen_title_region_two";
+  static const String signedInScanFeeScreenContentRegionOne = "signed_in_scan_fee_screen_content_region_one";
+  static const String signedInScanFeeScreenContentRegionTwo = "signed_in_scan_fee_screen_content_region_two";
+  static const String signedInScanFeeScreenContentRegionThree = "signed_in_scan_fee_screen_content_region_three";
+  static const String signedInScanFeeScreenButtonTitle = "signed_in_scan_fee_screen_button_title";
+  static const String signedInScanFeeScreenDialogLoadingContent = "signed_in_scan_fee_screen_dialog_loading_content";
+  static const String signedInScanFeeScreenDialogWarningTitle = "signed_in_scan_fee_screen_dialog_warning_title";
+  static const String signedInScanFeeScreenDialogWarningContent = "signed_in_scan_fee_screen_dialog_warning_content";
+  static const String signedInScanFeeScreenDialogWarningButtonTitle = "signed_in_scan_fee_screen_dialog_warning_button_title";
+  ///endregion
+
+  ///region signed in import account
+  static const String signedInImportKeyScreenTitleRegionOne = "signed_in_import_key_screen_title_region_one";
+  static const String signedInImportKeyScreenTitleRegionTwo = "signed_in_import_key_screen_title_region_two";
+  static const String signedInImportKeyScreenAccountType = "signed_in_import_key_screen_account_type";
+  static const String signedInImportKeyScreenSmartAccountType = "signed_in_import_key_screen_smart_account_type";
+  static const String signedInImportKeyScreenNormalAccountType = "signed_in_import_key_screen_normal_account_type";
+  static const String signedInImportKeyScreenSelectType = "signed_in_import_key_screen_select_type";
+  static const String signedInImportKeyScreenSelectTypePrivate = "signed_in_import_key_screen_select_type_private";
+  static const String signedInImportKeyScreenSelectTypePassPhrase = "signed_in_import_key_screen_select_type_pass_phrase";
+  static const String signedInImportKeyScreenPrivateKey = "signed_in_import_key_screen_private_key";
+  static const String signedInImportKeyScreenPassPhrase = "signed_in_import_key_screen_pass_phrase";
+  static const String signedInImportKeyScreenButtonTitle = "signed_in_import_key_screen_button_title";
+  static const String signedInImportKeyScreenInvalidPrivateKey = "signed_in_import_key_screen_invalid_private_key";
+  static const String signedInImportKeyScreenInvalidPassPhrase = "signed_in_import_key_screen_invalid_passphrase";
+  static const String signedInImportKeyScreenDialogLoadingTitle = "signed_in_import_key_screen_dialog_loading_title";
+  ///endregion
 }

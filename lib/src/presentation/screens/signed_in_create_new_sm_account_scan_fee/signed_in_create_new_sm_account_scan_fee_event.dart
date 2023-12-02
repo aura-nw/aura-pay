@@ -1,0 +1,8 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'signed_in_create_new_sm_account_scan_fee_event.freezed.dart';
+
+@freezed
+class SignedInCreateNewSmAccountScanFeeEvent with _$SignedInCreateNewSmAccountScanFeeEvent{
+  const factory SignedInCreateNewSmAccountScanFeeEvent.checkBalance() = SignedInCreateNewSmAccountScanFeeOnCheckingBalanceEvent;
+  const factory SignedInCreateNewSmAccountScanFeeEvent.createBalance() = SignedInCreateNewSmAccountScanFeeOnActiveSmartAccountEvent;
+}

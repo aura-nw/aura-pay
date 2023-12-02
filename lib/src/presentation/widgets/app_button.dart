@@ -101,15 +101,17 @@ class _AppButton extends StatelessWidget {
 
 final class PrimaryAppButton extends StatelessWidget {
   final String text;
+  final Widget? leading;
   final bool? isDisable;
   final VoidCallback? onPress;
   final double? minWidth;
-  final Color ?backGroundColor;
+  final Color? backGroundColor;
 
   const PrimaryAppButton({
     super.key,
     required this.text,
     this.isDisable,
+    this.leading,
     this.onPress,
     this.minWidth,
     this.backGroundColor,
@@ -130,6 +132,7 @@ final class PrimaryAppButton extends StatelessWidget {
             color: theme.contentColorWhite,
           ),
           theme: theme,
+          leading: leading,
         );
       },
     );

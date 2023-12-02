@@ -58,9 +58,7 @@ sealed class AssetIconPath{
   static const String homeBottomNavigatorBarSetting = '${_baseIconPath}ic_home_bottom_navigator_bar_setting.svg';
   static const String homeBottomNavigatorBarSettingActive = '${_baseIconPath}ic_home_bottom_navigator_bar_setting_active.svg';
 
-  ///endregion
-
-  ///region home page
+  /// Home page
   static const String homeNoTokenFound = '${_baseIconPath}ic_home_no_token_found.svg';
   static const String homeSendToken= '${_baseIconPath}ic_home_send_token.svg';
   static const String homeReceiveToken= '${_baseIconPath}ic_home_receive_token.svg';
@@ -72,12 +70,10 @@ sealed class AssetIconPath{
   static const String homeAppBarNotification= '${_baseIconPath}ic_home_app_bar_notification.svg';
   static const String homeCopy= '${_baseIconPath}ic_home_copy.svg';
   static const String homeArrowDown= '${_baseIconPath}ic_home_arrow_down.svg';
+  static const String homeReceiveShareAddress= '${_baseIconPath}ic_home_receive_share_address.svg';
+  static const String homeReceiveCopyAddress= '${_baseIconPath}ic_home_receive_copy_address.svg';
 
-  ///endregion
-
-  ///region accounts page
-
-
+  ///Accounts page
   static const String accountsMore = '${_baseIconPath}ic_accounts_more.svg';
   static const String accountsCheck = '${_baseIconPath}ic_accounts_check.svg';
   static const String accountsRemove = '${_baseIconPath}ic_accounts_remove.svg';
@@ -89,5 +85,8 @@ sealed class AssetIconPath{
   static const String accountsCreateNewSmartAccount = '${_baseIconPath}ic_accounts_create_new_smart_account.svg';
   static const String accountsViewOnAuraScan = '${_baseIconPath}ic_account_view_on_aura_scan.svg';
 
-  /// endregion
+
+  ///signed in import account
+  static const String signedInImportKeyInformation = '${_baseIconPath}ic_signed_in_import_account_information.svg';
+  ///
 }

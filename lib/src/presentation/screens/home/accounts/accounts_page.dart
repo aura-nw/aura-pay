@@ -47,8 +47,16 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
               children: [
                 AccountManagerFormWidget(
                   appTheme: appTheme,
-                  onCreateTap: () {},
-                  onImportTap: () {},
+                  onCreateTap: () async {
+                    await AppNavigator.push(
+                      RoutePath.signedInCreateNewAccountPickName,
+                    );
+                  },
+                  onImportTap: () async {
+                    await AppNavigator.push(
+                      RoutePath.signedInImportKey,
+                    );
+                  },
                   onRecoverTap: () {},
                 ),
                 const SizedBox(
@@ -92,75 +100,62 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                 const SizedBox(
                   height: BoxSize.boxSize06,
                 ),
-                AppLocalizationProvider(
-                  builder: (localization, _) {
-                    return Text(
-                      localization.translateWithParam(
-                        LanguageKey.accountsPageAllAccounts,
-                        {
-                          'total': 3,
-                        },
-                      ),
-                      style: AppTypoGraPhy.bodyMedium03.copyWith(
-                        color: appTheme.contentColorBlack,
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize07,
-                ),
                 Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: [
-                      BlocBuilder<AppGlobalCubit, AppGlobalState>(
-                        bloc: AppGlobalCubit.of(
-                          context,
-                        ),
-                        builder: (context, state) {
-                          return AccountItemWidget(
-                            appTheme: appTheme,
-                            address: state.accounts.first.address,
-                            accountName: state.accounts.first.accountName,
-                            onMoreTap: () {},
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize07,
-                      ),
-                      BlocBuilder<AppGlobalCubit, AppGlobalState>(
-                        bloc: AppGlobalCubit.of(
-                          context,
-                        ),
-                        builder: (context, state) {
-                          return AccountItemWidget(
-                            appTheme: appTheme,
-                            address: state.accounts.first.address,
-                            accountName: state.accounts.first.accountName,
-                            onMoreTap: () {},
-                            isSmartAccount: true,
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize07,
-                      ),
-                      BlocBuilder<AppGlobalCubit, AppGlobalState>(
-                        bloc: AppGlobalCubit.of(
-                          context,
-                        ),
-                        builder: (context, state) {
-                          return AccountItemWidget(
-                            appTheme: appTheme,
-                            address: state.accounts.first.address,
-                            accountName: state.accounts.first.accountName,
-                            onMoreTap: () {},
-                          );
-                        },
-                      ),
-                    ],
+                  child: BlocBuilder<AppGlobalCubit, AppGlobalState>(
+                    builder: (context, state) {
+                      final accounts = state.accounts;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppLocalizationProvider(
+                            builder: (localization, _) {
+                              return Text(
+                                localization.translateWithParam(
+                                  LanguageKey.accountsPageAllAccounts,
+                                  {
+                                    'total': accounts.length + 1,
+                                  },
+                                ),
+                                style: AppTypoGraPhy.bodyMedium03.copyWith(
+                                  color: appTheme.contentColorBlack,
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            height: BoxSize.boxSize07,
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: accounts.length,
+                              itemBuilder: (context, index) {
+                                final account = state.accounts[index];
+                                return Column(
+                                  children: [
+                                    AccountItemWidget(
+                                      appTheme: appTheme,
+                                      address: account.address,
+                                      accountName: account.accountName,
+                                      onMoreTap: () {
+                                        _showMoreOptionsDialog(
+                                          appTheme,
+                                          account,
+                                        );
+                                      },
+                                      isSmartAccount: index % 2 == 0,
+                                    ),
+                                    const SizedBox(
+                                      height: BoxSize.boxSize07,
+                                    ),
+                                  ],
+                                );
+                              },
+                              padding: EdgeInsets.zero,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ],

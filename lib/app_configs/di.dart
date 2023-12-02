@@ -10,6 +10,9 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_bloc.dart';
 
 import 'pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen_cubit.dart';
@@ -140,7 +143,7 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<OnBoardingScanFeeBloc, Map<String,String>,
+  getIt.registerFactoryParam<OnBoardingScanFeeBloc, Map<String, String>,
       Map<String, Uint8List>>(
     (smartAccount, accountRaw) => OnBoardingScanFeeBloc(
       getIt.get<SmartAccountUseCase>(),
@@ -150,9 +153,35 @@ Future<void> initDependency(
       salt: accountRaw['salt']!,
     ),
   );
+
   getIt.registerFactory<OnBoardingRecoverChoiceBloc>(
     () => OnBoardingRecoverChoiceBloc(
       getIt.get<AuthUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => SignedInCreateNewSmAccountPickAccountBloc(
+      getIt.get<WalletUseCase>(),
+      getIt.get<SmartAccountUseCase>(),
+    ),
+  );
+
+  getIt.registerFactoryParam<SignedInCreateNewSmAccountScanFeeBloc,
+      Map<String, String>, Map<String, Uint8List>>(
+    (smartAccount, accountRaw) => SignedInCreateNewSmAccountScanFeeBloc(
+      getIt.get<SmartAccountUseCase>(),
+      smartAccountAddress: smartAccount['smartAccountAddress']!,
+      accountName: smartAccount['accountName']!,
+      privateKey: accountRaw['privateKey']!,
+      salt: accountRaw['salt']!,
+    ),
+  );
+
+  getIt.registerFactory(
+    () => SignedInImportKeyBloc(
+      getIt.get<WalletUseCase>(),
+      getIt.get<SmartAccountUseCase>(),
     ),
   );
 }

@@ -124,6 +124,7 @@
   "home_page_no_token_found_title" : "No token found!",
   "home_page_no_token_found_content" : "All tokens of this smart account is shown here",
   "home_page_token_prefix" : "$",
+  "home_page_receive_share_address" : "Share Address",
 
   "accounts_page_app_bar_title" : "Accounts management",
   "accounts_page_create_new_smart_account" : "Create new smart account",
@@ -157,5 +158,39 @@
   "send_transaction_amount" : "Amount to send",
   "send_transaction_balance" : "Amount to send",
   "send_transaction_amount_max" : "MAX",
-  "send_transaction_button_next_title" : "Next"
+  "send_transaction_button_next_title" : "Next",
+
+  "signed_in_create_new_smart_account_screen_title_region_one" : "Create new",
+  "signed_in_create_new_smart_account_screen_title_region_two" : "smart account",
+  "signed_in_create_new_smart_account_screen_text_field_title" : "Pick a name",
+  "signed_in_create_new_smart_account_screen_button_title" : "Create",
+  "signed_in_create_new_smart_account_screen_dialog_loading_title" : "Checking device",
+
+
+  "signed_in_scan_fee_screen_title_region_one" : "Scan QR",
+  "signed_in_scan_fee_screen_title_region_two" : "to send fee",
+  "signed_in_scan_fee_screen_content_region_one" : "Your device has used up all its available fee grant requests. To continue create new account, please send a small fee of  to the below address",
+  "signed_in_scan_fee_screen_content_region_two" : "0.1 AURA",
+  "signed_in_scan_fee_screen_content_region_three" : "to the below address",
+  "signed_in_scan_fee_screen_button_title" : "Continue",
+  "signed_in_scan_fee_screen_dialog_loading_content" : "Checking balance",
+  "signed_in_scan_fee_screen_dialog_warning_title" : "Insufficient gas fee",
+  "signed_in_scan_fee_screen_dialog_warning_content" : "Please send a fee to the address or rechecking balance",
+  "signed_in_scan_fee_screen_dialog_warning_button_title" : "Dismiss",
+
+
+  "signed_in_import_key_screen_title_region_one" : "Import",
+  "signed_in_import_key_screen_title_region_two" : "Smart account",
+  "signed_in_import_key_screen_account_type" : "Account type",
+  "signed_in_import_key_screen_smart_account_type" : "Pyxis smart account",
+  "signed_in_import_key_screen_normal_account_type" : "Normal wallet",
+  "signed_in_import_key_screen_select_type" : "Select type",
+  "signed_in_import_key_screen_select_type_private" : "Import by private key",
+  "signed_in_import_key_screen_select_type_pass_phrase" : "Import by passphrase",
+  "signed_in_import_key_screen_private_key" : "Private key",
+  "signed_in_import_key_screen_pass_phrase" : "Passphrase",
+  "signed_in_import_key_screen_button_title" : "Next",
+  "signed_in_import_key_screen_invalid_private_key" : "Invalid private key",
+  "signed_in_import_key_screen_invalid_passphrase" : "Invalid passphrase",
+  "signed_in_import_key_screen_dialog_loading_title" : "Loading accounts"
 }

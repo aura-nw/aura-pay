@@ -31,9 +31,8 @@ class _RenameAccountFormWidgetState extends State<RenameAccountFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: Spacing.spacing08,
-        horizontal: Spacing.spacing06,
+      padding: const EdgeInsets.all(
+        Spacing.spacing06,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

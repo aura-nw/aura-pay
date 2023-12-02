@@ -12,6 +12,9 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_reques
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +41,17 @@ sealed class RoutePath {
 
   static const String home = '${_base}home';
   static const String sendTransaction = '$home/send_transaction';
+  static const String _signedInCreateNewAccount =
+      '$home/signed_in_create_new_account';
+  static const String signedInCreateNewAccountPickName =
+      '$_signedInCreateNewAccount/pick_name';
+  static const String signedInCreateNewAccountScanFee =
+      '$_signedInCreateNewAccount/scan_fee';
+
+  static const String _signedInImportAccount =
+      '$home/signed_in_import_account';
+  static const String signedInImportKey =
+      '$_signedInImportAccount/import_key';
 }
 
 sealed class AppNavigator {
@@ -138,6 +152,33 @@ sealed class AppNavigator {
           const SendTransactionScreen(),
           settings,
         );
+      case RoutePath.signedInCreateNewAccountPickName:
+        return _defaultRoute(
+          const SignedInCreateNewSmAccountPickAccountScreen(),
+          settings,
+        );
+      case RoutePath.signedInCreateNewAccountScanFee:
+        final Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        final String rawAddress = arguments['smart_account_address'];
+        final String accountName = arguments['accountName'];
+        final Uint8List privateKey = arguments['privateKey'];
+        final Uint8List salt = arguments['salt'];
+        return _defaultRoute(
+          SignedInCreateNewSmAccountScanFeeScreen(
+            rawAddress: rawAddress,
+            accountName: accountName,
+            privateKey: privateKey,
+            salt: salt,
+          ),
+          settings,
+        );
+
+      case RoutePath.signedInImportKey:
+        return _defaultRoute(
+          const SignedInImportKeyScreen(),
+          settings,
+        );
       default:
         return _defaultRoute(
           const SplashScreen(),
@@ -153,6 +194,10 @@ sealed class AppNavigator {
       state?.pushReplacementNamed(route, arguments: arguments);
 
   static void pop<T>([T? arguments]) => state?.pop(arguments);
+
+  static void popUntil(String routeName) => state?.popUntil(
+        (route) => route.settings.name == routeName,
+      );
 
   static void popToFirst() => state?.popUntil((route) => route.isFirst);
 

@@ -13,7 +13,11 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (p0) {
-        return const Scaffold();
+        return const Scaffold(
+          body: Center(
+            child: Text('Setting page'),
+          ),
+        );
       },
     );
   }

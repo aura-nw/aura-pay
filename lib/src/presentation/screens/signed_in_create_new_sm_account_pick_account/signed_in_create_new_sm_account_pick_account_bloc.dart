@@ -5,29 +5,30 @@ import 'dart:typed_data';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart' show WalletUseCase, SmartAccountUseCase;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'on_boarding_pick_account_event.dart';
-import 'on_boarding_pick_account_state.dart';
 
-class OnBoardingPickAccountBloc
-    extends Bloc<OnBoardingPickAccountEvent, OnBoardingPickAccountState> {
+import 'signed_in_create_new_sm_account_pick_account_event.dart';
+import 'signed_in_create_new_sm_account_pick_account_state.dart';
+
+class SignedInCreateNewSmAccountPickAccountBloc
+    extends Bloc<SignedInCreateNewSmAccountPickAccountEvent, SignedInCreateNewSmAccountPickAccountState> {
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
 
-  OnBoardingPickAccountBloc(this._walletUseCase, this._smartAccountUseCase)
+  SignedInCreateNewSmAccountPickAccountBloc(this._walletUseCase, this._smartAccountUseCase)
       : super(
-          const OnBoardingPickAccountState(),
-        ) {
+    const SignedInCreateNewSmAccountPickAccountState(),
+  ) {
     on(_onChangeAccountName);
     on(_onCreate);
   }
 
   void _onCreate(
-    OnBoardingPickAccountOnSubmitEvent event,
-    Emitter<OnBoardingPickAccountState> emit,
-  ) async {
+      SignedInCreateNewPickAccountOnSubmitEvent event,
+      Emitter<SignedInCreateNewSmAccountPickAccountState> emit,
+      ) async {
     emit(
       state.copyWith(
-        status: OnBoardingPickAccountStatus.onLoading,
+        status: SignedInCreateNewPickAccountStatus.onLoading,
       ),
     );
 
@@ -48,7 +49,7 @@ class OnBoardingPickAccountBloc
 
       /// Create a smart account address
       final String smartAccount =
-          await _smartAccountUseCase.generateSmartAccount(
+      await _smartAccountUseCase.generateSmartAccount(
         pubKey: wallet.publicKey,
         salt: saltBytes,
       );
@@ -58,12 +59,12 @@ class OnBoardingPickAccountBloc
 
       if (isFreeFee) {
         emit(state.copyWith(
-          status: OnBoardingPickAccountStatus.onCheckAddressEnoughFee,
+          status: SignedInCreateNewPickAccountStatus.onCheckAddressEnoughFee,
         ));
       } else {
         emit(
           state.copyWith(
-            status: OnBoardingPickAccountStatus.onCheckAddressUnEnoughFee,
+            status: SignedInCreateNewPickAccountStatus.onCheckAddressUnEnoughFee,
             smartAccountAddress: smartAccount,
             userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(
               wallet.privateKey!,
@@ -75,7 +76,7 @@ class OnBoardingPickAccountBloc
     } catch (e) {
       emit(
         state.copyWith(
-          status: OnBoardingPickAccountStatus.onCheckAddressError,
+          status: SignedInCreateNewPickAccountStatus.onCheckAddressError,
           errorMessage: e.toString(),
         ),
       );
@@ -83,9 +84,9 @@ class OnBoardingPickAccountBloc
   }
 
   void _onChangeAccountName(
-    OnBoardingPickAccountOnPickAccountChangeEvent event,
-    Emitter<OnBoardingPickAccountState> emit,
-  ) {
+      SignedInCreateNewPickAccountChangeEvent event,
+      Emitter<SignedInCreateNewSmAccountPickAccountState> emit,
+      ) {
     emit(
       state.copyWith(
         accountName: event.accountName,
