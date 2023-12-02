@@ -60,4 +60,24 @@ abstract interface class AuraSmartAccount {
     required String fee,
     required int gasLimit,
   });
+
+  /// Send token from smart account to address
+  /// This method has to pass seven parameters include: [userPrivateKey] as Uint8List,
+  /// [smartAccountAddress] as String,
+  /// [receiverAddress] as String,
+  /// [amount] as String,
+  /// [memo] as String?,
+  /// [fee] as String,
+  /// [gasLimit] as int,
+  /// Response a [String] is tx hash of transaction
+  /// It can throw [AuraSmartAccountError]
+  Future<String> sendToken({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String receiverAddress,
+    required String amount,
+    required String fee,
+    required int gasLimit,
+    String? memo,
+  });
 }

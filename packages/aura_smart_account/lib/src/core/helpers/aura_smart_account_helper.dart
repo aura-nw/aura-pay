@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 import 'package:aura_smart_account/src/core/constants/smart_account_constant.dart';
 import 'package:aura_smart_account/src/core/definitions/account.dart';
+import 'package:aura_smart_account/src/core/definitions/cosmos_signer_data.dart';
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
     as auth;
-import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart';
 import 'package:aura_smart_account/src/proto/cosmos/tx/signing/v1beta1/export.dart'
     as signing;
 import 'package:aura_smart_account/src/proto/cosmos/tx/v1beta1/export.dart'
@@ -29,8 +29,7 @@ sealed class AuraSmartAccountHelper {
     required Uint8List privateKey,
     required Uint8List pubKey,
     required List<pb.Any> messages,
-    required SmartAccount signerData,
-    required String chainId,
+    required CosmosSignerData signerData,
     required tx.Fee fee,
     String? memo,
   }) async {
@@ -73,7 +72,7 @@ sealed class AuraSmartAccountHelper {
       bodyBytes: txBodyBytes,
       authInfoBytes: authInfoBytes,
       accountNumber: signerData.accountNumber,
-      chainId: chainId,
+      chainId: signerData.chainId,
     );
 
     // Get sign doc bytes

@@ -1,6 +1,6 @@
 import 'package:grpc/grpc_or_grpcweb.dart';
 
-class AuraNetworkInfo {
+final class AuraNetworkInfo {
   final String host;
   final int port;
   final bool grpcTransportSecure;

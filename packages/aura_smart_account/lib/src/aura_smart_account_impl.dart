@@ -3,19 +3,23 @@ import 'dart:typed_data';
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_smart_account/src/core/constants/aura_network_information.dart';
 import 'package:aura_smart_account/src/core/definitions/account.dart';
-import 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
+import 'package:aura_smart_account/src/core/definitions/cosmos_signer_data.dart';
 import 'package:aura_smart_account/src/core/definitions/grpc_network_info.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
     as aura;
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
     as auth;
-import 'package:aura_smart_account/src/proto/cosmos/base/v1beta1/coin.pb.dart';
+import 'package:aura_smart_account/src/proto/cosmos/bank/v1beta1/export.dart'
+    as bank;
+import 'package:aura_smart_account/src/proto/cosmos/base/v1beta1/export.dart'
+    as base;
 import 'package:aura_smart_account/src/proto/cosmos/tx/v1beta1/export.dart'
     as tx;
 import 'package:aura_smart_account/src/proto/google/protobuf/export.dart' as pb;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:grpc/grpc.dart';
+import 'package:protobuf/protobuf.dart';
 
 import 'core/constants/smart_account_constant.dart';
 import 'core/helpers/aura_smart_account_helper.dart';
@@ -117,7 +121,8 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       // Generate a pub key from user pub key
       final Uint8List pubKeyGenerate =
           AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(
-              pubKey);
+        pubKey,
+      );
 
       // Create msg MsgActivateAccount.
       final aura.MsgActivateAccount msgActivateAccountRequest =
@@ -131,62 +136,30 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
           ..value = pubKeyGenerate,
       );
 
-      // Get account from smart account
-      final Account accountResponse = await AuraSmartAccountHelper.getAccount(
-        address: smartAccountAddress,
-        queryClient: queryAuthClient,
-      );
-
-      // create signer data
-      final aura.SmartAccount smartAccount = aura.SmartAccount.create()
-        ..address = accountResponse.address()
-        ..pubKey = accountResponse.pubKey()
-        ..accountNumber = accountResponse.accountNumber()
-        ..sequence = accountResponse.sequence();
+      // Get signer data
+      final CosmosSignerData signerData =
+          await _getSignerData(smartAccountAddress);
 
       // Create fee
       final tx.Fee feeSign = tx.Fee.create()
         ..gasLimit = $fixnum.Int64(gasLimit)
         ..amount.add(
-          Coin(
+          base.Coin(
             denom: auraNetworkInfo.denom,
             amount: fee,
           ),
         );
 
-      // Create tx
-      final tx.Tx txSign = await AuraSmartAccountHelper.sign(
-        privateKey: userPrivateKey,
-        pubKey: pubKeyGenerate,
-        messages: [
-          pb.Any.pack(
-            msgActivateAccountRequest,
-            typeUrlPrefix: '',
-          ),
-        ],
-        signerData: smartAccount,
-        chainId: auraNetworkInfo.chainId,
-        memo: memo,
-        fee: feeSign,
-      );
-
-      // Create tx raw from tx sign
-      tx.TxRaw txRaw = tx.TxRaw.create()
-        ..bodyBytes = txSign.body.writeToBuffer()
-        ..authInfoBytes = txSign.authInfo.writeToBuffer()
-        ..signatures.addAll(txSign.signatures);
-
-      final Uint8List txBytes = txRaw.writeToBuffer();
-
-      // create broadcast tx request
-      tx.BroadcastTxRequest broadcastTxRequest = tx.BroadcastTxRequest(
-        mode: tx.BroadcastMode.BROADCAST_MODE_SYNC,
-        txBytes: txBytes,
-      );
-
       // Broadcast TxBytes
       final tx.BroadcastTxResponse broadcastTxResponse =
-          await serviceClient.broadcastTx(broadcastTxRequest);
+          await _signAndBroadcastTx(
+        userPrivateKey: userPrivateKey,
+        pubKeyGenerate: pubKeyGenerate,
+        msg: msgActivateAccountRequest,
+        signerData: signerData,
+        feeSign: feeSign,
+        memo: memo,
+      );
 
       dev.log('Response data = ${broadcastTxResponse.txResponse.data}');
 
@@ -217,5 +190,154 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         errorMsg: e.toString(),
       );
     }
+  }
+
+  @override
+  Future<String> sendToken({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String receiverAddress,
+    required String amount,
+    required String fee,
+    required int gasLimit,
+    String? memo,
+  }) async {
+    try{
+      // Get pub key from private key
+      final Uint8List pubKey = WalletHelper.getPublicKeyFromPrivateKey(
+        userPrivateKey,
+      );
+
+      // Generate a pub key from user pub key
+      final Uint8List pubKeyGenerate =
+      AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(
+        pubKey,
+      );
+
+      // Create coin
+      final base.Coin coin = base.Coin.create()
+        ..denom = auraNetworkInfo.denom
+        ..amount = amount;
+
+      // Create msg send
+      final bank.MsgSend msgSend = bank.MsgSend.create()
+        ..fromAddress = smartAccountAddress
+        ..toAddress = receiverAddress
+        ..amount.add(coin);
+
+      // Get signer data
+      final CosmosSignerData signerData =
+      await _getSignerData(smartAccountAddress);
+
+      // Create fee
+      final tx.Fee feeSign = tx.Fee.create()
+        ..gasLimit = $fixnum.Int64(gasLimit)
+        ..amount.add(
+          base.Coin(
+            denom: auraNetworkInfo.denom,
+            amount: fee,
+          ),
+        );
+
+      final tx.BroadcastTxResponse broadcastTxResponse =
+      await _signAndBroadcastTx(
+        userPrivateKey: userPrivateKey,
+        feeSign: feeSign,
+        msg: msgSend,
+        pubKeyGenerate: pubKeyGenerate,
+        signerData: signerData,
+        memo: memo,
+      );
+
+      // Get status code
+      final int statusCode = broadcastTxResponse.txResponse.code;
+
+      // Broadcast successfully
+      if(statusCode == 0){
+        return broadcastTxResponse.txResponse.txhash;
+      }
+
+      throw AuraSmartAccountError(
+        code: AuraSmartAccountConstant.errorBroadcast,
+        errorMsg: broadcastTxResponse.txResponse.rawLog,
+      );
+    }catch(e){
+      // Convert exception to Aura Smart Account Exception
+      if (e is GrpcError) {
+        throw AuraSmartAccountError(
+          code: e.code,
+          errorMsg: e.message ?? e.codeName,
+        );
+      }
+
+      throw AuraSmartAccountError(
+        code: AuraSmartAccountConstant.errorCodeDefault,
+        errorMsg: e.toString(),
+      );
+    }
+
+  }
+
+  // Get signer data from sm account address
+  Future<CosmosSignerData> _getSignerData(String smAccountAddress) async {
+    // Get account from smart account
+    final Account accountResponse = await AuraSmartAccountHelper.getAccount(
+      address: smAccountAddress,
+      queryClient: queryAuthClient,
+    );
+
+    // create signer data
+    final CosmosSignerData signerData = CosmosSignerData(
+      chainId: auraNetworkInfo.chainId,
+      sequence: accountResponse.sequence(),
+      accountNumber: accountResponse.accountNumber(),
+    );
+
+    return signerData;
+  }
+
+  // Sign and broadcast tx
+  Future<tx.BroadcastTxResponse> _signAndBroadcastTx({
+    required Uint8List userPrivateKey,
+    required Uint8List pubKeyGenerate,
+    required GeneratedMessage msg,
+    required CosmosSignerData signerData,
+    String? memo,
+    required tx.Fee feeSign,
+  }) async {
+    // Create tx
+    final tx.Tx txSign = await AuraSmartAccountHelper.sign(
+      privateKey: userPrivateKey,
+      pubKey: pubKeyGenerate,
+      messages: [
+        pb.Any.pack(
+          msg,
+          typeUrlPrefix: '',
+        ),
+      ],
+      signerData: signerData,
+      memo: memo,
+      fee: feeSign,
+    );
+
+    // Create tx raw from tx sign
+    tx.TxRaw txRaw = tx.TxRaw.create()
+      ..bodyBytes = txSign.body.writeToBuffer()
+      ..authInfoBytes = txSign.authInfo.writeToBuffer()
+      ..signatures.addAll(txSign.signatures);
+
+    final Uint8List txBytes = txRaw.writeToBuffer();
+
+    // create broadcast tx request
+    tx.BroadcastTxRequest broadcastTxRequest = tx.BroadcastTxRequest(
+      mode: tx.BroadcastMode.BROADCAST_MODE_SYNC,
+      txBytes: txBytes,
+    );
+
+    // Broadcast TxBytes
+    final tx.BroadcastTxResponse broadcastTxResponse =
+        await serviceClient.broadcastTx(broadcastTxRequest);
+
+    return broadcastTxResponse;
   }
 }
