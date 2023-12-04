@@ -34,4 +34,24 @@ class SmartAccountProvider {
       memo: memo,
     );
   }
+
+  Future<TxResponse> sendToken({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String receiverAddress,
+    required String amount,
+    String? memo,
+    required String fee,
+    required int gasLimit,
+  }) async {
+    return _provider.sendToken(
+      userPrivateKey: userPrivateKey,
+      smartAccountAddress: smartAccountAddress,
+      receiverAddress: receiverAddress,
+      amount: amount,
+      fee: fee,
+      gasLimit: gasLimit,
+      memo: memo,
+    );
+  }
 }

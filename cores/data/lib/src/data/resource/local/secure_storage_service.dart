@@ -1,12 +1,12 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class SecureStorageService {
+final class SecureStorageService {
   final FlutterSecureStorage _storage;
 
   const SecureStorageService(this._storage);
 
   Future<String?> getValue(String key) async {
-    return _storage.read(key: key);
+    return _storage.read(key: key,);
   }
 
   Future<bool> constantValue(String key) async {
@@ -24,5 +24,9 @@ class SecureStorageService {
       key: key,
       value: value,
     );
+  }
+
+  Future<Map<String,dynamic>> readAll()async{
+    return _storage.readAll();
   }
 }

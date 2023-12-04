@@ -8,24 +8,21 @@ final class WalletRepositoryImpl implements WalletRepository {
   const WalletRepositoryImpl(this._walletService);
 
   @override
-  Future<AuraWallet> createWallet({required String walletName}) async {
-    return _walletService.createWallet(walletName: walletName);
+  Future<AuraWallet> createWallet() async {
+    return _walletService.createWallet();
   }
 
   @override
-  Future<AuraWallet> importWallet(
-      {required String privateKeyOrPassPhrase,
-      required String walletName}) async {
+  Future<AuraWallet> importWallet({
+    required String privateKeyOrPassPhrase,
+  }) async {
     return _walletService.importWallet(
       passPhraseOrPrivateKey: privateKeyOrPassPhrase,
-      walletName: walletName,
     );
   }
 
   @override
-  Future<void> removeWallet({required String walletName}) async {
-    return _walletService.removeWallet(
-      walletName: walletName,
-    );
+  Future<void> removeWallet() async {
+    return _walletService.removeWallet();
   }
 }

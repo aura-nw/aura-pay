@@ -39,4 +39,27 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
 
     return response.address;
   }
+
+  @override
+  Future<String> sendToken({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String receiverAddress,
+    required String amount,
+    String? memo,
+    required String fee,
+    required int gasLimit,
+  }) async {
+    final txResponse = await _provider.sendToken(
+      userPrivateKey: userPrivateKey,
+      smartAccountAddress: smartAccountAddress,
+      receiverAddress: receiverAddress,
+      amount: amount,
+      fee: fee,
+      gasLimit: gasLimit,
+      memo: memo,
+    );
+
+    return txResponse.txhash;
+  }
 }

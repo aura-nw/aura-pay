@@ -5,37 +5,23 @@ final class WalletProvider {
 
   const WalletProvider(this._auraWalletCore);
 
-  Future<AuraWallet> createWallet({
-    required String walletName,
-  }) async {
-    return _auraWalletCore.createRandomHDWallet(
-      walletName: walletName,
-    );
+  Future<AuraWallet> createWallet() async {
+    return _auraWalletCore.createRandomHDWallet();
   }
 
   Future<AuraWallet> importWallet({
     required String passPhraseOrPrivateKey,
-    required String walletName,
   }) async {
     return _auraWalletCore.restoreHDWallet(
       passPhraseOrPrivateKey: passPhraseOrPrivateKey,
-      walletName: walletName,
     );
   }
 
-  Future<void> removeWallet({
-    required String walletName,
-  }) async {
-    return _auraWalletCore.removeWallet(
-      walletName: walletName,
-    );
+  Future<void> removeWallet() async {
+    return _auraWalletCore.removeWallet();
   }
 
-  Future<AuraWallet?> getCurrentWallet({
-    required String walletName,
-  }) async {
-    return _auraWalletCore.loadStoredWallet(
-      walletName: walletName,
-    );
+  Future<AuraWallet?> getCurrentWallet() async {
+    return _auraWalletCore.loadStoredWallet();
   }
 }
