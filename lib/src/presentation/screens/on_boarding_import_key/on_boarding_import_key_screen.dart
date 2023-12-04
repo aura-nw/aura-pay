@@ -85,15 +85,8 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                       break;
                     case PyxisWalletType.normalWallet:
                       AppGlobalCubit.of(context).changeState(
-                        AppGlobalState(
+                        const AppGlobalState(
                           status: AppGlobalStatus.authorized,
-                          accounts: [
-                            GlobalActiveAccount(
-                              address: state.walletAddress,
-                              // Default account name when use import account with normal wallet type.
-                              accountName: 'Account 1',
-                            )
-                          ],
                         ),
                       );
                       break;
@@ -149,50 +142,50 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                               );
                             },
                           ),
-                          const SizedBox(
-                            height: BoxSize.boxSize07,
-                          ),
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return Row(
-                                children: [
-                                  Text(
-                                    localization.translate(
-                                      LanguageKey
-                                          .onBoardingImportKeyScreenAccountType,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: BoxSize.boxSize03,
-                                  ),
-                                  SvgPicture.asset(
-                                    AssetIconPath
-                                        .onBoardingImportKeyInformation,
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize05,
-                          ),
-                          OnBoardingImportKeyAccountTypeSelector(
-                            builder: (accountType) {
-                              return AccountTypeChoiceWidget(
-                                onSelected: (selectedAccountType) {
-                                  if (selectedAccountType != accountType) {
-                                    _bloc.add(
-                                      OnBoardingImportKeyOnSelectAccountTypeEvent(
-                                        accountType: selectedAccountType,
-                                      ),
-                                    );
-                                  }
-                                },
-                                defaultType: accountType,
-                                appTheme: appTheme,
-                              );
-                            },
-                          ),
+                          // const SizedBox(
+                          //   height: BoxSize.boxSize07,
+                          // ),
+                          // AppLocalizationProvider(
+                          //   builder: (localization, _) {
+                          //     return Row(
+                          //       children: [
+                          //         Text(
+                          //           localization.translate(
+                          //             LanguageKey
+                          //                 .onBoardingImportKeyScreenAccountType,
+                          //           ),
+                          //         ),
+                          //         const SizedBox(
+                          //           width: BoxSize.boxSize03,
+                          //         ),
+                          //         SvgPicture.asset(
+                          //           AssetIconPath
+                          //               .onBoardingImportKeyInformation,
+                          //         ),
+                          //       ],
+                          //     );
+                          //   },
+                          // ),
+                          // const SizedBox(
+                          //   height: BoxSize.boxSize05,
+                          // ),
+                          // OnBoardingImportKeyAccountTypeSelector(
+                          //   builder: (accountType) {
+                          //     return AccountTypeChoiceWidget(
+                          //       onSelected: (selectedAccountType) {
+                          //         if (selectedAccountType != accountType) {
+                          //           _bloc.add(
+                          //             OnBoardingImportKeyOnSelectAccountTypeEvent(
+                          //               accountType: selectedAccountType,
+                          //             ),
+                          //           );
+                          //         }
+                          //       },
+                          //       defaultType: accountType,
+                          //       appTheme: appTheme,
+                          //     );
+                          //   },
+                          // ),
                           const SizedBox(
                             height: BoxSize.boxSize07,
                           ),
@@ -302,12 +295,12 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                                 .translate(LanguageKey
                                                     .onBoardingImportKeyScreenInvalidPrivateKey),
                                             customValid: (value) {
-                                              try{
+                                              try {
                                                 return AuraWalletHelper
                                                     .checkPrivateKey(
                                                   value.trim(),
                                                 );
-                                              }catch(e){
+                                              } catch (e) {
                                                 return false;
                                               }
                                             },
@@ -350,12 +343,12 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                                   .onBoardingImportKeyScreenInvalidPassPhrase,
                                             ),
                                             customValid: (value) {
-                                              try{
+                                              try {
                                                 return AuraWalletHelper
                                                     .checkMnemonic(
                                                   mnemonic: value.trim(),
                                                 );
-                                              }catch(e){
+                                              } catch (e) {
                                                 return false;
                                               }
                                             },

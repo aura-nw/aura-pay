@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AppGlobalState {
   AppGlobalStatus get status => throw _privateConstructorUsedError;
-  List<GlobalActiveAccount> get accounts => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppGlobalStateCopyWith<AppGlobalState> get copyWith =>
@@ -30,7 +29,7 @@ abstract class $AppGlobalStateCopyWith<$Res> {
           AppGlobalState value, $Res Function(AppGlobalState) then) =
       _$AppGlobalStateCopyWithImpl<$Res, AppGlobalState>;
   @useResult
-  $Res call({AppGlobalStatus status, List<GlobalActiveAccount> accounts});
+  $Res call({AppGlobalStatus status});
 }
 
 /// @nodoc
@@ -47,17 +46,12 @@ class _$AppGlobalStateCopyWithImpl<$Res, $Val extends AppGlobalState>
   @override
   $Res call({
     Object? status = null,
-    Object? accounts = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AppGlobalStatus,
-      accounts: null == accounts
-          ? _value.accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
-              as List<GlobalActiveAccount>,
     ) as $Val);
   }
 }
@@ -70,7 +64,7 @@ abstract class _$$AppGlobalStateImplCopyWith<$Res>
       __$$AppGlobalStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AppGlobalStatus status, List<GlobalActiveAccount> accounts});
+  $Res call({AppGlobalStatus status});
 }
 
 /// @nodoc
@@ -85,17 +79,12 @@ class __$$AppGlobalStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? accounts = null,
   }) {
     return _then(_$AppGlobalStateImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AppGlobalStatus,
-      accounts: null == accounts
-          ? _value._accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
-              as List<GlobalActiveAccount>,
     ));
   }
 }
@@ -103,26 +92,15 @@ class __$$AppGlobalStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AppGlobalStateImpl implements _AppGlobalState {
-  const _$AppGlobalStateImpl(
-      {this.status = AppGlobalStatus.unauthorized,
-      final List<GlobalActiveAccount> accounts = const []})
-      : _accounts = accounts;
+  const _$AppGlobalStateImpl({this.status = AppGlobalStatus.unauthorized});
 
   @override
   @JsonKey()
   final AppGlobalStatus status;
-  final List<GlobalActiveAccount> _accounts;
-  @override
-  @JsonKey()
-  List<GlobalActiveAccount> get accounts {
-    if (_accounts is EqualUnmodifiableListView) return _accounts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_accounts);
-  }
 
   @override
   String toString() {
-    return 'AppGlobalState(status: $status, accounts: $accounts)';
+    return 'AppGlobalState(status: $status)';
   }
 
   @override
@@ -130,13 +108,11 @@ class _$AppGlobalStateImpl implements _AppGlobalState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppGlobalStateImpl &&
-            (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality().equals(other._accounts, _accounts));
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, const DeepCollectionEquality().hash(_accounts));
+  int get hashCode => Object.hash(runtimeType, status);
 
   @JsonKey(ignore: true)
   @override
@@ -147,14 +123,11 @@ class _$AppGlobalStateImpl implements _AppGlobalState {
 }
 
 abstract class _AppGlobalState implements AppGlobalState {
-  const factory _AppGlobalState(
-      {final AppGlobalStatus status,
-      final List<GlobalActiveAccount> accounts}) = _$AppGlobalStateImpl;
+  const factory _AppGlobalState({final AppGlobalStatus status}) =
+      _$AppGlobalStateImpl;
 
   @override
   AppGlobalStatus get status;
-  @override
-  List<GlobalActiveAccount> get accounts;
   @override
   @JsonKey(ignore: true)
   _$$AppGlobalStateImplCopyWith<_$AppGlobalStateImpl> get copyWith =>

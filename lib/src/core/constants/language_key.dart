@@ -188,6 +188,7 @@ sealed class LanguageKey {
   static const String sendTransactionRecipientHint = 'send_transaction_recipient_hint';
   static const String sendTransactionAmount = 'send_transaction_amount';
   static const String sendTransactionBalance = 'send_transaction_balance';
+  static const String sendTransactionBalanceHint = 'send_transaction_balance_hint';
   static const String sendTransactionAmountMax = 'send_transaction_amount_max';
   static const String sendTransactionButtonNextTitle= 'send_transaction_button_next_title';
   ///

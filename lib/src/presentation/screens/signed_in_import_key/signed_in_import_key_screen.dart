@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
@@ -16,6 +14,8 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/choice_select_widget.dart';
@@ -80,15 +80,13 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                     case PyxisWalletType.smartAccount:
                       break;
                     case PyxisWalletType.normalWallet:
-                      AppGlobalCubit.of(context).addNewAccount(
-                        GlobalActiveAccount(
-                          address: state.walletAddress,
-                          // Default account name when use import account with normal wallet type.
-                          accountName: 'Account 1',
-                        ),
-                      );
                       break;
                   }
+
+                  HomeScreenBloc.of(context).add(
+                    const HomeScreenEventOnReFetchAccount(),
+                  );
+
                   AppNavigator.popUntil(
                     RoutePath.home,
                   );
@@ -143,49 +141,49 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                               );
                             },
                           ),
-                          const SizedBox(
-                            height: BoxSize.boxSize07,
-                          ),
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return Row(
-                                children: [
-                                  Text(
-                                    localization.translate(
-                                      LanguageKey
-                                          .signedInImportKeyScreenAccountType,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: BoxSize.boxSize03,
-                                  ),
-                                  SvgPicture.asset(
-                                    AssetIconPath.signedInImportKeyInformation,
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize05,
-                          ),
-                          SignedInImportKeyAccountTypeSelector(
-                            builder: (accountType) {
-                              return AccountTypeChoiceWidget(
-                                onSelected: (selectedAccountType) {
-                                  if (selectedAccountType != accountType) {
-                                    _bloc.add(
-                                      SignedInImportKeyOnSelectAccountTypeEvent(
-                                        accountType: selectedAccountType,
-                                      ),
-                                    );
-                                  }
-                                },
-                                defaultType: accountType,
-                                appTheme: appTheme,
-                              );
-                            },
-                          ),
+                          // const SizedBox(
+                          //   height: BoxSize.boxSize07,
+                          // ),
+                          // AppLocalizationProvider(
+                          //   builder: (localization, _) {
+                          //     return Row(
+                          //       children: [
+                          //         Text(
+                          //           localization.translate(
+                          //             LanguageKey
+                          //                 .signedInImportKeyScreenAccountType,
+                          //           ),
+                          //         ),
+                          //         const SizedBox(
+                          //           width: BoxSize.boxSize03,
+                          //         ),
+                          //         SvgPicture.asset(
+                          //           AssetIconPath.signedInImportKeyInformation,
+                          //         ),
+                          //       ],
+                          //     );
+                          //   },
+                          // ),
+                          // const SizedBox(
+                          //   height: BoxSize.boxSize05,
+                          // ),
+                          // SignedInImportKeyAccountTypeSelector(
+                          //   builder: (accountType) {
+                          //     return AccountTypeChoiceWidget(
+                          //       onSelected: (selectedAccountType) {
+                          //         if (selectedAccountType != accountType) {
+                          //           _bloc.add(
+                          //             SignedInImportKeyOnSelectAccountTypeEvent(
+                          //               accountType: selectedAccountType,
+                          //             ),
+                          //           );
+                          //         }
+                          //       },
+                          //       defaultType: accountType,
+                          //       appTheme: appTheme,
+                          //     );
+                          //   },
+                          // ),
                           const SizedBox(
                             height: BoxSize.boxSize07,
                           ),

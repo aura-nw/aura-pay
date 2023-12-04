@@ -9,9 +9,15 @@ class OnBoardingImportKeyBloc
     extends Bloc<OnBoardingImportKeyEvent, OnBoardingImportKeyState> {
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
+  final ControllerKeyUseCase _controllerKeyUseCase;
+  final AuraAccountUseCase _accountUseCase;
 
-  OnBoardingImportKeyBloc(this._walletUseCase,this._smartAccountUseCase)
-      : super(
+  OnBoardingImportKeyBloc(
+    this._walletUseCase,
+    this._smartAccountUseCase,
+    this._controllerKeyUseCase,
+    this._accountUseCase,
+  ) : super(
           const OnBoardingImportKeyState(),
         ) {
     on(_onSelectAccountType);
@@ -62,8 +68,7 @@ class OnBoardingImportKeyBloc
     OnBoardingImportKeyOnSubmitEvent event,
     Emitter<OnBoardingImportKeyState> emit,
   ) async {
-
-    if(state.pyxisWalletType == PyxisWalletType.smartAccount) return;
+    if (state.pyxisWalletType == PyxisWalletType.smartAccount) return;
 
     emit(
       state.copyWith(
@@ -71,20 +76,28 @@ class OnBoardingImportKeyBloc
       ),
     );
     try {
-      switch(state.pyxisWalletType){
+      switch (state.pyxisWalletType) {
         case PyxisWalletType.smartAccount:
-
           break;
         case PyxisWalletType.normalWallet:
           final wallet = await _walletUseCase.importWallet(
             privateKeyOrPassPhrase: state.key,
-            /// Set Default account name
-            walletName: 'Account 1',
           );
+
+          await _accountUseCase.saveAccount(
+            address: wallet.bech32Address,
+            type: AuraAccountType.normal,
+            accountName: 'Unknown name',
+          );
+
+          await _controllerKeyUseCase.saveKey(
+            address: wallet.bech32Address,
+            key: state.key,
+          );
+
           emit(
             state.copyWith(
               status: OnBoardingImportKeyStatus.onImportAccountSuccess,
-              walletAddress: wallet.bech32Address
             ),
           );
           break;

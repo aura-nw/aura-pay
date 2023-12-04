@@ -34,7 +34,6 @@ class SignedInCreateNewSmAccountPickAccountBloc
 
     try {
       final wallet = await _walletUseCase.createWallet(
-        walletName: state.accountName,
       );
 
       final Random random = Random.secure();

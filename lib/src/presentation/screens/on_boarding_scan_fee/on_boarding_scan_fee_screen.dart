@@ -91,14 +91,8 @@ class _OnBoardingScanFeeScreenState extends State<OnBoardingScanFeeScreen>
                   break;
                 case OnBoardingScanFeeStatus.onActiveAccountSuccess:
                   AppGlobalCubit.of(context).changeState(
-                    AppGlobalState(
+                    const AppGlobalState(
                       status: AppGlobalStatus.authorized,
-                      accounts: [
-                        GlobalActiveAccount(
-                          address: state.smartAccountAddress,
-                          accountName: state.accountName,
-                        ),
-                      ],
                     ),
                   );
 

@@ -9,9 +9,15 @@ class SignedInImportKeyBloc
     extends Bloc<SignedInImportKeyEvent, SignedInImportKeyState> {
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
+  final AuraAccountUseCase _accountUseCase;
+  final ControllerKeyUseCase _controllerKeyUseCase;
 
-  SignedInImportKeyBloc(this._walletUseCase,this._smartAccountUseCase)
-      : super(
+  SignedInImportKeyBloc(
+    this._walletUseCase,
+    this._smartAccountUseCase,
+    this._accountUseCase,
+    this._controllerKeyUseCase,
+  ) : super(
           const SignedInImportKeyState(),
         ) {
     on(_onSelectAccountType);
@@ -62,8 +68,7 @@ class SignedInImportKeyBloc
     SignedInImportKeyOnSubmitEvent event,
     Emitter<SignedInImportKeyState> emit,
   ) async {
-
-    if(state.pyxisWalletType == PyxisWalletType.smartAccount) return;
+    if (state.pyxisWalletType == PyxisWalletType.smartAccount) return;
 
     emit(
       state.copyWith(
@@ -71,21 +76,17 @@ class SignedInImportKeyBloc
       ),
     );
     try {
-      switch(state.pyxisWalletType){
+      switch (state.pyxisWalletType) {
         case PyxisWalletType.smartAccount:
-
           break;
         case PyxisWalletType.normalWallet:
           final wallet = await _walletUseCase.importWallet(
             privateKeyOrPassPhrase: state.key,
-            /// Set Default account name
-            walletName: 'Account 1',
           );
           emit(
             state.copyWith(
-              status: SignedInImportKeyStatus.onImportAccountSuccess,
-              walletAddress: wallet.bech32Address
-            ),
+                status: SignedInImportKeyStatus.onImportAccountSuccess,
+                walletAddress: wallet.bech32Address),
           );
           break;
       }

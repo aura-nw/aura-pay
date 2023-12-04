@@ -1,7 +1,5 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
@@ -14,6 +12,7 @@ import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/account_manager_action_form.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/remove_account_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/rename_account_form_widget.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'widgets/account_item_widget.dart';
 import 'widgets/account_manager_form_widget.dart';
@@ -77,23 +76,21 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                 const SizedBox(
                   height: BoxSize.boxSize07,
                 ),
-                BlocBuilder<AppGlobalCubit, AppGlobalState>(
-                  bloc: AppGlobalCubit.of(
-                    context,
-                  ),
-                  builder: (context, state) {
+                HomeScreenAccountsSelector(
+                  builder: (accounts) {
+                    final account = accounts.first;
                     return AccountItemWidget(
                       appTheme: appTheme,
-                      address: state.accounts.first.address,
-                      accountName: state.accounts.first.accountName,
+                      address: account.address,
+                      accountName: account.name!,
                       onMoreTap: () {
                         _showMoreOptionsDialog(
                           appTheme,
-                          state.accounts.first,
+                          account,
                         );
                       },
                       onUsing: true,
-                      isSmartAccount: true,
+                      isSmartAccount: account.isSmartAccount,
                     );
                   },
                 ),
@@ -101,9 +98,8 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                   height: BoxSize.boxSize06,
                 ),
                 Expanded(
-                  child: BlocBuilder<AppGlobalCubit, AppGlobalState>(
-                    builder: (context, state) {
-                      final accounts = state.accounts;
+                  child: HomeScreenAccountsSelector(
+                    builder: (accounts) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -129,20 +125,20 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                             child: ListView.builder(
                               itemCount: accounts.length,
                               itemBuilder: (context, index) {
-                                final account = state.accounts[index];
+                                final account = accounts[index];
                                 return Column(
                                   children: [
                                     AccountItemWidget(
                                       appTheme: appTheme,
                                       address: account.address,
-                                      accountName: account.accountName,
+                                      accountName: account.name!,
                                       onMoreTap: () {
                                         _showMoreOptionsDialog(
                                           appTheme,
                                           account,
                                         );
                                       },
-                                      isSmartAccount: index % 2 == 0,
+                                      isSmartAccount: account.isSmartAccount,
                                     ),
                                     const SizedBox(
                                       height: BoxSize.boxSize07,
@@ -166,13 +162,14 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
     );
   }
 
-  void _showMoreOptionsDialog(AppTheme appTheme, GlobalActiveAccount account) {
+  void _showMoreOptionsDialog(AppTheme appTheme, AuraAccount account) {
     DialogProvider.showCustomDialog(
       context,
       appTheme: appTheme,
       canBack: true,
       widget: AccountManagerActionForm(
-        account: account,
+        address: account.address,
+        name: account.name!,
         appTheme: appTheme,
         onRemove: () {
           AppNavigator.pop();

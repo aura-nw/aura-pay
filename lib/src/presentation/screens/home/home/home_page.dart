@@ -2,9 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
@@ -13,6 +10,7 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
 import 'widgets/account_widget.dart';
 import 'widgets/chain_trigger_widget.dart';
 import 'widgets/empty_token_widget.dart';
@@ -32,11 +30,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with CustomFlutterToast, TickerProviderStateMixin {
-  late AppGlobalCubit _appGlobalCubit;
 
   @override
   void didChangeDependencies() {
-    _appGlobalCubit = AppGlobalCubit.of(context);
     super.didChangeDependencies();
   }
 
@@ -57,12 +53,11 @@ class _HomePageState extends State<HomePage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BlocBuilder<AppGlobalCubit, AppGlobalState>(
-                  bloc: _appGlobalCubit,
-                  builder: (context, state) {
+                HomeScreenAccountsSelector(
+                  builder: (accounts) {
                     return AccountCardWidget(
-                      address: state.accounts.first.address,
-                      accountName: state.accounts.first.accountName,
+                      address: accounts.first.address,
+                      accountName: accounts.first.name!,
                       appTheme: appTheme,
                       onShowMoreAccount: () {},
                       onCopy: _copyAddress,

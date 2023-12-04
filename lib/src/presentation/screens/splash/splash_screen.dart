@@ -1,7 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
@@ -38,14 +36,10 @@ class _SplashScreenState extends State<SplashScreen> {
               switch (state.status) {
                 case SplashScreenStatus.starting:
                   break;
-                case SplashScreenStatus.loadWalletSuccess:
-                  AppGlobalCubit.of(context).changeState(
-                    const AppGlobalState(
-                      status: AppGlobalStatus.authorized,
-                    ),
-                  );
+                case SplashScreenStatus.hasPassCode:
+
                   break;
-                case SplashScreenStatus.loadWalletNull:
+                case SplashScreenStatus.notHasPassCodeOrError:
                   AppNavigator.replaceWith(RoutePath.getStarted);
                   break;
               }

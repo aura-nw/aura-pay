@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_state.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
 import 'accounts/accounts_page.dart';
 import 'history/history_page.dart';
 import 'home/widgets/receive_token_widget.dart';
+import 'home_screen_bloc.dart';
 import 'setting/setting_page.dart';
 import 'widgets/bottom_navigator_bar_widget.dart';
 
@@ -24,16 +30,19 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late HomeScreenSection currentSection;
 
   late AnimationController _receiveWidgetController;
   late Animation _receiveAnimation;
 
-  late AppGlobalCubit _appGlobalCubit;
+  final HomeScreenBloc _bloc = getIt.get<HomeScreenBloc>();
 
   @override
   void initState() {
+    _bloc.add(
+      const HomeScreenEventOnInit(),
+    );
     _receiveWidgetController = AnimationController(
       vsync: this,
       duration: const Duration(
@@ -47,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _appGlobalCubit = AppGlobalCubit.of(context);
     _receiveAnimation = Tween<double>(
       begin: -context.h,
       end: 0,
@@ -76,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
     );
   }
 
-  void _onReceiveTap(){
+  void _onReceiveTap() {
     _receiveWidgetController.forward();
   }
 
@@ -84,78 +92,97 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
   Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (appTheme) {
-        return Stack(
-          children: [
-            Scaffold(
-              body: Stack(
-                children: [
-                  _buildTab(
-                    HomeScreenSection.home,
-                    HomePage(
-                      onReceiveTap: _onReceiveTap,
+        return BlocProvider.value(
+          value: _bloc,
+          child: HomeScreenStatusSelector(
+            builder: (status) {
+              switch (status) {
+                case HomeScreenStatus.loading:
+                  return Center(
+                    child: AppLoadingWidget(
+                      appTheme: appTheme,
                     ),
-                  ),
-                  _buildTab(
-                    HomeScreenSection.accounts,
-                    const AccountsPage(),
-                  ),
-                  _buildTab(
-                    HomeScreenSection.history,
-                    const HistoryPage(),
-                  ),
-                  _buildTab(
-                    HomeScreenSection.setting,
-                    const SettingPage(),
-                  ),
-                ],
-              ),
-              bottomNavigationBar: BottomNavigatorBarWidget(
-                currentIndex: HomeScreenSection.values.indexOf(
-                  currentSection,
-                ),
-                appTheme: appTheme,
-                onScanTap: () {},
-                onTabSelect: (index) {
+                  );
+                case HomeScreenStatus.loaded:
+                case HomeScreenStatus.error:
+                  return Stack(
+                    children: [
+                      Scaffold(
+                        body: Stack(
+                          children: [
+                            _buildTab(
+                              HomeScreenSection.home,
+                              HomePage(
+                                onReceiveTap: _onReceiveTap,
+                              ),
+                            ),
+                            _buildTab(
+                              HomeScreenSection.accounts,
+                              const AccountsPage(),
+                            ),
+                            _buildTab(
+                              HomeScreenSection.history,
+                              const HistoryPage(),
+                            ),
+                            _buildTab(
+                              HomeScreenSection.setting,
+                              const SettingPage(),
+                            ),
+                          ],
+                        ),
+                        bottomNavigationBar: BottomNavigatorBarWidget(
+                          currentIndex: HomeScreenSection.values.indexOf(
+                            currentSection,
+                          ),
+                          appTheme: appTheme,
+                          onScanTap: () {},
+                          onTabSelect: (index) {
+                            final HomeScreenSection newSection =
+                                HomeScreenSection.values[index];
 
-                  final HomeScreenSection newSection = HomeScreenSection.values[index];
+                            if (currentSection == newSection) {
+                              return;
+                            }
+                            setState(() {
+                              currentSection = newSection;
+                            });
+                          },
+                        ),
+                      ),
+                      AnimatedBuilder(
+                        animation: _receiveWidgetController,
+                        child: HomeScreenAccountsSelector(
+                          builder: (accounts) {
+                            return ReceiveTokenWidget(
+                              accountName: accounts.first.name!,
+                              address: accounts.first.address,
+                              theme: appTheme,
+                              onSwipeUp: () async {
+                                if (_receiveWidgetController.isCompleted) {
+                                  await _receiveWidgetController.reverse();
 
-                  if(currentSection == newSection){
-                    return;
-                  }
-                  setState(() {
-                    currentSection = newSection;
-                  });
-                },
-              ),
-            ),
-            AnimatedBuilder(
-              animation: _receiveWidgetController,
-              child: ReceiveTokenWidget(
-                accountName: _appGlobalCubit.state.accounts.first.accountName,
-                address: _appGlobalCubit.state.accounts.first.address,
-                theme: appTheme,
-                onSwipeUp: () async{
-                  if (_receiveWidgetController.isCompleted) {
-                    await _receiveWidgetController.reverse();
-
-                    _receiveWidgetController.reset();
-                  }
-                },
-                onShareAddress: () {
-
-                },
-              ),
-              builder: (context, child) {
-                return Transform.translate(
-                  offset: Offset(
-                    0,
-                    _receiveAnimation.value,
-                  ),
-                  child: child ?? const SizedBox.shrink(),
-                );
-              },
-            ),
-          ],
+                                  _receiveWidgetController.reset();
+                                }
+                              },
+                              onShareAddress: () {},
+                            );
+                          },
+                        ),
+                        builder: (context, child) {
+                          return Transform.translate(
+                            offset: Offset(
+                              0,
+                              _receiveAnimation.value,
+                            ),
+                            child: child ?? const SizedBox.shrink(),
+                          );
+                        },
+                      ),
+                    ],
+                  );
+              }
+            },
+          ),
         );
       },
     );

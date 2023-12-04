@@ -32,9 +32,7 @@ class OnBoardingPickAccountBloc
     );
 
     try {
-      final wallet = await _walletUseCase.createWallet(
-        walletName: state.accountName,
-      );
+      final wallet = await _walletUseCase.createWallet();
 
       final Random random = Random.secure();
 
@@ -52,6 +50,7 @@ class OnBoardingPickAccountBloc
         pubKey: wallet.publicKey,
         salt: saltBytes,
       );
+
       /// call api check fee gas
 
       bool isFreeFee = false;

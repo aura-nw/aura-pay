@@ -15,7 +15,7 @@ class SignedInImportKeyState with _$SignedInImportKeyState {
   const factory SignedInImportKeyState({
     @Default(SignedInImportKeyStatus.init) SignedInImportKeyStatus status,
     @Default(ImportWalletType.privateKey) ImportWalletType importWalletType,
-    @Default(PyxisWalletType.smartAccount) PyxisWalletType pyxisWalletType,
+    @Default(PyxisWalletType.normalWallet) PyxisWalletType pyxisWalletType,
     @Default(false) bool isReadySubmit,
     @Default('') String key,
     @Default('') String walletAddress,

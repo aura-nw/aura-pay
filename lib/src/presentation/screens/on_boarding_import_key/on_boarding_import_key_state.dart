@@ -15,10 +15,9 @@ class OnBoardingImportKeyState with _$OnBoardingImportKeyState {
   const factory OnBoardingImportKeyState({
     @Default(OnBoardingImportKeyStatus.init) OnBoardingImportKeyStatus status,
     @Default(ImportWalletType.privateKey) ImportWalletType importWalletType,
-    @Default(PyxisWalletType.smartAccount) PyxisWalletType pyxisWalletType,
+    @Default(PyxisWalletType.normalWallet) PyxisWalletType pyxisWalletType,
     @Default(false) bool isReadySubmit,
     @Default('') String key,
-    @Default('') String walletAddress,
     String? errorMessage,
   }) = _OnBoardingImportKeyState;
 }

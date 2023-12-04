@@ -11,6 +11,7 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_request_reviewing/on_boarding_recover_request_reviewing_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/re_login/re_login_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
@@ -25,6 +26,7 @@ import 'presentation/screens/on_boarding_recover_select_account/on_boarding_reco
 sealed class RoutePath {
   static const String _base = '/';
   static const String splash = _base;
+  static const String reLogin = '${_base}re_login';
   static const String _onBoarding = '${_base}onboarding';
   static const String getStarted = '$_onBoarding/get_started';
   static const String choiceOption = '$_onBoarding/choice_option';
@@ -48,10 +50,8 @@ sealed class RoutePath {
   static const String signedInCreateNewAccountScanFee =
       '$_signedInCreateNewAccount/scan_fee';
 
-  static const String _signedInImportAccount =
-      '$home/signed_in_import_account';
-  static const String signedInImportKey =
-      '$_signedInImportAccount/import_key';
+  static const String _signedInImportAccount = '$home/signed_in_import_account';
+  static const String signedInImportKey = '$_signedInImportAccount/import_key';
 }
 
 sealed class AppNavigator {
@@ -62,6 +62,11 @@ sealed class AppNavigator {
       case RoutePath.splash:
         return _defaultRoute(
           const SplashScreen(),
+          settings,
+        );
+      case RoutePath.reLogin:
+        return _defaultRoute(
+          const ReLoginScreen(),
           settings,
         );
       case RoutePath.getStarted:

@@ -3,8 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
@@ -96,12 +94,6 @@ class _SignedInCreateNewSmAccountScanFeeScreenState
                   break;
                 case SignedInCreateNewSmAccountScanFeeStatus
                       .onActiveAccountSuccess:
-                  AppGlobalCubit.of(context).addNewAccount(
-                    GlobalActiveAccount(
-                      address: state.smartAccountAddress,
-                      accountName: state.accountName,
-                    ),
-                  );
                   AppNavigator.popUntil(
                     RoutePath.home,
                   );

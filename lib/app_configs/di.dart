@@ -5,7 +5,11 @@ import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:aura_wallet_core/config_options/environment_options.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:isar/isar.dart';
+import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_bloc.dart';
@@ -23,6 +27,7 @@ final getIt = GetIt.instance;
 
 Future<void> initDependency(
   PyxisMobileConfig config,
+  Isar isar,
 ) async {
   final Dio dio = Dio(
     BaseOptions(
@@ -35,6 +40,13 @@ Future<void> initDependency(
       ),
       contentType: 'application/json; charset=utf-8',
     ),
+  );
+
+  const FlutterSecureStorage secureStorage = FlutterSecureStorage(
+    aOptions: AndroidOptions(
+        encryptedSharedPreferences: true,
+        sharedPreferencesName: AppLocalConstant.keyDbName),
+    iOptions: IOSOptions(),
   );
 
   final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -76,7 +88,28 @@ Future<void> initDependency(
     ),
   );
 
+  /// Local
+
+  getIt.registerLazySingleton<AccountStorageService>(
+    () => AccountStorageService(
+      isar,
+    ),
+  );
+
+  getIt.registerLazySingleton(
+    () => const SecureStorageService(
+      secureStorage,
+    ),
+  );
+
   ///Repository
+
+  getIt.registerLazySingleton<AppSecureRepository>(
+    () => AppSecureRepositoryImpl(
+      getIt.get<SecureStorageService>(),
+    ),
+  );
+
   getIt.registerLazySingleton<LocalizationRepository>(
     () => LocalizationRepositoryImpl(),
   );
@@ -99,7 +132,24 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<ControllerKeyRepository>(
+    () => ControllerKeyRepositoryImpl(
+      getIt.get<SecureStorageService>(),
+    ),
+  );
+  getIt.registerLazySingleton<AuraAccountRepository>(
+    () => AuraAccountRepositoryImpl(
+      getIt.get<AccountStorageService>(),
+    ),
+  );
+
   ///Use case
+  getIt.registerLazySingleton<AppSecureUseCase>(
+    () => AppSecureUseCase(
+      getIt.get<AppSecureRepository>(),
+    ),
+  );
+
   getIt.registerLazySingleton<LocalizationUseCase>(
     () => LocalizationUseCase(
       getIt.get<LocalizationRepository>(),
@@ -124,9 +174,22 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<AuraAccountUseCase>(
+    () => AuraAccountUseCase(
+      getIt.get<AuraAccountRepository>(),
+    ),
+  );
+  getIt.registerLazySingleton<ControllerKeyUseCase>(
+    () => ControllerKeyUseCase(
+      getIt.get<ControllerKeyRepository>(),
+    ),
+  );
+
   ///Bloc
   getIt.registerFactory<SplashScreenCubit>(
-    () => SplashScreenCubit(),
+    () => SplashScreenCubit(
+      getIt.get<AppSecureUseCase>(),
+    ),
   );
 
   getIt.registerFactory<OnBoardingPickAccountBloc>(
@@ -140,6 +203,8 @@ Future<void> initDependency(
     () => OnBoardingImportKeyBloc(
       getIt.get<WalletUseCase>(),
       getIt.get<SmartAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
     ),
   );
 
@@ -147,6 +212,8 @@ Future<void> initDependency(
       Map<String, Uint8List>>(
     (smartAccount, accountRaw) => OnBoardingScanFeeBloc(
       getIt.get<SmartAccountUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
       smartAccountAddress: smartAccount['smartAccountAddress']!,
       accountName: smartAccount['accountName']!,
       privateKey: accountRaw['privateKey']!,
@@ -157,6 +224,12 @@ Future<void> initDependency(
   getIt.registerFactory<OnBoardingRecoverChoiceBloc>(
     () => OnBoardingRecoverChoiceBloc(
       getIt.get<AuthUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => HomeScreenBloc(
+      getIt.get<AuraAccountUseCase>(),
     ),
   );
 
@@ -182,6 +255,8 @@ Future<void> initDependency(
     () => SignedInImportKeyBloc(
       getIt.get<WalletUseCase>(),
       getIt.get<SmartAccountUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
     ),
   );
 }

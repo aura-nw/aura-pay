@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
@@ -17,7 +16,8 @@ class AccountManagerActionForm extends StatelessWidget {
   final VoidCallback onViewOnAuraScan;
   final VoidCallback onRemove;
   final AppTheme appTheme;
-  final GlobalActiveAccount account;
+  final String address;
+  final String name;
 
   const AccountManagerActionForm({
     required this.appTheme,
@@ -25,7 +25,8 @@ class AccountManagerActionForm extends StatelessWidget {
     required this.onRenameAddress,
     required this.onShareAddress,
     required this.onViewOnAuraScan,
-    required this.account,
+    required this.address,
+    required this.name,
     super.key,
   });
 
@@ -67,8 +68,8 @@ class AccountManagerActionForm extends StatelessWidget {
                   ),
                   child: AccountItemImportedWidget(
                     appTheme: appTheme,
-                    address: account.address,
-                    accountName: account.accountName,
+                    address: address,
+                    accountName: name,
                   ),
                 ),
                 const SizedBox(

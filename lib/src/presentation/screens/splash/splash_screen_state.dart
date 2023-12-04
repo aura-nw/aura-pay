@@ -3,8 +3,8 @@ part 'splash_screen_state.freezed.dart';
 
 enum SplashScreenStatus {
   starting,
-  loadWalletSuccess,
-  loadWalletNull,
+  hasPassCode,
+  notHasPassCodeOrError,
 }
 
 @freezed
