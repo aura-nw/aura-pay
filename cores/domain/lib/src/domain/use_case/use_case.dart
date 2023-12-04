@@ -1,5 +1,7 @@
 export 'auth_use_case.dart';
-export 'app_passcode_use_case.dart';
 export 'localization_use_case.dart';
 export 'wallet_use_case.dart';
 export 'smart_account_use_case.dart';
+export 'controller_key_use_case.dart';
+export 'aura_account_use_case.dart';
+export 'app_secure_use_case.dart';

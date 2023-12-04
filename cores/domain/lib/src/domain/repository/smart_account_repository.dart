@@ -14,4 +14,14 @@ abstract interface class SmartAccountRepository {
     required String fee,
     required int gasLimit,
   });
+
+  Future<String> sendToken({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String receiverAddress,
+    required String amount,
+    String? memo,
+    required String fee,
+    required int gasLimit,
+  });
 }

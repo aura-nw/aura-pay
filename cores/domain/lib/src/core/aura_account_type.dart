@@ -1,0 +1,4 @@
+enum AuraAccountType {
+  normal,
+  smartAccount,
+}

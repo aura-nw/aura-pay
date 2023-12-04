@@ -6,29 +6,19 @@ final class WalletUseCase {
 
   const WalletUseCase(this._repository);
 
-  Future<AuraWallet> createWallet({
-    required String walletName,
-  }) async {
-    return _repository.createWallet(
-      walletName: walletName,
-    );
+  Future<AuraWallet> createWallet() async {
+    return _repository.createWallet();
   }
 
   Future<AuraWallet> importWallet({
     required String privateKeyOrPassPhrase,
-    required String walletName,
   }) async {
     return _repository.importWallet(
       privateKeyOrPassPhrase: privateKeyOrPassPhrase,
-      walletName: walletName,
     );
   }
 
-  Future<void> removeWallet({
-    required String walletName,
-  }) async {
-    return _repository.removeWallet(
-      walletName: walletName,
-    );
+  Future<void> removeWallet() async {
+    return _repository.removeWallet();
   }
 }
