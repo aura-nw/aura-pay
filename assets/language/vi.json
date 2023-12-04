@@ -155,7 +155,8 @@
   "send_transaction_recipient_label" : "Recipient address",
   "send_transaction_recipient_hint" : "Enter address",
   "send_transaction_amount" : "Amount to send",
-  "send_transaction_balance" : "Amount to send",
+  "send_transaction_balance" : "Balance",
+  "send_transaction_balance_hint" : "Enter amount",
   "send_transaction_amount_max" : "MAX",
   "send_transaction_button_next_title" : "Next",
 
