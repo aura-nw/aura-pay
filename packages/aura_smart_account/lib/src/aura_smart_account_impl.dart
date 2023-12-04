@@ -90,16 +90,8 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       // execute request.
       return querySmartAccountClient.generateAccount(request);
     } catch (e) {
-      if (e is GrpcError) {
-        throw AuraSmartAccountError(
-          code: e.code,
-          errorMsg: e.message ?? e.codeName,
-        );
-      }
-      throw AuraSmartAccountError(
-        code: AuraSmartAccountConstant.errorCodeDefault,
-        errorMsg: e.toString(),
-      );
+      // Handle exception
+      throw _getError(e);
     }
   }
 
@@ -113,6 +105,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     required int gasLimit,
   }) async {
     try {
+      dev.log(userPrivateKey.toString());
       // Get pub key from private key
       final Uint8List pubKey = WalletHelper.getPublicKeyFromPrivateKey(
         userPrivateKey,
@@ -177,23 +170,13 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         errorMsg: broadcastTxResponse.txResponse.rawLog,
       );
     } catch (e) {
-      // Convert exception to Aura Smart Account Exception
-      if (e is GrpcError) {
-        throw AuraSmartAccountError(
-          code: e.code,
-          errorMsg: e.message ?? e.codeName,
-        );
-      }
-
-      throw AuraSmartAccountError(
-        code: AuraSmartAccountConstant.errorCodeDefault,
-        errorMsg: e.toString(),
-      );
+      // Handle exception
+      throw _getError(e);
     }
   }
 
   @override
-  Future<String> sendToken({
+  Future<TxResponse> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,
@@ -254,7 +237,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
       // Broadcast successfully
       if(statusCode == 0){
-        return broadcastTxResponse.txResponse.txhash;
+        return broadcastTxResponse.txResponse;
       }
 
       throw AuraSmartAccountError(
@@ -262,20 +245,29 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         errorMsg: broadcastTxResponse.txResponse.rawLog,
       );
     }catch(e){
-      // Convert exception to Aura Smart Account Exception
-      if (e is GrpcError) {
-        throw AuraSmartAccountError(
-          code: e.code,
-          errorMsg: e.message ?? e.codeName,
-        );
-      }
+      // Handle exception
+      throw _getError(e);
+    }
 
-      throw AuraSmartAccountError(
-        code: AuraSmartAccountConstant.errorCodeDefault,
-        errorMsg: e.toString(),
+  }
+
+  // Convert exception to Aura Smart Account Exception
+  AuraSmartAccountError _getError(Object e){
+    if(e is AuraSmartAccountError){
+      return e;
+    }
+
+    if (e is GrpcError) {
+      return AuraSmartAccountError(
+        code: e.code,
+        errorMsg: e.message ?? e.codeName,
       );
     }
 
+    return AuraSmartAccountError(
+      code: AuraSmartAccountConstant.errorCodeDefault,
+      errorMsg: e.toString(),
+    );
   }
 
   // Get signer data from sm account address

@@ -6,7 +6,7 @@ import 'package:aura_smart_account/src/aura_smart_account_impl.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart';
-import 'package:grpc/grpc.dart';
+import 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dart';
 
 export 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 export 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
@@ -15,6 +15,7 @@ export 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.da
         QueryParamsResponse,
         MsgActivateAccountResponse,
         MsgRecoverResponse;
+export 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dart' show TxResponse;
 export 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
 
 /// AuraSmartAccount is an interface. It define some methods to support for aura smart account
@@ -69,9 +70,9 @@ abstract interface class AuraSmartAccount {
   /// [memo] as String?,
   /// [fee] as String,
   /// [gasLimit] as int,
-  /// Response a [String] is tx hash of transaction
+  /// Response a [TxResponse] is tx hash of transaction
   /// It can throw [AuraSmartAccountError]
-  Future<String> sendToken({
+  Future<TxResponse> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,
