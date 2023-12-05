@@ -24,4 +24,8 @@ abstract interface class SmartAccountRepository {
     required String fee,
     required int gasLimit,
   });
+
+  Future<String> getToken({
+    required String address,
+  });
 }

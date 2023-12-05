@@ -54,4 +54,12 @@ class SmartAccountUseCase {
       memo: memo,
     );
   }
+
+  Future<String> getToken({
+    required String address,
+  }) async {
+    return _repository.getToken(
+      address: address,
+    );
+  }
 }

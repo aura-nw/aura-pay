@@ -21,10 +21,7 @@ import 'on_boarding_recover_choice_state.dart';
 import 'on_boarding_recover_choice_event.dart';
 
 class OnBoardingRecoverChoiceScreen extends StatefulWidget {
-  final String passWord;
-
   const OnBoardingRecoverChoiceScreen({
-    required this.passWord,
     super.key,
   });
 
@@ -62,7 +59,6 @@ class _OnBoardingRecoverChoiceScreenState
                   showToast(state.errorMessage!);
                   break;
                 case OnBoardingRecoverChoiceStatus.loginSuccess:
-
                   // AppNavigator.pop();
                   AppNavigator.push(
                     RoutePath.recoverSelectAccount,
@@ -161,7 +157,8 @@ class _OnBoardingRecoverChoiceScreenState
                                 AppNavigator.push(RoutePath.recoverBackup);
                                 break;
                               case RecoverOptionType.google:
-                                _bloc.add(const OnBoardingRecoverChoiceOnGoogleSignInEvent());
+                                _bloc.add(
+                                    const OnBoardingRecoverChoiceOnGoogleSignInEvent());
                                 break;
                             }
                           },

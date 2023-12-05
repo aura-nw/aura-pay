@@ -13,9 +13,14 @@ import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 
 // ignore: must_be_immutable
 class OnBoardingChoiceOptionScreen extends StatelessWidget {
-  OnBoardingChoiceOptionScreen({super.key});
+  final bool needToSetPassCode;
 
-  int _selectedIndex = 0;
+  const OnBoardingChoiceOptionScreen({
+    this.needToSetPassCode = true,
+    super.key,
+  });
+
+  final int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -90,12 +95,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                                 LanguageKey
                                     .onBoardingChoiceOptionScreenCreateSmartAccountContent,
                               ),
-                              onPress: () {
-                                AppNavigator.push(
-                                  RoutePath.setupPasscode,
-                                  OnboardingType.create,
-                                );
-                              },
+                              onPress: _onCreateSmartAccountClick,
                             ),
                             const SizedBox(
                               height: BoxSize.boxSize04,
@@ -110,45 +110,36 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                               height: BoxSize.boxSize04,
                             ),
                             ChoiceOptionWidget(
-                                theme: appTheme,
-                                isSelected: _selectedIndex == 1,
-                                iconPath: AssetIconPath.onBoardingImportKey,
-                                title: localization.translate(
-                                  LanguageKey
-                                      .onBoardingChoiceOptionScreenImportExistAccountTitle,
-                                ),
-                                content: localization.translate(
-                                  LanguageKey
-                                      .onBoardingChoiceOptionScreenImportExistAccountContent,
-                                ),
-                                onPress: () {
-                                  AppNavigator.push(
-                                    RoutePath.setupPasscode,
-                                    OnboardingType.import,
-                                  );
-                                }),
+                              theme: appTheme,
+                              isSelected: _selectedIndex == 1,
+                              iconPath: AssetIconPath.onBoardingImportKey,
+                              title: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenImportExistAccountTitle,
+                              ),
+                              content: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenImportExistAccountContent,
+                              ),
+                              onPress: _onImportAccountClick,
+                            ),
                             const SizedBox(
                               height: BoxSize.boxSize07,
                             ),
                             ChoiceOptionWidget(
-                                theme: appTheme,
-                                isSelected: _selectedIndex == 2,
-                                iconPath:
-                                    AssetIconPath.onBoardingRecoverAccount,
-                                title: localization.translate(
-                                  LanguageKey
-                                      .onBoardingChoiceOptionScreenRecoverAccountTitle,
-                                ),
-                                content: localization.translate(
-                                  LanguageKey
-                                      .onBoardingChoiceOptionScreenRecoverAccountContent,
-                                ),
-                                onPress: () {
-                                  AppNavigator.push(
-                                    RoutePath.setupPasscode,
-                                    OnboardingType.recover,
-                                  );
-                                }),
+                              theme: appTheme,
+                              isSelected: _selectedIndex == 2,
+                              iconPath: AssetIconPath.onBoardingRecoverAccount,
+                              title: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenRecoverAccountTitle,
+                              ),
+                              content: localization.translate(
+                                LanguageKey
+                                    .onBoardingChoiceOptionScreenRecoverAccountContent,
+                              ),
+                              onPress: _onRecoverAccountClick,
+                            ),
                           ],
                         );
                       },
@@ -161,5 +152,44 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _onCreateSmartAccountClick() {
+    if (needToSetPassCode) {
+      AppNavigator.push(
+        RoutePath.setupPasscode,
+        OnboardingType.create,
+      );
+    }else{
+      AppNavigator.push(
+        RoutePath.pickAccountName,
+      );
+    }
+  }
+
+  void _onImportAccountClick() {
+    if(needToSetPassCode){
+      AppNavigator.push(
+        RoutePath.setupPasscode,
+        OnboardingType.import,
+      );
+    }else{
+      AppNavigator.push(
+        RoutePath.importFirstPage,
+      );
+    }
+  }
+
+  void _onRecoverAccountClick() {
+    if(needToSetPassCode){
+      AppNavigator.push(
+        RoutePath.setupPasscode,
+        OnboardingType.recover,
+      );
+    }else{
+      AppNavigator.push(
+        RoutePath.recoverChoice
+      );
+    }
   }
 }

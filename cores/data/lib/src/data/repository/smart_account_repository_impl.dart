@@ -62,4 +62,13 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
 
     return txResponse.txhash;
   }
+
+  @override
+  Future<String> getToken({
+    required String address,
+  }) async {
+    return _provider.getToken(
+      address: address,
+    );
+  }
 }

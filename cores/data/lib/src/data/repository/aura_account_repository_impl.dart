@@ -43,4 +43,11 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
       ),
     );
   }
+
+  @override
+  Future<AuraAccount?> getFirstAccount() async{
+    final account = await _accountStorageService.getFirstAccount();
+
+    return account?.toEntity;
+  }
 }

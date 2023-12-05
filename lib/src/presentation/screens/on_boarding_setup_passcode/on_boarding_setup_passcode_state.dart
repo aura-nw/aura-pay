@@ -4,13 +4,12 @@ part 'on_boarding_setup_passcode_state.freezed.dart';
 
 enum OnBoardingSetupPasscodeStatus {
   init,
-  createPasscodeSuccess,
-  confirmPasscodeSuccess,
-  confirmPasscodeWrong,
+  onSavePasscode,
+  savePasscodeDone,
 }
 
 @freezed
-class OnBoardingSetupPasscodeState with _$OnBoardingSetupPasscodeState{
+class OnBoardingSetupPasscodeState with _$OnBoardingSetupPasscodeState {
   const factory OnBoardingSetupPasscodeState({
     @Default(OnBoardingSetupPasscodeStatus.init)
     OnBoardingSetupPasscodeStatus status,

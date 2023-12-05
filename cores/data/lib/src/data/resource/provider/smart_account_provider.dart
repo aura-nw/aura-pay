@@ -54,4 +54,12 @@ class SmartAccountProvider {
       memo: memo,
     );
   }
+
+  Future<String> getToken({
+    required String address,
+  }) async {
+    return _provider.getToken(
+      address: address,
+    );
+  }
 }

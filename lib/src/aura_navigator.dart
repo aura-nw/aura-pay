@@ -5,13 +5,13 @@ import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup/on_boarding_recover_backup_address_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup_done/on_boarding_recover_backup_address_done_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_request_reviewing/on_boarding_recover_request_reviewing_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
-import 'package:pyxis_mobile/src/presentation/screens/re_login/re_login_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
@@ -26,8 +26,8 @@ import 'presentation/screens/on_boarding_recover_select_account/on_boarding_reco
 sealed class RoutePath {
   static const String _base = '/';
   static const String splash = _base;
-  static const String reLogin = '${_base}re_login';
   static const String _onBoarding = '${_base}onboarding';
+  static const String reLogin = '$_onBoarding/re_login';
   static const String getStarted = '$_onBoarding/get_started';
   static const String choiceOption = '$_onBoarding/choice_option';
   static const String setupPasscode = '$_onBoarding/setup_passcode';
@@ -66,7 +66,7 @@ sealed class AppNavigator {
         );
       case RoutePath.reLogin:
         return _defaultRoute(
-          const ReLoginScreen(),
+          const OnBoardingReLoginScreen(),
           settings,
         );
       case RoutePath.getStarted:
@@ -75,8 +75,11 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.choiceOption:
+        bool needToSetPassCode = settings.arguments as bool? ?? true;
         return _defaultRoute(
-          OnBoardingChoiceOptionScreen(),
+          OnBoardingChoiceOptionScreen(
+            needToSetPassCode: needToSetPassCode,
+          ),
           settings,
         );
       case RoutePath.setupPasscode:
@@ -88,11 +91,8 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.pickAccountName:
-        final String passWord = settings.arguments as String;
         return _defaultRoute(
-          OnBoardingPickAccountScreen(
-            passWord: passWord,
-          ),
+          const OnBoardingPickAccountScreen(),
           settings,
         );
       case RoutePath.scanQrFee:
@@ -112,19 +112,13 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.importFirstPage:
-        final String passWord = settings.arguments as String;
         return _defaultRoute(
-          OnBoardingImportKeyScreen(
-            passWord: passWord,
-          ),
+          const OnBoardingImportKeyScreen(),
           settings,
         );
       case RoutePath.recoverChoice:
-        final String passWord = settings.arguments as String;
         return _defaultRoute(
-          OnBoardingRecoverChoiceScreen(
-            passWord: passWord,
-          ),
+          const OnBoardingRecoverChoiceScreen(),
           settings,
         );
       case RoutePath.recoverSelectAccount:

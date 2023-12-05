@@ -26,6 +26,7 @@ dependencies:
   intl: ^0.18.0
   crypto: ^3.0.3
   path_provider: ^2.1.1
+  bech32: ^0.2.2
 
   #local db
   isar: ^3.1.0

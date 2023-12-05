@@ -32,4 +32,8 @@ final class AccountStorageService{
       await _isar.auraAccountDtos.put(accountDto);
     });
   }
+
+  Future<AuraAccountDto?> getFirstAccount()async{
+    return await _isar.auraAccountDtos.where().findFirst();
+  }
 }

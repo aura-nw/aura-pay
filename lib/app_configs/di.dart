@@ -12,8 +12,11 @@ import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_cubit.dart';
+import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_bloc.dart';
@@ -257,6 +260,25 @@ Future<void> initDependency(
       getIt.get<SmartAccountUseCase>(),
       getIt.get<AuraAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<OnBoardingSetupPasscodeBloc>(
+    () => OnBoardingSetupPasscodeBloc(
+      getIt.get<AppSecureUseCase>(),
+    ),
+  );
+  getIt.registerFactory<OnBoardingReLoginBloc>(
+    () => OnBoardingReLoginBloc(
+      getIt.get<AppSecureUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<SendTransactionBloc>(
+    () => SendTransactionBloc(
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<SmartAccountUseCase>(),
     ),
   );
 }

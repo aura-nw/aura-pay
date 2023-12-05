@@ -5,6 +5,7 @@ import 'package:aura_smart_account/src/core/constants/aura_network_information.d
 import 'package:aura_smart_account/src/core/definitions/account.dart';
 import 'package:aura_smart_account/src/core/definitions/cosmos_signer_data.dart';
 import 'package:aura_smart_account/src/core/definitions/grpc_network_info.dart';
+import 'package:aura_smart_account/src/core/utils/amount.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
     as aura;
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
@@ -33,6 +34,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
   late aura.QueryClient querySmartAccountClient;
   late auth.QueryClient queryAuthClient;
+  late bank.QueryClient bankClient;
   late tx.ServiceClient serviceClient;
 
   AuraSmartAccountImpl(AuraSmartAccountEnvironment environment) {
@@ -57,6 +59,10 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       auraNetworkInfo.getChannel(),
     );
     queryAuthClient = auth.QueryClient(
+      auraNetworkInfo.getChannel(),
+    );
+
+    bankClient = bank.QueryClient(
       auraNetworkInfo.getChannel(),
     );
 
@@ -185,7 +191,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     required int gasLimit,
     String? memo,
   }) async {
-    try{
+    try {
       // Get pub key from private key
       final Uint8List pubKey = WalletHelper.getPublicKeyFromPrivateKey(
         userPrivateKey,
@@ -193,7 +199,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
       // Generate a pub key from user pub key
       final Uint8List pubKeyGenerate =
-      AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(
+          AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(
         pubKey,
       );
 
@@ -210,7 +216,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
       // Get signer data
       final CosmosSignerData signerData =
-      await _getSignerData(smartAccountAddress);
+          await _getSignerData(smartAccountAddress);
 
       // Create fee
       final tx.Fee feeSign = tx.Fee.create()
@@ -223,7 +229,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         );
 
       final tx.BroadcastTxResponse broadcastTxResponse =
-      await _signAndBroadcastTx(
+          await _signAndBroadcastTx(
         userPrivateKey: userPrivateKey,
         feeSign: feeSign,
         msg: msgSend,
@@ -236,7 +242,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       final int statusCode = broadcastTxResponse.txResponse.code;
 
       // Broadcast successfully
-      if(statusCode == 0){
+      if (statusCode == 0) {
         return broadcastTxResponse.txResponse;
       }
 
@@ -244,16 +250,15 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         code: AuraSmartAccountConstant.errorBroadcast,
         errorMsg: broadcastTxResponse.txResponse.rawLog,
       );
-    }catch(e){
+    } catch (e) {
       // Handle exception
       throw _getError(e);
     }
-
   }
 
   // Convert exception to Aura Smart Account Exception
-  AuraSmartAccountError _getError(Object e){
-    if(e is AuraSmartAccountError){
+  AuraSmartAccountError _getError(Object e) {
+    if (e is AuraSmartAccountError) {
       return e;
     }
 
@@ -331,5 +336,27 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         await serviceClient.broadcastTx(broadcastTxRequest);
 
     return broadcastTxResponse;
+  }
+
+  @override
+  Future<String> getToken({
+    required String address,
+  }) async {
+    try {
+      // Create query balance request
+      bank.QueryBalanceRequest balanceRequest =
+          bank.QueryBalanceRequest.create()
+            ..address = address
+            ..denom = auraNetworkInfo.denom;
+
+      // query balance
+      final bank.QueryBalanceResponse balanceResponse =
+          await bankClient.balance(balanceRequest);
+
+      return balanceResponse.balance.amount.toAura;
+    } catch (e) {
+      // handle error
+      throw _getError(e);
+    }
   }
 }

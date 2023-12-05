@@ -1,21 +1,27 @@
-import 'dart:typed_data';
-
-import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
-import 'package:pyxis_mobile/src/presentation/screens/send_transaction/widgets/sender_widget.dart';
+import 'package:pyxis_mobile/src/core/helpers/wallet_address_validator.dart';
+import 'package:pyxis_mobile/src/presentation/screens/send_transaction/widgets/text_input_recipient_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
+import 'send_transaction_bloc.dart';
+import 'send_transaction_event.dart';
+import 'send_transaction_selector.dart';
+import 'widgets/sender_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_base.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_manager.dart';
+
+import 'send_transaction_state.dart';
 
 class SendTransactionScreen extends StatefulWidget {
   const SendTransactionScreen({super.key});
@@ -28,139 +34,322 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
   final TextEditingController _recipientController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
 
+  final SendTransactionBloc _bloc = getIt.get<SendTransactionBloc>();
+
+  @override
+  void initState() {
+    _bloc.add(
+      const SendTransactionEventOnInit(),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (appTheme) {
-        return Scaffold(
-          appBar: AppBarWithTitle(
-            appTheme: appTheme,
-            titleKey: LanguageKey.sendTransactionAppBarTitle,
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.spacing07,
-              vertical: Spacing.spacing08,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: [
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return Text(
-                            localization.translate(
-                              LanguageKey.sendTransactionSendFrom,
-                            ),
-                            style: AppTypoGraPhy.utilityLabelDefault.copyWith(
-                              color: appTheme.contentColorBlack,
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize06,
-                      ),
-                      BlocBuilder<AppGlobalCubit, AppGlobalState>(
-                        bloc: AppGlobalCubit.of(context),
-                        builder: (context, state) {
-                          return SenderWidget(
-                            appTheme: appTheme,
-                            address: 'account.address',
-                            accountName: 'account.accountName',
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize07,
-                      ),
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return Text(
-                            localization.translate(
-                              LanguageKey.sendTransactionRecipientLabel,
-                            ),
-                            style: AppTypoGraPhy.utilityLabelDefault.copyWith(
-                              color: appTheme.contentColorBlack,
-                            ),
-                          );
-                        },
-                      ),
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return TextInputNormalWidget(
-                            label: localization.translate(
-                              LanguageKey.sendTransactionRecipientHint,
-                            ),
-                            controller: _recipientController,
-                            // constraintManager: ConstraintManager(),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize07,
-                      ),
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return Text(
-                            localization.translate(
-                              LanguageKey.sendTransactionAmount,
-                            ),
-                            style: AppTypoGraPhy.utilityLabelDefault.copyWith(
-                              color: appTheme.contentColorBlack,
-                            ),
-                          );
-                        },
-                      ),
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return TextInputNormalWidget(
-                            label: localization.translate(
-                              LanguageKey.sendTransactionBalanceHint,
-                            ),
-                            controller: _amountController,
-                            // constraintManager: ConstraintManager(),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+        return BlocProvider.value(
+          value: _bloc,
+          child: BlocListener<SendTransactionBloc, SendTransactionState>(
+            listener: (context, state) {},
+            child: Scaffold(
+              appBar: AppBarWithTitle(
+                appTheme: appTheme,
+                titleKey: LanguageKey.sendTransactionAppBarTitle,
+              ),
+              body: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Spacing.spacing07,
+                  vertical: Spacing.spacing05,
                 ),
-                AppLocalizationProvider(
-                  builder: (localization, _) {
-                    return PrimaryAppButton(
-                      text: localization.translate(
-                        LanguageKey.sendTransactionButtonNextTitle,
-                      ),
-                      onPress: () async{
-                        final smCore = getIt.get<SmartAccountUseCase>();
-
-                        try {
-                          final txHash = await smCore.sendToken(
-                            userPrivateKey: Uint8List.fromList([1, 167, 9, 13, 97, 133, 153, 162, 131, 227, 36, 21, 22, 241, 201, 234, 221, 113, 23, 252, 110, 40, 178, 214, 69, 89, 53, 4, 237, 194, 244, 3]),
-                            smartAccountAddress: 'aura1zfanasp7hdvu6v46t2luznq34ed7fq4zkjhvqcr2wlu6lrd4xalqd92q6g',
-                            receiverAddress: 'aura176wt9d8zdg0dgrtvzxvplgdmv99j5yn3enpedl',
-                            amount: '2000',
-                            fee: '250',
-                            gasLimit: 400000,
-                          );
-
-                          print('tx hash = $txHash');
-                        } catch (e) {
-                          print(e.toString());
-                        }
-                      },
-                    );
-                  },
-                ),
-              ],
+                child: SendTransactionStatusSelector(builder: (status) {
+                  switch (status) {
+                    case SendTransactionStatus.loading:
+                    case SendTransactionStatus.error:
+                      return Center(
+                        child: AppLoadingWidget(
+                          appTheme: appTheme,
+                        ),
+                      );
+                    case SendTransactionStatus.loaded:
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: ListView(
+                              padding: EdgeInsets.zero,
+                              children: [
+                                AppLocalizationProvider(
+                                  builder: (localization, _) {
+                                    return Text(
+                                      localization.translate(
+                                        LanguageKey.sendTransactionSendFrom,
+                                      ),
+                                      style: AppTypoGraPhy.utilityLabelDefault
+                                          .copyWith(
+                                        color: appTheme.contentColorBlack,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: BoxSize.boxSize04,
+                                ),
+                                SendTransactionSenderSelector(
+                                  builder: (sender) {
+                                    return SenderWidget(
+                                      appTheme: appTheme,
+                                      address: sender?.address ?? '',
+                                      accountName: sender?.name ?? '',
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: BoxSize.boxSize07,
+                                ),
+                                AppLocalizationProvider(
+                                  builder: (localization, _) {
+                                    return Text(
+                                      localization.translate(
+                                        LanguageKey
+                                            .sendTransactionRecipientLabel,
+                                      ),
+                                      style: AppTypoGraPhy.utilityLabelDefault
+                                          .copyWith(
+                                        color: appTheme.contentColorBlack,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                AppLocalizationProvider(
+                                  builder: (localization, _) {
+                                    return TextInputRecipientWidget(
+                                      hintText: localization.translate(
+                                        LanguageKey
+                                            .sendTransactionRecipientHint,
+                                      ),
+                                      controller: _recipientController,
+                                      onClear: _onClearRecipient,
+                                      onChanged: _onChangeRecipientData,
+                                      onQrTap: () {},
+                                      onPaste: _onGetClipBoardData,
+                                      constraintManager: ConstraintManager()
+                                        ..custom(
+                                          errorMessage: localization.translate(
+                                            LanguageKey
+                                                .sendTransactionRecipientInValid,
+                                          ),
+                                          customValid: (recipient) {
+                                            return WalletAddressValidator
+                                                .isValidAddress(recipient);
+                                          },
+                                        ),
+                                      // constraintManager: ConstraintManager(),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: BoxSize.boxSize07,
+                                ),
+                                AppLocalizationProvider(
+                                  builder: (localization, _) {
+                                    return Text(
+                                      localization.translate(
+                                        LanguageKey.sendTransactionAmount,
+                                      ),
+                                      style: AppTypoGraPhy.utilityLabelDefault
+                                          .copyWith(
+                                        color: appTheme.contentColorBlack,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: BoxSize.boxSize05,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(
+                                        Spacing.spacing03,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          BorderRadiusSize.borderRadiusRound,
+                                        ),
+                                        color: appTheme.surfaceColorGrayLight,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            AssetIconPath.sendAuraCoin,
+                                          ),
+                                          const SizedBox(
+                                            width: BoxSize.boxSize04,
+                                          ),
+                                          AppLocalizationProvider(
+                                            builder: (localization, _) {
+                                              return Text(
+                                                localization.translate(
+                                                  LanguageKey.globalPyxisAura,
+                                                ),
+                                                style: AppTypoGraPhy
+                                                    .bodyMedium03
+                                                    .copyWith(
+                                                  color: appTheme
+                                                      .contentColorBlack,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    AppLocalizationProvider(
+                                      builder: (localization, _) {
+                                        return SendTransactionBalanceSelector(
+                                          builder: (balance) {
+                                            return Text(
+                                              '${localization.translate(
+                                                LanguageKey
+                                                    .sendTransactionBalance,
+                                              )}: $balance ${localization.translate(
+                                                LanguageKey.globalPyxisAura,
+                                              )}',
+                                              style: AppTypoGraPhy.bodyMedium02
+                                                  .copyWith(
+                                                color: appTheme.contentColor500,
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                AppLocalizationProvider(
+                                  builder: (localization, _) {
+                                    return TextInputNormalSuffixWidget(
+                                      hintText: localization.translate(
+                                        LanguageKey.sendTransactionBalanceHint,
+                                      ),
+                                      onChanged: _onChangeAmount,
+                                      controller: _amountController,
+                                      suffix: GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () => _onChangeAmount(
+                                          _bloc.state.balance,
+                                          true,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(
+                                            Spacing.spacing03,
+                                          ),
+                                          child: Text(
+                                            localization.translate(
+                                              LanguageKey
+                                                  .sendTransactionAmountMax,
+                                            ),
+                                            style: AppTypoGraPhy.bodyMedium03
+                                                .copyWith(
+                                                    color: appTheme
+                                                        .contentColorBrand),
+                                          ),
+                                        ),
+                                      ),
+                                      constraintManager: ConstraintManager()
+                                        ..custom(
+                                            errorMessage:
+                                                localization.translate(
+                                              LanguageKey
+                                                  .sendTransactionAmountInValid,
+                                            ),
+                                            customValid: _checkValidAmount),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          AppLocalizationProvider(
+                            builder: (localization, _) {
+                              return SendTransactionIsReadySubmitSelector(
+                                builder: (isReadySubmit) {
+                                  return PrimaryAppButton(
+                                    text: localization.translate(
+                                      LanguageKey
+                                          .sendTransactionButtonNextTitle,
+                                    ),
+                                    isDisable: !isReadySubmit,
+                                    onPress: () async {},
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            height: BoxSize.boxSize08,
+                          ),
+                        ],
+                      );
+                  }
+                }),
+              ),
             ),
           ),
         );
       },
     );
+  }
+
+  void _onGetClipBoardData() async {
+    ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+
+    _onChangeRecipientData(
+      data?.text ?? '',
+      true,
+    );
+  }
+
+  void _onChangeRecipientData(String value, bool isValid) async {
+    _recipientController.text = value;
+
+    _bloc.add(
+      SendTransactionEventOnChangeRecipientAddress(
+        _recipientController.text.trim(),
+      ),
+    );
+  }
+
+  void _onClearRecipient() {
+    _recipientController.text = '';
+
+    _bloc.add(
+      SendTransactionEventOnChangeRecipientAddress(
+        _recipientController.text.trim(),
+      ),
+    );
+  }
+
+  void _onChangeAmount(String amount, bool isValid) {
+    _amountController.text = amount;
+
+    _bloc.add(
+      SendTransactionEvent.onChangeAmount(
+        _amountController.text.trim(),
+      ),
+    );
+  }
+
+  bool _checkValidAmount(amount) {
+    try {
+      double am = double.parse(amount);
+
+      return am > 0;
+    } catch (e) {
+      return false;
+    }
   }
 }

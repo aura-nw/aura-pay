@@ -26,9 +26,6 @@ class SenderWidget extends StatelessWidget {
         horizontal: Spacing.spacing04,
         vertical: Spacing.spacing05,
       ),
-      margin: const EdgeInsets.only(
-        top: Spacing.spacing06,
-      ),
       decoration: BoxDecoration(
         color: appTheme.surfaceColorGrayLight,
         borderRadius: BorderRadius.circular(

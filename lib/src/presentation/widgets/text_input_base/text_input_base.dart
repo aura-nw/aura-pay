@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'text_input_manager.dart';
 
 ///region text input base
-sealed class TextInputWidgetBase extends StatefulWidget {
+class TextInputWidgetBase extends StatefulWidget {
   final TextEditingController? controller;
   final ConstraintManager? constraintManager;
   final String? hintText;
@@ -53,11 +53,11 @@ sealed class TextInputWidgetBase extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _TextInputWidgetBaseState<TextInputWidgetBase>();
+    return TextInputWidgetBaseState<TextInputWidgetBase>();
   }
 }
 
-class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
+class TextInputWidgetBaseState<T extends TextInputWidgetBase>
     extends State<T> {
   late TextEditingController _controller;
 
@@ -132,7 +132,7 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
   ///endregion
 
   ///region build text input base
-  Widget _buildTextInput(AppTheme theme) {
+  Widget buildTextInput(AppTheme theme) {
     return Row(
       children: [
         Expanded(
@@ -196,7 +196,7 @@ class _TextInputWidgetBaseState<T extends TextInputWidgetBase>
       builder: (theme) {
         return inputFormBuilder(
           context,
-          _buildTextInput(theme),
+          buildTextInput(theme),
           theme,
         );
       },
@@ -321,7 +321,7 @@ final class TextInputNormalWidget extends TextInputWidgetBase {
 }
 
 final class TextInputNormalState
-    extends _TextInputWidgetBaseState<TextInputNormalWidget> {
+    extends TextInputWidgetBaseState<TextInputNormalWidget> {
   @override
   Widget? buildLabel(AppTheme theme) {
     if (widget.label.isEmptyOrNull) {
@@ -397,7 +397,7 @@ final class TextInputNormalIconWidget extends TextInputWidgetBase {
 }
 
 final class TextInputNormalIconState
-    extends _TextInputWidgetBaseState<TextInputNormalIconWidget> {
+    extends TextInputWidgetBaseState<TextInputNormalIconWidget> {
   @override
   Widget? buildLabel(AppTheme theme) {
     if (widget.label.isEmptyOrNull) {
@@ -442,7 +442,7 @@ final class TextInputNormalIconState
           Row(
             children: [
               Expanded(
-                child: _buildTextInput(theme),
+                child: buildTextInput(theme),
               ),
               const SizedBox(
                 width: BoxSize.boxSize04  ,
@@ -456,6 +456,110 @@ final class TextInputNormalIconState
                   ),
                   child: SvgPicture.asset(widget.iconPath),
                 ),
+              ),
+            ],
+          ),
+          theme,
+        );
+      },
+    );
+  }
+}
+
+///endregion
+
+
+///region text input suffix widget
+final class TextInputNormalSuffixWidget extends TextInputWidgetBase {
+  final String? label;
+  final bool isRequired;
+  final Widget suffix;
+  final VoidCallback? onSuffixTap;
+
+  const TextInputNormalSuffixWidget({
+    this.label,
+    this.isRequired = false,
+    required this.suffix,
+    this.onSuffixTap,
+    super.obscureText,
+    super.autoFocus,
+    super.constraintManager,
+    super.scrollController,
+    super.enable,
+    super.inputFormatter,
+    super.focusNode,
+    super.controller,
+    super.hintText,
+    super.scrollPadding,
+    super.keyBoardType,
+    super.maxLength,
+    super.onSubmit,
+    super.maxLine,
+    super.minLine,
+    super.onChanged,
+    super.physics,
+    super.key,
+  });
+
+  @override
+  State<StatefulWidget> createState() => TextInputNormalSuffixState();
+}
+
+final class TextInputNormalSuffixState
+    extends TextInputWidgetBaseState<TextInputNormalSuffixWidget> {
+  @override
+  Widget? buildLabel(AppTheme theme) {
+    if (widget.label.isEmptyOrNull) {
+      return null;
+    }
+
+    if (widget.isRequired) {
+      return RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: widget.label,
+              style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                color: theme.contentColor700,
+              ),
+            ),
+            TextSpan(
+              text: ' *',
+              style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                color: theme.contentColorDanger,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Text(
+      widget.label!,
+      style: AppTypoGraPhy.utilityLabelSm.copyWith(
+        color: theme.contentColor700,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AppThemeBuilder(
+      builder: (theme) {
+        return inputFormBuilder(
+          context,
+          Row(
+            children: [
+              Expanded(
+                child: buildTextInput(theme),
+              ),
+              const SizedBox(
+                width: BoxSize.boxSize04  ,
+              ),
+              GestureDetector(
+                onTap: widget.onSuffixTap,
+                behavior: HitTestBehavior.opaque,
+                child: widget.suffix,
               ),
             ],
           ),

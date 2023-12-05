@@ -15,7 +15,8 @@ export 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.da
         QueryParamsResponse,
         MsgActivateAccountResponse,
         MsgRecoverResponse;
-export 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dart' show TxResponse;
+export 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dart'
+    show TxResponse;
 export 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
 
 /// AuraSmartAccount is an interface. It define some methods to support for aura smart account
@@ -61,6 +62,15 @@ abstract interface class AuraSmartAccount {
     required String fee,
     required int gasLimit,
   });
+
+  /// Query balance from address
+  /// This method has to pass [address] as String
+  /// Response a [String] is total token
+  /// It can throw [AuraSmartAccountError]
+  Future<String> getToken({
+    required String address,
+  });
+
 
   /// Send token from smart account to address
   /// This method has to pass seven parameters include: [userPrivateKey] as Uint8List,

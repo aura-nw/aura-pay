@@ -37,10 +37,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 case SplashScreenStatus.starting:
                   break;
                 case SplashScreenStatus.hasPassCode:
-
+                  AppNavigator.replaceWith(
+                    RoutePath.reLogin,
+                  );
                   break;
                 case SplashScreenStatus.notHasPassCodeOrError:
-                  AppNavigator.replaceWith(RoutePath.getStarted);
+                  AppNavigator.replaceWith(
+                    RoutePath.getStarted,
+                  );
                   break;
               }
             },

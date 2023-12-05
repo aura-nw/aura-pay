@@ -31,9 +31,7 @@ import 'on_boarding_import_key_state.dart';
 import 'on_boarding_import_key_selector.dart';
 
 class OnBoardingImportKeyScreen extends StatefulWidget {
-  final String passWord;
-
-  const OnBoardingImportKeyScreen({required this.passWord, super.key});
+  const OnBoardingImportKeyScreen({super.key});
 
   @override
   State<OnBoardingImportKeyScreen> createState() =>

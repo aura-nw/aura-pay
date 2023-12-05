@@ -88,5 +88,9 @@ sealed class AssetIconPath{
 
   ///signed in import account
   static const String signedInImportKeyInformation = '${_baseIconPath}ic_signed_in_import_account_information.svg';
-  ///
+
+
+  ///Send transaction
+  static const String sendQr = '${_baseIconPath}ic_send_qr.svg';
+  static const String sendAuraCoin = '${_baseIconPath}ic_send_aura_coin.svg';
 }

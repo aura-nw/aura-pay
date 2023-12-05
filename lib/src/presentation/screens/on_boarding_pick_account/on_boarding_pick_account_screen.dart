@@ -23,9 +23,7 @@ import 'on_boarding_pick_account_state.dart';
 import 'on_boarding_pick_account_selector.dart';
 
 class OnBoardingPickAccountScreen extends StatefulWidget {
-  final String passWord;
-
-  const OnBoardingPickAccountScreen({required this.passWord, super.key});
+  const OnBoardingPickAccountScreen({super.key});
 
   @override
   State<OnBoardingPickAccountScreen> createState() =>
@@ -82,7 +80,7 @@ class _OnBoardingPickAccountScreenState
                       'smart_account_address': state.smartAccountAddress,
                       'privateKey': state.userPrivateKey!,
                       'salt': state.saltBytes,
-                      'accountName' : state.accountName,
+                      'accountName': state.accountName,
                     },
                   );
                   break;

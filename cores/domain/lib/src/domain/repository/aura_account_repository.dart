@@ -3,6 +3,7 @@ import 'package:domain/src/domain/entities/requests/request.dart';
 
 abstract interface class AuraAccountRepository{
   Future<List<AuraAccount>> getAccounts();
+  Future<AuraAccount?> getFirstAccount();
 
   Future<void> saveAccount(SaveAccountRequestParameter parameter);
 

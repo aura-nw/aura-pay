@@ -1,6 +1,7 @@
 sealed class LanguageKey {
   static const String globalPyxisTitle = 'global_pyxis_title';
   static const String globalPyxisCopyMessage = 'global_pyxis_copy_message';
+  static const String globalPyxisAura= 'global_pyxis_aura';
 
   ///region onboarding get started
   static const String onBoardingGetStartedScreenTitle = 'on_boarding_get_started_screen_title';
@@ -127,13 +128,14 @@ sealed class LanguageKey {
   static const String onBoardingRecoverBackupAddressDoneScreenButtonDoneTitle = "on_boarding_recover_backup_address_done_screen_button_done_title";
   ///
 
-  ///region re login
-  static const String reLoginScreenTitle = "re_login_screen_title";
-  static const String reLoginScreenForgetPassword = "re_login_screen_forget_password";
-  static const String reLoginScreenDialogForgetPasswordTitle = "re_login_screen_dialog_forget_password_title";
-  static const String reLoginScreenDialogForgetPasswordContentRegionOne = "re_login_screen_dialog_forget_password_content_region_one";
-  static const String reLoginScreenDialogForgetPasswordContentRegionTwo = "re_login_screen_dialog_forget_password_content_region_two";
-  static const String reLoginScreenWrongCountDownTitle = "re_login_screen_wrong_count_down_title";
+  ///region onboarding re login
+  static const String onBoardingReLoginScreenTitle = "on_boarding_re_login_screen_title";
+  static const String onBoardingReLoginScreenWrongPassword = "on_boarding_re_login_screen_wrong_password";
+  static const String onBoardingReLoginScreenForgetPassword = "on_boarding_re_login_screen_forget_password";
+  static const String onBoardingReLoginScreenDialogForgetPasswordTitle = "on_boarding_re_login_screen_dialog_forget_password_title";
+  static const String onBoardingReLoginScreenDialogForgetPasswordContentRegionOne = "on_boarding_re_login_screen_dialog_forget_password_content_region_one";
+  static const String onBoardingReLoginScreenDialogForgetPasswordContentRegionTwo = "on_boarding_re_login_screen_dialog_forget_password_content_region_two";
+  static const String onBoardingReLoginScreenWrongCountDownTitle = "on_boarding_re_login_screen_wrong_count_down_title";
   ///endregion
 
   static const String homeScreenBottomNavigatorBarHome = 'home_screen_bottom_navigator_bar_home';
@@ -182,15 +184,18 @@ sealed class LanguageKey {
   ///
 
   ///region send transaction
-  static const String sendTransactionAppBarTitle = 'send_transaction_app_bar_title';
-  static const String sendTransactionSendFrom = 'send_transaction_send_from';
-  static const String sendTransactionRecipientLabel = 'send_transaction_recipient_label';
-  static const String sendTransactionRecipientHint = 'send_transaction_recipient_hint';
-  static const String sendTransactionAmount = 'send_transaction_amount';
-  static const String sendTransactionBalance = 'send_transaction_balance';
-  static const String sendTransactionBalanceHint = 'send_transaction_balance_hint';
-  static const String sendTransactionAmountMax = 'send_transaction_amount_max';
-  static const String sendTransactionButtonNextTitle= 'send_transaction_button_next_title';
+  static const String sendTransactionAppBarTitle = 'send_transaction_screen_app_bar_title';
+  static const String sendTransactionSendFrom = 'send_transaction_screen_send_from';
+  static const String sendTransactionRecipientLabel = 'send_transaction_screen_recipient_label';
+  static const String sendTransactionRecipientPaste = 'send_transaction_screen_recipient_paste';
+  static const String sendTransactionRecipientHint = 'send_transaction_screen_recipient_hint';
+  static const String sendTransactionRecipientInValid = 'send_transaction_screen_recipient_invalid';
+  static const String sendTransactionAmount = 'send_transaction_screen_amount';
+  static const String sendTransactionBalance = 'send_transaction_screen_balance';
+  static const String sendTransactionBalanceHint = 'send_transaction_screen_balance_hint';
+  static const String sendTransactionAmountMax = 'send_transaction_screen_amount_max';
+  static const String sendTransactionAmountInValid = 'send_transaction_screen_amount_invalid';
+  static const String sendTransactionButtonNextTitle= 'send_transaction_screen_button_next_title';
   ///
 
   ///region signed in create new account
