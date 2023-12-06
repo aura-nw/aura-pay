@@ -1,4 +1,4 @@
-import 'package:aura_smart_account/src/core/constants/smart_account_constant.dart';
+import 'package:aura_smart_account/src/core/constants/smart_account_error_code.dart';
 
 class AuraSmartAccountError extends Error {
   final int code;
@@ -14,11 +14,11 @@ class AuraSmartAccountError extends Error {
     return '[$code] $errorMsg';
   }
 
-  bool get isUnknownError => code == AuraSmartAccountConstant.errorCodeDefault;
+  bool get isUnknownError => code == SmartAccountErrorCode.errorCodeDefault;
 
-  bool get isErrorBroadcast => code == AuraSmartAccountConstant.errorBroadcast;
+  bool get isErrorBroadcast => code == SmartAccountErrorCode.errorBroadcast;
 
   bool get isGrpcError =>
-      code != AuraSmartAccountConstant.errorCodeDefault &&
-      code != AuraSmartAccountConstant.errorBroadcast;
+      code != SmartAccountErrorCode.errorCodeDefault &&
+      code != SmartAccountErrorCode.errorBroadcast;
 }

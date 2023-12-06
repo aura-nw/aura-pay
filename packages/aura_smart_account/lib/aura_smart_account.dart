@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:aura_smart_account/src/aura_smart_account_impl.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
+import 'package:aura_smart_account/src/core/definitions/fee.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart';
 import 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dart';
 
@@ -18,6 +19,8 @@ export 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.da
 export 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dart'
     show TxResponse;
 export 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
+export 'package:aura_smart_account/src/core/definitions/fee.dart';
+export 'package:aura_smart_account/src/core/definitions/gas_price.dart';
 
 /// AuraSmartAccount is an interface. It define some methods to support for aura smart account
 /// See more [https://github.com/aura-nw/aura/tree/main/proto/aura/smartaccount/]
@@ -46,12 +49,11 @@ abstract interface class AuraSmartAccount {
   });
 
   /// Active a smart account
-  /// This method has to pass seven parameters include: [userPrivateKey] as Uint8List,
+  /// This method has to pass six parameters include: [userPrivateKey] as Uint8List,
   /// [smartAccountAddress] as String,
   /// [salt] as Uint8List?,
   /// [memo] as String?,
-  /// [fee] as String,
-  /// [gasLimit] as int,
+  /// [fee] as [AuraSmartAccountFee]?,
   /// Response a [MsgActivateAccountResponse]
   /// It can throw [AuraSmartAccountError]
   Future<MsgActivateAccountResponse> activeSmartAccount({
@@ -59,8 +61,23 @@ abstract interface class AuraSmartAccount {
     required String smartAccountAddress,
     Uint8List? salt,
     String? memo,
-    required String fee,
-    required int gasLimit,
+    AuraSmartAccountFee? fee,
+  });
+
+  /// Simulate send token fee
+  /// This method has to pass five parameters include: [userPrivateKey] as Uint8List,
+  /// [smartAccountAddress] as String,
+  /// [receiverAddress] as String,
+  /// [amount] as String,
+  /// [memo] as String?,
+  /// Response a [int] is total gas used
+  /// It can throw [AuraSmartAccountError]
+  Future<int> simulateFee({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String receiverAddress,
+    required String amount,
+    String? memo,
   });
 
   /// Query balance from address
@@ -71,15 +88,13 @@ abstract interface class AuraSmartAccount {
     required String address,
   });
 
-
   /// Send token from smart account to address
-  /// This method has to pass seven parameters include: [userPrivateKey] as Uint8List,
+  /// This method has to pass six parameters include: [userPrivateKey] as Uint8List,
   /// [smartAccountAddress] as String,
   /// [receiverAddress] as String,
   /// [amount] as String,
   /// [memo] as String?,
-  /// [fee] as String,
-  /// [gasLimit] as int,
+  /// [fee] as [AuraSmartAccountFee]?,
   /// Response a [TxResponse] is tx hash of transaction
   /// It can throw [AuraSmartAccountError]
   Future<TxResponse> sendToken({
@@ -87,8 +102,7 @@ abstract interface class AuraSmartAccount {
     required String smartAccountAddress,
     required String receiverAddress,
     required String amount,
-    required String fee,
-    required int gasLimit,
+    AuraSmartAccountFee? fee,
     String? memo,
   });
 }

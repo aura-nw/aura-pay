@@ -9,8 +9,5 @@ sealed class AuraSmartAccountConstant {
     ),
   );
 
-  static int codeId = 729;
-
-  static int errorCodeDefault = 727;
-  static int errorBroadcast = 728;
+  static int defaultGasActiveSmartAccount = 400000;
 }

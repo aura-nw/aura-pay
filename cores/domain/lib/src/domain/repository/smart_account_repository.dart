@@ -28,4 +28,12 @@ abstract interface class SmartAccountRepository {
   Future<String> getToken({
     required String address,
   });
+
+  Future<int> simulateFee({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String receiverAddress,
+    required String amount,
+    String? memo,
+  });
 }

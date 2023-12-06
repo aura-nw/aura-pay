@@ -1,5 +1,3 @@
-import 'dart:math';
-
 extension AuraAmount on String{
   String get toAura{
     double aura = double.tryParse(this) ?? 0;

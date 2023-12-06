@@ -7,6 +7,7 @@ final class AuraNetworkInfo {
   final String chainId;
   final String bech32Hrp;
   final String denom;
+  final int codeId;
 
   const AuraNetworkInfo({
     required this.host,
@@ -15,6 +16,7 @@ final class AuraNetworkInfo {
     required this.chainId,
     required this.bech32Hrp,
     required this.denom,
+    required this.codeId,
   });
 
   GrpcOrGrpcWebClientChannel getChannel() {
