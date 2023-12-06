@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:isar/isar.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_mobile/src/core/providers/wallet_provider_implement.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
@@ -82,7 +83,7 @@ Future<void> initDependency(
   ///Provider
 
   getIt.registerLazySingleton<WalletProvider>(
-    () => WalletProvider(coreWallet),
+    () => WalletProviderImpl(coreWallet),
   );
 
   getIt.registerLazySingleton<SmartAccountProvider>(
@@ -115,12 +116,6 @@ Future<void> initDependency(
 
   getIt.registerLazySingleton<LocalizationRepository>(
     () => LocalizationRepositoryImpl(),
-  );
-
-  getIt.registerLazySingleton<WalletRepository>(
-    () => WalletRepositoryImpl(
-      getIt.get<WalletProvider>(),
-    ),
   );
 
   getIt.registerLazySingleton<AuthRepository>(
@@ -161,7 +156,7 @@ Future<void> initDependency(
 
   getIt.registerLazySingleton(
     () => WalletUseCase(
-      getIt.get<WalletRepository>(),
+      getIt.get<WalletProvider>(),
     ),
   );
 

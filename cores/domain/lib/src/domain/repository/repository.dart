@@ -1,6 +1,5 @@
 export 'auth_repository.dart';
 export 'localization_repository.dart';
-export 'wallet_repository.dart';
 export 'smart_account_repository.dart';
 export 'aura_account_repository.dart';
 export 'controller_key_repository.dart';

@@ -1,24 +1,24 @@
-import 'package:aura_wallet_core/aura_wallet_core.dart';
-import 'package:domain/src/domain/repository/wallet_repository.dart';
+import 'package:domain/src/domain/entities/pyxis_wallet.dart';
+import 'package:domain/src/domain/providers/wallet_provider.dart';
 
 final class WalletUseCase {
-  final WalletRepository _repository;
+  final WalletProvider _walletProvider;
 
-  const WalletUseCase(this._repository);
+  const WalletUseCase(this._walletProvider);
 
-  Future<AuraWallet> createWallet() async {
-    return _repository.createWallet();
+  Future<PyxisWallet> createWallet() async {
+    return _walletProvider.createWallet();
   }
 
-  Future<AuraWallet> importWallet({
+  Future<PyxisWallet> importWallet({
     required String privateKeyOrPassPhrase,
   }) async {
-    return _repository.importWallet(
+    return _walletProvider.importWallet(
       privateKeyOrPassPhrase: privateKeyOrPassPhrase,
     );
   }
 
   Future<void> removeWallet() async {
-    return _repository.removeWallet();
+    return _walletProvider.removeWallet();
   }
 }
