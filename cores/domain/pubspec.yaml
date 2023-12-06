@@ -11,11 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  aura_wallet_core:
-    git:
-      url: https://github.com/aura-nw/aura-wallet-core.git
-      ref: core_wallet
-
   isar: ^3.1.0
   isar_flutter_libs: ^3.1.0
 
