@@ -28,8 +28,7 @@ class SmartAccountProvider {
     return _provider.activeSmartAccount(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
-      fee: fee,
-      gasLimit: gasLimit,
+      fee: AuraSmartAccountFee(gasLimit: gasLimit, fee: fee),
       salt: salt,
       memo: memo,
     );
@@ -49,8 +48,7 @@ class SmartAccountProvider {
       smartAccountAddress: smartAccountAddress,
       receiverAddress: receiverAddress,
       amount: amount,
-      fee: fee,
-      gasLimit: gasLimit,
+      fee: AuraSmartAccountFee(gasLimit: gasLimit, fee: fee),
       memo: memo,
     );
   }

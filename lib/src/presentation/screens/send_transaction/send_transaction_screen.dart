@@ -283,7 +283,9 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                           .sendTransactionButtonNextTitle,
                                     ),
                                     isDisable: !isReadySubmit,
-                                    onPress: () async {},
+                                    onPress: () async {
+
+                                    },
                                   );
                                 },
                               );

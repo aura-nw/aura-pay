@@ -62,4 +62,20 @@ class SmartAccountUseCase {
       address: address,
     );
   }
+
+  Future<int> simulateFee({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String receiverAddress,
+    required String amount,
+    String? memo,
+  }) {
+    return _repository.simulateFee(
+      userPrivateKey: userPrivateKey,
+      smartAccountAddress: smartAccountAddress,
+      receiverAddress: receiverAddress,
+      amount: amount,
+      memo: memo,
+    );
+  }
 }
