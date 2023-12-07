@@ -1,5 +1,4 @@
 import 'package:domain/domain.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 extension GoogleAccountDtoMapper on GoogleAccountDto {
   GoogleAccount get toEntities => GoogleAccount(
@@ -8,16 +7,6 @@ extension GoogleAccountDtoMapper on GoogleAccountDto {
         displayName: displayName,
         photoUrl: photoUrl,
         serverAuthCode: serverAuthCode,
-      );
-}
-
-extension GoogleSignInAccountMapper on GoogleSignInAccount {
-  GoogleAccountDto get toDto => GoogleAccountDto(
-        id: id,
-        email: email,
-        serverAuthCode: serverAuthCode,
-        photoUrl: photoUrl,
-        displayName: displayName,
       );
 }
 

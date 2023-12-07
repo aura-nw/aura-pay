@@ -3,50 +3,42 @@ import 'package:data/src/data/resource/local/local.dart';
 import 'package:domain/domain.dart';
 
 final class AuraAccountRepositoryImpl implements AuraAccountRepository {
-  final AccountStorageService _accountStorageService;
+  final AccountDatabaseService _accountDatabaseService;
 
-  const AuraAccountRepositoryImpl(this._accountStorageService);
+  const AuraAccountRepositoryImpl(this._accountDatabaseService);
 
   @override
   Future<void> deleteAccount(int id) async {
-    return _accountStorageService.deleteAccount(id);
+    return _accountDatabaseService.deleteAccount(id);
   }
 
   @override
   Future<List<AuraAccount>> getAccounts() async {
-    final accounts = await _accountStorageService.getAuraAccounts();
+    final accounts = await _accountDatabaseService.getAuraAccounts();
 
     return accounts.map((e) => e.toEntity).toList();
   }
 
   @override
   Future<void> saveAccount(SaveAccountRequestParameter parameter) {
-    final AuraAccountDto accountDto = AuraAccountDto(
+    return _accountDatabaseService.saveAccount(
       type: parameter.type,
       address: parameter.address,
-      name: parameter.accountName,
+      accountName: parameter.accountName,
     );
-
-    return _accountStorageService.saveAccount(accountDto);
   }
 
   @override
   Future<void> updateAccount(RenameAccountRequestParameter parameter) async {
-    final AuraAccountDto? account =
-        await _accountStorageService.getAccount(parameter.id);
-
-    if (account == null) return;
-
-    return _accountStorageService.updateAccount(
-      account.copyWith(
-        name: parameter.accountName,
-      ),
+    return _accountDatabaseService.updateAccount(
+      id: parameter.id,
+      accountName: parameter.accountName,
     );
   }
 
   @override
-  Future<AuraAccount?> getFirstAccount() async{
-    final account = await _accountStorageService.getFirstAccount();
+  Future<AuraAccount?> getFirstAccount() async {
+    final account = await _accountDatabaseService.getFirstAccount();
 
     return account?.toEntity;
   }

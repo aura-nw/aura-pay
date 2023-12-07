@@ -13,25 +13,10 @@ dependencies:
   domain:
     path: ../domain
 
-  flutter_secure_storage:
-    git:
-      path: flutter_secure_storage
-      url: https://github.com/aura-nw/flutter_secure_storage.git
-      ref: feature/biometric_mobile
-  aura_smart_account:
-    path: ../../packages/aura_smart_account
-  google_sign_in: ^6.1.5
-
-  isar: ^3.1.0
-  isar_flutter_libs: ^3.1.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  build_runner: ^2.4.4
-  json_serializable: ^6.7.0
-  isar_generator: ^3.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

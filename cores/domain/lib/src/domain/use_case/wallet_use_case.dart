@@ -1,8 +1,8 @@
 import 'package:domain/src/domain/entities/pyxis_wallet.dart';
-import 'package:domain/src/domain/providers/wallet_provider.dart';
+import 'package:domain/src/domain/repository/wallet_repository.dart';
 
 final class WalletUseCase {
-  final WalletProvider _walletProvider;
+  final WalletRepository _walletProvider;
 
   const WalletUseCase(this._walletProvider);
 

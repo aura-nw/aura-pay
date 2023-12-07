@@ -1,6 +1,6 @@
 import 'package:domain/domain.dart';
 
-abstract class WalletProvider {
+abstract class WalletRepository {
   Future<PyxisWallet> createWallet();
 
   Future<PyxisWallet> importWallet({

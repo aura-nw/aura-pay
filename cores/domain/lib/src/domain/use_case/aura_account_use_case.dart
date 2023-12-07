@@ -18,7 +18,7 @@ final class AuraAccountUseCase {
 
   Future<void> saveAccount({
     required String address,
-    String? accountName,
+    required String accountName,
     required AuraAccountType type,
   }) {
     final SaveAccountRequestParameter parameter = SaveAccountRequestParameter(

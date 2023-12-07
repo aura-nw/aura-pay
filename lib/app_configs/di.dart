@@ -8,8 +8,12 @@ import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:isar/isar.dart';
+import 'package:pyxis_mobile/src/application/provider/google_sign_in/google_sign_in_provider_impl.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/account_database_service_impl.dart';
+import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_storage_service_impl.dart';
+import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
+import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
-import 'package:pyxis_mobile/src/core/providers/wallet_provider_implement.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
@@ -48,8 +52,9 @@ Future<void> initDependency(
 
   const FlutterSecureStorage secureStorage = FlutterSecureStorage(
     aOptions: AndroidOptions(
-        encryptedSharedPreferences: true,
-        sharedPreferencesName: AppLocalConstant.keyDbName),
+      encryptedSharedPreferences: true,
+      sharedPreferencesName: AppLocalConstant.keyDbName,
+    ),
     iOptions: IOSOptions(),
   );
 
@@ -58,7 +63,7 @@ Future<void> initDependency(
   );
 
   final AuraWalletCore coreWallet = AuraWalletCore.create(
-    environment: AuraEnvironment.testNet,
+    environment: AuraEnvironment.dev,
   );
 
   final AuraSmartAccount auraSmartAccount = AuraSmartAccount.create(
@@ -74,11 +79,6 @@ Future<void> initDependency(
   );
 
   ///Api service
-  getIt.registerLazySingleton(
-    () => AuthApiService(
-      googleSignIn,
-    ),
-  );
 
   ///Provider
 
@@ -87,21 +87,27 @@ Future<void> initDependency(
   );
 
   getIt.registerLazySingleton<SmartAccountProvider>(
-    () => SmartAccountProvider(
+    () => SmartAccountProviderImpl(
       auraSmartAccount,
+    ),
+  );
+
+  getIt.registerLazySingleton<GoogleSignInProvider>(
+    () => GoogleSignInProviderImpl(
+      googleSignIn,
     ),
   );
 
   /// Local
 
-  getIt.registerLazySingleton<AccountStorageService>(
-    () => AccountStorageService(
+  getIt.registerLazySingleton<AccountDatabaseService>(
+    () => AccountDatabaseServiceImpl(
       isar,
     ),
   );
 
-  getIt.registerLazySingleton(
-    () => const SecureStorageService(
+  getIt.registerLazySingleton<SecureStorageService>(
+    () => const SecureStorageServiceImpl(
       secureStorage,
     ),
   );
@@ -120,7 +126,7 @@ Future<void> initDependency(
 
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
-      getIt.get<AuthApiService>(),
+      getIt.get<GoogleSignInProvider>(),
     ),
   );
 
@@ -137,7 +143,7 @@ Future<void> initDependency(
   );
   getIt.registerLazySingleton<AuraAccountRepository>(
     () => AuraAccountRepositoryImpl(
-      getIt.get<AccountStorageService>(),
+      getIt.get<AccountDatabaseService>(),
     ),
   );
 
@@ -156,7 +162,7 @@ Future<void> initDependency(
 
   getIt.registerLazySingleton(
     () => WalletUseCase(
-      getIt.get<WalletProvider>(),
+      getIt.get<WalletRepository>(),
     ),
   );
 

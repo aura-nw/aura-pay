@@ -11,8 +11,8 @@ abstract interface class SmartAccountRepository {
     required String smartAccountAddress,
     Uint8List? salt,
     String? memo,
-    required String fee,
-    required int gasLimit,
+    String ?fee,
+    int ?gasLimit,
   });
 
   Future<String> sendToken({
@@ -21,8 +21,8 @@ abstract interface class SmartAccountRepository {
     required String receiverAddress,
     required String amount,
     String? memo,
-    required String fee,
-    required int gasLimit,
+    String ?fee,
+    int ?gasLimit,
   });
 
   Future<String> getToken({

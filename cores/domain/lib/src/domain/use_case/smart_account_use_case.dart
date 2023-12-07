@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:domain/src/domain/repository/repository.dart';
 
 class SmartAccountUseCase {
@@ -22,8 +21,8 @@ class SmartAccountUseCase {
     required String smartAccountAddress,
     Uint8List? salt,
     String? memo,
-    required String fee,
-    required int gasLimit,
+    String? fee,
+    int? gasLimit,
   }) async {
     return _repository.activeSmartAccount(
       userPrivateKey: userPrivateKey,
@@ -41,8 +40,8 @@ class SmartAccountUseCase {
     required String receiverAddress,
     required String amount,
     String? memo,
-    required String fee,
-    required int gasLimit,
+    String? fee,
+    int? gasLimit,
   }) async {
     return _repository.sendToken(
       userPrivateKey: userPrivateKey,

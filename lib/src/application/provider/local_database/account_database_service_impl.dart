@@ -1,0 +1,74 @@
+import 'package:data/data.dart';
+import 'package:domain/domain.dart';
+import 'package:isar/isar.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/aura_account_db.dart';
+
+final class AccountDatabaseServiceImpl implements AccountDatabaseService {
+  final Isar _isar;
+
+  const AccountDatabaseServiceImpl(
+    this._isar,
+  );
+
+  @override
+  Future<void> deleteAccount(int id) async {
+    await _isar.writeTxn(
+      () async {
+        _isar.auraAccountDbs.delete(id);
+      },
+    );
+  }
+
+  @override
+  Future<AuraAccountDto?> getAccount(int id) {
+    return _isar.auraAccountDbs.get(id);
+  }
+
+  @override
+  Future<List<AuraAccountDto>> getAuraAccounts() {
+    return _isar.auraAccountDbs.where().findAll();
+  }
+
+  @override
+  Future<AuraAccountDto?> getFirstAccount() {
+    return _isar.auraAccountDbs.where().findFirst();
+  }
+
+  @override
+  Future<void> saveAccount({
+    required String address,
+    required String accountName,
+    required AuraAccountType type,
+  }) async {
+    await _isar.writeTxn(
+      () async {
+        final AuraAccountDb accountDb = AuraAccountDb(
+          accountName: accountName,
+          accountAddress: address,
+          accountType: type,
+        );
+        await _isar.auraAccountDbs.put(
+          accountDb,
+        );
+      },
+    );
+  }
+
+  @override
+  Future<void> updateAccount(
+      {required int id, required String accountName}) async {
+    final AuraAccountDb? account = await _isar.auraAccountDbs.get(id);
+
+    if (account != null) {
+      await _isar.writeTxn(
+        () async {
+          await _isar.auraAccountDbs.put(
+            account.copyWith(
+              name: accountName,
+            ),
+          );
+        },
+      );
+    }
+  }
+}

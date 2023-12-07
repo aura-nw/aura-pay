@@ -1,6 +1,6 @@
-import 'package:data/data.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/aura_account_db.dart';
 import 'src/application/global/localization/localization_manager.dart';
 import 'app_configs/pyxis_mobile_config.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ void start(PyxisMobileConfig config) async {
   if (Isar.instanceNames.isEmpty) {
     isar = await Isar.open(
       [
-        AuraAccountDtoSchema,
+        AuraAccountDbSchema,
       ],
       directory: path,
       name: AppLocalConstant.accountDbName,

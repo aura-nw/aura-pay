@@ -1,11 +1,14 @@
 import 'dart:typed_data';
-import 'package:data/src/data/resource/provider/provider.dart';
-import 'package:domain/domain.dart';
 
-class SmartAccountRepositoryImpl implements SmartAccountRepository {
-  final SmartAccountProvider _provider;
+import 'package:aura_smart_account/aura_smart_account.dart';
+import 'package:data/data.dart';
 
-  const SmartAccountRepositoryImpl(this._provider);
+class SmartAccountProviderImpl implements SmartAccountProvider {
+  final AuraSmartAccount _auraSmartAccount;
+
+  const SmartAccountProviderImpl(
+    this._auraSmartAccount,
+  );
 
   @override
   Future<String> activeSmartAccount({
@@ -16,24 +19,43 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     String? fee,
     int? gasLimit,
   }) async {
-    return await _provider.activeSmartAccount(
+    AuraSmartAccountFee? smartAccountFee;
+
+    if (fee != null && gasLimit != null) {
+      smartAccountFee = AuraSmartAccountFee(
+        fee: fee,
+        gasLimit: gasLimit,
+      );
+    }
+
+    final response = await _auraSmartAccount.activeSmartAccount(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
-      fee: fee,
-      gasLimit: gasLimit,
-      salt: salt,
       memo: memo,
+      salt: salt,
+      fee: smartAccountFee,
     );
+
+    return response.address;
   }
 
   @override
-  Future<String> generateAddress({
+  Future<String> generateSmartAccount({
     required Uint8List pubKey,
     Uint8List? salt,
   }) async {
-    return await _provider.generateSmartAccount(
+    final response = await _auraSmartAccount.generateSmartAccount(
       pubKey: pubKey,
       salt: salt,
+    );
+
+    return response.address;
+  }
+
+  @override
+  Future<String> getToken({required String address}) {
+    return _auraSmartAccount.getToken(
+      address: address,
     );
   }
 
@@ -43,28 +65,28 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     required String smartAccountAddress,
     required String receiverAddress,
     required String amount,
-    String? memo,
     String? fee,
     int? gasLimit,
+    String? memo,
   }) async {
-    return await _provider.sendToken(
+    AuraSmartAccountFee? smartAccountFee;
+
+    if (fee != null && gasLimit != null) {
+      smartAccountFee = AuraSmartAccountFee(
+        fee: fee,
+        gasLimit: gasLimit,
+      );
+    }
+
+    final response = await _auraSmartAccount.sendToken(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
       receiverAddress: receiverAddress,
       amount: amount,
-      fee: fee,
-      gasLimit: gasLimit,
-      memo: memo,
+      fee: smartAccountFee,
     );
-  }
 
-  @override
-  Future<String> getToken({
-    required String address,
-  }) async {
-    return _provider.getToken(
-      address: address,
-    );
+    return response.txhash;
   }
 
   @override
@@ -75,7 +97,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     required String amount,
     String? memo,
   }) {
-    return _provider.simulateFee(
+    return _auraSmartAccount.simulateFee(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
       receiverAddress: receiverAddress,

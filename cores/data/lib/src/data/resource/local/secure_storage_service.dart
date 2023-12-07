@@ -1,32 +1,11 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+abstract interface class SecureStorageService {
+  Future<String?> getValue(String key);
 
-final class SecureStorageService {
-  final FlutterSecureStorage _storage;
+  Future<bool> constantValue(String key);
 
-  const SecureStorageService(this._storage);
+  Future<void> deleteValue(String key);
 
-  Future<String?> getValue(String key) async {
-    return _storage.read(key: key,);
-  }
+  Future<void> saveValue(String key, String value);
 
-  Future<bool> constantValue(String key) async {
-    return _storage.containsKey(
-      key: key,
-    );
-  }
-
-  Future<void> deleteValue(String key) async {
-    return _storage.delete(key: key);
-  }
-
-  Future<void> saveValue(String key, String value) async {
-    return _storage.write(
-      key: key,
-      value: value,
-    );
-  }
-
-  Future<Map<String,dynamic>> readAll()async{
-    return _storage.readAll();
-  }
+  Future<Map<String,dynamic>> readAll();
 }

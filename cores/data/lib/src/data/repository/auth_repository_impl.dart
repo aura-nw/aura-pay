@@ -1,26 +1,25 @@
 import 'package:data/src/data/dto/google_account_dto.dart';
-import 'package:data/src/data/resource/remote/auth_api_service.dart';
+import 'package:data/src/data/resource/provider/provider.dart';
 import 'package:domain/domain.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthApiService _authApiService;
+  final GoogleSignInProvider _authApiService;
 
   const AuthRepositoryImpl(this._authApiService);
 
   @override
   Future<GoogleAccount?> signInWithGoogle() async {
-    final GoogleSignInAccount? googleAccount =
+    final GoogleAccountDto? googleAccount =
         await _authApiService.loginWithGoogle();
 
     if (googleAccount != null) {}
 
-    return googleAccount?.toDto.toEntities;
+    return googleAccount?.toEntities;
   }
 
   @override
   Future<bool> signOut() async {
-    final GoogleSignInAccount? googleAccount = await _authApiService.signOut();
+    final GoogleAccountDto? googleAccount = await _authApiService.signOut();
 
     return googleAccount != null;
   }
