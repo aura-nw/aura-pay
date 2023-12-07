@@ -60,7 +60,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
   }
 
   @override
-  Future<String> sendToken({
+  Future<SendTransactionInformationDto> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,
@@ -86,7 +86,10 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       fee: smartAccountFee,
     );
 
-    return response.txhash;
+    return SendTransactionInformationDto(
+      txHash: response.txhash,
+      timestamp: response.timestamp,
+    );
   }
 
   @override

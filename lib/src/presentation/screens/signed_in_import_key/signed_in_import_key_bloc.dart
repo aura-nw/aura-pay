@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
+import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 
 import 'signed_in_import_key_state.dart';
 import 'singed_in_import_key_event.dart';
@@ -83,6 +84,18 @@ class SignedInImportKeyBloc
           final wallet = await _walletUseCase.importWallet(
             privateKeyOrPassPhrase: state.key,
           );
+
+          await _accountUseCase.saveAccount(
+            address: wallet.bech32Address,
+            type: AuraAccountType.normal,
+            accountName: PyxisAccountConstant.unName,
+          );
+
+          await _controllerKeyUseCase.saveKey(
+            address: wallet.bech32Address,
+            key: state.key,
+          );
+
           emit(
             state.copyWith(
                 status: SignedInImportKeyStatus.onImportAccountSuccess,

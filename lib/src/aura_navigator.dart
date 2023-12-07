@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
@@ -13,6 +14,7 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_reques
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_screen.dart';
@@ -43,6 +45,8 @@ sealed class RoutePath {
 
   static const String home = '${_base}home';
   static const String sendTransaction = '$home/send_transaction';
+  static const String sendTransactionConfirmation =
+      '$home/send_transaction_confirmation';
   static const String _signedInCreateNewAccount =
       '$home/signed_in_create_new_account';
   static const String signedInCreateNewAccountPickName =
@@ -149,6 +153,26 @@ sealed class AppNavigator {
       case RoutePath.sendTransaction:
         return _defaultRoute(
           const SendTransactionScreen(),
+          settings,
+        );
+      case RoutePath.sendTransactionConfirmation:
+        final Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+
+        final String amount = arguments['amount'] as String;
+        final String recipient = arguments['recipient'] as String;
+        final AuraAccount sender = arguments['sender'];
+        final String transactionFee = arguments['transactionFee'] as String;
+        final int gasEstimation = arguments['gasEstimation'] as int;
+
+        return _defaultRoute(
+          SendTransactionConfirmationScreen(
+            amount: amount,
+            recipient: recipient,
+            sender: sender,
+            transactionFee: transactionFee,
+            gasEstimation: gasEstimation,
+          ),
           settings,
         );
       case RoutePath.signedInCreateNewAccountPickName:

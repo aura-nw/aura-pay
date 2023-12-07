@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:domain/src/domain/entities/entities.dart';
 import 'package:domain/src/domain/repository/repository.dart';
 
 class SmartAccountUseCase {
@@ -34,7 +35,7 @@ class SmartAccountUseCase {
     );
   }
 
-  Future<String> sendToken({
+  Future<SendTransactionInformation> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,

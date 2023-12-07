@@ -222,7 +222,7 @@ class _OnBoardingScanFeeScreenState extends State<OnBoardingScanFeeScreen>
   void _showLoadingDialog(AppTheme appTheme) {
     DialogProvider.showLoadingDialog(
       context,
-      content: AppLocalizationManager.instance
+      content: AppLocalizationManager.of(context)
           .translate(LanguageKey.onBoardingScanFeeScreenDialogLoadingContent),
       appTheme: appTheme,
     );
@@ -231,13 +231,13 @@ class _OnBoardingScanFeeScreenState extends State<OnBoardingScanFeeScreen>
   void _showWarningDialog(AppTheme appTheme) {
     DialogProvider.showWarningDialog(
       context,
-      title: AppLocalizationManager.instance.translate(
+      title: AppLocalizationManager.of(context).translate(
         LanguageKey.onBoardingScanFeeScreenDialogWarningTitle,
       ),
-      message: AppLocalizationManager.instance.translate(
+      message: AppLocalizationManager.of(context).translate(
         LanguageKey.onBoardingScanFeeScreenDialogWarningContent,
       ),
-      buttonTitle: AppLocalizationManager.instance.translate(
+      buttonTitle: AppLocalizationManager.of(context).translate(
         LanguageKey.onBoardingScanFeeScreenDialogWarningButtonTitle,
       ),
       onButtonTap: () => AppNavigator.pop(),

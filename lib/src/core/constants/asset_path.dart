@@ -93,4 +93,11 @@ sealed class AssetIconPath{
   ///Send transaction
   static const String sendQr = '${_baseIconPath}ic_send_qr.svg';
   static const String sendAuraCoin = '${_baseIconPath}ic_send_aura_coin.svg';
+
+
+  /// Send transaction confirmation
+  static const String sendConfirmation = '${_baseIconPath}ic_send_confirmation.svg';
+  static const String sendConfirmationEdit = '${_baseIconPath}ic_send_confirmation_edit.svg';
+  static const String sendConfirmationMessage = '${_baseIconPath}ic_send_confirmation_message.svg';
+  static const String sendConfirmationDivider = '${_baseIconPath}ic_send_confirmation_divider.svg';
 }

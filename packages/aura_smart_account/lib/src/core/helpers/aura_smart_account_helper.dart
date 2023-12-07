@@ -1,7 +1,10 @@
 import 'dart:typed_data';
+import 'package:aura_smart_account/src/core/constants/aura_network_information.dart';
 import 'package:aura_smart_account/src/core/constants/smart_account_constant.dart';
 import 'package:aura_smart_account/src/core/definitions/account.dart';
+import 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 import 'package:aura_smart_account/src/core/definitions/cosmos_signer_data.dart';
+import 'package:aura_smart_account/src/core/definitions/grpc_network_info.dart';
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
     as auth;
 import 'package:aura_smart_account/src/proto/cosmos/tx/signing/v1beta1/export.dart'
@@ -16,6 +19,20 @@ import 'wallet_helper.dart';
 typedef AccountDeserializer = Account Function(pb.Any);
 
 sealed class AuraSmartAccountHelper {
+
+  static AuraNetworkInfo getNetworkInfoFromEnvironment(AuraSmartAccountEnvironment environment){
+    switch (environment) {
+      case AuraSmartAccountEnvironment.test:
+        return AuraNetWorkInformationConstant.testChannel;
+      case AuraSmartAccountEnvironment.serenity:
+        return AuraNetWorkInformationConstant.serenityChannel;
+      case AuraSmartAccountEnvironment.euphoria:
+        return AuraNetWorkInformationConstant.euphoriaChannel;
+      case AuraSmartAccountEnvironment.production:
+        return AuraNetWorkInformationConstant.productionChannel;
+    }
+  }
+
   static final Map<String, AccountDeserializer> _deserializerAccounts = {
     'BaseAccount': BaseAccount.fromAny,
     'SmartAccount': BaseAccount.fromAny,

@@ -10,8 +10,8 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
 
   HomeScreenBloc(this._accountUseCase)
       : super(
-           const HomeScreenState(),
-        ){
+          const HomeScreenState(),
+        ) {
     on(_init);
     on(_reFetchAccounts);
   }
@@ -44,7 +44,6 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     final accounts = await _accountUseCase.getAccounts();
 
     emit(state.copyWith(
-      status: HomeScreenStatus.loaded,
       accounts: accounts,
     ));
   }

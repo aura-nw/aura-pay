@@ -81,8 +81,6 @@ class OnBoardingScanFeeBloc
         userPrivateKey: state.privateKey,
         smartAccountAddress: state.smartAccountAddress,
         salt: state.salt,
-        fee: '2500',
-        gasLimit: 400000,
         memo: 'Active smart account',
       );
 

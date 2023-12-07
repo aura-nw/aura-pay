@@ -184,20 +184,37 @@ sealed class LanguageKey {
   ///
 
   ///region send transaction
-  static const String sendTransactionAppBarTitle = 'send_transaction_screen_app_bar_title';
-  static const String sendTransactionSendFrom = 'send_transaction_screen_send_from';
-  static const String sendTransactionRecipientLabel = 'send_transaction_screen_recipient_label';
-  static const String sendTransactionRecipientPaste = 'send_transaction_screen_recipient_paste';
-  static const String sendTransactionRecipientHint = 'send_transaction_screen_recipient_hint';
-  static const String sendTransactionRecipientInValid = 'send_transaction_screen_recipient_invalid';
-  static const String sendTransactionAmount = 'send_transaction_screen_amount';
-  static const String sendTransactionBalance = 'send_transaction_screen_balance';
-  static const String sendTransactionBalanceHint = 'send_transaction_screen_balance_hint';
-  static const String sendTransactionAmountMax = 'send_transaction_screen_amount_max';
-  static const String sendTransactionAmountInValid = 'send_transaction_screen_amount_invalid';
-  static const String sendTransactionButtonNextTitle= 'send_transaction_screen_button_next_title';
+  static const String sendTransactionScreenAppBarTitle = 'send_transaction_screen_app_bar_title';
+  static const String sendTransactionScreenSendFrom = 'send_transaction_screen_send_from';
+  static const String sendTransactionScreenRecipientLabel = 'send_transaction_screen_recipient_label';
+  static const String sendTransactionScreenRecipientPaste = 'send_transaction_screen_recipient_paste';
+  static const String sendTransactionScreenRecipientHint = 'send_transaction_screen_recipient_hint';
+  static const String sendTransactionScreenRecipientInValid = 'send_transaction_screen_recipient_invalid';
+  static const String sendTransactionScreenAmount = 'send_transaction_screen_amount';
+  static const String sendTransactionScreenBalance = 'send_transaction_screen_balance';
+  static const String sendTransactionScreenBalanceHint = 'send_transaction_screen_balance_hint';
+  static const String sendTransactionScreenAmountMax = 'send_transaction_screen_amount_max';
+  static const String sendTransactionScreenAmountInValid = 'send_transaction_screen_amount_invalid';
+  static const String sendTransactionScreenButtonNextTitle= 'send_transaction_screen_button_next_title';
+  static const String sendTransactionScreenEstimateFeeLoadingTitle = 'send_transaction_screen_estimate_fee_loading_title';
   ///
-
+  static const String sendTransactionConfirmationScreenAppBarTitle = 'send_transaction_confirmation_screen_app_bar_title';
+  static const String sendTransactionConfirmationScreenSendFrom = 'send_transaction_confirmation_screen_from_account';
+  static const String sendTransactionConfirmationScreenRecipient = 'send_transaction_confirmation_screen_recipient';
+  static const String sendTransactionConfirmationScreenAmount = 'send_transaction_confirmation_screen_amount';
+  static const String sendTransactionConfirmationScreenFee = 'send_transaction_confirmation_screen_fee';
+  static const String sendTransactionConfirmationScreenTotal = 'send_transaction_confirmation_screen_total';
+  static const String sendTransactionConfirmationScreenMessages = 'send_transaction_confirmation_screen_messages';
+  static const String sendTransactionConfirmationScreenSend = 'send_transaction_confirmation_screen_message_send';
+  static const String sendTransactionConfirmationScreenContent = 'send_transaction_confirmation_screen_message_content';
+  static const String sendTransactionConfirmationScreenChangeFeeTitle = 'send_transaction_confirmation_screen_change_fee_title';
+  static const String sendTransactionConfirmationScreenChangeFeeEstimate = 'send_transaction_confirmation_screen_change_fee_estimate';
+  static const String sendTransactionConfirmationScreenChangeFeeEstimateSlower = 'send_transaction_confirmation_screen_change_fee_estimate_slower';
+  static const String sendTransactionConfirmationScreenChangeFeeEstimateFaster = 'send_transaction_confirmation_screen_change_fee_estimate_faster';
+  static const String sendTransactionConfirmationScreenChangeFeeEstimateApplyButtonTitle = 'send_transaction_confirmation_screen_change_fee_estimate_apply_button_tittle';
+  static const String sendTransactionConfirmationScreenSending = 'send_transaction_confirmation_screen_sending';
+  ///region send transaction confirmation
+  
   ///region signed in create new account
   static const String signedInCreateNewSmartAccountScreenTitleRegionOne = "signed_in_create_new_smart_account_screen_title_region_one";
   static const String signedInCreateNewSmartAccountScreenTitleRegionTwo = "signed_in_create_new_smart_account_screen_title_region_two";

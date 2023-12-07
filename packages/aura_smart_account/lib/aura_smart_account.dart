@@ -21,6 +21,9 @@ export 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dar
 export 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
 export 'package:aura_smart_account/src/core/definitions/fee.dart';
 export 'package:aura_smart_account/src/core/definitions/gas_price.dart';
+export 'package:aura_smart_account/src/core/helpers/cosmos_helper.dart';
+export 'package:aura_smart_account/src/core/aura_smart_account_cache.dart';
+export 'package:aura_smart_account/src/core/utils/amount.dart';
 
 /// AuraSmartAccount is an interface. It define some methods to support for aura smart account
 /// See more [https://github.com/aura-nw/aura/tree/main/proto/aura/smartaccount/]

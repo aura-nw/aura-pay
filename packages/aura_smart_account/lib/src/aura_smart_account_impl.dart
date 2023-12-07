@@ -1,11 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
-import 'package:aura_smart_account/src/core/constants/aura_network_information.dart';
 import 'package:aura_smart_account/src/core/definitions/account.dart';
 import 'package:aura_smart_account/src/core/definitions/cosmos_signer_data.dart';
 import 'package:aura_smart_account/src/core/definitions/grpc_network_info.dart';
-import 'package:aura_smart_account/src/core/helpers/cosmos_helper.dart';
 import 'package:aura_smart_account/src/core/utils/amount.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
     as aura;
@@ -25,7 +23,6 @@ import 'package:protobuf/protobuf.dart';
 
 import 'core/constants/smart_account_constant.dart';
 import 'core/constants/smart_account_error_code.dart';
-import 'core/definitions/fee.dart';
 import 'core/helpers/aura_smart_account_helper.dart';
 import 'core/helpers/wallet_helper.dart';
 
@@ -33,6 +30,7 @@ import 'dart:developer' as dev;
 
 /// [AuraSmartAccountImpl] class is implementation of [AuraSmartAccount]
 class AuraSmartAccountImpl implements AuraSmartAccount {
+  final AuraSmartAccountEnvironment environment;
   late AuraNetworkInfo auraNetworkInfo;
 
   late aura.QueryClient querySmartAccountClient;
@@ -40,23 +38,20 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
   late bank.QueryClient bankClient;
   late tx.ServiceClient serviceClient;
 
-  AuraSmartAccountImpl(AuraSmartAccountEnvironment environment) {
+  AuraSmartAccountImpl(this.environment) {
     _createClient(environment);
   }
 
   /// Create client
   void _createClient(AuraSmartAccountEnvironment environment) {
-    auraNetworkInfo = AuraNetWorkInformationConstant.testChannel;
-    switch (environment) {
-      case AuraSmartAccountEnvironment.test:
-        auraNetworkInfo = AuraNetWorkInformationConstant.testChannel;
-      case AuraSmartAccountEnvironment.serenity:
-        auraNetworkInfo = AuraNetWorkInformationConstant.serenityChannel;
-      case AuraSmartAccountEnvironment.euphoria:
-        auraNetworkInfo = AuraNetWorkInformationConstant.euphoriaChannel;
-      case AuraSmartAccountEnvironment.production:
-        auraNetworkInfo = AuraNetWorkInformationConstant.productionChannel;
-    }
+    auraNetworkInfo = AuraSmartAccountHelper.getNetworkInfoFromEnvironment(
+      environment,
+    );
+
+    AuraSmartAccountCache.init(
+      auraNetworkInfo.denom,
+      auraNetworkInfo.chainId,
+    );
 
     querySmartAccountClient = aura.QueryClient(
       auraNetworkInfo.getChannel(),
@@ -148,7 +143,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       late tx.Fee feeSign;
 
       if (fee == null) {
-        CosmosHelper.calculateFee(
+        feeSign = CosmosHelper.calculateFee(
           AuraSmartAccountConstant.defaultGasActiveSmartAccount,
           deNom: auraNetworkInfo.denom,
         );
@@ -250,7 +245,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         );
       } else {
         // Create fee
-        tx.Fee feeSign = tx.Fee.create()
+        feeSign = tx.Fee.create()
           ..gasLimit = $fixnum.Int64(fee.gasLimit)
           ..amount.add(
             base.Coin(
@@ -450,6 +445,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
       return response.gasInfo.gasUsed.toInt();
     } catch (e) {
+      dev.log(e.toString());
       // Default gas estimation
       return 100000;
     }

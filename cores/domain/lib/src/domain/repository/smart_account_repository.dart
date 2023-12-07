@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:domain/src/domain/entities/send_transaction_information.dart';
+
 abstract interface class SmartAccountRepository {
   Future<String> generateAddress({
     required Uint8List pubKey,
@@ -15,7 +17,7 @@ abstract interface class SmartAccountRepository {
     int ?gasLimit,
   });
 
-  Future<String> sendToken({
+  Future<SendTransactionInformation> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,

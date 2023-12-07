@@ -86,7 +86,7 @@ final class TextInputRecipientState
                     builder: (localization, _) {
                       return Text(
                         localization.translate(
-                          LanguageKey.sendTransactionRecipientPaste,
+                          LanguageKey.sendTransactionScreenRecipientPaste,
                         ),
                         style: AppTypoGraPhy.bodyMedium02.copyWith(
                           color: theme.contentColorBrandDark,

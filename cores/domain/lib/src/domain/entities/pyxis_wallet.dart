@@ -1,3 +1,4 @@
+import 'package:domain/src/domain/entities/send_transaction_information.dart';
 import 'package:flutter/services.dart';
 
 abstract class PyxisWallet {
@@ -13,7 +14,7 @@ abstract class PyxisWallet {
     this.mnemonic,
   });
 
-  Future<T> sendTransaction<T>({
+  Future sendTransaction({
     required String toAddress,
     required String amount,
     required String fee,
@@ -21,7 +22,7 @@ abstract class PyxisWallet {
     String? memo,
   });
 
-  Future<bool> submitTransaction<P>({
+  Future<SendTransactionInformation> submitTransaction<P>({
     required P signedTransaction,
   });
 

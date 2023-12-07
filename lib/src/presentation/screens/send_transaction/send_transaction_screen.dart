@@ -3,15 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/helpers/wallet_address_validator.dart';
+import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/widgets/text_input_recipient_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'send_transaction_bloc.dart';
 import 'send_transaction_event.dart';
 import 'send_transaction_selector.dart';
@@ -30,7 +35,8 @@ class SendTransactionScreen extends StatefulWidget {
   State<SendTransactionScreen> createState() => _SendTransactionScreenState();
 }
 
-class _SendTransactionScreenState extends State<SendTransactionScreen> {
+class _SendTransactionScreenState extends State<SendTransactionScreen>
+    with CustomFlutterToast {
   final TextEditingController _recipientController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
 
@@ -51,11 +57,42 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
         return BlocProvider.value(
           value: _bloc,
           child: BlocListener<SendTransactionBloc, SendTransactionState>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              switch (state.status) {
+                case SendTransactionStatus.loading:
+                  break;
+                case SendTransactionStatus.loaded:
+                  break;
+                case SendTransactionStatus.error:
+                  break;
+                case SendTransactionStatus.onEstimateFee:
+                  _showLoadingDialog(appTheme);
+                case SendTransactionStatus.estimateFeeSuccess:
+                  AppNavigator.pop();
+
+                  AppNavigator.push(
+                    RoutePath.sendTransactionConfirmation,
+                    {
+                      'amount': state.amount,
+                      'recipient': state.recipientAddress,
+                      'sender': state.sender,
+                      'transactionFee': state.estimateFee,
+                      'gasEstimation': state.gasEstimation,
+                    },
+                  );
+                  break;
+                case SendTransactionStatus.estimateFeeError:
+                  showToast(
+                    state.error!,
+                  );
+                  AppNavigator.pop();
+                  break;
+              }
+            },
             child: Scaffold(
               appBar: AppBarWithTitle(
                 appTheme: appTheme,
-                titleKey: LanguageKey.sendTransactionAppBarTitle,
+                titleKey: LanguageKey.sendTransactionScreenAppBarTitle,
               ),
               body: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -71,6 +108,9 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                           appTheme: appTheme,
                         ),
                       );
+                    case SendTransactionStatus.onEstimateFee:
+                    case SendTransactionStatus.estimateFeeSuccess:
+                    case SendTransactionStatus.estimateFeeError:
                     case SendTransactionStatus.loaded:
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +123,8 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                   builder: (localization, _) {
                                     return Text(
                                       localization.translate(
-                                        LanguageKey.sendTransactionSendFrom,
+                                        LanguageKey
+                                            .sendTransactionScreenSendFrom,
                                       ),
                                       style: AppTypoGraPhy.utilityLabelDefault
                                           .copyWith(
@@ -112,7 +153,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                     return Text(
                                       localization.translate(
                                         LanguageKey
-                                            .sendTransactionRecipientLabel,
+                                            .sendTransactionScreenRecipientLabel,
                                       ),
                                       style: AppTypoGraPhy.utilityLabelDefault
                                           .copyWith(
@@ -126,7 +167,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                     return TextInputRecipientWidget(
                                       hintText: localization.translate(
                                         LanguageKey
-                                            .sendTransactionRecipientHint,
+                                            .sendTransactionScreenRecipientHint,
                                       ),
                                       controller: _recipientController,
                                       onClear: _onClearRecipient,
@@ -137,7 +178,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                         ..custom(
                                           errorMessage: localization.translate(
                                             LanguageKey
-                                                .sendTransactionRecipientInValid,
+                                                .sendTransactionScreenRecipientInValid,
                                           ),
                                           customValid: (recipient) {
                                             return WalletAddressValidator
@@ -155,7 +196,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                   builder: (localization, _) {
                                     return Text(
                                       localization.translate(
-                                        LanguageKey.sendTransactionAmount,
+                                        LanguageKey.sendTransactionScreenAmount,
                                       ),
                                       style: AppTypoGraPhy.utilityLabelDefault
                                           .copyWith(
@@ -214,7 +255,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                             return Text(
                                               '${localization.translate(
                                                 LanguageKey
-                                                    .sendTransactionBalance,
+                                                    .sendTransactionScreenBalance,
                                               )}: $balance ${localization.translate(
                                                 LanguageKey.globalPyxisAura,
                                               )}',
@@ -233,7 +274,8 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                   builder: (localization, _) {
                                     return TextInputNormalSuffixWidget(
                                       hintText: localization.translate(
-                                        LanguageKey.sendTransactionBalanceHint,
+                                        LanguageKey
+                                            .sendTransactionScreenBalanceHint,
                                       ),
                                       onChanged: _onChangeAmount,
                                       controller: _amountController,
@@ -250,7 +292,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                           child: Text(
                                             localization.translate(
                                               LanguageKey
-                                                  .sendTransactionAmountMax,
+                                                  .sendTransactionScreenAmountMax,
                                             ),
                                             style: AppTypoGraPhy.bodyMedium03
                                                 .copyWith(
@@ -261,12 +303,12 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                       ),
                                       constraintManager: ConstraintManager()
                                         ..custom(
-                                            errorMessage:
-                                                localization.translate(
-                                              LanguageKey
-                                                  .sendTransactionAmountInValid,
-                                            ),
-                                            customValid: _checkValidAmount),
+                                          errorMessage: localization.translate(
+                                            LanguageKey
+                                                .sendTransactionScreenAmountInValid,
+                                          ),
+                                          customValid: _checkValidAmount,
+                                        ),
                                     );
                                   },
                                 ),
@@ -280,11 +322,13 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
                                   return PrimaryAppButton(
                                     text: localization.translate(
                                       LanguageKey
-                                          .sendTransactionButtonNextTitle,
+                                          .sendTransactionScreenButtonNextTitle,
                                     ),
                                     isDisable: !isReadySubmit,
                                     onPress: () async {
-
+                                      _bloc.add(
+                                        const SendTransactionEventOnEstimateFee(),
+                                      );
                                     },
                                   );
                                 },
@@ -349,9 +393,21 @@ class _SendTransactionScreenState extends State<SendTransactionScreen> {
     try {
       double am = double.parse(amount);
 
-      return am > 0;
+      double total = double.parse(_bloc.state.balance);
+
+      return am > 0 && am <= total;
     } catch (e) {
       return false;
     }
+  }
+
+  void _showLoadingDialog(AppTheme appTheme) {
+    DialogProvider.showLoadingDialog(
+      context,
+      content: AppLocalizationManager.of(context).translate(
+        LanguageKey.sendTransactionScreenEstimateFeeLoadingTitle,
+      ),
+      appTheme: appTheme,
+    );
   }
 }

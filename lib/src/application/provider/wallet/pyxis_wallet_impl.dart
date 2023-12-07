@@ -1,5 +1,6 @@
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:data/data.dart';
+import 'package:domain/domain.dart';
 
 class PyxisWalletImpl extends PyxisWalletDto {
   final AuraWallet _auraWallet;
@@ -18,7 +19,7 @@ class PyxisWalletImpl extends PyxisWalletDto {
   }
 
   @override
-  Future<T> sendTransaction<T>({
+  Future sendTransaction({
     required String toAddress,
     required String amount,
     required String fee,
@@ -33,13 +34,19 @@ class PyxisWalletImpl extends PyxisWalletDto {
       memo: memo,
     );
 
-    return tx as T;
+    return tx;
   }
 
   @override
-  Future<bool> submitTransaction<P>({required P signedTransaction}) async {
-    return _auraWallet.submitTransaction(
+  Future<SendTransactionInformation> submitTransaction<P>(
+      {required P signedTransaction}) async {
+    final response = await _auraWallet.submitTransaction(
       signedTransaction: signedTransaction as dynamic,
     );
+
+    return SendTransactionInformationDto(
+      txHash: response.txhash,
+      timestamp: response.timestamp,
+    ).toEntity;
   }
 }

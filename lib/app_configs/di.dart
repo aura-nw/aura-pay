@@ -22,6 +22,7 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_bloc.dart';
@@ -147,6 +148,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<WalletRepository>(
+    () => WalletRepositoryImpl(
+      getIt.get<WalletProvider>(),
+    ),
+  );
+
   ///Use case
   getIt.registerLazySingleton<AppSecureUseCase>(
     () => AppSecureUseCase(
@@ -248,6 +255,8 @@ Future<void> initDependency(
       Map<String, String>, Map<String, Uint8List>>(
     (smartAccount, accountRaw) => SignedInCreateNewSmAccountScanFeeBloc(
       getIt.get<SmartAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
       smartAccountAddress: smartAccount['smartAccountAddress']!,
       accountName: smartAccount['accountName']!,
       privateKey: accountRaw['privateKey']!,
@@ -280,6 +289,21 @@ Future<void> initDependency(
     () => SendTransactionBloc(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<SmartAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
+    ),
+  );
+
+  getIt.registerFactoryParam<SendTransactionConfirmationBloc, AuraAccount,
+      Map<String, dynamic>>(
+    (account, transactionI) => SendTransactionConfirmationBloc(
+      getIt.get<SmartAccountUseCase>(),
+      getIt.get<WalletUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
+      sender: account,
+      recipient: transactionI['recipient'],
+      amount: transactionI['amount'],
+      transactionFee: transactionI['fee'],
+      estimationGas: transactionI['gas'],
     ),
   );
 }

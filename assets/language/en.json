@@ -165,6 +165,7 @@
   "send_transaction_screen_balance_hint" : "Enter amount",
   "send_transaction_screen_amount_max" : "MAX",
   "send_transaction_screen_button_next_title" : "Next",
+  "send_transaction_screen_estimate_fee_loading_title" : "Estimating fee",
 
   "send_transaction_confirmation_screen_app_bar_title" : "Send token confirmation",
   "send_transaction_confirmation_screen_from_account" : "From",
@@ -180,6 +181,7 @@
   "send_transaction_confirmation_screen_change_fee_estimate_slower" : "Slower",
   "send_transaction_confirmation_screen_change_fee_estimate_faster" : "Faster",
   "send_transaction_confirmation_screen_change_fee_estimate_apply_button_tittle" : "Apply",
+  "send_transaction_confirmation_screen_sending" : "Sending",
 
   "signed_in_create_new_smart_account_screen_title_region_one" : "Create new",
   "signed_in_create_new_smart_account_screen_title_region_two" : "smart account",

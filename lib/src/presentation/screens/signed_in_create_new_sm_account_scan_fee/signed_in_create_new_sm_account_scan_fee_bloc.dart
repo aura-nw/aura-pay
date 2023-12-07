@@ -1,16 +1,22 @@
 import 'dart:typed_data';
 
+import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'signed_in_create_new_sm_account_scan_fee_event.dart';
 import 'signed_in_create_new_sm_account_scan_fee_state.dart';
 
-class SignedInCreateNewSmAccountScanFeeBloc
-    extends Bloc<SignedInCreateNewSmAccountScanFeeEvent, SignedInCreateNewSmAccountScanFeeState> {
+class SignedInCreateNewSmAccountScanFeeBloc extends Bloc<
+    SignedInCreateNewSmAccountScanFeeEvent,
+    SignedInCreateNewSmAccountScanFeeState> {
   final SmartAccountUseCase _smartAccountUseCase;
+  final AuraAccountUseCase _accountUseCase;
+  final ControllerKeyUseCase _controllerKeyUseCase;
 
   SignedInCreateNewSmAccountScanFeeBloc(
-    this._smartAccountUseCase, {
+    this._smartAccountUseCase,
+    this._controllerKeyUseCase,
+    this._accountUseCase, {
     required String smartAccountAddress,
     required Uint8List privateKey,
     required Uint8List salt,
@@ -28,7 +34,7 @@ class SignedInCreateNewSmAccountScanFeeBloc
   }
 
   void _onCheckingBalance(
-      SignedInCreateNewSmAccountScanFeeOnCheckingBalanceEvent event,
+    SignedInCreateNewSmAccountScanFeeOnCheckingBalanceEvent event,
     Emitter<SignedInCreateNewSmAccountScanFeeState> emit,
   ) async {
     emit(
@@ -47,7 +53,8 @@ class SignedInCreateNewSmAccountScanFeeBloc
         /// show error message for user
         emit(
           state.copyWith(
-            status: SignedInCreateNewSmAccountScanFeeStatus.onCheckBalanceUnEnough,
+            status:
+                SignedInCreateNewSmAccountScanFeeStatus.onCheckBalanceUnEnough,
           ),
         );
       }
@@ -62,7 +69,7 @@ class SignedInCreateNewSmAccountScanFeeBloc
   }
 
   void _onActiveSmartAccount(
-      SignedInCreateNewSmAccountScanFeeOnActiveSmartAccountEvent event,
+    SignedInCreateNewSmAccountScanFeeOnActiveSmartAccountEvent event,
     Emitter<SignedInCreateNewSmAccountScanFeeState> emit,
   ) async {
     try {
@@ -81,9 +88,24 @@ class SignedInCreateNewSmAccountScanFeeBloc
         memo: 'Active smart account',
       );
 
+
+      await _accountUseCase.saveAccount(
+        address: state.smartAccountAddress,
+        accountName: state.accountName,
+        type: AuraAccountType.smartAccount,
+      );
+
+      await _controllerKeyUseCase.saveKey(
+        address: state.smartAccountAddress,
+        key: AuraWalletHelper.getPrivateKeyFromBytes(
+          state.privateKey,
+        ),
+      );
+
       emit(
         state.copyWith(
-          status: SignedInCreateNewSmAccountScanFeeStatus.onActiveAccountSuccess,
+          status:
+              SignedInCreateNewSmAccountScanFeeStatus.onActiveAccountSuccess,
         ),
       );
     } catch (e) {

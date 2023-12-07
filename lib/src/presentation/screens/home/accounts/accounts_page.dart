@@ -12,6 +12,8 @@ import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/account_manager_action_form.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/remove_account_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/rename_account_form_widget.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'widgets/account_item_widget.dart';
@@ -26,6 +28,14 @@ class AccountsPage extends StatefulWidget {
 }
 
 class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
+  late HomeScreenBloc _homeScreenBloc;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _homeScreenBloc = HomeScreenBloc.of(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppThemeBuilder(
@@ -50,10 +60,18 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                     await AppNavigator.push(
                       RoutePath.signedInCreateNewAccountPickName,
                     );
+
+                    _homeScreenBloc.add(
+                      const HomeScreenEventOnReFetchAccount(),
+                    );
                   },
                   onImportTap: () async {
                     await AppNavigator.push(
                       RoutePath.signedInImportKey,
+                    );
+
+                    _homeScreenBloc.add(
+                      const HomeScreenEventOnReFetchAccount(),
                     );
                   },
                   onRecoverTap: () {},
@@ -82,7 +100,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                     return AccountItemWidget(
                       appTheme: appTheme,
                       address: account.address,
-                      accountName: account.name!,
+                      accountName: account.name,
                       onMoreTap: () {
                         _showMoreOptionsDialog(
                           appTheme,
@@ -131,7 +149,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                                     AccountItemWidget(
                                       appTheme: appTheme,
                                       address: account.address,
-                                      accountName: account.name!,
+                                      accountName: account.name,
                                       onMoreTap: () {
                                         _showMoreOptionsDialog(
                                           appTheme,
@@ -169,7 +187,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
       canBack: true,
       widget: AccountManagerActionForm(
         address: account.address,
-        name: account.name!,
+        name: account.name,
         appTheme: appTheme,
         onRemove: () {
           AppNavigator.pop();

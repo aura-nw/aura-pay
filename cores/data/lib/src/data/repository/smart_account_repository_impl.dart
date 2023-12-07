@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:data/src/data/resource/provider/provider.dart';
+import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 
 class SmartAccountRepositoryImpl implements SmartAccountRepository {
@@ -38,7 +38,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
   }
 
   @override
-  Future<String> sendToken({
+  Future<SendTransactionInformation> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,
@@ -47,7 +47,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     String? fee,
     int? gasLimit,
   }) async {
-    return await _provider.sendToken(
+    final transactionResponse = await _provider.sendToken(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
       receiverAddress: receiverAddress,
@@ -56,6 +56,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
       gasLimit: gasLimit,
       memo: memo,
     );
+    return transactionResponse.toEntity;
   }
 
   @override

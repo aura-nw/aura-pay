@@ -1,7 +1,7 @@
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
+import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'on_boarding_import_key_event.dart';
 import 'on_boarding_import_key_state.dart';
 
@@ -87,7 +87,7 @@ class OnBoardingImportKeyBloc
           await _accountUseCase.saveAccount(
             address: wallet.bech32Address,
             type: AuraAccountType.normal,
-            accountName: 'Unknown name',
+            accountName: PyxisAccountConstant.unName,
           );
 
           await _controllerKeyUseCase.saveKey(

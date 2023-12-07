@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:data/src/data/dto/dto.dart';
+
 abstract interface class SmartAccountProvider{
   Future<String> generateSmartAccount({
     required Uint8List pubKey,
@@ -27,7 +29,7 @@ abstract interface class SmartAccountProvider{
     required String address,
   });
 
-  Future<String> sendToken({
+  Future<SendTransactionInformationDto> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,

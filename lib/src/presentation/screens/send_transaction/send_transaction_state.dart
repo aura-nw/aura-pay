@@ -7,6 +7,9 @@ enum SendTransactionStatus {
   loading,
   loaded,
   error,
+  onEstimateFee,
+  estimateFeeSuccess,
+  estimateFeeError,
 }
 
 @freezed
@@ -21,5 +24,7 @@ class SendTransactionState with _$SendTransactionState {
     @Default('') String amount,
     String? error,
     @Default(false) bool isReadySubmit,
+    @Default('') String estimateFee,
+    @Default(0) int gasEstimation,
   }) = _SendTransactionState;
 }

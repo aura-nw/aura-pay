@@ -8,4 +8,6 @@ class SendTransactionEvent with _$SendTransactionEvent{
   const factory SendTransactionEvent.onChangeRecipientAddress(String address) = SendTransactionEventOnChangeRecipientAddress;
 
   const factory SendTransactionEvent.onChangeAmount(String amount) = SendTransactionEventOnChangeAmount;
+
+  const factory SendTransactionEvent.onEstimateFee() = SendTransactionEventOnEstimateFee;
 }
