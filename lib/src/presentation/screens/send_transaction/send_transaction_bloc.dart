@@ -36,7 +36,7 @@ final class SendTransactionBloc
     );
     try {
       // Get first account
-      final AuraAccount account = (await _auraAccountUseCase.getAccounts())[1];
+      final AuraAccount  ? account = await _auraAccountUseCase.getFirstAccount();
 
       final String balance = await _smartAccountUseCase.getToken(
         address: account?.address ?? '',
@@ -105,8 +105,6 @@ final class SendTransactionBloc
         address: sender.address,
       ))!;
 
-      print(privateKeyString);
-
       final int gasLimit = await _smartAccountUseCase.simulateFee(
         userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(
           privateKeyString,
@@ -116,16 +114,12 @@ final class SendTransactionBloc
         amount: state.amount.toDenom,
       );
 
-      print('Gas limit = ${gasLimit}');
-
       final fee = CosmosHelper.calculateFee(
         gasLimit,
         deNom: AuraSmartAccountCache.deNom,
       );
 
       final amount = fee.amount[0];
-
-      print('fee = ${amount.amount}');
 
       emit(
         state.copyWith(

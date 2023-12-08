@@ -78,4 +78,12 @@ class SmartAccountUseCase {
       memo: memo,
     );
   }
+
+  Future<SendTransactionInformation> getTx({
+    required String txHash,
+  }) async {
+    return _repository.getTx(
+      txHash: txHash,
+    );
+  }
 }

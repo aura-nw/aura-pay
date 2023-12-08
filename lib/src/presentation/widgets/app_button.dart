@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class _AppButton extends StatelessWidget {
   final String text;
   final Widget? leading;
+  final Widget? suffix;
   final TextStyle textStyle;
 
   final Color? color;
@@ -36,6 +37,7 @@ class _AppButton extends StatelessWidget {
     this.gradient,
     this.minWidth,
     this.leading,
+    this.suffix,
     bool? loading,
     bool? disabled,
     EdgeInsets? padding,
@@ -89,7 +91,15 @@ class _AppButton extends StatelessWidget {
                         const SizedBox(
                           width: 7,
                         ),
-                      Text(text, style: textStyle),
+                      Text(
+                        text,
+                        style: textStyle,
+                      ),
+                      if (suffix != null)
+                        const SizedBox(
+                          width: 7,
+                        ),
+                      suffix ?? const SizedBox.shrink(),
                     ],
                   ),
           ),
@@ -102,6 +112,7 @@ class _AppButton extends StatelessWidget {
 final class PrimaryAppButton extends StatelessWidget {
   final String text;
   final Widget? leading;
+  final Widget? suffix;
   final bool? isDisable;
   final VoidCallback? onPress;
   final double? minWidth;
@@ -112,6 +123,7 @@ final class PrimaryAppButton extends StatelessWidget {
     required this.text,
     this.isDisable,
     this.leading,
+    this.suffix,
     this.onPress,
     this.minWidth,
     this.backGroundColor,
@@ -133,6 +145,7 @@ final class PrimaryAppButton extends StatelessWidget {
           ),
           theme: theme,
           leading: leading,
+          suffix: suffix,
         );
       },
     );
@@ -146,6 +159,8 @@ final class BorderAppButton extends StatelessWidget {
   final double? minWidth;
   final Color? borderColor;
   final Color? textColor;
+  final Widget? leading;
+  final Widget? suffix;
 
   const BorderAppButton({
     super.key,
@@ -155,6 +170,8 @@ final class BorderAppButton extends StatelessWidget {
     this.minWidth,
     this.borderColor,
     this.textColor,
+    this.leading,
+    this.suffix,
   });
 
   @override
@@ -171,6 +188,8 @@ final class BorderAppButton extends StatelessWidget {
           ),
           theme: theme,
           borderColor: borderColor ?? theme.borderColorBrand,
+          suffix: suffix,
+          leading: leading,
         );
       },
     );
@@ -182,6 +201,8 @@ final class TextAppButton extends StatelessWidget {
   final bool? isDisable;
   final VoidCallback? onPress;
   final double? minWidth;
+  final Widget? leading;
+  final Widget? suffix;
 
   const TextAppButton({
     super.key,
@@ -189,6 +210,8 @@ final class TextAppButton extends StatelessWidget {
     this.isDisable,
     this.onPress,
     this.minWidth,
+    this.leading,
+    this.suffix,
   });
 
   @override
@@ -205,6 +228,8 @@ final class TextAppButton extends StatelessWidget {
             color: theme.contentColor700,
           ),
           theme: theme,
+          suffix: suffix,
+          leading: leading,
         );
       },
     );

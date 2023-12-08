@@ -28,7 +28,7 @@ class SendTransactionConfirmationBloc extends Bloc<
             transactionFee: transactionFee,
             estimationGas: estimationGas,
           ),
-        ){
+        ) {
     on(_onChangeFee);
     on(_onSendToken);
   }
@@ -75,7 +75,6 @@ class SendTransactionConfirmationBloc extends Bloc<
           gasLimit: state.estimationGas,
         );
       } else {
-
         // send token by normal wallet
 
         final wallet = await _walletUseCase.importWallet(
@@ -84,7 +83,7 @@ class SendTransactionConfirmationBloc extends Bloc<
 
         final tx = await wallet.sendTransaction(
           toAddress: state.recipient,
-          amount: state.amount,
+          amount: state.amount.toDenom,
           fee: state.transactionFee,
           gasLimit: state.estimationGas,
         );
@@ -94,6 +93,8 @@ class SendTransactionConfirmationBloc extends Bloc<
         );
       }
 
+      information = await _checkTransactionInfo(information.txHash, 0);
+
       emit(
         state.copyWith(
           status: SendTransactionConfirmationStatus.success,
@@ -101,13 +102,29 @@ class SendTransactionConfirmationBloc extends Bloc<
         ),
       );
     } catch (e) {
-      print(e.toString());
       emit(
         state.copyWith(
           status: SendTransactionConfirmationStatus.error,
           errorMsg: e.toString(),
         ),
       );
+    }
+  }
+
+  Future<SendTransactionInformation> _checkTransactionInfo(
+      String txHash, int times) async {
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
+    try {
+      return await _smartAccountUseCase.getTx(
+        txHash: txHash,
+      );
+    } catch (e) {
+      if (times == 4) {
+        rethrow;
+      }
+      return _checkTransactionInfo(txHash, times + 1);
     }
   }
 }

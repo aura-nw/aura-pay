@@ -47,6 +47,7 @@ class PyxisWalletImpl extends PyxisWalletDto {
     return SendTransactionInformationDto(
       txHash: response.txhash,
       timestamp: response.timestamp,
+      status: response.code,
     ).toEntity;
   }
 }

@@ -214,7 +214,18 @@ sealed class LanguageKey {
   static const String sendTransactionConfirmationScreenChangeFeeEstimateApplyButtonTitle = 'send_transaction_confirmation_screen_change_fee_estimate_apply_button_tittle';
   static const String sendTransactionConfirmationScreenSending = 'send_transaction_confirmation_screen_sending';
   ///region send transaction confirmation
-  
+
+  /// Send transaction result
+  static const String sendTransactionResultScreenSuccessFul = 'send_transaction_result_screen_successful';
+  static const String sendTransactionResultScreenFrom = 'send_transaction_result_screen_from';
+  static const String sendTransactionResultScreenRecipient = 'send_transaction_result_screen_recipient';
+  static const String sendTransactionResultScreenTimeCreated = 'send_transaction_result_screen_time';
+  static const String sendTransactionResultScreenHash = 'send_transaction_result_screen_hash';
+  static const String sendTransactionResultScreenViewTransaction = 'send_transaction_result_screen_view_transaction';
+  static const String sendTransactionResultScreenButtonBackToHomePage = 'send_transaction_result_screen_button_back_to_home_page_title';
+  ///
+
+
   ///region signed in create new account
   static const String signedInCreateNewSmartAccountScreenTitleRegionOne = "signed_in_create_new_smart_account_screen_title_region_one";
   static const String signedInCreateNewSmartAccountScreenTitleRegionTwo = "signed_in_create_new_smart_account_screen_title_region_two";

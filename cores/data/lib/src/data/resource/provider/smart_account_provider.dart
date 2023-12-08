@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:data/src/data/dto/dto.dart';
 
-abstract interface class SmartAccountProvider{
+abstract interface class SmartAccountProvider {
   Future<String> generateSmartAccount({
     required Uint8List pubKey,
     Uint8List? salt,
@@ -37,5 +37,9 @@ abstract interface class SmartAccountProvider{
     String? fee,
     int? gasLimit,
     String? memo,
+  });
+
+  Future<SendTransactionInformationDto> getTx({
+    required String txHash,
   });
 }

@@ -50,3 +50,5 @@ phyxis_mobile_dev.iml
 
 *.freezed.dart
 *.g.dart
+
+packages/aura-wallet-core

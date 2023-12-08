@@ -89,6 +89,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
     return SendTransactionInformationDto(
       txHash: response.txhash,
       timestamp: response.timestamp,
+      status: response.code,
     );
   }
 
@@ -106,6 +107,19 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       receiverAddress: receiverAddress,
       amount: amount,
       memo: memo,
+    );
+  }
+
+  @override
+  Future<SendTransactionInformationDto> getTx({required String txHash}) async {
+    final response = await _auraSmartAccount.getTx(
+      txHash: txHash,
+    );
+
+    return SendTransactionInformationDto(
+      txHash: response.txhash,
+      timestamp: response.timestamp,
+      status: response.code,
     );
   }
 }

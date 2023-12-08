@@ -84,4 +84,12 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
       memo: memo,
     );
   }
+
+  @override
+  Future<SendTransactionInformation> getTx({required String txHash}) async {
+    final response = await _provider.getTx(
+      txHash: txHash,
+    );
+    return response.toEntity;
+  }
 }

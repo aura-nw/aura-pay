@@ -20,10 +20,9 @@ packages:
   alan:
     dependency: transitive
     description:
-      name: alan
-      sha256: "5c4af4ccff43491c17f471299b925c82ee18e8b833b195b296a5f982659f994a"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../packages/aura-wallet-core/packages/alan.dart"
+      relative: true
+    source: path
     version: "0.41.4+1"
   analyzer:
     dependency: transitive
@@ -75,11 +74,9 @@ packages:
   aura_wallet_core:
     dependency: transitive
     description:
-      path: "."
-      ref: core_wallet
-      resolved-ref: "4945446b3653faa6fcdb1df092d66744f9a64314"
-      url: "https://github.com/aura-nw/aura-wallet-core.git"
-    source: git
+      path: "../packages/aura-wallet-core"
+      relative: true
+    source: path
     version: "0.0.1"
   base_x:
     dependency: transitive
@@ -480,10 +477,10 @@ packages:
     dependency: transitive
     description:
       name: google_sign_in_ios
-      sha256: "81495441405c138e3c638f5097bebaa0db644567b3976e08944cfb8926ff2e6d"
+      sha256: e050cd907db1ee441b8efc0d8db63f3514f343872fdef6de36940fb09a92b2d7
       url: "https://pub.dev"
     source: hosted
-    version: "5.6.5"
+    version: "5.7.0"
   google_sign_in_platform_interface:
     dependency: transitive
     description:

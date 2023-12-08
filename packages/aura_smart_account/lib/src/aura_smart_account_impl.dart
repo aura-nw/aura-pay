@@ -4,7 +4,6 @@ import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_smart_account/src/core/definitions/account.dart';
 import 'package:aura_smart_account/src/core/definitions/cosmos_signer_data.dart';
 import 'package:aura_smart_account/src/core/definitions/grpc_network_info.dart';
-import 'package:aura_smart_account/src/core/utils/amount.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
     as aura;
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
@@ -448,6 +447,27 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       dev.log(e.toString());
       // Default gas estimation
       return 100000;
+    }
+  }
+
+  @override
+  Future<TxResponse> getTx({required String txHash}) async {
+    try {
+      // Create request
+      final tx.GetTxRequest request = tx.GetTxRequest(
+        hash: txHash,
+      );
+
+      // execute request
+      final tx.GetTxResponse response = await serviceClient.getTx(
+        request,
+      );
+
+      return response.txResponse;
+
+    } catch (e) {
+      // Handle exception
+      throw _getError(e);
     }
   }
 }

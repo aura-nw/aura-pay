@@ -100,4 +100,9 @@ sealed class AssetIconPath{
   static const String sendConfirmationEdit = '${_baseIconPath}ic_send_confirmation_edit.svg';
   static const String sendConfirmationMessage = '${_baseIconPath}ic_send_confirmation_message.svg';
   static const String sendConfirmationDivider = '${_baseIconPath}ic_send_confirmation_divider.svg';
+
+  /// Send transaction successful
+  static const String sendSuccessfulLogo = '${_baseIconPath}ic_transaction_successful_logo.svg';
+  static const String sendSuccessfulCopy = '${_baseIconPath}ic_transaction_successful_copy.svg';
+  static const String sendSuccessfulView = '${_baseIconPath}ic_transaction_successful_view.svg';
 }

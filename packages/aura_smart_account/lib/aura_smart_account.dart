@@ -98,7 +98,7 @@ abstract interface class AuraSmartAccount {
   /// [amount] as String,
   /// [memo] as String?,
   /// [fee] as [AuraSmartAccountFee]?,
-  /// Response a [TxResponse] is tx hash of transaction
+  /// Response a [TxResponse] is tx of transaction
   /// It can throw [AuraSmartAccountError]
   Future<TxResponse> sendToken({
     required Uint8List userPrivateKey,
@@ -107,5 +107,13 @@ abstract interface class AuraSmartAccount {
     required String amount,
     AuraSmartAccountFee? fee,
     String? memo,
+  });
+
+  /// Get tx response of a transaction
+  /// This method has to pass a [txHash] as String
+  /// Response a [TxResponse] is tx of transaction
+  /// It can throw [AuraSmartAccountError]
+  Future<TxResponse> getTx({
+    required String txHash,
   });
 }
