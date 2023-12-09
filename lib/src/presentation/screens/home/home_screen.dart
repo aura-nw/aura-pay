@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
@@ -153,9 +154,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         animation: _receiveWidgetController,
                         child: HomeScreenAccountsSelector(
                           builder: (accounts) {
+                            final account = accounts.first;
                             return ReceiveTokenWidget(
-                              accountName: accounts.first.name!,
-                              address: accounts.first.address,
+                              accountName: account.name,
+                              address: account.address,
                               theme: appTheme,
                               onSwipeUp: () async {
                                 if (_receiveWidgetController.isCompleted) {
@@ -164,7 +166,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   _receiveWidgetController.reset();
                                 }
                               },
-                              onShareAddress: () {},
+                              onShareAddress: () {
+                                ShareNetWork.shareWalletAddress(
+                                  account.address,
+                                );
+                              },
                             );
                           },
                         ),

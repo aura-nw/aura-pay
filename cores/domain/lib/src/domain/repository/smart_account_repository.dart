@@ -8,7 +8,7 @@ abstract interface class SmartAccountRepository {
     Uint8List? salt,
   });
 
-  Future<String> activeSmartAccount({
+  Future<TransactionInformation> activeSmartAccount({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     Uint8List? salt,
@@ -17,7 +17,7 @@ abstract interface class SmartAccountRepository {
     int? gasLimit,
   });
 
-  Future<SendTransactionInformation> sendToken({
+  Future<TransactionInformation> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,
@@ -39,7 +39,7 @@ abstract interface class SmartAccountRepository {
     String? memo,
   });
 
-  Future<SendTransactionInformation> getTx({
+  Future<TransactionInformation> getTx({
     required String txHash,
   });
 }

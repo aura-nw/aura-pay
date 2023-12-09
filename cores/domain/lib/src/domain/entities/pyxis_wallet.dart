@@ -22,7 +22,7 @@ abstract class PyxisWallet {
     String? memo,
   });
 
-  Future<SendTransactionInformation> submitTransaction<P>({
+  Future<TransactionInformation> submitTransaction<P>({
     required P signedTransaction,
   });
 

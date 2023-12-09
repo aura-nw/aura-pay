@@ -29,8 +29,34 @@ class SendTransactionConfirmationBloc extends Bloc<
             estimationGas: estimationGas,
           ),
         ) {
+    on(_onInit);
     on(_onChangeFee);
     on(_onSendToken);
+
+    add(
+      const SendTransactionConfirmationEventOnInit(),
+    );
+  }
+
+  void _onInit(
+    SendTransactionConfirmationEventOnInit event,
+    Emitter<SendTransactionConfirmationState> emit,
+  ) {
+    final highFee = CosmosHelper.calculateFee(
+      state.estimationGas,
+      deNom: AuraSmartAccountCache.deNom,
+      gasPrice: GasPriceStep.high.value,
+    );
+    final lowFee = CosmosHelper.calculateFee(
+      state.estimationGas,
+      deNom: AuraSmartAccountCache.deNom,
+      gasPrice: GasPriceStep.low.value,
+    );
+
+    emit(state.copyWith(
+      highTransactionFee: highFee.amount[0].amount,
+      lowTransactionFee: lowFee.amount[0].amount,
+    ));
   }
 
   void _onChangeFee(
@@ -61,7 +87,7 @@ class SendTransactionConfirmationBloc extends Bloc<
         address: sender.address,
       ))!;
 
-      late SendTransactionInformation information;
+      late TransactionInformation information;
 
       if (state.sender.type == AuraAccountType.smartAccount) {
         // send token by smart account
@@ -95,13 +121,23 @@ class SendTransactionConfirmationBloc extends Bloc<
 
       information = await _checkTransactionInfo(information.txHash, 0);
 
-      emit(
-        state.copyWith(
-          status: SendTransactionConfirmationStatus.success,
-          sendTransactionInformation: information,
-        ),
-      );
+      if (information.status == 0) {
+        emit(
+          state.copyWith(
+            status: SendTransactionConfirmationStatus.success,
+            transactionInformation: information,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            errorMsg: information.rawLog,
+            status: SendTransactionConfirmationStatus.error,
+          ),
+        );
+      }
     } catch (e) {
+      print(e.toString());
       emit(
         state.copyWith(
           status: SendTransactionConfirmationStatus.error,
@@ -111,10 +147,12 @@ class SendTransactionConfirmationBloc extends Bloc<
     }
   }
 
-  Future<SendTransactionInformation> _checkTransactionInfo(
+  Future<TransactionInformation> _checkTransactionInfo(
       String txHash, int times) async {
     await Future.delayed(
-      const Duration(seconds: 1),
+      const Duration(
+        seconds: 1,
+      ),
     );
     try {
       return await _smartAccountUseCase.getTx(

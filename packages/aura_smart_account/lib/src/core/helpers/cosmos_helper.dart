@@ -15,12 +15,13 @@ sealed class CosmosHelper {
   static tx.Fee calculateFee(
     int gasEstimation, {
     required String deNom,
+    double ?gasPrice,
   }) {
     //set default for multi gas
     const double multiGas = 1.6;
 
     // Set default gas price is average gas price
-    final double gasPrice = GasPriceStep.average.value;
+    gasPrice??= GasPriceStep.average.value;
 
     // Create gas price from gasPrice and denom
     String gasPriceString = '$gasPrice$deNom';

@@ -8,7 +8,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
   const SmartAccountRepositoryImpl(this._provider);
 
   @override
-  Future<String> activeSmartAccount({
+  Future<TransactionInformation> activeSmartAccount({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     Uint8List? salt,
@@ -38,7 +38,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
   }
 
   @override
-  Future<SendTransactionInformation> sendToken({
+  Future<TransactionInformation> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,
@@ -86,7 +86,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
   }
 
   @override
-  Future<SendTransactionInformation> getTx({required String txHash}) async {
+  Future<TransactionInformation> getTx({required String txHash}) async {
     final response = await _provider.getTx(
       txHash: txHash,
     );

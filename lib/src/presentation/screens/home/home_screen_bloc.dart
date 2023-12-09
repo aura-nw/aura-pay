@@ -7,13 +7,49 @@ import 'home_screen_state.dart';
 
 class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   final AuraAccountUseCase _accountUseCase;
+  final ControllerKeyUseCase _controllerKeyUseCase;
 
-  HomeScreenBloc(this._accountUseCase)
-      : super(
+  HomeScreenBloc(
+    this._accountUseCase,
+    this._controllerKeyUseCase,
+  ) : super(
           const HomeScreenState(),
         ) {
     on(_init);
     on(_reFetchAccounts);
+    on(_onRenameAccount);
+    on(_onRemoveAccount);
+  }
+
+  void _onRenameAccount(
+    HomeScreenEventOnRenameAccount event,
+    Emitter<HomeScreenState> emit,
+  ) async {
+    await _accountUseCase.updateAccount(
+      name: event.name,
+      id: event.id,
+    );
+
+    add(
+      const HomeScreenEventOnReFetchAccount(),
+    );
+  }
+
+  void _onRemoveAccount(
+    HomeScreenEventOnRemoveAccount event,
+    Emitter<HomeScreenState> emit,
+  ) async {
+    await _accountUseCase.deleteAccount(
+      event.id,
+    );
+
+    await _controllerKeyUseCase.deleteKey(
+      address: event.address,
+    );
+
+    add(
+      const HomeScreenEventOnReFetchAccount(),
+    );
   }
 
   void _init(

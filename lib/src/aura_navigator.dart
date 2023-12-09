@@ -15,6 +15,7 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_bo
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/send_transaction_result/send_transaction_result_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_screen.dart';
@@ -47,6 +48,8 @@ sealed class RoutePath {
   static const String sendTransaction = '$home/send_transaction';
   static const String sendTransactionConfirmation =
       '$home/send_transaction_confirmation';
+  static const String sendTransactionSuccessFul =
+      '$home/send_transaction_successful';
   static const String _signedInCreateNewAccount =
       '$home/signed_in_create_new_account';
   static const String signedInCreateNewAccountPickName =
@@ -172,6 +175,26 @@ sealed class AppNavigator {
             sender: sender,
             transactionFee: transactionFee,
             gasEstimation: gasEstimation,
+          ),
+          settings,
+        );
+      case RoutePath.sendTransactionSuccessFul:
+        final Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+
+        final String amount = arguments['amount'] as String;
+        final String recipient = arguments['recipient'] as String;
+        final String sender = arguments['sender'] as String;
+        final String hash = arguments['hash'] as String;
+        final String time = arguments['time'] as String;
+
+        return _defaultRoute(
+          SendTransactionResultScreen(
+            amount: amount,
+            recipient: recipient,
+            sender: sender,
+            txHash: hash,
+            timeCreated: time,
           ),
           settings,
         );

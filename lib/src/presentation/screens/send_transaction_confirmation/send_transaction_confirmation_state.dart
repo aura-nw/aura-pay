@@ -20,7 +20,9 @@ class SendTransactionConfirmationState with _$SendTransactionConfirmationState {
     required String recipient,
     required String amount,
     required String transactionFee,
+    @Default('') String highTransactionFee,
+    @Default('') String lowTransactionFee,
     required int estimationGas,
-    SendTransactionInformation? sendTransactionInformation,
+    TransactionInformation? transactionInformation,
   }) = _SendTransactionConfirmationState;
 }

@@ -38,16 +38,17 @@ class PyxisWalletImpl extends PyxisWalletDto {
   }
 
   @override
-  Future<SendTransactionInformation> submitTransaction<P>(
+  Future<TransactionInformation> submitTransaction<P>(
       {required P signedTransaction}) async {
     final response = await _auraWallet.submitTransaction(
       signedTransaction: signedTransaction as dynamic,
     );
 
-    return SendTransactionInformationDto(
+    return TransactionInformationDto(
       txHash: response.txhash,
       timestamp: response.timestamp,
       status: response.code,
+      rawLog: response.rawLog,
     ).toEntity;
   }
 }

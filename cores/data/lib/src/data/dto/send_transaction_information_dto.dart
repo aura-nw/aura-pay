@@ -1,21 +1,24 @@
 import 'package:domain/domain.dart';
 
-extension SendTransactionInformationDtoMapper on SendTransactionInformationDto {
-  SendTransactionInformation get toEntity => SendTransactionInformation(
+extension TransactionInformationDtoMapper on TransactionInformationDto {
+  TransactionInformation get toEntity => TransactionInformation(
         txHash: txHash,
         timestamp: timestamp,
         status: status,
+        rawLog: rawLog,
       );
 }
 
-class SendTransactionInformationDto {
+class TransactionInformationDto {
   final String timestamp;
+  final String rawLog;
   final String txHash;
   final int status;
 
-  const SendTransactionInformationDto({
+  const TransactionInformationDto({
     required this.txHash,
     required this.timestamp,
     required this.status,
+    required this.rawLog,
   });
 }

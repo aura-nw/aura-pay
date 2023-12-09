@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:data/data.dart';
+import 'package:domain/domain.dart';
 
 class SmartAccountProviderImpl implements SmartAccountProvider {
   final AuraSmartAccount _auraSmartAccount;
@@ -11,7 +12,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
   );
 
   @override
-  Future<String> activeSmartAccount({
+  Future<TransactionInformation> activeSmartAccount({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     Uint8List? salt,
@@ -36,7 +37,12 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       fee: smartAccountFee,
     );
 
-    return response.address;
+    return TransactionInformationDto(
+      txHash: response.txhash,
+      timestamp: response.timestamp,
+      status: response.code,
+      rawLog: response.rawLog,
+    ).toEntity;
   }
 
   @override
@@ -60,7 +66,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
   }
 
   @override
-  Future<SendTransactionInformationDto> sendToken({
+  Future<TransactionInformationDto> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,
@@ -86,10 +92,11 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       fee: smartAccountFee,
     );
 
-    return SendTransactionInformationDto(
+    return TransactionInformationDto(
       txHash: response.txhash,
       timestamp: response.timestamp,
       status: response.code,
+      rawLog: response.rawLog,
     );
   }
 
@@ -111,15 +118,16 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
   }
 
   @override
-  Future<SendTransactionInformationDto> getTx({required String txHash}) async {
+  Future<TransactionInformationDto> getTx({required String txHash}) async {
     final response = await _auraSmartAccount.getTx(
       txHash: txHash,
     );
 
-    return SendTransactionInformationDto(
+    return TransactionInformationDto(
       txHash: response.txhash,
       timestamp: response.timestamp,
       status: response.code,
+      rawLog: response.rawLog,
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:data/src/data/dto/dto.dart';
+import 'package:domain/domain.dart';
 
 abstract interface class SmartAccountProvider {
   Future<String> generateSmartAccount({
@@ -8,7 +9,7 @@ abstract interface class SmartAccountProvider {
     Uint8List? salt,
   });
 
-  Future<String> activeSmartAccount({
+  Future<TransactionInformation> activeSmartAccount({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     Uint8List? salt,
@@ -29,7 +30,7 @@ abstract interface class SmartAccountProvider {
     required String address,
   });
 
-  Future<SendTransactionInformationDto> sendToken({
+  Future<TransactionInformationDto> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,
@@ -39,7 +40,7 @@ abstract interface class SmartAccountProvider {
     String? memo,
   });
 
-  Future<SendTransactionInformationDto> getTx({
+  Future<TransactionInformationDto> getTx({
     required String txHash,
   });
 }

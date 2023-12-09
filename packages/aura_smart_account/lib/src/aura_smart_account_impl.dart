@@ -101,7 +101,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
   }
 
   @override
-  Future<MsgActivateAccountResponse> activeSmartAccount({
+  Future<TxResponse> activeSmartAccount({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     Uint8List? salt,
@@ -176,9 +176,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       final int statusCode = broadcastTxResponse.txResponse.code;
 
       if (statusCode == 0) {
-        return aura.MsgActivateAccountResponse(
-          address: smartAccountAddress,
-        );
+        return broadcastTxResponse.txResponse;
       }
       throw AuraSmartAccountError(
         code: SmartAccountErrorCode.errorBroadcast,

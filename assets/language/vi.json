@@ -107,7 +107,7 @@
   "on_boarding_re_login_screen_forget_password" : "Forget your passcode?",
   "on_boarding_re_login_screen_dialog_forget_password_title" : "Forget your passcode?",
   "on_boarding_re_login_screen_dialog_forget_password_content_region_one" : "You can delete Pyxis app and re-install. REMIND that all the current smart account/ wallet will be",
-  "on_boarding_re_login_screen_dialog_forget_password_content_region_one_two" : "removed from this app permanently.",
+  "on_boarding_re_login_screen_dialog_forget_password_content_region_two" : "removed from this app permanently.",
   "on_boarding_re_login_screen_wrong_count_down_title" : "Lock in ${time}",
 
   "home_screen_bottom_navigator_bar_home" : "Home",
@@ -224,5 +224,8 @@
   "signed_in_import_key_screen_button_title" : "Next",
   "signed_in_import_key_screen_invalid_private_key" : "Invalid private key",
   "signed_in_import_key_screen_invalid_passphrase" : "Invalid passphrase",
-  "signed_in_import_key_screen_dialog_loading_title" : "Loading accounts"
+  "signed_in_import_key_screen_dialog_loading_title" : "Loading accounts",
+
+  "scanner_widget_app_bar_title" : "Scan QR code",
+  "scanner_widget_upload_photo" : "Upload photo"
 }

@@ -17,7 +17,7 @@ class SmartAccountUseCase {
     );
   }
 
-  Future<String> activeSmartAccount({
+  Future<TransactionInformation> activeSmartAccount({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     Uint8List? salt,
@@ -35,7 +35,7 @@ class SmartAccountUseCase {
     );
   }
 
-  Future<SendTransactionInformation> sendToken({
+  Future<TransactionInformation> sendToken({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String receiverAddress,
@@ -79,7 +79,7 @@ class SmartAccountUseCase {
     );
   }
 
-  Future<SendTransactionInformation> getTx({
+  Future<TransactionInformation> getTx({
     required String txHash,
   }) async {
     return _repository.getTx(

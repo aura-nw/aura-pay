@@ -46,6 +46,7 @@ sealed class AssetIconPath{
   static const String commonInputError = '${_baseIconPath}ic_common_input_error.svg';
   static const String commonCheckSuccess = '${_baseIconPath}ic_common_check_success.svg';
   static const String commonSmartAccountAvatarDefault= '${_baseIconPath}ic_common_smart_account_avatar_default.svg';
+  static const String commonCloseBottomSheet = '${_baseIconPath}ic_common_close_bottom_sheet.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive = '${_baseIconPath}ic_home_bottom_navigator_bar_home_active.svg';

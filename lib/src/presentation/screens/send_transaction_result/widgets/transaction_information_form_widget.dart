@@ -6,6 +6,8 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/utils/app_date_format.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 
 class TransactionInformationFormWidget extends StatelessWidget {
   final AppTheme appTheme;
@@ -41,18 +43,20 @@ class TransactionInformationFormWidget extends StatelessWidget {
         children: [
           _buildLineTransaction(
             LanguageKey.sendTransactionResultScreenFrom,
-            sender,
+            sender.addressView,
           ),
           _buildLineTransaction(
             LanguageKey.sendTransactionResultScreenRecipient,
-            recipient,
+            recipient.addressView,
           ),
           _buildLineTransaction(
             LanguageKey.sendTransactionResultScreenTimeCreated,
-            time,
+            AppDateTime.formatDateHHMMDMMMYYY(
+              time,
+            ),
           ),
           _buildTxHash(
-            txHash,
+            txHash.addressView,
           ),
         ],
       ),

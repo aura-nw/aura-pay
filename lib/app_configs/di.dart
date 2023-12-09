@@ -241,6 +241,7 @@ Future<void> initDependency(
   getIt.registerFactory(
     () => HomeScreenBloc(
       getIt.get<AuraAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
     ),
   );
 

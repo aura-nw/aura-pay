@@ -13,9 +13,7 @@ export 'package:aura_smart_account/src/core/definitions/aura_smart_account_envir
 export 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
     show
         QueryGenerateAccountResponse,
-        QueryParamsResponse,
-        MsgActivateAccountResponse,
-        MsgRecoverResponse;
+        QueryParamsResponse;
 export 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dart'
     show TxResponse;
 export 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
@@ -57,9 +55,9 @@ abstract interface class AuraSmartAccount {
   /// [salt] as Uint8List?,
   /// [memo] as String?,
   /// [fee] as [AuraSmartAccountFee]?,
-  /// Response a [MsgActivateAccountResponse]
+  /// Response a [TxResponse]
   /// It can throw [AuraSmartAccountError]
-  Future<MsgActivateAccountResponse> activeSmartAccount({
+  Future<TxResponse> activeSmartAccount({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     Uint8List? salt,

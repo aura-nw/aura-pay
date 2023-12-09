@@ -24,18 +24,28 @@ class AppDateFormatter {
   static final DateFormat monthShortWithYear = DateFormat('MMM yyyy');
 }
 
-class AppDateTime {
-  static DateTime parseDateTime(String date) {
-    if (date.lastIndexOf('Z') != -1) {
-      return DateTime.parse(date).toLocal();
+sealed class AppDateTime {
+
+  static String formatDateHHMMDMMMYYY(String dateTimeString) {
+    late DateTime dateTime;
+    if (dateTimeString.lastIndexOf('Z') != -1) {
+      dateTime = DateTime.parse(dateTimeString).toLocal();
+    }else{
+      dateTime = DateTime.parse(dateTimeString);
     }
-    return DateTime.parse(date);
+
+    // Format the DateTime to "hh:mm, d MMM yyyy"
+    String timeFormat = "${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}";
+    String dateFormat = "${dateTime.day}th ${_getMonthEnName(dateTime.month)} ${dateTime.year}";
+
+    return "$timeFormat, $dateFormat";
   }
 
-  static String formatDateToString(
-    DateTime date, {
-    required DateFormat format,
-  }) {
-    return format.format(date);
+  static String _getMonthEnName(int month) {
+    // Convert month number to month name
+    const monthNames = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    return monthNames[month - 1];
   }
 }

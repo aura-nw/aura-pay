@@ -10,12 +10,14 @@ import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input
 
 class RenameAccountFormWidget extends StatefulWidget {
   final String address;
+  final String accountNameDefault;
   final void Function(String) onConfirm;
   final AppTheme appTheme;
 
   const RenameAccountFormWidget({
     required this.appTheme,
     required this.address,
+    required this.accountNameDefault,
     required this.onConfirm,
     super.key,
   });
@@ -27,6 +29,12 @@ class RenameAccountFormWidget extends StatefulWidget {
 
 class _RenameAccountFormWidgetState extends State<RenameAccountFormWidget> {
   final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    _controller.text = widget.accountNameDefault;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

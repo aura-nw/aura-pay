@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage>
                   builder: (accounts) {
                     return AccountCardWidget(
                       address: accounts.first.address,
-                      accountName: accounts.first.name!,
+                      accountName: accounts.first.name,
                       appTheme: appTheme,
                       onShowMoreAccount: () {},
                       onCopy: _copyAddress,

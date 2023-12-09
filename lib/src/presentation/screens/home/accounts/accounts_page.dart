@@ -5,9 +5,12 @@ import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/aura_scan.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/helpers/app_launcher.dart';
+import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/account_manager_action_form.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/remove_account_form_widget.dart';
@@ -127,7 +130,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                                 localization.translateWithParam(
                                   LanguageKey.accountsPageAllAccounts,
                                   {
-                                    'total': accounts.length + 1,
+                                    'total': accounts.length,
                                   },
                                 ),
                                 style: AppTypoGraPhy.bodyMedium03.copyWith(
@@ -194,7 +197,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
 
           _showRemoveDialog(
             appTheme,
-            account.address,
+            account,
           );
         },
         onRenameAddress: () async {
@@ -202,25 +205,43 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
 
           _showRenameDialog(
             appTheme,
+            account,
+          );
+        },
+        onShareAddress: () async {
+          await ShareNetWork.shareWalletAddress(
             account.address,
           );
         },
-        onShareAddress: () {},
-        onViewOnAuraScan: () {},
+        onViewOnAuraScan: () async {
+          await AppLauncher.launch(
+            AuraScan.account(
+              account.address,
+            ),
+          );
+        },
       ),
     );
   }
 
-  void _showRenameDialog(AppTheme appTheme, String address) {
+  void _showRenameDialog(AppTheme appTheme, AuraAccount account) {
     DialogProvider.showCustomDialog(
       context,
       appTheme: appTheme,
       canBack: true,
       widget: RenameAccountFormWidget(
         appTheme: appTheme,
-        address: address,
+        address: account.address,
+        accountNameDefault: account.name,
         onConfirm: (newName) {
           AppNavigator.pop();
+
+          _homeScreenBloc.add(
+            HomeScreenEventOnRenameAccount(
+              account.id,
+              newName,
+            ),
+          );
 
           showSuccessToast(
             AppLocalizationManager.of(context).translate(
@@ -232,14 +253,22 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
     );
   }
 
-  void _showRemoveDialog(AppTheme appTheme, String address) {
+  void _showRemoveDialog(AppTheme appTheme, AuraAccount account) {
     DialogProvider.showCustomDialog(
       context,
       appTheme: appTheme,
       canBack: true,
       widget: RemoveAccountFormWidget(
         appTheme: appTheme,
-        address: address,
+        address: account.address,
+        onRemove: () {
+          _homeScreenBloc.add(
+            HomeScreenEventOnRemoveAccount(
+              account.id,
+              account.address,
+            ),
+          );
+        },
       ),
     );
   }

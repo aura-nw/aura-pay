@@ -15,6 +15,8 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/widgets/change_fee_form_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_layout.dart';
 import 'send_transaction_confirmation_selector.dart';
 import 'send_transaction_confirmation_event.dart';
 import 'send_transaction_confirmation_state.dart';
@@ -83,8 +85,18 @@ class _SendTransactionConfirmationScreenState
                   AppNavigator.pop();
                   break;
                 case SendTransactionConfirmationStatus.success:
-                  print('time ${state.sendTransactionInformation!.timestamp}');
                   AppNavigator.pop();
+
+                  AppNavigator.push(
+                    RoutePath.sendTransactionSuccessFul,
+                    {
+                      'sender': state.sender.address,
+                      'amount': state.amount,
+                      'recipient': state.recipient,
+                      'hash': state.transactionInformation?.txHash ?? '',
+                      'time': state.transactionInformation?.timestamp ?? '',
+                    },
+                  );
                   break;
               }
             },
@@ -222,18 +234,16 @@ class _SendTransactionConfirmationScreenState
             children: [
               AppLocalizationProvider(
                 builder: (localization, _) {
-                  return SendTransactionConfirmationFeeSelector(
-                    builder: (fee) {
-                      return Text(
-                        '${fee.toAura} ${localization.translate(
-                          LanguageKey.globalPyxisAura,
-                        )}',
-                        style: AppTypoGraPhy.body03.copyWith(
-                          color: appTheme.contentColorBlack,
-                        ),
-                      );
-                    }
-                  );
+                  return SendTransactionConfirmationFeeSelector(builder: (fee) {
+                    return Text(
+                      '${fee.toAura} ${localization.translate(
+                        LanguageKey.globalPyxisAura,
+                      )}',
+                      style: AppTypoGraPhy.body03.copyWith(
+                        color: appTheme.contentColorBlack,
+                      ),
+                    );
+                  });
                 },
               ),
               const SizedBox(
@@ -241,6 +251,7 @@ class _SendTransactionConfirmationScreenState
               ),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
+                onTap: _onEditFee,
                 child: SvgPicture.asset(
                   AssetIconPath.sendConfirmationEdit,
                 ),
@@ -407,5 +418,30 @@ class _SendTransactionConfirmationScreenState
       ),
       appTheme: appTheme,
     );
+  }
+
+  void _onEditFee() async {
+    final fee = await AppBottomSheetLayout.showFullScreenDialog(
+      context,
+      child: ChangeFeeFormWidget(
+        max: double.parse(
+          _bloc.state.highTransactionFee,
+        ),
+        min: double.parse(
+          _bloc.state.lowTransactionFee,
+        ),
+        currentValue: double.parse(
+          _bloc.state.transactionFee,
+        ),
+      ),
+    );
+
+    if (fee is double) {
+      _bloc.add(
+        SendTransactionConfirmationEventOnChangeFee(
+          fee: fee.round().toString(),
+        ),
+      );
+    }
   }
 }

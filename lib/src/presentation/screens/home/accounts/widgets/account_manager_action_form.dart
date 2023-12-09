@@ -81,7 +81,7 @@ class AccountManagerActionForm extends StatelessWidget {
                   onTap: onShareAddress,
                 ),
                 const SizedBox(
-                  height: BoxSize.boxSize08,
+                  height: BoxSize.boxSize07,
                 ),
                 _buildOptions(
                   AssetIconPath.accountsRename,

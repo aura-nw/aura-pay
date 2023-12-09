@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,6 +15,8 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/widgets/forgot_passcode_form_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_layout.dart';
 import 'on_boarding_re_login_bloc.dart';
 import 'on_boarding_re_login_event.dart';
 import 'on_boarding_re_login_selector.dart';
@@ -208,13 +211,20 @@ class _OnBoardingReLoginScreenState extends State<OnBoardingReLoginScreen> {
                       builder: (localization, _) {
                         return RichText(
                           text: TextSpan(
-                              text: localization.translate(
-                                LanguageKey
-                                    .onBoardingReLoginScreenForgetPassword,
-                              ),
-                              style: AppTypoGraPhy.body02.copyWith(
-                                color: appTheme.contentColorBrand,
-                              )),
+                            text: localization.translate(
+                              LanguageKey.onBoardingReLoginScreenForgetPassword,
+                            ),
+                            style: AppTypoGraPhy.body02.copyWith(
+                              color: appTheme.contentColorBrand,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                AppBottomSheetLayout.showFullScreenDialog(
+                                  context,
+                                  child: const ForgotPasscodeFormWidget(),
+                                );
+                              },
+                          ),
                         );
                       },
                     ),

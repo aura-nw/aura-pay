@@ -14,11 +14,9 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
+import 'widgets/import_wallet_type_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
-import 'package:pyxis_mobile/src/presentation/widgets/choice_select_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_base.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_manager.dart';
@@ -27,7 +25,7 @@ import 'signed_in_import_key_bloc.dart';
 import 'signed_in_import_key_selector.dart';
 import 'signed_in_import_key_state.dart';
 import 'singed_in_import_key_event.dart';
-import 'widgets/acocunt_type_widget.dart';
+import 'widgets/account_type_widget.dart';
 
 class SignedInImportKeyScreen extends StatefulWidget {
   const SignedInImportKeyScreen({
@@ -45,13 +43,19 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
 
   bool _passWordIsHide = true;
 
-  final Map<ImportWalletType, String> _options = {
-    ImportWalletType.privateKey: AppLocalizationManager.instance.translate(
-      LanguageKey.signedInImportKeyScreenSelectTypePrivate,
-    ),
-    ImportWalletType.passPhrase: AppLocalizationManager.instance.translate(
-      LanguageKey.signedInImportKeyScreenSelectTypePassPhrase,
-    ),
+  final Map<ImportWalletType, List<String>> _options = {
+    ImportWalletType.privateKey: [
+      AppLocalizationManager.instance.translate(
+        LanguageKey.signedInImportKeyScreenSelectTypePrivate,
+      ),
+      'E.g: 54c446f7d...31f28d6'
+    ],
+    ImportWalletType.passPhrase: [
+      AppLocalizationManager.instance.translate(
+        LanguageKey.signedInImportKeyScreenSelectTypePassPhrase,
+      ),
+      'E.g: Hour keyboard mother bottle ...'
+    ],
   };
 
   final GlobalKey<TextInputNormalIconState> _inputPrivateGlobalKey =
@@ -82,10 +86,6 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                     case PyxisWalletType.normalWallet:
                       break;
                   }
-
-                  HomeScreenBloc.of(context).add(
-                    const HomeScreenEventOnReFetchAccount(),
-                  );
 
                   AppNavigator.popUntil(
                     RoutePath.home,
@@ -191,59 +191,8 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                             builder: (localization, _) {
                               return SignedInImportKeyImportTypeSelector(
                                 builder: (importType) {
-                                  return ChoiceSelectWidget<
-                                      MapEntry<ImportWalletType, String>>(
+                                  return ImportWalletTypeSelectWidget(
                                     data: _options.entries.toList(),
-                                    isSelected: (selectedData, compareItem) {
-                                      return selectedData
-                                          .map((e) => e.key)
-                                          .toList()
-                                          .contains(compareItem.key);
-                                    },
-                                    builder: (selectedOptions) {
-                                      if (selectedOptions.isEmpty) {
-                                        return const SizedBox();
-                                      }
-                                      return Text(
-                                        selectedOptions[0].value,
-                                        style: AppTypoGraPhy.body03.copyWith(
-                                            color: appTheme.contentColorUnKnow),
-                                      );
-                                    },
-                                    optionBuilder: (option) {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            option.value,
-                                            style: AppTypoGraPhy
-                                                .utilityLabelDefault
-                                                .copyWith(
-                                              color: appTheme.contentColorBlack,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: BoxSize.boxSize03,
-                                          ),
-                                          Text(
-                                            option.value,
-                                            style:
-                                                AppTypoGraPhy.body02.copyWith(
-                                              color: appTheme.contentColor500,
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                    modalTitle: localization.translate(
-                                      LanguageKey
-                                          .signedInImportKeyScreenSelectType,
-                                    ),
-                                    label: localization.translate(
-                                      LanguageKey
-                                          .signedInImportKeyScreenSelectType,
-                                    ),
                                     selectedData: _options.entries
                                         .where((e) => e.key == importType)
                                         .toList(),

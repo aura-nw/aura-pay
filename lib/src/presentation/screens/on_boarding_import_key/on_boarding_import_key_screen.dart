@@ -16,14 +16,14 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'widgets/import_wallet_type_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
-import 'package:pyxis_mobile/src/presentation/widgets/choice_select_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_base.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_manager.dart';
 
-import 'widgets/acocunt_type_widget.dart';
+import 'widgets/account_type_widget.dart';
 
 import 'on_boarding_import_key_event.dart';
 import 'on_boarding_import_key_bloc.dart';
@@ -44,13 +44,19 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
 
   bool _passWordIsHide = true;
 
-  final Map<ImportWalletType, String> _options = {
-    ImportWalletType.privateKey: AppLocalizationManager.instance.translate(
-      LanguageKey.onBoardingImportKeyScreenSelectTypePrivate,
-    ),
-    ImportWalletType.passPhrase: AppLocalizationManager.instance.translate(
-      LanguageKey.onBoardingImportKeyScreenSelectTypePassPhrase,
-    ),
+  final Map<ImportWalletType, List<String>> _options = {
+    ImportWalletType.privateKey: [
+      AppLocalizationManager.instance.translate(
+        LanguageKey.onBoardingImportKeyScreenSelectTypePrivate,
+      ),
+      'E.g: 54c446f7d...31f28d6'
+    ],
+    ImportWalletType.passPhrase: [
+      AppLocalizationManager.instance.translate(
+        LanguageKey.onBoardingImportKeyScreenSelectTypePassPhrase,
+      ),
+      'E.g: Hour keyboard mother bottle ...'
+    ],
   };
 
   final GlobalKey<TextInputNormalIconState> _inputPrivateGlobalKey =
@@ -191,59 +197,8 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                             builder: (localization, _) {
                               return OnBoardingImportKeyImportTypeSelector(
                                 builder: (importType) {
-                                  return ChoiceSelectWidget<
-                                      MapEntry<ImportWalletType, String>>(
+                                  return ImportWalletTypeSelectWidget(
                                     data: _options.entries.toList(),
-                                    isSelected: (selectedData, compareItem) {
-                                      return selectedData
-                                          .map((e) => e.key)
-                                          .toList()
-                                          .contains(compareItem.key);
-                                    },
-                                    builder: (selectedOptions) {
-                                      if (selectedOptions.isEmpty) {
-                                        return const SizedBox();
-                                      }
-                                      return Text(
-                                        selectedOptions[0].value,
-                                        style: AppTypoGraPhy.body03.copyWith(
-                                            color: appTheme.contentColorUnKnow),
-                                      );
-                                    },
-                                    optionBuilder: (option) {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            option.value,
-                                            style: AppTypoGraPhy
-                                                .utilityLabelDefault
-                                                .copyWith(
-                                              color: appTheme.contentColorBlack,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: BoxSize.boxSize03,
-                                          ),
-                                          Text(
-                                            option.value,
-                                            style:
-                                                AppTypoGraPhy.body02.copyWith(
-                                              color: appTheme.contentColor500,
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                    modalTitle: localization.translate(
-                                      LanguageKey
-                                          .onBoardingImportKeyScreenSelectType,
-                                    ),
-                                    label: localization.translate(
-                                      LanguageKey
-                                          .onBoardingImportKeyScreenSelectType,
-                                    ),
                                     selectedData: _options.entries
                                         .where((e) => e.key == importType)
                                         .toList(),

@@ -36,7 +36,7 @@ final class SendTransactionBloc
     );
     try {
       // Get first account
-      final AuraAccount  ? account = await _auraAccountUseCase.getFirstAccount();
+      final AuraAccount? account = await _auraAccountUseCase.getFirstAccount();
 
       final String balance = await _smartAccountUseCase.getToken(
         address: account?.address ?? '',
@@ -144,7 +144,7 @@ final class SendTransactionBloc
 
       double total = double.parse(state.balance);
 
-      if(am > total || am == 0){
+      if (am > total || am == 0) {
         return false;
       }
 

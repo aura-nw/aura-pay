@@ -13,10 +13,12 @@ import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 class RemoveAccountFormWidget extends StatelessWidget {
   final AppTheme appTheme;
   final String address;
+  final VoidCallback onRemove;
 
   const RemoveAccountFormWidget({
     required this.appTheme,
     required this.address,
+    required this.onRemove,
     super.key,
   });
 
@@ -121,6 +123,8 @@ class RemoveAccountFormWidget extends StatelessWidget {
                       ),
                       onPress: () {
                         AppNavigator.pop();
+
+                        onRemove();
                       },
                       backGroundColor: appTheme.surfaceColorDangerDark,
                     );

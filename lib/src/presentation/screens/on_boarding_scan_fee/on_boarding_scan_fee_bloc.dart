@@ -77,31 +77,45 @@ class OnBoardingScanFeeBloc
         ),
       );
 
-      await _smartAccountUseCase.activeSmartAccount(
+      TransactionInformation transactionInformation =
+          await _smartAccountUseCase.activeSmartAccount(
         userPrivateKey: state.privateKey,
         smartAccountAddress: state.smartAccountAddress,
         salt: state.salt,
         memo: 'Active smart account',
       );
 
-      await _accountUseCase.saveAccount(
-        address: state.smartAccountAddress,
-        accountName: state.accountName,
-        type: AuraAccountType.smartAccount,
+      transactionInformation = await _smartAccountUseCase.getTx(
+        txHash: transactionInformation.txHash,
       );
 
-      await _controllerKeyUseCase.saveKey(
-        address: state.smartAccountAddress,
-        key: AuraWalletHelper.getPrivateKeyFromBytes(
-          state.privateKey,
-        ),
-      );
+      if (transactionInformation.status == 0) {
+        await _accountUseCase.saveAccount(
+          address: state.smartAccountAddress,
+          accountName: state.accountName,
+          type: AuraAccountType.smartAccount,
+        );
 
-      emit(
-        state.copyWith(
-          status: OnBoardingScanFeeStatus.onActiveAccountSuccess,
-        ),
-      );
+        await _controllerKeyUseCase.saveKey(
+          address: state.smartAccountAddress,
+          key: AuraWalletHelper.getPrivateKeyFromBytes(
+            state.privateKey,
+          ),
+        );
+
+        emit(
+          state.copyWith(
+            status: OnBoardingScanFeeStatus.onActiveAccountSuccess,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            status: OnBoardingScanFeeStatus.onActiveAccountError,
+            errorMessage: transactionInformation.rawLog,
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(
@@ -109,6 +123,25 @@ class OnBoardingScanFeeBloc
           errorMessage: e.toString(),
         ),
       );
+    }
+  }
+
+  Future<TransactionInformation> _checkTransactionInfo(
+      String txHash, int times) async {
+    await Future.delayed(
+      const Duration(
+        seconds: 1,
+      ),
+    );
+    try {
+      return await _smartAccountUseCase.getTx(
+        txHash: txHash,
+      );
+    } catch (e) {
+      if (times == 4) {
+        rethrow;
+      }
+      return _checkTransactionInfo(txHash, times + 1);
     }
   }
 }

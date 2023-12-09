@@ -59,7 +59,9 @@ class _ChoiceModalWidgetState<T> extends State<ChoiceModalWidget<T>> {
                 child: Text(
                   widget.title,
                   textAlign: TextAlign.center,
-                  style: AppTypoGraPhy.heading02.copyWith(),
+                  style: AppTypoGraPhy.heading02.copyWith(
+                    color: widget.appTheme.contentColorBlack,
+                  ),
                 ),
               ),
               const SizedBox(

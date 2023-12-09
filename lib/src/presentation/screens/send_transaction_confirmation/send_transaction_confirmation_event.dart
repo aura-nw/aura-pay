@@ -8,6 +8,8 @@ class SendTransactionConfirmationEvent with _$SendTransactionConfirmationEvent {
     required String fee,
   }) = SendTransactionConfirmationEventOnChangeFee;
 
+  const factory SendTransactionConfirmationEvent.onInit() = SendTransactionConfirmationEventOnInit;
+
   const factory SendTransactionConfirmationEvent.onSendToken() =
       SendTransactionConfirmationEventOnSendToken;
 }

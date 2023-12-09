@@ -8,9 +8,11 @@ import 'package:pyxis_mobile/src/application/global/localization/app_localizatio
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/aura_scan.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/helpers/app_launcher.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'widgets/transaction_information_form_widget.dart';
@@ -46,13 +48,16 @@ class _SendTransactionResultScreenState
         return Scaffold(
           body: Padding(
             padding: EdgeInsets.only(
-              top: context.statusBar + kToolbarHeight,
+              top: context.statusBar,
               right: Spacing.spacing07,
               left: Spacing.spacing07,
               bottom: Spacing.spacing05,
             ),
             child: Column(
               children: [
+                const SizedBox(
+                  height: BoxSize.boxSize08,
+                ),
                 Expanded(
                   child: ListView(
                     padding: EdgeInsets.zero,
@@ -61,7 +66,7 @@ class _SendTransactionResultScreenState
                         AssetIconPath.sendSuccessfulLogo,
                       ),
                       const SizedBox(
-                        height: BoxSize.boxSize10,
+                        height: BoxSize.boxSize08,
                       ),
                       AppLocalizationProvider(
                         builder: (localization, _) {
@@ -69,6 +74,7 @@ class _SendTransactionResultScreenState
                             localization.translate(
                               LanguageKey.sendTransactionResultScreenSuccessFul,
                             ),
+                            textAlign: TextAlign.center,
                             style: AppTypoGraPhy.heading03.copyWith(
                               color: appTheme.contentColor700,
                             ),
@@ -76,7 +82,7 @@ class _SendTransactionResultScreenState
                         },
                       ),
                       const SizedBox(
-                        height: BoxSize.boxSize05,
+                        height: BoxSize.boxSize03,
                       ),
                       AppLocalizationProvider(
                         builder: (localization, _) {
@@ -84,6 +90,7 @@ class _SendTransactionResultScreenState
                             '${widget.amount} ${localization.translate(
                               LanguageKey.globalPyxisAura,
                             )}',
+                            textAlign: TextAlign.center,
                             style: AppTypoGraPhy.heading04.copyWith(
                               color: appTheme.contentColorBrand,
                             ),
@@ -109,7 +116,13 @@ class _SendTransactionResultScreenState
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    AppLauncher.launch(
+                      AuraScan.transaction(
+                        widget.txHash,
+                      ),
+                    );
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: AppLocalizationProvider(
                     builder: (localization, _) {
