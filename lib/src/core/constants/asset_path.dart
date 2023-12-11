@@ -88,6 +88,17 @@ sealed class AssetIconPath{
   static const String accountsCreateNewSmartAccount = '${_baseIconPath}ic_accounts_create_new_smart_account.svg';
   static const String accountsViewOnAuraScan = '${_baseIconPath}ic_account_view_on_aura_scan.svg';
 
+  /// History page
+  static const String historyArrowDown = '${_baseIconPath}ic_history_arrow_down.svg';
+  static const String historyCopyActive = '${_baseIconPath}ic_history_copy_active.svg';
+  static const String historyCopy = '${_baseIconPath}ic_history_copy.svg';
+  static const String historyMore = '${_baseIconPath}ic_history_more.svg';
+  static const String historyReceiveLogoCircle = '${_baseIconPath}ic_history_receive_logo_circle.svg';
+  static const String historyReceiveLogo = '${_baseIconPath}ic_history_receive_logo.svg';
+  static const String historySendLogoCircle = '${_baseIconPath}ic_history_send_logo_circle.svg';
+  static const String historySendLogo = '${_baseIconPath}ic_history_send_logo.svg';
+  static const String historyStakeLogo = '${_baseIconPath}ic_history_stake_logo.svg';
+
 
   ///signed in import account
   static const String signedInImportKeyInformation = '${_baseIconPath}ic_signed_in_import_account_information.svg';

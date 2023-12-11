@@ -43,4 +43,11 @@ abstract interface class SmartAccountProvider {
   Future<TransactionInformationDto> getTx({
     required String txHash,
   });
+
+  Future<List<PyxisTransactionDto>> getTransactionHistories({
+    required List<String> events,
+    required int limit,
+    required int offset,
+    required String orderBy,
+  });
 }

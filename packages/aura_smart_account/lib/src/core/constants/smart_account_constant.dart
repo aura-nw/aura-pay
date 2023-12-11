@@ -9,5 +9,7 @@ sealed class AuraSmartAccountConstant {
     ),
   );
 
-  static int defaultGasActiveSmartAccount = 400000;
+  static const int defaultGasActiveSmartAccount = 400000;
+  static const int defaultQueryOffset = 0;
+  static const int defaultQueryLimit = 100;
 }

@@ -130,4 +130,42 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       rawLog: response.rawLog,
     );
   }
+
+  @override
+  Future<List<PyxisTransactionDto>> getTransactionHistories({
+    required List<String> events,
+    required int limit,
+    required int offset,
+    required String orderBy,
+  }) async {
+    final response = await _auraSmartAccount.getHistoryTransaction(
+      events: events,
+      orderParameter: OrderParameter(
+        offset: offset,
+        limit: limit,
+        orderBy: orderBy.fromString,
+      ),
+    );
+
+    return response
+        .map(
+          (e) => PyxisTransactionDto(
+            status: e.status,
+            txHash: e.txHash,
+            timeStamp: e.timeStamp,
+            event: PyxisTransactionEventDto(
+              values: e.event.values
+                  .map(
+                    (ar) => PyxisTransactionAttributeDto(
+                      key: ar.key,
+                      value: ar.value,
+                    ),
+                  )
+                  .toList(),
+              type: e.event.type,
+            ),
+          ),
+        )
+        .toList();
+  }
 }

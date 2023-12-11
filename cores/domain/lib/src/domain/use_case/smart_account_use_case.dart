@@ -86,4 +86,18 @@ class SmartAccountUseCase {
       txHash: txHash,
     );
   }
+
+  Future<List<PyxisTransaction>> getTransactionHistories({
+    required int limit,
+    required int offset,
+    required List<String> events,
+    required String orderBy,
+  }) {
+    return _repository.getTransactionHistories(
+      events: events,
+      limit: limit,
+      offset: offset,
+      orderBy: orderBy,
+    );
+  }
 }

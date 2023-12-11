@@ -92,4 +92,25 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     );
     return response.toEntity;
   }
+
+  @override
+  Future<List<PyxisTransaction>> getTransactionHistories({
+    required List<String> events,
+    required int limit,
+    required int offset,
+    required String orderBy,
+  }) async {
+    final response = await _provider.getTransactionHistories(
+      events: events,
+      limit: limit,
+      offset: offset,
+      orderBy: orderBy,
+    );
+
+    return response
+        .map(
+          (e) => e.toEntity,
+        )
+        .toList();
+  }
 }

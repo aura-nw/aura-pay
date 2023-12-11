@@ -13,16 +13,12 @@ import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_state.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/widgets/tab_builder.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
-import 'accounts/accounts_page.dart';
-import 'history/history_page.dart';
 import 'home/widgets/receive_token_widget.dart';
 import 'home_screen_bloc.dart';
-import 'setting/setting_page.dart';
 import 'widgets/bottom_navigator_bar_widget.dart';
-
-import 'home/home_page.dart';
 
 enum HomeScreenSection {
   home,
@@ -75,23 +71,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildTab(HomeScreenSection section, Widget widget) {
-    final active = currentSection == section;
-
-    return Positioned.fill(
-      child: IgnorePointer(
-        ignoring: !active,
-        child: AnimatedOpacity(
-          opacity: active ? 1 : 0,
-          duration: const Duration(
-            milliseconds: 200,
-          ),
-          child: widget,
-        ),
-      ),
-    );
-  }
-
   void _onReceiveTap() {
     _receiveWidgetController.forward();
   }
@@ -116,27 +95,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   return Stack(
                     children: [
                       Scaffold(
-                        body: Stack(
-                          children: [
-                            _buildTab(
-                              HomeScreenSection.home,
-                              HomePage(
-                                onReceiveTap: _onReceiveTap,
-                              ),
-                            ),
-                            _buildTab(
-                              HomeScreenSection.accounts,
-                              const AccountsPage(),
-                            ),
-                            _buildTab(
-                              HomeScreenSection.history,
-                              const HistoryPage(),
-                            ),
-                            _buildTab(
-                              HomeScreenSection.setting,
-                              const SettingPage(),
-                            ),
-                          ],
+                        body: HomeScreenTabBuilder(
+                          currentSection: currentSection,
+                          onReceiveTap: _onReceiveTap,
                         ),
                         bottomNavigationBar: BottomNavigatorBarWidget(
                           currentIndex: HomeScreenSection.values.indexOf(
@@ -205,16 +166,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  void _showRequestCameraPermission(AppTheme appTheme) async{
+  void _showRequestCameraPermission(AppTheme appTheme) async {
+    PermissionStatus status =
+        await SystemPermissionHelper.getCurrentCameraPermissionStatus();
 
-    PermissionStatus status = await SystemPermissionHelper.getCurrentCameraPermissionStatus();
-
-    if(status.isGranted){
+    if (status.isGranted) {
       final result = await AppNavigator.push(
         RoutePath.scanner,
       );
-    }else{
-      if(context.mounted){
+    } else {
+      if (context.mounted) {
         DialogProvider.showPermissionDialog(
           context,
           appTheme: appTheme,

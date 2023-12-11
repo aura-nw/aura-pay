@@ -183,6 +183,25 @@ sealed class LanguageKey {
   static const String accountsPageRemoveAccountSuccess = 'accounts_page_remove_account_success';
   ///
 
+  ///region history page
+  static const String transactionHistoryPageAppBarTitle = 'transaction_history_page_app_bar_title';
+  static const String transactionHistoryPageAll = 'transaction_history_page_all';
+  static const String transactionHistoryPageSend = 'transaction_history_page_send';
+  static const String transactionHistoryPageReceive = 'transaction_history_page_receive';
+  static const String transactionHistoryPageStake = 'transaction_history_page_stake';
+  static const String transactionHistoryPageSelectAccount = 'transaction_history_page_select_account';
+  static const String transactionHistoryPageFrom = 'transaction_history_page_from';
+  static const String transactionHistoryPageTo = 'transaction_history_page_to';
+  static const String transactionHistoryPageTransactionHash = 'transaction_history_page_transaction_hash';
+  static const String transactionHistoryPageTransactionFee = 'transaction_history_page_transaction_fee';
+  static const String transactionHistoryPageTransactionTime = 'transaction_history_page_transaction_time';
+  static const String transactionHistoryPageTransactionStatus = 'transaction_history_page_transaction_status';
+  static const String transactionHistoryPageTransactionStatusSuccess = 'transaction_history_page_transaction_status_successful';
+  static const String transactionHistoryPageTransactionStatusFail = 'transaction_history_page_transaction_status_fail';
+  static const String transactionHistoryPageViewOnAuraScan = 'transaction_history_page_view_on_aura_scan';
+  static const String transactionHistoryPageNoTransactionFound = 'transaction_history_page_no_transaction_found';
+  ///
+
   ///region send transaction
   static const String sendTransactionScreenAppBarTitle = 'send_transaction_screen_app_bar_title';
   static const String sendTransactionScreenSendFrom = 'send_transaction_screen_send_from';

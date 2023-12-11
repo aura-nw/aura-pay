@@ -25,6 +25,17 @@ class AppDateFormatter {
 }
 
 sealed class AppDateTime {
+ static String formatDateTimeHHmmWithAMPM(String dateTimeString){
+   late DateTime dateTime;
+   if (dateTimeString.lastIndexOf('Z') != -1) {
+     dateTime = DateTime.parse(dateTimeString).toLocal();
+   }else{
+     dateTime = DateTime.parse(dateTimeString);
+   }
+
+   return '${AppDateFormatter.hourMinute.format(dateTime)} ${AppDateFormatter.amPm.format(dateTime)}';
+ }
+
 
   static String formatDateHHMMDMMMYYY(String dateTimeString) {
     late DateTime dateTime;

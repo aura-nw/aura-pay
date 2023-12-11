@@ -27,6 +27,8 @@ import 'core/helpers/wallet_helper.dart';
 
 import 'dart:developer' as dev;
 
+import 'proto/cosmos/base/query/v1beta1/export.dart';
+
 /// [AuraSmartAccountImpl] class is implementation of [AuraSmartAccount]
 class AuraSmartAccountImpl implements AuraSmartAccount {
   final AuraSmartAccountEnvironment environment;
@@ -462,9 +464,50 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       );
 
       return response.txResponse;
-
     } catch (e) {
       // Handle exception
+      throw _getError(e);
+    }
+  }
+
+  @override
+  Future<List<AuraSmartAccountTransaction>> getHistoryTransaction({
+    required List<String> events,
+    OrderParameter orderParameter = const OrderParameter(),
+  }) async {
+    try {
+      // Create request
+      final tx.GetTxsEventRequest request = tx.GetTxsEventRequest(
+        events: events,
+        pagination: PageRequest(
+          offset: $fixnum.Int64(orderParameter.offset),
+          limit: $fixnum.Int64(orderParameter.limit),
+        ),
+        orderBy: orderParameter.getOrderBy,
+      );
+
+      // Get response from request
+      final tx.GetTxsEventResponse response =
+          await serviceClient.getTxsEvent(request);
+
+      return response.txResponses.map((e) {
+        final event = e.events[0];
+        return AuraSmartAccountTransaction(
+          status: e.code,
+          txHash: e.txhash,
+          timeStamp: e.timestamp,
+          event: AuraSmartAccountEvent(
+            values: event.attributes.map((txAttribute) {
+              return AuraSmartAccountAttribute(
+                key: String.fromCharCodes(txAttribute.key),
+                value: String.fromCharCodes(txAttribute.value),
+              );
+            }).toList(),
+            type: event.type,
+          ),
+        );
+      }).toList();
+    } catch (e) {
       throw _getError(e);
     }
   }

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:domain/src/domain/entities/send_transaction_information.dart';
+import 'package:domain/src/domain/entities/entities.dart';
 
 abstract interface class SmartAccountRepository {
   Future<String> generateAddress({
@@ -41,5 +41,12 @@ abstract interface class SmartAccountRepository {
 
   Future<TransactionInformation> getTx({
     required String txHash,
+  });
+
+  Future<List<PyxisTransaction>> getTransactionHistories({
+    required List<String> events,
+    required int limit,
+    required int offset,
+    required String orderBy,
   });
 }

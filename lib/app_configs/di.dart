@@ -14,6 +14,7 @@ import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_stor
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
@@ -305,6 +306,13 @@ Future<void> initDependency(
       amount: transactionI['amount'],
       transactionFee: transactionI['fee'],
       estimationGas: transactionI['gas'],
+    ),
+  );
+
+  getIt.registerFactory<HistoryPageBloc>(
+    () => HistoryPageBloc(
+      getIt.get<SmartAccountUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
     ),
   );
 }
