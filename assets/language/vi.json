@@ -226,6 +226,13 @@
   "signed_in_import_key_screen_invalid_passphrase" : "Invalid passphrase",
   "signed_in_import_key_screen_dialog_loading_title" : "Loading accounts",
 
-  "scanner_widget_app_bar_title" : "Scan QR code",
-  "scanner_widget_upload_photo" : "Upload photo"
+  "scanner_screen_app_bar_title" : "Scan QR code",
+  "scanner_screen_upload_photo" : "Upload photo",
+
+  "common_permission_camera_title" : "Allow Camera Access",
+  "common_permission_camera_content" : "In order to scan a QR code, you must allow Pyxis to access the camera",
+  "common_permission_gallery_title" : "Allow File and Gallery access",
+  "common_permission_gallery_content" : "In order to scan a QR code, you must allow Pyxis to access the gallery",
+  "common_permission_accept" : "Ok",
+  "common_permission_reject" : "Cancel"
 }

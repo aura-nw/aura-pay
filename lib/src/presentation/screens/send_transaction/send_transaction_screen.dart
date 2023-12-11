@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
@@ -12,6 +13,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/helpers/system_permission_helper.dart';
 import 'package:pyxis_mobile/src/core/helpers/wallet_address_validator.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/widgets/text_input_recipient_widget.dart';
@@ -172,7 +174,11 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                                       controller: _recipientController,
                                       onClear: _onClearRecipient,
                                       onChanged: _onChangeRecipientData,
-                                      onQrTap: () {},
+                                      onQrTap: () async {
+                                        _showRequestCameraPermission(
+                                          appTheme,
+                                        );
+                                      },
                                       onPaste: _onGetClipBoardData,
                                       constraintManager: ConstraintManager()
                                         ..custom(
@@ -409,5 +415,40 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
       ),
       appTheme: appTheme,
     );
+  }
+
+
+  void _showRequestCameraPermission(AppTheme appTheme) async{
+
+    PermissionStatus status = await SystemPermissionHelper.getCurrentCameraPermissionStatus();
+
+    if(status.isGranted){
+      final result = await AppNavigator.push(
+        RoutePath.scanner,
+      );
+    }else{
+      if(context.mounted){
+        DialogProvider.showPermissionDialog(
+          context,
+          appTheme: appTheme,
+          onAccept: () {
+            AppNavigator.pop();
+            SystemPermissionHelper.requestCameraPermission(
+              onSuccessFul: () async {
+                final result = await AppNavigator.push(
+                  RoutePath.scanner,
+                );
+              },
+              reject: () {
+                SystemPermissionHelper.goToSettings();
+              },
+            );
+          },
+          headerIconPath: AssetIconPath.commonPermissionCamera,
+          titleKey: LanguageKey.commonPermissionCameraTitle,
+          contentKey: LanguageKey.commonPermissionCameraContent,
+        );
+      }
+    }
   }
 }

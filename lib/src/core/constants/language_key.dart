@@ -264,4 +264,18 @@ sealed class LanguageKey {
   static const String signedInImportKeyScreenInvalidPassPhrase = 'signed_in_import_key_screen_invalid_passphrase';
   static const String signedInImportKeyScreenDialogLoadingTitle = 'signed_in_import_key_screen_dialog_loading_title';
   ///endregion
+
+  ///region
+  static const String scannerScreenAppBarTitle = 'scanner_screen_app_bar_title';
+  static const String scannerScreenUploadPhoto = 'scanner_screen_upload_photo';
+  ///
+
+  /// permission
+  static const String commonPermissionCameraTitle = 'common_permission_camera_title';
+  static const String commonPermissionCameraContent = 'common_permission_camera_content';
+  static const String commonPermissionGalleryTitle = 'common_permission_gallery_title';
+  static const String commonPermissionGalleryContent = 'common_permission_gallery_content';
+  static const String commonPermissionAccept = 'common_permission_accept';
+  static const String commonPermissionReject = 'common_permission_reject';
+  ///
 }

@@ -13,6 +13,7 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_request_reviewing/on_boarding_recover_request_reviewing_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/scanner/scanner_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_result/send_transaction_result_screen.dart';
@@ -29,6 +30,7 @@ import 'presentation/screens/on_boarding_recover_select_account/on_boarding_reco
 sealed class RoutePath {
   static const String _base = '/';
   static const String splash = _base;
+  static const String scanner = '${_base}scanner';
   static const String _onBoarding = '${_base}onboarding';
   static const String reLogin = '$_onBoarding/re_login';
   static const String getStarted = '$_onBoarding/get_started';
@@ -223,6 +225,11 @@ sealed class AppNavigator {
       case RoutePath.signedInImportKey:
         return _defaultRoute(
           const SignedInImportKeyScreen(),
+          settings,
+        );
+      case RoutePath.scanner:
+        return _defaultRoute(
+          const ScannerScreen(),
           settings,
         );
       default:

@@ -27,6 +27,7 @@ dependencies:
   path_provider: ^2.1.1
   url_launcher: ^6.2.1
   mobile_scanner: ^3.5.5
+  image_picker: ^1.0.4
 
   #local db
   isar: ^3.1.0

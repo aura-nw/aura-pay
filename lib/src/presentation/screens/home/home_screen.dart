@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
+import 'package:pyxis_mobile/src/core/helpers/system_permission_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_state.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'accounts/accounts_page.dart';
 import 'history/history_page.dart';
 import 'home/widgets/receive_token_widget.dart';
@@ -136,7 +143,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             currentSection,
                           ),
                           appTheme: appTheme,
-                          onScanTap: () {},
+                          onScanTap: () {
+                            _showRequestCameraPermission(
+                              appTheme,
+                            );
+                          },
                           onTabSelect: (index) {
                             final HomeScreenSection newSection =
                                 HomeScreenSection.values[index];
@@ -192,5 +203,39 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         );
       },
     );
+  }
+
+  void _showRequestCameraPermission(AppTheme appTheme) async{
+
+    PermissionStatus status = await SystemPermissionHelper.getCurrentCameraPermissionStatus();
+
+    if(status.isGranted){
+      final result = await AppNavigator.push(
+        RoutePath.scanner,
+      );
+    }else{
+      if(context.mounted){
+        DialogProvider.showPermissionDialog(
+          context,
+          appTheme: appTheme,
+          onAccept: () {
+            AppNavigator.pop();
+            SystemPermissionHelper.requestCameraPermission(
+              onSuccessFul: () async {
+                final result = await AppNavigator.push(
+                  RoutePath.scanner,
+                );
+              },
+              reject: () {
+                SystemPermissionHelper.goToSettings();
+              },
+            );
+          },
+          headerIconPath: AssetIconPath.commonPermissionCamera,
+          titleKey: LanguageKey.commonPermissionCameraTitle,
+          contentKey: LanguageKey.commonPermissionCameraContent,
+        );
+      }
+    }
   }
 }

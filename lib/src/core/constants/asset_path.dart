@@ -47,6 +47,8 @@ sealed class AssetIconPath{
   static const String commonCheckSuccess = '${_baseIconPath}ic_common_check_success.svg';
   static const String commonSmartAccountAvatarDefault= '${_baseIconPath}ic_common_smart_account_avatar_default.svg';
   static const String commonCloseBottomSheet = '${_baseIconPath}ic_common_close_bottom_sheet.svg';
+  static const String commonPermissionCamera = '${_baseIconPath}ic_common_permission_camera.svg';
+  static const String commonPermissionGallery = '${_baseIconPath}ic_common_permission_gallery.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive = '${_baseIconPath}ic_home_bottom_navigator_bar_home_active.svg';
@@ -106,4 +108,8 @@ sealed class AssetIconPath{
   static const String sendSuccessfulLogo = '${_baseIconPath}ic_transaction_successful_logo.svg';
   static const String sendSuccessfulCopy = '${_baseIconPath}ic_transaction_successful_copy.svg';
   static const String sendSuccessfulView = '${_baseIconPath}ic_transaction_successful_view.svg';
+
+  /// Scanner
+  static const String scannerBack = '${_baseIconPath}ic_scanner_back.svg';
+  static const String scannerPhoto = '${_baseIconPath}ic_scanner_photo.svg';
 }

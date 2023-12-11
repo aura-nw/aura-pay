@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
@@ -151,6 +154,110 @@ final class _WarningDialog extends _DialogProviderWidget {
   }
 }
 
+final class _PermissionDialog extends _DialogProviderWidget {
+  final String headerIconPath;
+  final VoidCallback onAccept;
+  final String titleKey;
+  final String contentKey;
+
+  const _PermissionDialog({
+    required this.onAccept,
+    required this.headerIconPath,
+    required this.titleKey,
+    required this.contentKey,
+    super.key,
+  });
+
+  @override
+  Widget? bottomBuilder(BuildContext content, AppTheme appTheme) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        AppLocalizationProvider(
+          builder: (localization, _) {
+            return PrimaryAppButton(
+              onPress: onAccept,
+              text: localization.translate(
+                LanguageKey.commonPermissionAccept,
+              ),
+            );
+          },
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize04,
+        ),
+        AppLocalizationProvider(builder: (localization, _) {
+          return BorderAppButton(
+            text: localization.translate(
+              LanguageKey.commonPermissionReject,
+            ),
+            onPress: () {
+              AppNavigator.pop();
+            },
+          );
+        }),
+      ],
+    );
+  }
+
+  @override
+  Widget contentBuilder(BuildContext context, AppTheme appTheme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        AppLocalizationProvider(
+          builder: (localization, _) {
+            return Text(
+              localization.translate(
+                titleKey,
+              ),
+              style: AppTypoGraPhy.heading02.copyWith(
+                color: appTheme.contentColorBlack,
+              ),
+              textAlign: TextAlign.center,
+            );
+          },
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize03,
+        ),
+        AppLocalizationProvider(
+          builder: (localization, _) {
+            return Text(
+              localization.translate(
+                contentKey,
+              ),
+              style: AppTypoGraPhy.body02.copyWith(
+                color: appTheme.contentColor500,
+              ),
+              textAlign: TextAlign.center,
+            );
+          },
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize04,
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget? headerBuilder(BuildContext context, AppTheme appTheme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(
+          height: BoxSize.boxSize04,
+        ),
+        SvgPicture.asset(
+          headerIconPath,
+        ),
+      ],
+    );
+  }
+}
+
 sealed class DialogProvider {
   static Widget _mainDialog(
     Widget child, {
@@ -158,10 +265,8 @@ sealed class DialogProvider {
     required AppTheme appTheme,
     EdgeInsets? insetPadding,
   }) {
-    return WillPopScope(
-      onWillPop: () async {
-        return canBack;
-      },
+    return PopScope(
+      canPop: canBack,
       child: Dialog(
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -242,6 +347,31 @@ sealed class DialogProvider {
           appTheme: appTheme,
           insetPadding: insetPadding,
           canBack: canBack,
+        );
+      },
+    );
+  }
+
+  static Future<T?> showPermissionDialog<T>(
+    BuildContext context, {
+    required AppTheme appTheme,
+    required VoidCallback onAccept,
+    required String headerIconPath,
+    required String titleKey,
+    required String contentKey,
+  }) async {
+    return showDialog<T>(
+      context: context,
+      builder: (context) {
+        return _mainDialog(
+          _PermissionDialog(
+            onAccept: onAccept,
+            headerIconPath: headerIconPath,
+            titleKey: titleKey,
+            contentKey: contentKey,
+          ),
+          appTheme: appTheme,
+          canBack: true,
         );
       },
     );
