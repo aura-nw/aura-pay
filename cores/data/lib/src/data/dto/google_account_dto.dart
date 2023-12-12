@@ -2,30 +2,29 @@ import 'package:domain/domain.dart';
 
 extension GoogleAccountDtoMapper on GoogleAccountDto {
   GoogleAccount get toEntities => GoogleAccount(
-        id: id,
         email: email,
-        displayName: displayName,
-        photoUrl: photoUrl,
-        serverAuthCode: serverAuthCode,
+        name: name,
+        idToken: idToken,
+        oAuthAccessToken: oAuthAccessToken,
+        oAuthIdToken: oAuthIdToken,
+        profileImage: profileImage,
       );
 }
 
 class GoogleAccountDto {
-  final String id;
-
-  final String? displayName;
-
   final String email;
-
-  final String? photoUrl;
-
-  final String? serverAuthCode;
+  final String? name;
+  final String? profileImage;
+  final String? idToken;
+  final String? oAuthIdToken;
+  final String? oAuthAccessToken;
 
   const GoogleAccountDto({
-    required this.id,
+    this.idToken,
     required this.email,
-    this.displayName,
-    this.photoUrl,
-    this.serverAuthCode,
+    this.profileImage,
+    this.oAuthIdToken,
+    this.oAuthAccessToken,
+    this.name,
   });
 }

@@ -1,19 +1,17 @@
 class GoogleAccount {
-  final String id;
-
-  final String? displayName;
-
   final String email;
-
-  final String? photoUrl;
-
-  final String? serverAuthCode;
+  final String? name;
+  final String? profileImage;
+  final String? idToken;
+  final String? oAuthIdToken;
+  final String? oAuthAccessToken;
 
   const GoogleAccount({
-    required this.id,
+    this.idToken,
     required this.email,
-    this.displayName,
-    this.photoUrl,
-    this.serverAuthCode,
+    this.profileImage,
+    this.oAuthIdToken,
+    this.oAuthAccessToken,
+    this.name,
   });
 }

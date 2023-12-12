@@ -170,6 +170,13 @@
   "transaction_history_page_view_on_aura_scan" : "View on Aura scan",
   "transaction_history_page_no_transaction_found" : "No transaction found",
 
+  "setting_page_app_bar_title" : "Setting",
+  "setting_page_recovery_methods" : "Recovery methods",
+  "setting_page_device_management" : "Device management",
+  "setting_page_address_book" : "Address book",
+  "setting_page_passcode" : "Passcode and Biometrics",
+  "setting_page_help_center" : "Help center",
+
   "send_transaction_screen_app_bar_title" : "Send",
   "send_transaction_screen_send_from" : "From",
   "send_transaction_screen_recipient_label" : "Recipient address",
@@ -242,6 +249,19 @@
   "signed_in_import_key_screen_invalid_passphrase" : "Invalid passphrase",
   "signed_in_import_key_screen_dialog_loading_title" : "Loading accounts",
 
+
+  "signed_in_recover_choice_screen_title_region_one" : "Recover",
+  "signed_in_recover_choice_screen_title_region_two" : "smart account",
+  "signed_in_recover_choice_screen_content" : "Select the method to recover account",
+  "signed_in_recover_choice_screen_google_option_title" : "Using google account",
+  "signed_in_recover_choice_screen_google_option_content" : "Powered by W Web3auth",
+  "signed_in_recover_choice_screen_backup_option_title" : "Using backup address",
+  "signed_in_recover_choice_screen_backup_option_content" : "Get the guideline from Pyxis",
+  "signed_in_recover_choice_screen_button_title" : "Next",
+  "signed_in_recover_choice_screen_dialog_select_not_found_title" : "No account found!",
+  "signed_in_recover_choice_screen_dialog_select_not_found_content" : "The selected google account is not connected to any smart account on Pyxis. Please use other google account or method to recovery.",
+  "signed_in_recover_choice_screen_dialog_select_not_found_button_title" : "Confirm",
+
   "scanner_screen_app_bar_title" : "Scan QR code",
   "scanner_screen_upload_photo" : "Upload photo",
 
@@ -250,5 +270,26 @@
   "common_permission_gallery_title" : "Allow File and Gallery access",
   "common_permission_gallery_content" : "In order to scan a QR code, you must allow Pyxis to access the gallery",
   "common_permission_accept" : "Ok",
-  "common_permission_reject" : "Cancel"
+  "common_permission_reject" : "Cancel",
+
+  "recovery_method_screen_app_bar_title" : "Recovery methods",
+  "recovery_method_screen_content" : "The recovery method can only be set for a Pyxis smart account",
+  "recovery_method_screen_set" : "Set",
+  "recovery_method_screen_change_recovery_method" : "Change recovery method",
+  "recovery_method_screen_no_account_found" : "No account found",
+  "recovery_method_screen_google" : "Google account",
+  "recovery_method_screen_backup_address" : "Backup address",
+
+
+  "set_recovery_method_screen_app_bar_title" : "Set recovery methods",
+  "set_recovery_method_screen_content" : "Pyxis offer you 2 ways to recover your account in case you lost your private key",
+  "set_recovery_method_screen_connect_google_account_title" : "Connect Google account",
+  "set_recovery_method_screen_connect_google_account_content" : "Select one of your Google account which is frequently used. Incase you lost access to Pyxis account , you can use this Google account to recover it.",
+  "set_recovery_method_screen_connect_google_account_powered_by" : "Powered by",
+  "set_recovery_method_screen_connect_google_account_web3_auth" : "Web3auth",
+  "set_recovery_method_screen_add_backup_address_title" : "Add backup address",
+  "set_recovery_method_screen_add_backup_address_content" : "Simply add a normal wallet to your Pyxis account. In case you lost access to account, use our Recovery Center to initiate the recovery process.",
+  "set_recovery_method_screen_add_backup_address_hint" : "Enter address",
+  "set_recovery_method_screen_add_backup_address_invalid" : "Invalid address",
+  "set_recovery_method_screen_set_button_title" : "Set"
 }

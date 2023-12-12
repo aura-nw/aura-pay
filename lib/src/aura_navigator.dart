@@ -13,13 +13,16 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_request_reviewing/on_boarding_recover_request_reviewing_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/recovery_method/recovery_method_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/scanner/scanner_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_result/send_transaction_result_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/set_recovery_method/set_recovery_method_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -58,6 +61,12 @@ sealed class RoutePath {
       '$_signedInCreateNewAccount/pick_name';
   static const String signedInCreateNewAccountScanFee =
       '$_signedInCreateNewAccount/scan_fee';
+
+  static const String _signedInRecover = '$home/signed_in_recover';
+  static const String signedInRecoverChoice = '$_signedInRecover/choice';
+
+  static const String recoverMethod = '$home/recover_method';
+  static const String setRecoverMethod = '$recoverMethod/set_recover_method';
 
   static const String _signedInImportAccount = '$home/signed_in_import_account';
   static const String signedInImportKey = '$_signedInImportAccount/import_key';
@@ -230,6 +239,24 @@ sealed class AppNavigator {
       case RoutePath.scanner:
         return _defaultRoute(
           const ScannerScreen(),
+          settings,
+        );
+      case RoutePath.recoverMethod:
+        return _defaultRoute(
+          const RecoveryMethodScreen(),
+          settings,
+        );
+      case RoutePath.setRecoverMethod:
+        final AuraAccount account = settings.arguments as AuraAccount;
+        return _defaultRoute(
+          SetRecoveryMethodScreen(
+            account: account,
+          ),
+          settings,
+        );
+      case RoutePath.signedInRecoverChoice:
+        return _defaultRoute(
+          const SignedInRecoverChoiceScreen(),
           settings,
         );
       default:

@@ -77,7 +77,11 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                       const HomeScreenEventOnReFetchAccount(),
                     );
                   },
-                  onRecoverTap: () {},
+                  onRecoverTap: () async {
+                    await AppNavigator.push(
+                      RoutePath.signedInRecoverChoice,
+                    );
+                  },
                 ),
                 const SizedBox(
                   height: BoxSize.boxSize06,

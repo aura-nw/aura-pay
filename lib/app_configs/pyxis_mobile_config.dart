@@ -20,5 +20,5 @@ class PyxisMobileConfig {
   String get baseUrl => configs['BASE_URL'];
 
   String get appName => configs['APP_NAME'];
-  String get googleClientId => configs['GOOGLE_CLIENT_ID'];
+  String get web3AuthClientId => configs['WEB3_AUTH_CLIENT_ID'];
 }

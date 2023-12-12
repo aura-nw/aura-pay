@@ -123,4 +123,26 @@ sealed class AssetIconPath{
   /// Scanner
   static const String scannerBack = '${_baseIconPath}ic_scanner_back.svg';
   static const String scannerPhoto = '${_baseIconPath}ic_scanner_photo.svg';
+
+
+  /// Setting
+  static const String settingRecovery = '${_baseIconPath}ic_setting_recovery.svg';
+  static const String settingAddressBook = '${_baseIconPath}ic_setting_address_book.svg';
+  static const String settingBiometric = '${_baseIconPath}ic_setting_biometric.svg';
+  static const String settingDeviceManagement = '${_baseIconPath}ic_setting_device_management.svg';
+  static const String settingHelpCenter = '${_baseIconPath}ic_setting_help_center.svg';
+  static const String settingArrowNext = '${_baseIconPath}ic_setting_arrow_next.svg';
+
+
+  /// Recovery method
+  static const String recoveryMethodCheck = '${_baseIconPath}ic_recovery_method_check.svg';
+  static const String recoveryMethodMore = '${_baseIconPath}ic_recovery_method_more.svg';
+  static const String recoveryMethodWarning = '${_baseIconPath}ic_recovery_method_warning.svg';
+  static const String recoveryMethodChange = '${_baseIconPath}ic_recovery_method_change.svg';
+  static const String recoveryMethodCopy = '${_baseIconPath}ic_recovery_method_copy.svg';
+
+  /// Set recovery method
+  static const String setRecoveryMethodWeb3Auth = '${_baseIconPath}ic_set_recovery_method_web3_auth.svg';
+  static const String setRecoveryMethodBackupAddress = '${_baseIconPath}ic_set_recovery_method_backup_address.svg';
+  static const String setRecoveryMethodGoogle = '${_baseIconPath}ic_set_recovery_method_google.svg';
 }

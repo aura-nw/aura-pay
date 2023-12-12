@@ -4,7 +4,7 @@ import 'package:isar/isar.dart';
 
 part 'aura_account_db.g.dart';
 
-extension AuraAccountDbExtension on AuraAccountDb{
+extension AuraAccountDbExtension on AuraAccountDb {
   AuraAccountDb copyWith({
     AuraAccountType? type,
     String? address,
@@ -20,6 +20,13 @@ extension AuraAccountDbExtension on AuraAccountDb{
   }
 }
 
+extension AuraAccountRecoveryMethodDbExtension on AuraAccountRecoveryMethodDb {
+  AuraAccountRecoveryMethodDto get toDto => AuraAccountRecoveryMethodDto(
+        method: method,
+        value: value,
+      );
+}
+
 @Collection(
   inheritance: false,
 )
@@ -29,16 +36,31 @@ class AuraAccountDb extends AuraAccountDto {
   final AuraAccountType accountType;
   final String accountAddress;
   final String accountName;
+  final AuraAccountRecoveryMethodDb? methodDb;
 
   AuraAccountDb({
     this.accountId = Isar.autoIncrement,
     required this.accountName,
     required this.accountAddress,
     required this.accountType,
+    this.methodDb,
   }) : super(
           id: accountId,
           name: accountName,
           address: accountAddress,
           type: accountType,
+          method: methodDb?.toDto,
         );
+}
+
+@embedded
+final class AuraAccountRecoveryMethodDb {
+  final String value;
+  @enumerated
+  final AuraSmartAccountRecoveryMethod method;
+
+  const AuraAccountRecoveryMethodDb({
+    this.method = AuraSmartAccountRecoveryMethod.web3Auth,
+    this.value = '',
+  });
 }

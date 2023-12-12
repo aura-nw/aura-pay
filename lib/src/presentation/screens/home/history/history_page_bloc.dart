@@ -63,13 +63,13 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
         ),
       );
 
-      final transactions = await _getTransaction();
+      // final transactions = await _getTransaction();
 
       emit(
         state.copyWith(
           status: HistoryPageStatus.loaded,
-          canLoadMore: transactions.length == 30,
-          transactions: transactions,
+          // canLoadMore: transactions.length == 30,
+          // transactions: transactions,
         ),
       );
     } catch (e) {

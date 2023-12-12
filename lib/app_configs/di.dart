@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
@@ -6,13 +7,12 @@ import 'package:aura_wallet_core/config_options/environment_options.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:isar/isar.dart';
-import 'package:pyxis_mobile/src/application/provider/google_sign_in/google_sign_in_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/account_database_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
+import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
@@ -22,11 +22,16 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_bo
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_cubit.dart';
+import 'package:pyxis_mobile/src/presentation/screens/recovery_method/recovery_method_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_bloc.dart';
+import 'package:web3auth_flutter/enums.dart';
+import 'package:web3auth_flutter/input.dart';
+import 'package:web3auth_flutter/web3auth_flutter.dart';
 
 import 'pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen_cubit.dart';
@@ -60,8 +65,21 @@ Future<void> initDependency(
     iOptions: IOSOptions(),
   );
 
-  final GoogleSignIn googleSignIn = GoogleSignIn(
-    signInOption: SignInOption.standard,
+  // Set web3 auth redirect uri
+  // Must replace late
+  Uri redirectUrl;
+  if (Platform.isAndroid) {
+    redirectUrl = Uri.parse('app://com.aura.network.pyxis_mobile/auth');
+  } else {
+    redirectUrl = Uri.parse('com.example.w3aflutter://openlogin');
+  }
+
+  await Web3AuthFlutter.init(
+    Web3AuthOptions(
+      clientId: config.web3AuthClientId,
+      network: Network.sapphire_devnet,
+      redirectUrl: redirectUrl,
+    ),
   );
 
   final AuraWalletCore coreWallet = AuraWalletCore.create(
@@ -95,9 +113,7 @@ Future<void> initDependency(
   );
 
   getIt.registerLazySingleton<GoogleSignInProvider>(
-    () => GoogleSignInProviderImpl(
-      googleSignIn,
-    ),
+    () => const Web3AuthProviderImpl(),
   );
 
   /// Local
@@ -126,8 +142,8 @@ Future<void> initDependency(
     () => LocalizationRepositoryImpl(),
   );
 
-  getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(
+  getIt.registerLazySingleton<Web3AuthRepository>(
+    () => Web3AuthRepositoryImpl(
       getIt.get<GoogleSignInProvider>(),
     ),
   );
@@ -175,8 +191,8 @@ Future<void> initDependency(
   );
 
   getIt.registerLazySingleton(
-    () => AuthUseCase(
-      getIt.get<AuthRepository>(),
+    () => Web3AuthUseCase(
+      getIt.get<Web3AuthRepository>(),
     ),
   );
 
@@ -235,7 +251,7 @@ Future<void> initDependency(
 
   getIt.registerFactory<OnBoardingRecoverChoiceBloc>(
     () => OnBoardingRecoverChoiceBloc(
-      getIt.get<AuthUseCase>(),
+      getIt.get<Web3AuthUseCase>(),
     ),
   );
 
@@ -313,6 +329,18 @@ Future<void> initDependency(
     () => HistoryPageBloc(
       getIt.get<SmartAccountUseCase>(),
       getIt.get<AuraAccountUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<RecoveryMethodScreenBloc>(
+    () => RecoveryMethodScreenBloc(
+      getIt.get<AuraAccountUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<SignedInRecoverChoiceBloc>(
+    () => SignedInRecoverChoiceBloc(
+      getIt.get<Web3AuthUseCase>(),
     ),
   );
 }

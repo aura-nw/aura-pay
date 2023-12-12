@@ -5,7 +5,7 @@ import 'on_boarding_recover_choice_state.dart';
 
 class OnBoardingRecoverChoiceBloc
     extends Bloc<OnBoardingRecoverChoiceEvent, OnBoardingRecoverChoiceState> {
-  final AuthUseCase _authUseCase;
+  final Web3AuthUseCase _authUseCase;
 
   OnBoardingRecoverChoiceBloc(this._authUseCase)
       : super(
@@ -30,14 +30,18 @@ class OnBoardingRecoverChoiceBloc
 
 
       if (account != null) {
-        String ?accessToken = await _authUseCase.getCurrentAccessToken();
+       String userPrivateKey = await _authUseCase.getPrivateKey();
+
+       print('User privatek key = ${userPrivateKey}');
 
         emit(
           state.copyWith(
             status: OnBoardingRecoverChoiceStatus.loginSuccess,
-            accessToken: accessToken,
+            accessToken: userPrivateKey,
           ),
         );
+
+        await _authUseCase.onLogout();
 
         /// send account information to server get all smart account
 

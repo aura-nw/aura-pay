@@ -202,6 +202,15 @@ sealed class LanguageKey {
   static const String transactionHistoryPageNoTransactionFound = 'transaction_history_page_no_transaction_found';
   ///
 
+  ///region setting page
+  static const String settingPageAppBarTitle = 'setting_page_app_bar_title';
+  static const String settingPageRecoveryMethods = 'setting_page_recovery_methods';
+  static const String settingPageDeviceManagement = 'setting_page_device_management';
+  static const String settingPagePasscode = 'setting_page_passcode';
+  static const String settingPageAddressBook = 'setting_page_address_book';
+  static const String settingPageHelpCenter = 'setting_page_help_center';
+  ///
+
   ///region send transaction
   static const String sendTransactionScreenAppBarTitle = 'send_transaction_screen_app_bar_title';
   static const String sendTransactionScreenSendFrom = 'send_transaction_screen_send_from';
@@ -284,17 +293,57 @@ sealed class LanguageKey {
   static const String signedInImportKeyScreenDialogLoadingTitle = 'signed_in_import_key_screen_dialog_loading_title';
   ///endregion
 
-  ///region
+
+  ///region recover choice
+  static const String signedInRecoverChoiceScreenTitleRegionOne = 'signed_in_recover_choice_screen_title_region_one';
+  static const String signedInRecoverChoiceScreenTitleRegionTwo = 'signed_in_recover_choice_screen_title_region_two';
+  static const String signedInRecoverChoiceScreenContent = 'signed_in_recover_choice_screen_content';
+  static const String signedInRecoverChoiceScreenGoogleOptionTitle = 'signed_in_recover_choice_screen_google_option_title';
+  static const String signedInRecoverChoiceScreenGoogleOptionContent = 'signed_in_recover_choice_screen_google_option_content';
+  static const String signedInRecoverChoiceScreenBackupOptionTitle = 'signed_in_recover_choice_screen_backup_option_title';
+  static const String signedInRecoverChoiceScreenBackupOptionContent = 'signed_in_recover_choice_screen_backup_option_content';
+  static const String signedInRecoverChoiceScreenButtonTitle = 'signed_in_recover_choice_screen_button_title';
+  static const String signedInRecoverChoiceScreenDialogSelectNotFoundTitle = 'signed_in_recover_choice_screen_dialog_select_not_found_title';
+  static const String signedInRecoverChoiceScreenDialogSelectNotFoundContent = 'signed_in_recover_choice_screen_dialog_select_not_found_content';
+  static const String signedInRecoverChoiceScreenDialogSelectNotFoundButtonTitle = 'signed_in_recover_choice_screen_dialog_select_not_found_button_title';
+  ///endregion
+
+  ///region scanner
   static const String scannerScreenAppBarTitle = 'scanner_screen_app_bar_title';
   static const String scannerScreenUploadPhoto = 'scanner_screen_upload_photo';
-  ///
+  ///endregion
 
-  /// permission
+  ///region permission
   static const String commonPermissionCameraTitle = 'common_permission_camera_title';
   static const String commonPermissionCameraContent = 'common_permission_camera_content';
   static const String commonPermissionGalleryTitle = 'common_permission_gallery_title';
   static const String commonPermissionGalleryContent = 'common_permission_gallery_content';
   static const String commonPermissionAccept = 'common_permission_accept';
   static const String commonPermissionReject = 'common_permission_reject';
+  ///endregion
+
+  ///region recovery method
+  static const String recoveryMethodScreenAppBarTitle = 'recovery_method_screen_app_bar_title';
+  static const String recoveryMethodScreenContent = 'recovery_method_screen_content';
+  static const String recoveryMethodScreenSet = 'recovery_method_screen_set';
+  static const String recoveryMethodScreenChangeRecoveryMethod = 'recovery_method_screen_change_recovery_method';
+  static const String recoveryMethodScreenGoogle = 'recovery_method_screen_google';
+  static const String recoveryMethodScreenBackupAddress = 'recovery_method_screen_backup_address';
+  static const String recoveryMethodScreenNoAccountFound = 'recovery_method_screen_no_account_found';
+  ///
+
+
+  ///region set recovery method
+  static const String setRecoveryMethodScreenAppBarTitle = 'set_recovery_method_screen_app_bar_title';
+  static const String setRecoveryMethodScreenContent = 'set_recovery_method_screen_content';
+  static const String setRecoveryMethodScreenConnectGoogleAccountTitle = 'set_recovery_method_screen_connect_google_account_title';
+  static const String setRecoveryMethodScreenConnectGoogleAccountContent = 'set_recovery_method_screen_connect_google_account_content';
+  static const String setRecoveryMethodScreenConnectGoogleAccountPoweredBy = 'set_recovery_method_screen_connect_google_account_powered_by';
+  static const String setRecoveryMethodScreenConnectGoogleAccountWeb3Auth = 'set_recovery_method_screen_connect_google_account_web3_auth';
+  static const String setRecoveryMethodScreenAddBackupAddressTitle = 'set_recovery_method_screen_add_backup_address_title';
+  static const String setRecoveryMethodScreenAddBackupAddressContent = 'set_recovery_method_screen_add_backup_address_content';
+  static const String setRecoveryMethodScreenAddBackupAddressHint = 'set_recovery_method_screen_add_backup_address_hint';
+  static const String setRecoveryMethodScreenAddBackupAddressInvalid = 'set_recovery_method_screen_add_backup_address_invalid';
+  static const String setRecoveryMethodScreenSetButtonTitle = 'set_recovery_method_screen_set_button_title';
   ///
 }

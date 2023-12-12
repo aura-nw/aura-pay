@@ -1,0 +1,218 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/language_key.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/constants/typography.dart';
+
+final class _SetRecoveryOptionWidget extends StatelessWidget {
+  final String methodIconPath;
+  final String titleKey;
+  final String contentKey;
+  final Widget? subContent;
+  final bool isSelected;
+  final AppTheme appTheme;
+  final VoidCallback onTap;
+
+  const _SetRecoveryOptionWidget({
+    required this.contentKey,
+    required this.titleKey,
+    required this.methodIconPath,
+    this.subContent,
+    this.isSelected = false,
+    required this.appTheme,
+    required this.onTap,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: const EdgeInsets.all(
+          Spacing.spacing04,
+        ),
+        margin: const EdgeInsets.only(
+          bottom: BoxSize.boxSize05,
+        ),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? appTheme.surfaceColorBrandLight
+              : appTheme.surfaceColorWhite,
+          borderRadius: BorderRadius.circular(
+            BorderRadiusSize.borderRadius04,
+          ),
+          border: Border.all(
+            color: isSelected
+                ? appTheme.borderColorBrand
+                : appTheme.borderColorGrayDefault,
+          ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SvgPicture.asset(
+                    methodIconPath,
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize03,
+                  ),
+                  AppLocalizationProvider(
+                    builder: (localization, _) {
+                      return Text(
+                        localization.translate(
+                          titleKey,
+                        ),
+                        style: AppTypoGraPhy.utilityLabelDefault.copyWith(
+                          color: appTheme.contentColorBlack,
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize02,
+                  ),
+                  AppLocalizationProvider(
+                    builder: (localization, _) {
+                      return Text(
+                        localization.translate(
+                          contentKey,
+                        ),
+                        style: AppTypoGraPhy.body02.copyWith(
+                          color: appTheme.contentColor500,
+                        ),
+                      );
+                    },
+                  ),
+                  if (subContent != null)
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: BoxSize.boxSize06,
+                        ),
+                        subContent!,
+                      ],
+                    )
+                  else
+                    const SizedBox.shrink(),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: BoxSize.boxSize05,
+            ),
+            SvgPicture.asset(
+              isSelected
+                  ? AssetIconPath.commonRadioCheck
+                  : AssetIconPath.commonRadioUnCheck,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+final class SetRecoveryFormWidget extends StatefulWidget {
+  final AppTheme appTheme;
+  final void Function(int) onChange;
+
+  const SetRecoveryFormWidget({
+    required this.appTheme,
+    required this.onChange,
+    super.key,
+  });
+
+  @override
+  State<SetRecoveryFormWidget> createState() => _SetRecoveryFormWidgetState();
+}
+
+class _SetRecoveryFormWidgetState extends State<SetRecoveryFormWidget> {
+  int _indexSelected = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _SetRecoveryOptionWidget(
+          contentKey:
+              LanguageKey.setRecoveryMethodScreenConnectGoogleAccountContent,
+          titleKey:
+              LanguageKey.setRecoveryMethodScreenConnectGoogleAccountTitle,
+          methodIconPath: AssetIconPath.setRecoveryMethodGoogle,
+          appTheme: widget.appTheme,
+          isSelected: _indexSelected == 0,
+          onTap: () {
+            _onTap(0);
+          },
+          subContent: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              AppLocalizationProvider(
+                builder: (localization, _) {
+                  return Text(
+                    localization.translate(
+                      LanguageKey
+                          .setRecoveryMethodScreenConnectGoogleAccountPoweredBy,
+                    ),
+                    style: AppTypoGraPhy.bodyMedium01.copyWith(
+                      color: widget.appTheme.contentColor500,
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(
+                width: BoxSize.boxSize04,
+              ),
+              SvgPicture.asset(
+                AssetIconPath.setRecoveryMethodWeb3Auth,
+              ),
+              const SizedBox(
+                width: BoxSize.boxSize04,
+              ),
+              AppLocalizationProvider(
+                builder: (localization, _) {
+                  return Text(
+                    localization.translate(
+                      LanguageKey
+                          .setRecoveryMethodScreenConnectGoogleAccountWeb3Auth,
+                    ),
+                    style: AppTypoGraPhy.body01.copyWith(
+                      color: widget.appTheme.contentColor500,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        _SetRecoveryOptionWidget(
+          contentKey:
+              LanguageKey.setRecoveryMethodScreenAddBackupAddressContent,
+          titleKey: LanguageKey.setRecoveryMethodScreenAddBackupAddressTitle,
+          methodIconPath: AssetIconPath.setRecoveryMethodBackupAddress,
+          appTheme: widget.appTheme,
+          isSelected: _indexSelected == 1,
+          onTap: () {
+            _onTap(1);
+          },
+        ),
+      ],
+    );
+  }
+
+  void _onTap(int index) {
+    if (_indexSelected == index) return;
+    setState(() {
+      _indexSelected = index;
+    });
+  }
+}

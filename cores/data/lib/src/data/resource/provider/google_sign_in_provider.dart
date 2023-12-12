@@ -2,9 +2,9 @@ import 'package:data/src/data/dto/dto.dart';
 
 abstract interface class GoogleSignInProvider {
 
-  Future<GoogleAccountDto?> loginWithGoogle();
+  Future<GoogleAccountDto?> login();
 
-  Future<GoogleAccountDto?> signOut();
+  Future<void> signOut();
 
-  Future<String?> getCurrentAccessToken();
+  Future<String> getUserPrivateKey();
 }
