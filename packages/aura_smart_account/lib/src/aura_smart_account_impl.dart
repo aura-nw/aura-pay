@@ -379,7 +379,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       final bank.QueryBalanceResponse balanceResponse =
           await bankClient.balance(balanceRequest);
 
-      return balanceResponse.balance.amount.toAura;
+      return balanceResponse.balance.amount;
     } catch (e) {
       // handle error
       throw _getError(e);
@@ -490,23 +490,65 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       final tx.GetTxsEventResponse response =
           await serviceClient.getTxsEvent(request);
 
+      // Map response to List<AuraSmartAccountTransaction>
       return response.txResponses.map((e) {
-        final event = e.events[0];
+        int index = response.txResponses.indexOf(e);
+
+        final txs = response.txs[index];
+
+        final msg = txs.body.messages[0];
+
+        bank.MsgSend msgSend = bank.MsgSend.create();
+
+        if(msg.canUnpackInto(msgSend)){
+          msgSend = msg.unpackInto(msgSend);
+        }
+
+        String ? amount;
+
+        if(msgSend.amount.isNotEmpty){
+          amount = msgSend.amount[0].amount;
+        }
+
+        // Get fee
+        final String fee = txs.authInfo.fee.amount[0].amount;
+
+        final String memo = txs.body.memo;
+
+        final String type = msg.typeUrl;
         return AuraSmartAccountTransaction(
+          type: type,
           status: e.code,
           txHash: e.txhash,
           timeStamp: e.timestamp,
-          event: AuraSmartAccountEvent(
-            values: event.attributes.map((txAttribute) {
-              return AuraSmartAccountAttribute(
-                key: String.fromCharCodes(txAttribute.key),
-                value: String.fromCharCodes(txAttribute.value),
-              );
-            }).toList(),
-            type: event.type,
-          ),
+          fee: fee,
+          memo: memo,
+          amount: amount,
+          events: [
+            msgSend.fromAddress,
+            msgSend.toAddress,
+          ],
         );
       }).toList();
+    } catch (e) {
+      throw _getError(e);
+    }
+  }
+
+  Future<void> recoverSmartAccount({
+    required String smartAccountAddress,
+    required Uint8List newPrivateKey,
+  }) async {
+    try {
+      pb.Any pubKeyAny = pb.Any.create()
+        ..value = []
+        ..typeUrl = AuraSmartAccountConstant.pubKeyTypeUrl;
+
+      final aura.MsgRecover request = aura.MsgRecover.create()
+        ..creator = smartAccountAddress
+        ..address = smartAccountAddress
+        ..publicKey = pubKeyAny
+        ..credentials = '';
     } catch (e) {
       throw _getError(e);
     }

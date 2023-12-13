@@ -150,20 +150,14 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
     return response
         .map(
           (e) => PyxisTransactionDto(
+            type: e.type,
+            fee: e.fee,
+            memo: e.memo,
             status: e.status,
             txHash: e.txHash,
             timeStamp: e.timeStamp,
-            event: PyxisTransactionEventDto(
-              values: e.event.values
-                  .map(
-                    (ar) => PyxisTransactionAttributeDto(
-                      key: ar.key,
-                      value: ar.value,
-                    ),
-                  )
-                  .toList(),
-              type: e.event.type,
-            ),
+            events: e.events,
+            amount: e.amount,
           ),
         )
         .toList();

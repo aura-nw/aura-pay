@@ -15,6 +15,7 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/helpers/system_permission_helper.dart';
 import 'package:pyxis_mobile/src/core/helpers/wallet_address_validator.dart';
+import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/widgets/text_input_recipient_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
@@ -262,7 +263,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                                               '${localization.translate(
                                                 LanguageKey
                                                     .sendTransactionScreenBalance,
-                                              )}: $balance ${localization.translate(
+                                              )}: ${balance.formatAura} ${localization.translate(
                                                 LanguageKey.globalPyxisAura,
                                               )}',
                                               style: AppTypoGraPhy.bodyMedium02

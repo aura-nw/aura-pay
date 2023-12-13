@@ -14,6 +14,8 @@ class TransactionWidget extends StatelessWidget {
   final String amount;
   final String time;
   final AppTheme appTheme;
+  final bool isReceive;
+  final VoidCallback onTap;
 
   const TransactionWidget({
     required this.type,
@@ -22,85 +24,93 @@ class TransactionWidget extends StatelessWidget {
     required this.amount,
     required this.time,
     required this.appTheme,
+    required this.isReceive,
+    required this.onTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        bottom: Spacing.spacing08,
-      ),
-      child: Row(
-        children: [
-          SvgPicture.asset(
-            iconPath,
-          ),
-          const SizedBox(
-            width: BoxSize.boxSize05,
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      type,
-                      style: AppTypoGraPhy.heading01.copyWith(
-                        color: appTheme.contentColorBlack,
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          bottom: Spacing.spacing08,
+        ),
+        child: Row(
+          children: [
+            SvgPicture.asset(
+              iconPath,
+            ),
+            const SizedBox(
+              width: BoxSize.boxSize05,
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        type,
+                        style: AppTypoGraPhy.heading01.copyWith(
+                          color: appTheme.contentColorBlack,
+                        ),
                       ),
-                    ),
-                    AppLocalizationProvider(
-                      builder: (localization, _) {
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return Text(
+                            '$amount ${localization.translate(
+                              LanguageKey.globalPyxisAura,
+                            )}',
+                            style: AppTypoGraPhy.bodyMedium02.copyWith(
+                              color: isReceive
+                                  ? appTheme.contentColorSuccess
+                                  : appTheme.contentColorBlack,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize04,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AppLocalizationProvider(builder: (localization, _) {
                         return Text(
-                          '$amount ${localization.translate(
-                            LanguageKey.globalPyxisAura,
-                          )}',
-                          style: AppTypoGraPhy.bodyMedium02.copyWith(
-                            color: appTheme.contentColorBlack,
+                          status
+                              ? localization.translate(
+                                  LanguageKey
+                                      .transactionHistoryPageTransactionStatusSuccess,
+                                )
+                              : localization.translate(
+                                  LanguageKey
+                                      .transactionHistoryPageTransactionStatusFail,
+                                ),
+                          style: AppTypoGraPhy.body01.copyWith(
+                            color: status
+                                ? appTheme.contentColorSuccess
+                                : appTheme.contentColorDanger,
                           ),
                         );
-                      },
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize04,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AppLocalizationProvider(builder: (localization, _) {
-                      return Text(
-                        status
-                            ? localization.translate(
-                                LanguageKey
-                                    .transactionHistoryPageTransactionStatusSuccess,
-                              )
-                            : localization.translate(
-                                LanguageKey
-                                    .transactionHistoryPageTransactionStatusFail,
-                              ),
-                        style: AppTypoGraPhy.body01.copyWith(
-                          color: status
-                              ? appTheme.contentColorSuccess
-                              : appTheme.contentColorDanger,
+                      }),
+                      Text(
+                        AppDateTime.formatDateTimeHHmmWithAMPM(time),
+                        style: AppTypoGraPhy.body02.copyWith(
+                          color: appTheme.contentColor500,
                         ),
-                      );
-                    }),
-                    Text(
-                      AppDateTime.formatDateTimeHHmmWithAMPM(time),
-                      style: AppTypoGraPhy.body02.copyWith(
-                        color: appTheme.contentColor500,
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

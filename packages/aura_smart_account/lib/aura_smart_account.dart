@@ -13,9 +13,7 @@ import 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dar
 
 export 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 export 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
-    show
-        QueryGenerateAccountResponse,
-        QueryParamsResponse;
+    show QueryGenerateAccountResponse, QueryParamsResponse;
 export 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dart'
     show TxResponse;
 export 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
@@ -23,7 +21,6 @@ export 'package:aura_smart_account/src/core/definitions/fee.dart';
 export 'package:aura_smart_account/src/core/definitions/gas_price.dart';
 export 'package:aura_smart_account/src/core/helpers/cosmos_helper.dart';
 export 'package:aura_smart_account/src/core/aura_smart_account_cache.dart';
-export 'package:aura_smart_account/src/core/utils/amount.dart';
 export 'package:aura_smart_account/src/core/definitions/order_parameter.dart';
 export 'package:aura_smart_account/src/core/definitions/aura_smart_account_transaction.dart';
 
@@ -118,7 +115,6 @@ abstract interface class AuraSmartAccount {
   Future<TxResponse> getTx({
     required String txHash,
   });
-
 
   /// Get transactions by address
   /// This method has to pass two parameters include:

@@ -2,6 +2,7 @@ import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'send_transaction_confirmation_event.dart';
 import 'send_transaction_confirmation_state.dart';
 

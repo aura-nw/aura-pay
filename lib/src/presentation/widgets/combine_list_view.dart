@@ -8,8 +8,8 @@ class CombinedListView<T> extends StatefulWidget {
 
   final List<T> data;
   final Widget Function(T) builder;
-  final Future<void> Function(BuildContext) onRefresh;
-  final void Function(BuildContext) onLoadMore;
+  final void Function() onRefresh;
+  final void Function() onLoadMore;
   final double loadMoreThreshHold;
   final bool canLoadMore;
   final Widget Function()? buildEmpty;
@@ -55,7 +55,7 @@ class _CombinedListViewState<T> extends State<CombinedListView<T>> {
         _scrollController.position.extentAfter < widget.loadMoreThreshHold;
 
     if (thresholdReached && widget.canLoadMore) {
-      widget.onLoadMore(context);
+      widget.onLoadMore();
     }
   }
 
@@ -72,7 +72,7 @@ class _CombinedListViewState<T> extends State<CombinedListView<T>> {
       ),
       slivers: [
         CupertinoSliverRefreshControl(
-          onRefresh: () => widget.onRefresh(context),
+          onRefresh: () async => widget.onRefresh(),
         ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),

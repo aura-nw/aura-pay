@@ -2,34 +2,20 @@ final class AuraSmartAccountTransaction {
   final String txHash;
   final int status;
   final String timeStamp;
-  final AuraSmartAccountEvent event;
+  final String fee;
+  final String type;
+  final String? memo;
+  final List<String> events;
+  final String ?amount;
 
   const AuraSmartAccountTransaction({
     required this.status,
     required this.txHash,
     required this.timeStamp,
-    required this.event,
-  });
-
-  bool get isSuccess => status == 0;
-}
-
-final class AuraSmartAccountEvent {
-  final String type;
-  final List<AuraSmartAccountAttribute> values;
-
-  const AuraSmartAccountEvent({
-    required this.values,
+    required this.fee,
     required this.type,
-  });
-}
-
-final class AuraSmartAccountAttribute {
-  final String key;
-  final String value;
-
-  const AuraSmartAccountAttribute({
-    required this.key,
-    required this.value,
+    required this.events,
+    this.memo,
+    this.amount,
   });
 }

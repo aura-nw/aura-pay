@@ -1,4 +1,3 @@
-import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
@@ -6,6 +5,7 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_base.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/slider_base_widget.dart';
@@ -126,7 +126,7 @@ class _ChangeFeeFormWidgetState
                   ),
                 ),
                 TextSpan(
-                    text: ' ${_value.toString().toAura} ${localization.translate(
+                    text: ' ${_value.toString().formatAura} ${localization.translate(
                       LanguageKey.globalPyxisAura,
                     )}',
                     style: AppTypoGraPhy.bodyMedium02.copyWith(

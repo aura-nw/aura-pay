@@ -13,6 +13,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/widgets/change_fee_form_widget.dart';
@@ -236,7 +237,7 @@ class _SendTransactionConfirmationScreenState
                 builder: (localization, _) {
                   return SendTransactionConfirmationFeeSelector(builder: (fee) {
                     return Text(
-                      '${fee.toAura} ${localization.translate(
+                      '${fee.formatAura} ${localization.translate(
                         LanguageKey.globalPyxisAura,
                       )}',
                       style: AppTypoGraPhy.body03.copyWith(
@@ -290,7 +291,7 @@ class _SendTransactionConfirmationScreenState
                   double amountD = double.tryParse(amount) ?? 0;
                   return SendTransactionConfirmationFeeSelector(
                     builder: (fee) {
-                      double feeD = double.tryParse(fee.toAura) ?? 0;
+                      double feeD = double.tryParse(fee.formatAura) ?? 0;
                       return Text(
                         '${amountD + feeD} ${localization.translate(
                           LanguageKey.globalPyxisAura,

@@ -1,4 +1,4 @@
-import 'package:aura_smart_account/aura_smart_account.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
@@ -9,7 +9,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
-import 'package:pyxis_mobile/src/core/helpers/aura_transaction_helper.dart';
+import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_state.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/widgets/transaction_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
@@ -84,7 +84,13 @@ class _HistoryPageState extends State<HistoryPage> {
                     ),
                     child: HistoryTabBarWidget(
                       appTheme: appTheme,
-                      onChange: (index) {},
+                      onChange: (index) {
+                        _bloc.add(
+                          HistoryPageEventOnFilter(
+                            index,
+                          ),
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -113,7 +119,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                 if (transactions.isEmpty) {
                                   return Center(
                                     child: AppLocalizationProvider(
-                                      builder: (localization, p1) {
+                                      builder: (localization, _) {
                                         return Text(
                                           localization.translate(
                                             LanguageKey
@@ -130,13 +136,19 @@ class _HistoryPageState extends State<HistoryPage> {
                                 return HistoryPageCanLoadMoreSelector(
                                   builder: (canLoadMore) {
                                     return CombinedListView(
-                                      onRefresh: (p0) async {},
-                                      onLoadMore: (p0) {},
+                                      onRefresh: () => _bloc.add(
+                                        const HistoryPageEventOnRefresh(),
+                                      ),
+                                      onLoadMore: () {
+                                        if (canLoadMore) {
+                                          _bloc.add(
+                                            const HistoryPageEventOnLoadMore(),
+                                          );
+                                        }
+                                      },
                                       data: transactions,
                                       builder: (transaction) {
-                                        String spender = AuraTransactionHelper
-                                            .getAttributeSpender(
-                                                transaction.event);
+                                        String sender = transaction.events[0];
 
                                         String type =
                                             AppLocalizationManager.of(context)
@@ -145,27 +157,34 @@ class _HistoryPageState extends State<HistoryPage> {
                                               .transactionHistoryPageReceive,
                                         );
 
-                                        String iconPath =  AssetIconPath.historyReceiveLogo;
+                                        String iconPath =
+                                            AssetIconPath.historyReceiveLogo;
 
-                                        if (spender == _bloc.state.address) {
-                                          type =  AppLocalizationManager.of(context)
-                                              .translate(
+
+                                        bool isSend = sender == _bloc.state.address;
+
+                                        if (isSend) {
+                                          type =
+                                              AppLocalizationManager.of(context)
+                                                  .translate(
                                             LanguageKey
                                                 .transactionHistoryPageSend,
                                           );
 
-                                          iconPath = AssetIconPath.historySendLogo;
+                                          iconPath =
+                                              AssetIconPath.historySendLogo;
                                         }
                                         return TransactionWidget(
+                                          onTap: (){
+                                            _showTransactionDetail(transaction);
+                                          },
                                           type: type,
-                                          iconPath: iconPath ,
+                                          iconPath: iconPath,
                                           status: transaction.isSuccess,
-                                          amount: AuraTransactionHelper
-                                              .getAttributeAmount(
-                                            transaction.event,
-                                          ),
+                                          amount: transaction.amount?.formatAura  ?? '',
                                           time: transaction.timeStamp,
                                           appTheme: appTheme,
+                                          isReceive: !isSend,
                                         );
                                       },
                                       canLoadMore: canLoadMore,
@@ -185,5 +204,9 @@ class _HistoryPageState extends State<HistoryPage> {
         );
       },
     );
+  }
+
+  void _showTransactionDetail(PyxisTransaction transaction){
+
   }
 }

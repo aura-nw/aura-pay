@@ -3,6 +3,7 @@ import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/helpers/wallet_address_validator.dart';
+import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'send_transaction_event.dart';
 import 'send_transaction_state.dart';
 
