@@ -14,6 +14,8 @@ import 'package:aura_smart_account/src/proto/cosmos/base/v1beta1/export.dart'
     as base;
 import 'package:aura_smart_account/src/proto/cosmos/tx/v1beta1/export.dart'
     as tx;
+import 'package:aura_smart_account/src/proto/cosmwasm/wasm/v1/export.dart'
+    as coswasm;
 import 'package:aura_smart_account/src/proto/google/protobuf/export.dart' as pb;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
@@ -170,10 +172,6 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         feeSign: feeSign,
         memo: memo,
       );
-
-      dev.log('Response data = ${broadcastTxResponse.txResponse.data}');
-
-      dev.log('Tx hash = ${broadcastTxResponse.txResponse.txhash}');
 
       final int statusCode = broadcastTxResponse.txResponse.code;
 
@@ -500,13 +498,13 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
         bank.MsgSend msgSend = bank.MsgSend.create();
 
-        if(msg.canUnpackInto(msgSend)){
+        if (msg.canUnpackInto(msgSend)) {
           msgSend = msg.unpackInto(msgSend);
         }
 
-        String ? amount;
+        String? amount;
 
-        if(msgSend.amount.isNotEmpty){
+        if (msgSend.amount.isNotEmpty) {
           amount = msgSend.amount[0].amount;
         }
 
@@ -550,6 +548,84 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         ..publicKey = pubKeyAny
         ..credentials = '';
     } catch (e) {
+      throw _getError(e);
+    }
+  }
+
+  @override
+  Future<TxResponse> setRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String recoverAddress,
+    AuraSmartAccountFee? fee,
+  }) async {
+    try{
+      // Get pub key from private key
+      final Uint8List pubKey = WalletHelper.getPublicKeyFromPrivateKey(
+        userPrivateKey,
+      );
+
+      // Generate a pub key from user pub key
+      final Uint8List pubKeyGenerate =
+      AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(
+        pubKey,
+      );
+
+      // Create msg
+      final coswasm.MsgExecuteContract msg = coswasm.MsgExecuteContract.create()
+        ..sender = smartAccountAddress
+        ..contract = smartAccountAddress
+        ..msg = AuraSmartAccountConstant.executeContractMsg(
+          smartAccountAddress: smartAccountAddress,
+          recoverAddress: recoverAddress,
+        );
+
+      // Get signer data
+      final CosmosSignerData signerData =
+      await _getSignerData(smartAccountAddress);
+
+      // Create fee
+      late tx.Fee feeSign;
+
+      if (fee == null) {
+        feeSign = CosmosHelper.calculateFee(
+          AuraSmartAccountConstant.defaultGasActiveSmartAccount,
+          deNom: auraNetworkInfo.denom,
+        );
+      } else {
+        // Create fee
+        feeSign = tx.Fee.create()
+          ..gasLimit = $fixnum.Int64(fee.gasLimit)
+          ..amount.add(
+            base.Coin(
+              denom: auraNetworkInfo.denom,
+              amount: fee.fee,
+            ),
+          );
+      }
+
+      // Broadcast TxBytes
+      final tx.BroadcastTxResponse broadcastTxResponse =
+      await _signAndBroadcastTx(
+        userPrivateKey: userPrivateKey,
+        pubKeyGenerate: pubKeyGenerate,
+        msg: msg,
+        signerData: signerData,
+        feeSign: feeSign,
+        memo: null,
+      );
+
+      final int statusCode = broadcastTxResponse.txResponse.code;
+
+      if (statusCode == 0) {
+        return broadcastTxResponse.txResponse;
+      }
+      throw AuraSmartAccountError(
+        code: SmartAccountErrorCode.errorBroadcast,
+        errorMsg: broadcastTxResponse.txResponse.rawLog,
+      );
+    }catch(e){
+      // handle exception
       throw _getError(e);
     }
   }

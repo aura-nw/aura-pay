@@ -85,8 +85,9 @@ class OnBoardingScanFeeBloc
         memo: 'Active smart account',
       );
 
-      transactionInformation = await _smartAccountUseCase.getTx(
-        txHash: transactionInformation.txHash,
+      transactionInformation = await _checkTransactionInfo(
+        transactionInformation.txHash,
+        0,
       );
 
       if (transactionInformation.status == 0) {
@@ -127,7 +128,9 @@ class OnBoardingScanFeeBloc
   }
 
   Future<TransactionInformation> _checkTransactionInfo(
-      String txHash, int times) async {
+    String txHash,
+    int times,
+  ) async {
     await Future.delayed(
       const Duration(
         seconds: 1,

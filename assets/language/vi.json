@@ -291,5 +291,20 @@
   "set_recovery_method_screen_add_backup_address_content" : "Simply add a normal wallet to your Pyxis account. In case you lost access to account, use our Recovery Center to initiate the recovery process.",
   "set_recovery_method_screen_add_backup_address_hint" : "Enter address",
   "set_recovery_method_screen_add_backup_address_invalid" : "Invalid address",
-  "set_recovery_method_screen_set_button_title" : "Set"
+  "set_recovery_method_screen_set_button_title" : "Set",
+
+  "recovery_method_confirmation_screen_app_bar_title" : "Recovery method confirmation",
+  "recovery_method_confirmation_screen_content_region_one" : "Please confirm to add",
+  "recovery_method_confirmation_screen_content_region_two" : "as the backup account of",
+  "recovery_method_confirmation_screen_messages" : "Messages",
+  "recovery_method_confirmation_screen_change_recovery" : "Change Recovery",
+  "recovery_method_confirmation_screen_change_message" : "Set ${account} to recovery for ${address}",
+  "recovery_method_confirmation_screen_transaction_fee" : "Transaction fee",
+  "recovery_method_confirmation_screen_button_confirm_title" : "Confirm",
+  "recovery_method_confirmation_screen_change_fee_title" : "Speed up Transaction",
+  "recovery_method_confirmation_screen_change_fee_estimate" : "Estimated transaction fee:",
+  "recovery_method_confirmation_screen_change_fee_estimate_slower" : "Slower",
+  "recovery_method_confirmation_screen_change_fee_estimate_faster" : "Faster",
+  "recovery_method_confirmation_screen_change_fee_estimate_apply_button_tittle" : "Apply",
+  "recovery_method_confirmation_screen_loading" : "Recovering"
 }

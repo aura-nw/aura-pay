@@ -8,7 +8,7 @@ sealed class AuraNetWorkInformationConstant {
     bech32Hrp: 'aura',
     denom: 'utaura',
     grpcTransportSecure: true,
-    codeId: 729,
+    codeId: 736,
   );
   static const AuraNetworkInfo serenityChannel = AuraNetworkInfo(
     host: 'grpc.serenity.aura.network',
@@ -17,7 +17,7 @@ sealed class AuraNetWorkInformationConstant {
     bech32Hrp: 'aura',
     denom: 'uaura',
     grpcTransportSecure: false,
-    codeId: 729,
+    codeId: 736,
   );
   static const AuraNetworkInfo euphoriaChannel = AuraNetworkInfo(
     host: 'rpc.euphoria.aura.network',
@@ -26,7 +26,7 @@ sealed class AuraNetWorkInformationConstant {
     chainId: 'euphoria-2',
     bech32Hrp: '',
     denom: 'ueaura',
-    codeId: 729,
+    codeId: 736,
   );
   static const AuraNetworkInfo productionChannel = AuraNetworkInfo(
     host: 'rpc.aura.network',
@@ -35,6 +35,6 @@ sealed class AuraNetWorkInformationConstant {
     chainId: 'xstaxy-1',
     bech32Hrp: 'aura',
     denom: 'uaura',
-    codeId: 729,
+    codeId: 736,
   );
 }

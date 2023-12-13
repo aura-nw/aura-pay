@@ -113,4 +113,23 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
         )
         .toList();
   }
+
+  @override
+  Future<TransactionInformation> setRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String recoverAddress,
+    String? fee,
+    int? gasLimit,
+  }) async {
+    final response = await _provider.setRecoveryMethod(
+      userPrivateKey: userPrivateKey,
+      smartAccountAddress: smartAccountAddress,
+      recoverAddress: recoverAddress,
+      fee: fee,
+      gasLimit: gasLimit,
+    );
+
+    return response.toEntity;
+  }
 }

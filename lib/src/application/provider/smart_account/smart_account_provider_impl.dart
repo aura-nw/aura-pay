@@ -162,4 +162,35 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
         )
         .toList();
   }
+
+  @override
+  Future<TransactionInformationDto> setRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String recoverAddress,
+    String? fee,
+    int? gasLimit,
+  }) async {
+    AuraSmartAccountFee? smartAccountFee;
+    if (fee != null && gasLimit != null) {
+      smartAccountFee = AuraSmartAccountFee(
+        fee: fee,
+        gasLimit: gasLimit,
+      );
+    }
+
+    final response = await _auraSmartAccount.setRecoveryMethod(
+      userPrivateKey: userPrivateKey,
+      smartAccountAddress: smartAccountAddress,
+      recoverAddress: recoverAddress,
+      fee: smartAccountFee,
+    );
+
+    return TransactionInformationDto(
+      txHash: response.txhash,
+      timestamp: response.timestamp,
+      status: response.code,
+      rawLog: response.rawLog,
+    );
+  }
 }

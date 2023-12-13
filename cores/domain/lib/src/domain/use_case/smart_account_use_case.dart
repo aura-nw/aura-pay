@@ -100,4 +100,20 @@ class SmartAccountUseCase {
       orderBy: orderBy,
     );
   }
+
+  Future<TransactionInformation> setRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String recoverAddress,
+    String? fee,
+    int? gasLimit,
+  }) async {
+    return _repository.setRecoveryMethod(
+      userPrivateKey: userPrivateKey,
+      smartAccountAddress: smartAccountAddress,
+      recoverAddress: recoverAddress,
+      gasLimit: gasLimit,
+      fee: fee,
+    );
+  }
 }

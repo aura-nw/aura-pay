@@ -346,4 +346,22 @@ sealed class LanguageKey {
   static const String setRecoveryMethodScreenAddBackupAddressInvalid = 'set_recovery_method_screen_add_backup_address_invalid';
   static const String setRecoveryMethodScreenSetButtonTitle = 'set_recovery_method_screen_set_button_title';
   ///
+
+
+  ///region recovery confirmation
+  static const String recoveryMethodConfirmationScreenAppBarTitle = 'recovery_method_confirmation_screen_app_bar_title';
+  static const String recoveryMethodConfirmationScreenContentRegionOne = 'recovery_method_confirmation_screen_content_region_one';
+  static const String recoveryMethodConfirmationScreenContentRegionTwo = 'recovery_method_confirmation_screen_content_region_two';
+  static const String recoveryMethodConfirmationScreenMessages = 'recovery_method_confirmation_screen_messages';
+  static const String recoveryMethodConfirmationScreenChangeRecovery= 'recovery_method_confirmation_screen_change_recovery';
+  static const String recoveryMethodConfirmationScreenMessage= 'recovery_method_confirmation_screen_change_message';
+  static const String recoveryMethodConfirmationScreenTransactionFee = 'recovery_method_confirmation_screen_transaction_fee';
+  static const String recoveryMethodConfirmationScreenButtonConfirmTitle = 'recovery_method_confirmation_screen_button_confirm_title';
+  static const String recoveryMethodConfirmationScreenChangeFeeTitle = 'recovery_method_confirmation_screen_change_fee_title';
+  static const String recoveryMethodConfirmationScreenChangeFeeEstimate = 'recovery_method_confirmation_screen_change_fee_estimate';
+  static const String recoveryMethodConfirmationScreenChangeFeeEstimateSlower = 'recovery_method_confirmation_screen_change_fee_estimate_slower';
+  static const String recoveryMethodConfirmationScreenChangeFeeEstimateFaster = 'recovery_method_confirmation_screen_change_fee_estimate_faster';
+  static const String recoveryMethodConfirmationScreenChangeFeeEstimateApplyButtonTitle = 'recovery_method_confirmation_screen_change_fee_estimate_apply_button_tittle';
+  static const String recoveryMethodConfirmationScreenRecovering = 'recovery_method_confirmation_screen_loading';
+  ///
 }

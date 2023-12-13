@@ -145,4 +145,10 @@ sealed class AssetIconPath{
   static const String setRecoveryMethodWeb3Auth = '${_baseIconPath}ic_set_recovery_method_web3_auth.svg';
   static const String setRecoveryMethodBackupAddress = '${_baseIconPath}ic_set_recovery_method_backup_address.svg';
   static const String setRecoveryMethodGoogle = '${_baseIconPath}ic_set_recovery_method_google.svg';
+
+  /// Recovery confirmation
+  static const String recoveryConfirmation = '${_baseIconPath}ic_recovery_confirmation.svg';
+  static const String recoveryConfirmationEdit = '${_baseIconPath}ic_recovery_confirmation_edit.svg';
+  static const String recoveryConfirmationMessage = '${_baseIconPath}ic_recovery_confirmation_message.svg';
+  static const String recoveryConfirmationDivider = '${_baseIconPath}ic_recovery_confirmation_divider.svg';
 }

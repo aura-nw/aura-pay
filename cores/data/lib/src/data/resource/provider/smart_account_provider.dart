@@ -50,4 +50,12 @@ abstract interface class SmartAccountProvider {
     required int offset,
     required String orderBy,
   });
+
+  Future<TransactionInformationDto> setRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String recoverAddress,
+    String? fee,
+    int? gasLimit,
+  });
 }

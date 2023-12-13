@@ -126,4 +126,11 @@ abstract interface class AuraSmartAccount {
     required List<String> events,
     OrderParameter orderParameter = const OrderParameter(),
   });
+
+  Future<TxResponse> setRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String recoverAddress,
+    AuraSmartAccountFee? fee,
+  });
 }

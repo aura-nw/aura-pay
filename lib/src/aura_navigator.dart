@@ -14,6 +14,7 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_reques
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/recovery_method/recovery_method_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmation/recovery_method_confirmation_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/scanner/scanner_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_screen.dart';
@@ -67,6 +68,7 @@ sealed class RoutePath {
 
   static const String recoverMethod = '$home/recover_method';
   static const String setRecoverMethod = '$recoverMethod/set_recover_method';
+  static const String recoverConfirmation = '$recoverMethod/confirmation';
 
   static const String _signedInImportAccount = '$home/signed_in_import_account';
   static const String signedInImportKey = '$_signedInImportAccount/import_key';
@@ -251,6 +253,17 @@ sealed class AppNavigator {
         return _defaultRoute(
           SetRecoveryMethodScreen(
             account: account,
+          ),
+          settings,
+        );
+      case RoutePath.recoverConfirmation:
+        final Map<String,dynamic> arguments = settings.arguments as Map<String,dynamic>;
+        final AuraAccount account = arguments['account'];
+        final GoogleAccount googleAccount = arguments['google_account'];
+        return _defaultRoute(
+          RecoveryMethodConfirmationScreen(
+            account: account,
+            googleAccount: googleAccount,
           ),
           settings,
         );

@@ -31,6 +31,15 @@ wget -O "$AURA_ZIP" "https://github.com/aura-nw/aura/archive/refs/heads/main.zip
 unzip "$AURA_ZIP" -d "$BUILD/" && rm "$AURA_ZIP"
 AURA="$BUILD/aura-main"
 
+WASMD_ZIP="$BUILD/wasmd.zip"
+wget -O "$WASMD_ZIP" "https://github.com/CosmWasm/wasmd/archive/refs/tags/v0.33.0.zip"
+unzip "$WASMD_ZIP" -d "$BUILD/" && rm "$WASMD_ZIP"
+WASMD="$BUILD/wasmd-0.33.0"
+
+PROTO_COSMWASM=$PROTO/cosmwasm
+mkdir -p "$PROTO_COSMWASM"
+mv -f "$WASMD/proto/cosmwasm"/* "$PROTO_COSMWASM"
+
 PROTO_AURA=$PROTO/aura/smartaccount
 mkdir -p "$PROTO_AURA"
 mv -f "$AURA/proto/aura/smartaccount"/* "$PROTO_AURA"

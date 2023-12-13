@@ -49,4 +49,12 @@ abstract interface class SmartAccountRepository {
     required int offset,
     required String orderBy,
   });
+
+  Future<TransactionInformation> setRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required String recoverAddress,
+    String? fee,
+    int? gasLimit,
+  });
 }

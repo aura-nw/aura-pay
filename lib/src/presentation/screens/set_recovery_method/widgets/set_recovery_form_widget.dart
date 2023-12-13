@@ -214,5 +214,6 @@ class _SetRecoveryFormWidgetState extends State<SetRecoveryFormWidget> {
     setState(() {
       _indexSelected = index;
     });
+    widget.onChange(index);
   }
 }

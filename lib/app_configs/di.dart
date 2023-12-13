@@ -23,8 +23,10 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/recovery_method/recovery_method_screen_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmation/recovery_method_confirmation_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/set_recovery_method/set_recovery_method_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_bloc.dart';
@@ -341,6 +343,21 @@ Future<void> initDependency(
   getIt.registerFactory<SignedInRecoverChoiceBloc>(
     () => SignedInRecoverChoiceBloc(
       getIt.get<Web3AuthUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => SetRecoveryMethodScreenBloc(
+      getIt.get<Web3AuthUseCase>(),
+    ),
+  );
+
+  getIt.registerFactoryParam<RecoveryMethodConfirmationBloc,AuraAccount,GoogleAccount>(
+    (account, googleAccount) => RecoveryMethodConfirmationBloc(
+      getIt.get<SmartAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
+      account: account,
+      googleAccount: googleAccount,
     ),
   );
 }
