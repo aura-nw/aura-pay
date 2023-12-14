@@ -10,4 +10,7 @@ class RecoveryMethodConfirmationEvent with _$RecoveryMethodConfirmationEvent {
 
   const factory RecoveryMethodConfirmationEvent.onConfirm() =
       RecoveryMethodConfirmationEventOnConfirm;
+
+  const factory RecoveryMethodConfirmationEvent.onInit() =
+      RecoveryMethodConfirmationEventOnInit;
 }

@@ -13,6 +13,7 @@ class AccountRecoveryWidget extends StatelessWidget {
   final String address;
   final bool isVerified;
   final String? recoveryMethod;
+  final String? recoveryValue;
   final AppTheme appTheme;
   final VoidCallback onTap;
 
@@ -21,6 +22,7 @@ class AccountRecoveryWidget extends StatelessWidget {
     required this.address,
     required this.isVerified,
     this.recoveryMethod,
+    this.recoveryValue,
     required this.appTheme,
     required this.onTap,
     super.key,
@@ -28,57 +30,82 @@ class AccountRecoveryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        bottom: Spacing.spacing08,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      accountName,
-                      maxLines: 1,
-                      style: AppTypoGraPhy.heading02.copyWith(
-                        color: appTheme.contentColorBlack,
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          bottom: Spacing.spacing08,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        accountName,
+                        maxLines: 1,
+                        style: AppTypoGraPhy.heading02.copyWith(
+                          color: appTheme.contentColorBlack,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: BoxSize.boxSize03,
+                      ),
+                      isVerified
+                          ? SvgPicture.asset(
+                              AssetIconPath.recoveryMethodCheck,
+                            )
+                          : SvgPicture.asset(
+                              AssetIconPath.recoveryMethodWarning,
+                            ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize02,
+                  ),
+                  Text(
+                    address.addressView,
+                    style: AppTypoGraPhy.body02.copyWith(
+                      color: appTheme.contentColor500,
+                    ),
+                  ),
+                  if (recoveryMethod != null) ...[
+                    const SizedBox(
+                      height: BoxSize.boxSize02,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '${recoveryMethod ?? ''}: ',
+                            style: AppTypoGraPhy.body02.copyWith(
+                              color: appTheme.contentColor500,
+                            ),
+                          ),
+                          TextSpan(
+                            text: recoveryValue ?? '',
+                            style: AppTypoGraPhy.bodyMedium02.copyWith(
+                              color: appTheme.contentColorBlack,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      width: BoxSize.boxSize03,
-                    ),
-                    isVerified
-                        ? SvgPicture.asset(
-                            AssetIconPath.recoveryMethodCheck,
-                          )
-                        : SvgPicture.asset(
-                            AssetIconPath.recoveryMethodWarning,
-                          ),
-                  ],
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize04,
-                ),
-                Text(
-                  address.addressView,
-                  style: AppTypoGraPhy.body02.copyWith(
-                    color: appTheme.contentColor500,
-                  ),
-                ),
-              ],
+                  ] else
+                    const SizedBox.shrink(),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            width: BoxSize.boxSize05,
-          ),
-          GestureDetector(
-            onTap: onTap,
-            child: isVerified
+            const SizedBox(
+              width: BoxSize.boxSize05,
+            ),
+            isVerified
                 ? SvgPicture.asset(
                     AssetIconPath.recoveryMethodMore,
                   )
@@ -108,8 +135,8 @@ class AccountRecoveryWidget extends StatelessWidget {
                       },
                     ),
                   ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

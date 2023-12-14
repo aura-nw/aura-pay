@@ -330,8 +330,8 @@ sealed class LanguageKey {
   static const String recoveryMethodScreenGoogle = 'recovery_method_screen_google';
   static const String recoveryMethodScreenBackupAddress = 'recovery_method_screen_backup_address';
   static const String recoveryMethodScreenNoAccountFound = 'recovery_method_screen_no_account_found';
+  static const String recoveryMethodScreenSetRecoverySuccess = 'recovery_method_screen_backup_address_set_recovery_success';
   ///
-
 
   ///region set recovery method
   static const String setRecoveryMethodScreenAppBarTitle = 'set_recovery_method_screen_app_bar_title';

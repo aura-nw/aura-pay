@@ -59,9 +59,9 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
     ],
   };
 
-  final GlobalKey<TextInputNormalIconState> _inputPrivateGlobalKey =
+  final GlobalKey<TextInputNormalSuffixState> _inputPrivateGlobalKey =
       GlobalKey();
-  final GlobalKey<TextInputNormalIconState> _inputPassPhraseGlobalKey =
+  final GlobalKey<TextInputNormalSuffixState> _inputPassPhraseGlobalKey =
       GlobalKey();
 
   @override
@@ -228,8 +228,10 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                 case ImportWalletType.privateKey:
                                   return AppLocalizationProvider(
                                     builder: (localization, _) {
-                                      return TextInputNormalIconWidget(
-                                        iconPath: AssetIconPath.commonEyeHide,
+                                      return TextInputNormalSuffixWidget(
+                                        suffix: SvgPicture.asset(
+                                          AssetIconPath.commonEyeHide,
+                                        ),
                                         isRequired: true,
                                         key: _inputPrivateGlobalKey,
                                         maxLine: 1,
@@ -263,7 +265,7 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                               .onBoardingImportKeyScreenPrivateKey,
                                         ),
                                         obscureText: _passWordIsHide,
-                                        onIconTap: () {
+                                        onSuffixTap: () {
                                           setState(() {
                                             _passWordIsHide = !_passWordIsHide;
                                           });
@@ -274,8 +276,10 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                 case ImportWalletType.passPhrase:
                                   return AppLocalizationProvider(
                                     builder: (localization, _) {
-                                      return TextInputNormalIconWidget(
-                                        iconPath: AssetIconPath.commonEyeHide,
+                                      return TextInputNormalSuffixWidget(
+                                        suffix: SvgPicture.asset(
+                                          AssetIconPath.commonEyeHide,
+                                        ),
                                         isRequired: true,
                                         maxLine: 1,
                                         key: _inputPassPhraseGlobalKey,
@@ -311,7 +315,7 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                               .onBoardingImportKeyScreenPassPhrase,
                                         ),
                                         obscureText: _passWordIsHide,
-                                        onIconTap: () {
+                                        onSuffixTap: () {
                                           setState(() {
                                             _passWordIsHide = !_passWordIsHide;
                                           });

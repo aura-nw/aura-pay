@@ -10,13 +10,14 @@ extension AuraAccountDbExtension on AuraAccountDb {
     String? address,
     String? name,
     int? id,
+    AuraAccountRecoveryMethodDb? methodDb,
   }) {
     return AuraAccountDb(
-      accountId: id ?? this.id,
-      accountType: type ?? this.type,
-      accountAddress: address ?? this.address,
-      accountName: name ?? this.name,
-    );
+        accountId: id ?? this.id,
+        accountType: type ?? this.type,
+        accountAddress: address ?? this.address,
+        accountName: name ?? this.name,
+        methodDb: methodDb ?? this.methodDb);
   }
 }
 
@@ -24,6 +25,15 @@ extension AuraAccountRecoveryMethodDbExtension on AuraAccountRecoveryMethodDb {
   AuraAccountRecoveryMethodDto get toDto => AuraAccountRecoveryMethodDto(
         method: method,
         value: value,
+      );
+
+  AuraAccountRecoveryMethodDb copyWith({
+    AuraSmartAccountRecoveryMethod? method,
+    String? value,
+  }) =>
+      AuraAccountRecoveryMethodDb(
+        method: method ?? this.method,
+        value: value ?? this.value,
       );
 }
 

@@ -1,6 +1,8 @@
 import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'recovery_method_confirmation_screen.dart';
+
 part 'recovery_method_confirmation_screen_state.freezed.dart';
 
 enum RecoveryMethodConfirmationStatus {
@@ -13,8 +15,7 @@ enum RecoveryMethodConfirmationStatus {
 @freezed
 class RecoveryMethodConfirmationState with _$RecoveryMethodConfirmationState {
   const factory RecoveryMethodConfirmationState({
-    required AuraAccount account,
-    required GoogleAccount googleAccount,
+    required RecoveryMethodConfirmationArgument argument,
     @Default(RecoveryMethodConfirmationStatus.none)
     RecoveryMethodConfirmationStatus status,
     String ?error,

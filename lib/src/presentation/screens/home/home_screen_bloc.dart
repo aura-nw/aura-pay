@@ -26,7 +26,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     Emitter<HomeScreenState> emit,
   ) async {
     await _accountUseCase.updateAccount(
-      name: event.name,
+      accountName: event.name,
       id: event.id,
     );
 

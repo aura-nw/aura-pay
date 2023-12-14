@@ -12,7 +12,7 @@ final class AuraAccountUseCase {
     return _repository.getAccounts();
   }
 
-  Future<AuraAccount?> getFirstAccount(){
+  Future<AuraAccount?> getFirstAccount() {
     return _repository.getFirstAccount();
   }
 
@@ -34,13 +34,21 @@ final class AuraAccountUseCase {
   }
 
   Future<void> updateAccount({
-    required String name,
+    String? accountName,
+    String? address,
+    AuraAccountType? type,
+    AuraSmartAccountRecoveryMethod? method,
+    String? value,
     required int id,
   }) {
     final RenameAccountRequestParameter parameter =
         RenameAccountRequestParameter(
       id: id,
-      accountName: name,
+      accountName: accountName,
+      address: address,
+      type: type,
+      method: method,
+      value: value,
     );
     return _repository.updateAccount(parameter);
   }

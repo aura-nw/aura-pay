@@ -3,7 +3,7 @@ import 'package:data/src/data/resource/provider/provider.dart';
 import 'package:domain/domain.dart';
 
 class Web3AuthRepositoryImpl implements Web3AuthRepository {
-  final GoogleSignInProvider _authApiService;
+  final Web3AuthProvider _authApiService;
 
   const Web3AuthRepositoryImpl(this._authApiService);
 
@@ -23,8 +23,6 @@ class Web3AuthRepositoryImpl implements Web3AuthRepository {
   Future<GoogleAccount?> login() async{
     final GoogleAccountDto? googleAccount =
         await _authApiService.login();
-
-    if (googleAccount != null) {}
 
     return googleAccount?.toEntities;
   }

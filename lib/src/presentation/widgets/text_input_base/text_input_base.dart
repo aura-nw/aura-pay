@@ -15,6 +15,7 @@ class TextInputWidgetBase extends StatefulWidget {
   final TextEditingController? controller;
   final ConstraintManager? constraintManager;
   final String? hintText;
+  final VoidCallback? onClear;
   final void Function(String, bool)? onChanged;
   final void Function(String, bool)? onSubmit;
   final int? maxLine;
@@ -29,10 +30,12 @@ class TextInputWidgetBase extends StatefulWidget {
   final ScrollPhysics? physics;
   final List<TextInputFormatter>? inputFormatter;
   final TextInputType? keyBoardType;
+  final bool enableClear;
 
   const TextInputWidgetBase({
     super.key,
     this.constraintManager,
+    this.onClear,
     this.controller,
     this.hintText,
     this.onChanged,
@@ -43,6 +46,7 @@ class TextInputWidgetBase extends StatefulWidget {
     this.enable = true,
     this.autoFocus = false,
     this.obscureText = false,
+    this.enableClear = false,
     this.focusNode,
     this.scrollPadding = const EdgeInsets.symmetric(),
     this.scrollController,
@@ -57,13 +61,14 @@ class TextInputWidgetBase extends StatefulWidget {
   }
 }
 
-class TextInputWidgetBaseState<T extends TextInputWidgetBase>
-    extends State<T> {
+class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
   late TextEditingController _controller;
 
   String? errorMessage;
 
   late FocusNode _focusNode;
+
+  bool enableClear = false;
 
   @override
   void didChangeDependencies() {
@@ -171,6 +176,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase>
               border: InputBorder.none,
               contentPadding: EdgeInsets.zero,
               hintStyle: AppTypoGraPhy.body03,
+
               /// This line may be fix in the future.
               counterText: '',
             ),
@@ -182,6 +188,18 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase>
           ),
           SvgPicture.asset(
             AssetIconPath.commonInputError,
+          ),
+        ],
+        if (enableClear && widget.enableClear) ...[
+          const SizedBox(
+            width: BoxSize.boxSize04,
+          ),
+          GestureDetector(
+            onTap: widget.onClear,
+            behavior: HitTestBehavior.opaque,
+            child: SvgPicture.asset(
+              AssetIconPath.commonClose,
+            ),
           ),
         ]
       ],
@@ -236,10 +254,23 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase>
     }
   }
 
+  void _onTextInputChange() {
+    if (!widget.enableClear) return;
+    if (_controller.text.trim().isEmpty) {
+      enableClear = false;
+    } else {
+      enableClear = true;
+    }
+
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
+
+    _controller.addListener(_onTextInputChange);
 
     _focusNode = widget.focusNode ?? FocusNode(canRequestFocus: true);
 
@@ -250,6 +281,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase>
 
   @override
   void dispose() {
+    _controller.removeListener(_onTextInputChange);
     if (widget.controller == null) {
       _controller.dispose();
     }
@@ -263,6 +295,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase>
     if (oldWidget.controller != null &&
         oldWidget.controller?.text != _controller.text) {
       _controller = widget.controller!;
+      _controller.addListener(_onTextInputChange);
     }
   }
 
@@ -360,115 +393,6 @@ final class TextInputNormalState
 
 ///endregion
 
-///region text input icon
-final class TextInputNormalIconWidget extends TextInputWidgetBase {
-  final String? label;
-  final bool isRequired;
-  final String iconPath;
-  final VoidCallback? onIconTap;
-
-  const TextInputNormalIconWidget({
-    this.label,
-    this.isRequired = false,
-    required this.iconPath,
-    this.onIconTap,
-    super.obscureText,
-    super.autoFocus,
-    super.constraintManager,
-    super.scrollController,
-    super.enable,
-    super.inputFormatter,
-    super.focusNode,
-    super.controller,
-    super.hintText,
-    super.scrollPadding,
-    super.keyBoardType,
-    super.maxLength,
-    super.onSubmit,
-    super.maxLine,
-    super.minLine,
-    super.onChanged,
-    super.physics,
-    super.key,
-  });
-
-  @override
-  State<StatefulWidget> createState() => TextInputNormalIconState();
-}
-
-final class TextInputNormalIconState
-    extends TextInputWidgetBaseState<TextInputNormalIconWidget> {
-  @override
-  Widget? buildLabel(AppTheme theme) {
-    if (widget.label.isEmptyOrNull) {
-      return null;
-    }
-
-    if (widget.isRequired) {
-      return RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: widget.label,
-              style: AppTypoGraPhy.utilityLabelSm.copyWith(
-                color: theme.contentColor700,
-              ),
-            ),
-            TextSpan(
-              text: ' *',
-              style: AppTypoGraPhy.utilityLabelSm.copyWith(
-                color: theme.contentColorDanger,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return Text(
-      widget.label!,
-      style: AppTypoGraPhy.utilityLabelSm.copyWith(
-        color: theme.contentColor700,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AppThemeBuilder(
-      builder: (theme) {
-        return inputFormBuilder(
-          context,
-          Row(
-            children: [
-              Expanded(
-                child: buildTextInput(theme),
-              ),
-              const SizedBox(
-                width: BoxSize.boxSize04  ,
-              ),
-              GestureDetector(
-                onTap: widget.onIconTap,
-                behavior: HitTestBehavior.opaque,
-                child: Padding(
-                  padding: const EdgeInsets.all(
-                    Spacing.spacing02,
-                  ),
-                  child: SvgPicture.asset(widget.iconPath),
-                ),
-              ),
-            ],
-          ),
-          theme,
-        );
-      },
-    );
-  }
-}
-
-///endregion
-
-
 ///region text input suffix widget
 final class TextInputNormalSuffixWidget extends TextInputWidgetBase {
   final String? label;
@@ -554,7 +478,7 @@ final class TextInputNormalSuffixState
                 child: buildTextInput(theme),
               ),
               const SizedBox(
-                width: BoxSize.boxSize04  ,
+                width: BoxSize.boxSize04,
               ),
               GestureDetector(
                 onTap: widget.onSuffixTap,
@@ -564,6 +488,59 @@ final class TextInputNormalSuffixState
             ],
           ),
           theme,
+        );
+      },
+    );
+  }
+}
+
+///endregion
+
+///region text input with only text field widget
+final class TextInputOnlyTextFieldWidget extends TextInputWidgetBase {
+  const TextInputOnlyTextFieldWidget({
+    super.obscureText,
+    super.autoFocus,
+    super.constraintManager,
+    super.scrollController,
+    super.enable,
+    super.inputFormatter,
+    super.focusNode,
+    super.controller,
+    super.hintText,
+    super.scrollPadding,
+    super.keyBoardType,
+    super.maxLength,
+    super.onSubmit,
+    super.maxLine,
+    super.minLine,
+    super.onChanged,
+    super.physics,
+    super.key,
+    super.enableClear,
+    super.onClear,
+  });
+
+  @override
+  State<StatefulWidget> createState() => TextInputOnlyTextFieldWidgetState();
+}
+
+final class TextInputOnlyTextFieldWidgetState
+    extends TextInputWidgetBaseState<TextInputOnlyTextFieldWidget> {
+  @override
+  Widget? buildLabel(AppTheme theme) {
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AppThemeBuilder(
+      builder: (theme) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.spacing04,
+          ),
+          child: buildTextInput(theme),
         );
       },
     );

@@ -1,15 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/helpers/system_permission_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
+import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_state.dart';
@@ -34,7 +39,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin , CustomFlutterToast{
   late HomeScreenSection currentSection;
 
   late AnimationController _receiveWidgetController;
@@ -143,6 +148,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   account.address,
                                 );
                               },
+                              onCopyAddress: _onCopyAddress,
                             );
                           },
                         ),
@@ -195,6 +201,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           headerIconPath: AssetIconPath.commonPermissionCamera,
           titleKey: LanguageKey.commonPermissionCameraTitle,
           contentKey: LanguageKey.commonPermissionCameraContent,
+        );
+      }
+    }
+  }
+
+  void _onCopyAddress(String address)async{
+    await Clipboard.setData(
+      ClipboardData(text: address),
+    );
+
+    if (Platform.isIOS) {
+      if (context.mounted) {
+        showToast(
+          AppLocalizationManager.of(context).translateWithParam(
+            LanguageKey.globalPyxisCopyMessage,
+            {
+              'value': 'address',
+            },
+          ),
         );
       }
     }

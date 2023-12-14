@@ -1,6 +1,6 @@
 import 'package:data/src/data/dto/dto.dart';
 
-abstract interface class GoogleSignInProvider {
+abstract interface class Web3AuthProvider {
 
   Future<GoogleAccountDto?> login();
 

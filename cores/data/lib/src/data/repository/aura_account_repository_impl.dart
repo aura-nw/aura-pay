@@ -29,10 +29,16 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
   }
 
   @override
-  Future<void> updateAccount(RenameAccountRequestParameter parameter) async {
+  Future<void> updateAccount(
+    RenameAccountRequestParameter parameter,
+  ) async {
     return _accountDatabaseService.updateAccount(
       id: parameter.id,
       accountName: parameter.accountName,
+      value: parameter.value,
+      method: parameter.method,
+      type: parameter.type,
+      address: parameter.address,
     );
   }
 

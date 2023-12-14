@@ -17,6 +17,7 @@ class ReceiveTokenWidget extends StatelessWidget {
   final AppTheme theme;
   final VoidCallback onSwipeUp;
   final VoidCallback onShareAddress;
+  final void Function(String) onCopyAddress;
 
   const ReceiveTokenWidget({
     required this.accountName,
@@ -24,6 +25,7 @@ class ReceiveTokenWidget extends StatelessWidget {
     required this.theme,
     required this.onSwipeUp,
     required this.onShareAddress,
+    required this.onCopyAddress,
     Key? key,
   }) : super(key: key);
 
@@ -79,7 +81,7 @@ class ReceiveTokenWidget extends StatelessWidget {
                   height: BoxSize.boxSize06,
                 ),
                 AccountCardReceiveWidget(
-                  onCopy: onCopy,
+                  onCopy: (address) => onCopyAddress(address),
                   accountName: accountName,
                   address: address,
                   appTheme: theme,
@@ -107,6 +109,4 @@ class ReceiveTokenWidget extends StatelessWidget {
       ),
     );
   }
-
-  void onCopy(String address) {}
 }

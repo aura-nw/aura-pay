@@ -12,11 +12,11 @@ class PyxisMobileConfig {
 
   Map<String, dynamic> get appConfigs => jsonDecode(configs['APP_CONFIG']);
 
-  String get coinId => configs['coinId'];
-  String get chainId => configs['chainId'];
+  String get coinId => appConfigs['coinId'];
+  String get chainId => appConfigs['chainId'];
   String get apiVersion => appConfigs['api_version'];
-  String get deNom => configs['denom'];
-  String get symbol => configs['coin'];
+  String get deNom => appConfigs['denom'];
+  String get symbol => appConfigs['coin'];
   String get baseUrl => configs['BASE_URL'];
 
   String get appName => configs['APP_NAME'];

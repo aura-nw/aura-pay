@@ -279,6 +279,7 @@
   "recovery_method_screen_no_account_found" : "No account found",
   "recovery_method_screen_google" : "Google account",
   "recovery_method_screen_backup_address" : "Backup address",
+  "recovery_method_screen_backup_address_set_recovery_success" : "Recovery method has been set",
 
 
   "set_recovery_method_screen_app_bar_title" : "Set recovery methods",

@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 
 part 'set_recovery_method_screen_state.freezed.dart';
 
@@ -16,6 +17,8 @@ class SetRecoveryMethodScreenState with _$SetRecoveryMethodScreenState {
     SetRecoveryMethodScreenStatus status,
     String ?error,
     GoogleAccount ?googleAccount,
-    @Default(0) int selectedMethod,
+    @Default(RecoverOptionType.google) RecoverOptionType selectedMethod,
+    @Default(true) bool isReady,
+    String ?recoverAddress,
   }) = _SetRecoveryMethodScreenState;
 }

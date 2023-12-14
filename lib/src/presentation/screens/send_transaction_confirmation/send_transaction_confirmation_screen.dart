@@ -1,4 +1,3 @@
-import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

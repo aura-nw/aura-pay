@@ -257,13 +257,10 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.recoverConfirmation:
-        final Map<String,dynamic> arguments = settings.arguments as Map<String,dynamic>;
-        final AuraAccount account = arguments['account'];
-        final GoogleAccount googleAccount = arguments['google_account'];
+        final RecoveryMethodConfirmationArgument argument = settings.arguments as RecoveryMethodConfirmationArgument;
         return _defaultRoute(
           RecoveryMethodConfirmationScreen(
-            account: account,
-            googleAccount: googleAccount,
+            argument: argument,
           ),
           settings,
         );

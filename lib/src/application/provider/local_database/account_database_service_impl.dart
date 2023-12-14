@@ -55,16 +55,35 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
   }
 
   @override
-  Future<void> updateAccount(
-      {required int id, required String accountName}) async {
+  Future<void> updateAccount({
+    required int id,
+    String? accountName,
+    String? address,
+    AuraAccountType? type,
+    AuraSmartAccountRecoveryMethod? method,
+    String? value,
+  }) async {
     final AuraAccountDb? account = await _isar.auraAccountDbs.get(id);
 
     if (account != null) {
+      AuraAccountRecoveryMethodDb ? methodDb = account.methodDb;
+
+
+      if(method !=null && value != null){
+        methodDb ??= const AuraAccountRecoveryMethodDb();
+      }
+
       await _isar.writeTxn(
         () async {
           await _isar.auraAccountDbs.put(
             account.copyWith(
               name: accountName,
+              address: address,
+              type: type,
+              methodDb: methodDb?.copyWith(
+                method: method,
+                value: value,
+              ),
             ),
           );
         },

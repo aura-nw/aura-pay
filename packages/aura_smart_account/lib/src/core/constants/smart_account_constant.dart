@@ -6,7 +6,8 @@ sealed class AuraSmartAccountConstant {
   static final List<int> initMsgDefault = utf8.encode(
     jsonEncode(
       {
-        'plugin_manager_addr' : 'aura1y6ww7g6c5yc36363guep6zu004fc3wmdll0ass8ule4syzfceqvsamk8tp'
+        'plugin_manager_addr':
+            'aura1y6ww7g6c5yc36363guep6zu004fc3wmdll0ass8ule4syzfceqvsamk8tp'
       },
     ),
   );
@@ -21,10 +22,10 @@ sealed class AuraSmartAccountConstant {
             'register_plugin': {
               'plugin_address':
                   'aura1lmq568d3m3n04fq2ca27mjsx2522gljhqcgf3ptcyq2pm3es7y7sxnnqrz',
-              'config': {
+              'config': jsonEncode({
                 'smart_account_address': smartAccountAddress,
                 'recover_address': recoverAddress
-              },
+              }),
             },
           },
         ),

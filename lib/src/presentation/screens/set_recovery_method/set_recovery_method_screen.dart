@@ -5,10 +5,13 @@ import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmation/recovery_method_confirmation_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/set_recovery_method/set_recovery_method_screen_selector.dart';
 import 'set_recovery_method_screen_bloc.dart';
 import 'set_recovery_method_screen_event.dart';
 import 'set_recovery_method_screen_state.dart';
@@ -48,12 +51,23 @@ class _SetRecoveryMethodScreenState extends State<SetRecoveryMethodScreen>
                 case SetRecoveryMethodScreenStatus.none:
                   break;
                 case SetRecoveryMethodScreenStatus.loginSuccess:
+                  late RecoveryMethodConfirmationArgument argument;
+
+                  if (state.selectedMethod == RecoverOptionType.google) {
+                    argument = RecoveryMethodConfirmationGoogleArgument(
+                      account: widget.account,
+                      data: state.googleAccount,
+                    );
+                  } else {
+                    argument = RecoveryMethodConfirmationBackupAddressArgument(
+                      account: widget.account,
+                      data: state.recoverAddress,
+                    );
+                  }
+
                   AppNavigator.push(
                     RoutePath.recoverConfirmation,
-                    {
-                      'account': widget.account,
-                      'google_account': state.googleAccount,
-                    },
+                    argument,
                   );
                   break;
                 case SetRecoveryMethodScreenStatus.loginFail:
@@ -99,28 +113,46 @@ class _SetRecoveryMethodScreenState extends State<SetRecoveryMethodScreen>
                           const SizedBox(
                             height: BoxSize.boxSize06,
                           ),
-                          SetRecoveryFormWidget(
-                            appTheme: appTheme,
-                            onChange: (index) {
-                              _bloc.add(
-                                SetRecoveryMethodScreenEventOnChangeMethod(
-                                  index,
-                                ),
-                              );
-                            },
-                          ),
+                          SetRecoveryMethodScreenMethodSelector(
+                              builder: (selectedMethod) {
+                            return SetRecoveryFormWidget(
+                              appTheme: appTheme,
+                              selectedMethod: selectedMethod,
+                              onAddressChange: (address, isValid) {
+                                _bloc.add(
+                                  SetRecoveryMethodScreenEventOnChangeRecoveryAddress(
+                                    address,
+                                    isValid,
+                                  ),
+                                );
+                              },
+                              onChange: (method) {
+                                _bloc.add(
+                                  SetRecoveryMethodScreenEventOnChangeMethod(
+                                    method,
+                                  ),
+                                );
+                              },
+                            );
+                          }),
                         ],
                       ),
                     ),
                     AppLocalizationProvider(
                       builder: (localization, _) {
-                        return PrimaryAppButton(
-                          text: localization.translate(
-                            LanguageKey.setRecoveryMethodScreenSetButtonTitle,
-                          ),
-                          onPress: () {
-                            _bloc.add(
-                              const SetRecoveryMethodScreenEventOnSet(),
+                        return SetRecoveryMethodScreenIsReadySelector(
+                          builder: (isReady) {
+                            return PrimaryAppButton(
+                              isDisable: !isReady,
+                              text: localization.translate(
+                                LanguageKey
+                                    .setRecoveryMethodScreenSetButtonTitle,
+                              ),
+                              onPress: () {
+                                _bloc.add(
+                                  const SetRecoveryMethodScreenEventOnSet(),
+                                );
+                              },
                             );
                           },
                         );

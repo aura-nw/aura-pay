@@ -16,7 +16,11 @@ abstract interface class AccountDatabaseService {
 
   Future<void> updateAccount({
     required int id,
-    required String accountName,
+    String? accountName,
+    String? address,
+    AuraAccountType? type,
+    AuraSmartAccountRecoveryMethod? method,
+    String? value,
   });
 
   Future<AuraAccountDto?> getFirstAccount();

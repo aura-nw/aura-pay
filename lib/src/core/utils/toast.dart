@@ -76,25 +76,31 @@ mixin CustomFlutterToast<T extends StatefulWidget> on State<T> {
     );
   }
 
-  void showToast(String message) {
+  void showToast(
+    String message, [
+    Duration duration = const Duration(
+      milliseconds: 2200,
+    ),
+  ]) {
     _fToast.showToast(
       child: _buildToast(message),
       gravity: ToastGravity.BOTTOM,
-      toastDuration: const Duration(
-        milliseconds: 2200,
-      ),
+      toastDuration: duration,
     );
   }
 
-  void showSuccessToast(String message) {
+  void showSuccessToast(
+    String message, [
+    Duration duration = const Duration(
+      milliseconds: 2200,
+    ),
+  ]) {
     _fToast.showToast(
       child: _buildSuccessToast(
         message,
       ),
       gravity: ToastGravity.BOTTOM,
-      toastDuration: const Duration(
-        milliseconds: 2200,
-      ),
+      toastDuration: duration,
     );
   }
 }

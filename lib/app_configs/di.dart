@@ -14,6 +14,7 @@ import 'package:pyxis_mobile/src/application/provider/smart_account/smart_accoun
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
@@ -23,6 +24,7 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/recovery_method/recovery_method_screen_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmation/recovery_method_confirmation_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmation/recovery_method_confirmation_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_bloc.dart';
@@ -100,6 +102,10 @@ Future<void> initDependency(
     () => config,
   );
 
+  getIt.registerLazySingleton<RecoveryObserver>(
+    () => RecoveryObserver(),
+  );
+
   ///Api service
 
   ///Provider
@@ -114,7 +120,7 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerLazySingleton<GoogleSignInProvider>(
+  getIt.registerLazySingleton<Web3AuthProvider>(
     () => const Web3AuthProviderImpl(),
   );
 
@@ -146,7 +152,7 @@ Future<void> initDependency(
 
   getIt.registerLazySingleton<Web3AuthRepository>(
     () => Web3AuthRepositoryImpl(
-      getIt.get<GoogleSignInProvider>(),
+      getIt.get<Web3AuthProvider>(),
     ),
   );
 
@@ -352,12 +358,15 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<RecoveryMethodConfirmationBloc,AuraAccount,GoogleAccount>(
-    (account, googleAccount) => RecoveryMethodConfirmationBloc(
+  getIt.registerFactoryParam<RecoveryMethodConfirmationBloc,
+      RecoveryMethodConfirmationArgument, dynamic>(
+    (argument, _) => RecoveryMethodConfirmationBloc(
       getIt.get<SmartAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
-      account: account,
-      googleAccount: googleAccount,
+      getIt.get<WalletUseCase>(),
+      getIt.get<Web3AuthUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
+      argument: argument,
     ),
   );
 }

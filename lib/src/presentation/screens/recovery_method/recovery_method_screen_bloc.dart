@@ -10,8 +10,9 @@ class RecoveryMethodScreenBloc
   RecoveryMethodScreenBloc(this._accountUseCase)
       : super(
           const RecoveryMethodScreenState(),
-        ){
+        ) {
     on(_fetchAccounts);
+    on(_refreshAccount);
   }
 
   void _fetchAccounts(
@@ -35,7 +36,35 @@ class RecoveryMethodScreenBloc
 
       emit(
         state.copyWith(
+          status: RecoveryMethodScreenStatus.loaded,
+          accounts: smartAccounts,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
           status: RecoveryMethodScreenStatus.error,
+        ),
+      );
+    }
+  }
+
+  void _refreshAccount(
+      RecoveryMethodScreenEventRefresh event,
+    Emitter<RecoveryMethodScreenState> emit,
+  ) async {
+    try {
+      final List<AuraAccount> accounts = await _accountUseCase.getAccounts();
+
+      final List<AuraAccount> smartAccounts = accounts
+          .where(
+            (ac) => ac.type == AuraAccountType.smartAccount,
+          )
+          .toList();
+
+      emit(
+        state.copyWith(
+          status: RecoveryMethodScreenStatus.loaded,
           accounts: smartAccounts,
         ),
       );
