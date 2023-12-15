@@ -3,6 +3,12 @@
   "global_pyxis_copy_message" : "Copy ${value} success",
   "global_pyxis_aura" : "AURA",
 
+  "transaction_common_change_fee_title" : "Speed up Transaction",
+  "transaction_common_change_fee_estimate" : "Estimated transaction fee:",
+  "transaction_common_change_fee_estimate_slower" : "Slower",
+  "transaction_common_change_fee_estimate_faster" : "Faster",
+  "transaction_common_change_fee_estimate_apply_button_tittle" : "Apply",
+
   "on_boarding_get_started_screen_title" : "The go-to platform for multi-signature asset management on the Interchain",
   "on_boarding_get_started_screen_button_title" : "Get Started",
   "on_boarding_get_started_screen_term_of_service" : "Term of Services",
@@ -83,12 +89,24 @@
   "on_boarding_recover_select_account_screen_title_region_two" : "smart account",
   "on_boarding_recover_select_account_screen_content" : "Select an account to recover.",
   "on_boarding_recover_select_account_screen_button_title" : "Recover",
+  "on_boarding_recover_select_account_no_account_found" : "No account found",
 
   "on_boarding_recover_request_reviewing_screen_title_region_one" : "Request",
   "on_boarding_recover_request_reviewing_screen_title_region_two" : "in reviewing",
   "on_boarding_recover_request_reviewing_screen_content" : "Your recovery request will be reviewed within 48 hours to verify that this address belongs to you.",
   "on_boarding_recover_request_reviewing_screen_notify_button_title" : "Notify me",
   "on_boarding_recover_request_reviewing_screen_back_button_title" : "Back to home",
+
+  "on_boarding_recover_sign_screen_title_region_one" : "Account recovery",
+  "on_boarding_recover_sign_screen_title_region_two" : "Successful",
+  "on_boarding_recover_sign_screen_content" : "Please sign this transaction to complete the recovery process",
+  "on_boarding_recover_sign_screen_account" : "Account",
+  "on_boarding_recover_sign_screen_messages" : "Messages",
+  "on_boarding_recover_sign_screen_update_key" : "Update key",
+  "on_boarding_recover_sign_screen_update_key_content" : "Update ${address} to ${newAddress}",
+  "on_boarding_recover_sign_screen_transaction_fee" : "Transaction fee",
+  "on_boarding_recover_sign_screen_button_confirm_title" : "Confirm",
+  "on_boarding_recover_sign_screen_loading" : "Recovering",
 
   "on_boarding_recover_backup_address_screen_title_region_one" : "Using",
   "on_boarding_recover_backup_address_screen_title_region_two" : "backup address",
@@ -200,11 +218,6 @@
   "send_transaction_confirmation_screen_messages" : "Messages",
   "send_transaction_confirmation_screen_message_send" : "Send",
   "send_transaction_confirmation_screen_message_content" : "Send [${amount}] [${token_name}] to [${address}]",
-  "send_transaction_confirmation_screen_change_fee_title" : "Speed up Transaction",
-  "send_transaction_confirmation_screen_change_fee_estimate" : "Estimated transaction fee:",
-  "send_transaction_confirmation_screen_change_fee_estimate_slower" : "Slower",
-  "send_transaction_confirmation_screen_change_fee_estimate_faster" : "Faster",
-  "send_transaction_confirmation_screen_change_fee_estimate_apply_button_tittle" : "Apply",
   "send_transaction_confirmation_screen_sending" : "Sending",
 
   "send_transaction_result_screen_successful" : "Transaction Successful!",
@@ -302,10 +315,11 @@
   "recovery_method_confirmation_screen_change_message" : "Set ${account} to recovery for ${address}",
   "recovery_method_confirmation_screen_transaction_fee" : "Transaction fee",
   "recovery_method_confirmation_screen_button_confirm_title" : "Confirm",
-  "recovery_method_confirmation_screen_change_fee_title" : "Speed up Transaction",
-  "recovery_method_confirmation_screen_change_fee_estimate" : "Estimated transaction fee:",
-  "recovery_method_confirmation_screen_change_fee_estimate_slower" : "Slower",
-  "recovery_method_confirmation_screen_change_fee_estimate_faster" : "Faster",
-  "recovery_method_confirmation_screen_change_fee_estimate_apply_button_tittle" : "Apply",
-  "recovery_method_confirmation_screen_loading" : "Recovering"
+  "recovery_method_confirmation_screen_loading" : "Recovering",
+
+  "signed_in_recover_select_account_screen_title_region_one" : "Recover",
+  "signed_in_recover_select_account_screen_title_region_two" : "smart account",
+  "signed_in_recover_select_account_screen_content" : "Select an account to recover.",
+  "signed_in_recover_select_account_screen_button_title" : "Recover",
+  "signed_in_recover_select_account_no_account_found" : "No account found"
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
-import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
@@ -17,7 +15,6 @@ import 'signed_in_recover_choice_state.dart';
 import 'widgets/pick_recover_option_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
-import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 
 class SignedInRecoverChoiceScreen extends StatefulWidget {
   const SignedInRecoverChoiceScreen({
@@ -50,17 +47,14 @@ class _SignedInRecoverChoiceScreenState
                 case SignedInRecoverChoiceStatus.none:
                   break;
                 case SignedInRecoverChoiceStatus.onLogin:
-                  // _showLoadingDialog(appTheme);
                   break;
                 case SignedInRecoverChoiceStatus.loginFailure:
-                  // AppNavigator.pop();
-
                   showToast(state.errorMessage!);
                   break;
                 case SignedInRecoverChoiceStatus.loginSuccess:
-                  // AppNavigator.pop();
                   AppNavigator.push(
                     RoutePath.recoverSelectAccount,
+                    state.googleAccount,
                   );
                   break;
               }
@@ -171,33 +165,6 @@ class _SignedInRecoverChoiceScreenState
           ),
         );
       },
-    );
-  }
-
-  void _showWarningDialog(AppTheme appTheme) {
-    /// Need to fix these text messages after apply business
-    DialogProvider.showWarningDialog(
-      context,
-      title: AppLocalizationManager.instance.translate(
-        LanguageKey.onBoardingScanFeeScreenDialogWarningTitle,
-      ),
-      message: AppLocalizationManager.instance.translate(
-        LanguageKey.onBoardingScanFeeScreenDialogWarningContent,
-      ),
-      buttonTitle: AppLocalizationManager.instance.translate(
-        LanguageKey.onBoardingScanFeeScreenDialogWarningButtonTitle,
-      ),
-      onButtonTap: () => AppNavigator.pop(),
-      appTheme: appTheme,
-    );
-  }
-
-  void _showLoadingDialog(AppTheme appTheme) {
-    DialogProvider.showLoadingDialog(
-      context,
-      content: AppLocalizationManager.instance
-          .translate(LanguageKey.onBoardingScanFeeScreenDialogLoadingContent),
-      appTheme: appTheme,
     );
   }
 }

@@ -157,7 +157,6 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
         );
       }
     } catch (e) {
-      print(e.toString());
       emit(
         state.copyWith(
           status: RecoveryMethodConfirmationStatus.onRecoverFail,

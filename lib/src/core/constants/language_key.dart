@@ -3,6 +3,14 @@ sealed class LanguageKey {
   static const String globalPyxisCopyMessage = 'global_pyxis_copy_message';
   static const String globalPyxisAura= 'global_pyxis_aura';
 
+  ///region common transaction
+  static const String commonTransactionChangeFeeTitle = 'transaction_common_change_fee_title';
+  static const String commonTransactionChangeFeeEstimate = 'transaction_common_change_fee_estimate';
+  static const String commonTransactionChangeFeeEstimateSlower = 'transaction_common_change_fee_estimate_slower';
+  static const String commonTransactionChangeFeeEstimateFaster = 'transaction_common_change_fee_estimate_faster';
+  static const String commonTransactionChangeFeeEstimateApplyButtonTitle = 'transaction_common_change_fee_estimate_apply_button_tittle';
+  ///
+
   ///region onboarding get started
   static const String onBoardingGetStartedScreenTitle = 'on_boarding_get_started_screen_title';
   static const String onBoardingGetStartedScreenButtonTitle = 'on_boarding_get_started_screen_button_title';
@@ -101,6 +109,7 @@ sealed class LanguageKey {
   static const String onBoardingRecoverSelectAccountScreenTitleRegionTwo = 'on_boarding_recover_select_account_screen_title_region_two';
   static const String onBoardingRecoverSelectAccountScreenContent = 'on_boarding_recover_select_account_screen_content';
   static const String onBoardingRecoverSelectAccountScreenButtonTitle = 'on_boarding_recover_select_account_screen_button_title';
+  static const String onBoardingRecoverSelectAccountScreenNoAccountFound = 'on_boarding_recover_select_account_no_account_found';
   ///endregion
 
   ///region recover request review
@@ -110,6 +119,19 @@ sealed class LanguageKey {
   static const String onBoardingRecoverRequestReviewingScreenNotifyButtonTitle = 'on_boarding_recover_request_reviewing_screen_notify_button_title';
   static const String onBoardingRecoverRequestReviewingScreenBackButtonTitle = 'on_boarding_recover_request_reviewing_screen_back_button_title';
   ///endregion
+
+  ///region recover sign
+  static const String onBoardingRecoverSignScreenTitleRegionOne  = 'on_boarding_recover_sign_screen_title_region_one';
+  static const String onBoardingRecoverSignScreenTitleRegionTwo  = 'on_boarding_recover_sign_screen_title_region_two';
+  static const String onBoardingRecoverSignScreenContent  = 'on_boarding_recover_sign_screen_content';
+  static const String onBoardingRecoverSignScreenAccount  = 'on_boarding_recover_sign_screen_account';
+  static const String onBoardingRecoverSignScreenMessages  = 'on_boarding_recover_sign_screen_messages';
+  static const String onBoardingRecoverSignScreenUpdateKey = 'on_boarding_recover_sign_screen_update_key';
+  static const String onBoardingRecoverSignScreenUpdateKeyContent = 'on_boarding_recover_sign_screen_update_key_content';
+  static const String onBoardingRecoverSignScreenTransactionFee = 'on_boarding_recover_sign_screen_transaction_fee';
+  static const String onBoardingRecoverSignScreenRecovering = 'on_boarding_recover_sign_screen_loading';
+  static const String onBoardingRecoverSignScreenConfirmButtonTitle = 'on_boarding_recover_sign_screen_button_confirm_title';
+  ///
 
   ///region recover backup address
   static const String onBoardingRecoverBackupAddressScreenTitleRegionOne = 'on_boarding_recover_backup_address_screen_title_region_one';
@@ -235,11 +257,6 @@ sealed class LanguageKey {
   static const String sendTransactionConfirmationScreenMessages = 'send_transaction_confirmation_screen_messages';
   static const String sendTransactionConfirmationScreenSend = 'send_transaction_confirmation_screen_message_send';
   static const String sendTransactionConfirmationScreenContent = 'send_transaction_confirmation_screen_message_content';
-  static const String sendTransactionConfirmationScreenChangeFeeTitle = 'send_transaction_confirmation_screen_change_fee_title';
-  static const String sendTransactionConfirmationScreenChangeFeeEstimate = 'send_transaction_confirmation_screen_change_fee_estimate';
-  static const String sendTransactionConfirmationScreenChangeFeeEstimateSlower = 'send_transaction_confirmation_screen_change_fee_estimate_slower';
-  static const String sendTransactionConfirmationScreenChangeFeeEstimateFaster = 'send_transaction_confirmation_screen_change_fee_estimate_faster';
-  static const String sendTransactionConfirmationScreenChangeFeeEstimateApplyButtonTitle = 'send_transaction_confirmation_screen_change_fee_estimate_apply_button_tittle';
   static const String sendTransactionConfirmationScreenSending = 'send_transaction_confirmation_screen_sending';
   ///region send transaction confirmation
 
@@ -357,11 +374,14 @@ sealed class LanguageKey {
   static const String recoveryMethodConfirmationScreenMessage= 'recovery_method_confirmation_screen_change_message';
   static const String recoveryMethodConfirmationScreenTransactionFee = 'recovery_method_confirmation_screen_transaction_fee';
   static const String recoveryMethodConfirmationScreenButtonConfirmTitle = 'recovery_method_confirmation_screen_button_confirm_title';
-  static const String recoveryMethodConfirmationScreenChangeFeeTitle = 'recovery_method_confirmation_screen_change_fee_title';
-  static const String recoveryMethodConfirmationScreenChangeFeeEstimate = 'recovery_method_confirmation_screen_change_fee_estimate';
-  static const String recoveryMethodConfirmationScreenChangeFeeEstimateSlower = 'recovery_method_confirmation_screen_change_fee_estimate_slower';
-  static const String recoveryMethodConfirmationScreenChangeFeeEstimateFaster = 'recovery_method_confirmation_screen_change_fee_estimate_faster';
-  static const String recoveryMethodConfirmationScreenChangeFeeEstimateApplyButtonTitle = 'recovery_method_confirmation_screen_change_fee_estimate_apply_button_tittle';
   static const String recoveryMethodConfirmationScreenRecovering = 'recovery_method_confirmation_screen_loading';
   ///
+
+  ///region
+  static const String signedInRecoverSelectAccountScreenTitleRegionOne = 'signed_in_recover_select_account_screen_title_region_one';
+  static const String signedInRecoverSelectAccountScreenTitleRegionTwo = 'signed_in_recover_select_account_screen_title_region_two';
+  static const String signedInRecoverSelectAccountScreenContent = 'signed_in_recover_select_account_screen_content';
+  static const String signedInRecoverSelectAccountScreenButtonTitle = 'signed_in_recover_select_account_screen_button_title';
+  static const String signedInRecoverSelectAccountScreenNoAccountFound = 'signed_in_recover_select_account_no_account_found';
+ ///
 }

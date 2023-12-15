@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
-import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
@@ -14,7 +12,6 @@ import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'widgets/pick_recover_option_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
-import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 
 import 'on_boarding_recover_choice_bloc.dart';
 import 'on_boarding_recover_choice_state.dart';
@@ -33,7 +30,7 @@ class OnBoardingRecoverChoiceScreen extends StatefulWidget {
 class _OnBoardingRecoverChoiceScreenState
     extends State<OnBoardingRecoverChoiceScreen> with CustomFlutterToast {
   /// Fake for deploy test flight
-  RecoverOptionType selectedType = RecoverOptionType.backupAddress;
+  RecoverOptionType selectedType = RecoverOptionType.google;
 
   final OnBoardingRecoverChoiceBloc _bloc =
       getIt.get<OnBoardingRecoverChoiceBloc>();
@@ -51,17 +48,16 @@ class _OnBoardingRecoverChoiceScreenState
                 case OnBoardingRecoverChoiceStatus.none:
                   break;
                 case OnBoardingRecoverChoiceStatus.onLogin:
-                  // _showLoadingDialog(appTheme);
                   break;
                 case OnBoardingRecoverChoiceStatus.loginFailure:
-                  // AppNavigator.pop();
-
-                  showToast(state.errorMessage!);
+                  showToast(
+                    state.errorMessage ?? '',
+                  );
                   break;
                 case OnBoardingRecoverChoiceStatus.loginSuccess:
-                  // AppNavigator.pop();
                   AppNavigator.push(
                     RoutePath.recoverSelectAccount,
+                    state.googleAccount,
                   );
                   break;
               }
@@ -158,7 +154,8 @@ class _OnBoardingRecoverChoiceScreenState
                                 break;
                               case RecoverOptionType.google:
                                 _bloc.add(
-                                    const OnBoardingRecoverChoiceOnGoogleSignInEvent());
+                                  const OnBoardingRecoverChoiceOnGoogleSignInEvent(),
+                                );
                                 break;
                             }
                           },
@@ -172,33 +169,6 @@ class _OnBoardingRecoverChoiceScreenState
           ),
         );
       },
-    );
-  }
-
-  void _showWarningDialog(AppTheme appTheme) {
-    /// Need to fix these text messages after apply business
-    DialogProvider.showWarningDialog(
-      context,
-      title: AppLocalizationManager.instance.translate(
-        LanguageKey.onBoardingScanFeeScreenDialogWarningTitle,
-      ),
-      message: AppLocalizationManager.instance.translate(
-        LanguageKey.onBoardingScanFeeScreenDialogWarningContent,
-      ),
-      buttonTitle: AppLocalizationManager.instance.translate(
-        LanguageKey.onBoardingScanFeeScreenDialogWarningButtonTitle,
-      ),
-      onButtonTap: () => AppNavigator.pop(),
-      appTheme: appTheme,
-    );
-  }
-
-  void _showLoadingDialog(AppTheme appTheme) {
-    DialogProvider.showLoadingDialog(
-      context,
-      content: AppLocalizationManager.instance
-          .translate(LanguageKey.onBoardingScanFeeScreenDialogLoadingContent),
-      appTheme: appTheme,
     );
   }
 }

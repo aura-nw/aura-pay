@@ -11,6 +11,7 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup_done/on_boarding_recover_backup_address_done_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_request_reviewing/on_boarding_recover_request_reviewing_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_sign/on_boarding_recover_sign_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_setup_passcode/on_boarding_setup_passcode_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/recovery_method/recovery_method_screen.dart';
@@ -30,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
 import 'presentation/screens/on_boarding_import_key/on_boarding_import_key_screen.dart';
 import 'presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_screen.dart';
+import 'presentation/screens/signed_in_recover_select_account/singed_in_recover_select_account_screen.dart';
 
 sealed class RoutePath {
   static const String _base = '/';
@@ -47,6 +49,7 @@ sealed class RoutePath {
   static const String recoverSelectAccount =
       '$_onBoarding/recover_select_account';
   static const String recoverReviewing = '$_onBoarding/recover_reviewing';
+  static const String recoverSign = '$_onBoarding/recover_sign';
   static const String recoverBackup = '$_onBoarding/recover_backup';
   static const String recoverBackupDone = '$_onBoarding/recover_backup_done';
 
@@ -65,6 +68,8 @@ sealed class RoutePath {
 
   static const String _signedInRecover = '$home/signed_in_recover';
   static const String signedInRecoverChoice = '$_signedInRecover/choice';
+  static const String signedInRecoverSelectAccount =
+      '$_signedInRecover/select_account';
 
   static const String recoverMethod = '$home/recover_method';
   static const String setRecoverMethod = '$recoverMethod/set_recover_method';
@@ -142,8 +147,11 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.recoverSelectAccount:
+        final GoogleAccount googleAccount = settings.arguments as GoogleAccount;
         return _defaultRoute(
-          const OnBoardingRecoverSelectAccountScreen(),
+          OnBoardingRecoverSelectAccountScreen(
+            googleAccount: googleAccount,
+          ),
           settings,
         );
       case RoutePath.recoverReviewing:
@@ -257,7 +265,8 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.recoverConfirmation:
-        final RecoveryMethodConfirmationArgument argument = settings.arguments as RecoveryMethodConfirmationArgument;
+        final RecoveryMethodConfirmationArgument argument =
+            settings.arguments as RecoveryMethodConfirmationArgument;
         return _defaultRoute(
           RecoveryMethodConfirmationScreen(
             argument: argument,
@@ -267,6 +276,24 @@ sealed class AppNavigator {
       case RoutePath.signedInRecoverChoice:
         return _defaultRoute(
           const SignedInRecoverChoiceScreen(),
+          settings,
+        );
+      case RoutePath.recoverSign:
+        final Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        final AuraAccount account = arguments['account'];
+        final GoogleAccount googleAccount = arguments['google_account'];
+        return _defaultRoute(
+          OnBoardingRecoverSignScreen(
+              googleAccount: googleAccount, account: account),
+          settings,
+        );
+      case RoutePath.signedInRecoverSelectAccount:
+        final GoogleAccount googleAccount = settings.arguments as  GoogleAccount;
+        return _defaultRoute(
+          SingedInRecoverSelectAccountScreen(
+            googleAccount: googleAccount,
+          ),
           settings,
         );
       default:

@@ -197,7 +197,26 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
   }
 
   List<String> _getEventByTab(int tab, {String? address}) {
-    // Total tab = 3 include all , send , receive , stake
+    List<String> querySend = [
+      "message.sender='${address ?? state.address}'",
+      "message.action='${TransactionType.Send}'"
+    ];
+
+    List<String> queryReceive = [
+      "transfer.recipient='${address ?? state.address}'",
+    ];
+
+    List<String> querySetRecovery = [
+      "message.sender='${address ?? state.address}'",
+      "message.action='${TransactionType.ExecuteContract}'"
+    ];
+
+    List<String> queryRecover = [
+      "message.sender='${address ?? state.address}'",
+      "message.action='${TransactionType.Recover}'"
+    ];
+
+    // Total tab = 3 include all , send , receive , set recovery , recover
     final List<String> events = [
       "transfer.sender='${address ?? state.address}'",
       "transfer.recipient='${address ?? state.address}'",

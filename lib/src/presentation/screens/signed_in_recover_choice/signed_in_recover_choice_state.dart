@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'signed_in_recover_choice_state.freezed.dart';
@@ -15,6 +16,6 @@ class SignedInRecoverChoiceState with _$SignedInRecoverChoiceState{
     @Default(SignedInRecoverChoiceStatus.none)
     SignedInRecoverChoiceStatus status,
     String ?errorMessage,
-    String ?accessToken,
+    GoogleAccount ?googleAccount,
   }) = _SignedInRecoverChoiceState;
 }

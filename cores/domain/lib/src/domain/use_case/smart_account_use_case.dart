@@ -116,4 +116,20 @@ class SmartAccountUseCase {
       fee: fee,
     );
   }
+
+  Future<TransactionInformation> recoverSmartAccount({
+    required Uint8List privateKey,
+    required String recoverAddress,
+    required String smartAccountAddress,
+    String? fee,
+    int? gasLimit,
+  }) async {
+    return _repository.recoverSmartAccount(
+      privateKey: privateKey,
+      recoverAddress: recoverAddress,
+      smartAccountAddress: smartAccountAddress,
+      fee: fee,
+      gasLimit: gasLimit,
+    );
+  }
 }

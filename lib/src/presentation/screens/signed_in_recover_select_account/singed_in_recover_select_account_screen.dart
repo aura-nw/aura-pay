@@ -9,38 +9,38 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_state.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
-import 'on_boarding_recover_select_account_bloc.dart';
-import 'on_boarding_recover_select_account_event.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
-import 'on_boarding_recover_select_account_selector.dart';
+import 'signed_in_recover_select_account_bloc.dart';
+import 'singed_in_recover_select_account_event.dart';
+import 'singed_in_recover_select_account_selector.dart';
+import 'singed_in_recover_select_account_state.dart';
 import 'widgets/smart_account_widget.dart';
 
-class OnBoardingRecoverSelectAccountScreen extends StatefulWidget {
+class SingedInRecoverSelectAccountScreen extends StatefulWidget {
   final GoogleAccount googleAccount;
 
-  const OnBoardingRecoverSelectAccountScreen({
+  const SingedInRecoverSelectAccountScreen({
     required this.googleAccount,
     super.key,
   });
 
   @override
-  State<OnBoardingRecoverSelectAccountScreen> createState() =>
-      _OnBoardingRecoverSelectAccountScreenState();
+  State<SingedInRecoverSelectAccountScreen> createState() =>
+      _SingedInRecoverSelectAccountScreenState();
 }
 
-class _OnBoardingRecoverSelectAccountScreenState
-    extends State<OnBoardingRecoverSelectAccountScreen> {
-  late OnBoardingRecoverSelectAccountBloc _bloc;
+class _SingedInRecoverSelectAccountScreenState
+    extends State<SingedInRecoverSelectAccountScreen> {
+  late SingedInRecoverSelectAccountBloc _bloc;
 
   @override
   void initState() {
-    _bloc = getIt.get<OnBoardingRecoverSelectAccountBloc>(
+    _bloc = getIt.get<SingedInRecoverSelectAccountBloc>(
       param1: widget.googleAccount,
     )..add(
-        const OnBoardingRecoverSelectAccountEventFetchAccount(),
+        const SingedInRecoverSelectAccountEventFetchAccount(),
       );
     super.initState();
   }
@@ -61,17 +61,17 @@ class _OnBoardingRecoverSelectAccountScreenState
                 horizontal: Spacing.spacing07,
                 vertical: Spacing.spacing08,
               ),
-              child: OnboardingRecoverSelectAccountStatusSelector(
+              child: SingedInRecoverSelectAccountStatusSelector(
                 builder: (status) {
                   switch (status) {
-                    case OnboardingRecoverSelectAccountStatus.loading:
+                    case SingedInRecoverSelectAccountStatus.loading:
                       return Center(
                         child: AppLoadingWidget(
                           appTheme: appTheme,
                         ),
                       );
-                    case OnboardingRecoverSelectAccountStatus.loaded:
-                    case OnboardingRecoverSelectAccountStatus.error:
+                    case SingedInRecoverSelectAccountStatus.loaded:
+                    case SingedInRecoverSelectAccountStatus.error:
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -83,7 +83,7 @@ class _OnBoardingRecoverSelectAccountScreenState
                                     TextSpan(
                                       text: localization.translate(
                                         LanguageKey
-                                            .onBoardingRecoverSelectAccountScreenTitleRegionOne,
+                                            .signedInRecoverSelectAccountScreenTitleRegionOne,
                                       ),
                                       style: AppTypoGraPhy.heading06.copyWith(
                                         color: appTheme.contentColorBlack,
@@ -92,7 +92,7 @@ class _OnBoardingRecoverSelectAccountScreenState
                                     TextSpan(
                                       text: ' ${localization.translate(
                                         LanguageKey
-                                            .onBoardingRecoverSelectAccountScreenTitleRegionTwo,
+                                            .signedInRecoverSelectAccountScreenTitleRegionTwo,
                                       )}',
                                       style: AppTypoGraPhy.heading05.copyWith(
                                         color: appTheme.contentColorBrand,
@@ -111,7 +111,7 @@ class _OnBoardingRecoverSelectAccountScreenState
                               return Text(
                                 localization.translate(
                                   LanguageKey
-                                      .onBoardingRecoverSelectAccountScreenContent,
+                                      .signedInRecoverSelectAccountScreenContent,
                                 ),
                                 style: AppTypoGraPhy.body03.copyWith(
                                   color: appTheme.contentColor500,
@@ -120,8 +120,7 @@ class _OnBoardingRecoverSelectAccountScreenState
                             },
                           ),
                           Expanded(
-                            child:
-                                OnboardingRecoverSelectAccountAccountsSelector(
+                            child: SignedInRecoverSelectAccountAccountsSelector(
                               builder: (accounts) {
                                 if (accounts.isEmpty) {
                                   return Center(
@@ -130,7 +129,7 @@ class _OnBoardingRecoverSelectAccountScreenState
                                         return Text(
                                           localization.translate(
                                             LanguageKey
-                                                .onBoardingRecoverSelectAccountScreenNoAccountFound,
+                                                .signedInRecoverSelectAccountScreenNoAccountFound,
                                           ),
                                           style: AppTypoGraPhy.bodyMedium02
                                               .copyWith(
@@ -154,7 +153,7 @@ class _OnBoardingRecoverSelectAccountScreenState
                                         top: Spacing.spacing05,
                                       ),
                                       child:
-                                          OnboardingRecoverSelectAccountAccountSelectedSelector(
+                                          SignedInRecoverSelectAccountAccountSelectedSelector(
                                         builder: (selectedAccount) {
                                           return SmartAccountWidget(
                                             appTheme: appTheme,
@@ -163,7 +162,7 @@ class _OnBoardingRecoverSelectAccountScreenState
                                             smartAccountName: account.name,
                                             onTap: () {
                                               _bloc.add(
-                                                OnBoardingRecoverSelectAccountEventSelectAccount(
+                                                SingedInRecoverSelectAccountEventSelectAccount(
                                                   account: account,
                                                 ),
                                               );
@@ -181,12 +180,12 @@ class _OnBoardingRecoverSelectAccountScreenState
                           ),
                           AppLocalizationProvider(
                             builder: (localization, _) {
-                              return OnboardingRecoverSelectAccountAccountSelectedSelector(
+                              return SignedInRecoverSelectAccountAccountSelectedSelector(
                                 builder: (account) {
                                   return PrimaryAppButton(
                                     text: localization.translate(
                                       LanguageKey
-                                          .onBoardingRecoverSelectAccountScreenButtonTitle,
+                                          .signedInRecoverSelectAccountScreenButtonTitle,
                                     ),
                                     isDisable: account == null,
                                     onPress: () {

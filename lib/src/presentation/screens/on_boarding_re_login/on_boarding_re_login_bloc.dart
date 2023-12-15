@@ -30,7 +30,6 @@ final class OnBoardingReLoginBloc
 
       if (password == event.password) {
         final accounts = await _accountUseCase.getAccounts();
-
         emit(
           state.copyWith(
             status: accounts.isEmpty

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 sealed class AuraSmartAccountConstant {
   static String pubKeyTypeUrl = '/cosmos.crypto.secp256k1.PubKey';
+  static String msgRecoverTypeUrl = '/aura.smartaccount.v1beta1.MsgRecover';
 
   static final List<int> initMsgDefault = utf8.encode(
     jsonEncode(
@@ -32,6 +33,7 @@ sealed class AuraSmartAccountConstant {
       );
 
   static const int defaultGasActiveSmartAccount = 400000;
+  static const String maxFeeGrant = '1000000';
   static const int defaultQueryOffset = 0;
   static const int defaultQueryLimit = 100;
 }

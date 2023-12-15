@@ -132,4 +132,23 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
 
     return response.toEntity;
   }
+
+  @override
+  Future<TransactionInformation> recoverSmartAccount({
+    required Uint8List privateKey,
+    required String recoverAddress,
+    required String smartAccountAddress,
+    String? fee,
+    int? gasLimit,
+  })async{
+    final response = await _provider.recoverSmartAccount(
+      privateKey: privateKey,
+      smartAccountAddress: smartAccountAddress,
+      recoverAddress: recoverAddress,
+      fee: fee,
+      gasLimit: gasLimit,
+    );
+
+    return response.toEntity;
+  }
 }

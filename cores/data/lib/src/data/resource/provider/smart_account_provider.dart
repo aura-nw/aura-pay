@@ -58,4 +58,12 @@ abstract interface class SmartAccountProvider {
     String? fee,
     int? gasLimit,
   });
+
+  Future<TransactionInformationDto> recoverSmartAccount({
+    required Uint8List privateKey,
+    required String recoverAddress,
+    required String smartAccountAddress,
+    String? fee,
+    int? gasLimit,
+  });
 }

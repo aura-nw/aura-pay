@@ -127,10 +127,34 @@ abstract interface class AuraSmartAccount {
     OrderParameter orderParameter = const OrderParameter(),
   });
 
+  /// Set a recovery method for smart account
+  /// This method has to pass four parameters include:
+  /// [userPrivateKey] as Uint8List
+  /// [smartAccountAddress] as String
+  /// [recoverAddress] as String
+  /// [fee] as [AuraSmartAccountFee]?
+  /// Response [TxResponse]
+  /// It can throw [AuraSmartAccountError]
   Future<TxResponse> setRecoveryMethod({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String recoverAddress,
+    AuraSmartAccountFee? fee,
+  });
+
+  /// recover new pub key for smart account
+  /// This method has to pass four parameters include:
+  /// [privateKey] as Uint8List. It's new private key which recovery address was set before
+  /// [recoveryAddress] as String.
+  /// [smartAccountAddress] as String
+  /// [recoverAddress] as String
+  /// [fee] as [AuraSmartAccountFee]?
+  /// Response [TxResponse]
+  /// It can throw [AuraSmartAccountError]
+  Future<TxResponse> recoverSmartAccount({
+    required Uint8List privateKey,
+    required String recoveryAddress,
+    required String smartAccountAddress,
     AuraSmartAccountFee? fee,
   });
 }

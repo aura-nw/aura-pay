@@ -25,7 +25,7 @@ class OnBoardingRecoverBackupAddressScreen extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: Spacing.spacing07,
-              vertical: Spacing.spacing08,
+              vertical: Spacing.spacing04,
             ),
             child: Column(
               children: [

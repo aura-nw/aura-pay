@@ -15,8 +15,8 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
-import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/widgets/change_fee_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_layout.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/transaction_common/change_fee_form_widget.dart';
 import 'send_transaction_confirmation_selector.dart';
 import 'send_transaction_confirmation_event.dart';
 import 'send_transaction_confirmation_state.dart';
@@ -253,7 +253,7 @@ class _SendTransactionConfirmationScreenState
                 behavior: HitTestBehavior.opaque,
                 onTap: _onEditFee,
                 child: SvgPicture.asset(
-                  AssetIconPath.sendConfirmationEdit,
+                  AssetIconPath.commonFeeEdit,
                 ),
               ),
             ],
@@ -317,7 +317,7 @@ class _SendTransactionConfirmationScreenState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SvgPicture.asset(
-          AssetIconPath.sendConfirmationDivider,
+          AssetIconPath.commonRoundDivider,
         ),
         const SizedBox(
           height: BoxSize.boxSize04,
@@ -340,7 +340,7 @@ class _SendTransactionConfirmationScreenState
         Row(
           children: [
             SvgPicture.asset(
-              AssetIconPath.sendConfirmationMessage,
+              AssetIconPath.commonSignMessage,
             ),
             const SizedBox(
               width: BoxSize.boxSize04,

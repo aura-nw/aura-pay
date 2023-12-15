@@ -1,4 +1,3 @@
-import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'recovery_method_confirmation_screen.dart';

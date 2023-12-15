@@ -44,7 +44,7 @@ class _ChangeFeeFormWidgetState
         return PrimaryAppButton(
           text: localization.translate(
             LanguageKey
-                .recoveryMethodConfirmationScreenChangeFeeEstimateApplyButtonTitle,
+                .commonTransactionChangeFeeEstimateApplyButtonTitle,
           ),
           onPress: () {
             AppNavigator.pop(_value);
@@ -79,7 +79,7 @@ class _ChangeFeeFormWidgetState
               Text(
                 localization.translate(
                   LanguageKey
-                      .recoveryMethodConfirmationScreenChangeFeeEstimateSlower,
+                      .commonTransactionChangeFeeEstimateSlower,
                 ),
                 style: AppTypoGraPhy.utilityHelperSm.copyWith(
                   color: appTheme.contentColorBlack,
@@ -88,7 +88,7 @@ class _ChangeFeeFormWidgetState
               Text(
                 localization.translate(
                   LanguageKey
-                      .recoveryMethodConfirmationScreenChangeFeeEstimateFaster,
+                      .commonTransactionChangeFeeEstimateFaster,
                 ),
                 style: AppTypoGraPhy.utilityHelperSm.copyWith(
                   color: appTheme.contentColorBlack,
@@ -119,7 +119,7 @@ class _ChangeFeeFormWidgetState
                 TextSpan(
                   text: localization.translate(
                     LanguageKey
-                        .recoveryMethodConfirmationScreenChangeFeeEstimate,
+                        .commonTransactionChangeFeeEstimate,
                   ),
                   style: AppTypoGraPhy.body02.copyWith(
                     color: appTheme.contentColor500,
@@ -149,7 +149,7 @@ class _ChangeFeeFormWidgetState
       builder: (localization, _) {
         return Text(
           localization.translate(
-            LanguageKey.recoveryMethodConfirmationScreenChangeFeeTitle,
+            LanguageKey.commonTransactionChangeFeeTitle,
           ),
           style: AppTypoGraPhy.heading02.copyWith(
             color: appTheme.contentColorBlack,

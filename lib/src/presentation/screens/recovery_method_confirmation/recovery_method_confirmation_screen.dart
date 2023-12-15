@@ -15,16 +15,18 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
-import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmation/recovery_method_confirmation_screen_state.dart';
+import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/transaction_common/change_fee_form_widget.dart';
+import 'recovery_method_confirmation_screen_state.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_layout.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 import 'recovery_method_confirmation_screen_bloc.dart';
 import 'recovery_method_confirmation_screen_event.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 
 import 'recovery_method_confirmation_screen_selector.dart';
-import 'widgets/change_fee_form_widget.dart';
 
 abstract class RecoveryMethodConfirmationArgument<T> {
   final AuraAccount account;
@@ -66,7 +68,7 @@ class RecoveryMethodConfirmationScreen extends StatefulWidget {
 }
 
 class _RecoveryMethodConfirmationScreenState
-    extends State<RecoveryMethodConfirmationScreen> {
+    extends State<RecoveryMethodConfirmationScreen> with CustomFlutterToast{
   late RecoveryMethodConfirmationBloc _bloc;
 
   final RecoveryObserver _recoveryObserver = getIt.get<RecoveryObserver>();
@@ -112,11 +114,8 @@ class _RecoveryMethodConfirmationScreenState
                   );
                   break;
                 case RecoveryMethodConfirmationStatus.onRecoverFail:
-                  _recoveryObserver.emit(
-                    status: false,
-                    msg: state.error,
-                  );
-                  AppNavigator.popUntil(RoutePath.recoverMethod);
+                  AppNavigator.pop();
+                  showToast(state.error ?? '');
                   break;
               }
             },
@@ -196,7 +195,7 @@ class _RecoveryMethodConfirmationScreenState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SvgPicture.asset(
-                          AssetIconPath.recoveryConfirmationDivider,
+                          AssetIconPath.commonRoundDivider,
                         ),
                         const SizedBox(
                           height: BoxSize.boxSize04,
@@ -220,7 +219,7 @@ class _RecoveryMethodConfirmationScreenState
                         Row(
                           children: [
                             SvgPicture.asset(
-                              AssetIconPath.recoveryConfirmationMessage,
+                              AssetIconPath.commonSignMessage,
                             ),
                             const SizedBox(
                               width: BoxSize.boxSize04,
@@ -268,6 +267,10 @@ class _RecoveryMethodConfirmationScreenState
                             ),
                           ],
                         ),
+                        const SizedBox(
+                          height: BoxSize.boxSize04,
+                        ),
+                        const DividerSeparator(),
                         Padding(
                           padding: const EdgeInsets.only(
                             top: Spacing.spacing04,
@@ -315,7 +318,7 @@ class _RecoveryMethodConfirmationScreenState
                                     behavior: HitTestBehavior.opaque,
                                     onTap: _onEditFee,
                                     child: SvgPicture.asset(
-                                      AssetIconPath.recoveryConfirmationEdit,
+                                      AssetIconPath.commonFeeEdit,
                                     ),
                                   ),
                                 ],

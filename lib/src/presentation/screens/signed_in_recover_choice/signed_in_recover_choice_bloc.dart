@@ -14,7 +14,7 @@ class SignedInRecoverChoiceBloc
     on(_onLoginWithGoogle);
   }
 
-  void _onLoginWithGoogle(SignedInRecoverChoiceEvent event,
+  void _onLoginWithGoogle(SignedInRecoverChoiceEventOnGoogleSignIn event,
       Emitter<SignedInRecoverChoiceState> emit) async {
     emit(
       state.copyWith(
@@ -22,34 +22,24 @@ class SignedInRecoverChoiceBloc
       ),
     );
 
-    ///
-    ///
     try {
-      final account = await _authUseCase.onLogin();
+      final GoogleAccount? account = await _authUseCase.onLogin();
 
       if (account != null) {
-        String userPrivateKey = await _authUseCase.getPrivateKey();
-
-        print('User privatek key = ${userPrivateKey}');
-
         emit(
           state.copyWith(
             status: SignedInRecoverChoiceStatus.loginSuccess,
-            accessToken: userPrivateKey,
+            googleAccount: account,
           ),
         );
-
-        await _authUseCase.onLogout();
-
-        /// send account information to server get all smart account
-
-        /// if empty show error to user
-        /// else direct and show smart accounts for user select.
+      } else {
+        emit(
+          state.copyWith(
+            status: SignedInRecoverChoiceStatus.loginFailure,
+          ),
+        );
       }
-
-      /// if false. handle some exception
     } catch (e) {
-      print(e.toString());
       emit(
         state.copyWith(
           status: SignedInRecoverChoiceStatus.loginFailure,

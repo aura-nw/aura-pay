@@ -69,4 +69,5 @@ sealed class TransactionType {
   static const String ExecuteAuthz = '/cosmos.authz.v1beta1.MsgExec';
   static const String RevokeAuthz = '/cosmos.authz.v1beta1.MsgRevoke';
   static const String Fail = 'FAILED';
+  static const String Recover = '/aura.smartaccount.v1beta1.MsgRecover';
 }

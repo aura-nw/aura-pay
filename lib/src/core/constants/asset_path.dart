@@ -49,6 +49,9 @@ sealed class AssetIconPath{
   static const String commonCloseBottomSheet = '${_baseIconPath}ic_common_close_bottom_sheet.svg';
   static const String commonPermissionCamera = '${_baseIconPath}ic_common_permission_camera.svg';
   static const String commonPermissionGallery = '${_baseIconPath}ic_common_permission_gallery.svg';
+  static const String commonRoundDivider = '${_baseIconPath}ic_common_round_divider.svg';
+  static const String commonSignMessage = '${_baseIconPath}ic_common_message.svg';
+  static const String commonFeeEdit = '${_baseIconPath}ic_common_fee_edit.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive = '${_baseIconPath}ic_home_bottom_navigator_bar_home_active.svg';
@@ -111,9 +114,6 @@ sealed class AssetIconPath{
 
   /// Send transaction confirmation
   static const String sendConfirmation = '${_baseIconPath}ic_send_confirmation.svg';
-  static const String sendConfirmationEdit = '${_baseIconPath}ic_send_confirmation_edit.svg';
-  static const String sendConfirmationMessage = '${_baseIconPath}ic_send_confirmation_message.svg';
-  static const String sendConfirmationDivider = '${_baseIconPath}ic_send_confirmation_divider.svg';
 
   /// Send transaction successful
   static const String sendSuccessfulLogo = '${_baseIconPath}ic_transaction_successful_logo.svg';
@@ -148,7 +148,4 @@ sealed class AssetIconPath{
 
   /// Recovery confirmation
   static const String recoveryConfirmation = '${_baseIconPath}ic_recovery_confirmation.svg';
-  static const String recoveryConfirmationEdit = '${_baseIconPath}ic_recovery_confirmation_edit.svg';
-  static const String recoveryConfirmationMessage = '${_baseIconPath}ic_recovery_confirmation_message.svg';
-  static const String recoveryConfirmationDivider = '${_baseIconPath}ic_recovery_confirmation_divider.svg';
 }
