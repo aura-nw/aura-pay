@@ -211,7 +211,12 @@ sealed class LanguageKey {
   static const String transactionHistoryPageSend = 'transaction_history_page_send';
   static const String transactionHistoryPageReceive = 'transaction_history_page_receive';
   static const String transactionHistoryPageStake = 'transaction_history_page_stake';
+  static const String transactionHistoryPageRecoveryTap = 'transaction_history_page_recovery_tab';
+  static const String transactionHistoryPageSetRecoveryTap = 'transaction_history_page_set_recovery_tab';
+  static const String transactionHistoryPageRecovery = 'transaction_history_page_recovery';
+  static const String transactionHistoryPageSetRecovery = 'transaction_history_page_set_recovery';
   static const String transactionHistoryPageSelectAccount = 'transaction_history_page_select_account';
+  static const String transactionHistoryPageSelectSmAccount = 'transaction_history_page_select_sm_account';
   static const String transactionHistoryPageFrom = 'transaction_history_page_from';
   static const String transactionHistoryPageTo = 'transaction_history_page_to';
   static const String transactionHistoryPageTransactionHash = 'transaction_history_page_transaction_hash';

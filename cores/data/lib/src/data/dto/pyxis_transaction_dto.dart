@@ -5,12 +5,28 @@ extension PyxisTransactionDtoMapper on PyxisTransactionDto {
         status: status,
         txHash: txHash,
         timeStamp: timeStamp,
-        events: events,
+        msg: msg,
         fee: fee,
-        type: type,
         memo: memo,
-        amount: amount,
       );
+
+  PyxisTransactionDto copyWith({
+    int? status,
+    String? txHash,
+    String? timeStamp,
+    String? fee,
+    Map<String,dynamic>? msg,
+    String? memo,
+  }) {
+    return PyxisTransactionDto(
+      status: status ?? this.status,
+      txHash: txHash ?? this.txHash,
+      timeStamp: timeStamp ?? this.timeStamp,
+      fee: fee ?? this.fee,
+      msg: msg ?? this.msg,
+      memo: memo ?? this.memo,
+    );
+  }
 }
 
 final class PyxisTransactionDto {
@@ -18,19 +34,27 @@ final class PyxisTransactionDto {
   final int status;
   final String timeStamp;
   final String fee;
-  final String type;
   final String? memo;
-  final List<String> events;
-  final String? amount;
+  final Map<String, dynamic> msg;
 
   const PyxisTransactionDto({
     required this.status,
     required this.txHash,
     required this.timeStamp,
     required this.fee,
-    required this.type,
-    required this.events,
+    required this.msg,
     this.memo,
-    this.amount,
   });
+
+  bool get isSuccess => status == 0;
+
+  factory PyxisTransactionDto.fromJson(Map<String, dynamic> json) {
+    return PyxisTransactionDto(
+      status: json['code'],
+      txHash: json['txhash'],
+      timeStamp: json['timestamp'],
+      fee: '',
+      msg: {},
+    );
+  }
 }

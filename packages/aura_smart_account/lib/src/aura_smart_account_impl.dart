@@ -31,8 +31,6 @@ import 'core/helpers/wallet_helper.dart';
 
 import 'dart:developer' as dev;
 
-import 'proto/cosmos/base/query/v1beta1/export.dart';
-
 /// [AuraSmartAccountImpl] class is implementation of [AuraSmartAccount]
 class AuraSmartAccountImpl implements AuraSmartAccount {
   final AuraSmartAccountEnvironment environment;
@@ -466,71 +464,6 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       return response.txResponse;
     } catch (e) {
       // Handle exception
-      throw _getError(e);
-    }
-  }
-
-  @override
-  Future<List<AuraSmartAccountTransaction>> getHistoryTransaction({
-    required List<String> events,
-    OrderParameter orderParameter = const OrderParameter(),
-  }) async {
-    try {
-      // Create request
-      final tx.GetTxsEventRequest request = tx.GetTxsEventRequest(
-        events: events,
-        pagination: PageRequest(
-          offset: $fixnum.Int64(orderParameter.offset),
-          limit: $fixnum.Int64(orderParameter.limit),
-        ),
-        orderBy: orderParameter.getOrderBy,
-      );
-
-      // Get response from request
-      final tx.GetTxsEventResponse response =
-          await serviceClient.getTxsEvent(request);
-
-      // Map response to List<AuraSmartAccountTransaction>
-      return response.txResponses.map((e) {
-        int index = response.txResponses.indexOf(e);
-
-        final txs = response.txs[index];
-
-        final msg = txs.body.messages[0];
-
-        bank.MsgSend msgSend = bank.MsgSend.create();
-
-        if (msg.canUnpackInto(msgSend)) {
-          msgSend = msg.unpackInto(msgSend);
-        }
-
-        String? amount;
-
-        if (msgSend.amount.isNotEmpty) {
-          amount = msgSend.amount[0].amount;
-        }
-
-        // Get fee
-        final String fee = txs.authInfo.fee.amount[0].amount;
-
-        final String memo = txs.body.memo;
-
-        final String type = msg.typeUrl;
-        return AuraSmartAccountTransaction(
-          type: type,
-          status: e.code,
-          txHash: e.txhash,
-          timeStamp: e.timestamp,
-          fee: fee,
-          memo: memo,
-          amount: amount,
-          events: [
-            msgSend.fromAddress,
-            msgSend.toAddress,
-          ],
-        );
-      }).toList();
-    } catch (e) {
       throw _getError(e);
     }
   }

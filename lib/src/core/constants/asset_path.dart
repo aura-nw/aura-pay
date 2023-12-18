@@ -101,6 +101,10 @@ sealed class AssetIconPath{
   static const String historySendLogoCircle = '${_baseIconPath}ic_history_send_logo_circle.svg';
   static const String historySendLogo = '${_baseIconPath}ic_history_send_logo.svg';
   static const String historyStakeLogo = '${_baseIconPath}ic_history_stake_logo.svg';
+  static const String historyRecoveryLogo = '${_baseIconPath}ic_history_recovery_logo.svg';
+  static const String historyRecoveryLogoCircle = '${_baseIconPath}ic_history_recovery_logo_circle.svg';
+  static const String historySetRecoveryLogo = '${_baseIconPath}ic_history_set_recovery_logo.svg';
+  static const String historySetRecoveryLogoCircle = '${_baseIconPath}ic_history_set_recovery_logo_circle.svg';
 
 
   ///signed in import account

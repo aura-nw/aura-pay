@@ -33,8 +33,8 @@ final class HistoryPageTransactionsSelector extends BlocSelector<
         );
 }
 
-final class HistoryPageCanLoadMoreSelector extends BlocSelector<
-    HistoryPageBloc, HistoryPageState, bool> {
+final class HistoryPageCanLoadMoreSelector
+    extends BlocSelector<HistoryPageBloc, HistoryPageState, bool> {
   HistoryPageCanLoadMoreSelector({
     Key? key,
     required Widget Function(bool) builder,
@@ -43,6 +43,34 @@ final class HistoryPageCanLoadMoreSelector extends BlocSelector<
           selector: (state) => state.canLoadMore,
           builder: (_, canLoadMore) => builder(
             canLoadMore,
+          ),
+        );
+}
+
+final class HistoryPageAccountsSelector
+    extends BlocSelector<HistoryPageBloc, HistoryPageState, List<AuraAccount>> {
+  HistoryPageAccountsSelector({
+    Key? key,
+    required Widget Function(List<AuraAccount>) builder,
+  }) : super(
+          key: key,
+          selector: (state) => state.accounts,
+          builder: (_, accounts) => builder(
+            accounts,
+          ),
+        );
+}
+
+final class HistoryPageSelectedAccountSelector
+    extends BlocSelector<HistoryPageBloc, HistoryPageState, AuraAccount?> {
+  HistoryPageSelectedAccountSelector({
+    Key? key,
+    required Widget Function(AuraAccount?) builder,
+  }) : super(
+          key: key,
+          selector: (state) => state.selectedAccount,
+          builder: (_, selectedAccount) => builder(
+            selectedAccount,
           ),
         );
 }

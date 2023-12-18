@@ -15,11 +15,13 @@ class HistoryPageState with _$HistoryPageState {
   const factory HistoryPageState({
     @Default(HistoryPageStatus.loading) HistoryPageStatus status,
     @Default([]) List<PyxisTransaction> transactions,
+    @Default(0) int currentTab,
     @Default(1) int offset,
     @Default(30) int limit,
-    @Default([]) List<String> events,
+    @Default([]) List<List<String>> events,
     @Default(false) bool canLoadMore,
-    @Default('') String address,
+    @Default([]) List<AuraAccount> accounts,
+    AuraAccount ? selectedAccount,
     String ?error,
   }) = _HistoryPageState;
 }

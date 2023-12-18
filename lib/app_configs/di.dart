@@ -13,6 +13,7 @@ import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_stor
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
+import 'package:pyxis_mobile/src/application/service/transaction/transaction_api_service_impl.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
@@ -53,7 +54,7 @@ Future<void> initDependency(
 ) async {
   final Dio dio = Dio(
     BaseOptions(
-      baseUrl: config.baseUrl + config.apiVersion,
+      baseUrl: config.lcdUrl,
       connectTimeout: const Duration(
         milliseconds: 60000,
       ),
@@ -110,6 +111,18 @@ Future<void> initDependency(
   );
 
   ///Api service
+
+  getIt.registerLazySingleton<TransactionApiServiceGenerate>(
+    () => TransactionApiServiceGenerate(
+      getIt.get<Dio>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<TransactionApiService>(
+    () => TransactionApiServiceImpl(
+      getIt.get<TransactionApiServiceGenerate>(),
+    ),
+  );
 
   ///Provider
 
@@ -182,6 +195,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<TransactionRepository>(
+    () => TransactionRepositoryImpl(
+      getIt.get<TransactionApiService>(),
+    ),
+  );
+
   ///Use case
   getIt.registerLazySingleton<AppSecureUseCase>(
     () => AppSecureUseCase(
@@ -221,6 +240,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<ControllerKeyUseCase>(
     () => ControllerKeyUseCase(
       getIt.get<ControllerKeyRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<TransactionUseCase>(
+    () => TransactionUseCase(
+      getIt.get<TransactionRepository>(),
     ),
   );
 
@@ -338,7 +363,7 @@ Future<void> initDependency(
 
   getIt.registerFactory<HistoryPageBloc>(
     () => HistoryPageBloc(
-      getIt.get<SmartAccountUseCase>(),
+      getIt.get<TransactionUseCase>(),
       getIt.get<AuraAccountUseCase>(),
     ),
   );

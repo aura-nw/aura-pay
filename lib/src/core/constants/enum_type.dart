@@ -35,3 +35,11 @@ enum RecoverOptionType{
   google,
   backupAddress,
 }
+
+// Cosmos msg type
+enum MsgType{
+  send,
+  recover,
+  executeContract,
+  other,
+}

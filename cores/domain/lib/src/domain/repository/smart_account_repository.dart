@@ -43,13 +43,6 @@ abstract interface class SmartAccountRepository {
     required String txHash,
   });
 
-  Future<List<PyxisTransaction>> getTransactionHistories({
-    required List<String> events,
-    required int limit,
-    required int offset,
-    required String orderBy,
-  });
-
   Future<TransactionInformation> setRecoveryMethod({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
