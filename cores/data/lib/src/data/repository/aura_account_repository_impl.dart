@@ -39,6 +39,7 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
       method: parameter.method,
       type: parameter.type,
       address: parameter.address,
+      useNullAble: parameter.useNullAble,
     );
   }
 

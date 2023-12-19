@@ -3,20 +3,16 @@ final class PyxisTransaction {
   final int status;
   final String timeStamp;
   final String fee;
-  final String type;
   final String? memo;
-  final List<String> events;
-  final String ?amount;
+  final Map<String,dynamic> msg;
 
   const PyxisTransaction({
     required this.status,
     required this.txHash,
     required this.timeStamp,
     required this.fee,
-    required this.type,
-    required this.events,
+    required this.msg,
     this.memo,
-    this.amount,
   });
 
   bool get isSuccess => status == 0;

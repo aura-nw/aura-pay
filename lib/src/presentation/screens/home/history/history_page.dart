@@ -2,25 +2,27 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
-import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
-import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
-import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
+import 'package:pyxis_mobile/src/core/utils/app_date_format.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_state.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/history/widgets/change_account_widget.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/history/widgets/transaction_detail_widget.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/widgets/transaction_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/combine_list_view.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'history_page_event.dart';
 import 'history_page_selector.dart';
 import 'history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 import 'widgets/account_widget.dart';
 import 'widgets/tab_bar_widget.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -63,14 +65,20 @@ class _HistoryPageState extends State<HistoryPage> {
                     padding: const EdgeInsets.symmetric(
                       horizontal: Spacing.spacing07,
                     ),
-                    child: HomeScreenAccountsSelector(
+                    child: HistoryPageAccountsSelector(
                       builder: (accounts) {
-                        final account = accounts.first;
-                        return HistoryAccountWidget(
-                          onShowMoreAccount: () {},
-                          appTheme: appTheme,
-                          address: account.address,
-                          accountName: account.name,
+                        return HistoryPageSelectedAccountSelector(
+                          builder: (selectedAccount) {
+                            return HistoryAccountWidget(
+                              onShowMoreAccount: () {
+                                _showMoreAccount(
+                                    appTheme, accounts, selectedAccount);
+                              },
+                              appTheme: appTheme,
+                              address: selectedAccount?.address ?? '',
+                              accountName: selectedAccount?.name ?? '',
+                            );
+                          },
                         );
                       },
                     ),
@@ -147,44 +155,86 @@ class _HistoryPageState extends State<HistoryPage> {
                                         }
                                       },
                                       data: transactions,
-                                      builder: (transaction) {
-                                        String sender = transaction.events[0];
+                                      builder: (transaction, index) {
+                                        Widget widget = const SizedBox();
 
-                                        String type =
-                                            AppLocalizationManager.of(context)
-                                                .translate(
-                                          LanguageKey
-                                              .transactionHistoryPageReceive,
+                                        final hasPreviousIndex = transactions
+                                            .constantIndex(index - 1);
+
+                                        final String dateFormat = AppDateTime
+                                            .formatDateDMMMYYY(
+                                          transaction.timeStamp,
                                         );
 
-                                        String iconPath =
-                                            AssetIconPath.historyReceiveLogo;
+                                        if (!hasPreviousIndex) {
+                                          widget = Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                dateFormat,
+                                                style: AppTypoGraPhy.bodyMedium02.copyWith(
+                                                  color: appTheme.contentColorBlack,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: BoxSize.boxSize06,
+                                              ),
+                                            ],
+                                          );
+                                        } else {
+                                          final previousItem =
+                                              transactions[index - 1];
 
-
-                                        bool isSend = sender == _bloc.state.address;
-
-                                        if (isSend) {
-                                          type =
-                                              AppLocalizationManager.of(context)
-                                                  .translate(
-                                            LanguageKey
-                                                .transactionHistoryPageSend,
+                                          final String preDateFormat = AppDateTime
+                                              .formatDateDMMMYYY(
+                                            previousItem.timeStamp,
                                           );
 
-                                          iconPath =
-                                              AssetIconPath.historySendLogo;
+
+                                          if (preDateFormat !=
+                                              dateFormat) {
+                                            widget = Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  dateFormat,
+                                                  style: AppTypoGraPhy.bodyMedium02.copyWith(
+                                                    color: appTheme.contentColorBlack,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: BoxSize.boxSize06,
+                                                ),
+                                              ],
+                                            );
+                                          }
                                         }
-                                        return TransactionWidget(
-                                          onTap: (){
-                                            _showTransactionDetail(transaction);
-                                          },
-                                          type: type,
-                                          iconPath: iconPath,
-                                          status: transaction.isSuccess,
-                                          amount: transaction.amount?.formatAura  ?? '',
-                                          time: transaction.timeStamp,
-                                          appTheme: appTheme,
-                                          isReceive: !isSend,
+                                        return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            widget,
+                                            TransactionWidget(
+                                              onTap: () {
+                                                _showTransactionDetail(
+                                                    transaction, appTheme);
+                                              },
+                                              status: transaction.isSuccess,
+                                              msg: transaction.msg,
+                                              time: transaction.timeStamp,
+                                              appTheme: appTheme,
+                                              accountName: _bloc.state
+                                                      .selectedAccount?.name ??
+                                                  '',
+                                              address: _bloc
+                                                      .state
+                                                      .selectedAccount
+                                                      ?.address ??
+                                                  '',
+                                            ),
+                                          ],
                                         );
                                       },
                                       canLoadMore: canLoadMore,
@@ -206,7 +256,46 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  void _showTransactionDetail(PyxisTransaction transaction){
+  void _showTransactionDetail(
+    PyxisTransaction transaction,
+    AppTheme appTheme,
+  ) {
+    DialogProvider.showCustomDialog(
+      context,
+      appTheme: appTheme,
+      canBack: true,
+      widget: TransactionDetailWidget(
+        appTheme: appTheme,
+        pyxisTransaction: transaction,
+        accountName: _bloc.state.selectedAccount?.name ?? '',
+        address: _bloc.state.selectedAccount?.address ?? '',
+      ),
+    );
+  }
 
+  void _showMoreAccount(
+    AppTheme appTheme,
+    List<AuraAccount> accounts,
+    AuraAccount? selectedAccount,
+  ) async {
+    final AuraAccount? account =
+        await DialogProvider.showCustomDialog<AuraAccount>(
+      context,
+      appTheme: appTheme,
+      canBack: true,
+      widget: ChangeAccountFormWidget(
+        appTheme: appTheme,
+        accounts: accounts,
+        isSelected: (account) {
+          return account.id == selectedAccount?.id;
+        },
+      ),
+    );
+
+    if (account != null) {
+      _bloc.add(
+        HistoryPageEventOnChangeSelectedAccount(account),
+      );
+    }
   }
 }

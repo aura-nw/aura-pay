@@ -1,5 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
@@ -80,6 +82,9 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                   onRecoverTap: () async {
                     await AppNavigator.push(
                       RoutePath.signedInRecoverChoice,
+                    );
+                    _homeScreenBloc.add(
+                      const HomeScreenEventOnReFetchAccount(),
                     );
                   },
                 ),
@@ -266,6 +271,13 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
         appTheme: appTheme,
         address: account.address,
         onRemove: () {
+          if (_homeScreenBloc.state.accounts.length == 1) {
+            AppGlobalCubit.of(context).changeState(
+              const AppGlobalState(
+                status: AppGlobalStatus.unauthorized,
+              ),
+            );
+          }
           _homeScreenBloc.add(
             HomeScreenEventOnRemoveAccount(
               account.id,

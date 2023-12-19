@@ -203,10 +203,12 @@ final class TextAppButton extends StatelessWidget {
   final double? minWidth;
   final Widget? leading;
   final Widget? suffix;
+  final TextStyle ?style;
 
   const TextAppButton({
     super.key,
     required this.text,
+    this.style,
     this.isDisable,
     this.onPress,
     this.minWidth,
@@ -224,7 +226,7 @@ final class TextAppButton extends StatelessWidget {
           onPress: onPress,
           color: theme.bodyColorBackground,
           minWidth: minWidth,
-          textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
+          textStyle: style ?? AppTypoGraPhy.bodyMedium03.copyWith(
             color: theme.contentColor700,
           ),
           theme: theme,

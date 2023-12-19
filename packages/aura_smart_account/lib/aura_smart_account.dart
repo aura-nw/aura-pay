@@ -5,9 +5,7 @@ import 'dart:typed_data';
 import 'package:aura_smart_account/src/aura_smart_account_impl.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_error.dart';
-import 'package:aura_smart_account/src/core/definitions/aura_smart_account_transaction.dart';
 import 'package:aura_smart_account/src/core/definitions/fee.dart';
-import 'package:aura_smart_account/src/core/definitions/order_parameter.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart';
 import 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dart';
 
@@ -21,8 +19,7 @@ export 'package:aura_smart_account/src/core/definitions/fee.dart';
 export 'package:aura_smart_account/src/core/definitions/gas_price.dart';
 export 'package:aura_smart_account/src/core/helpers/cosmos_helper.dart';
 export 'package:aura_smart_account/src/core/aura_smart_account_cache.dart';
-export 'package:aura_smart_account/src/core/definitions/order_parameter.dart';
-export 'package:aura_smart_account/src/core/definitions/aura_smart_account_transaction.dart';
+export 'src/export_type.dart';
 
 /// AuraSmartAccount is an interface. It define some methods to support for aura smart account
 /// See more [https://github.com/aura-nw/aura/tree/main/proto/aura/smartaccount/]
@@ -114,17 +111,6 @@ abstract interface class AuraSmartAccount {
   /// It can throw [AuraSmartAccountError]
   Future<TxResponse> getTx({
     required String txHash,
-  });
-
-  /// Get transactions by address
-  /// This method has to pass two parameters include:
-  /// [events] as List<String>. For example ["transfer.sender='$address'", "transfer.recipient='$address'"]
-  /// [orderParameter] as [OrderParameter] to pass queries parameter to request
-  /// Response [List<String>]
-  /// It can throw [AuraSmartAccountError]
-  Future<List<AuraSmartAccountTransaction>> getHistoryTransaction({
-    required List<String> events,
-    OrderParameter orderParameter = const OrderParameter(),
   });
 
   /// Set a recovery method for smart account

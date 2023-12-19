@@ -132,38 +132,6 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
   }
 
   @override
-  Future<List<PyxisTransactionDto>> getTransactionHistories({
-    required List<String> events,
-    required int limit,
-    required int offset,
-    required String orderBy,
-  }) async {
-    final response = await _auraSmartAccount.getHistoryTransaction(
-      events: events,
-      orderParameter: OrderParameter(
-        offset: offset,
-        limit: limit,
-        orderBy: orderBy.fromString,
-      ),
-    );
-
-    return response
-        .map(
-          (e) => PyxisTransactionDto(
-            type: e.type,
-            fee: e.fee,
-            memo: e.memo,
-            status: e.status,
-            txHash: e.txHash,
-            timeStamp: e.timeStamp,
-            events: e.events,
-            amount: e.amount,
-          ),
-        )
-        .toList();
-  }
-
-  @override
   Future<TransactionInformationDto> setRecoveryMethod({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,

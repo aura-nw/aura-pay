@@ -120,6 +120,7 @@ extension IntExtension on int {
     String secondsLeft = s.toString().length < 2 ? "0$s" : s.toString();
     return secondsLeft;
   }
+
 }
 
 extension TruncateDoubles on double {

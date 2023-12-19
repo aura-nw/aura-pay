@@ -108,6 +108,8 @@ final class OnBoardingRecoverSignBloc
 
       information = await _checkTransactionInfo(information.txHash, 0);
 
+      await _web3authUseCase.onLogout();
+
       if (information.status == 0) {
         _controllerKeyUseCase.saveKey(
           address: state.account.address,
@@ -128,7 +130,6 @@ final class OnBoardingRecoverSignBloc
         );
       }
     } catch (e) {
-      print(e.toString());
       emit(
         state.copyWith(
           status: OnBoardingRecoverSignStatus.onRecoverFail,

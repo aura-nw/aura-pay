@@ -7,7 +7,7 @@ class CombinedListView<T> extends StatefulWidget {
   static const double _defaultEndReachedThreshold = 200;
 
   final List<T> data;
-  final Widget Function(T) builder;
+  final Widget Function(T,int) builder;
   final void Function() onRefresh;
   final void Function() onLoadMore;
   final double loadMoreThreshHold;
@@ -78,7 +78,7 @@ class _CombinedListViewState<T> extends State<CombinedListView<T>> {
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
-              (_, index) => widget.builder(widget.data[index]),
+              (_, index) => widget.builder(widget.data[index],index),
               childCount: widget.data.length,
             ),
           ),

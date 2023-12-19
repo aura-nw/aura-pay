@@ -36,6 +36,20 @@ sealed class AppDateTime {
    return '${AppDateFormatter.hourMinute.format(dateTime)} ${AppDateFormatter.amPm.format(dateTime)}';
  }
 
+ static String formatDateDMMMYYY(String dateTimeString) {
+   late DateTime dateTime;
+   if (dateTimeString.lastIndexOf('Z') != -1) {
+     dateTime = DateTime.parse(dateTimeString).toLocal();
+   }else{
+     dateTime = DateTime.parse(dateTimeString);
+   }
+
+
+   String dateFormat = "${dateTime.day} ${_getMonthEnName(dateTime.month)} ${dateTime.year}";
+
+   return dateFormat;
+ }
+
 
   static String formatDateHHMMDMMMYYY(String dateTimeString) {
     late DateTime dateTime;
@@ -47,7 +61,7 @@ sealed class AppDateTime {
 
     // Format the DateTime to "hh:mm, d MMM yyyy"
     String timeFormat = "${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}";
-    String dateFormat = "${dateTime.day}th ${_getMonthEnName(dateTime.month)} ${dateTime.year}";
+    String dateFormat = "${dateTime.day} ${_getMonthEnName(dateTime.month)} ${dateTime.year}";
 
     return "$timeFormat, $dateFormat";
   }

@@ -62,14 +62,14 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
     AuraAccountType? type,
     AuraSmartAccountRecoveryMethod? method,
     String? value,
+    bool useNullAble = false,
   }) async {
     final AuraAccountDb? account = await _isar.auraAccountDbs.get(id);
 
     if (account != null) {
-      AuraAccountRecoveryMethodDb ? methodDb = account.methodDb;
+      AuraAccountRecoveryMethodDb? methodDb = account.methodDb;
 
-
-      if(method !=null && value != null){
+      if (method != null && value != null) {
         methodDb ??= const AuraAccountRecoveryMethodDb();
       }
 
@@ -80,10 +80,12 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
               name: accountName,
               address: address,
               type: type,
-              methodDb: methodDb?.copyWith(
-                method: method,
-                value: value,
-              ),
+              methodDb: useNullAble
+                  ? null
+                  : methodDb?.copyWith(
+                      method: method,
+                      value: value,
+                    ),
             ),
           );
         },

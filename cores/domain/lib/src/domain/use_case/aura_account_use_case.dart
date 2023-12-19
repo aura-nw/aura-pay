@@ -40,6 +40,7 @@ final class AuraAccountUseCase {
     AuraSmartAccountRecoveryMethod? method,
     String? value,
     required int id,
+    bool useNullable = false,
   }) {
     final RenameAccountRequestParameter parameter =
         RenameAccountRequestParameter(

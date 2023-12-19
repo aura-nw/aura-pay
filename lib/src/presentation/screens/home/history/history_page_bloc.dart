@@ -1,16 +1,18 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/transaction_enum.dart';
+import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 import 'history_page_event.dart';
 
 import 'history_page_state.dart';
 
 final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
-  final SmartAccountUseCase _smartAccountUseCase;
+  final TransactionUseCase _transactionUseCase;
   final AuraAccountUseCase _accountUseCase;
 
   HistoryPageBloc(
-    this._smartAccountUseCase,
+    this._transactionUseCase,
     this._accountUseCase,
   ) : super(
           const HistoryPageState(),
@@ -19,21 +21,17 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     on(_onLoadMore);
     on(_onRefresh);
     on(_onFilter);
+    on(_onChangeAccount);
   }
 
   Future<List<PyxisTransaction>> _getTransaction() async {
     List<PyxisTransaction> transactions = List.empty(growable: true);
-    for (final event in state.events) {
-      final transactionByEvent =
-          await _smartAccountUseCase.getTransactionHistories(
-        limit: state.limit,
-        offset: state.offset,
-        events: [
-          event,
-        ],
 
-        /// Default order by
-        orderBy: '',
+    for (final event in state.events) {
+      final transactionByEvent = await _transactionUseCase.getTransactions(
+        limit: state.limit,
+        page: state.offset,
+        events: event,
       );
 
       transactions.addAll(transactionByEvent);
@@ -42,15 +40,25 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     transactions.sort(
       (a, b) {
         // Default sort as ASC
-        return a.timeStamp.compareTo(b.timeStamp);
+        return b.timeStamp.compareTo(a.timeStamp);
       },
     );
 
-    return transactions
-        .where(
-          (element) => element.type == TransactionType.Send,
-        )
-        .toList();
+    return transactions.where(
+      (transaction) {
+        final MsgType type = TransactionHelper.getMsgType(transaction.msg);
+
+        if (type == MsgType.other) {
+          return false;
+        }
+
+        if (type == MsgType.executeContract) {
+          return TransactionHelper.validateMsgSetRecovery(transaction.msg);
+        }
+
+        return true;
+      },
+    ).toList();
   }
 
   void _onInit(
@@ -64,14 +72,15 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     );
 
     try {
-      final account = await _accountUseCase.getFirstAccount();
+      final accounts = await _accountUseCase.getAccounts();
 
       emit(
         state.copyWith(
-          address: account?.address ?? '',
+          selectedAccount: accounts.firstOrNull,
+          accounts: accounts,
           events: _getEventByTab(
-            0,
-            address: account?.address,
+            state.currentTab,
+            address: accounts.firstOrNull?.address,
           ),
         ),
       );
@@ -81,12 +90,11 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
       emit(
         state.copyWith(
           status: HistoryPageStatus.loaded,
-          canLoadMore: transactions.length == 30,
+          canLoadMore: transactions.length >= 30,
           transactions: transactions,
         ),
       );
     } catch (e) {
-      print(e.toString());
       emit(
         state.copyWith(
           status: HistoryPageStatus.error,
@@ -106,6 +114,9 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
       state.copyWith(
         status: HistoryPageStatus.loadMore,
         offset: state.offset + 1,
+        events: _getEventByTab(
+          state.currentTab,
+        ),
       ),
     );
 
@@ -141,6 +152,9 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
         status: HistoryPageStatus.loading,
         offset: 1,
         transactions: [],
+        events: _getEventByTab(
+          state.currentTab,
+        ),
       ),
     );
 
@@ -150,7 +164,7 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
       emit(
         state.copyWith(
           status: HistoryPageStatus.loaded,
-          canLoadMore: transactions.length == 30,
+          canLoadMore: transactions.length >= 30,
           transactions: transactions,
         ),
       );
@@ -173,6 +187,7 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
         status: HistoryPageStatus.loading,
         offset: 1,
         transactions: [],
+        currentTab: event.tab,
         events: _getEventByTab(event.tab),
       ),
     );
@@ -182,7 +197,7 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
       emit(
         state.copyWith(
           status: HistoryPageStatus.loaded,
-          canLoadMore: transactions.length == 30,
+          canLoadMore: transactions.length >= 30,
           transactions: transactions,
         ),
       );
@@ -196,36 +211,57 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     }
   }
 
-  List<String> _getEventByTab(int tab, {String? address}) {
+  void _onChangeAccount(
+    HistoryPageEventOnChangeSelectedAccount event,
+    Emitter<HistoryPageState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        selectedAccount: event.selectedAccount,
+        events: _getEventByTab(state.currentTab),
+      ),
+    );
+
+    add(
+      const HistoryPageEventOnRefresh(),
+    );
+  }
+
+  List<List<String>> _getEventByTab(int tab, {String? address}) {
     List<String> querySend = [
-      "message.sender='${address ?? state.address}'",
+      "message.sender='${address ?? state.selectedAccount?.address}'",
       "message.action='${TransactionType.Send}'"
     ];
 
     List<String> queryReceive = [
-      "transfer.recipient='${address ?? state.address}'",
+      "transfer.recipient='${address ?? state.selectedAccount?.address}'",
     ];
 
     List<String> querySetRecovery = [
-      "message.sender='${address ?? state.address}'",
+      "message.sender='${address ?? state.selectedAccount?.address}'",
       "message.action='${TransactionType.ExecuteContract}'"
     ];
 
     List<String> queryRecover = [
-      "message.sender='${address ?? state.address}'",
+      "message.sender='${address ?? state.selectedAccount?.address}'",
       "message.action='${TransactionType.Recover}'"
     ];
 
-    // Total tab = 3 include all , send , receive , set recovery , recover
-    final List<String> events = [
-      "transfer.sender='${address ?? state.address}'",
-      "transfer.recipient='${address ?? state.address}'",
-      "stake.sender='${address ?? state.address}'",
-    ];
-
     if (tab == 0) {
-      return events;
+      return [
+        ["message.sender='${address ?? state.selectedAccount?.address}'"],
+        ...[
+          queryReceive,
+        ],
+      ];
     } else {
+      List<List<String>> events = [
+        querySend,
+        queryReceive,
+        querySetRecovery,
+        queryRecover
+      ];
+
       return [
         events[tab - 1],
       ];

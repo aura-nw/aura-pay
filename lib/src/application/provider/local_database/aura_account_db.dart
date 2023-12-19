@@ -13,11 +13,12 @@ extension AuraAccountDbExtension on AuraAccountDb {
     AuraAccountRecoveryMethodDb? methodDb,
   }) {
     return AuraAccountDb(
-        accountId: id ?? this.id,
-        accountType: type ?? this.type,
-        accountAddress: address ?? this.address,
-        accountName: name ?? this.name,
-        methodDb: methodDb ?? this.methodDb);
+      accountId: id ?? this.id,
+      accountType: type ?? this.type,
+      accountAddress: address ?? this.address,
+      accountName: name ?? this.name,
+      methodDb: methodDb ?? this.methodDb,
+    );
   }
 }
 

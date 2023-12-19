@@ -32,6 +32,7 @@ import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
 import 'presentation/screens/on_boarding_import_key/on_boarding_import_key_screen.dart';
 import 'presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_screen.dart';
 import 'presentation/screens/signed_in_recover_select_account/singed_in_recover_select_account_screen.dart';
+import 'presentation/screens/signed_in_recover_sign/signed_in_recover_sign_screen.dart';
 
 sealed class RoutePath {
   static const String _base = '/';
@@ -70,6 +71,7 @@ sealed class RoutePath {
   static const String signedInRecoverChoice = '$_signedInRecover/choice';
   static const String signedInRecoverSelectAccount =
       '$_signedInRecover/select_account';
+  static const String signedInRecoverSign = '$_signedInRecover/sign';
 
   static const String recoverMethod = '$home/recover_method';
   static const String setRecoverMethod = '$recoverMethod/set_recover_method';
@@ -289,10 +291,22 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.signedInRecoverSelectAccount:
-        final GoogleAccount googleAccount = settings.arguments as  GoogleAccount;
+        final GoogleAccount googleAccount = settings.arguments as GoogleAccount;
         return _defaultRoute(
           SingedInRecoverSelectAccountScreen(
             googleAccount: googleAccount,
+          ),
+          settings,
+        );
+      case RoutePath.signedInRecoverSign:
+        final Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        final AuraAccount account = arguments['account'];
+        final GoogleAccount googleAccount = arguments['google_account'];
+        return _defaultRoute(
+          SignedInRecoverSignScreen(
+            googleAccount: googleAccount,
+            account: account,
           ),
           settings,
         );

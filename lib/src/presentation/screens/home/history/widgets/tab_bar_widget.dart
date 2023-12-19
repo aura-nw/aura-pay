@@ -28,7 +28,8 @@ class _HistoryTabBarWidgetState extends State<HistoryTabBarWidget> {
     LanguageKey.transactionHistoryPageAll,
     LanguageKey.transactionHistoryPageSend,
     LanguageKey.transactionHistoryPageReceive,
-    LanguageKey.transactionHistoryPageStake,
+    LanguageKey.transactionHistoryPageSetRecoveryTap,
+    LanguageKey.transactionHistoryPageRecoveryTap,
   ];
 
   int selectedTab = 0;
@@ -72,12 +73,12 @@ class _HistoryTabBarWidgetState extends State<HistoryTabBarWidget> {
             ),
           ),
         ),
-        const SizedBox(
-          width: BoxSize.boxSize02,
-        ),
-        SvgPicture.asset(
-          AssetIconPath.historyMore,
-        ),
+        // const SizedBox(
+        //   width: BoxSize.boxSize02,
+        // ),
+        // SvgPicture.asset(
+        //   AssetIconPath.historyMore,
+        // ),
       ],
     );
   }
