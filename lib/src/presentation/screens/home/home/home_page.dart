@@ -81,6 +81,10 @@ class _HomePageState extends State<HomePage>
                       await AppNavigator.push(
                         RoutePath.sendTransaction,
                       );
+
+                      _bloc.add(
+                        const HomePageEventOnFetchTokenPrice(),
+                      );
                     },
                     onStakeTap: () {},
                     onTXsLimitTap: () {},

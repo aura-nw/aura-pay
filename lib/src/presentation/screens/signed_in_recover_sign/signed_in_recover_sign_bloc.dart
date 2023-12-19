@@ -136,7 +136,6 @@ final class SignedInRecoverSignBloc
         );
       }
 
-      await _web3authUseCase.onLogout();
     } catch (e) {
       emit(
         state.copyWith(
@@ -144,6 +143,8 @@ final class SignedInRecoverSignBloc
           error: e.toString(),
         ),
       );
+    }finally{
+      _logout();
     }
   }
 
@@ -163,6 +164,14 @@ final class SignedInRecoverSignBloc
         rethrow;
       }
       return _checkTransactionInfo(txHash, times + 1);
+    }
+  }
+
+  void _logout()async{
+    try{
+       _web3authUseCase.onLogout();
+    }catch(e){
+      //
     }
   }
 }

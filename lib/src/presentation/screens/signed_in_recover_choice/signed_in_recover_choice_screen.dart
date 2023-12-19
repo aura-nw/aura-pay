@@ -53,7 +53,7 @@ class _SignedInRecoverChoiceScreenState
                   break;
                 case SignedInRecoverChoiceStatus.loginSuccess:
                   AppNavigator.push(
-                    RoutePath.recoverSelectAccount,
+                    RoutePath.signedInRecoverSelectAccount,
                     state.googleAccount,
                   );
                   break;
