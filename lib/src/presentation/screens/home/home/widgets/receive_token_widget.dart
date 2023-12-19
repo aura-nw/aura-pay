@@ -37,6 +37,9 @@ class ReceiveTokenWidget extends StatelessWidget {
           onSwipeUp.call();
         }
       },
+      onTap: () {
+        onSwipeUp.call();
+      },
       child: Material(
         color: Colors.transparent,
         child: Container(
@@ -47,62 +50,65 @@ class ReceiveTokenWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: Spacing.spacing09,
           ),
-          child: Container(
-            padding: const EdgeInsets.only(
-              left: Spacing.spacing05,
-              right: Spacing.spacing05,
-              bottom: Spacing.spacing07,
-              top: Spacing.spacing04,
-            ),
-            decoration: BoxDecoration(
-              color: theme.bodyColorBackground,
-              borderRadius: BorderRadius.circular(
-                BorderRadiusSize.borderRadius06,
+          child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              padding: const EdgeInsets.only(
+                left: Spacing.spacing05,
+                right: Spacing.spacing05,
+                bottom: Spacing.spacing07,
+                top: Spacing.spacing04,
               ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ScrollViewWidget(
-                  appTheme: theme,
+              decoration: BoxDecoration(
+                color: theme.bodyColorBackground,
+                borderRadius: BorderRadius.circular(
+                  BorderRadiusSize.borderRadius06,
                 ),
-                const SizedBox(
-                  height: BoxSize.boxSize08,
-                ),
-                QrImageView(
-                  data: address,
-                  version: QrVersions.auto,
-                  padding: EdgeInsets.zero,
-                  backgroundColor: theme.bodyColorBackground,
-                  size: context.w / 2.4,
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize06,
-                ),
-                AccountCardReceiveWidget(
-                  onCopy: (address) => onCopyAddress(address),
-                  accountName: accountName,
-                  address: address,
-                  appTheme: theme,
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize07,
-                ),
-                AppLocalizationProvider(
-                  builder: (localization, _) {
-                    return PrimaryAppButton(
-                      leading: SvgPicture.asset(
-                        AssetIconPath.homeReceiveShareAddress,
-                      ),
-                      text: localization.translate(
-                        LanguageKey.homePageReceiveShareAddress,
-                      ),
-                      onPress: onShareAddress,
-                    );
-                  },
-                )
-              ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ScrollViewWidget(
+                    appTheme: theme,
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize08,
+                  ),
+                  QrImageView(
+                    data: address,
+                    version: QrVersions.auto,
+                    padding: EdgeInsets.zero,
+                    backgroundColor: theme.bodyColorBackground,
+                    size: context.w / 2.4,
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize06,
+                  ),
+                  AccountCardReceiveWidget(
+                    onCopy: (address) => onCopyAddress(address),
+                    accountName: accountName,
+                    address: address,
+                    appTheme: theme,
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize07,
+                  ),
+                  AppLocalizationProvider(
+                    builder: (localization, _) {
+                      return PrimaryAppButton(
+                        leading: SvgPicture.asset(
+                          AssetIconPath.homeReceiveShareAddress,
+                        ),
+                        text: localization.translate(
+                          LanguageKey.homePageReceiveShareAddress,
+                        ),
+                        onPress: onShareAddress,
+                      );
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),

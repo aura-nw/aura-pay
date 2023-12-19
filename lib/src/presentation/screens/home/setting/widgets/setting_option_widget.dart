@@ -22,43 +22,42 @@ class SettingOptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        bottom: Spacing.spacing08,
-      ),
-      child: Row(
-        children: [
-          SvgPicture.asset(
-            iconPath,
-          ),
-          const SizedBox(
-            width: BoxSize.boxSize05,
-          ),
-          Expanded(
-            child: AppLocalizationProvider(
-              builder: (localization, _) {
-                return Text(
-                  localization.translate(
-                    labelPath,
-                  ),
-                  style: AppTypoGraPhy.bodyMedium03.copyWith(
-                    color: appTheme.contentColor700,
-                  ),
-                );
-              },
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.only(
+            bottom: Spacing.spacing04, top: Spacing.spacing04),
+        child: Row(
+          children: [
+            SvgPicture.asset(
+              iconPath,
             ),
-          ),
-          const SizedBox(
-            width: BoxSize.boxSize05,
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: onTap,
-            child: SvgPicture.asset(
+            const SizedBox(
+              width: BoxSize.boxSize05,
+            ),
+            Expanded(
+              child: AppLocalizationProvider(
+                builder: (localization, _) {
+                  return Text(
+                    localization.translate(
+                      labelPath,
+                    ),
+                    style: AppTypoGraPhy.bodyMedium03.copyWith(
+                      color: appTheme.contentColor700,
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(
+              width: BoxSize.boxSize05,
+            ),
+            SvgPicture.asset(
               AssetIconPath.settingArrowNext,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
