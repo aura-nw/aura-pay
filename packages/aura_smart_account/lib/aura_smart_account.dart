@@ -8,6 +8,7 @@ import 'package:aura_smart_account/src/core/definitions/aura_smart_account_error
 import 'package:aura_smart_account/src/core/definitions/fee.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart';
 import 'package:aura_smart_account/src/proto/cosmos/base/abci/v1beta1/export.dart';
+import 'package:protobuf/protobuf.dart';
 
 export 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 export 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
@@ -18,7 +19,6 @@ export 'package:aura_smart_account/src/core/definitions/aura_smart_account_error
 export 'package:aura_smart_account/src/core/definitions/fee.dart';
 export 'package:aura_smart_account/src/core/definitions/gas_price.dart';
 export 'package:aura_smart_account/src/core/helpers/cosmos_helper.dart';
-export 'package:aura_smart_account/src/core/aura_smart_account_cache.dart';
 export 'src/export_type.dart';
 
 /// AuraSmartAccount is an interface. It define some methods to support for aura smart account
@@ -74,9 +74,7 @@ abstract interface class AuraSmartAccount {
   Future<int> simulateFee({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
-    required String receiverAddress,
-    required String amount,
-    String? memo,
+    required GeneratedMessage msg,
   });
 
   /// Query balance from address
@@ -125,6 +123,19 @@ abstract interface class AuraSmartAccount {
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String recoverAddress,
+    AuraSmartAccountFee? fee,
+  });
+
+  /// Remove a recovery method for smart account
+  /// This method has to pass three parameters include:
+  /// [userPrivateKey] as Uint8List
+  /// [smartAccountAddress] as String
+  /// [fee] as [AuraSmartAccountFee]?
+  /// Response [TxResponse]
+  /// It can throw [AuraSmartAccountError]
+  Future<TxResponse> unRegisterRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
     AuraSmartAccountFee? fee,
   });
 

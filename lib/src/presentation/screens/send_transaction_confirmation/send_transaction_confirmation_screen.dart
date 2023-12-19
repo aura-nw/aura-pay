@@ -292,7 +292,7 @@ class _SendTransactionConfirmationScreenState
                     builder: (fee) {
                       double feeD = double.tryParse(fee.formatAura) ?? 0;
                       return Text(
-                        '${amountD + feeD} ${localization.translate(
+                        '${(amountD + feeD).formatAuraNumber} ${localization.translate(
                           LanguageKey.globalPyxisAura,
                         )}',
                         style: AppTypoGraPhy.heading03.copyWith(

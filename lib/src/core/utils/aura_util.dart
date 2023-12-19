@@ -1,4 +1,5 @@
 extension AuraFormatter on String {
+
   String get formatAura {
     double auraD = double.tryParse(this) ?? 0;
 
@@ -37,5 +38,19 @@ extension AuraFormatter on String {
     double aura = double.tryParse(this) ?? 0;
 
     return (aura * 1000000).round().toString();
+  }
+}
+
+extension AuraNumberFormatter on num{
+  String get formatAuraNumber{
+    String auraString = toStringAsFixed(6);
+
+    auraString = auraString.replaceAll(RegExp(r'0*$'), '');
+
+    if (auraString.endsWith('.')) {
+      auraString = auraString.substring(0, auraString.length - 1);
+    }
+
+    return auraString;
   }
 }

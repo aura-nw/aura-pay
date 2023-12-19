@@ -2,6 +2,8 @@ import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmation/recovery_method_confirmation_screen.dart';
 import 'recovery_method_confirmation_screen_event.dart';
 import 'recovery_method_confirmation_screen_state.dart';
@@ -41,22 +43,23 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     RecoveryMethodConfirmationEventOnInit event,
     Emitter<RecoveryMethodConfirmationState> emit,
   ) async {
+    final config = getIt.get<PyxisMobileConfig>();
     // Set default gas
     final highFee = CosmosHelper.calculateFee(
       _defaultGasLimit,
-      deNom: AuraSmartAccountCache.deNom,
+      deNom: config.deNom,
       gasPrice: GasPriceStep.high.value,
     );
 
     final fee = CosmosHelper.calculateFee(
       _defaultGasLimit,
-      deNom: AuraSmartAccountCache.deNom,
+      deNom: config.deNom,
       gasPrice: GasPriceStep.average.value,
     );
 
     final lowFee = CosmosHelper.calculateFee(
       _defaultGasLimit,
-      deNom: AuraSmartAccountCache.deNom,
+      deNom: config.deNom,
       gasPrice: GasPriceStep.low.value,
     );
 
@@ -85,6 +88,7 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     RecoveryMethodConfirmationEventOnConfirm event,
     Emitter<RecoveryMethodConfirmationState> emit,
   ) async {
+
     emit(
       state.copyWith(
         status: RecoveryMethodConfirmationStatus.onRecovering,
@@ -97,6 +101,32 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
       final String? smPrivateKey = await _controllerKeyUseCase.getKey(
         address: account.address,
       );
+
+      if (state.argument.isReadyMethod) {
+        TransactionInformation information =
+            await _smartAccountUseCase.unRegisterRecoveryMethod(
+          userPrivateKey:
+              AuraWalletHelper.getPrivateKeyFromString(smPrivateKey!),
+          smartAccountAddress: account.address,
+        );
+
+        information = await _checkTransactionInfo(information.txHash, 0);
+
+        if (information.status != 0) {
+          emit(
+            state.copyWith(
+              status: RecoveryMethodConfirmationStatus.onUnRegisterRecoverFail,
+              error: information.rawLog,
+            ),
+          );
+        }else{
+          await _accountUseCase.updateAccount(
+            id: account.id,
+            method: null,
+            useNullable: true,
+          );
+        }
+      }
 
       String recoveryAddress = '';
 
@@ -134,6 +164,8 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
 
       information = await _checkTransactionInfo(information.txHash, 0);
 
+      await _web3authUseCase.onLogout();
+
       if (information.status == 0) {
         await _accountUseCase.updateAccount(
           id: account.id,
@@ -154,8 +186,6 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
           ),
         );
       }
-
-      await _web3authUseCase.onLogout();
     } catch (e) {
       emit(
         state.copyWith(

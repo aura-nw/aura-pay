@@ -107,9 +107,8 @@ class PickRecoverOptionWidget extends StatefulWidget {
 }
 
 class _PickRecoverOptionWidgetState extends State<PickRecoverOptionWidget> {
-  /// Fake for deploy test flight
   ///Default type
-  RecoverOptionType type = RecoverOptionType.backupAddress;
+  RecoverOptionType type = RecoverOptionType.google;
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +116,6 @@ class _PickRecoverOptionWidgetState extends State<PickRecoverOptionWidget> {
       builder: (localization, _) {
         return Column(
           children: [
-            if (Platform.isAndroid)
               _PickRecoverOptionItemWidget(
                 content: localization.translate(
                   LanguageKey.onBoardingRecoverChoiceScreenGoogleOptionContent,

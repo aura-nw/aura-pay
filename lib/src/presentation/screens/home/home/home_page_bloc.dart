@@ -61,7 +61,9 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       if (message is Map<String, dynamic>) {
         try {
           final SmartAccountUseCase smartAccountUseCase =
-              smartAccountUseCaseFactory();
+              smartAccountUseCaseFactory(
+            message['auraSmartAccountEnvironment'],
+          );
 
           final Dio dio = dioFactory(message['base_url']);
 
@@ -102,6 +104,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       'base_url': config.coinGeckoUrl + config.coinGeckoVersion,
       'address': account?.address,
       'aura_id': config.auraId,
+      'auraSmartAccountEnvironment': config.environment.toSME,
     });
   }
 

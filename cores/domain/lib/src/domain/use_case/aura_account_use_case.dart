@@ -50,6 +50,7 @@ final class AuraAccountUseCase {
       type: type,
       method: method,
       value: value,
+      useNullAble: useNullable,
     );
     return _repository.updateAccount(parameter);
   }

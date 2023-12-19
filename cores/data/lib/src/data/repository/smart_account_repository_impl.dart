@@ -69,19 +69,14 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
   }
 
   @override
-  Future<int> simulateFee({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    required String receiverAddress,
-    required String amount,
-    String? memo,
-  }) {
+  Future<int> simulateFee(
+      {required Uint8List userPrivateKey,
+      required String smartAccountAddress,
+      dynamic msg}) {
     return _provider.simulateFee(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
-      receiverAddress: receiverAddress,
-      amount: amount,
-      memo: memo,
+      msg: msg,
     );
   }
 
@@ -113,13 +108,30 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
   }
 
   @override
+  Future<TransactionInformation> unRegisterRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    String? fee,
+    int? gasLimit,
+  }) async {
+    final response = await _provider.unRegisterRecoveryMethod(
+      userPrivateKey: userPrivateKey,
+      smartAccountAddress: smartAccountAddress,
+      fee: fee,
+      gasLimit: gasLimit,
+    );
+
+    return response.toEntity;
+  }
+
+  @override
   Future<TransactionInformation> recoverSmartAccount({
     required Uint8List privateKey,
     required String recoverAddress,
     required String smartAccountAddress,
     String? fee,
     int? gasLimit,
-  })async{
+  }) async {
     final response = await _provider.recoverSmartAccount(
       privateKey: privateKey,
       smartAccountAddress: smartAccountAddress,

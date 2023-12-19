@@ -93,11 +93,11 @@ Future<void> initDependency(
   );
 
   final AuraWalletCore coreWallet = AuraWalletCore.create(
-    environment: AuraEnvironment.dev,
+    environment: config.environment.toWalletCoreE,
   );
 
   final AuraSmartAccount auraSmartAccount = AuraSmartAccount.create(
-    AuraSmartAccountEnvironment.test,
+    config.environment.toSME,
   );
 
   getIt.registerFactory<Dio>(
@@ -382,9 +382,10 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactory(
-    () => SetRecoveryMethodScreenBloc(
+  getIt.registerFactoryParam<SetRecoveryMethodScreenBloc,AuraAccount,dynamic>(
+    (account,_) => SetRecoveryMethodScreenBloc(
       getIt.get<Web3AuthUseCase>(),
+      account: account,
     ),
   );
 

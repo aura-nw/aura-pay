@@ -4,29 +4,44 @@ sealed class AuraSmartAccountConstant {
   static String pubKeyTypeUrl = '/cosmos.crypto.secp256k1.PubKey';
   static String msgRecoverTypeUrl = '/aura.smartaccount.v1beta1.MsgRecover';
 
-  static final List<int> initMsgDefault = utf8.encode(
-    jsonEncode(
-      {
-        'plugin_manager_addr':
-            'aura1y6ww7g6c5yc36363guep6zu004fc3wmdll0ass8ule4syzfceqvsamk8tp'
-      },
-    ),
-  );
+  static List<int> initMsgDefault({
+    required String pluginManager,
+  }) =>
+      utf8.encode(
+        jsonEncode(
+          {
+            'plugin_manager_addr': pluginManager,
+          },
+        ),
+      );
 
-  static List<int> executeContractMsg({
+  static List<int> setRecoveryMsg({
     required String smartAccountAddress,
     required String recoverAddress,
+    required String recoveryContractAddress,
   }) =>
       utf8.encode(
         jsonEncode(
           {
             'register_plugin': {
-              'plugin_address':
-                  'aura1lmq568d3m3n04fq2ca27mjsx2522gljhqcgf3ptcyq2pm3es7y7sxnnqrz',
+              'plugin_address': recoveryContractAddress,
               'config': jsonEncode({
                 'smart_account_address': smartAccountAddress,
                 'recover_address': recoverAddress
               }),
+            },
+          },
+        ),
+      );
+
+  static List<int> unRegisterRecovery({
+    required String recoveryContractAddress,
+  }) =>
+      utf8.encode(
+        jsonEncode(
+          {
+            'unregister_plugin': {
+              'plugin_address': recoveryContractAddress,
             },
           },
         ),

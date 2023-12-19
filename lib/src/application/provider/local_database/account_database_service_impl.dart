@@ -75,19 +75,24 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
 
       await _isar.writeTxn(
         () async {
-          await _isar.auraAccountDbs.put(
-            account.copyWith(
+          if (useNullAble) {
+            await _isar.auraAccountDbs.put(account.copyWithNull(
               name: accountName,
               address: address,
               type: type,
-              methodDb: useNullAble
-                  ? null
-                  : methodDb?.copyWith(
-                      method: method,
-                      value: value,
-                    ),
-            ),
-          );
+              methodDb: null,
+            ));
+          } else {
+            await _isar.auraAccountDbs.put(account.copyWith(
+              name: accountName,
+              address: address,
+              type: type,
+              methodDb: methodDb?.copyWith(
+                method: method,
+                value: value,
+              ),
+            ));
+          }
         },
       );
     }

@@ -7,11 +7,11 @@ import 'package:pyxis_mobile/src/application/service/token/token_api_service_imp
 
 /// Use for isolate
 
-SmartAccountUseCase smartAccountUseCaseFactory() => SmartAccountUseCase(
+SmartAccountUseCase smartAccountUseCaseFactory(AuraSmartAccountEnvironment auraSmartAccountEnvironment) => SmartAccountUseCase(
       SmartAccountRepositoryImpl(
         SmartAccountProviderImpl(
           AuraSmartAccount.create(
-            AuraSmartAccountEnvironment.test,
+            auraSmartAccountEnvironment,
           ),
         ),
       ),

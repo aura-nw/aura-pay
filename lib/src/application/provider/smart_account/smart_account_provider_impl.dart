@@ -104,16 +104,12 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
   Future<int> simulateFee({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
-    required String receiverAddress,
-    required String amount,
-    String? memo,
+    dynamic msg
   }) {
     return _auraSmartAccount.simulateFee(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
-      receiverAddress: receiverAddress,
-      amount: amount,
-      memo: memo,
+      msg: msg,
     );
   }
 
@@ -151,6 +147,35 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
       recoverAddress: recoverAddress,
+      fee: smartAccountFee,
+    );
+
+    return TransactionInformationDto(
+      txHash: response.txhash,
+      timestamp: response.timestamp,
+      status: response.code,
+      rawLog: response.rawLog,
+    );
+  }
+
+  @override
+  Future<TransactionInformationDto> unRegisterRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    String? fee,
+    int? gasLimit,
+  }) async {
+    AuraSmartAccountFee? smartAccountFee;
+    if (fee != null && gasLimit != null) {
+      smartAccountFee = AuraSmartAccountFee(
+        fee: fee,
+        gasLimit: gasLimit,
+      );
+    }
+
+    final response = await _auraSmartAccount.unRegisterRecoveryMethod(
+      userPrivateKey: userPrivateKey,
+      smartAccountAddress: smartAccountAddress,
       fee: smartAccountFee,
     );
 

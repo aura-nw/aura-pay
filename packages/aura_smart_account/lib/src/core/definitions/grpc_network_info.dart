@@ -8,6 +8,8 @@ final class AuraNetworkInfo {
   final String bech32Hrp;
   final String denom;
   final int codeId;
+  final String pluginManagerAddress;
+  final String recoverContractAddress;
 
   const AuraNetworkInfo({
     required this.host,
@@ -17,6 +19,8 @@ final class AuraNetworkInfo {
     required this.bech32Hrp,
     required this.denom,
     required this.codeId,
+    required this.pluginManagerAddress,
+    required this.recoverContractAddress,
   });
 
   GrpcOrGrpcWebClientChannel getChannel() {

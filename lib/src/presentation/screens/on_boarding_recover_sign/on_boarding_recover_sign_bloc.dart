@@ -2,6 +2,8 @@ import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'on_boarding_recover_sign_event.dart';
 import 'on_boarding_recover_sign_state.dart';
 
@@ -40,22 +42,24 @@ final class OnBoardingRecoverSignBloc
     OnBoardingRecoverSignEventOnInit event,
     Emitter<OnBoardingRecoverSignState> emit,
   ) async {
+
+    final config = getIt.get<PyxisMobileConfig>();
     // Set default gas
     final highFee = CosmosHelper.calculateFee(
       _defaultGasLimit,
-      deNom: AuraSmartAccountCache.deNom,
+      deNom: config.deNom,
       gasPrice: GasPriceStep.high.value,
     );
 
     final fee = CosmosHelper.calculateFee(
       _defaultGasLimit,
-      deNom: AuraSmartAccountCache.deNom,
+      deNom: config.deNom,
       gasPrice: GasPriceStep.average.value,
     );
 
     final lowFee = CosmosHelper.calculateFee(
       _defaultGasLimit,
-      deNom: AuraSmartAccountCache.deNom,
+      deNom: config.deNom,
       gasPrice: GasPriceStep.low.value,
     );
 

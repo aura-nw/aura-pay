@@ -9,6 +9,10 @@ sealed class AuraNetWorkInformationConstant {
     denom: 'utaura',
     grpcTransportSecure: true,
     codeId: 736,
+    recoverContractAddress:
+        'aura1lmq568d3m3n04fq2ca27mjsx2522gljhqcgf3ptcyq2pm3es7y7sxnnqrz',
+    pluginManagerAddress:
+        'aura1y6ww7g6c5yc36363guep6zu004fc3wmdll0ass8ule4syzfceqvsamk8tp',
   );
   static const AuraNetworkInfo serenityChannel = AuraNetworkInfo(
     host: 'grpc.serenity.aura.network',
@@ -17,7 +21,11 @@ sealed class AuraNetWorkInformationConstant {
     bech32Hrp: 'aura',
     denom: 'uaura',
     grpcTransportSecure: false,
-    codeId: 736,
+    codeId: 1570,
+    recoverContractAddress:
+        'aura1md0j2me0jannnx5eudufwuuuq5pj0g6wahqvqeqle5mz4av8syeq029cg2',
+    pluginManagerAddress:
+        'aura12mkmnqnrxvp3083m8ueac2l72g8k2rs52tp9mw0q4upt5akmz2jsqv0knq',
   );
   static const AuraNetworkInfo euphoriaChannel = AuraNetworkInfo(
     host: 'rpc.euphoria.aura.network',
@@ -27,6 +35,10 @@ sealed class AuraNetWorkInformationConstant {
     bech32Hrp: '',
     denom: 'ueaura',
     codeId: 736,
+    recoverContractAddress:
+        'aura1lmq568d3m3n04fq2ca27mjsx2522gljhqcgf3ptcyq2pm3es7y7sxnnqrz',
+    pluginManagerAddress:
+        'aura1y6ww7g6c5yc36363guep6zu004fc3wmdll0ass8ule4syzfceqvsamk8tp',
   );
   static const AuraNetworkInfo productionChannel = AuraNetworkInfo(
     host: 'rpc.aura.network',
@@ -36,5 +48,8 @@ sealed class AuraNetWorkInformationConstant {
     bech32Hrp: 'aura',
     denom: 'uaura',
     codeId: 736,
+    recoverContractAddress:
+    'aura1lmq568d3m3n04fq2ca27mjsx2522gljhqcgf3ptcyq2pm3es7y7sxnnqrz',
+    pluginManagerAddress: 'aura1y6ww7g6c5yc36363guep6zu004fc3wmdll0ass8ule4syzfceqvsamk8tp',
   );
 }

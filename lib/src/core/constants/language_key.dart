@@ -368,6 +368,7 @@ sealed class LanguageKey {
   static const String setRecoveryMethodScreenAddBackupAddressHint = 'set_recovery_method_screen_add_backup_address_hint';
   static const String setRecoveryMethodScreenAddBackupAddressInvalid = 'set_recovery_method_screen_add_backup_address_invalid';
   static const String setRecoveryMethodScreenSetButtonTitle = 'set_recovery_method_screen_set_button_title';
+  static const String setRecoveryMethodScreenAlreadyMethod = 'set_recovery_method_screen_already_method';
   ///
 
 
