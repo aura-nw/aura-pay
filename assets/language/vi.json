@@ -326,5 +326,16 @@
   "signed_in_recover_select_account_screen_title_region_two" : "smart account",
   "signed_in_recover_select_account_screen_content" : "Select an account to recover.",
   "signed_in_recover_select_account_screen_button_title" : "Recover",
-  "signed_in_recover_select_account_no_account_found" : "No account found"
+  "signed_in_recover_select_account_no_account_found" : "No account found",
+
+  "signed_in_recover_sign_screen_title_region_one" : "Account recovery",
+  "signed_in_recover_sign_screen_title_region_two" : "Successful",
+  "signed_in_recover_sign_screen_content" : "Please sign this transaction to complete the recovery process",
+  "signed_in_recover_sign_screen_account" : "Account",
+  "signed_in_recover_sign_screen_messages" : "Messages",
+  "signed_in_recover_sign_screen_update_key" : "Update key",
+  "signed_in_recover_sign_screen_update_key_content" : "Update ${address} to ${newAddress}",
+  "signed_in_recover_sign_screen_transaction_fee" : "Transaction fee",
+  "signed_in_recover_sign_screen_button_confirm_title" : "Confirm",
+  "signed_in_recover_sign_screen_loading" : "Recovering"
 }

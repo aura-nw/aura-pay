@@ -2,25 +2,28 @@ import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'on_boarding_recover_sign_event.dart';
-import 'on_boarding_recover_sign_state.dart';
 
-final class OnBoardingRecoverSignBloc
-    extends Bloc<OnBoardingRecoverSignEvent, OnBoardingRecoverSignState> {
+import 'signed_in_recover_sign_event.dart';
+import 'signed_in_recover_sign_state.dart';
+
+final class SignedInRecoverSignBloc
+    extends Bloc<SignedInRecoverSignEvent, SignedInRecoverSignState> {
   final Web3AuthUseCase _web3authUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
+  final AuraAccountUseCase _accountUseCase;
 
-  OnBoardingRecoverSignBloc(
+  SignedInRecoverSignBloc(
     this._walletUseCase,
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
-    this._web3authUseCase, {
+    this._web3authUseCase,
+    this._accountUseCase, {
     required AuraAccount account,
     required GoogleAccount googleAccount,
   }) : super(
-          OnBoardingRecoverSignState(
+          SignedInRecoverSignState(
             account: account,
             googleAccount: googleAccount,
           ),
@@ -30,15 +33,15 @@ final class OnBoardingRecoverSignBloc
     on(_onConfirm);
 
     add(
-      const OnBoardingRecoverSignEventOnInit(),
+      const SignedInRecoverSignEventOnInit(),
     );
   }
 
   final int _defaultGasLimit = 400000;
 
   void _onInit(
-    OnBoardingRecoverSignEventOnInit event,
-    Emitter<OnBoardingRecoverSignState> emit,
+    SignedInRecoverSignEventOnInit event,
+    Emitter<SignedInRecoverSignState> emit,
   ) async {
     // Set default gas
     final highFee = CosmosHelper.calculateFee(
@@ -69,24 +72,24 @@ final class OnBoardingRecoverSignBloc
   }
 
   void _onChangeFee(
-    OnBoardingRecoverSignEventOnChangeFee event,
-    Emitter<OnBoardingRecoverSignState> emit,
+    SignedInRecoverSignEventOnChangeFee event,
+    Emitter<SignedInRecoverSignState> emit,
   ) async {
     emit(
       state.copyWith(
         transactionFee: event.fee,
-        status: OnBoardingRecoverSignStatus.none,
+        status: SignedInRecoverSignStatus.none,
       ),
     );
   }
 
   void _onConfirm(
-    OnBoardingRecoverSignEventOnConfirm event,
-    Emitter<OnBoardingRecoverSignState> emit,
+    SignedInRecoverSignEventOnConfirm event,
+    Emitter<SignedInRecoverSignState> emit,
   ) async {
     emit(
       state.copyWith(
-        status: OnBoardingRecoverSignStatus.onRecovering,
+        status: SignedInRecoverSignStatus.onRecovering,
       ),
     );
     try {
@@ -95,7 +98,6 @@ final class OnBoardingRecoverSignBloc
       final wallet = await _walletUseCase.importWallet(
         privateKeyOrPassPhrase: backupPrivateKey,
       );
-
 
       TransactionInformation information =
           await _smartAccountUseCase.recoverSmartAccount(
@@ -111,20 +113,26 @@ final class OnBoardingRecoverSignBloc
       await _web3authUseCase.onLogout();
 
       if (information.status == 0) {
-        _controllerKeyUseCase.saveKey(
+        await _accountUseCase.updateAccount(
+          id: state.account.id,
+          method: null,
+          useNullable: true,
+        );
+
+        await _controllerKeyUseCase.saveKey(
           address: state.account.address,
           key: backupPrivateKey,
         );
 
         emit(
           state.copyWith(
-            status: OnBoardingRecoverSignStatus.onRecoverSuccess,
+            status: SignedInRecoverSignStatus.onRecoverSuccess,
           ),
         );
       } else {
         emit(
           state.copyWith(
-            status: OnBoardingRecoverSignStatus.onRecoverFail,
+            status: SignedInRecoverSignStatus.onRecoverFail,
             error: information.rawLog,
           ),
         );
@@ -132,7 +140,7 @@ final class OnBoardingRecoverSignBloc
     } catch (e) {
       emit(
         state.copyWith(
-          status: OnBoardingRecoverSignStatus.onRecoverFail,
+          status: SignedInRecoverSignStatus.onRecoverFail,
           error: e.toString(),
         ),
       );

@@ -21,6 +21,7 @@ abstract interface class AccountDatabaseService {
     AuraAccountType? type,
     AuraSmartAccountRecoveryMethod? method,
     String? value,
+    bool useNullAble = false,
   });
 
   Future<AuraAccountDto?> getFirstAccount();

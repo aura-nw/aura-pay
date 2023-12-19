@@ -389,4 +389,18 @@ sealed class LanguageKey {
   static const String signedInRecoverSelectAccountScreenButtonTitle = 'signed_in_recover_select_account_screen_button_title';
   static const String signedInRecoverSelectAccountScreenNoAccountFound = 'signed_in_recover_select_account_no_account_found';
  ///
+
+  ///region signed in recover sign
+  static const String signedInRecoverSignScreenTitleRegionOne  = 'signed_in_recover_sign_screen_title_region_one';
+  static const String signedInRecoverSignScreenTitleRegionTwo  = 'signed_in_recover_sign_screen_title_region_two';
+  static const String signedInRecoverSignScreenContent  = 'signed_in_recover_sign_screen_content';
+  static const String signedInRecoverSignScreenAccount  = 'signed_in_recover_sign_screen_account';
+  static const String signedInRecoverSignScreenMessages  = 'signed_in_recover_sign_screen_messages';
+  static const String signedInRecoverSignScreenUpdateKey = 'signed_in_recover_sign_screen_update_key';
+  static const String signedInRecoverSignScreenUpdateKeyContent = 'signed_in_recover_sign_screen_update_key_content';
+  static const String signedInRecoverSignScreenTransactionFee = 'signed_in_recover_sign_screen_transaction_fee';
+  static const String signedInRecoverSignScreenRecovering = 'signed_in_recover_sign_screen_loading';
+  static const String signedInRecoverSignScreenConfirmButtonTitle = 'signed_in_recover_sign_screen_button_confirm_title';
+  ///
+
 }

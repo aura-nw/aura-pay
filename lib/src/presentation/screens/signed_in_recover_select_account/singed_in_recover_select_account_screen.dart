@@ -190,7 +190,7 @@ class _SingedInRecoverSelectAccountScreenState
                                     isDisable: account == null,
                                     onPress: () {
                                       AppNavigator.push(
-                                        RoutePath.recoverSign,
+                                        RoutePath.signedInRecoverSign,
                                         {
                                           'account': account,
                                           'google_account':

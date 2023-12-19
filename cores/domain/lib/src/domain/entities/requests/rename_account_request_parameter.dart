@@ -7,6 +7,7 @@ final class RenameAccountRequestParameter {
   final AuraAccountType? type;
   final AuraSmartAccountRecoveryMethod? method;
   final String? value;
+  final bool useNullAble;
 
   const RenameAccountRequestParameter({
     required this.id,
@@ -15,5 +16,6 @@ final class RenameAccountRequestParameter {
     this.type,
     this.method,
     this.value,
+    this.useNullAble = false,
   });
 }

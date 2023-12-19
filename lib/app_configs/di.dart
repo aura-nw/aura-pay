@@ -37,6 +37,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_ac
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_select_account/signed_in_recover_select_account_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_sign/signed_in_recover_sign_bloc.dart';
 import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
 import 'package:web3auth_flutter/web3auth_flutter.dart';
@@ -422,6 +423,19 @@ Future<void> initDependency(
       dynamic>(
     (googleAccount, _) => SingedInRecoverSelectAccountBloc(
       getIt.get<AuraAccountUseCase>(),
+      googleAccount: googleAccount,
+    ),
+  );
+
+  getIt.registerFactoryParam<SignedInRecoverSignBloc, AuraAccount,
+      GoogleAccount>(
+        (account, googleAccount) => SignedInRecoverSignBloc(
+      getIt.get<WalletUseCase>(),
+      getIt.get<SmartAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
+      getIt.get<Web3AuthUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
+      account: account,
       googleAccount: googleAccount,
     ),
   );
