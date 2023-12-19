@@ -2,9 +2,9 @@ extension AuraFormatter on String {
   String get formatAura {
     double auraD = double.tryParse(this) ?? 0;
 
-    String auraString = (auraD/1000000).toStringAsFixed(6);
+    String auraString = (auraD / 1000000).toStringAsFixed(6);
 
-    auraString = auraString.replaceAll(RegExp(r'0*$'),'');
+    auraString = auraString.replaceAll(RegExp(r'0*$'), '');
 
     if (auraString.endsWith('.')) {
       auraString = auraString.substring(0, auraString.length - 1);
@@ -13,7 +13,27 @@ extension AuraFormatter on String {
     return auraString;
   }
 
-  String get toDenom{
+  String formatPrice(double price) {
+    double auraD = double.tryParse(this) ?? 0;
+
+    auraD = (auraD / 1000000);
+
+    if (price == 0) return '0';
+
+    auraD = auraD * price;
+
+    String auraString = auraD.toStringAsFixed(2);
+
+    auraString = auraString.replaceAll(RegExp(r'0*$'), '');
+
+    if (auraString.endsWith('.')) {
+      auraString = auraString.substring(0, auraString.length - 1);
+    }
+
+    return auraString;
+  }
+
+  String get toDenom {
     double aura = double.tryParse(this) ?? 0;
 
     return (aura * 1000000).round().toString();

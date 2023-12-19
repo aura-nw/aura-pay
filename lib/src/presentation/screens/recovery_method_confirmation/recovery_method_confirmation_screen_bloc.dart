@@ -134,8 +134,6 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
 
       information = await _checkTransactionInfo(information.txHash, 0);
 
-      await _web3authUseCase.onLogout();
-
       if (information.status == 0) {
         await _accountUseCase.updateAccount(
           id: account.id,
@@ -156,6 +154,8 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
           ),
         );
       }
+
+      await _web3authUseCase.onLogout();
     } catch (e) {
       emit(
         state.copyWith(

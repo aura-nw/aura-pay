@@ -232,7 +232,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
-                                            AssetIconPath.sendAuraCoin,
+                                            AssetIconPath.commonAuraTokenLogo,
                                           ),
                                           const SizedBox(
                                             width: BoxSize.boxSize04,

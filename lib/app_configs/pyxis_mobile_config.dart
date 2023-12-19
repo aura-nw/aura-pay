@@ -12,6 +12,12 @@ class PyxisMobileConfig {
   PyxisMobileConfig({required this.configs});
 
   Map<String, dynamic> get appConfigs => jsonDecode(configs['APP_CONFIG']);
+  Map<String, dynamic> get coinGECKO => jsonDecode(configs['COIN_GECKO']);
+
+  String get coinGeckoUrl => coinGECKO['base_url'];
+  String get coinGeckoVersion => coinGECKO['api_version'];
+
+  String get auraId => configs['AURA_ID'];
 
   String get coinId => appConfigs['coinId'];
   String get chainId => appConfigs['chainId'];

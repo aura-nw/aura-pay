@@ -52,6 +52,7 @@ sealed class AssetIconPath{
   static const String commonRoundDivider = '${_baseIconPath}ic_common_round_divider.svg';
   static const String commonSignMessage = '${_baseIconPath}ic_common_message.svg';
   static const String commonFeeEdit = '${_baseIconPath}ic_common_fee_edit.svg';
+  static const String commonAuraTokenLogo = '${_baseIconPath}ic_common_aura_token_logo.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive = '${_baseIconPath}ic_home_bottom_navigator_bar_home_active.svg';
@@ -113,7 +114,6 @@ sealed class AssetIconPath{
 
   ///Send transaction
   static const String sendQr = '${_baseIconPath}ic_send_qr.svg';
-  static const String sendAuraCoin = '${_baseIconPath}ic_send_aura_coin.svg';
 
 
   /// Send transaction confirmation

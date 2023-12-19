@@ -2,6 +2,7 @@
   "global_pyxis_title" : "Pyxis",
   "global_pyxis_copy_message" : "Copy ${value} success",
   "global_pyxis_aura" : "AURA",
+  "global_pyxis_aura_id" : "Aura network",
 
   "transaction_common_change_fee_title" : "Speed up Transaction",
   "transaction_common_change_fee_estimate" : "Estimated transaction fee:",
