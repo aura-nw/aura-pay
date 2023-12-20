@@ -31,10 +31,12 @@ import 'recovery_method_confirmation_screen_selector.dart';
 abstract class RecoveryMethodConfirmationArgument<T> {
   final AuraAccount account;
   final T? data;
+  final bool isReadyMethod;
 
   const RecoveryMethodConfirmationArgument({
     required this.account,
     required this.data,
+    required this.isReadyMethod,
   });
 }
 
@@ -43,6 +45,7 @@ final class RecoveryMethodConfirmationGoogleArgument
   RecoveryMethodConfirmationGoogleArgument({
     required super.account,
     required super.data,
+    required super.isReadyMethod,
   });
 }
 
@@ -51,6 +54,7 @@ final class RecoveryMethodConfirmationBackupAddressArgument
   RecoveryMethodConfirmationBackupAddressArgument({
     required super.account,
     required super.data,
+    required super.isReadyMethod,
   });
 }
 
@@ -68,7 +72,7 @@ class RecoveryMethodConfirmationScreen extends StatefulWidget {
 }
 
 class _RecoveryMethodConfirmationScreenState
-    extends State<RecoveryMethodConfirmationScreen> with CustomFlutterToast{
+    extends State<RecoveryMethodConfirmationScreen> with CustomFlutterToast {
   late RecoveryMethodConfirmationBloc _bloc;
 
   final RecoveryObserver _recoveryObserver = getIt.get<RecoveryObserver>();
@@ -114,6 +118,10 @@ class _RecoveryMethodConfirmationScreenState
                   );
                   break;
                 case RecoveryMethodConfirmationStatus.onRecoverFail:
+                  AppNavigator.pop();
+                  showToast(state.error ?? '');
+                  break;
+                case RecoveryMethodConfirmationStatus.onUnRegisterRecoverFail:
                   AppNavigator.pop();
                   showToast(state.error ?? '');
                   break;

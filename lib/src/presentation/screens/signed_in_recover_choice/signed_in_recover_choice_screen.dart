@@ -28,8 +28,7 @@ class SignedInRecoverChoiceScreen extends StatefulWidget {
 
 class _SignedInRecoverChoiceScreenState
     extends State<SignedInRecoverChoiceScreen> with CustomFlutterToast {
-  /// Fake for deploy test flight
-  RecoverOptionType selectedType = RecoverOptionType.backupAddress;
+  RecoverOptionType selectedType = RecoverOptionType.google;
 
   final SignedInRecoverChoiceBloc _bloc =
       getIt.get<SignedInRecoverChoiceBloc>();
@@ -53,7 +52,7 @@ class _SignedInRecoverChoiceScreenState
                   break;
                 case SignedInRecoverChoiceStatus.loginSuccess:
                   AppNavigator.push(
-                    RoutePath.recoverSelectAccount,
+                    RoutePath.signedInRecoverSelectAccount,
                     state.googleAccount,
                   );
                   break;

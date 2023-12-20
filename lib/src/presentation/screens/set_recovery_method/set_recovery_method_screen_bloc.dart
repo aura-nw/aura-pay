@@ -9,9 +9,12 @@ final class SetRecoveryMethodScreenBloc
   final Web3AuthUseCase _web3authUseCase;
 
   SetRecoveryMethodScreenBloc(
-    this._web3authUseCase,
-  ) : super(
-          const SetRecoveryMethodScreenState(),
+    this._web3authUseCase, {
+    required AuraAccount account,
+  }) : super(
+          SetRecoveryMethodScreenState(
+            account: account,
+          ),
         ) {
     on(_onSetRecoveryMethod);
     on(_onChangeMethod);
@@ -55,20 +58,45 @@ final class SetRecoveryMethodScreenBloc
         final account = await _web3authUseCase.onLogin();
 
         if (account != null) {
-          emit(
-            state.copyWith(
-              status: SetRecoveryMethodScreenStatus.loginSuccess,
-              googleAccount: account,
-            ),
-          );
+          bool isReadyMethod = state.account.isVerified &&
+              state.account.method?.value == account.email;
+
+          if (isReadyMethod) {
+            emit(
+              state.copyWith(
+                status: SetRecoveryMethodScreenStatus.isReadyMethod,
+              ),
+            );
+            await _web3authUseCase.onLogout();
+          } else {
+            emit(
+              state.copyWith(
+                status: SetRecoveryMethodScreenStatus.loginSuccess,
+                googleAccount: account,
+              ),
+            );
+          }
         }
       } else {
         // backup address
-        emit(
-          state.copyWith(
-            status: SetRecoveryMethodScreenStatus.loginSuccess,
-          ),
-        );
+
+        bool isReadyMethod = state.account.isVerified &&
+            state.account.method?.value == state.recoverAddress;
+
+        if (isReadyMethod) {
+          emit(
+            state.copyWith(
+              status: SetRecoveryMethodScreenStatus.isReadyMethod,
+            ),
+          );
+          await _web3authUseCase.onLogout();
+        } else {
+          emit(
+            state.copyWith(
+              status: SetRecoveryMethodScreenStatus.loginSuccess,
+            ),
+          );
+        }
       }
     } catch (e) {
       emit(

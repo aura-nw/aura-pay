@@ -8,6 +8,7 @@ enum SetRecoveryMethodScreenStatus {
   none,
   loginSuccess,
   loginFail,
+  isReadyMethod,
 }
 
 @freezed
@@ -20,5 +21,6 @@ class SetRecoveryMethodScreenState with _$SetRecoveryMethodScreenState {
     @Default(RecoverOptionType.google) RecoverOptionType selectedMethod,
     @Default(true) bool isReady,
     String ?recoverAddress,
+    required AuraAccount account,
   }) = _SetRecoveryMethodScreenState;
 }

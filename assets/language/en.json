@@ -2,6 +2,7 @@
   "global_pyxis_title" : "Pyxis",
   "global_pyxis_copy_message" : "Copy ${value} success",
   "global_pyxis_aura" : "AURA",
+  "global_pyxis_aura_id" : "Aura network",
 
   "transaction_common_change_fee_title" : "Speed up Transaction",
   "transaction_common_change_fee_estimate" : "Estimated transaction fee:",
@@ -311,6 +312,7 @@
   "set_recovery_method_screen_add_backup_address_hint" : "Enter address",
   "set_recovery_method_screen_add_backup_address_invalid" : "Invalid address",
   "set_recovery_method_screen_set_button_title" : "Set",
+  "set_recovery_method_screen_already_method" : "Method is already registered",
 
   "recovery_method_confirmation_screen_app_bar_title" : "Recovery method confirmation",
   "recovery_method_confirmation_screen_content_region_one" : "Please confirm to add",

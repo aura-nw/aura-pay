@@ -6,3 +6,4 @@ export 'controller_key_repository.dart';
 export 'app_secure_repository.dart';
 export 'wallet_repository.dart';
 export 'transaction_repository.dart';
+export 'token_repository.dart';

@@ -63,20 +63,14 @@ class SmartAccountUseCase {
     );
   }
 
-  Future<int> simulateFee({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    required String receiverAddress,
-    required String amount,
-    String? memo,
-  }) {
+  Future<int> simulateFee(
+      {required Uint8List userPrivateKey,
+      required String smartAccountAddress,
+      dynamic msg}) {
     return _repository.simulateFee(
-      userPrivateKey: userPrivateKey,
-      smartAccountAddress: smartAccountAddress,
-      receiverAddress: receiverAddress,
-      amount: amount,
-      memo: memo,
-    );
+        userPrivateKey: userPrivateKey,
+        smartAccountAddress: smartAccountAddress,
+        msg: msg);
   }
 
   Future<TransactionInformation> getTx({
@@ -98,6 +92,20 @@ class SmartAccountUseCase {
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
       recoverAddress: recoverAddress,
+      gasLimit: gasLimit,
+      fee: fee,
+    );
+  }
+
+  Future<TransactionInformation> unRegisterRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    String? fee,
+    int? gasLimit,
+  }) async {
+    return _repository.unRegisterRecoveryMethod(
+      userPrivateKey: userPrivateKey,
+      smartAccountAddress: smartAccountAddress,
       gasLimit: gasLimit,
       fee: fee,
     );

@@ -31,13 +31,10 @@ abstract interface class SmartAccountRepository {
     required String address,
   });
 
-  Future<int> simulateFee({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    required String receiverAddress,
-    required String amount,
-    String? memo,
-  });
+  Future<int> simulateFee(
+      {required Uint8List userPrivateKey,
+      required String smartAccountAddress,
+      dynamic msg});
 
   Future<TransactionInformation> getTx({
     required String txHash,
@@ -47,6 +44,13 @@ abstract interface class SmartAccountRepository {
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
     required String recoverAddress,
+    String? fee,
+    int? gasLimit,
+  });
+
+  Future<TransactionInformation> unRegisterRecoveryMethod({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
     String? fee,
     int? gasLimit,
   });

@@ -20,6 +20,22 @@ extension AuraAccountDbExtension on AuraAccountDb {
       methodDb: methodDb ?? this.methodDb,
     );
   }
+
+  AuraAccountDb copyWithNull({
+    AuraAccountType? type,
+    String? address,
+    String? name,
+    int? id,
+    AuraAccountRecoveryMethodDb? methodDb,
+  }) {
+    return AuraAccountDb(
+      accountId: id ?? this.id,
+      accountType: type ?? this.type,
+      accountAddress: address ?? this.address,
+      accountName: name ?? this.name,
+      methodDb: methodDb,
+    );
+  }
 }
 
 extension AuraAccountRecoveryMethodDbExtension on AuraAccountRecoveryMethodDb {

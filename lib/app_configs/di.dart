@@ -17,6 +17,7 @@ import 'package:pyxis_mobile/src/application/service/transaction/transaction_api
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
@@ -92,11 +93,11 @@ Future<void> initDependency(
   );
 
   final AuraWalletCore coreWallet = AuraWalletCore.create(
-    environment: AuraEnvironment.dev,
+    environment: config.environment.toWalletCoreE,
   );
 
   final AuraSmartAccount auraSmartAccount = AuraSmartAccount.create(
-    AuraSmartAccountEnvironment.test,
+    config.environment.toSME,
   );
 
   getIt.registerFactory<Dio>(
@@ -381,9 +382,10 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactory(
-    () => SetRecoveryMethodScreenBloc(
+  getIt.registerFactoryParam<SetRecoveryMethodScreenBloc,AuraAccount,dynamic>(
+    (account,_) => SetRecoveryMethodScreenBloc(
       getIt.get<Web3AuthUseCase>(),
+      account: account,
     ),
   );
 
@@ -429,7 +431,7 @@ Future<void> initDependency(
 
   getIt.registerFactoryParam<SignedInRecoverSignBloc, AuraAccount,
       GoogleAccount>(
-        (account, googleAccount) => SignedInRecoverSignBloc(
+    (account, googleAccount) => SignedInRecoverSignBloc(
       getIt.get<WalletUseCase>(),
       getIt.get<SmartAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
@@ -437,6 +439,12 @@ Future<void> initDependency(
       getIt.get<AuraAccountUseCase>(),
       account: account,
       googleAccount: googleAccount,
+    ),
+  );
+
+  getIt.registerFactory<HomePageBloc>(
+    () => HomePageBloc(
+      getIt.get<AuraAccountUseCase>(),
     ),
   );
 }

@@ -9,6 +9,7 @@ enum RecoveryMethodConfirmationStatus {
   onRecovering,
   onRecoverSuccess,
   onRecoverFail,
+  onUnRegisterRecoverFail,
 }
 
 @freezed

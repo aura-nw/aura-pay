@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
@@ -35,8 +36,15 @@ class SetRecoveryMethodScreen extends StatefulWidget {
 
 class _SetRecoveryMethodScreenState extends State<SetRecoveryMethodScreen>
     with CustomFlutterToast {
-  final SetRecoveryMethodScreenBloc _bloc =
-      getIt.get<SetRecoveryMethodScreenBloc>();
+  late SetRecoveryMethodScreenBloc _bloc;
+
+  @override
+  void initState() {
+    _bloc = getIt.get<SetRecoveryMethodScreenBloc>(
+      param1: widget.account,
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +58,13 @@ class _SetRecoveryMethodScreenState extends State<SetRecoveryMethodScreen>
               switch (state.status) {
                 case SetRecoveryMethodScreenStatus.none:
                   break;
+                case SetRecoveryMethodScreenStatus.isReadyMethod:
+                  showToast(
+                    AppLocalizationManager.of(context).translate(
+                      LanguageKey.setRecoveryMethodScreenAlreadyMethod,
+                    ),
+                  );
+                  break;
                 case SetRecoveryMethodScreenStatus.loginSuccess:
                   late RecoveryMethodConfirmationArgument argument;
 
@@ -57,11 +72,13 @@ class _SetRecoveryMethodScreenState extends State<SetRecoveryMethodScreen>
                     argument = RecoveryMethodConfirmationGoogleArgument(
                       account: widget.account,
                       data: state.googleAccount,
+                      isReadyMethod: widget.account.isVerified,
                     );
                   } else {
                     argument = RecoveryMethodConfirmationBackupAddressArgument(
                       account: widget.account,
                       data: state.recoverAddress,
+                      isReadyMethod: widget.account.isVerified,
                     );
                   }
 

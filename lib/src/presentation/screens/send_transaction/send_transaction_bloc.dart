@@ -2,6 +2,8 @@ import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/wallet_address_validator.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'send_transaction_event.dart';
@@ -106,18 +108,28 @@ final class SendTransactionBloc
         address: sender.address,
       ))!;
 
+      final config = getIt.get<PyxisMobileConfig>();
+
+      final MsgSend msgSend = MsgSend.create()
+        ..fromAddress = sender.address
+        ..toAddress = state.recipientAddress
+        ..amount.add(
+          Coin.create()
+            ..amount = state.amount
+            ..denom = config.deNom,
+        );
+
       final int gasLimit = await _smartAccountUseCase.simulateFee(
         userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(
           privateKeyString,
         ),
         smartAccountAddress: sender.address,
-        receiverAddress: state.recipientAddress,
-        amount: state.amount.toDenom,
+        msg: msgSend,
       );
 
       final fee = CosmosHelper.calculateFee(
         gasLimit,
-        deNom: AuraSmartAccountCache.deNom,
+        deNom: config.deNom,
       );
 
       final amount = fee.amount[0];
