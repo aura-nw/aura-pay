@@ -18,7 +18,7 @@ class RecoveryMethodConfirmationState with _$RecoveryMethodConfirmationState {
     required RecoveryMethodConfirmationArgument argument,
     @Default(RecoveryMethodConfirmationStatus.none)
     RecoveryMethodConfirmationStatus status,
-    String ?error,
+    String? error,
     @Default('') String transactionFee,
     @Default('') String highTransactionFee,
     @Default('') String lowTransactionFee,
