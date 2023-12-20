@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +40,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin , CustomFlutterToast{
+class _HomeScreenState extends State<HomeScreen>
+    with TickerProviderStateMixin, CustomFlutterToast {
   late HomeScreenSection currentSection;
 
   late AnimationController _receiveWidgetController;
@@ -49,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
 
   @override
   void initState() {
+    // Initialize the state
     _bloc.add(
       const HomeScreenEventOnInit(),
     );
@@ -65,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    // Set up the animation
     _receiveAnimation = Tween<double>(
       begin: -context.h,
       end: 0,
@@ -77,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
   }
 
   void _onReceiveTap() {
+    // Start the receive widget animation
     _receiveWidgetController.forward();
   }
 
@@ -90,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
             builder: (status) {
               switch (status) {
                 case HomeScreenStatus.loading:
+                  // Show loading indicator
                   return Center(
                     child: AppLoadingWidget(
                       appTheme: appTheme,
@@ -110,11 +116,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
                           ),
                           appTheme: appTheme,
                           onScanTap: () {
+                            // Show camera permission dialog
                             _showRequestCameraPermission(
                               appTheme,
                             );
                           },
                           onTabSelect: (index) {
+                            // Change the current section
                             final HomeScreenSection newSection =
                                 HomeScreenSection.values[index];
 
@@ -138,12 +146,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
                               theme: appTheme,
                               onSwipeUp: () async {
                                 if (_receiveWidgetController.isCompleted) {
+                                  // Reverse the receive widget animation
                                   await _receiveWidgetController.reverse();
 
                                   _receiveWidgetController.reset();
                                 }
                               },
                               onShareAddress: () {
+                                // Share wallet address
                                 ShareNetWork.shareWalletAddress(
                                   account.address,
                                 );
@@ -173,15 +183,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
   }
 
   void _showRequestCameraPermission(AppTheme appTheme) async {
+    // Check camera permission status
     PermissionStatus status =
         await SystemPermissionHelper.getCurrentCameraPermissionStatus();
 
     if (status.isGranted) {
+      // Camera permission is granted, navigate to scanner screen
       final result = await AppNavigator.push(
         RoutePath.scanner,
       );
+      LogProvider.log(
+          'scanner isGranted = ${status.isGranted} | result = $result');
     } else {
       if (context.mounted) {
+        // Show camera permission dialog
         DialogProvider.showPermissionDialog(
           context,
           appTheme: appTheme,
@@ -189,11 +204,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
             AppNavigator.pop();
             SystemPermissionHelper.requestCameraPermission(
               onSuccessFul: () async {
+                // Camera permission is granted, navigate to scanner screen
                 final result = await AppNavigator.push(
                   RoutePath.scanner,
                 );
+                LogProvider.log('scanner result $result');
               },
               reject: () {
+                // Open app settings
                 SystemPermissionHelper.goToSettings();
               },
             );
@@ -206,13 +224,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
     }
   }
 
-  void _onCopyAddress(String address)async{
+  void _onCopyAddress(String address) async {
+    // Copy the address to clipboard
     await Clipboard.setData(
       ClipboardData(text: address),
     );
 
     if (Platform.isIOS) {
       if (context.mounted) {
+        // Show toast message
         showToast(
           AppLocalizationManager.of(context).translateWithParam(
             LanguageKey.globalPyxisCopyMessage,

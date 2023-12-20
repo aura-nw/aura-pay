@@ -12,6 +12,7 @@ import 'application/global/app_theme/cubit/theme_cubit.dart';
 import 'application/global/localization/app_translations_delegate.dart';
 import 'application/global/localization/localization_manager.dart';
 
+// Define the AuraWalletApplication widget
 class AuraWalletApplication extends StatefulWidget {
   const AuraWalletApplication({Key? key}) : super(key: key);
 
@@ -33,16 +34,22 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
+    // Handle different app lifecycle states
     switch (state) {
       case AppLifecycleState.inactive:
+        // Handle inactive state
         break;
       case AppLifecycleState.resumed:
+        // Handle resumed state
         break;
       case AppLifecycleState.detached:
+        // Handle detached state
         break;
       case AppLifecycleState.paused:
+        // Handle paused state
         break;
       case AppLifecycleState.hidden:
+        // Handle hidden state
         break;
     }
   }
@@ -102,13 +109,16 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                     listenWhen: (previous, current) =>
                         current.status != previous.status,
                     listener: (context, state) {
+                      // Listen to changes in AppGlobalState status
                       switch (state.status) {
                         case AppGlobalStatus.authorized:
+                          // If the user is authorized, navigate to the home screen
                           AppNavigator.replaceAllWith(
                             RoutePath.home,
                           );
                           break;
                         case AppGlobalStatus.unauthorized:
+                          // If the user is unauthorized, navigate to the get started screen
                           AppNavigator.replaceAllWith(RoutePath.getStarted);
                           break;
                       }

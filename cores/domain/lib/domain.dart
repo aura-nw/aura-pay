@@ -6,3 +6,4 @@ export 'src/core/errors/app_error.dart';
 export 'src/domain/entities/entities.dart';
 export 'src/domain/entities/requests/request.dart';
 export 'src/core/aura_account_type.dart';
+export 'src/domain/providers/log_provider.dart';
