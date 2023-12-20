@@ -112,11 +112,13 @@ abstract interface class AuraSmartAccount {
   });
 
   /// Set a recovery method for smart account
-  /// This method has to pass four parameters include:
+  /// This method has to pass six parameters include:
   /// [userPrivateKey] as Uint8List
   /// [smartAccountAddress] as String
   /// [recoverAddress] as String
   /// [fee] as [AuraSmartAccountFee]?
+  /// [isReadyRegister] as [bool] default is false
+  /// [revokePreAddress] as [String]? default is false
   /// Response [TxResponse]
   /// It can throw [AuraSmartAccountError]
   Future<TxResponse> setRecoveryMethod({
@@ -124,19 +126,8 @@ abstract interface class AuraSmartAccount {
     required String smartAccountAddress,
     required String recoverAddress,
     AuraSmartAccountFee? fee,
-  });
-
-  /// Remove a recovery method for smart account
-  /// This method has to pass three parameters include:
-  /// [userPrivateKey] as Uint8List
-  /// [smartAccountAddress] as String
-  /// [fee] as [AuraSmartAccountFee]?
-  /// Response [TxResponse]
-  /// It can throw [AuraSmartAccountError]
-  Future<TxResponse> unRegisterRecoveryMethod({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    AuraSmartAccountFee? fee,
+    bool isReadyRegister = false,
+    String ?revokePreAddress,
   });
 
   /// recover new pub key for smart account

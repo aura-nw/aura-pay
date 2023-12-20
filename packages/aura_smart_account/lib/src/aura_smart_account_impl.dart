@@ -166,7 +166,9 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
           await _signAndBroadcastTx(
         userPrivateKey: userPrivateKey,
         pubKeyGenerate: pubKeyGenerate,
-        msg: msgActivateAccountRequest,
+        msgs: [
+          msgActivateAccountRequest,
+        ],
         signerData: signerData,
         feeSign: feeSign,
         memo: memo,
@@ -252,7 +254,9 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
           await _signAndBroadcastTx(
         userPrivateKey: userPrivateKey,
         feeSign: feeSign,
-        msg: msgSend,
+        msgs: [
+          msgSend,
+        ],
         pubKeyGenerate: pubKeyGenerate,
         signerData: signerData,
         memo: memo,
@@ -317,7 +321,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
   Future<tx.BroadcastTxResponse> _signAndBroadcastTx({
     required Uint8List userPrivateKey,
     required Uint8List pubKeyGenerate,
-    required GeneratedMessage msg,
+    required List<GeneratedMessage> msgs,
     required CosmosSignerData signerData,
     String? memo,
     required tx.Fee feeSign,
@@ -326,12 +330,12 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     final tx.Tx txSign = await AuraSmartAccountHelper.sign(
       privateKey: userPrivateKey,
       pubKey: pubKeyGenerate,
-      messages: [
-        pb.Any.pack(
-          msg,
-          typeUrlPrefix: '',
-        ),
-      ],
+      messages: msgs
+          .map((msg) => pb.Any.pack(
+                msg,
+                typeUrlPrefix: '',
+              ))
+          .toList(),
       signerData: signerData,
       memo: memo,
       fee: feeSign,
@@ -457,6 +461,8 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     required String smartAccountAddress,
     required String recoverAddress,
     AuraSmartAccountFee? fee,
+    bool isReadyRegister = false,
+    String ?revokePreAddress,
   }) async {
     try {
       // Get pub key from private key
@@ -470,15 +476,72 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         pubKey,
       );
 
-      // Create msg
-      final coswasm.MsgExecuteContract msg = coswasm.MsgExecuteContract.create()
-        ..sender = smartAccountAddress
-        ..contract = smartAccountAddress
-        ..msg = AuraSmartAccountConstant.setRecoveryMsg(
-          smartAccountAddress: smartAccountAddress,
-          recoverAddress: recoverAddress,
-          recoveryContractAddress: auraNetworkInfo.recoverContractAddress,
+      // Create empty messages to broadcast
+      List<GeneratedMessage> messages = List.empty(growable: true);
+
+      // Create revoke fee grant if need
+      if (isReadyRegister) {
+        feeGrant.MsgRevokeAllowance revokeAllowance =
+            feeGrant.MsgRevokeAllowance.create()
+              ..granter = smartAccountAddress
+              ..grantee = revokePreAddress ?? '';
+
+        // Create msg unregister contract
+        final coswasm.MsgExecuteContract msgUnRegister =
+            coswasm.MsgExecuteContract.create()
+              ..sender = smartAccountAddress
+              ..contract = smartAccountAddress
+              ..msg = AuraSmartAccountConstant.unRegisterRecovery(
+                recoveryContractAddress: auraNetworkInfo.recoverContractAddress,
+              );
+
+        messages.addAll([
+          revokeAllowance,
+          msgUnRegister,
+        ]);
+      }
+
+      // Create msg execute
+      final coswasm.MsgExecuteContract msgExecuteContract =
+          coswasm.MsgExecuteContract.create()
+            ..sender = smartAccountAddress
+            ..contract = smartAccountAddress
+            ..msg = AuraSmartAccountConstant.setRecoveryMsg(
+              smartAccountAddress: smartAccountAddress,
+              recoverAddress: recoverAddress,
+              recoveryContractAddress: auraNetworkInfo.recoverContractAddress,
+            );
+
+      // Create grant fee for recover address
+
+      feeGrant.BasicAllowance basicAllowance = feeGrant.BasicAllowance.create()
+        ..spendLimit.add(
+          base.Coin.create()
+            ..denom = auraNetworkInfo.denom
+            ..amount = AuraSmartAccountConstant.maxFeeGrant,
         );
+
+      feeGrant.AllowedMsgAllowance allowance =
+          feeGrant.AllowedMsgAllowance.create()
+            ..allowance = pb.Any.pack(
+              basicAllowance,
+              typeUrlPrefix: '',
+            )
+            ..allowedMessages.add(
+              AuraSmartAccountConstant.msgRecoverTypeUrl,
+            );
+
+      // Create fee grant
+      feeGrant.MsgGrantAllowance msgGrant = feeGrant.MsgGrantAllowance.create()
+        ..granter = smartAccountAddress
+        ..grantee = recoverAddress
+        ..allowance = pb.Any.pack(
+          allowance,
+          typeUrlPrefix: '',
+        );
+
+      // Add message to sign
+      messages.addAll([msgExecuteContract, msgGrant]);
 
       // Create fee
       late tx.Fee feeSign;
@@ -503,65 +566,12 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       // Get signer data
       CosmosSignerData signerData = await _getSignerData(smartAccountAddress);
 
-      // Grant fee for recover address
-
-      feeGrant.BasicAllowance basicAllowance = feeGrant.BasicAllowance.create()
-        ..spendLimit.add(
-          base.Coin.create()
-            ..denom = auraNetworkInfo.denom
-            ..amount = AuraSmartAccountConstant.maxFeeGrant,
-        );
-
-      feeGrant.AllowedMsgAllowance allowance =
-          feeGrant.AllowedMsgAllowance.create()
-            ..allowance = pb.Any.pack(
-              basicAllowance,
-              typeUrlPrefix: '',
-            )
-            ..allowedMessages.add(
-              AuraSmartAccountConstant.msgRecoverTypeUrl,
-            );
-
-      feeGrant.MsgGrantAllowance msgGrant = feeGrant.MsgGrantAllowance.create()
-        ..granter = smartAccountAddress
-        ..grantee = recoverAddress
-        ..allowance = pb.Any.pack(
-          allowance,
-          typeUrlPrefix: '',
-        );
-
-      final tx.BroadcastTxResponse broadcastGrantFeeResponse =
-          await _signAndBroadcastTx(
-        userPrivateKey: userPrivateKey,
-        pubKeyGenerate: pubKeyGenerate,
-        msg: msgGrant,
-        signerData: signerData,
-        feeSign: feeSign,
-        memo: null,
-      );
-
-      // Verify tx hash
-      TxResponse grantFeeTxResponse = await _checkTransactionInfo(
-          broadcastGrantFeeResponse.txResponse.txhash, 0);
-
-      // if code 18 . Already fee grant
-      if (grantFeeTxResponse.code != 0 && grantFeeTxResponse.code != 18) {
-        throw AuraSmartAccountError(
-          code: SmartAccountErrorCode.errorBroadcast,
-          errorMsg: broadcastGrantFeeResponse.txResponse.rawLog,
-        );
-      }
-      //
-
-      // fetch update signer data
-      signerData = await _getSignerData(smartAccountAddress);
-
       // Broadcast TxBytes
       final tx.BroadcastTxResponse broadcastTxResponse =
           await _signAndBroadcastTx(
         userPrivateKey: userPrivateKey,
         pubKeyGenerate: pubKeyGenerate,
-        msg: msg,
+        msgs: messages,
         signerData: signerData,
         feeSign: feeSign,
         memo: null,
@@ -601,6 +611,8 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         pubKey,
       );
 
+      final List<GeneratedMessage> messages = List.empty(growable: true);
+
       // Create new pub key
       final pb.Any newPubKey = pb.Any.create()
         ..typeUrl = AuraSmartAccountConstant.pubKeyTypeUrl
@@ -612,6 +624,28 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         ..creator = recoveryAddress
         ..publicKey = newPubKey
         ..credentials = '';
+
+      messages.add(msgRecover);
+
+      // Create revoke fee grant and unregister recovery
+      feeGrant.MsgRevokeAllowance revokeAllowance =
+          feeGrant.MsgRevokeAllowance.create()
+            ..granter = smartAccountAddress
+            ..grantee = recoveryAddress;
+
+      // Create msg unregister contract
+      final coswasm.MsgExecuteContract msgUnRegister =
+          coswasm.MsgExecuteContract.create()
+            ..sender = smartAccountAddress
+            ..contract = smartAccountAddress
+            ..msg = AuraSmartAccountConstant.unRegisterRecovery(
+              recoveryContractAddress: auraNetworkInfo.recoverContractAddress,
+            );
+
+      messages.addAll([
+        revokeAllowance,
+        msgUnRegister,
+      ]);
 
       // Get signer data
       final CosmosSignerData signerData = await _getSignerData(recoveryAddress);
@@ -643,7 +677,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
           await _signAndBroadcastTx(
         userPrivateKey: privateKey,
         feeSign: feeSign,
-        msg: msgRecover,
+        msgs: messages,
         pubKeyGenerate: pubKeyGenerate,
         signerData: signerData,
         memo: null,
@@ -661,99 +695,6 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       );
     } catch (e) {
       // Handle error
-      throw _getError(e);
-    }
-  }
-
-  Future<TxResponse> _checkTransactionInfo(String txHash, int times) async {
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1300,
-      ),
-    );
-    try {
-      return await getTx(
-        txHash: txHash,
-      );
-    } catch (e) {
-      if (times == 3) {
-        rethrow;
-      }
-      return _checkTransactionInfo(txHash, times + 1);
-    }
-  }
-
-  @override
-  Future<TxResponse> unRegisterRecoveryMethod({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    AuraSmartAccountFee? fee,
-  }) async {
-    try {
-      // Get pub key from private key
-      final Uint8List pubKey = WalletHelper.getPublicKeyFromPrivateKey(
-        userPrivateKey,
-      );
-
-      // Generate a pub key from user pub key
-      final Uint8List pubKeyGenerate =
-          AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(
-        pubKey,
-      );
-
-      // Create msg
-      final coswasm.MsgExecuteContract msg = coswasm.MsgExecuteContract.create()
-        ..sender = smartAccountAddress
-        ..contract = smartAccountAddress
-        ..msg = AuraSmartAccountConstant.unRegisterRecovery(
-          recoveryContractAddress: auraNetworkInfo.recoverContractAddress,
-        );
-
-      // Create fee
-      late tx.Fee feeSign;
-
-      if (fee == null) {
-        feeSign = CosmosHelper.calculateFee(
-          AuraSmartAccountConstant.defaultGasActiveSmartAccount,
-          deNom: auraNetworkInfo.denom,
-        );
-      } else {
-        // Create fee
-        feeSign = tx.Fee.create()
-          ..gasLimit = $fixnum.Int64(fee.gasLimit)
-          ..amount.add(
-            base.Coin(
-              denom: auraNetworkInfo.denom,
-              amount: fee.fee,
-            ),
-          );
-      }
-
-      // Get signer data
-      CosmosSignerData signerData = await _getSignerData(smartAccountAddress);
-
-      // Broadcast TxBytes
-      final tx.BroadcastTxResponse broadcastTxResponse =
-          await _signAndBroadcastTx(
-        userPrivateKey: userPrivateKey,
-        pubKeyGenerate: pubKeyGenerate,
-        msg: msg,
-        signerData: signerData,
-        feeSign: feeSign,
-        memo: null,
-      );
-
-      final int statusCode = broadcastTxResponse.txResponse.code;
-
-      if (statusCode == 0) {
-        return broadcastTxResponse.txResponse;
-      }
-      throw AuraSmartAccountError(
-        code: SmartAccountErrorCode.errorBroadcast,
-        errorMsg: broadcastTxResponse.txResponse.rawLog,
-      );
-    } catch (e) {
-      // handle exception
       throw _getError(e);
     }
   }

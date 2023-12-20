@@ -42,15 +42,18 @@ extension AuraAccountRecoveryMethodDbExtension on AuraAccountRecoveryMethodDb {
   AuraAccountRecoveryMethodDto get toDto => AuraAccountRecoveryMethodDto(
         method: method,
         value: value,
+    subValue: subValue,
       );
 
   AuraAccountRecoveryMethodDb copyWith({
     AuraSmartAccountRecoveryMethod? method,
     String? value,
+    String? subValue,
   }) =>
       AuraAccountRecoveryMethodDb(
         method: method ?? this.method,
         value: value ?? this.value,
+        subValue: subValue ?? this.subValue,
       );
 }
 
@@ -83,11 +86,13 @@ class AuraAccountDb extends AuraAccountDto {
 @embedded
 final class AuraAccountRecoveryMethodDb {
   final String value;
+  final String subValue;
   @enumerated
   final AuraSmartAccountRecoveryMethod method;
 
   const AuraAccountRecoveryMethodDb({
     this.method = AuraSmartAccountRecoveryMethod.web3Auth,
     this.value = '',
+    this.subValue = '',
   });
 }

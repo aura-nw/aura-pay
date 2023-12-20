@@ -144,10 +144,17 @@ class _HomePageState extends State<HomePage>
                   const SizedBox(
                     height: BoxSize.boxSize07,
                   ),
-                  HomePagePriceSelector(
-                    builder: (price) {
-                      return HomePageBalanceSelector(
-                        builder: (balances) {
+                  HomePageBalanceSelector(
+                    builder: (balances) {
+                      return HomePagePriceSelector(
+                        builder: (price) {
+                          if (balances.isEmpty) {
+                            return Center(
+                              child: EmptyTokenWidget(
+                                appTheme: appTheme,
+                              ),
+                            );
+                            }
                           return AppLocalizationProvider(
                             builder: (localization, _) {
                               return TokenItemWidget(
@@ -171,11 +178,6 @@ class _HomePageState extends State<HomePage>
                       );
                     },
                   ),
-                  // Center(
-                  //   child: EmptyTokenWidget(
-                  //     appTheme: appTheme,
-                  //   ),
-                  // ),
                 ],
               ),
             ),

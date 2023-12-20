@@ -22,10 +22,12 @@ final class AuraAccount {
 
 final class AuraAccountRecoveryMethod {
   final String value;
+  final String subValue;
   final AuraSmartAccountRecoveryMethod method;
 
   const AuraAccountRecoveryMethod({
     required this.method,
     required this.value,
+    required this.subValue,
   });
 }

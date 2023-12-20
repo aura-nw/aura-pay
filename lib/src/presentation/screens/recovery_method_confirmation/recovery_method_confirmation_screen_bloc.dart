@@ -88,7 +88,6 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     RecoveryMethodConfirmationEventOnConfirm event,
     Emitter<RecoveryMethodConfirmationState> emit,
   ) async {
-
     emit(
       state.copyWith(
         status: RecoveryMethodConfirmationStatus.onRecovering,
@@ -101,32 +100,6 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
       final String? smPrivateKey = await _controllerKeyUseCase.getKey(
         address: account.address,
       );
-
-      if (state.argument.isReadyMethod) {
-        TransactionInformation information =
-            await _smartAccountUseCase.unRegisterRecoveryMethod(
-          userPrivateKey:
-              AuraWalletHelper.getPrivateKeyFromString(smPrivateKey!),
-          smartAccountAddress: account.address,
-        );
-
-        information = await _checkTransactionInfo(information.txHash, 0);
-
-        if (information.status != 0) {
-          emit(
-            state.copyWith(
-              status: RecoveryMethodConfirmationStatus.onUnRegisterRecoverFail,
-              error: information.rawLog,
-            ),
-          );
-        }else{
-          await _accountUseCase.updateAccount(
-            id: account.id,
-            method: null,
-            useNullable: true,
-          );
-        }
-      }
 
       String recoveryAddress = '';
 
@@ -158,19 +131,24 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
         userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(smPrivateKey!),
         smartAccountAddress: account.address,
         recoverAddress: recoveryAddress,
-        gasLimit: _defaultGasLimit,
+        gasLimit: state.argument.account.isVerified
+            ? (1.5 * _defaultGasLimit).round()
+            : _defaultGasLimit,
         fee: state.transactionFee,
+        isReadyRegister: state.argument.account.isVerified,
+        revokePreAddress: state.argument.account.method?.subValue,
       );
 
       information = await _checkTransactionInfo(information.txHash, 0);
 
-      await _web3authUseCase.onLogout();
-
       if (information.status == 0) {
+        await _web3authUseCase.onLogout();
+
         await _accountUseCase.updateAccount(
           id: account.id,
           method: method,
           value: recoveryValue,
+          subValue: recoveryAddress,
         );
 
         emit(

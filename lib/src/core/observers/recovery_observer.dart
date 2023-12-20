@@ -1,30 +1,25 @@
+import 'observer_base.dart';
+
 typedef RecoveryListener = void Function(bool, String?);
 
-final class RecoveryObserver {
-  final List<RecoveryListener> _listeners = List.empty(growable: true);
+final class RecoveryEmitParam {
+  final bool status;
+  final String? msg;
 
-  void addListener(RecoveryListener listener) {
-    if (!_listeners.contains(listener)) {
-      _listeners.add(listener);
-    }
-  }
+  const RecoveryEmitParam({
+    required this.status,
+    this.msg,
+  });
+}
 
-  void removeListener(RecoveryListener listener) {
-    if (_listeners.contains(listener)) {
-      _listeners.remove(listener);
-    }
-  }
-
-  void clear() {
-    _listeners.clear();
-  }
-
+final class RecoveryObserver
+    extends ObserverBase<RecoveryListener, RecoveryEmitParam> {
+  @override
   void emit({
-    required bool status,
-    String? msg,
+    required RecoveryEmitParam emitParam,
   }) {
-    for (final listener in _listeners) {
-      listener.call(status, msg);
+    for (final listener in listeners) {
+      listener.call(emitParam.status, emitParam.msg);
     }
   }
 }

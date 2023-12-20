@@ -60,19 +60,20 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     await for (final message in receivePort) {
       if (message is Map<String, dynamic>) {
         try {
-
           final Dio horoScopeDio = dioFactory(message['horoscope_url']);
 
           final Dio auraNetworkDio = dioFactory(message['aura_network_url']);
 
-          final BalanceUseCase horoScropeBalanceUseCase = balanceUseCaseFactory(horoScopeDio);
+          final BalanceUseCase horoScropeBalanceUseCase =
+              balanceUseCaseFactory(horoScopeDio);
 
           final balances = await horoScropeBalanceUseCase.getBalances(
             address: message['address'],
             environment: message['environment'],
           );
 
-          final BalanceUseCase auraNetworkBalanceUseCase = balanceUseCaseFactory(auraNetworkDio);
+          final BalanceUseCase auraNetworkBalanceUseCase =
+              balanceUseCaseFactory(auraNetworkDio);
 
           final price = await auraNetworkBalanceUseCase.getTokenPrice();
 
@@ -93,9 +94,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     HomePageEventOnFetchTokenPrice event,
     Emitter<HomePageState> emit,
   ) async {
-    emit(state.copyWith(
-      balances: [],
-    ));
+    emit(state.copyWith());
     final account = await _accountUseCase.getFirstAccount();
 
     _isolateSendPort.send({

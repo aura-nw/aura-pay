@@ -17,6 +17,7 @@ extension AuraAccountRecoveryMethodDtoExtension on AuraAccountRecoveryMethodDto 
     return AuraAccountRecoveryMethod(
       method: method,
       value: value,
+      subValue: subValue,
     );
   }
 }
@@ -39,11 +40,13 @@ class AuraAccountDto {
 
 final class AuraAccountRecoveryMethodDto{
   final String value;
+  final String subValue;
   final AuraSmartAccountRecoveryMethod method;
 
   const AuraAccountRecoveryMethodDto({
     required this.method,
     required this.value,
+    required this.subValue,
   });
 }
 

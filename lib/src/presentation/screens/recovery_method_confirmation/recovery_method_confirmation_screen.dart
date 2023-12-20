@@ -31,12 +31,10 @@ import 'recovery_method_confirmation_screen_selector.dart';
 abstract class RecoveryMethodConfirmationArgument<T> {
   final AuraAccount account;
   final T? data;
-  final bool isReadyMethod;
 
   const RecoveryMethodConfirmationArgument({
     required this.account,
     required this.data,
-    required this.isReadyMethod,
   });
 }
 
@@ -45,7 +43,6 @@ final class RecoveryMethodConfirmationGoogleArgument
   RecoveryMethodConfirmationGoogleArgument({
     required super.account,
     required super.data,
-    required super.isReadyMethod,
   });
 }
 
@@ -54,7 +51,6 @@ final class RecoveryMethodConfirmationBackupAddressArgument
   RecoveryMethodConfirmationBackupAddressArgument({
     required super.account,
     required super.data,
-    required super.isReadyMethod,
   });
 }
 
@@ -111,7 +107,7 @@ class _RecoveryMethodConfirmationScreenState
                   break;
                 case RecoveryMethodConfirmationStatus.onRecoverSuccess:
                   _recoveryObserver.emit(
-                    status: true,
+                    emitParam: const RecoveryEmitParam(status: true,),
                   );
                   AppNavigator.popUntil(
                     RoutePath.recoverMethod,

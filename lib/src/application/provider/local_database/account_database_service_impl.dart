@@ -62,6 +62,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
     AuraAccountType? type,
     AuraSmartAccountRecoveryMethod? method,
     String? value,
+    String? subValue,
     bool useNullAble = false,
   }) async {
     final AuraAccountDb? account = await _isar.auraAccountDbs.get(id);
@@ -90,6 +91,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
               methodDb: methodDb?.copyWith(
                 method: method,
                 value: value,
+                subValue: subValue,
               ),
             ));
           }

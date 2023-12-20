@@ -181,7 +181,8 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                                         );
                                       },
                                       onPaste: _onGetClipBoardData,
-                                      constraintManager: ConstraintManager()
+                                      constraintManager: ConstraintManager(
+                                          isValidOnChanged: true)
                                         ..custom(
                                           errorMessage: localization.translate(
                                             LanguageKey
@@ -362,18 +363,22 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
 
     _onChangeRecipientData(
       data?.text ?? '',
-      true,
+      WalletAddressValidator.isValidAddress(
+        (data?.text ?? '').trim(),
+      ),
     );
   }
 
   void _onChangeRecipientData(String value, bool isValid) async {
     _recipientController.text = value;
 
-    _bloc.add(
-      SendTransactionEventOnChangeRecipientAddress(
-        _recipientController.text.trim(),
-      ),
-    );
+    if (isValid) {
+      _bloc.add(
+        SendTransactionEventOnChangeRecipientAddress(
+          _recipientController.text.trim(),
+        ),
+      );
+    }
   }
 
   void _onClearRecipient() {
@@ -418,17 +423,16 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
     );
   }
 
+  void _showRequestCameraPermission(AppTheme appTheme) async {
+    PermissionStatus status =
+        await SystemPermissionHelper.getCurrentCameraPermissionStatus();
 
-  void _showRequestCameraPermission(AppTheme appTheme) async{
-
-    PermissionStatus status = await SystemPermissionHelper.getCurrentCameraPermissionStatus();
-
-    if(status.isGranted){
+    if (status.isGranted) {
       final result = await AppNavigator.push(
         RoutePath.scanner,
       );
-    }else{
-      if(context.mounted){
+    } else {
+      if (context.mounted) {
         DialogProvider.showPermissionDialog(
           context,
           appTheme: appTheme,

@@ -255,6 +255,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
   }
 
   void _onTextInputChange() {
+    validate();
     if (!widget.enableClear) return;
     if (_controller.text.trim().isEmpty) {
       enableClear = false;

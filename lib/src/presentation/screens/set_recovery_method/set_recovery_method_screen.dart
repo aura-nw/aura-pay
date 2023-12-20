@@ -72,13 +72,11 @@ class _SetRecoveryMethodScreenState extends State<SetRecoveryMethodScreen>
                     argument = RecoveryMethodConfirmationGoogleArgument(
                       account: widget.account,
                       data: state.googleAccount,
-                      isReadyMethod: widget.account.isVerified,
                     );
                   } else {
                     argument = RecoveryMethodConfirmationBackupAddressArgument(
                       account: widget.account,
                       data: state.recoverAddress,
-                      isReadyMethod: widget.account.isVerified,
                     );
                   }
 

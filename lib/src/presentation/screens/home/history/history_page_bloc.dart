@@ -43,8 +43,9 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
 
     return transactions.where(
       (transaction) {
-        final MsgType type =
-            TransactionHelper.getMsgType(transaction.messages[0].content);
+        final MsgType type = TransactionHelper.getMsgType(
+          transaction.messages[0].content,
+        );
 
         if (type == MsgType.other) {
           return false;

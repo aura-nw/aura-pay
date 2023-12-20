@@ -21,6 +21,7 @@ abstract interface class AccountDatabaseService {
     AuraAccountType? type,
     AuraSmartAccountRecoveryMethod? method,
     String? value,
+    String? subValue,
     bool useNullAble = false,
   });
 
