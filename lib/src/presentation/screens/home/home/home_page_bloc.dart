@@ -35,10 +35,10 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         _isolateSendPort = message;
       }
       if (message is Map<String, dynamic>) {
-        if (message.containsKey('price') && message.containsKey('balance')) {
+        if (message.containsKey('price') && message.containsKey('balances')) {
           add(
             HomePageEventOnUpdateCurrency(
-              balance: message['balance'],
+              balances: message['balances'],
               price: message['price'],
             ),
           );
@@ -60,28 +60,26 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     await for (final message in receivePort) {
       if (message is Map<String, dynamic>) {
         try {
-          final SmartAccountUseCase smartAccountUseCase =
-              smartAccountUseCaseFactory(
-            message['auraSmartAccountEnvironment'],
-          );
 
-          final Dio dio = dioFactory(message['base_url']);
+          final Dio horoScopeDio = dioFactory(message['horoscope_url']);
 
-          final TokenUseCase tokenUseCase = tokenUseCaseFactory(dio);
+          final Dio auraNetworkDio = dioFactory(message['aura_network_url']);
 
-          final balance = await smartAccountUseCase.getToken(
+          final BalanceUseCase horoScropeBalanceUseCase = balanceUseCaseFactory(horoScopeDio);
+
+          final balances = await horoScropeBalanceUseCase.getBalances(
             address: message['address'],
+            environment: message['environment'],
           );
 
-          final price = await tokenUseCase.getTokenPrice(
-            id: message['aura_id'],
-            currency: 'usd',
-          );
+          final BalanceUseCase auraNetworkBalanceUseCase = balanceUseCaseFactory(auraNetworkDio);
+
+          final price = await auraNetworkBalanceUseCase.getTokenPrice();
 
           // Send the API response back to the main isolate
           sendPort.send({
             'price': price,
-            'balance': balance,
+            'balances': balances,
           });
         } catch (error) {
           // Send the error back to the main isolate
@@ -96,14 +94,15 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     Emitter<HomePageState> emit,
   ) async {
     emit(state.copyWith(
-      balance: '0',
+      balances: [],
     ));
     final account = await _accountUseCase.getFirstAccount();
 
     _isolateSendPort.send({
-      'base_url': config.coinGeckoUrl + config.coinGeckoVersion,
+      'horoscope_url': config.horoScopeUrl + config.horoScopeVersion,
+      'aura_network_url': config.auraNetworkBaseUrl + config.auraNetworkVersion,
       'address': account?.address,
-      'aura_id': config.auraId,
+      'environment': config.environment.environmentString,
       'auraSmartAccountEnvironment': config.environment.toSME,
     });
   }
@@ -115,7 +114,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     emit(
       state.copyWith(
         price: event.price,
-        balance: event.balance,
+        balances: event.balances,
       ),
     );
   }

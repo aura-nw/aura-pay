@@ -1,16 +1,17 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home_page_bloc.dart';
 import 'home_page_state.dart';
 
 final class HomePageBalanceSelector
-    extends BlocSelector<HomePageBloc, HomePageState, String> {
+    extends BlocSelector<HomePageBloc, HomePageState, List<PyxisBalance>> {
   HomePageBalanceSelector({
     Key? key,
-    required Widget Function(String) builder,
+    required Widget Function(List<PyxisBalance>) builder,
   }) : super(
           key: key,
-          selector: (state) => state.balance,
+          selector: (state) => state.balances,
           builder: (_, balance) => builder(
             balance,
           ),

@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
-import 'package:aura_wallet_core/config_options/environment_options.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -56,7 +55,7 @@ Future<void> initDependency(
 ) async {
   final Dio dio = Dio(
     BaseOptions(
-      baseUrl: config.lcdUrl,
+      baseUrl: config.horoScopeUrl + config.horoScopeVersion,
       connectTimeout: const Duration(
         milliseconds: 60000,
       ),

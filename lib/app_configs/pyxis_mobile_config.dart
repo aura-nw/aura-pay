@@ -4,12 +4,26 @@ import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/config_options/environment_options.dart';
 
 extension PyxisEnvironmentMapper on PyxisEnvironment {
+  String get environmentString {
+    switch (this) {
+      case PyxisEnvironment.dev:
+        return 'auratestnet';
+      case PyxisEnvironment.serenity:
+        return 'auratestnet';
+      case PyxisEnvironment.staging:
+        return 'auratestnet';
+      case PyxisEnvironment.production:
+        return 'auratestnet';
+    }
+  }
+
   AuraSmartAccountEnvironment get toSME {
     int index = this.index;
 
     return AuraSmartAccountEnvironment.values[index];
   }
-  AuraEnvironment get toWalletCoreE  {
+
+  AuraEnvironment get toWalletCoreE {
     int index = this.index;
 
     return AuraEnvironment.values[index];
@@ -34,11 +48,17 @@ class PyxisMobileConfig {
 
   Map<String, dynamic> get appConfigs => jsonDecode(configs['APP_CONFIG']);
 
-  Map<String, dynamic> get coinGECKO => jsonDecode(configs['COIN_GECKO']);
+  Map<String, dynamic> get horoScopeConfig =>
+      jsonDecode(configs['HORO_SCOPE_CONFIG']);
 
-  String get coinGeckoUrl => coinGECKO['base_url'];
+  Map<String, dynamic> get auraNetWorkConfig =>
+      jsonDecode(configs['AURA_NET_WORK_CONFIG']);
 
-  String get coinGeckoVersion => coinGECKO['api_version'];
+  String get horoScopeUrl => horoScopeConfig['baseUrl'];
+  String get horoScopeVersion => horoScopeConfig['version'];
+
+  String get auraNetworkBaseUrl => auraNetWorkConfig['baseUrl'];
+  String get auraNetworkVersion => auraNetWorkConfig['version'];
 
   String get auraId => configs['AURA_ID'];
 
@@ -49,8 +69,6 @@ class PyxisMobileConfig {
   String get deNom => appConfigs['denom'];
 
   String get symbol => appConfigs['coin'];
-
-  String get lcdUrl => configs['LCD_URL'];
 
   String get appName => configs['APP_NAME'];
 

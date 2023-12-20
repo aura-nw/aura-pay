@@ -1,17 +1,25 @@
-import 'package:domain/src/domain/repository/repository.dart';
+import 'package:domain/domain.dart';
 
-final class TokenUseCase {
-  final TokenRepository _repository;
+final class BalanceUseCase {
+  final BalanceRepository _repository;
 
-  const TokenUseCase(this._repository);
+  const BalanceUseCase(this._repository);
 
-  Future<double> getTokenPrice({
-    required String id,
-    required String currency,
+  Future<double> getTokenPrice() async {
+    return _repository.getTokenPrice();
+  }
+
+  Future<List<PyxisBalance>> getBalances({
+    required String address,
+    required String environment,
   }) async {
-    return _repository.getTokenPrice(
-      id: id,
-      currency: currency,
+    final QueryBalancesParameter parameter = QueryBalancesParameter(
+      address: address,
+      environment: environment,
+    );
+    return _repository.getBalances(
+      body: parameter.toJson(),
+      environment: environment,
     );
   }
 }

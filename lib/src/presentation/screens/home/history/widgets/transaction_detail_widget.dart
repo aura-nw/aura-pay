@@ -37,7 +37,9 @@ class TransactionDetailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MsgType msgType = TransactionHelper.getMsgType(pyxisTransaction.msg);
+    final MsgType msgType = TransactionHelper.getMsgType(
+      pyxisTransaction.messages[0].content,
+    );
     return Padding(
       padding: const EdgeInsets.only(
         bottom: Spacing.spacing06,
@@ -89,8 +91,9 @@ class TransactionDetailWidget extends StatelessWidget {
   Widget _buildTransactionWithType(MsgType msgType, BuildContext context) {
     switch (msgType) {
       case MsgType.send:
-        final MsgSend msgSend =
-            TransactionHelper.parseMsgSend(pyxisTransaction.msg);
+        final MsgSend msgSend = TransactionHelper.parseMsgSend(
+          pyxisTransaction.messages[0].content,
+        );
 
         bool isSend = msgSend.fromAddress == address;
 
@@ -152,7 +155,7 @@ class TransactionDetailWidget extends StatelessWidget {
                 children: [
                   _buildInformation(
                     LanguageKey.transactionHistoryPageTransactionFee,
-                    '${pyxisTransaction.fee.formatAura} ${AppLocalizationManager.of(context).translate(
+                    '${pyxisTransaction.transactionFees[0].amount.formatAura} ${AppLocalizationManager.of(context).translate(
                       LanguageKey.globalPyxisAura,
                     )}',
                   ),
@@ -223,7 +226,7 @@ class TransactionDetailWidget extends StatelessWidget {
                 children: [
                   _buildInformation(
                     LanguageKey.transactionHistoryPageTransactionFee,
-                    '${pyxisTransaction.fee.formatAura} ${AppLocalizationManager.of(context).translate(
+                    '${pyxisTransaction.transactionFees[0].amount.formatAura} ${AppLocalizationManager.of(context).translate(
                       LanguageKey.globalPyxisAura,
                     )}',
                   ),
@@ -408,7 +411,7 @@ class TransactionDetailWidget extends StatelessWidget {
               ),
               _buildInformation(
                 LanguageKey.transactionHistoryPageTransactionFee,
-                '${pyxisTransaction.fee.formatAura} ${AppLocalizationManager.of(context).translate(
+                '${pyxisTransaction.transactionFees[0].amount.formatAura} ${AppLocalizationManager.of(context).translate(
                   LanguageKey.globalPyxisAura,
                 )}',
               ),

@@ -41,7 +41,7 @@ sealed class TransactionHelper {
       return false;
     }
 
-    return msg['msg'].containsKey('register_plugin');
+    return jsonDecode(msg['msg']).containsKey('register_plugin');
   }
 
   static MsgType getMsgType(Map<String, dynamic> msg) {

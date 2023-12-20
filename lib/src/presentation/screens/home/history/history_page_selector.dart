@@ -5,6 +5,20 @@ import 'history_page_bloc.dart';
 
 import 'history_page_state.dart';
 
+final class HistoryPageTransactionHistoryEnumSelector
+    extends BlocSelector<HistoryPageBloc, HistoryPageState, TransactionHistoryEnum> {
+  HistoryPageTransactionHistoryEnumSelector({
+    Key? key,
+    required Widget Function(TransactionHistoryEnum) builder,
+  }) : super(
+          key: key,
+          selector: (state) => state.currentTab,
+          builder: (_, currentTab) => builder(
+            currentTab,
+          ),
+        );
+}
+
 final class HistoryPageStatusSelector
     extends BlocSelector<HistoryPageBloc, HistoryPageState, HistoryPageStatus> {
   HistoryPageStatusSelector({

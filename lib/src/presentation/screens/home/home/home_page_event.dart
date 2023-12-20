@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_page_event.freezed.dart';
@@ -8,7 +9,7 @@ class HomePageEvent with _$HomePageEvent {
       HomePageEventOnFetchTokenPrice;
 
   const factory HomePageEvent.updateCurrency({
-    required String balance,
+    required List<PyxisBalance> balances,
     required double price,
   }) = HomePageEventOnUpdateCurrency;
 }

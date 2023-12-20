@@ -149,9 +149,6 @@ class TransactionWidget extends StatelessWidget {
         );
 
       case MsgType.executeContract:
-        final MsgExecuteContract msgExecuteContract =
-            TransactionHelper.parseMsgExecuteContract(msg);
-
         return Row(
           children: [
             SvgPicture.asset(

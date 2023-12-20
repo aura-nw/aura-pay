@@ -8,28 +8,32 @@ final class TransactionRepositoryImpl implements TransactionRepository {
 
   @override
   Future<List<PyxisTransaction>> getTransactions({
-    required Map<String, dynamic> queries,
+    required Map<String, dynamic> body,
+    required String environment,
   }) async {
-    final TransactionBaseResponse response = await _apiService.getTransaction(
-      queries: queries,
+    final BaseResponseV2 response = await _apiService.getTransaction(
+      body: body,
     );
 
-    List<PyxisTransactionDto> transactions = response.txResponse.map((e) {
-      final int txIndex = response.txResponse.indexOf(e);
-      final Map<String, dynamic> tx = response.txs[txIndex];
+    final data = response.handleResponse();
 
-      final PyxisTransactionDto transaction = PyxisTransactionDto.fromJson(e);
+    // Get transaction from chain id or default
+    String transaction = 'transaction';
+    Map<String, dynamic> transactionMap = data[environment] ??
+        {
+          transaction: [],
+        };
 
-      final Map<String, dynamic> authInfo = tx['auth_info'];
+    final List<PyxisTransactionDto> transactions = List.empty(
+      growable: true,
+    );
 
-      final String fee = authInfo['fee']?['amount']?[0]?['amount'] ?? '';
+    for (final transactionData in transactionMap[transaction]) {
+      final PyxisTransactionDto transactionDto =
+          PyxisTransactionDto.fromJson(transactionData);
 
-      return transaction.copyWith(
-        memo: tx['body']?['memo'],
-        fee: fee,
-        msg: tx['body']['messages'][0],
-      );
-    }).toList();
+      transactions.add(transactionDto);
+    }
 
     return transactions
         .map(

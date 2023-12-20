@@ -7,6 +7,6 @@ class HistoryPageEvent with _$HistoryPageEvent{
   const factory HistoryPageEvent.onInit() = HistoryPageEventOnInit;
   const factory HistoryPageEvent.onLoadMore() = HistoryPageEventOnLoadMore;
   const factory HistoryPageEvent.onRefresh() = HistoryPageEventOnRefresh;
-  const factory HistoryPageEvent.onFilter(int tab) = HistoryPageEventOnFilter;
+  const factory HistoryPageEvent.onFilter(int index) = HistoryPageEventOnFilter;
   const factory HistoryPageEvent.changeAccount(AuraAccount selectedAccount) = HistoryPageEventOnChangeSelectedAccount;
 }

@@ -1,3 +1,4 @@
+import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 
 extension PyxisTransactionDtoMapper on PyxisTransactionDto {
@@ -5,56 +6,79 @@ extension PyxisTransactionDtoMapper on PyxisTransactionDto {
         status: status,
         txHash: txHash,
         timeStamp: timeStamp,
-        msg: msg,
-        fee: fee,
-        memo: memo,
+        heightLt: heightLt,
+        messages: messages
+            .map(
+              (e) => e.toEntity,
+            )
+            .toList(),
+        transactionFees: transactionFees
+            .map(
+              (e) => e.toEntity,
+            )
+            .toList(),
       );
-
-  PyxisTransactionDto copyWith({
-    int? status,
-    String? txHash,
-    String? timeStamp,
-    String? fee,
-    Map<String,dynamic>? msg,
-    String? memo,
-  }) {
-    return PyxisTransactionDto(
-      status: status ?? this.status,
-      txHash: txHash ?? this.txHash,
-      timeStamp: timeStamp ?? this.timeStamp,
-      fee: fee ?? this.fee,
-      msg: msg ?? this.msg,
-      memo: memo ?? this.memo,
-    );
-  }
 }
 
-final class PyxisTransactionDto {
+extension PyxisTransactionMsgDtoMapper on PyxisTransactionMsgDto {
+  PyxisTransactionMsg get toEntity => PyxisTransactionMsg(
+        type: type,
+        content: content,
+      );
+}
+
+class PyxisTransactionDto {
   final String txHash;
   final int status;
+  final int heightLt;
   final String timeStamp;
-  final String fee;
-  final String? memo;
-  final Map<String, dynamic> msg;
+  final List<PyxisBalanceDto> transactionFees;
+  final List<PyxisTransactionMsgDto> messages;
 
   const PyxisTransactionDto({
     required this.status,
+    required this.heightLt,
     required this.txHash,
     required this.timeStamp,
-    required this.fee,
-    required this.msg,
-    this.memo,
+    required this.transactionFees,
+    required this.messages,
   });
 
   bool get isSuccess => status == 0;
 
   factory PyxisTransactionDto.fromJson(Map<String, dynamic> json) {
+    final List<dynamic> feeList = json['fee'];
+    final List<dynamic> msgList = json['transaction_messages'];
+
     return PyxisTransactionDto(
       status: json['code'],
-      txHash: json['txhash'],
+      txHash: json['hash'],
       timeStamp: json['timestamp'],
-      fee: '',
-      msg: {},
+      heightLt: json['height'],
+      transactionFees: feeList
+          .map(
+            (fee) => PyxisBalanceDto.fromJson(fee),
+          )
+          .toList(),
+      messages:
+          msgList.map((msg) => PyxisTransactionMsgDto.fromJson(msg)).toList(),
+    );
+  }
+}
+
+class PyxisTransactionMsgDto {
+  final String type;
+  final Map<String, dynamic> content;
+
+  const PyxisTransactionMsgDto({
+    required this.type,
+    required this.content,
+  });
+
+  factory PyxisTransactionMsgDto.fromJson(Map<String, dynamic> json) {
+    return PyxisTransactionMsgDto(
+      type: json['type'],
+      content: json['content'],
     );
   }
 }

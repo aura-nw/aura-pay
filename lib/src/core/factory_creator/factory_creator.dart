@@ -3,7 +3,7 @@ import 'package:data/data.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
-import 'package:pyxis_mobile/src/application/service/token/token_api_service_impl.dart';
+import 'package:pyxis_mobile/src/application/service/balance/token_api_service_impl.dart';
 
 /// Use for isolate
 
@@ -17,10 +17,10 @@ SmartAccountUseCase smartAccountUseCaseFactory(AuraSmartAccountEnvironment auraS
       ),
     );
 
-TokenUseCase tokenUseCaseFactory(Dio dio) => TokenUseCase(
-      TokenRepositoryImpl(
-        TokenApiServiceImpl(
-          TokenApiServiceGenerator(
+BalanceUseCase balanceUseCaseFactory(Dio dio) => BalanceUseCase(
+      BalanceRepositoryImpl(
+        BalanceApiServiceImpl(
+          BalanceApiServiceGenerator(
             dio,
           ),
         ),

@@ -1,12 +1,52 @@
 import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pyxis_mobile/src/core/constants/transaction_enum.dart';
+
 part 'history_page_state.freezed.dart';
+
+// Can add more here.
+enum TransactionHistoryEnum implements Comparable<TransactionHistoryEnum> {
+  all([
+    TransactionType.Send,
+    TransactionType.ExecuteContract,
+    TransactionType.Recover,
+  ]),
+  send([
+    TransactionType.Send,
+  ]),
+  receive([
+    TransactionType.Send,
+  ]),
+  executeContract([
+    TransactionType.ExecuteContract,
+  ]),
+  recovery([
+    TransactionType.Recover,
+  ]);
+
+  final List<String> messages;
+
+  const TransactionHistoryEnum(this.messages);
+
+  String? getReceive(String? receive) {
+    bool isHasReceive = this != TransactionHistoryEnum.executeContract;
+
+    if (isHasReceive) {
+      return receive;
+    }
+
+    return null;
+  }
+
+  @override
+  int compareTo(TransactionHistoryEnum other) =>
+      messages.length - other.messages.length;
+}
 
 enum HistoryPageStatus {
   loading,
   loaded,
   loadMore,
-  refresh,
   error,
 }
 
@@ -15,13 +55,12 @@ class HistoryPageState with _$HistoryPageState {
   const factory HistoryPageState({
     @Default(HistoryPageStatus.loading) HistoryPageStatus status,
     @Default([]) List<PyxisTransaction> transactions,
-    @Default(0) int currentTab,
-    @Default(1) int offset,
+    @Default(TransactionHistoryEnum.all) TransactionHistoryEnum currentTab,
+    @Default('') String environment,
     @Default(30) int limit,
-    @Default([]) List<List<String>> events,
     @Default(false) bool canLoadMore,
     @Default([]) List<AuraAccount> accounts,
-    AuraAccount ? selectedAccount,
-    String ?error,
+    AuraAccount? selectedAccount,
+    String? error,
   }) = _HistoryPageState;
 }

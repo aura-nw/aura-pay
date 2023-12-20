@@ -1,4 +1,4 @@
 sealed class ApiServicePath{
-  static const String txs = '/cosmos/tx/v1beta1/txs';
-  static const String simplePrice = '/simple/price';
+  static const String graphiql = '/graphql';
+  static const String auraPrice = '/cw20-tokens/price/aura-network';
 }

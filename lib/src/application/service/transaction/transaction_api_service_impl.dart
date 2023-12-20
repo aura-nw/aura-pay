@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:data/data.dart';
 import 'package:dio/dio.dart';
 import 'package:pyxis_mobile/src/application/service/api_service_path.dart';
@@ -11,16 +13,20 @@ class TransactionApiServiceImpl implements TransactionApiService {
   const TransactionApiServiceImpl(this._apiServiceGenerate);
 
   @override
-  Future<TransactionBaseResponse> getTransaction({required Map<String,dynamic> queries}){
-    return _apiServiceGenerate.getTransactions(queries);
+  Future<BaseResponseV2> getTransaction({
+    required Map<String, dynamic> body,
+  }) {
+    return _apiServiceGenerate.getTransactions(body);
   }
-
 }
 
 @RestApi()
 abstract class TransactionApiServiceGenerate {
-  factory TransactionApiServiceGenerate(Dio dio,{String ?baseUrl}) = _TransactionApiServiceGenerate;
+  factory TransactionApiServiceGenerate(Dio dio, {String? baseUrl}) =
+      _TransactionApiServiceGenerate;
 
-  @GET(ApiServicePath.txs)
-  Future<TransactionBaseResponse> getTransactions(@Queries() Map<String,dynamic> queries);
+  @POST(ApiServicePath.graphiql)
+  Future<BaseResponseV2> getTransactions(
+    @Body() Map<String, dynamic> body,
+  );
 }

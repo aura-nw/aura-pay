@@ -1,3 +1,4 @@
+import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:pyxis_mobile/src/application/global/localization/app_localizatio
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/app_date_format.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_state.dart';
@@ -121,123 +123,148 @@ class _HistoryPageState extends State<HistoryPage> {
                           case HistoryPageStatus.loaded:
                           case HistoryPageStatus.error:
                           case HistoryPageStatus.loadMore:
-                          case HistoryPageStatus.refresh:
                             return HistoryPageTransactionsSelector(
                               builder: (transactions) {
-                                if (transactions.isEmpty) {
-                                  return Center(
-                                    child: AppLocalizationProvider(
-                                      builder: (localization, _) {
-                                        return Text(
-                                          localization.translate(
-                                            LanguageKey
-                                                .transactionHistoryPageNoTransactionFound,
-                                          ),
-                                          style: AppTypoGraPhy.body02.copyWith(
-                                            color: appTheme.contentColor500,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                }
-                                return HistoryPageCanLoadMoreSelector(
-                                  builder: (canLoadMore) {
-                                    return CombinedListView(
-                                      onRefresh: () => _bloc.add(
-                                        const HistoryPageEventOnRefresh(),
-                                      ),
-                                      onLoadMore: () {
-                                        if (canLoadMore) {
-                                          _bloc.add(
-                                            const HistoryPageEventOnLoadMore(),
+                                return HistoryPageTransactionHistoryEnumSelector(
+                                  builder: (tab) {
+                                    if (tab == TransactionHistoryEnum.send) {
+                                      transactions = transactions.where(
+                                        (element) {
+                                          final MsgSend msgSend =
+                                              TransactionHelper.parseMsgSend(
+                                            element.messages[0].content,
                                           );
-                                        }
-                                      },
-                                      data: transactions,
-                                      builder: (transaction, index) {
-                                        Widget widget = const SizedBox();
 
-                                        final hasPreviousIndex = transactions
-                                            .constantIndex(index - 1);
+                                          return msgSend.fromAddress == _bloc.state.selectedAccount?.address;
+                                        },
+                                      ).toList();
+                                    }
 
-                                        final String dateFormat = AppDateTime
-                                            .formatDateDMMMYYY(
-                                          transaction.timeStamp,
-                                        );
-
-                                        if (!hasPreviousIndex) {
-                                          widget = Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                dateFormat,
-                                                style: AppTypoGraPhy.bodyMedium02.copyWith(
-                                                  color: appTheme.contentColorBlack,
-                                                ),
+                                    if (transactions.isEmpty) {
+                                      return Center(
+                                        child: AppLocalizationProvider(
+                                          builder: (localization, _) {
+                                            return Text(
+                                              localization.translate(
+                                                LanguageKey
+                                                    .transactionHistoryPageNoTransactionFound,
                                               ),
-                                              const SizedBox(
-                                                height: BoxSize.boxSize06,
+                                              style:
+                                                  AppTypoGraPhy.body02.copyWith(
+                                                color: appTheme.contentColor500,
                                               ),
-                                            ],
-                                          );
-                                        } else {
-                                          final previousItem =
-                                              transactions[index - 1];
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    }
+                                    return HistoryPageCanLoadMoreSelector(
+                                      builder: (canLoadMore) {
+                                        return CombinedListView(
+                                          onRefresh: () => _bloc.add(
+                                            const HistoryPageEventOnRefresh(),
+                                          ),
+                                          onLoadMore: () {
+                                            if (canLoadMore) {
+                                              _bloc.add(
+                                                const HistoryPageEventOnLoadMore(),
+                                              );
+                                            }
+                                          },
+                                          data: transactions,
+                                          builder: (transaction, index) {
+                                            Widget widget = const SizedBox();
 
-                                          final String preDateFormat = AppDateTime
-                                              .formatDateDMMMYYY(
-                                            previousItem.timeStamp,
-                                          );
+                                            final hasPreviousIndex =
+                                                transactions
+                                                    .constantIndex(index - 1);
 
+                                            final String dateFormat =
+                                                AppDateTime.formatDateDMMMYYY(
+                                              transaction.timeStamp,
+                                            );
 
-                                          if (preDateFormat !=
-                                              dateFormat) {
-                                            widget = Column(
+                                            if (!hasPreviousIndex) {
+                                              widget = Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    dateFormat,
+                                                    style: AppTypoGraPhy
+                                                        .bodyMedium02
+                                                        .copyWith(
+                                                      color: appTheme
+                                                          .contentColorBlack,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: BoxSize.boxSize06,
+                                                  ),
+                                                ],
+                                              );
+                                            } else {
+                                              final previousItem =
+                                                  transactions[index - 1];
+
+                                              final String preDateFormat =
+                                                  AppDateTime.formatDateDMMMYYY(
+                                                previousItem.timeStamp,
+                                              );
+
+                                              if (preDateFormat != dateFormat) {
+                                                widget = Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      dateFormat,
+                                                      style: AppTypoGraPhy
+                                                          .bodyMedium02
+                                                          .copyWith(
+                                                        color: appTheme
+                                                            .contentColorBlack,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: BoxSize.boxSize06,
+                                                    ),
+                                                  ],
+                                                );
+                                              }
+                                            }
+                                            return Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  dateFormat,
-                                                  style: AppTypoGraPhy.bodyMedium02.copyWith(
-                                                    color: appTheme.contentColorBlack,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: BoxSize.boxSize06,
+                                                widget,
+                                                TransactionWidget(
+                                                  onTap: () {
+                                                    _showTransactionDetail(
+                                                        transaction, appTheme);
+                                                  },
+                                                  status: transaction.isSuccess,
+                                                  msg: transaction
+                                                      .messages[0].content,
+                                                  time: transaction.timeStamp,
+                                                  appTheme: appTheme,
+                                                  accountName: _bloc
+                                                          .state
+                                                          .selectedAccount
+                                                          ?.name ??
+                                                      '',
+                                                  address: _bloc
+                                                          .state
+                                                          .selectedAccount
+                                                          ?.address ??
+                                                      '',
                                                 ),
                                               ],
                                             );
-                                          }
-                                        }
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            widget,
-                                            TransactionWidget(
-                                              onTap: () {
-                                                _showTransactionDetail(
-                                                    transaction, appTheme);
-                                              },
-                                              status: transaction.isSuccess,
-                                              msg: transaction.msg,
-                                              time: transaction.timeStamp,
-                                              appTheme: appTheme,
-                                              accountName: _bloc.state
-                                                      .selectedAccount?.name ??
-                                                  '',
-                                              address: _bloc
-                                                      .state
-                                                      .selectedAccount
-                                                      ?.address ??
-                                                  '',
-                                            ),
-                                          ],
+                                          },
+                                          canLoadMore: canLoadMore,
                                         );
                                       },
-                                      canLoadMore: canLoadMore,
                                     );
                                   },
                                 );

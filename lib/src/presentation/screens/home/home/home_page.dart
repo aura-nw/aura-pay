@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage>
                   AppLocalizationProvider(
                     builder: (localization, _) {
                       return HomePagePriceSelector(builder: (price) {
-                        return HomePageBalanceSelector(builder: (balance) {
+                        return HomePageBalanceSelector(builder: (balances) {
                           return RichText(
                             text: TextSpan(
                               children: [
@@ -128,7 +128,8 @@ class _HomePageState extends State<HomePage>
                                   ),
                                 ),
                                 TextSpan(
-                                  text: '  ${balance.formatPrice(price ?? 0)}',
+                                  text:
+                                      '  ${(balances.firstOrNull?.amount ?? '').formatTotalPrice(price ?? 0)}',
                                   style: AppTypoGraPhy.heading03.copyWith(
                                     color: appTheme.contentColor700,
                                   ),
@@ -143,26 +144,33 @@ class _HomePageState extends State<HomePage>
                   const SizedBox(
                     height: BoxSize.boxSize07,
                   ),
-                  HomePagePriceSelector(builder: (price) {
-                    return HomePageBalanceSelector(builder: (balance) {
-                      return AppLocalizationProvider(
-                          builder: (localization, _) {
-                        return TokenItemWidget(
-                          iconPath: AssetIconPath.commonAuraTokenLogo,
-                          coin: localization.translate(
-                            LanguageKey.globalPyxisAura,
-                          ),
-                          coinId: localization.translate(
-                            LanguageKey.globalPyxisAuraId,
-                          ),
-                          appTheme: appTheme,
-                          price:
-                              '${localization.translate(LanguageKey.homePageTokenPrefix)} ${balance.formatPrice(price ?? 0)}',
-                          balance: balance.formatAura,
-                        );
-                      });
-                    });
-                  }),
+                  HomePagePriceSelector(
+                    builder: (price) {
+                      return HomePageBalanceSelector(
+                        builder: (balances) {
+                          return AppLocalizationProvider(
+                            builder: (localization, _) {
+                              return TokenItemWidget(
+                                iconPath: AssetIconPath.commonAuraTokenLogo,
+                                coin: localization.translate(
+                                  LanguageKey.globalPyxisAura,
+                                ),
+                                coinId: localization.translate(
+                                  LanguageKey.globalPyxisAuraId,
+                                ),
+                                appTheme: appTheme,
+                                price:
+                                    '${localization.translate(LanguageKey.homePageTokenPrefix)} ${(price ?? 0).formatPrice}',
+                                balance:
+                                    balances.firstOrNull?.amount.formatAura ??
+                                        '',
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
                   // Center(
                   //   child: EmptyTokenWidget(
                   //     appTheme: appTheme,
