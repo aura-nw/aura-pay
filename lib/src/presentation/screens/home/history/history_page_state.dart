@@ -28,14 +28,15 @@ enum TransactionHistoryEnum implements Comparable<TransactionHistoryEnum> {
 
   const TransactionHistoryEnum(this.messages);
 
-  String? getReceive(String? receive) {
-    bool isHasReceive = this != TransactionHistoryEnum.executeContract;
-
-    if (isHasReceive) {
-      return receive;
+  QueryTransactionType get convertToQueryType {
+    if (index == 1) {
+      return QueryTransactionType.send;
+    } else if (index == 2) {
+      return QueryTransactionType.receive;
+    } else if (index == 3) {
+      return QueryTransactionType.send;
     }
-
-    return null;
+    return QueryTransactionType.all;
   }
 
   @override

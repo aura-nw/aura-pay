@@ -14,6 +14,7 @@ final class TransactionUseCase {
     required String environment,
     String ?sender,
     String? receive,
+    required QueryTransactionType queryTransactionType,
   }) async {
     return _repository.getTransactions(
       body: QueryTransactionParameter(
@@ -23,6 +24,7 @@ final class TransactionUseCase {
         limit: limit,
         heightLt: heightLt,
         environment: environment,
+        queryType: queryTransactionType,
       ).toJson(),
       environment: environment,
     );

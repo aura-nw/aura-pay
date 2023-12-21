@@ -44,17 +44,14 @@ sealed class TransactionHelper {
     return jsonDecode(msg['msg']).containsKey('register_plugin');
   }
 
-  static MsgType getMsgType(Map<String, dynamic> msg) {
-    final String type = msg['@type'];
-    switch (type) {
-      case TransactionType.Send:
-        return MsgType.send;
-      case TransactionType.Recover:
-        return MsgType.recover;
-      case TransactionType.ExecuteContract:
-        return MsgType.executeContract;
-      default:
-        return MsgType.other;
+  static MsgType getMsgType(List<String> msgTypes) {
+    if(msgTypes.contains(TransactionType.Send)){
+      return MsgType.send;
+    }else if(msgTypes.contains(TransactionType.Recover)){
+      return MsgType.recover;
+    }else if (msgTypes.contains(TransactionType.ExecuteContract)){
+      return MsgType.executeContract;
     }
+    return MsgType.other;
   }
 }

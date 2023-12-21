@@ -13,6 +13,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/helpers/system_permission_helper.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
@@ -47,8 +48,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
 
   final HomeScreenBloc _bloc = getIt.get<HomeScreenBloc>();
 
+  final HomePageObserver _observer = getIt.get<HomePageObserver>();
+
+  void _onEmitAccountChange(){
+    _observer.emit(emitParam: true);
+  }
+
   @override
   void initState() {
+    _bloc.registerCallBack(_onEmitAccountChange);
     _bloc.add(
       const HomeScreenEventOnInit(),
     );

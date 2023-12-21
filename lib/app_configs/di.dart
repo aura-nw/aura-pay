@@ -14,6 +14,7 @@ import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dar
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/service/transaction/transaction_api_service_impl.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page_bloc.dart';
@@ -109,6 +110,9 @@ Future<void> initDependency(
 
   getIt.registerLazySingleton<RecoveryObserver>(
     () => RecoveryObserver(),
+  );
+  getIt.registerLazySingleton<HomePageObserver>(
+    () => HomePageObserver(),
   );
 
   ///Api service
@@ -381,8 +385,8 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<SetRecoveryMethodScreenBloc,AuraAccount,dynamic>(
-    (account,_) => SetRecoveryMethodScreenBloc(
+  getIt.registerFactoryParam<SetRecoveryMethodScreenBloc, AuraAccount, dynamic>(
+    (account, _) => SetRecoveryMethodScreenBloc(
       getIt.get<Web3AuthUseCase>(),
       account: account,
     ),

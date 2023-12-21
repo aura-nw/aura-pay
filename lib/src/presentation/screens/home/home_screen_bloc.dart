@@ -79,9 +79,28 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   ) async {
     final accounts = await _accountUseCase.getAccounts();
 
+    _broadcastChange();
+
     emit(state.copyWith(
       accounts: accounts,
     ));
+  }
+
+  // Register callback
+  VoidCallback ?broadCast;
+
+  void _broadcastChange(){
+    broadCast?.call();
+  }
+
+  void registerCallBack(VoidCallback callback){
+    broadCast  = callback;
+  }
+
+  @override
+  Future<void> close() {
+    broadCast = null;
+    return super.close();
   }
 
   static HomeScreenBloc of(BuildContext context) => BlocProvider.of(context);

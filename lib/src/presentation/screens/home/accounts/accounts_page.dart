@@ -243,18 +243,18 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
         address: account.address,
         accountNameDefault: account.name,
         onConfirm: (newName) {
+          showSuccessToast(
+            AppLocalizationManager.of(context).translate(
+              LanguageKey.accountsPageRenameAccountSuccess,
+            ),
+          );
+
           AppNavigator.pop();
 
           _homeScreenBloc.add(
             HomeScreenEventOnRenameAccount(
               account.id,
               newName,
-            ),
-          );
-
-          showSuccessToast(
-            AppLocalizationManager.of(context).translate(
-              LanguageKey.accountsPageRenameAccountSuccess,
             ),
           );
         },

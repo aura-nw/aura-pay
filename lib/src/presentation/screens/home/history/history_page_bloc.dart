@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
+import 'package:pyxis_mobile/src/core/constants/transaction_enum.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'history_page_event.dart';
 
 import 'history_page_state.dart';
@@ -22,6 +24,7 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     on(_onLoadMore);
     on(_onRefresh);
     on(_onFilter);
+    on(_onUpdateAccount);
     on(_onChangeAccount);
   }
 
@@ -36,15 +39,18 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
       sender: state.selectedAccount?.address,
       msgTypes: state.currentTab.messages,
       heightLt: heightLt,
-      receive: state.currentTab.getReceive(
-        receive ?? state.selectedAccount?.address,
-      ),
+      receive: receive ?? state.selectedAccount?.address,
+      queryTransactionType: state.currentTab.convertToQueryType,
     );
 
     return transactions.where(
       (transaction) {
         final MsgType type = TransactionHelper.getMsgType(
-          transaction.messages[0].content,
+          transaction.messages
+              .map(
+                (e) => e.type,
+              )
+              .toList(),
         );
 
         if (type == MsgType.other) {
@@ -52,8 +58,13 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
         }
 
         if (type == MsgType.executeContract) {
-          return TransactionHelper.validateMsgSetRecovery(
-              transaction.messages[0].content);
+          final Map<String, dynamic> msg = transaction.messages
+              .firstWhere(
+                (element) => element.type == TransactionType.ExecuteContract,
+              )
+              .content;
+
+          return TransactionHelper.validateMsgSetRecovery(msg);
         }
 
         return true;
@@ -194,6 +205,7 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     HistoryPageEventOnChangeSelectedAccount event,
     Emitter<HistoryPageState> emit,
   ) async {
+    if (event.selectedAccount.id == state.selectedAccount?.id) return;
     emit(
       state.copyWith(
         selectedAccount: event.selectedAccount,
@@ -203,5 +215,62 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     add(
       const HistoryPageEventOnRefresh(),
     );
+  }
+
+  void _onUpdateAccount(
+    HistoryPageEventOnUpdateAccount event,
+    Emitter<HistoryPageState> emit,
+  ) async {
+    try {
+      final accounts = await _accountUseCase.getAccounts();
+
+      if (accounts.isEmpty) return;
+
+      AuraAccount? selectedAccount = accounts.first;
+
+      final bool constantAccount = accounts
+          .map((e) => e.id)
+          .toList()
+          .contains(state.selectedAccount?.id);
+
+      if (constantAccount) {
+        selectedAccount = accounts.firstWhereOrNull((e) => e.id == state.selectedAccount?.id);
+
+        emit(
+          state.copyWith(
+            selectedAccount: selectedAccount,
+            accounts: accounts,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            status: HistoryPageStatus.loading,
+            selectedAccount: selectedAccount,
+            accounts: accounts,
+            transactions: [],
+          ),
+        );
+
+        final transactions = await _getTransaction(
+          receive: selectedAccount.address,
+        );
+
+        emit(
+          state.copyWith(
+            status: HistoryPageStatus.loaded,
+            canLoadMore: transactions.length == 30,
+            transactions: transactions,
+          ),
+        );
+      }
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: HistoryPageStatus.error,
+          error: e.toString(),
+        ),
+      );
+    }
   }
 }

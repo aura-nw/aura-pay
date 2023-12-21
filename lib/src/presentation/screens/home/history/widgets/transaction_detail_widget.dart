@@ -10,6 +10,7 @@ import 'package:pyxis_mobile/src/core/constants/aura_scan.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/constants/transaction_enum.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/helpers/app_launcher.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
@@ -38,7 +39,7 @@ class TransactionDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MsgType msgType = TransactionHelper.getMsgType(
-      pyxisTransaction.messages[0].content,
+      pyxisTransaction.messages.map((e) => e.type).toList(),
     );
     return Padding(
       padding: const EdgeInsets.only(
@@ -91,8 +92,13 @@ class TransactionDetailWidget extends StatelessWidget {
   Widget _buildTransactionWithType(MsgType msgType, BuildContext context) {
     switch (msgType) {
       case MsgType.send:
+        final Map<String, dynamic> msg = pyxisTransaction.messages
+            .firstWhere(
+              (element) => element.type == TransactionType.Send,
+            )
+            .content;
         final MsgSend msgSend = TransactionHelper.parseMsgSend(
-          pyxisTransaction.messages[0].content,
+          msg,
         );
 
         bool isSend = msgSend.fromAddress == address;
