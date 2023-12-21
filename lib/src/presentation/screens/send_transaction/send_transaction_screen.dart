@@ -105,12 +105,12 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                 child: SendTransactionStatusSelector(builder: (status) {
                   switch (status) {
                     case SendTransactionStatus.loading:
-                    case SendTransactionStatus.error:
                       return Center(
                         child: AppLoadingWidget(
                           appTheme: appTheme,
                         ),
                       );
+                    case SendTransactionStatus.error:
                     case SendTransactionStatus.onEstimateFee:
                     case SendTransactionStatus.estimateFeeSuccess:
                     case SendTransactionStatus.estimateFeeError:

@@ -12,6 +12,7 @@ import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_stor
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
+import 'package:pyxis_mobile/src/application/service/balance/token_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/transaction/transaction_api_service_impl.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
@@ -115,6 +116,13 @@ Future<void> initDependency(
     () => HomePageObserver(),
   );
 
+  getIt.registerLazySingleton<BalanceApiServiceGenerator>(
+    () => BalanceApiServiceGenerator(
+      getIt.get<Dio>(),
+      baseUrl: config.horoScopeUrl + config.horoScopeVersion,
+    ),
+  );
+
   ///Api service
 
   getIt.registerLazySingleton<TransactionApiServiceGenerate>(
@@ -126,6 +134,11 @@ Future<void> initDependency(
   getIt.registerLazySingleton<TransactionApiService>(
     () => TransactionApiServiceImpl(
       getIt.get<TransactionApiServiceGenerate>(),
+    ),
+  );
+  getIt.registerLazySingleton<BalanceApiService>(
+    () => BalanceApiServiceImpl(
+      getIt.get<BalanceApiServiceGenerator>(),
     ),
   );
 
@@ -205,6 +218,11 @@ Future<void> initDependency(
       getIt.get<TransactionApiService>(),
     ),
   );
+  getIt.registerLazySingleton<BalanceRepository>(
+    () => BalanceRepositoryImpl(
+      getIt.get<BalanceApiService>(),
+    ),
+  );
 
   ///Use case
   getIt.registerLazySingleton<AppSecureUseCase>(
@@ -251,6 +269,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<TransactionUseCase>(
     () => TransactionUseCase(
       getIt.get<TransactionRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<BalanceUseCase>(
+    () => BalanceUseCase(
+      getIt.get<BalanceRepository>(),
     ),
   );
 

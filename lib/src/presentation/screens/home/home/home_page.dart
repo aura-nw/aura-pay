@@ -68,21 +68,21 @@ class _HomePageState extends State<HomePage>
                   HomeScreenAccountsSelector(
                     builder: (accounts) {
                       return HomeScreenSelectedAccountSelector(
-                        builder: (selectedAccount) {
-                          return AccountCardWidget(
-                            address: selectedAccount?.address ?? '',
-                            accountName: selectedAccount?.name ?? '',
-                            appTheme: appTheme,
-                            onShowMoreAccount: () {
-                              _showManageAccount(
-                                appTheme,
-                                accounts,
-                              );
-                            },
-                            onCopy: _copyAddress,
-                          );
-                        }
-                      );
+                          builder: (selectedAccount) {
+                        return AccountCardWidget(
+                          address: selectedAccount?.address ?? '',
+                          accountName: selectedAccount?.name ?? '',
+                          appTheme: appTheme,
+                          onShowMoreAccount: () {
+                            _showManageAccount(
+                              appTheme,
+                              accounts,
+                              selectedAccount,
+                            );
+                          },
+                          onCopy: _copyAddress,
+                        );
+                      });
                     },
                   ),
                   const SizedBox(
@@ -224,24 +224,34 @@ class _HomePageState extends State<HomePage>
   void _showManageAccount(
     AppTheme appTheme,
     List<AuraAccount> accounts,
+    AuraAccount? selectedAccount,
   ) async {
     final AuraAccount? account =
         await DialogProvider.showCustomDialog<AuraAccount>(
       context,
       appTheme: appTheme,
+      canBack: true,
       widget: HomePickAccountFormWidget(
         accounts: accounts,
         appTheme: appTheme,
         isSelected: (account) {
-          return accounts.firstOrNull?.id == account.id;
+          return selectedAccount?.id == account.id;
         },
       ),
     );
+
+    if (selectedAccount?.id == account?.id) return;
 
     if (account != null && context.mounted) {
       HomeScreenBloc.of(context).add(
         HomeScreenEventOnChooseAccount(
           account,
+        ),
+      );
+
+      _bloc.add(
+        HomePageEventOnFetchTokenPriceWithAddress(
+          account.address,
         ),
       );
     }

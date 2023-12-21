@@ -90,7 +90,9 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
 
       emit(
         state.copyWith(
-          selectedAccount: accounts.firstOrNull,
+          selectedAccount: accounts.firstWhereOrNull(
+            (ac) => ac.index == 0,
+          ),
           accounts: accounts,
         ),
       );
@@ -226,16 +228,14 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
 
       if (accounts.isEmpty) return;
 
-      AuraAccount? selectedAccount = accounts.first;
+      AuraAccount? selectedAccount = accounts.firstWhereOrNull(
+        (e) => e.index == 0,
+      );
 
-      final bool constantAccount = accounts
-          .map((e) => e.id)
-          .toList()
-          .contains(state.selectedAccount?.id);
+      final bool constantAccount =
+          state.selectedAccount?.id == selectedAccount?.id;
 
       if (constantAccount) {
-        selectedAccount = accounts.firstWhereOrNull((e) => e.id == state.selectedAccount?.id);
-
         emit(
           state.copyWith(
             selectedAccount: selectedAccount,
@@ -253,7 +253,7 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
         );
 
         final transactions = await _getTransaction(
-          receive: selectedAccount.address,
+          receive: selectedAccount?.address,
         );
 
         emit(

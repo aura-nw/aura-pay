@@ -10,6 +10,7 @@ extension AuraAccountDbExtension on AuraAccountDb {
     String? address,
     String? name,
     int? id,
+    int? index,
     AuraAccountRecoveryMethodDb? methodDb,
   }) {
     return AuraAccountDb(
@@ -18,6 +19,7 @@ extension AuraAccountDbExtension on AuraAccountDb {
       accountAddress: address ?? this.address,
       accountName: name ?? this.name,
       methodDb: methodDb ?? this.methodDb,
+      indexDb: index ?? this.index,
     );
   }
 
@@ -26,6 +28,7 @@ extension AuraAccountDbExtension on AuraAccountDb {
     String? address,
     String? name,
     int? id,
+    int? index,
     AuraAccountRecoveryMethodDb? methodDb,
   }) {
     return AuraAccountDb(
@@ -34,6 +37,7 @@ extension AuraAccountDbExtension on AuraAccountDb {
       accountAddress: address ?? this.address,
       accountName: name ?? this.name,
       methodDb: methodDb,
+      indexDb: index ?? this.index,
     );
   }
 }
@@ -42,7 +46,7 @@ extension AuraAccountRecoveryMethodDbExtension on AuraAccountRecoveryMethodDb {
   AuraAccountRecoveryMethodDto get toDto => AuraAccountRecoveryMethodDto(
         method: method,
         value: value,
-    subValue: subValue,
+        subValue: subValue,
       );
 
   AuraAccountRecoveryMethodDb copyWith({
@@ -67,6 +71,7 @@ class AuraAccountDb extends AuraAccountDto {
   final String accountAddress;
   final String accountName;
   final AuraAccountRecoveryMethodDb? methodDb;
+  final int indexDb;
 
   AuraAccountDb({
     this.accountId = Isar.autoIncrement,
@@ -74,12 +79,14 @@ class AuraAccountDb extends AuraAccountDto {
     required this.accountAddress,
     required this.accountType,
     this.methodDb,
+    this.indexDb = 1,
   }) : super(
           id: accountId,
           name: accountName,
           address: accountAddress,
           type: accountType,
           method: methodDb?.toDto,
+          index: indexDb,
         );
 }
 

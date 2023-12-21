@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'home_screen_event.dart';
 
 import 'home_screen_state.dart';
@@ -19,7 +20,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     on(_reFetchAccounts);
     on(_onRenameAccount);
     on(_onRemoveAccount);
-    on(_onUChooseAccount);
+    on(_onChooseAccount);
   }
 
   void _onRenameAccount(
@@ -66,7 +67,9 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       emit(state.copyWith(
         status: HomeScreenStatus.loaded,
         accounts: accounts,
-        selectedAccount: accounts.firstOrNull,
+        selectedAccount: accounts.firstWhereOrNull(
+          (e) => e.index == 0,
+        ),
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -85,10 +88,13 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
 
     emit(state.copyWith(
       accounts: accounts,
+      selectedAccount: accounts.firstWhereOrNull(
+            (e) => e.index == 0,
+      ),
     ));
   }
 
-  void _onUChooseAccount(
+  void _onChooseAccount(
     HomeScreenEventOnChooseAccount event,
     Emitter<HomeScreenState> emit,
   ) async {

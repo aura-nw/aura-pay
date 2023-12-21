@@ -63,10 +63,12 @@ final class SendTransactionBloc
         ),
       );
     } catch (e) {
+      // Set default balance
       emit(
         state.copyWith(
           status: SendTransactionStatus.error,
           error: e.toString(),
+          balance: '0',
         ),
       );
     }

@@ -8,6 +8,7 @@ extension AuraAccountDtoExtension on AuraAccountDto {
       address: address,
       name: name,
       method: method?.toEntity,
+      index: index,
     );
   }
 }
@@ -24,6 +25,7 @@ extension AuraAccountRecoveryMethodDtoExtension on AuraAccountRecoveryMethodDto 
 
 class AuraAccountDto {
   final int id;
+  final int index;
   final AuraAccountType type;
   final String name;
   final String address;
@@ -31,6 +33,7 @@ class AuraAccountDto {
 
   const AuraAccountDto({
     required this.id,
+    required this.index,
     required this.type,
     required this.address,
     required this.name,

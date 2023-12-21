@@ -27,6 +27,9 @@ class HomePickAccountFormWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        const SizedBox(
+          height: BoxSize.boxSize04,
+        ),
         ScrollViewWidget(
           appTheme: appTheme,
         ),

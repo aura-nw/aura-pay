@@ -21,6 +21,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         ) {
     _initIsolate();
     on(_onFetchPrice);
+    on(_onFetchPriceWithAddress);
     on(_onUpdateCurrency);
   }
 
@@ -94,16 +95,34 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     HomePageEventOnFetchTokenPrice event,
     Emitter<HomePageState> emit,
   ) async {
-    emit(state.copyWith());
     final account = await _accountUseCase.getFirstAccount();
 
-    _isolateSendPort.send({
+    _isolateSendPort.send(
+      _createMsg(
+        account?.address,
+      ),
+    );
+  }
+
+  void _onFetchPriceWithAddress(
+    HomePageEventOnFetchTokenPriceWithAddress event,
+    Emitter<HomePageState> emit,
+  ) async {
+    _isolateSendPort.send(
+      _createMsg(
+        event.address,
+      ),
+    );
+  }
+
+  Map<String, dynamic> _createMsg(String? address) {
+    return {
       'horoscope_url': config.horoScopeUrl + config.horoScopeVersion,
       'aura_network_url': config.auraNetworkBaseUrl + config.auraNetworkVersion,
-      'address': account?.address,
+      'address': address,
       'environment': config.environment.environmentString,
       'auraSmartAccountEnvironment': config.environment.toSME,
-    });
+    };
   }
 
   void _onUpdateCurrency(
