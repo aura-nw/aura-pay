@@ -19,6 +19,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     on(_reFetchAccounts);
     on(_onRenameAccount);
     on(_onRemoveAccount);
+    on(_onUChooseAccount);
   }
 
   void _onRenameAccount(
@@ -65,6 +66,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       emit(state.copyWith(
         status: HomeScreenStatus.loaded,
         accounts: accounts,
+        selectedAccount: accounts.firstOrNull,
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -86,20 +88,39 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     ));
   }
 
-  // Register callback
-  VoidCallback ?broadCast;
+  void _onUChooseAccount(
+    HomeScreenEventOnChooseAccount event,
+    Emitter<HomeScreenState> emit,
+  ) async {
+    if (event.account.id == state.selectedAccount?.id) return;
 
-  void _broadcastChange(){
-    broadCast?.call();
+    emit(state.copyWith(
+      selectedAccount: event.account,
+    ));
+
+    await _accountUseCase.updateChangeIndex(
+      id: event.account.id,
+    );
+
+    add(
+      const HomeScreenEventOnReFetchAccount(),
+    );
   }
 
-  void registerCallBack(VoidCallback callback){
-    broadCast  = callback;
+  // Register callback
+  VoidCallback? _broadCast;
+
+  void _broadcastChange() {
+    _broadCast?.call();
+  }
+
+  void registerCallBack(VoidCallback callback) {
+    _broadCast = callback;
   }
 
   @override
   Future<void> close() {
-    broadCast = null;
+    _broadCast = null;
     return super.close();
   }
 

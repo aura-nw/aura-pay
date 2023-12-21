@@ -349,6 +349,7 @@ Future<void> initDependency(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<SmartAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
+      getIt.get<BalanceUseCase>(),
     ),
   );
 

@@ -50,4 +50,12 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
 
     return account?.toEntity;
   }
+
+  Future<void> updateChangeIndex({
+    required int id,
+  }) {
+    return _accountDatabaseService.updateAccount(
+      id: id,
+    );
+  }
 }

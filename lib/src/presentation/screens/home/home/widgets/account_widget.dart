@@ -6,6 +6,74 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/aura_smart_account_base_widget.dart';
+import 'package:domain/domain.dart';
+
+final class HomeAccountChangeWidget extends AuraSmartAccountBaseWidget {
+  final AuraAccount account;
+  final bool isFirst;
+
+  HomeAccountChangeWidget({
+    required this.account,
+    required this.isFirst,
+    required super.appTheme,
+    super.key,
+  }) : super(
+    address: account.address,
+    accountName: account.name,
+  );
+
+  @override
+  Widget accountNameBuilder(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          accountName,
+          style: AppTypoGraPhy.heading02.copyWith(
+            color: appTheme.contentColorBlack,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        if (isFirst) ...[
+          const SizedBox(
+            width: BoxSize.boxSize03,
+          ),
+          SvgPicture.asset(
+            AssetIconPath.commonRadioCheck,
+          )
+        ] else
+          const SizedBox.shrink(),
+      ],
+    );
+  }
+
+  @override
+  Widget actionFormBuilder(BuildContext context) {
+    if (account.isSmartAccount) {
+      return Container();
+    }
+    return const SizedBox.shrink();
+  }
+
+  @override
+  Widget addressBuilder(BuildContext context) {
+    return Text(
+      address.addressView,
+      style: AppTypoGraPhy.body02.copyWith(
+        color: appTheme.contentColor300,
+      ),
+    );
+  }
+
+  @override
+  Widget avatarBuilder(BuildContext context) {
+    return SvgPicture.asset(
+      AssetIconPath.commonSmartAccountAvatarDefault,
+    );
+  }
+}
+
 
 final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
   final VoidCallback onShowMoreAccount;

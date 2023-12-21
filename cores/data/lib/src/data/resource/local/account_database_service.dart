@@ -26,4 +26,8 @@ abstract interface class AccountDatabaseService {
   });
 
   Future<AuraAccountDto?> getFirstAccount();
+
+  Future<void> updateChangeIndex({
+    required int id,
+  });
 }

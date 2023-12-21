@@ -56,4 +56,12 @@ final class AuraAccountUseCase {
     );
     return _repository.updateAccount(parameter);
   }
+
+  Future<void> updateChangeIndex({
+    required int id,
+  }) {
+    return _repository.updateChangeIndex(
+      id: id,
+    );
+  }
 }

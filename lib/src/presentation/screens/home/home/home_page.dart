@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
@@ -14,7 +16,11 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/home/widgets/token_item_widget.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
+import 'widgets/home_pick_account_widget.dart';
+import 'widgets/token_item_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'home_page_event.dart';
 import 'home_page_selector.dart';
 import 'home_page_bloc.dart';
@@ -61,12 +67,21 @@ class _HomePageState extends State<HomePage>
                 children: [
                   HomeScreenAccountsSelector(
                     builder: (accounts) {
-                      return AccountCardWidget(
-                        address: accounts.first.address,
-                        accountName: accounts.first.name,
-                        appTheme: appTheme,
-                        onShowMoreAccount: () {},
-                        onCopy: _copyAddress,
+                      return HomeScreenSelectedAccountSelector(
+                        builder: (selectedAccount) {
+                          return AccountCardWidget(
+                            address: selectedAccount?.address ?? '',
+                            accountName: selectedAccount?.name ?? '',
+                            appTheme: appTheme,
+                            onShowMoreAccount: () {
+                              _showManageAccount(
+                                appTheme,
+                                accounts,
+                              );
+                            },
+                            onCopy: _copyAddress,
+                          );
+                        }
                       );
                     },
                   ),
@@ -154,7 +169,7 @@ class _HomePageState extends State<HomePage>
                                 appTheme: appTheme,
                               ),
                             );
-                            }
+                          }
                           return AppLocalizationProvider(
                             builder: (localization, _) {
                               return TokenItemWidget(
@@ -203,6 +218,32 @@ class _HomePageState extends State<HomePage>
           ),
         );
       }
+    }
+  }
+
+  void _showManageAccount(
+    AppTheme appTheme,
+    List<AuraAccount> accounts,
+  ) async {
+    final AuraAccount? account =
+        await DialogProvider.showCustomDialog<AuraAccount>(
+      context,
+      appTheme: appTheme,
+      widget: HomePickAccountFormWidget(
+        accounts: accounts,
+        appTheme: appTheme,
+        isSelected: (account) {
+          return accounts.firstOrNull?.id == account.id;
+        },
+      ),
+    );
+
+    if (account != null && context.mounted) {
+      HomeScreenBloc.of(context).add(
+        HomeScreenEventOnChooseAccount(
+          account,
+        ),
+      );
     }
   }
 }

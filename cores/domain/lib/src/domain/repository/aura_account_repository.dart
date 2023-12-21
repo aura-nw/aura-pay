@@ -10,4 +10,8 @@ abstract interface class AuraAccountRepository{
   Future<void> deleteAccount(int id);
 
   Future<void> updateAccount(RenameAccountRequestParameter parameter);
+
+  Future<void> updateChangeIndex({
+    required int id,
+  });
 }

@@ -99,4 +99,18 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
       );
     }
   }
+
+  Future<void> updateChangeIndex({
+    required int id,
+  }) async {
+    final AuraAccountDb? account = await _isar.auraAccountDbs.get(id);
+
+    if (account == null) return;
+
+    await _isar.writeTxn(() async {
+      await _isar.auraAccountDbs.delete(id);
+
+      await _isar.auraAccountDbs.put(account);
+    });
+  }
 }

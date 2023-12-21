@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_screen_event.freezed.dart';
@@ -8,4 +9,5 @@ class HomeScreenEvent with _$HomeScreenEvent{
   const factory HomeScreenEvent.reFetchAccount() = HomeScreenEventOnReFetchAccount;
   const factory HomeScreenEvent.onRenameAccountEvent(int id,String name) = HomeScreenEventOnRenameAccount;
   const factory HomeScreenEvent.onRemoveAccount(int id,String address,) = HomeScreenEventOnRemoveAccount;
+  const factory HomeScreenEvent.onChooseAccount(AuraAccount account) = HomeScreenEventOnChooseAccount;
 }
