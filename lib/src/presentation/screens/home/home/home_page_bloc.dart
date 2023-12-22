@@ -13,7 +13,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
   late Isolate _isolate;
   late ReceivePort _receivePort;
-  late SendPort _isolateSendPort;
+  SendPort ?_isolateSendPort;
 
   HomePageBloc(this._accountUseCase)
       : super(
@@ -33,7 +33,16 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     // Listen to the stream only once
     _receivePort.listen((message) {
       if (message is SendPort) {
-        _isolateSendPort = message;
+        // receive isolateSendPort from other thread
+        if(_isolateSendPort == null){
+          // only call that first run.
+          add(
+            const HomePageEventOnFetchTokenPrice(),
+          );
+          _isolateSendPort = message;
+        }else{
+          _isolateSendPort = message;
+        }
       }
       if (message is Map<String, dynamic>) {
         if (message.containsKey('price') && message.containsKey('balances')) {
@@ -46,10 +55,6 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         }
       }
     });
-
-    add(
-      const HomePageEventOnFetchTokenPrice(),
-    );
   }
 
   final config = getIt.get<PyxisMobileConfig>();
@@ -97,7 +102,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   ) async {
     final account = await _accountUseCase.getFirstAccount();
 
-    _isolateSendPort.send(
+    _isolateSendPort?.send(
       _createMsg(
         account?.address,
       ),
@@ -108,7 +113,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     HomePageEventOnFetchTokenPriceWithAddress event,
     Emitter<HomePageState> emit,
   ) async {
-    _isolateSendPort.send(
+    _isolateSendPort?.send(
       _createMsg(
         event.address,
       ),

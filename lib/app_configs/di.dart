@@ -34,6 +34,8 @@ import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmati
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_transaction_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/set_recovery_method/set_recovery_method_screen_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/setting_change_passcode/setting_change_passcode_cubit.dart';
+import 'package:pyxis_mobile/src/presentation/screens/setting_passcode_and_biometric/setting_passcode_and_biometric_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_bloc.dart';
@@ -473,6 +475,16 @@ Future<void> initDependency(
   getIt.registerFactory<HomePageBloc>(
     () => HomePageBloc(
       getIt.get<AuraAccountUseCase>(),
+    ),
+  );
+  getIt.registerFactory<SettingPasscodeAndBiometricCubit>(
+    () => SettingPasscodeAndBiometricCubit(
+      getIt.get<AppSecureUseCase>(),
+    ),
+  );
+  getIt.registerFactory<SettingChangePasscodeCubit>(
+    () => SettingChangePasscodeCubit(
+      getIt.get<AppSecureUseCase>(),
     ),
   );
 }

@@ -11,4 +11,8 @@ abstract interface class AppSecureRepository {
   Future<bool> hasPassCode({
     required String key,
   });
+
+  Future<String?> getBiometric({
+    required String key,
+  });
 }

@@ -5,7 +5,9 @@ final class AppSecureUseCase {
 
   const AppSecureUseCase(this._repository);
 
-  Future<bool> hasPassCode({required String key,}){
+  Future<bool> hasPassCode({
+    required String key,
+  }) {
     return _repository.hasPassCode(key: key);
   }
 
@@ -19,6 +21,24 @@ final class AppSecureUseCase {
     return _repository.savePassword(
       key: key,
       passWord: password,
+    );
+  }
+
+  Future<bool> alReadySetBioMetric({
+    required String key,
+  }) async {
+    String? value = await _repository.getBiometric(key: key);
+
+    return value != null && value == 'true';
+  }
+
+  Future<void> setBioMetric({
+    required String key,
+    required bool setBioValue,
+  }) async {
+    return _repository.savePassword(
+      key: key,
+      passWord: setBioValue.toString(),
     );
   }
 }

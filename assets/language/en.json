@@ -203,13 +203,19 @@
   "setting_page_passcode" : "Passcode and Biometrics",
   "setting_page_help_center" : "Help center",
 
-  "setting_change_passcode_screen_app_bar_title" : "Passcode and Biometrics",
-  "setting_change_passcode_screen_change_passcode" : "Change Passcode",
-  "setting_change_passcode_screen_face_id" : "Face ID/Touch ID",
+  "setting_passcode_screen_app_bar_title" : "Passcode and Biometrics",
+  "setting_passcode_screen_change_passcode" : "Change Passcode",
+  "setting_passcode_screen_face_id" : "Face ID/Touch ID",
+  "setting_passcode_screen_set_new_passcode_successful" : "Passcode has been set",
 
 
-  "setting_change_passcode_page_enter_your_password" : "Enter you passcode",
-  
+  "setting_change_passcode_screen_enter_your_password" : "Enter you passcode",
+  "setting_change_passcode_screen_input_passcode_invalid" : "Passcode does wrong",
+  "setting_change_passcode_screen_create_new_pass_code" : "Create a new passcode",
+  "setting_change_passcode_screen_create_new_pass_code_content" : "Set an app passcode to protects your data and funds",
+  "setting_change_passcode_screen_confirm_passcode" : "Confirm the passcode",
+  "setting_change_passcode_screen_confirm_passcode_invalid" : "Passcode does not match",
+
 
   "send_transaction_screen_app_bar_title" : "Send",
   "send_transaction_screen_send_from" : "From",
@@ -300,6 +306,10 @@
   "common_permission_gallery_content" : "In order to scan a QR code, you must allow Pyxis to access the gallery",
   "common_permission_accept" : "Ok",
   "common_permission_reject" : "Cancel",
+
+  "common_local_auth_title" : "Verify to unlock Pyxis",
+  "common_local_auth_android_sign_title" : "You have to verify this one to unlock Pyxis. If no, you must verify by passcode",
+  "common_local_auth_button_cancel_title" : "Cancel",
 
   "recovery_method_screen_app_bar_title" : "Recovery methods",
   "recovery_method_screen_content" : "The recovery method can only be set for a Pyxis smart account",

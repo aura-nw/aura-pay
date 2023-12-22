@@ -43,6 +43,8 @@ PODS:
   - isar_flutter_libs (1.0.0):
     - Flutter
   - KeychainSwift (20.0.0)
+  - local_auth_ios (0.0.1):
+    - Flutter
   - Logging (1.0.0)
   - MLImage (1.0.0-beta4)
   - MLKitBarcodeScanning (3.0.0):
@@ -111,6 +113,7 @@ DEPENDENCIES:
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - isar_flutter_libs (from `.symlinks/plugins/isar_flutter_libs/ios`)
+  - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -156,6 +159,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   isar_flutter_libs:
     :path: ".symlinks/plugins/isar_flutter_libs/ios"
+  local_auth_ios:
+    :path: ".symlinks/plugins/local_auth_ios/ios"
   mobile_scanner:
     :path: ".symlinks/plugins/mobile_scanner/ios"
   package_info_plus:
@@ -189,6 +194,7 @@ SPEC CHECKSUMS:
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   isar_flutter_libs: b69f437aeab9c521821c3f376198c4371fa21073
   KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
+  local_auth_ios: c6cf091ded637a88f24f86a8875d8b0f526e2605
   Logging: 9ef4ecb546ad3169398d5a723bc9bea1c46bef26
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505

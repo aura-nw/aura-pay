@@ -240,16 +240,23 @@ sealed class LanguageKey {
   static const String settingPageAddressBook = 'setting_page_address_book';
   static const String settingPageHelpCenter = 'setting_page_help_center';
   ///
-  
-  /// region setting change passcode
-  static const String settingChangePasscodeScreenAppBarTitle = 'setting_change_passcode_screen_app_bar_title';
-  static const String settingChangePasscodeScreenChangePasscode = 'setting_change_passcode_screen_change_passcode';
-  static const String settingChangePasscodeScreenFaceId = 'setting_change_passcode_screen_face_id';
-  /// 
-  /// 
-  /// region setting change passcode
-  static const String settingChangePasscodePageEnterYourPassword = 'setting_change_passcode_page_enter_your_password';
 
+  /// region setting change passcode and biometric
+  static const String settingChangePasscodeAndBioScreenAppBarTitle = 'setting_passcode_screen_app_bar_title';
+  static const String settingChangePasscodeAndBioScreenChangePasscode = 'setting_passcode_screen_change_passcode';
+  static const String settingChangePasscodeAndBioScreenFaceId = 'setting_passcode_screen_face_id';
+  static const String settingChangePasscodeAndBioScreenSetNewPassCodeSuccessful = 'setting_passcode_screen_set_new_passcode_successful';
+  ///
+
+
+  /// region setting change passcode
+  static const String settingChangePasscodeScreenEnterYourPassword = 'setting_change_passcode_screen_enter_your_password';
+  static const String settingChangePasscodeScreenInputPasscodeInvalid = 'setting_change_passcode_screen_input_passcode_invalid';
+  static const String settingChangePasscodeScreenCreateNewPasscode = 'setting_change_passcode_screen_create_new_pass_code';
+  static const String settingChangePasscodeScreenCreateNewPasscodeContent = 'setting_change_passcode_screen_create_new_pass_code_content';
+  static const String settingChangePasscodeScreenConfirmPassCode = 'setting_change_passcode_screen_confirm_passcode';
+  static const String settingChangePasscodeScreenConfirmPassCodeInvalid = 'setting_change_passcode_screen_confirm_passcode_invalid';
+  ///
 
   ///region send transaction
   static const String sendTransactionScreenAppBarTitle = 'send_transaction_screen_app_bar_title';
@@ -356,6 +363,12 @@ sealed class LanguageKey {
   static const String commonPermissionAccept = 'common_permission_accept';
   static const String commonPermissionReject = 'common_permission_reject';
   ///endregion
+
+  ///region local auth
+  static const String commonLocalAuthTitle = 'common_local_auth_title';
+  static const String commonLocalAuthAndroidSignTitle = 'common_local_auth_android_sign_title';
+  static const String commonLocalAuthButtonCancelTitle = 'common_local_auth_button_cancel_title';
+  ///
 
   ///region recovery method
   static const String recoveryMethodScreenAppBarTitle = 'recovery_method_screen_app_bar_title';

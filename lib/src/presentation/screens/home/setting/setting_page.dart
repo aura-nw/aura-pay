@@ -65,7 +65,7 @@ class _SettingPageState extends State<SettingPage> {
                       appTheme: appTheme,
                       onTap: () {
                         AppNavigator.push(
-                          RoutePath.setting_change_passcode,
+                          RoutePath.settingPassCodeAndBioMetric,
                         );
                       },
                     ),

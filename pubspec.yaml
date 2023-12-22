@@ -64,6 +64,7 @@ dependencies:
   #3-party
   share_plus: ^7.2.1
   web3auth_flutter: ^3.1.1
+  local_auth: ^2.1.7
 
   #core
   data:
