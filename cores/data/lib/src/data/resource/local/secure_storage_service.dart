@@ -1,4 +1,4 @@
-abstract interface class SecureStorageService {
+abstract interface class StorageService {
   Future<String?> getValue(String key);
 
   Future<bool> constantValue(String key);
@@ -7,5 +7,10 @@ abstract interface class SecureStorageService {
 
   Future<void> saveValue(String key, String value);
 
-  Future<Map<String,dynamic>> readAll();
+  Future<Map<String, dynamic>> readAll();
 }
+
+// for secure service
+abstract interface class SecureStorageService implements StorageService {}
+// for normal service
+abstract interface class NormalStorageService implements StorageService {}

@@ -28,10 +28,13 @@ dependencies:
   url_launcher: ^6.2.1
   mobile_scanner: ^3.5.5
   image_picker: ^1.0.4
+  crypto: ^3.0.3
 
   #local db
   isar: ^3.1.0
   isar_flutter_libs: ^3.1.0
+
+  shared_preferences: ^2.2.2
 
   flutter_secure_storage:
     git:

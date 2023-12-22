@@ -7,8 +7,10 @@ final class AppSecureUseCase {
 
   Future<bool> hasPassCode({
     required String key,
-  }) {
-    return _repository.hasPassCode(key: key);
+  }) async{
+    final String ?passcode = await getCurrentPassword(key: key);
+
+    return passcode != null && passcode.isNotEmpty;
   }
 
   Future<String?> getCurrentPassword({

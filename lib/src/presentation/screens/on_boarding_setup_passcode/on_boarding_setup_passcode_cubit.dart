@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_mobile/src/core/helpers/crypto_helper.dart';
 import 'on_boarding_setup_passcode_state.dart';
 
 class OnBoardingSetupPasscodeBloc extends Cubit<OnBoardingSetupPasscodeState> {
@@ -21,9 +22,11 @@ class OnBoardingSetupPasscodeBloc extends Cubit<OnBoardingSetupPasscodeState> {
     );
 
     try {
+      String hashPassCode = CryptoHelper.hashStringBySha256(passCode);
+
       await _appSecureUseCase.savePassword(
         key: AppLocalConstant.passCodeKey,
-        password: passCode,
+        password: hashPassCode,
       );
     } catch (e) {
       //

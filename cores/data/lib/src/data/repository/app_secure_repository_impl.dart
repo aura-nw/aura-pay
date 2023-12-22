@@ -2,7 +2,7 @@ import 'package:data/src/data/resource/local/local.dart';
 import 'package:domain/domain.dart';
 
 final class AppSecureRepositoryImpl implements AppSecureRepository{
-  final SecureStorageService _service;
+  final StorageService _service;
 
   const AppSecureRepositoryImpl(this._service);
   @override

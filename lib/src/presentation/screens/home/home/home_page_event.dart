@@ -11,8 +11,11 @@ class HomePageEvent with _$HomePageEvent {
   const factory HomePageEvent.fetchTokenPriceWithAddress(String address) =
       HomePageEventOnFetchTokenPriceWithAddress;
 
-  const factory HomePageEvent.updateCurrency({
-    required List<PyxisBalance> balances,
+  const factory HomePageEvent.updatePrice({
     required double price,
-  }) = HomePageEventOnUpdateCurrency;
+  }) = HomePageEventOnUpdatePrice;
+
+  const factory HomePageEvent.updateBalance({
+    required List<PyxisBalance> balances,
+  }) = HomePageEventOnUpdateBalances;
 }

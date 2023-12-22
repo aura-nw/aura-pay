@@ -9,7 +9,7 @@ extension PyxisEnvironmentMapper on PyxisEnvironment {
       case PyxisEnvironment.dev:
         return 'auratestnet';
       case PyxisEnvironment.serenity:
-        return 'auratestnet';
+        return 'serenity';
       case PyxisEnvironment.staging:
         return 'auratestnet';
       case PyxisEnvironment.production:

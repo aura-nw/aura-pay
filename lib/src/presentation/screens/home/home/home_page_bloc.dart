@@ -13,7 +13,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
   late Isolate _isolate;
   late ReceivePort _receivePort;
-  SendPort ?_isolateSendPort;
+  SendPort? _isolateSendPort;
 
   HomePageBloc(this._accountUseCase)
       : super(
@@ -22,7 +22,8 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     _initIsolate();
     on(_onFetchPrice);
     on(_onFetchPriceWithAddress);
-    on(_onUpdateCurrency);
+    on(_onUpdateBalance);
+    on(_onUpdatePrice);
   }
 
   void _initIsolate() async {
@@ -34,24 +35,31 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     _receivePort.listen((message) {
       if (message is SendPort) {
         // receive isolateSendPort from other thread
-        if(_isolateSendPort == null){
+        if (_isolateSendPort == null) {
           // only call that first run.
           add(
             const HomePageEventOnFetchTokenPrice(),
           );
           _isolateSendPort = message;
-        }else{
+        } else {
           _isolateSendPort = message;
         }
       }
       if (message is Map<String, dynamic>) {
-        if (message.containsKey('price') && message.containsKey('balances')) {
+        if (message.containsKey('balances')) {
           add(
-            HomePageEventOnUpdateCurrency(
+            HomePageEventOnUpdateBalances(
               balances: message['balances'],
+            ),
+          );
+        } else if (message.containsKey('price')) {
+          add(
+            HomePageEventOnUpdatePrice(
               price: message['price'],
             ),
           );
+        } else {
+          LogProvider.log('${message['error']}');
         }
       }
     });
@@ -73,26 +81,49 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           final BalanceUseCase horoScropeBalanceUseCase =
               balanceUseCaseFactory(horoScopeDio);
 
-          final balances = await horoScropeBalanceUseCase.getBalances(
-            address: message['address'],
-            environment: message['environment'],
-          );
-
           final BalanceUseCase auraNetworkBalanceUseCase =
               balanceUseCaseFactory(auraNetworkDio);
 
-          final price = await auraNetworkBalanceUseCase.getTokenPrice();
+          await _getBalances(horoScropeBalanceUseCase, message, sendPort);
 
-          // Send the API response back to the main isolate
-          sendPort.send({
-            'price': price,
-            'balances': balances,
-          });
+          await _getPrice(auraNetworkBalanceUseCase, message, sendPort);
+
         } catch (error) {
           // Send the error back to the main isolate
           sendPort.send({'error': error.toString()});
         }
       }
+    }
+  }
+
+  static Future<void> _getBalances(BalanceUseCase horoScropeBalanceUseCase,Map<String,dynamic> message, SendPort sendPort)async{
+    try {
+      final balances = await horoScropeBalanceUseCase.getBalances(
+        address: message['address'],
+        environment: message['environment'],
+      );
+
+      // Send the API response back to the main isolate
+      sendPort.send({
+        'balances': balances,
+      });
+    } catch (e) {
+      // Send the error back to the main isolate
+      sendPort.send({'error': e.toString()});
+    }
+  }
+
+  static Future<void> _getPrice(BalanceUseCase auraNetworkBalanceUseCase,Map<String,dynamic> message, SendPort sendPort)async{
+    try {
+      final price = await auraNetworkBalanceUseCase.getTokenPrice();
+
+      // Send the API response back to the main isolate
+      sendPort.send({
+        'price': price,
+      });
+    } catch (e) {
+      // Send the error back to the main isolate
+      sendPort.send({'error': e.toString()});
     }
   }
 
@@ -130,14 +161,24 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     };
   }
 
-  void _onUpdateCurrency(
-    HomePageEventOnUpdateCurrency event,
+  void _onUpdateBalance(
+    HomePageEventOnUpdateBalances event,
+    Emitter<HomePageState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        balances: event.balances,
+      ),
+    );
+  }
+
+  void _onUpdatePrice(
+    HomePageEventOnUpdatePrice event,
     Emitter<HomePageState> emit,
   ) {
     emit(
       state.copyWith(
         price: event.price,
-        balances: event.balances,
       ),
     );
   }
