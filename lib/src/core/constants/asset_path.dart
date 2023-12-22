@@ -207,6 +207,13 @@ sealed class AssetIconPath {
   static const String settingHelpCenter =
       '${_baseIconPath}ic_setting_help_center.svg';
 
+  /// Setting bio and passcode
+
+  static const String settingBioAndPasscodeBio =
+      '${_baseIconPath}ic_setting_bio_and_passcode_bio.svg';
+  static const String settingBioAndPasscodeLock =
+      '${_baseIconPath}ic_setting_bio_and_passcode_lock.svg';
+
   /// Recovery method
   static const String recoveryMethodCheck =
       '${_baseIconPath}ic_recovery_method_check.svg';
