@@ -63,7 +63,11 @@ class _SettingPageState extends State<SettingPage> {
                       iconPath: AssetIconPath.settingBiometric,
                       labelPath: LanguageKey.settingPagePasscode,
                       appTheme: appTheme,
-                      onTap: () {},
+                      onTap: () {
+                        AppNavigator.push(
+                          RoutePath.setting_change_passcode,
+                        );
+                      },
                     ),
                   ],
                 ),

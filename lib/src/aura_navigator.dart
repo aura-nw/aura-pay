@@ -21,6 +21,8 @@ import 'package:pyxis_mobile/src/presentation/screens/send_transaction/send_tran
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmation/send_transaction_confirmation_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/send_transaction_result/send_transaction_result_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/set_recovery_method/set_recovery_method_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/settings/setting_passcode_and_biometric/change_passcode/change_passcode.dart';
+import 'package:pyxis_mobile/src/presentation/screens/settings/setting_passcode_and_biometric/setting_passcode_and_biometric.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_screen.dart';
@@ -79,6 +81,11 @@ sealed class RoutePath {
 
   static const String _signedInImportAccount = '$home/signed_in_import_account';
   static const String signedInImportKey = '$_signedInImportAccount/import_key';
+
+  static const String setting_page_passcode = '$_base/setting_page_passcode';
+
+  static const String setting_change_passcode =
+      '$_base/setting_change_passcode';
 }
 
 sealed class AppNavigator {
@@ -117,9 +124,19 @@ sealed class AppNavigator {
           ),
           settings,
         );
+      case RoutePath.setting_change_passcode:
+        return _defaultRoute(
+          const ChangePassCodePage(),
+          settings,
+        );
       case RoutePath.pickAccountName:
         return _defaultRoute(
           const OnBoardingPickAccountScreen(),
+          settings,
+        );
+      case RoutePath.setting_page_passcode:
+        return _defaultRoute(
+          const SettingPagePasscode(),
           settings,
         );
       case RoutePath.scanQrFee:

@@ -201,6 +201,13 @@
   "setting_page_passcode" : "Passcode and Biometrics",
   "setting_page_help_center" : "Help center",
 
+  "setting_change_passcode_screen_app_bar_title" : "Passcode and Biometrics",
+  "setting_change_passcode_screen_change_passcode" : "Change Passcode",
+  "setting_change_passcode_screen_face_id" : "Face ID/Touch ID",
+
+  "setting_change_passcode_page_enter_your_password" : "Enter you passcode",
+
+
   "send_transaction_screen_app_bar_title" : "Send",
   "send_transaction_screen_send_from" : "From",
   "send_transaction_screen_recipient_label" : "Recipient address",

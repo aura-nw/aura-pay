@@ -238,6 +238,16 @@ sealed class LanguageKey {
   static const String settingPageAddressBook = 'setting_page_address_book';
   static const String settingPageHelpCenter = 'setting_page_help_center';
   ///
+  
+  /// region setting change passcode
+  static const String settingChangePasscodeScreenAppBarTitle = 'setting_change_passcode_screen_app_bar_title';
+  static const String settingChangePasscodeScreenChangePasscode = 'setting_change_passcode_screen_change_passcode';
+  static const String settingChangePasscodeScreenFaceId = 'setting_change_passcode_screen_face_id';
+  /// 
+  /// 
+  /// region setting change passcode
+  static const String settingChangePasscodePageEnterYourPassword = 'setting_change_passcode_page_enter_your_password';
+
 
   ///region send transaction
   static const String sendTransactionScreenAppBarTitle = 'send_transaction_screen_app_bar_title';
