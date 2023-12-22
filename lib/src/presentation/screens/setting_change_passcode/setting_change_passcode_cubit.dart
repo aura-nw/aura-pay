@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_mobile/src/core/helpers/crypto_helper.dart';
 import 'setting_change_passcode_state.dart';
 
 final class SettingChangePasscodeCubit
@@ -17,7 +18,9 @@ final class SettingChangePasscodeCubit
       key: AppLocalConstant.passCodeKey,
     );
 
-    SettingChangePassCodeStatus status = passcode.join('') == currentPasscode
+    String passCodeCompare = CryptoHelper.hashStringBySha256(passcode.join(''));
+
+    SettingChangePassCodeStatus status = passCodeCompare == currentPasscode
         ? SettingChangePassCodeStatus.enterPasscodeSuccessful
         : SettingChangePassCodeStatus.enterPasscodeWrong;
 
@@ -41,9 +44,11 @@ final class SettingChangePasscodeCubit
         : SettingChangePassCodeStatus.confirmPasscodeWrong;
 
     if (status == SettingChangePassCodeStatus.confirmPassCodeSuccessful) {
+
+      String hashPassCode = CryptoHelper.hashStringBySha256(passCodes);
       await _appSecureUseCase.savePassword(
         key: AppLocalConstant.passCodeKey,
-        password: passCodes,
+        password: hashPassCode,
       );
     }
 

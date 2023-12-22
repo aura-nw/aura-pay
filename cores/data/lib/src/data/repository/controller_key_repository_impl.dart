@@ -2,7 +2,7 @@ import 'package:data/src/data/resource/local/local.dart';
 import 'package:domain/domain.dart';
 
 class ControllerKeyRepositoryImpl implements ControllerKeyRepository{
-  final SecureStorageService _service;
+  final StorageService _service;
 
   const ControllerKeyRepositoryImpl(this._service);
 

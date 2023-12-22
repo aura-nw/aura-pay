@@ -98,9 +98,11 @@ class _OnBoardingSetupPasscodeScreenState
                                     LanguageKey
                                         .onBoardingSetupPasscodeScreenCreateContent,
                                   ),
-                                  style: AppTypoGraPhy.utilityLabelDefault.copyWith(
-                                    color: appTheme.contentColor700,
+                                  style: AppTypoGraPhy.utilityLabelSm
+                                      .copyWith(
+                                    color: appTheme.contentColor500,
                                   ),
+                                  textAlign: TextAlign.center,
                                 );
                               },
                             ),

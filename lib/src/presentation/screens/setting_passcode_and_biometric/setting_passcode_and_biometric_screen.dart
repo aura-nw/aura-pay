@@ -71,7 +71,7 @@ class _SettingPasscodeAndBiometricScreenState
               child: Column(
                 children: [
                   SettingSecureOptionWidget(
-                    iconPath: AssetIconPath.settingBioAndPassCodeLock,
+                    iconPath: AssetIconPath.settingBioAndPasscodeLock,
                     labelPath: LanguageKey
                         .settingChangePasscodeAndBioScreenChangePasscode,
                     appTheme: appTheme,
@@ -94,7 +94,7 @@ class _SettingPasscodeAndBiometricScreenState
                     ),
                   ),
                   SettingSecureOptionWidget(
-                    iconPath: AssetIconPath.settingBioAndPassCodeBio,
+                    iconPath: AssetIconPath.settingBioAndPasscodeBio,
                     labelPath:
                         LanguageKey.settingChangePasscodeAndBioScreenFaceId,
                     appTheme: appTheme,

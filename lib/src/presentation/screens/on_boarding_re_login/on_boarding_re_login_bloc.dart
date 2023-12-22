@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_mobile/src/core/helpers/crypto_helper.dart';
 import 'on_boarding_re_login_event.dart';
 import 'on_boarding_re_login_state.dart';
 
@@ -28,11 +29,13 @@ final class OnBoardingReLoginBloc
         key: AppLocalConstant.passCodeKey,
       );
 
-      if (password == event.password) {
-        final accounts = await _accountUseCase.getAccounts();
+      String passCodeCompare = CryptoHelper.hashStringBySha256(event.password);
+
+      if (password == passCodeCompare) {
+        final account = await _accountUseCase.getFirstAccount();
         emit(
           state.copyWith(
-            status: accounts.isEmpty
+            status: account == null
                 ? OnBoardingReLoginStatus.nonHasAccounts
                 : OnBoardingReLoginStatus.hasAccounts,
           ),

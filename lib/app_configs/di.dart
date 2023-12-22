@@ -8,6 +8,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:isar/isar.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/account_database_service_impl.dart';
+import 'package:pyxis_mobile/src/application/provider/normal_storage/normal_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
@@ -42,6 +43,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signe
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_select_account/signed_in_recover_select_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_sign/signed_in_recover_sign_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
 import 'package:web3auth_flutter/web3auth_flutter.dart';
@@ -77,6 +79,9 @@ Future<void> initDependency(
     ),
     iOptions: IOSOptions(),
   );
+
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
 
   // Set web3 auth redirect uri
   // Must replace late
@@ -173,12 +178,17 @@ Future<void> initDependency(
       secureStorage,
     ),
   );
+  getIt.registerLazySingleton<NormalStorageService>(
+    () => NormalStorageServiceImpl(
+      sharedPreferences,
+    ),
+  );
 
   ///Repository
 
   getIt.registerLazySingleton<AppSecureRepository>(
     () => AppSecureRepositoryImpl(
-      getIt.get<SecureStorageService>(),
+      getIt.get<NormalStorageService>(),
     ),
   );
 
@@ -284,6 +294,7 @@ Future<void> initDependency(
   getIt.registerFactory<SplashScreenCubit>(
     () => SplashScreenCubit(
       getIt.get<AppSecureUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
     ),
   );
 

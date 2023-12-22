@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashScreenCubit extends Cubit<SplashScreenState> {
   final AppSecureUseCase _appSecureUseCase;
+  final AuraAccountUseCase _accountUseCase;
 
-  SplashScreenCubit(this._appSecureUseCase)
+  SplashScreenCubit(this._appSecureUseCase,this._accountUseCase)
       : super(
           const SplashScreenState(),
         );
@@ -50,8 +51,10 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
           if (isSupportBio) {
             bool isVerify  = await LocalAuthHelper.requestLocalAuth();
 
+            final account = await _accountUseCase.getFirstAccount();
+
             // users verify successful
-            if(isVerify){
+            if(isVerify && account != null){
               status = SplashScreenStatus.verifyByBioSuccessful;
             }
           }

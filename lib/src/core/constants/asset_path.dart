@@ -197,7 +197,6 @@ sealed class AssetIconPath {
   static const String scannerPhoto = '${_baseIconPath}ic_scanner_photo.svg';
 
   /// Setting
-
   static const String settingRecovery =
       '${_baseIconPath}ic_setting_recovery.svg';
   static const String settingAddressBook =
