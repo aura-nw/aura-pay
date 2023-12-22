@@ -59,6 +59,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Account Manager Form Widget
                 AccountManagerFormWidget(
                   appTheme: appTheme,
                   onCreateTap: () async {
@@ -91,6 +92,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                 const SizedBox(
                   height: BoxSize.boxSize06,
                 ),
+                // App Localization Provider
                 AppLocalizationProvider(
                   builder: (localization, _) {
                     return Text(
@@ -106,6 +108,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                 const SizedBox(
                   height: BoxSize.boxSize07,
                 ),
+                // Home Screen Selected Account Selector
                 HomeScreenSelectedAccountSelector(
                   builder: (account) {
                     return AccountItemWidget(
@@ -132,6 +135,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // App Localization Provider
                           AppLocalizationProvider(
                             builder: (localization, _) {
                               return Text(
