@@ -8,6 +8,7 @@ import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/aura_smart_account_base_widget.dart';
 import 'package:domain/domain.dart';
 
+// Define a class named HomeAccountChangeWidget that extends AuraSmartAccountBaseWidget
 final class HomeAccountChangeWidget extends AuraSmartAccountBaseWidget {
   final AuraAccount account;
   final bool isFirst;
@@ -18,10 +19,11 @@ final class HomeAccountChangeWidget extends AuraSmartAccountBaseWidget {
     required super.appTheme,
     super.key,
   }) : super(
-    address: account.address,
-    accountName: account.name,
-  );
+          address: account.address,
+          accountName: account.name,
+        );
 
+  // Override the accountNameBuilder method
   @override
   Widget accountNameBuilder(BuildContext context) {
     return Row(
@@ -35,6 +37,7 @@ final class HomeAccountChangeWidget extends AuraSmartAccountBaseWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
+        // If isFirst is true, display a SizedBox and SvgPicture.asset
         if (isFirst) ...[
           const SizedBox(
             width: BoxSize.boxSize03,
@@ -48,14 +51,17 @@ final class HomeAccountChangeWidget extends AuraSmartAccountBaseWidget {
     );
   }
 
+  // Override the actionFormBuilder method
   @override
   Widget actionFormBuilder(BuildContext context) {
+    // If the account is a smart account, return an empty Container
     if (account.isSmartAccount) {
       return Container();
     }
     return const SizedBox.shrink();
   }
 
+  // Override the addressBuilder method
   @override
   Widget addressBuilder(BuildContext context) {
     return Text(
@@ -66,6 +72,7 @@ final class HomeAccountChangeWidget extends AuraSmartAccountBaseWidget {
     );
   }
 
+  // Override the avatarBuilder method
   @override
   Widget avatarBuilder(BuildContext context) {
     return SvgPicture.asset(
@@ -74,7 +81,7 @@ final class HomeAccountChangeWidget extends AuraSmartAccountBaseWidget {
   }
 }
 
-
+// Define a private class named _HomeAccountWidget that extends AuraSmartAccountBaseWidget
 final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
   final VoidCallback onShowMoreAccount;
   final void Function(String) onCopy;
@@ -88,6 +95,7 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
     super.key,
   });
 
+  // Override the accountNameBuilder method
   @override
   Widget accountNameBuilder(BuildContext context) {
     return Row(
@@ -117,6 +125,7 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
     );
   }
 
+  // Override the actionFormBuilder method
   @override
   Widget actionFormBuilder(BuildContext context) {
     return GestureDetector(
@@ -128,6 +137,7 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
     );
   }
 
+  // Override the addressBuilder method
   @override
   Widget addressBuilder(BuildContext context) {
     return Text(
@@ -138,6 +148,7 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
     );
   }
 
+  // Override the avatarBuilder method
   @override
   Widget avatarBuilder(BuildContext context) {
     return SvgPicture.asset(
@@ -146,6 +157,7 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
   }
 }
 
+// Define a private class named _HomeAccountReceiveWidget that extends AuraSmartAccountBaseWidget
 final class _HomeAccountReceiveWidget extends AuraSmartAccountBaseWidget {
   final void Function(String) onCopy;
 
@@ -157,6 +169,7 @@ final class _HomeAccountReceiveWidget extends AuraSmartAccountBaseWidget {
     super.key,
   });
 
+  // Override the accountNameBuilder method
   @override
   Widget accountNameBuilder(BuildContext context) {
     return Text(
@@ -169,11 +182,13 @@ final class _HomeAccountReceiveWidget extends AuraSmartAccountBaseWidget {
     );
   }
 
+  // Override the actionFormBuilder method
   @override
   Widget actionFormBuilder(BuildContext context) {
     return const SizedBox();
   }
 
+  // Override the addressBuilder method
   @override
   Widget addressBuilder(BuildContext context) {
     return Row(
@@ -201,6 +216,7 @@ final class _HomeAccountReceiveWidget extends AuraSmartAccountBaseWidget {
     );
   }
 
+  // Override the avatarBuilder method
   @override
   Widget avatarBuilder(BuildContext context) {
     return SvgPicture.asset(
@@ -209,7 +225,7 @@ final class _HomeAccountReceiveWidget extends AuraSmartAccountBaseWidget {
   }
 }
 
-/// region home account card
+// Define a class named AccountCardWidget
 class AccountCardWidget extends StatelessWidget {
   final VoidCallback onShowMoreAccount;
   final void Function(String) onCopy;
@@ -256,8 +272,7 @@ class AccountCardWidget extends StatelessWidget {
   }
 }
 
-///endregion
-
+// Define a class named AccountCardReceiveWidget
 class AccountCardReceiveWidget extends StatelessWidget {
   final void Function(String) onCopy;
   final AppTheme appTheme;

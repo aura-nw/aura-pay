@@ -32,17 +32,20 @@ class ReceiveTokenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      // Triggered when a vertical drag gesture ends
       onVerticalDragEnd: (dragDetail) {
         if (dragDetail.velocity.pixelsPerSecond.dy < -50) {
           onSwipeUp.call();
         }
       },
+      // Triggered when the widget is tapped
       onTap: () {
         onSwipeUp.call();
       },
       child: Material(
         color: Colors.transparent,
         child: Container(
+          // Overlay color with opacity
           color: theme.bodyColorOverlay.withOpacity(0.8),
           width: context.w,
           height: context.h,
@@ -69,12 +72,14 @@ class ReceiveTokenWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Scrollable view widget
                   ScrollViewWidget(
                     appTheme: theme,
                   ),
                   const SizedBox(
                     height: BoxSize.boxSize08,
                   ),
+                  // QR code image view
                   QrImageView(
                     data: address,
                     version: QrVersions.auto,
@@ -85,6 +90,7 @@ class ReceiveTokenWidget extends StatelessWidget {
                   const SizedBox(
                     height: BoxSize.boxSize06,
                   ),
+                  // Account card receive widget
                   AccountCardReceiveWidget(
                     onCopy: (address) => onCopyAddress(address),
                     accountName: accountName,
@@ -94,6 +100,7 @@ class ReceiveTokenWidget extends StatelessWidget {
                   const SizedBox(
                     height: BoxSize.boxSize07,
                   ),
+                  // App localization provider
                   AppLocalizationProvider(
                     builder: (localization, _) {
                       return PrimaryAppButton(
