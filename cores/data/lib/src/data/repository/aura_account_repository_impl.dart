@@ -40,6 +40,7 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
       type: parameter.type,
       address: parameter.address,
       useNullAble: parameter.useNullAble,
+      subValue: parameter.subValue,
     );
   }
 
@@ -48,5 +49,14 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
     final account = await _accountDatabaseService.getFirstAccount();
 
     return account?.toEntity;
+  }
+
+  @override
+  Future<void> updateChangeIndex({
+    required int id,
+  }) {
+    return _accountDatabaseService.updateChangeIndex(
+      id: id,
+    );
   }
 }

@@ -27,3 +27,15 @@ class HomeScreenAccountsSelector
           builder: (_, accounts) => builder(accounts),
         );
 }
+
+class HomeScreenSelectedAccountSelector
+    extends BlocSelector<HomeScreenBloc, HomeScreenState, AuraAccount?> {
+  HomeScreenSelectedAccountSelector({
+    Key? key,
+    required Widget Function(AuraAccount?) builder,
+  }) : super(
+          key: key,
+          selector: (state) => state.selectedAccount,
+          builder: (_, selectedAccount) => builder(selectedAccount),
+        );
+}

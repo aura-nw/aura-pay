@@ -112,9 +112,9 @@ final class OnBoardingRecoverSignBloc
 
       information = await _checkTransactionInfo(information.txHash, 0);
 
-      _logout();
-
       if (information.status == 0) {
+        await _web3authUseCase.onLogout();
+
         _controllerKeyUseCase.saveKey(
           address: state.account.address,
           key: backupPrivateKey,
@@ -160,14 +160,6 @@ final class OnBoardingRecoverSignBloc
         rethrow;
       }
       return _checkTransactionInfo(txHash, times + 1);
-    }
-  }
-
-  void _logout()async{
-    try{
-      await _web3authUseCase.onLogout();
-    }catch(e){
-      //
     }
   }
 }

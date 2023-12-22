@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'home_screen_event.dart';
 
 import 'home_screen_state.dart';
@@ -19,6 +20,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     on(_reFetchAccounts);
     on(_onRenameAccount);
     on(_onRemoveAccount);
+    on(_onChooseAccount);
   }
 
   void _onRenameAccount(
@@ -65,6 +67,9 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       emit(state.copyWith(
         status: HomeScreenStatus.loaded,
         accounts: accounts,
+        selectedAccount: accounts.firstWhereOrNull(
+          (e) => e.index == 0,
+        ),
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -79,9 +84,50 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   ) async {
     final accounts = await _accountUseCase.getAccounts();
 
+    _broadcastChange();
+
     emit(state.copyWith(
       accounts: accounts,
+      selectedAccount: accounts.firstWhereOrNull(
+            (e) => e.index == 0,
+      ),
     ));
+  }
+
+  void _onChooseAccount(
+    HomeScreenEventOnChooseAccount event,
+    Emitter<HomeScreenState> emit,
+  ) async {
+    if (event.account.id == state.selectedAccount?.id) return;
+
+    emit(state.copyWith(
+      selectedAccount: event.account,
+    ));
+
+    await _accountUseCase.updateChangeIndex(
+      id: event.account.id,
+    );
+
+    add(
+      const HomeScreenEventOnReFetchAccount(),
+    );
+  }
+
+  // Register callback
+  VoidCallback? _broadCast;
+
+  void _broadcastChange() {
+    _broadCast?.call();
+  }
+
+  void registerCallBack(VoidCallback callback) {
+    _broadCast = callback;
+  }
+
+  @override
+  Future<void> close() {
+    _broadCast = null;
+    return super.close();
   }
 
   static HomeScreenBloc of(BuildContext context) => BlocProvider.of(context);

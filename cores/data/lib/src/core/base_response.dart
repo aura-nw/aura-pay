@@ -1,32 +1,49 @@
 import 'package:domain/domain.dart';
 
-class BaseResponse<T> {
-  final int code;
+abstract class BaseResponse<T> {
   final T? data;
+
+  const BaseResponse({this.data});
+}
+
+final class BaseResponseV2<T> extends BaseResponse<T> {
+  final int code;
   final String message;
 
-  const BaseResponse({
+  const BaseResponseV2({
     required this.code,
-    this.data,
+    super.data,
     required this.message,
   });
 
-  factory BaseResponse.fromJson(Map<String, dynamic> json) {
-    return BaseResponse(
+  factory BaseResponseV2.fromJson(Map<String, dynamic> json) {
+    return BaseResponseV2(
       code: json['code'],
       data: json['data'],
       message: json['message'],
     );
   }
 
-  static T? handleResponse<T>(BaseResponse<T> response) {
-    if (response.code == 200) {
-      return response.data;
+  T? handleResponse() {
+    if (code == 200) {
+      return data;
     }
 
     throw AppError(
-      message: response.message,
-      code: response.code,
+      message: message,
+      code: code,
+    );
+  }
+}
+
+final class BaseResponseV1<T> extends BaseResponse<T> {
+  const BaseResponseV1({
+    super.data,
+  });
+
+  factory BaseResponseV1.fromJson(Map<String, dynamic> json) {
+    return BaseResponseV1(
+      data: json['data'],
     );
   }
 }

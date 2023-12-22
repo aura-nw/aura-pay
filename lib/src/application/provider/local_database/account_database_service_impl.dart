@@ -1,7 +1,7 @@
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:isar/isar.dart';
-import 'package:pyxis_mobile/src/application/provider/local_database/aura_account_db.dart';
+import 'aura_account_db.dart';
 
 final class AccountDatabaseServiceImpl implements AccountDatabaseService {
   final Isar _isar;
@@ -26,12 +26,12 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
 
   @override
   Future<List<AuraAccountDto>> getAuraAccounts() {
-    return _isar.auraAccountDbs.where().findAll();
+    return _isar.auraAccountDbs.where().sortByIndexDb().findAll();
   }
 
   @override
   Future<AuraAccountDto?> getFirstAccount() {
-    return _isar.auraAccountDbs.where().findFirst();
+    return _isar.auraAccountDbs.filter().indexDbEqualTo(0).findFirst();
   }
 
   @override
@@ -40,12 +40,15 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
     required String accountName,
     required AuraAccountType type,
   }) async {
+    int currentLength = await _isar.auraAccountDbs.count();
+
     await _isar.writeTxn(
       () async {
         final AuraAccountDb accountDb = AuraAccountDb(
           accountName: accountName,
           accountAddress: address,
           accountType: type,
+          indexDb: currentLength != 0 ? 1 : 0,
         );
         await _isar.auraAccountDbs.put(
           accountDb,
@@ -62,6 +65,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
     AuraAccountType? type,
     AuraSmartAccountRecoveryMethod? method,
     String? value,
+    String? subValue,
     bool useNullAble = false,
   }) async {
     final AuraAccountDb? account = await _isar.auraAccountDbs.get(id);
@@ -83,18 +87,46 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
               methodDb: null,
             ));
           } else {
-            await _isar.auraAccountDbs.put(account.copyWith(
-              name: accountName,
-              address: address,
-              type: type,
-              methodDb: methodDb?.copyWith(
-                method: method,
-                value: value,
+            await _isar.auraAccountDbs.put(
+              account.copyWith(
+                name: accountName,
+                address: address,
+                type: type,
+                methodDb: methodDb?.copyWith(
+                  method: method,
+                  value: value,
+                  subValue: subValue,
+                ),
               ),
-            ));
+            );
           }
         },
       );
     }
+  }
+
+  @override
+  Future<void> updateChangeIndex({
+    required int id,
+  }) async {
+    AuraAccountDb? account = await _isar.auraAccountDbs.get(id);
+
+    final AuraAccountDb? currentAccount =
+        await _isar.auraAccountDbs.filter().indexDbEqualTo(0).findFirst();
+
+    if (account == null || currentAccount == null) return;
+
+    await _isar.writeTxn(() async {
+      await _isar.auraAccountDbs.put(
+        currentAccount.copyWith(
+          index: 1,
+        ),
+      );
+      await _isar.auraAccountDbs.put(
+        account.copyWith(
+          index: 0,
+        ),
+      );
+    });
   }
 }

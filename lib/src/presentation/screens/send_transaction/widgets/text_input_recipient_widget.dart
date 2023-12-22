@@ -9,12 +9,11 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_base.dart';
 
 class TextInputRecipientWidget extends TextInputWidgetBase {
-  final VoidCallback onClear;
   final VoidCallback onPaste;
   final VoidCallback onQrTap;
 
   const TextInputRecipientWidget({
-    required this.onClear,
+    required super.onClear,
     required this.onPaste,
     required this.onQrTap,
     super.obscureText,

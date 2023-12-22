@@ -1,8 +1,11 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/transaction_enum.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'history_page_event.dart';
 
 import 'history_page_state.dart';
@@ -21,39 +24,47 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     on(_onLoadMore);
     on(_onRefresh);
     on(_onFilter);
+    on(_onUpdateAccount);
     on(_onChangeAccount);
   }
 
-  Future<List<PyxisTransaction>> _getTransaction() async {
-    List<PyxisTransaction> transactions = List.empty(growable: true);
-
-    for (final event in state.events) {
-      final transactionByEvent = await _transactionUseCase.getTransactions(
-        limit: state.limit,
-        page: state.offset,
-        events: event,
-      );
-
-      transactions.addAll(transactionByEvent);
-    }
-
-    transactions.sort(
-      (a, b) {
-        // Default sort as ASC
-        return b.timeStamp.compareTo(a.timeStamp);
-      },
+  Future<List<PyxisTransaction>> _getTransaction({
+    int? heightLt,
+    String? receive,
+  }) async {
+    final List<PyxisTransaction> transactions =
+        await _transactionUseCase.getTransactions(
+      limit: state.limit,
+      environment: state.environment,
+      sender: state.selectedAccount?.address,
+      msgTypes: state.currentTab.messages,
+      heightLt: heightLt,
+      receive: receive ?? state.selectedAccount?.address,
+      queryTransactionType: state.currentTab.convertToQueryType,
     );
 
     return transactions.where(
       (transaction) {
-        final MsgType type = TransactionHelper.getMsgType(transaction.msg);
+        final MsgType type = TransactionHelper.getMsgType(
+          transaction.messages
+              .map(
+                (e) => e.type,
+              )
+              .toList(),
+        );
 
         if (type == MsgType.other) {
           return false;
         }
 
         if (type == MsgType.executeContract) {
-          return TransactionHelper.validateMsgSetRecovery(transaction.msg);
+          final Map<String, dynamic> msg = transaction.messages
+              .firstWhere(
+                (element) => element.type == TransactionType.ExecuteContract,
+              )
+              .content;
+
+          return TransactionHelper.validateMsgSetRecovery(msg);
         }
 
         return true;
@@ -65,9 +76,12 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     HistoryPageEventOnInit event,
     Emitter<HistoryPageState> emit,
   ) async {
+    final config = getIt.get<PyxisMobileConfig>();
+
     emit(
       state.copyWith(
         status: HistoryPageStatus.loading,
+        environment: config.environment.environmentString,
       ),
     );
 
@@ -76,21 +90,21 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
 
       emit(
         state.copyWith(
-          selectedAccount: accounts.firstOrNull,
-          accounts: accounts,
-          events: _getEventByTab(
-            state.currentTab,
-            address: accounts.firstOrNull?.address,
+          selectedAccount: accounts.firstWhereOrNull(
+            (ac) => ac.index == 0,
           ),
+          accounts: accounts,
         ),
       );
 
-      final transactions = await _getTransaction();
+      final transactions = await _getTransaction(
+        receive: accounts.firstOrNull?.address,
+      );
 
       emit(
         state.copyWith(
           status: HistoryPageStatus.loaded,
-          canLoadMore: transactions.length >= 30,
+          canLoadMore: transactions.length == 30,
           transactions: transactions,
         ),
       );
@@ -113,15 +127,13 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     emit(
       state.copyWith(
         status: HistoryPageStatus.loadMore,
-        offset: state.offset + 1,
-        events: _getEventByTab(
-          state.currentTab,
-        ),
       ),
     );
 
     try {
-      final transactions = await _getTransaction();
+      final transactions = await _getTransaction(
+        heightLt: state.transactions.lastOrNull?.heightLt,
+      );
 
       emit(
         state.copyWith(
@@ -147,14 +159,12 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     HistoryPageEventOnRefresh event,
     Emitter<HistoryPageState> emit,
   ) async {
+    if (state.status != HistoryPageStatus.loaded) return;
+
     emit(
       state.copyWith(
         status: HistoryPageStatus.loading,
-        offset: 1,
         transactions: [],
-        events: _getEventByTab(
-          state.currentTab,
-        ),
       ),
     );
 
@@ -164,7 +174,7 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
       emit(
         state.copyWith(
           status: HistoryPageStatus.loaded,
-          canLoadMore: transactions.length >= 30,
+          canLoadMore: transactions.length == 30,
           transactions: transactions,
         ),
       );
@@ -184,41 +194,7 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
   ) async {
     emit(
       state.copyWith(
-        status: HistoryPageStatus.loading,
-        offset: 1,
-        transactions: [],
-        currentTab: event.tab,
-        events: _getEventByTab(event.tab),
-      ),
-    );
-    try {
-      final transactions = await _getTransaction();
-
-      emit(
-        state.copyWith(
-          status: HistoryPageStatus.loaded,
-          canLoadMore: transactions.length >= 30,
-          transactions: transactions,
-        ),
-      );
-    } catch (e) {
-      emit(
-        state.copyWith(
-          status: HistoryPageStatus.error,
-          error: e.toString(),
-        ),
-      );
-    }
-  }
-
-  void _onChangeAccount(
-    HistoryPageEventOnChangeSelectedAccount event,
-    Emitter<HistoryPageState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        selectedAccount: event.selectedAccount,
-        events: _getEventByTab(state.currentTab),
+        currentTab: TransactionHistoryEnum.values[event.index],
       ),
     );
 
@@ -227,44 +203,74 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     );
   }
 
-  List<List<String>> _getEventByTab(int tab, {String? address}) {
-    List<String> querySend = [
-      "message.sender='${address ?? state.selectedAccount?.address}'",
-      "message.action='${TransactionType.Send}'"
-    ];
+  void _onChangeAccount(
+    HistoryPageEventOnChangeSelectedAccount event,
+    Emitter<HistoryPageState> emit,
+  ) async {
+    if (event.selectedAccount.id == state.selectedAccount?.id) return;
+    emit(
+      state.copyWith(
+        selectedAccount: event.selectedAccount,
+      ),
+    );
 
-    List<String> queryReceive = [
-      "transfer.recipient='${address ?? state.selectedAccount?.address}'",
-    ];
+    add(
+      const HistoryPageEventOnRefresh(),
+    );
+  }
 
-    List<String> querySetRecovery = [
-      "message.sender='${address ?? state.selectedAccount?.address}'",
-      "message.action='${TransactionType.ExecuteContract}'"
-    ];
+  void _onUpdateAccount(
+    HistoryPageEventOnUpdateAccount event,
+    Emitter<HistoryPageState> emit,
+  ) async {
+    try {
+      final accounts = await _accountUseCase.getAccounts();
 
-    List<String> queryRecover = [
-      "message.sender='${address ?? state.selectedAccount?.address}'",
-      "message.action='${TransactionType.Recover}'"
-    ];
+      if (accounts.isEmpty) return;
 
-    if (tab == 0) {
-      return [
-        ["message.sender='${address ?? state.selectedAccount?.address}'"],
-        ...[
-          queryReceive,
-        ],
-      ];
-    } else {
-      List<List<String>> events = [
-        querySend,
-        queryReceive,
-        querySetRecovery,
-        queryRecover
-      ];
+      AuraAccount? selectedAccount = accounts.firstWhereOrNull(
+        (e) => e.index == 0,
+      );
 
-      return [
-        events[tab - 1],
-      ];
+      final bool constantAccount =
+          state.selectedAccount?.id == selectedAccount?.id;
+
+      if (constantAccount) {
+        emit(
+          state.copyWith(
+            selectedAccount: selectedAccount,
+            accounts: accounts,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            status: HistoryPageStatus.loading,
+            selectedAccount: selectedAccount,
+            accounts: accounts,
+            transactions: [],
+          ),
+        );
+
+        final transactions = await _getTransaction(
+          receive: selectedAccount?.address,
+        );
+
+        emit(
+          state.copyWith(
+            status: HistoryPageStatus.loaded,
+            canLoadMore: transactions.length == 30,
+            transactions: transactions,
+          ),
+        );
+      }
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: HistoryPageStatus.error,
+          error: e.toString(),
+        ),
+      );
     }
   }
 }

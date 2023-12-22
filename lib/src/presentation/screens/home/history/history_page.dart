@@ -8,6 +8,7 @@ import 'package:pyxis_mobile/src/application/global/localization/app_localizatio
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/app_date_format.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_state.dart';
@@ -35,12 +36,31 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   final HistoryPageBloc _bloc = getIt.get<HistoryPageBloc>();
 
+  final HomePageObserver _observer = getIt.get<HomePageObserver>();
+
+  void _listenHomePageUpdateAccount(bool status) async {
+    if (status) {
+      // update account
+      _bloc.add(
+        const HistoryPageEventOnUpdateAccount(),
+      );
+    }
+  }
+
+  //
   @override
   void initState() {
+    _observer.addListener(_listenHomePageUpdateAccount);
     _bloc.add(
       const HistoryPageEventOnInit(),
     );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _observer.removeListener(_listenHomePageUpdateAccount);
+    super.dispose();
   }
 
   @override
@@ -121,7 +141,6 @@ class _HistoryPageState extends State<HistoryPage> {
                           case HistoryPageStatus.loaded:
                           case HistoryPageStatus.error:
                           case HistoryPageStatus.loadMore:
-                          case HistoryPageStatus.refresh:
                             return HistoryPageTransactionsSelector(
                               builder: (transactions) {
                                 if (transactions.isEmpty) {
@@ -161,8 +180,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                         final hasPreviousIndex = transactions
                                             .constantIndex(index - 1);
 
-                                        final String dateFormat = AppDateTime
-                                            .formatDateDMMMYYY(
+                                        final String dateFormat =
+                                            AppDateTime.formatDateDMMMYYY(
                                           transaction.timeStamp,
                                         );
 
@@ -173,8 +192,11 @@ class _HistoryPageState extends State<HistoryPage> {
                                             children: [
                                               Text(
                                                 dateFormat,
-                                                style: AppTypoGraPhy.bodyMedium02.copyWith(
-                                                  color: appTheme.contentColorBlack,
+                                                style: AppTypoGraPhy
+                                                    .bodyMedium02
+                                                    .copyWith(
+                                                  color: appTheme
+                                                      .contentColorBlack,
                                                 ),
                                               ),
                                               const SizedBox(
@@ -186,22 +208,23 @@ class _HistoryPageState extends State<HistoryPage> {
                                           final previousItem =
                                               transactions[index - 1];
 
-                                          final String preDateFormat = AppDateTime
-                                              .formatDateDMMMYYY(
+                                          final String preDateFormat =
+                                              AppDateTime.formatDateDMMMYYY(
                                             previousItem.timeStamp,
                                           );
 
-
-                                          if (preDateFormat !=
-                                              dateFormat) {
+                                          if (preDateFormat != dateFormat) {
                                             widget = Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   dateFormat,
-                                                  style: AppTypoGraPhy.bodyMedium02.copyWith(
-                                                    color: appTheme.contentColorBlack,
+                                                  style: AppTypoGraPhy
+                                                      .bodyMedium02
+                                                      .copyWith(
+                                                    color: appTheme
+                                                        .contentColorBlack,
                                                   ),
                                                 ),
                                                 const SizedBox(
@@ -222,7 +245,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     transaction, appTheme);
                                               },
                                               status: transaction.isSuccess,
-                                              msg: transaction.msg,
+                                              msgs: transaction.messages,
                                               time: transaction.timeStamp,
                                               appTheme: appTheme,
                                               accountName: _bloc.state

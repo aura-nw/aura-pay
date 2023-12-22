@@ -114,6 +114,8 @@ final class SignedInRecoverSignBloc
       information = await _checkTransactionInfo(information.txHash, 0);
 
       if (information.status == 0) {
+        await _web3authUseCase.onLogout();
+
         await _accountUseCase.updateAccount(
           id: state.account.id,
           method: null,
@@ -146,8 +148,6 @@ final class SignedInRecoverSignBloc
           error: e.toString(),
         ),
       );
-    }finally{
-      _logout();
     }
   }
 
@@ -167,14 +167,6 @@ final class SignedInRecoverSignBloc
         rethrow;
       }
       return _checkTransactionInfo(txHash, times + 1);
-    }
-  }
-
-  void _logout()async{
-    try{
-       _web3authUseCase.onLogout();
-    }catch(e){
-      //
     }
   }
 }

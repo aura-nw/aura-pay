@@ -87,6 +87,8 @@ class SmartAccountUseCase {
     required String recoverAddress,
     String? fee,
     int? gasLimit,
+    bool isReadyRegister = false,
+    String ?revokePreAddress,
   }) async {
     return _repository.setRecoveryMethod(
       userPrivateKey: userPrivateKey,
@@ -94,20 +96,8 @@ class SmartAccountUseCase {
       recoverAddress: recoverAddress,
       gasLimit: gasLimit,
       fee: fee,
-    );
-  }
-
-  Future<TransactionInformation> unRegisterRecoveryMethod({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    String? fee,
-    int? gasLimit,
-  }) async {
-    return _repository.unRegisterRecoveryMethod(
-      userPrivateKey: userPrivateKey,
-      smartAccountAddress: smartAccountAddress,
-      gasLimit: gasLimit,
-      fee: fee,
+      isReadyRegister: isReadyRegister,
+      revokePreAddress: revokePreAddress,
     );
   }
 

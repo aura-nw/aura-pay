@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
-import 'package:aura_wallet_core/config_options/environment_options.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -13,8 +12,10 @@ import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_stor
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
+import 'package:pyxis_mobile/src/application/service/balance/token_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/transaction/transaction_api_service_impl.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page_bloc.dart';
@@ -56,7 +57,7 @@ Future<void> initDependency(
 ) async {
   final Dio dio = Dio(
     BaseOptions(
-      baseUrl: config.lcdUrl,
+      baseUrl: config.horoScopeUrl + config.horoScopeVersion,
       connectTimeout: const Duration(
         milliseconds: 60000,
       ),
@@ -111,6 +112,16 @@ Future<void> initDependency(
   getIt.registerLazySingleton<RecoveryObserver>(
     () => RecoveryObserver(),
   );
+  getIt.registerLazySingleton<HomePageObserver>(
+    () => HomePageObserver(),
+  );
+
+  getIt.registerLazySingleton<BalanceApiServiceGenerator>(
+    () => BalanceApiServiceGenerator(
+      getIt.get<Dio>(),
+      baseUrl: config.horoScopeUrl + config.horoScopeVersion,
+    ),
+  );
 
   ///Api service
 
@@ -123,6 +134,11 @@ Future<void> initDependency(
   getIt.registerLazySingleton<TransactionApiService>(
     () => TransactionApiServiceImpl(
       getIt.get<TransactionApiServiceGenerate>(),
+    ),
+  );
+  getIt.registerLazySingleton<BalanceApiService>(
+    () => BalanceApiServiceImpl(
+      getIt.get<BalanceApiServiceGenerator>(),
     ),
   );
 
@@ -202,6 +218,11 @@ Future<void> initDependency(
       getIt.get<TransactionApiService>(),
     ),
   );
+  getIt.registerLazySingleton<BalanceRepository>(
+    () => BalanceRepositoryImpl(
+      getIt.get<BalanceApiService>(),
+    ),
+  );
 
   ///Use case
   getIt.registerLazySingleton<AppSecureUseCase>(
@@ -248,6 +269,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<TransactionUseCase>(
     () => TransactionUseCase(
       getIt.get<TransactionRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<BalanceUseCase>(
+    () => BalanceUseCase(
+      getIt.get<BalanceRepository>(),
     ),
   );
 
@@ -346,6 +373,7 @@ Future<void> initDependency(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<SmartAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
+      getIt.get<BalanceUseCase>(),
     ),
   );
 
@@ -382,8 +410,8 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<SetRecoveryMethodScreenBloc,AuraAccount,dynamic>(
-    (account,_) => SetRecoveryMethodScreenBloc(
+  getIt.registerFactoryParam<SetRecoveryMethodScreenBloc, AuraAccount, dynamic>(
+    (account, _) => SetRecoveryMethodScreenBloc(
       getIt.get<Web3AuthUseCase>(),
       account: account,
     ),

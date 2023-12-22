@@ -1,4 +1,5 @@
 import 'package:aura_smart_account/aura_smart_account.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
@@ -8,6 +9,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/constants/transaction_enum.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/app_date_format.dart';
@@ -15,7 +17,7 @@ import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 
 class TransactionWidget extends StatelessWidget {
   final bool status;
-  final Map<String,dynamic> msg;
+  final List<PyxisTransactionMsg> msgs;
   final String time;
   final AppTheme appTheme;
   final VoidCallback onTap;
@@ -24,7 +26,7 @@ class TransactionWidget extends StatelessWidget {
 
   const TransactionWidget({
     required this.status,
-    required this.msg,
+    required this.msgs,
     required this.time,
     required this.appTheme,
     required this.onTap,
@@ -35,9 +37,11 @@ class TransactionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MsgType msgType = TransactionHelper.getMsgType(msg);
+    final MsgType msgType = TransactionHelper.getMsgType(
+      msgs.map((e) => e.type).toList(),
+    );
 
-    if(msgType == MsgType.other){
+    if (msgType == MsgType.other) {
       return const SizedBox.shrink();
     }
 
@@ -56,6 +60,11 @@ class TransactionWidget extends StatelessWidget {
   Widget _buildTransactionWithType(MsgType msgType, BuildContext context) {
     switch (msgType) {
       case MsgType.send:
+        final Map<String, dynamic> msg = msgs
+            .firstWhere(
+              (element) => element.type == TransactionType.Send,
+            )
+            .content;
         final MsgSend msgSend = TransactionHelper.parseMsgSend(msg);
 
         bool isSend = msgSend.fromAddress == address;
@@ -126,13 +135,13 @@ class TransactionWidget extends StatelessWidget {
                         return Text(
                           status
                               ? localization.translate(
-                            LanguageKey
-                                .transactionHistoryPageTransactionStatusSuccess,
-                          )
+                                  LanguageKey
+                                      .transactionHistoryPageTransactionStatusSuccess,
+                                )
                               : localization.translate(
-                            LanguageKey
-                                .transactionHistoryPageTransactionStatusFail,
-                          ),
+                                  LanguageKey
+                                      .transactionHistoryPageTransactionStatusFail,
+                                ),
                           style: AppTypoGraPhy.body01.copyWith(
                             color: status
                                 ? appTheme.contentColorSuccess
@@ -149,9 +158,6 @@ class TransactionWidget extends StatelessWidget {
         );
 
       case MsgType.executeContract:
-        final MsgExecuteContract msgExecuteContract =
-            TransactionHelper.parseMsgExecuteContract(msg);
-
         return Row(
           children: [
             SvgPicture.asset(

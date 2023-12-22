@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/wallet_address_validator.dart';
-import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
+
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'send_transaction_event.dart';
 import 'send_transaction_state.dart';
 
@@ -14,11 +15,13 @@ final class SendTransactionBloc
   final AuraAccountUseCase _auraAccountUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
+  final BalanceUseCase _balanceUseCase;
 
   SendTransactionBloc(
     this._auraAccountUseCase,
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
+    this._balanceUseCase,
   ) : super(
           const SendTransactionState(),
         ) {
@@ -32,6 +35,7 @@ final class SendTransactionBloc
     SendTransactionEventOnInit event,
     Emitter<SendTransactionState> emit,
   ) async {
+    final config = getIt.get<PyxisMobileConfig>();
     emit(
       state.copyWith(
         status: SendTransactionStatus.loading,
@@ -41,22 +45,30 @@ final class SendTransactionBloc
       // Get first account
       final AuraAccount? account = await _auraAccountUseCase.getFirstAccount();
 
-      final String balance = await _smartAccountUseCase.getToken(
+      final List<PyxisBalance> balances = await _balanceUseCase.getBalances(
         address: account?.address ?? '',
+        environment: config.environment.environmentString,
       );
 
       emit(
         state.copyWith(
           status: SendTransactionStatus.loaded,
           sender: account,
-          balance: balance,
+          balance: balances
+                  .firstWhereOrNull(
+                    (element) => element.denom == config.deNom,
+                  )
+                  ?.amount ??
+              '0',
         ),
       );
     } catch (e) {
+      // Set default balance
       emit(
         state.copyWith(
           status: SendTransactionStatus.error,
           error: e.toString(),
+          balance: '0',
         ),
       );
     }

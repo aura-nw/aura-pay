@@ -1,5 +1,4 @@
 extension AuraFormatter on String {
-
   String get formatAura {
     double auraD = double.tryParse(this) ?? 0;
 
@@ -14,7 +13,7 @@ extension AuraFormatter on String {
     return auraString;
   }
 
-  String formatPrice(double price) {
+  String formatTotalPrice(double price) {
     double auraD = double.tryParse(this) ?? 0;
 
     auraD = (auraD / 1000000);
@@ -41,9 +40,24 @@ extension AuraFormatter on String {
   }
 }
 
-extension AuraNumberFormatter on num{
-  String get formatAuraNumber{
+extension AuraNumberFormatter on num {
+  String get formatAuraNumber {
     String auraString = toStringAsFixed(6);
+
+    auraString = auraString.replaceAll(RegExp(r'0*$'), '');
+
+    if (auraString.endsWith('.')) {
+      auraString = auraString.substring(0, auraString.length - 1);
+    }
+
+    return auraString;
+  }
+
+  String get formatPrice {
+
+    if (this == 0) return '0';
+
+    String auraString = toStringAsFixed(2);
 
     auraString = auraString.replaceAll(RegExp(r'0*$'), '');
 

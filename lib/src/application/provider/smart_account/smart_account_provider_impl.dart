@@ -134,6 +134,8 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
     required String recoverAddress,
     String? fee,
     int? gasLimit,
+    bool isReadyRegister = false,
+    String ?revokePreAddress,
   }) async {
     AuraSmartAccountFee? smartAccountFee;
     if (fee != null && gasLimit != null) {
@@ -148,35 +150,8 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       smartAccountAddress: smartAccountAddress,
       recoverAddress: recoverAddress,
       fee: smartAccountFee,
-    );
-
-    return TransactionInformationDto(
-      txHash: response.txhash,
-      timestamp: response.timestamp,
-      status: response.code,
-      rawLog: response.rawLog,
-    );
-  }
-
-  @override
-  Future<TransactionInformationDto> unRegisterRecoveryMethod({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    String? fee,
-    int? gasLimit,
-  }) async {
-    AuraSmartAccountFee? smartAccountFee;
-    if (fee != null && gasLimit != null) {
-      smartAccountFee = AuraSmartAccountFee(
-        fee: fee,
-        gasLimit: gasLimit,
-      );
-    }
-
-    final response = await _auraSmartAccount.unRegisterRecoveryMethod(
-      userPrivateKey: userPrivateKey,
-      smartAccountAddress: smartAccountAddress,
-      fee: smartAccountFee,
+      isReadyRegister: isReadyRegister,
+      revokePreAddress: revokePreAddress,
     );
 
     return TransactionInformationDto(

@@ -8,6 +8,7 @@ extension AuraAccountDtoExtension on AuraAccountDto {
       address: address,
       name: name,
       method: method?.toEntity,
+      index: index,
     );
   }
 }
@@ -17,12 +18,14 @@ extension AuraAccountRecoveryMethodDtoExtension on AuraAccountRecoveryMethodDto 
     return AuraAccountRecoveryMethod(
       method: method,
       value: value,
+      subValue: subValue,
     );
   }
 }
 
 class AuraAccountDto {
   final int id;
+  final int index;
   final AuraAccountType type;
   final String name;
   final String address;
@@ -30,6 +33,7 @@ class AuraAccountDto {
 
   const AuraAccountDto({
     required this.id,
+    required this.index,
     required this.type,
     required this.address,
     required this.name,
@@ -39,11 +43,13 @@ class AuraAccountDto {
 
 final class AuraAccountRecoveryMethodDto{
   final String value;
+  final String subValue;
   final AuraSmartAccountRecoveryMethod method;
 
   const AuraAccountRecoveryMethodDto({
     required this.method,
     required this.value,
+    required this.subValue,
   });
 }
 

@@ -146,6 +146,8 @@
   "home_page_no_token_found_content" : "All tokens of this smart account is shown here",
   "home_page_token_prefix" : "$",
   "home_page_receive_share_address" : "Share Address",
+  "home_page_other_account_form_title" : "Your other account",
+  "home_page_sm_account" : "Smart acc",
 
   "accounts_page_app_bar_title" : "Accounts management",
   "accounts_page_create_new_smart_account" : "Create new smart account",

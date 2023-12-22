@@ -14,5 +14,6 @@ class HomeScreenState with _$HomeScreenState {
   const factory HomeScreenState({
     @Default(HomeScreenStatus.loading) HomeScreenStatus status,
     @Default([]) List<AuraAccount> accounts,
+    AuraAccount ? selectedAccount,
   }) = _HomeScreenState;
 }

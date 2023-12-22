@@ -95,6 +95,8 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     required String recoverAddress,
     String? fee,
     int? gasLimit,
+    bool isReadyRegister = false,
+    String ?revokePreAddress,
   }) async {
     final response = await _provider.setRecoveryMethod(
       userPrivateKey: userPrivateKey,
@@ -102,23 +104,8 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
       recoverAddress: recoverAddress,
       fee: fee,
       gasLimit: gasLimit,
-    );
-
-    return response.toEntity;
-  }
-
-  @override
-  Future<TransactionInformation> unRegisterRecoveryMethod({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    String? fee,
-    int? gasLimit,
-  }) async {
-    final response = await _provider.unRegisterRecoveryMethod(
-      userPrivateKey: userPrivateKey,
-      smartAccountAddress: smartAccountAddress,
-      fee: fee,
-      gasLimit: gasLimit,
+      isReadyRegister: isReadyRegister,
+      revokePreAddress: revokePreAddress,
     );
 
     return response.toEntity;

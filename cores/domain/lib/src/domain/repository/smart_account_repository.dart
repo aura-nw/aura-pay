@@ -46,13 +46,8 @@ abstract interface class SmartAccountRepository {
     required String recoverAddress,
     String? fee,
     int? gasLimit,
-  });
-
-  Future<TransactionInformation> unRegisterRecoveryMethod({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    String? fee,
-    int? gasLimit,
+    bool isReadyRegister = false,
+    String ?revokePreAddress,
   });
 
   Future<TransactionInformation> recoverSmartAccount({

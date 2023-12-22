@@ -177,6 +177,8 @@ sealed class LanguageKey {
   static const String homePageNoTokenFoundTitle = 'home_page_no_token_found_title';
   static const String homePageNoTokenFoundContent = 'home_page_no_token_found_content';
   static const String homePageReceiveShareAddress = 'home_page_receive_share_address';
+  static const String homePageOtherAccountFormTitle = 'home_page_other_account_form_title';
+  static const String homePageSmartAccount = 'home_page_sm_account';
   ///
 
   ///region accounts page

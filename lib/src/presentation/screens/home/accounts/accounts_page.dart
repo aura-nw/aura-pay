@@ -106,21 +106,20 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                 const SizedBox(
                   height: BoxSize.boxSize07,
                 ),
-                HomeScreenAccountsSelector(
-                  builder: (accounts) {
-                    final account = accounts.first;
+                HomeScreenSelectedAccountSelector(
+                  builder: (account) {
                     return AccountItemWidget(
                       appTheme: appTheme,
-                      address: account.address,
-                      accountName: account.name,
+                      address: account?.address ?? '',
+                      accountName: account?.name ?? '',
                       onMoreTap: () {
                         _showMoreOptionsDialog(
                           appTheme,
-                          account,
+                          account!,
                         );
                       },
                       onUsing: true,
-                      isSmartAccount: account.isSmartAccount,
+                      isSmartAccount: account?.isSmartAccount ?? false,
                     );
                   },
                 ),
@@ -243,18 +242,18 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
         address: account.address,
         accountNameDefault: account.name,
         onConfirm: (newName) {
+          showSuccessToast(
+            AppLocalizationManager.of(context).translate(
+              LanguageKey.accountsPageRenameAccountSuccess,
+            ),
+          );
+
           AppNavigator.pop();
 
           _homeScreenBloc.add(
             HomeScreenEventOnRenameAccount(
               account.id,
               newName,
-            ),
-          );
-
-          showSuccessToast(
-            AppLocalizationManager.of(context).translate(
-              LanguageKey.accountsPageRenameAccountSuccess,
             ),
           );
         },

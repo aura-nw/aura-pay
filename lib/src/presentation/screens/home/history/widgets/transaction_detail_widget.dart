@@ -10,6 +10,7 @@ import 'package:pyxis_mobile/src/core/constants/aura_scan.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/constants/transaction_enum.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/helpers/app_launcher.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
@@ -37,7 +38,9 @@ class TransactionDetailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MsgType msgType = TransactionHelper.getMsgType(pyxisTransaction.msg);
+    final MsgType msgType = TransactionHelper.getMsgType(
+      pyxisTransaction.messages.map((e) => e.type).toList(),
+    );
     return Padding(
       padding: const EdgeInsets.only(
         bottom: Spacing.spacing06,
@@ -89,8 +92,14 @@ class TransactionDetailWidget extends StatelessWidget {
   Widget _buildTransactionWithType(MsgType msgType, BuildContext context) {
     switch (msgType) {
       case MsgType.send:
-        final MsgSend msgSend =
-            TransactionHelper.parseMsgSend(pyxisTransaction.msg);
+        final Map<String, dynamic> msg = pyxisTransaction.messages
+            .firstWhere(
+              (element) => element.type == TransactionType.Send,
+            )
+            .content;
+        final MsgSend msgSend = TransactionHelper.parseMsgSend(
+          msg,
+        );
 
         bool isSend = msgSend.fromAddress == address;
 
@@ -152,7 +161,7 @@ class TransactionDetailWidget extends StatelessWidget {
                 children: [
                   _buildInformation(
                     LanguageKey.transactionHistoryPageTransactionFee,
-                    '${pyxisTransaction.fee.formatAura} ${AppLocalizationManager.of(context).translate(
+                    '${pyxisTransaction.transactionFees[0].amount.formatAura} ${AppLocalizationManager.of(context).translate(
                       LanguageKey.globalPyxisAura,
                     )}',
                   ),
@@ -223,7 +232,7 @@ class TransactionDetailWidget extends StatelessWidget {
                 children: [
                   _buildInformation(
                     LanguageKey.transactionHistoryPageTransactionFee,
-                    '${pyxisTransaction.fee.formatAura} ${AppLocalizationManager.of(context).translate(
+                    '${pyxisTransaction.transactionFees[0].amount.formatAura} ${AppLocalizationManager.of(context).translate(
                       LanguageKey.globalPyxisAura,
                     )}',
                   ),
@@ -408,7 +417,7 @@ class TransactionDetailWidget extends StatelessWidget {
               ),
               _buildInformation(
                 LanguageKey.transactionHistoryPageTransactionFee,
-                '${pyxisTransaction.fee.formatAura} ${AppLocalizationManager.of(context).translate(
+                '${pyxisTransaction.transactionFees[0].amount.formatAura} ${AppLocalizationManager.of(context).translate(
                   LanguageKey.globalPyxisAura,
                 )}',
               ),
