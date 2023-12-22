@@ -84,6 +84,8 @@ sealed class AssetIconPath {
   static const String commonFeeEdit = '${_baseIconPath}ic_common_fee_edit.svg';
   static const String commonAuraTokenLogo =
       '${_baseIconPath}ic_common_aura_token_logo.svg';
+  static const String commonArrowNext =
+      '${_baseIconPath}ic_common_arrow_next.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive =
@@ -204,8 +206,6 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_setting_device_management.svg';
   static const String settingHelpCenter =
       '${_baseIconPath}ic_setting_help_center.svg';
-  static const String settingArrowNext =
-      '${_baseIconPath}ic_setting_arrow_next.svg';
 
   /// Recovery method
   static const String recoveryMethodCheck =
