@@ -49,29 +49,27 @@ class _RecoveryMethodScreenState extends State<RecoveryMethodScreen>
     super.initState();
   }
 
-  void _handleRecoveryConfirmationStatus(bool status, String? msg) {
+  void _handleRecoveryConfirmationStatus(bool status, String? msg) async {
     // set recover success
     if (status) {
       // refresh account
       _bloc.add(
         const RecoveryMethodScreenEventRefresh(),
       );
-      showSuccessToast(
-        AppLocalizationManager.of(context).translate(
-          LanguageKey.recoveryMethodScreenSetRecoverySuccess,
-        ),
-        const Duration(
-          seconds: 3,
-        ),
-      );
-    } else {
-      // set recover error
-      showToast(
-        msg ?? '',
-        const Duration(
-          seconds: 3,
-        ),
-      );
+
+      await Future.delayed(const Duration(
+        microseconds: 1100,
+      ));
+      if (context.mounted) {
+        showSuccessToast(
+          AppLocalizationManager.of(context).translate(
+            LanguageKey.recoveryMethodScreenSetRecoverySuccess,
+          ),
+          const Duration(
+            seconds: 3,
+          ),
+        );
+      }
     }
   }
 
@@ -154,14 +152,17 @@ class _RecoveryMethodScreenState extends State<RecoveryMethodScreen>
                                   itemBuilder: (context, index) {
                                     final account = accounts[index];
                                     String? recoveryMethod;
-                                    String? recoverValue = account.method?.value;
+                                    String? recoverValue =
+                                        account.method?.value;
 
                                     if (account.isVerified) {
                                       String? recoveryType;
 
                                       recoverValue = account.method?.method ==
-                                          AuraSmartAccountRecoveryMethod
-                                              .web3Auth ? recoverValue : recoverValue.addressView;
+                                              AuraSmartAccountRecoveryMethod
+                                                  .web3Auth
+                                          ? recoverValue
+                                          : recoverValue.addressView;
 
                                       recoveryType = account.method?.method ==
                                               AuraSmartAccountRecoveryMethod

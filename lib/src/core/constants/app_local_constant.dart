@@ -7,4 +7,5 @@ sealed class AppLocalConstant{
 
 
   static const String passCodeKey = 'pyxis_app_pass_code';
+  static const String bioMetricKey = 'pyxis_app_bio_metric';
 }

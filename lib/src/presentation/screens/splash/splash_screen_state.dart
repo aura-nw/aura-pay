@@ -4,6 +4,7 @@ part 'splash_screen_state.freezed.dart';
 enum SplashScreenStatus {
   starting,
   hasPassCode,
+  verifyByBioSuccessful,
   notHasPassCodeOrError,
 }
 

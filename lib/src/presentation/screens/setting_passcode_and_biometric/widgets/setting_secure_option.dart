@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
-import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 
-class SettingOptionWidget extends StatelessWidget {
+class SettingSecureOptionWidget extends StatelessWidget {
   final String iconPath;
   final String labelPath;
   final AppTheme appTheme;
   final VoidCallback onTap;
+  final Widget prefix;
 
-  const SettingOptionWidget({
+  const SettingSecureOptionWidget({
     required this.iconPath,
     required this.labelPath,
     required this.appTheme,
     required this.onTap,
+    required this.prefix,
     super.key,
   });
 
@@ -53,9 +54,7 @@ class SettingOptionWidget extends StatelessWidget {
             const SizedBox(
               width: BoxSize.boxSize05,
             ),
-            SvgPicture.asset(
-              AssetIconPath.commonArrowNext,
-            ),
+            prefix,
           ],
         ),
       ),

@@ -4,38 +4,32 @@ import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/pyxic_mobile.dart';
 
 /// The environment to use
-Environment selectedEnvironment = Environment.dev; // The environment
+PyxisEnvironment selectedEnvironment = PyxisEnvironment.dev; // The environment
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Load the environment configuration
   switch (selectedEnvironment) {
-    case Environment.dev:
+    case PyxisEnvironment.dev:
       await dotenv.load(fileName: 'assets/.env.dev');
       break;
-    case Environment.serenity:
+    case PyxisEnvironment.serenity:
       await dotenv.load(fileName: 'assets/.env.serenity');
       break;
-    case Environment.staging:
+    case PyxisEnvironment.staging:
       await dotenv.load(fileName: 'assets/.env.staging');
       break;
-    case Environment.prod:
+    case PyxisEnvironment.production:
       await dotenv.load(fileName: 'assets/.env.prod');
   }
 
   // Create the PyxisMobileConfig object with the environment configuration
   final PyxisMobileConfig config = PyxisMobileConfig(
     configs: {}..addAll(dotenv.env),
+    environment: selectedEnvironment,
   );
 
   // Start the Pyxis Mobile application
   start(config);
-}
-
-enum Environment {
-  dev,
-  serenity,
-  staging,
-  prod,
 }

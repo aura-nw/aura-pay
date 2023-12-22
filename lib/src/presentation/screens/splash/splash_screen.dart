@@ -36,6 +36,11 @@ class _SplashScreenState extends State<SplashScreen> {
               switch (state.status) {
                 case SplashScreenStatus.starting:
                   break;
+                case SplashScreenStatus.verifyByBioSuccessful:
+                  AppNavigator.replaceWith(
+                    RoutePath.home,
+                  );
+                  break;
                 case SplashScreenStatus.hasPassCode:
                   AppNavigator.replaceWith(
                     RoutePath.reLogin,

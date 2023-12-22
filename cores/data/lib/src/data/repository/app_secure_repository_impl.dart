@@ -20,4 +20,9 @@ final class AppSecureRepositoryImpl implements AppSecureRepository{
     return _service.constantValue(key);
   }
 
+  @override
+  Future<String?> getBiometric({required String key}) {
+    return _service.getValue(key);
+  }
+
 }
