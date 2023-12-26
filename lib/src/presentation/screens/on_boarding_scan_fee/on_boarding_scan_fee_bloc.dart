@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'on_boarding_scan_fee_event.dart';
 import 'on_boarding_scan_fee_state.dart';
 
@@ -11,11 +13,13 @@ class OnBoardingScanFeeBloc
   final SmartAccountUseCase _smartAccountUseCase;
   final AuraAccountUseCase _accountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
+  final TransactionUseCase _transactionUseCase;
 
   OnBoardingScanFeeBloc(
     this._smartAccountUseCase,
     this._accountUseCase,
-    this._controllerKeyUseCase, {
+    this._controllerKeyUseCase,
+    this._transactionUseCase, {
     required String smartAccountAddress,
     required Uint8List privateKey,
     required Uint8List salt,
@@ -31,6 +35,8 @@ class OnBoardingScanFeeBloc
     on(_onCheckingBalance);
     on(_onActiveSmartAccount);
   }
+
+  final config = getIt.get<PyxisMobileConfig>();
 
   void _onCheckingBalance(
     OnBoardingScanFeeOnCheckingBalanceEvent event,
@@ -137,8 +143,9 @@ class OnBoardingScanFeeBloc
       ),
     );
     try {
-      return await _smartAccountUseCase.getTx(
+      return await _transactionUseCase.getTransactionDetail(
         txHash: txHash,
+        environment: config.environment.environmentString,
       );
     } catch (e) {
       if (times == 4) {

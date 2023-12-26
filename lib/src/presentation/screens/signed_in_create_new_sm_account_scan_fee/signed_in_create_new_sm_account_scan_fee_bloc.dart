@@ -3,6 +3,9 @@ import 'dart:typed_data';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
+import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 import 'signed_in_create_new_sm_account_scan_fee_event.dart';
 import 'signed_in_create_new_sm_account_scan_fee_state.dart';
 
@@ -12,11 +15,13 @@ class SignedInCreateNewSmAccountScanFeeBloc extends Bloc<
   final SmartAccountUseCase _smartAccountUseCase;
   final AuraAccountUseCase _accountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
+  final TransactionUseCase _transactionUseCase;
 
   SignedInCreateNewSmAccountScanFeeBloc(
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
-    this._accountUseCase, {
+    this._accountUseCase,
+    this._transactionUseCase, {
     required String smartAccountAddress,
     required Uint8List privateKey,
     required Uint8List salt,
@@ -32,6 +37,8 @@ class SignedInCreateNewSmAccountScanFeeBloc extends Bloc<
     on(_onCheckingBalance);
     on(_onActiveSmartAccount);
   }
+
+  final config = getIt.get<PyxisMobileConfig>();
 
   void _onCheckingBalance(
     SignedInCreateNewSmAccountScanFeeOnCheckingBalanceEvent event,
@@ -79,35 +86,50 @@ class SignedInCreateNewSmAccountScanFeeBloc extends Bloc<
         ),
       );
 
-      await _smartAccountUseCase.activeSmartAccount(
+      TransactionInformation transactionInformation =
+          await _smartAccountUseCase.activeSmartAccount(
         userPrivateKey: state.privateKey,
         smartAccountAddress: state.smartAccountAddress,
         salt: state.salt,
-        fee: '2500',
-        gasLimit: 400000,
         memo: 'Active smart account',
       );
 
-
-      await _accountUseCase.saveAccount(
-        address: state.smartAccountAddress,
-        accountName: state.accountName,
-        type: AuraAccountType.smartAccount,
+      transactionInformation = await TransactionHelper.checkTransactionInfo(
+        transactionInformation.txHash,
+        0,
+        transactionUseCase: _transactionUseCase,
+        config: config,
       );
 
-      await _controllerKeyUseCase.saveKey(
-        address: state.smartAccountAddress,
-        key: AuraWalletHelper.getPrivateKeyFromBytes(
-          state.privateKey,
-        ),
-      );
+      if (transactionInformation.status == 0) {
+        await _accountUseCase.saveAccount(
+          address: state.smartAccountAddress,
+          accountName: state.accountName,
+          type: AuraAccountType.smartAccount,
+        );
 
-      emit(
-        state.copyWith(
-          status:
-              SignedInCreateNewSmAccountScanFeeStatus.onActiveAccountSuccess,
-        ),
-      );
+        await _controllerKeyUseCase.saveKey(
+          address: state.smartAccountAddress,
+          key: AuraWalletHelper.getPrivateKeyFromBytes(
+            state.privateKey,
+          ),
+        );
+
+        emit(
+          state.copyWith(
+            status:
+                SignedInCreateNewSmAccountScanFeeStatus.onActiveAccountSuccess,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            status:
+                SignedInCreateNewSmAccountScanFeeStatus.onActiveAccountError,
+            errorMessage: transactionInformation.rawLog,
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(

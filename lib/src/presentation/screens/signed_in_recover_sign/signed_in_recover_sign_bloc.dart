@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
+import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 
 import 'signed_in_recover_sign_event.dart';
 import 'signed_in_recover_sign_state.dart';
@@ -15,13 +16,15 @@ final class SignedInRecoverSignBloc
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
   final AuraAccountUseCase _accountUseCase;
+  final TransactionUseCase _transactionUseCase;
 
   SignedInRecoverSignBloc(
     this._walletUseCase,
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
     this._web3authUseCase,
-    this._accountUseCase, {
+    this._accountUseCase,
+    this._transactionUseCase, {
     required AuraAccount account,
     required GoogleAccount googleAccount,
   }) : super(
@@ -39,6 +42,7 @@ final class SignedInRecoverSignBloc
     );
   }
 
+  final _config = getIt.get<PyxisMobileConfig>();
   final int _defaultGasLimit = 400000;
 
   void _onInit(
@@ -111,7 +115,12 @@ final class SignedInRecoverSignBloc
         smartAccountAddress: state.account.address,
       );
 
-      information = await _checkTransactionInfo(information.txHash, 0);
+      information = await TransactionHelper.checkTransactionInfo(
+        information.txHash,
+        0,
+        config: _config,
+        transactionUseCase: _transactionUseCase,
+      );
 
       if (information.status == 0) {
         await _web3authUseCase.onLogout();
@@ -140,7 +149,6 @@ final class SignedInRecoverSignBloc
           ),
         );
       }
-
     } catch (e) {
       emit(
         state.copyWith(
@@ -148,25 +156,6 @@ final class SignedInRecoverSignBloc
           error: e.toString(),
         ),
       );
-    }
-  }
-
-  Future<TransactionInformation> _checkTransactionInfo(
-      String txHash, int times) async {
-    await Future.delayed(
-      const Duration(
-        seconds: 1,
-      ),
-    );
-    try {
-      return await _smartAccountUseCase.getTx(
-        txHash: txHash,
-      );
-    } catch (e) {
-      if (times == 4) {
-        rethrow;
-      }
-      return _checkTransactionInfo(txHash, times + 1);
     }
   }
 }

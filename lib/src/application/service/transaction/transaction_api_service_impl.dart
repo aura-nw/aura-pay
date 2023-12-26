@@ -18,6 +18,13 @@ class TransactionApiServiceImpl implements TransactionApiService {
   }) {
     return _apiServiceGenerate.getTransactions(body);
   }
+
+  @override
+  Future<BaseResponseV2> getTransactionDetail({
+    required Map<String, dynamic> body,
+  }) {
+    return _apiServiceGenerate.getTransactionDetail(body);
+  }
 }
 
 @RestApi()
@@ -27,6 +34,11 @@ abstract class TransactionApiServiceGenerate {
 
   @POST(ApiServicePath.graphiql)
   Future<BaseResponseV2> getTransactions(
+    @Body() Map<String, dynamic> body,
+  );
+
+  @POST(ApiServicePath.graphiql)
+  Future<BaseResponseV2> getTransactionDetail(
     @Body() Map<String, dynamic> body,
   );
 }

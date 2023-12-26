@@ -21,4 +21,16 @@ class TransactionInformationDto {
     required this.status,
     required this.rawLog,
   });
+
+  factory TransactionInformationDto.fromJson(Map<String, dynamic> json) {
+    final response = Map<String, dynamic>.from(
+      json['data']?['tx_response'] ?? {},
+    );
+    return TransactionInformationDto(
+      txHash: json['hash'],
+      timestamp: json['timestamp'],
+      status: json['code'],
+      rawLog: response['raw_log'] ?? '',
+    );
+  }
 }

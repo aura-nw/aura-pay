@@ -15,13 +15,14 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
   final WalletUseCase _walletUseCase;
   final Web3AuthUseCase _web3authUseCase;
   final AuraAccountUseCase _accountUseCase;
+  final TransactionUseCase _transactionUseCase;
 
   RecoveryMethodConfirmationBloc(
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
     this._walletUseCase,
     this._web3authUseCase,
-    this._accountUseCase, {
+    this._accountUseCase,this._transactionUseCase, {
     required RecoveryMethodConfirmationArgument argument,
   }) : super(
           RecoveryMethodConfirmationState(
@@ -37,13 +38,14 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     );
   }
 
+  final config = getIt.get<PyxisMobileConfig>();
+
   final int _defaultGasLimit = 400000;
 
   void _onInit(
     RecoveryMethodConfirmationEventOnInit event,
     Emitter<RecoveryMethodConfirmationState> emit,
   ) async {
-    final config = getIt.get<PyxisMobileConfig>();
     // Set default gas
     final highFee = CosmosHelper.calculateFee(
       _defaultGasLimit,
@@ -182,8 +184,9 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
       ),
     );
     try {
-      return await _smartAccountUseCase.getTx(
+      return await _transactionUseCase.getTransactionDetail(
         txHash: txHash,
+        environment: config.environment.environmentString,
       );
     } catch (e) {
       if (times == 4) {

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
+import 'package:domain/domain.dart';
+import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/transaction_enum.dart';
 
@@ -34,10 +36,10 @@ sealed class TransactionHelper {
     return msgExecuteContract;
   }
 
-  static bool validateMsgSetRecovery(Map<String,dynamic> msg){
+  static bool validateMsgSetRecovery(Map<String, dynamic> msg) {
     final String type = msg['@type'];
 
-    if(type!= TransactionType.ExecuteContract){
+    if (type != TransactionType.ExecuteContract) {
       return false;
     }
 
@@ -45,13 +47,42 @@ sealed class TransactionHelper {
   }
 
   static MsgType getMsgType(List<String> msgTypes) {
-    if(msgTypes.contains(TransactionType.Send)){
+    if (msgTypes.contains(TransactionType.Send)) {
       return MsgType.send;
-    }else if(msgTypes.contains(TransactionType.Recover)){
+    } else if (msgTypes.contains(TransactionType.Recover)) {
       return MsgType.recover;
-    }else if (msgTypes.contains(TransactionType.ExecuteContract)){
+    } else if (msgTypes.contains(TransactionType.ExecuteContract)) {
       return MsgType.executeContract;
     }
     return MsgType.other;
+  }
+
+  static Future<TransactionInformation> checkTransactionInfo(
+    String txHash,
+    int times, {
+    required TransactionUseCase transactionUseCase,
+    required PyxisMobileConfig config,
+  }) async {
+    await Future.delayed(
+      const Duration(
+        seconds: 1,
+      ),
+    );
+    try {
+      return await transactionUseCase.getTransactionDetail(
+        txHash: txHash,
+        environment: config.environment.environmentString,
+      );
+    } catch (e) {
+      if (times == 4) {
+        rethrow;
+      }
+      return checkTransactionInfo(
+        txHash,
+        times + 1,
+        config: config,
+        transactionUseCase: transactionUseCase,
+      );
+    }
   }
 }
