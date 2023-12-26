@@ -5,4 +5,9 @@ abstract interface class TransactionRepository {
     required Map<String, dynamic> body,
     required String environment,
   });
+
+  Future<TransactionInformation> getTransactionDetail({
+    required Map<String, dynamic> body,
+    required String environment,
+  });
 }

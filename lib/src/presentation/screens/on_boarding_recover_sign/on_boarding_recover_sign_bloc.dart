@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
+import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 import 'on_boarding_recover_sign_event.dart';
 import 'on_boarding_recover_sign_state.dart';
 
@@ -13,12 +14,14 @@ final class OnBoardingRecoverSignBloc
   final ControllerKeyUseCase _controllerKeyUseCase;
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
+  final TransactionUseCase _transactionUseCase;
 
   OnBoardingRecoverSignBloc(
     this._walletUseCase,
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
-    this._web3authUseCase, {
+    this._web3authUseCase,
+    this._transactionUseCase, {
     required AuraAccount account,
     required GoogleAccount googleAccount,
   }) : super(
@@ -37,12 +40,12 @@ final class OnBoardingRecoverSignBloc
   }
 
   final int _defaultGasLimit = 400000;
+  final config = getIt.get<PyxisMobileConfig>();
 
   void _onInit(
     OnBoardingRecoverSignEventOnInit event,
     Emitter<OnBoardingRecoverSignState> emit,
   ) async {
-
     final config = getIt.get<PyxisMobileConfig>();
     // Set default gas
     final highFee = CosmosHelper.calculateFee(
@@ -100,7 +103,6 @@ final class OnBoardingRecoverSignBloc
         privateKeyOrPassPhrase: backupPrivateKey,
       );
 
-
       TransactionInformation information =
           await _smartAccountUseCase.recoverSmartAccount(
         privateKey: AuraWalletHelper.getPrivateKeyFromString(
@@ -110,7 +112,12 @@ final class OnBoardingRecoverSignBloc
         smartAccountAddress: state.account.address,
       );
 
-      information = await _checkTransactionInfo(information.txHash, 0);
+      information = await TransactionHelper.checkTransactionInfo(
+        information.txHash,
+        0,
+        config: config,
+        transactionUseCase: _transactionUseCase,
+      );
 
       if (information.status == 0) {
         await _web3authUseCase.onLogout();
@@ -133,7 +140,6 @@ final class OnBoardingRecoverSignBloc
           ),
         );
       }
-
     } catch (e) {
       emit(
         state.copyWith(
@@ -141,25 +147,6 @@ final class OnBoardingRecoverSignBloc
           error: e.toString(),
         ),
       );
-    }
-  }
-
-  Future<TransactionInformation> _checkTransactionInfo(
-      String txHash, int times) async {
-    await Future.delayed(
-      const Duration(
-        seconds: 1,
-      ),
-    );
-    try {
-      return await _smartAccountUseCase.getTx(
-        txHash: txHash,
-      );
-    } catch (e) {
-      if (times == 4) {
-        rethrow;
-      }
-      return _checkTransactionInfo(txHash, times + 1);
     }
   }
 }

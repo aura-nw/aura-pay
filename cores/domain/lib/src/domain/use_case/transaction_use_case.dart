@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:domain/src/domain/entities/entities.dart';
 import 'package:domain/src/domain/entities/requests/query_transaction_parameter.dart';
 import 'package:domain/src/domain/repository/repository.dart';
@@ -9,10 +10,10 @@ final class TransactionUseCase {
 
   Future<List<PyxisTransaction>> getTransactions({
     required List<String> msgTypes,
-    int ?heightLt,
+    int? heightLt,
     required int limit,
     required String environment,
-    String ?sender,
+    String? sender,
     String? receive,
     required QueryTransactionType queryTransactionType,
   }) async {
@@ -25,6 +26,19 @@ final class TransactionUseCase {
         heightLt: heightLt,
         environment: environment,
         queryType: queryTransactionType,
+      ).toJson(),
+      environment: environment,
+    );
+  }
+
+  Future<TransactionInformation> getTransactionDetail({
+    required String txHash,
+    required String environment,
+  }) async {
+    return _repository.getTransactionDetail(
+      body: QueryTransactionDetailParameter(
+        environment: environment,
+        txHash: txHash,
       ).toJson(),
       environment: environment,
     );

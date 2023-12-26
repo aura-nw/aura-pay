@@ -41,4 +41,28 @@ final class TransactionRepositoryImpl implements TransactionRepository {
         )
         .toList();
   }
+
+  @override
+  Future<TransactionInformation> getTransactionDetail({required Map<String, dynamic> body, required String environment}) async{
+    final BaseResponseV2 responseV2 = await _apiService.getTransactionDetail(body: body);
+
+    final data = responseV2.handleResponse();
+
+    // Get transaction from chain id or default
+    String transaction = 'transaction';
+    Map<String, dynamic> transactionMap = data[environment] ??
+        {
+          transaction: [],
+        };
+
+    final List<Map<String,dynamic>> transactions = transactionMap['transaction'];
+
+    if(transactions.isEmpty){
+      throw Exception('Transaction not found');
+    }
+
+    final TransactionInformationDto transactionInformationDto = TransactionInformationDto.fromJson(transactions[0]);
+
+    return transactionInformationDto.toEntity;
+  }
 }
