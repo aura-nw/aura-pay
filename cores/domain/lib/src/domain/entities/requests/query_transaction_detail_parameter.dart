@@ -25,7 +25,6 @@ final class QueryTransactionDetailParameter {
 
   String _query() {
     String query = r'''
-    
     query queryTxDetail(
       $limit: Int = 100
       $order: order_by = desc

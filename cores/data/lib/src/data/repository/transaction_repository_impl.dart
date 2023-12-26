@@ -43,8 +43,10 @@ final class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<TransactionInformation> getTransactionDetail({required Map<String, dynamic> body, required String environment}) async{
-    final BaseResponseV2 responseV2 = await _apiService.getTransactionDetail(body: body);
+  Future<TransactionInformation> getTransactionDetail(
+      {required Map<String, dynamic> body, required String environment}) async {
+    final BaseResponseV2 responseV2 =
+        await _apiService.getTransactionDetail(body: body);
 
     final data = responseV2.handleResponse();
 
@@ -55,13 +57,17 @@ final class TransactionRepositoryImpl implements TransactionRepository {
           transaction: [],
         };
 
-    final List<Map<String,dynamic>> transactions = transactionMap['transaction'];
+    final List<Map<String, dynamic>> transactions =
+        List<Map<String, dynamic>>.from(
+      transactionMap[transaction],
+    );
 
-    if(transactions.isEmpty){
+    if (transactions.isEmpty) {
       throw Exception('Transaction not found');
     }
 
-    final TransactionInformationDto transactionInformationDto = TransactionInformationDto.fromJson(transactions[0]);
+    final TransactionInformationDto transactionInformationDto =
+        TransactionInformationDto.fromJson(transactions[0]);
 
     return transactionInformationDto.toEntity;
   }
