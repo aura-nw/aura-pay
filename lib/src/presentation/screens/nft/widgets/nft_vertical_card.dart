@@ -20,73 +20,79 @@ final class NFTVerticalCard extends StatelessWidget {
     required this.idToken,
   });
 
-  final double _width = 100;
-  final double _height = 67;
-
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CacheNetworkImageExtend(
-          imageUrl: url,
-          targetWidth: context.cacheImageTarget,
-          targetHeight: context.cacheImageTarget,
-          fit: BoxFit.cover,
-          width: _width,
-          height: _height,
-          loadingBuilder: (context, url, onProcess) {
-            return Shimmer.fromColors(
-              baseColor: appTheme.surfaceColorGrayDefault,
-              highlightColor: appTheme.surfaceColorBrandSemiLight,
-              child: const SizedBox.shrink(),
-            );
-          },
-          errorBuilder: (context, url, error) {
-            return Shimmer.fromColors(
-              baseColor: appTheme.surfaceColorGrayDefault,
-              highlightColor: appTheme.surfaceColorBrandSemiLight,
-              child: const SizedBox.shrink(),
-            );
-          },
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(
+              BorderRadiusSize.borderRadius03,
+            ),
+            child: Stack(
+              children: [
+                CacheNetworkImageExtend(
+                  imageUrl: url,
+                  targetWidth: context.cacheImageTarget,
+                  targetHeight: context.cacheImageTarget,
+                  fit: BoxFit.cover,
+                  width: double.maxFinite,
+                  height: double.maxFinite,
+                  loadingBuilder: (context, url, onProcess) {
+                    return Shimmer.fromColors(
+                      baseColor: appTheme.surfaceColorGrayDefault,
+                      highlightColor: appTheme.surfaceColorBrandSemiLight,
+                      child: const SizedBox.shrink(),
+                    );
+                  },
+                  errorBuilder: (context, url, error) {
+                    return Shimmer.fromColors(
+                      baseColor: appTheme.surfaceColorGrayDefault,
+                      highlightColor: appTheme.surfaceColorBrandSemiLight,
+                      child: const SizedBox.shrink(),
+                    );
+                  },
+                ),
+                Positioned(
+                  top: Spacing.spacing03,
+                  right: Spacing.spacing03,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Spacing.spacing01,
+                      horizontal: Spacing.spacing03,
+                    ),
+                    decoration: BoxDecoration(
+                      color: appTheme.surfaceColorBlack.withOpacity(
+                        0.5,
+                      ),
+                      borderRadius: BorderRadius.circular(
+                        BorderRadiusSize.borderRadiusRound,
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      idToken,
+                      style: AppTypoGraPhy.body01.copyWith(
+                        color: appTheme.contentColorWhite,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
         const SizedBox(
-          height: BoxSize.boxSize04,
+          height: BoxSize.boxSize05,
         ),
         Text(
           name,
-          style: AppTypoGraPhy.heading01.copyWith(
+          style: AppTypoGraPhy.body01.copyWith(
             color: appTheme.contentColorBlack,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-
-              const SizedBox(
-                height: BoxSize.boxSize05,
-              ),
-              Text(
-                createAt,
-                style: AppTypoGraPhy.body01.copyWith(
-                  color: appTheme.contentColor500,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          width: BoxSize.boxSize04,
-        ),
-        Text(
-          idToken,
-          style: AppTypoGraPhy.body01.copyWith(
-            color: appTheme.contentColor500,
-          ),
         ),
       ],
     );

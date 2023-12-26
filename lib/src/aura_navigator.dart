@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/nft/nft_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_screen.dart';
@@ -57,6 +58,7 @@ sealed class RoutePath {
   static const String recoverBackupDone = '$_onBoarding/recover_backup_done';
 
   static const String home = '${_base}home';
+  static const String nft = '$home/nft';
   static const String sendTransaction = '$home/send_transaction';
   static const String sendTransactionConfirmation =
       '$home/send_transaction_confirmation';
@@ -328,6 +330,11 @@ sealed class AppNavigator {
             googleAccount: googleAccount,
             account: account,
           ),
+          settings,
+        );
+      case RoutePath.nft:
+        return _defaultRoute(
+          const NFTScreen(),
           settings,
         );
       default:

@@ -237,4 +237,8 @@ sealed class AssetIconPath {
   /// Recovery confirmation
   static const String recoveryConfirmation =
       '${_baseIconPath}ic_recovery_confirmation.svg';
+
+  /// NFTs
+  static const String nftList = '${_baseIconPath}ic_nft_list.svg';
+  static const String nftGrid = '${_baseIconPath}ic_nft_grid.svg';
 }

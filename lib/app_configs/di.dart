@@ -14,6 +14,7 @@ import 'package:pyxis_mobile/src/application/provider/smart_account/smart_accoun
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/service/balance/token_api_service_impl.dart';
+import 'package:pyxis_mobile/src/application/service/nft/nft_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/transaction/transaction_api_service_impl.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
@@ -21,6 +22,7 @@ import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/nft/nft_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_bloc.dart';
@@ -130,6 +132,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<NFTApiServiceGenerate>(
+    () => NFTApiServiceGenerate(
+      getIt.get<Dio>(),
+    ),
+  );
+
   ///Api service
 
   getIt.registerLazySingleton<TransactionApiServiceGenerate>(
@@ -181,6 +189,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<NormalStorageService>(
     () => NormalStorageServiceImpl(
       sharedPreferences,
+    ),
+  );
+
+  getIt.registerLazySingleton<NFTApiService>(
+    () => NFTApiServiceImpl(
+      getIt.get<NFTApiServiceGenerate>(),
     ),
   );
 
@@ -236,6 +250,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<NFTRepository>(
+    () => NFTRepositoryImpl(
+      getIt.get<NFTApiService>(),
+    ),
+  );
+
   ///Use case
   getIt.registerLazySingleton<AppSecureUseCase>(
     () => AppSecureUseCase(
@@ -287,6 +307,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<BalanceUseCase>(
     () => BalanceUseCase(
       getIt.get<BalanceRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton(
+    () => NFTUseCase(
+      getIt.get<NFTRepository>(),
     ),
   );
 
@@ -502,6 +528,13 @@ Future<void> initDependency(
   getIt.registerFactory<SettingChangePasscodeCubit>(
     () => SettingChangePasscodeCubit(
       getIt.get<AppSecureUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<NFTBloc>(
+    () => NFTBloc(
+      getIt.get<NFTUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
     ),
   );
 }

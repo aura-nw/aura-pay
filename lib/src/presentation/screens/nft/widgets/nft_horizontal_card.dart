@@ -22,8 +22,8 @@ final class NFTHorizontalCard extends StatelessWidget {
     required this.idToken,
   });
 
-  final double _width = 100;
-  final double _height = 67;
+  static const double _width = 100;
+  static const double _height = 70;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ final class NFTHorizontalCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(
-                height: BoxSize.boxSize05,
+                height: BoxSize.boxSize02,
               ),
               Text(
                 createAt,

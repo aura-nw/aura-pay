@@ -90,12 +90,12 @@ final class NFTsInformationDto {
 
   factory NFTsInformationDto.fromJson(Map<String, dynamic> json) {
     return NFTsInformationDto(
-      cw721Tokens: (json['cw721_tokens'] as List<dynamic>)
+      cw721Tokens: (json['cw721_token'] as List<dynamic>)
           .map((token) => NFTInformationDto.fromJson(token))
           .toList(),
       count: Map<String, dynamic>.from(
             json['cw721_token_aggregate'] ?? {},
-          )['cw721_token_aggregate']?['count'] ??
+          )['aggregate']?['count'] ??
           0,
     );
   }

@@ -4,7 +4,7 @@ import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/pyxic_mobile.dart';
 
 /// The environment to use
-PyxisEnvironment selectedEnvironment = PyxisEnvironment.dev; // The environment
+PyxisEnvironment selectedEnvironment = PyxisEnvironment.serenity; // The environment
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

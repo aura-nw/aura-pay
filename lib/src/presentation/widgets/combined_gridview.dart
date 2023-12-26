@@ -2,34 +2,43 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 
-class CombinedListView<T> extends StatefulWidget {
+class CombinedGridView<T> extends StatefulWidget {
   static const double _defaultEndReachedThreshold = 200;
 
   final List<T> data;
-  final Widget Function(T,int) builder;
+  final Widget Function(T, int) builder;
   final void Function() onRefresh;
   final void Function() onLoadMore;
   final double loadMoreThreshHold;
   final bool canLoadMore;
   final Widget Function()? buildEmpty;
+  final int childCount;
+  final double childAspectRatio;
+  final double crossAxisSpacing;
+  final double mainAxisSpacing;
 
-  const CombinedListView({
+  const CombinedGridView({
     Key? key,
+    required this.childCount,
     required this.onRefresh,
     required this.onLoadMore,
     required this.data,
     required this.builder,
     required this.canLoadMore,
+    required this.childAspectRatio,
+    required this.crossAxisSpacing,
+    required this.mainAxisSpacing,
     this.loadMoreThreshHold = _defaultEndReachedThreshold,
     this.buildEmpty,
   }) : super(key: key);
 
   @override
-  State<CombinedListView<T>> createState() => _CombinedListViewState<T>();
+  State<CombinedGridView<T>> createState() => _CombinedGridViewState<T>();
 }
 
-class _CombinedListViewState<T> extends State<CombinedListView<T>> {
+class _CombinedGridViewState<T> extends State<CombinedGridView<T>> {
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -76,9 +85,20 @@ class _CombinedListViewState<T> extends State<CombinedListView<T>> {
         ),
         SliverPadding(
           padding: EdgeInsets.zero,
-          sliver: SliverList(
+          sliver: SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: widget.childCount,
+              childAspectRatio: widget.childAspectRatio,
+              crossAxisSpacing: widget.crossAxisSpacing,
+              mainAxisSpacing: widget.mainAxisSpacing,
+            ),
             delegate: SliverChildBuilderDelegate(
-              (_, index) => widget.builder(widget.data[index],index),
+              (context, index) {
+                return widget.builder(
+                  widget.data[index],
+                  index,
+                );
+              },
               childCount: widget.data.length,
               addAutomaticKeepAlives: true,
               findChildIndexCallback: (key) {
@@ -102,7 +122,9 @@ class _CombinedListViewState<T> extends State<CombinedListView<T>> {
         SliverToBoxAdapter(
           child: widget.canLoadMore
               ? const Padding(
-                  padding: EdgeInsets.only(bottom: 16),
+                  padding: EdgeInsets.only(
+                    bottom: Spacing.spacing05,
+                  ),
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),

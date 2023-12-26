@@ -43,3 +43,9 @@ enum MsgType{
   executeContract,
   other,
 }
+
+// NFT layout type
+enum NFTLayoutType{
+  list,
+  grid,
+}
