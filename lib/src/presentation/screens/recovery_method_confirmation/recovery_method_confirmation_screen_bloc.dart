@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
@@ -160,6 +162,14 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
           subValue: recoveryAddress,
         );
 
+        unawaited(
+          _insertRecoveryMethod(
+            recoveryAddress: recoveryAddress,
+            smartAccountAddress: account.address,
+            name: account.name,
+          ),
+        );
+
         emit(
           state.copyWith(
             status: RecoveryMethodConfirmationStatus.onRecoverSuccess,
@@ -179,6 +189,26 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
           status: RecoveryMethodConfirmationStatus.onRecoverFail,
           error: e.toString(),
         ),
+      );
+    }
+  }
+
+  Future<void> _insertRecoveryMethod({
+    required String recoveryAddress,
+    required String smartAccountAddress,
+    required String name,
+  }) async {
+    try {
+      await _smartAccountUseCase.insertRecoveryAccount(
+        recoveryAddress: recoveryAddress,
+        smartAccountAddress: smartAccountAddress,
+        name: name,
+      );
+    } catch (e) {
+      await _smartAccountUseCase.insertLocalRecoveryAccount(
+        recoveryAddress: recoveryAddress,
+        smartAccountAddress: smartAccountAddress,
+        name: name,
       );
     }
   }

@@ -54,10 +54,18 @@ class PyxisMobileConfig {
   Map<String, dynamic> get auraNetWorkConfig =>
       jsonDecode(configs['AURA_NET_WORK_CONFIG']);
 
+  Map<String, dynamic> get pyxisNetworkConfig =>
+      jsonDecode(configs['PYXIS_NETWORK_CONFIG']);
+
+  String get pyxisBaseUrl => pyxisNetworkConfig['baseUrl'];
+  String get pyxisVersion => pyxisNetworkConfig['baseUrl'];
+
   String get horoScopeUrl => horoScopeConfig['baseUrl'];
+
   String get horoScopeVersion => horoScopeConfig['version'];
 
   String get auraNetworkBaseUrl => auraNetWorkConfig['baseUrl'];
+
   String get auraNetworkVersion => auraNetWorkConfig['version'];
 
   String get auraId => configs['AURA_ID'];

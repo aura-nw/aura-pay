@@ -307,7 +307,7 @@ sealed class AppNavigator {
       case RoutePath.recoverSign:
         final Map<String, dynamic> arguments =
             settings.arguments as Map<String, dynamic>;
-        final AuraAccount account = arguments['account'];
+        final PyxisRecoveryAccount account = arguments['account'];
         final GoogleAccount googleAccount = arguments['google_account'];
         return _defaultRoute(
           OnBoardingRecoverSignScreen(
@@ -325,7 +325,7 @@ sealed class AppNavigator {
       case RoutePath.signedInRecoverSign:
         final Map<String, dynamic> arguments =
             settings.arguments as Map<String, dynamic>;
-        final AuraAccount account = arguments['account'];
+        final PyxisRecoveryAccount account = arguments['account'];
         final GoogleAccount googleAccount = arguments['google_account'];
         return _defaultRoute(
           SignedInRecoverSignScreen(

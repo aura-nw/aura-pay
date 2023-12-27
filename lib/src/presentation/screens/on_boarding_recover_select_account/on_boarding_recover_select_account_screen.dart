@@ -158,9 +158,11 @@ class _OnBoardingRecoverSelectAccountScreenState
                                         builder: (selectedAccount) {
                                           return SmartAccountWidget(
                                             appTheme: appTheme,
-                                            smartAccountAddress:
-                                                account.address.addressView,
-                                            smartAccountName: account.name,
+                                            smartAccountAddress: account
+                                                .smartAccountAddress
+                                                .addressView,
+                                            smartAccountName:
+                                                account.name ?? '',
                                             onTap: () {
                                               _bloc.add(
                                                 OnBoardingRecoverSelectAccountEventSelectAccount(

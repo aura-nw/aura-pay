@@ -13,7 +13,7 @@ enum SignedInRecoverSignStatus {
 class SignedInRecoverSignState with _$SignedInRecoverSignState {
   const factory SignedInRecoverSignState({
     required GoogleAccount googleAccount,
-    required AuraAccount account,
+    required PyxisRecoveryAccount account,
     @Default(SignedInRecoverSignStatus.none)
     SignedInRecoverSignStatus status,
     String ?error,

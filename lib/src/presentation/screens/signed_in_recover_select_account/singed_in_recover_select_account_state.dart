@@ -16,8 +16,8 @@ class SingedInRecoverSelectAccountState
     @Default(SingedInRecoverSelectAccountStatus.loading)
     SingedInRecoverSelectAccountStatus status,
     String ?error,
-    @Default([]) List<AuraAccount> accounts,
-    AuraAccount ?selectedAccount,
+    @Default([]) List<PyxisRecoveryAccount> accounts,
+    PyxisRecoveryAccount ?selectedAccount,
     required GoogleAccount googleAccount,
   }) = _SingedInRecoverSelectAccountState;
 }

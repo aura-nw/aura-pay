@@ -12,6 +12,7 @@ import 'package:pyxis_mobile/src/application/global/localization/localization_ma
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
+import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
@@ -31,7 +32,7 @@ import 'on_boarding_recover_sign_event.dart';
 import 'on_boarding_recover_sign_selector.dart';
 
 class OnBoardingRecoverSignScreen extends StatefulWidget {
-  final AuraAccount account;
+  final PyxisRecoveryAccount account;
   final GoogleAccount googleAccount;
 
   const OnBoardingRecoverSignScreen({
@@ -51,7 +52,7 @@ class _OnBoardingRecoverSignScreenState
 
   @override
   void initState() {
-    _bloc = getIt.get(
+    _bloc = getIt.get<OnBoardingRecoverSignBloc>(
       param1: widget.account,
       param2: widget.googleAccount,
     );
@@ -184,8 +185,9 @@ class _OnBoardingRecoverSignScreenState
                           SelectedSmartAccountWidget(
                             appTheme: appTheme,
                             smartAccountAddress:
-                                widget.account.address.addressView,
-                            smartAccountName: widget.account.name,
+                                widget.account.smartAccountAddress.addressView,
+                            smartAccountName: widget.account.name ??
+                                PyxisAccountConstant.unName,
                           ),
                           const SizedBox(
                             height: BoxSize.boxSize04,
@@ -243,7 +245,9 @@ class _OnBoardingRecoverSignScreenState
                                                 .onBoardingRecoverSignScreenUpdateKeyContent,
                                             {
                                               'address': widget
-                                                  .account.address.addressView,
+                                                  .account
+                                                  .smartAccountAddress
+                                                  .addressView,
                                               'newAddress':
                                                   widget.googleAccount.email,
                                             },

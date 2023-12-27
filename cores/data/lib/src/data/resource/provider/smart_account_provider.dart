@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:data/src/data/dto/dto.dart';
 import 'package:domain/domain.dart';
 

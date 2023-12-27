@@ -6,11 +6,14 @@ import 'singed_in_recover_select_account_state.dart';
 
 final class SingedInRecoverSelectAccountBloc extends Bloc<
     SingedInRecoverSelectAccountEvent, SingedInRecoverSelectAccountState> {
-  /// Fake after get from server
-  final AuraAccountUseCase _accountUseCase;
+  final SmartAccountUseCase _smartAccountUseCase;
+  final WalletUseCase _walletUseCase;
+  final Web3AuthUseCase _web3authUseCase;
 
   SingedInRecoverSelectAccountBloc(
-    this._accountUseCase, {
+    this._smartAccountUseCase,
+    this._web3authUseCase,
+    this._walletUseCase, {
     required GoogleAccount googleAccount,
   }) : super(
           SingedInRecoverSelectAccountState(
@@ -31,13 +34,16 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
       ),
     );
     try {
-      List<AuraAccount> accounts = await _accountUseCase.getAccounts();
+      final String backupPrivateKey = await _web3authUseCase.getPrivateKey();
 
-      accounts = accounts
-          .where(
-            (e) => e.method?.value == state.googleAccount.email,
-          )
-          .toList();
+      final wallet = await _walletUseCase.importWallet(
+        privateKeyOrPassPhrase: backupPrivateKey,
+      );
+
+      List<PyxisRecoveryAccount> accounts =
+          await _smartAccountUseCase.getRecoveryAccountByAddress(
+        recoveryAddress: wallet.bech32Address,
+      );
 
       emit(
         state.copyWith(
@@ -59,7 +65,7 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
     SingedInRecoverSelectAccountEventSelectAccount event,
     Emitter<SingedInRecoverSelectAccountState> emit,
   ) {
-    if(state.selectedAccount?.id == event.account.id) return;
+    if (state.selectedAccount?.id == event.account.id) return;
 
     emit(
       state.copyWith(

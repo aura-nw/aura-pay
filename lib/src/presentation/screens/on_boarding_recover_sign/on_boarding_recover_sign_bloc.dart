@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
+import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 import 'on_boarding_recover_sign_event.dart';
 import 'on_boarding_recover_sign_state.dart';
@@ -15,14 +16,16 @@ final class OnBoardingRecoverSignBloc
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
   final TransactionUseCase _transactionUseCase;
+  final AuraAccountUseCase _accountUseCase;
 
   OnBoardingRecoverSignBloc(
     this._walletUseCase,
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
     this._web3authUseCase,
-    this._transactionUseCase, {
-    required AuraAccount account,
+    this._transactionUseCase,
+    this._accountUseCase, {
+    required PyxisRecoveryAccount account,
     required GoogleAccount googleAccount,
   }) : super(
           OnBoardingRecoverSignState(
@@ -109,7 +112,7 @@ final class OnBoardingRecoverSignBloc
           backupPrivateKey,
         ),
         recoverAddress: wallet.bech32Address,
-        smartAccountAddress: state.account.address,
+        smartAccountAddress: state.account.smartAccountAddress,
       );
 
       information = await TransactionHelper.checkTransactionInfo(
@@ -122,8 +125,14 @@ final class OnBoardingRecoverSignBloc
       if (information.status == 0) {
         await _web3authUseCase.onLogout();
 
+        await _accountUseCase.saveAccount(
+          address: state.account.smartAccountAddress,
+          accountName: state.account.name ?? PyxisAccountConstant.unName,
+          type: AuraAccountType.smartAccount,
+        );
+
         _controllerKeyUseCase.saveKey(
-          address: state.account.address,
+          address: state.account.smartAccountAddress,
           key: backupPrivateKey,
         );
 

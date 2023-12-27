@@ -59,4 +59,11 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
       id: id,
     );
   }
+
+  @override
+  Future<AuraAccount?> getAccountByAddress({required String address}) async{
+    final account = await _accountDatabaseService.getAccountByAddress(address: address);
+
+    return account?.toEntity;
+  }
 }

@@ -5,3 +5,5 @@ export 'send_transaction_information.dart';
 export 'pyxis_transaction.dart';
 export 'pyxis_balance.dart';
 export 'nft_information.dart';
+export 'pyxis_recovery_account.dart';
+export 'local_recovery_account.dart';
