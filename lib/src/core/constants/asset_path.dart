@@ -4,6 +4,7 @@ sealed class AssetLogoPath {
   static const String _baseLogoPath = '${_baseAsset}logo/';
   static const String logo = '${_baseLogoPath}logo_pyxis.svg';
   static const String logoDark = '${_baseLogoPath}logo_pyxis_dark.svg';
+  static const String logoOpacity = '${_baseLogoPath}logo_pyxis_opacity.svg';
 }
 
 sealed class AssetImagePath {

@@ -49,3 +49,10 @@ enum NFTLayoutType{
   list,
   grid,
 }
+
+// Support media type
+enum MediaType{
+  image,
+  video,
+  audio,
+}

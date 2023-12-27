@@ -434,5 +434,6 @@ sealed class LanguageKey {
   static const String nftScreenAppBarTitle = 'nft_screen_app_bar_title';
   static const String nftScreenTotal = 'nft_screen_total';
   static const String nftScreenNoNFTFound = 'nft_screen_no_nft_found';
+  static const String nftScreenTokenStandard = 'nft_screen_token_standard';
   ///
 }

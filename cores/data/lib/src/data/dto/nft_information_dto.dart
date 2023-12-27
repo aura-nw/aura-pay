@@ -47,6 +47,7 @@ extension OffChainMediaInfoDtoToEntity on OffChainMediaInfoDto {
   OffChainMediaInfo toEntity() {
     return OffChainMediaInfo(
       image: image.toEntity(),
+      animation: animation?.toEntity(),
     );
   }
 }
@@ -54,6 +55,16 @@ extension OffChainMediaInfoDtoToEntity on OffChainMediaInfoDto {
 extension ImageInfoDtoToEntity on ImageInfoDto {
   ImageInfo toEntity() {
     return ImageInfo(
+      url: url,
+      contentType: contentType,
+    );
+  }
+}
+
+
+extension AnimationInfoDtoToEntity on AnimationInfoDto {
+  AnimationInfo toEntity() {
+    return AnimationInfo(
       url: url,
       contentType: contentType,
     );
@@ -169,14 +180,23 @@ final class OnChainMediaInfoDto {
 
 final class OffChainMediaInfoDto {
   final ImageInfoDto image;
+  final AnimationInfoDto? animation;
 
   const OffChainMediaInfoDto({
     required this.image,
+    this.animation,
   });
 
   factory OffChainMediaInfoDto.fromJson(Map<String, dynamic> json) {
     return OffChainMediaInfoDto(
-      image: ImageInfoDto.fromJson(json['image']),
+      image: ImageInfoDto.fromJson(
+        json['image'],
+      ),
+      animation: json['animation'] != null
+          ? AnimationInfoDto.fromJson(
+              json['animation'],
+            )
+          : null,
     );
   }
 }
@@ -192,6 +212,23 @@ final class ImageInfoDto {
 
   factory ImageInfoDto.fromJson(Map<String, dynamic> json) {
     return ImageInfoDto(
+      url: json['url'],
+      contentType: json['content_type'],
+    );
+  }
+}
+
+final class AnimationInfoDto {
+  final String? url;
+  final String? contentType;
+
+  const AnimationInfoDto({
+    this.url,
+    this.contentType,
+  });
+
+  factory AnimationInfoDto.fromJson(Map<String, dynamic> json) {
+    return AnimationInfoDto(
       url: json['url'],
       contentType: json['content_type'],
     );

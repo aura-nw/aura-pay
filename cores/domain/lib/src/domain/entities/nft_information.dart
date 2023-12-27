@@ -46,9 +46,11 @@ final class OnChainMediaInfo {
 
 final class OffChainMediaInfo {
   final ImageInfo image;
+  final AnimationInfo ?animation;
 
   const OffChainMediaInfo({
     required this.image,
+    this.animation,
   });
 }
 
@@ -60,6 +62,13 @@ final class ImageInfo {
     this.url,
     this.contentType,
   });
+}
+
+final class AnimationInfo{
+  final String? url;
+  final String? contentType;
+
+  const AnimationInfo({this.url,this.contentType});
 }
 
 final class CW721Contract {

@@ -6,7 +6,6 @@ import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
-import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_event.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_selector.dart';
@@ -17,9 +16,11 @@ import 'package:pyxis_mobile/src/presentation/widgets/combine_list_view.dart';
 
 class NFTLayoutBuilder extends StatelessWidget {
   final AppTheme appTheme;
+  final Animation<double> opacityAnimation;
 
   const NFTLayoutBuilder({
     required this.appTheme,
+    required this.opacityAnimation,
     super.key,
   });
 
@@ -27,32 +28,42 @@ class NFTLayoutBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return NFTLayoutViewTypeSelector(
       builder: (viewType) {
-        return NFTInformationSSelector(builder: (nFTs) {
-          if (nFTs.isEmpty) {
-            return Center(
-              child: AppLocalizationProvider(
-                builder: (localization, _) {
-                  return Text(
-                    localization.translate(
-                      LanguageKey.nftScreenNoNFTFound,
-                    ),
-                    style: AppTypoGraPhy.bodyMedium02.copyWith(
-                      color: appTheme.contentColor500,
-                    ),
-                  );
-                },
-              ),
+        return NFTInformationSSelector(
+          builder: (nFTs) {
+            if (nFTs.isEmpty) {
+              return Center(
+                child: AppLocalizationProvider(
+                  builder: (localization, _) {
+                    return Text(
+                      localization.translate(
+                        LanguageKey.nftScreenNoNFTFound,
+                      ),
+                      style: AppTypoGraPhy.bodyMedium02.copyWith(
+                        color: appTheme.contentColor500,
+                      ),
+                    );
+                  },
+                ),
+              );
+            }
+            return NFTCanLoadMoreSelector(
+              builder: (canLoadMore) {
+                return AnimatedOpacity(
+                  opacity: opacityAnimation.value,
+                  duration: const Duration(
+                    milliseconds: 700,
+                  ),
+                  child: _buildLayout(
+                    viewType,
+                    context,
+                    nFTs,
+                    canLoadMore,
+                  ),
+                );
+              },
             );
-          }
-          return NFTCanLoadMoreSelector(builder: (canLoadMore) {
-            return _buildLayout(
-              viewType,
-              context,
-              nFTs,
-              canLoadMore,
-            );
-          });
-        });
+          },
+        );
       },
     );
   }
@@ -108,7 +119,6 @@ class NFTLayoutBuilder extends StatelessWidget {
               child: NFTHorizontalCard(
                 name: nft.cw721Contract.name,
                 url: nft.mediaInfo.offChain.image.url ?? '',
-                createAt: nft.createdAt.toString(),
                 appTheme: appTheme,
                 idToken: '#${nft.tokenId}',
               ),

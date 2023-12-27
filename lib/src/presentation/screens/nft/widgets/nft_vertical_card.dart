@@ -1,6 +1,8 @@
 import 'package:cache_network_image_extended/cache_network_image_extended.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
@@ -19,6 +21,8 @@ final class NFTVerticalCard extends StatelessWidget {
     required this.appTheme,
     required this.idToken,
   });
+
+  static const double _logoSize = 56;
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +47,28 @@ final class NFTVerticalCard extends StatelessWidget {
                     return Shimmer.fromColors(
                       baseColor: appTheme.surfaceColorGrayDefault,
                       highlightColor: appTheme.surfaceColorBrandSemiLight,
-                      child: const SizedBox.shrink(),
+                      child: Container(
+                        width: double.maxFinite,
+                        height: double.maxFinite,
+                        decoration: BoxDecoration(
+                          color: appTheme.primaryColor50,
+                        ),
+                      ),
                     );
                   },
                   errorBuilder: (context, url, error) {
-                    return Shimmer.fromColors(
-                      baseColor: appTheme.surfaceColorGrayDefault,
-                      highlightColor: appTheme.surfaceColorBrandSemiLight,
-                      child: const SizedBox.shrink(),
+                    return Container(
+                      width: double.maxFinite,
+                      height: double.maxFinite,
+                      decoration: BoxDecoration(
+                        color: appTheme.primaryColor50,
+                      ),
+                      alignment: Alignment.center,
+                      child: SvgPicture.asset(
+                        AssetLogoPath.logoOpacity,
+                        height: _logoSize,
+                        width: _logoSize,
+                      ),
                     );
                   },
                 ),
@@ -97,4 +115,5 @@ final class NFTVerticalCard extends StatelessWidget {
       ],
     );
   }
+
 }

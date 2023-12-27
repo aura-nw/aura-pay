@@ -13,10 +13,12 @@ import 'package:pyxis_mobile/src/presentation/screens/nft/nft_selector.dart';
 
 class NFTCountWidget extends StatelessWidget {
   final AppTheme appTheme;
+  final VoidCallback onChangeViewType;
 
   const NFTCountWidget({
     super.key,
     required this.appTheme,
+    required this.onChangeViewType,
   });
 
   @override
@@ -59,6 +61,7 @@ class NFTCountWidget extends StatelessWidget {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
+              onChangeViewType();
               NFTLayoutType type = NFTLayoutType.grid;
 
               if(viewType == NFTLayoutType.grid){

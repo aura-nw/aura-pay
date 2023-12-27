@@ -363,5 +363,6 @@
 
   "nft_screen_app_bar_title" : "NFTs",
   "nft_screen_total" : "Total NFTs",
-  "nft_screen_no_nft_found" : "No NFT found"
+  "nft_screen_no_nft_found" : "No NFT found",
+  "nft_screen_token_standard" : "CW721"
 }

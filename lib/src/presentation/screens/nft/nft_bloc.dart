@@ -78,7 +78,6 @@ final class NFTBloc extends Bloc<NFTEvent, NFTState> {
       ),
     );
 
-
     try {
       final NFTsInformation nftInformation = await _getNFTsInformation();
 
@@ -137,9 +136,12 @@ final class NFTBloc extends Bloc<NFTEvent, NFTState> {
     NFTEventOnSwitchViewType event,
     Emitter<NFTState> emit,
   ) {
-    emit(state.copyWith(
-      viewType: event.type,
-    ));
+    emit(
+      state.copyWith(
+        viewType: event.type,
+        status: NFTStatus.onChangeViewType,
+      ),
+    );
   }
 
   static NFTBloc of(BuildContext context) => BlocProvider.of<NFTBloc>(context);
