@@ -2,8 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 
 sealed class NFTHelper{
-  MediaType getMediaType(NFTInformation nftInformation){
-    final offChain = nftInformation.mediaInfo.offChain;
+  static MediaType getMediaType(OffChainMediaInfo offChain){
     String nftType = '';
 
     if(offChain.animation != null){

@@ -21,30 +21,11 @@ class NFTScreen extends StatefulWidget {
   State<NFTScreen> createState() => _NFTScreenState();
 }
 
-class _NFTScreenState extends State<NFTScreen>
-    with SingleTickerProviderStateMixin {
+class _NFTScreenState extends State<NFTScreen> {
   final NFTBloc _bloc = getIt.get<NFTBloc>();
-  late AnimationController _opacityController;
-  late Animation<double> _opacityAnimation;
 
   @override
   void initState() {
-    _opacityController = AnimationController(
-      vsync: this,
-      value: 1,
-      duration: const Duration(
-        milliseconds: 1200,
-      ),
-      reverseDuration: const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _opacityAnimation = Tween<double>(
-      begin: 0.0, // Starting opacity
-      end: 1.0, // Ending opacity
-    ).animate(_opacityController);
-
     _bloc.add(
       const NFTEventOnInit(),
     );
@@ -53,7 +34,6 @@ class _NFTScreenState extends State<NFTScreen>
 
   @override
   void dispose() {
-    _opacityController.dispose();
     super.dispose();
   }
 
@@ -63,63 +43,47 @@ class _NFTScreenState extends State<NFTScreen>
       builder: (appTheme) {
         return BlocProvider.value(
           value: _bloc,
-          child: BlocListener<NFTBloc, NFTState>(
-            listener: (context, state) async {
-              if (state.status == NFTStatus.onChangeViewType) {
-                if (_opacityController.isCompleted) {
-                  await _opacityController.reverse();
-
-                  _opacityController.reset();
-                }
-              }
-            },
-            child: Scaffold(
-              backgroundColor: appTheme.bodyColorBackground,
-              appBar: AppBarWithTitle(
-                appTheme: appTheme,
-                titleKey: LanguageKey.nftScreenAppBarTitle,
+          child: Scaffold(
+            backgroundColor: appTheme.bodyColorBackground,
+            appBar: AppBarWithTitle(
+              appTheme: appTheme,
+              titleKey: LanguageKey.nftScreenAppBarTitle,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.spacing07,
+                vertical: Spacing.spacing05,
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing07,
-                  vertical: Spacing.spacing05,
-                ),
-                child: NFTStatusSelector(
-                  builder: (status) {
-                    switch (status) {
-                      case NFTStatus.loading:
-                        return Center(
-                          child: AppLoadingWidget(
+              child: NFTStatusSelector(
+                builder: (status) {
+                  switch (status) {
+                    case NFTStatus.loading:
+                      return Center(
+                        child: AppLoadingWidget(
+                          appTheme: appTheme,
+                        ),
+                      );
+                    case NFTStatus.error:
+                    case NFTStatus.loaded:
+                    case NFTStatus.refresh:
+                    case NFTStatus.loadMore:
+                      return Column(
+                        children: [
+                          NFTCountWidget(
                             appTheme: appTheme,
                           ),
-                        );
-                      case NFTStatus.error:
-                      case NFTStatus.loaded:
-                      case NFTStatus.refresh:
-                      case NFTStatus.loadMore:
-                      case NFTStatus.onChangeViewType:
-                        return Column(
-                          children: [
-                            NFTCountWidget(
+                          const SizedBox(
+                            height: BoxSize.boxSize07,
+                          ),
+                          Expanded(
+                            child: NFTLayoutBuilder(
                               appTheme: appTheme,
-                              onChangeViewType: () async {
-                                await _opacityController.forward();
-                              },
                             ),
-                            const SizedBox(
-                              height: BoxSize.boxSize07,
-                            ),
-                            Expanded(
-                              child: NFTLayoutBuilder(
-                                appTheme: appTheme,
-                                opacityAnimation: _opacityAnimation,
-                              ),
-                            ),
-                          ],
-                        );
-                    }
-                  },
-                ),
+                          ),
+                        ],
+                      );
+                  }
+                },
               ),
             ),
           ),

@@ -10,7 +10,6 @@ enum NFTStatus {
   loadMore,
   refresh,
   error,
-  onChangeViewType,
 }
 
 @freezed

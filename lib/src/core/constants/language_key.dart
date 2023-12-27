@@ -436,4 +436,12 @@ sealed class LanguageKey {
   static const String nftScreenNoNFTFound = 'nft_screen_no_nft_found';
   static const String nftScreenTokenStandard = 'nft_screen_token_standard';
   ///
+
+  ///region nft detail
+  static const String nftDetailScreenName = 'nft_detail_screen_name';
+  static const String nftDetailScreenBlockChain = 'nft_detail_screen_blockChain';
+  static const String nftDetailScreenContractAddress = 'nft_detail_screen_contract_address';
+  static const String nftDetailScreenTokenStandard = 'nft_detail_screen_token_standard';
+  static const String nftDetailScreenTokenStandardTitle = 'nft_detail_screen_token_standard_title';
+  ///
 }

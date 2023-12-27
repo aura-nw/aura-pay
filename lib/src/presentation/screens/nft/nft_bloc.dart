@@ -139,7 +139,7 @@ final class NFTBloc extends Bloc<NFTEvent, NFTState> {
     emit(
       state.copyWith(
         viewType: event.type,
-        status: NFTStatus.onChangeViewType,
+        status: NFTStatus.loaded,
       ),
     );
   }

@@ -62,6 +62,8 @@ class PyxisMobileConfig {
 
   String get auraId => configs['AURA_ID'];
 
+  String get chainName => appConfigs['chainName'];
+
   String get coinId => appConfigs['coinId'];
 
   String get chainId => appConfigs['chainId'];
