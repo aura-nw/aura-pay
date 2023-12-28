@@ -1,7 +1,4 @@
 import 'package:domain/domain.dart';
-import 'package:domain/src/domain/entities/entities.dart';
-import 'package:domain/src/domain/entities/requests/query_transaction_parameter.dart';
-import 'package:domain/src/domain/repository/repository.dart';
 
 final class TransactionUseCase {
   final TransactionRepository _repository;

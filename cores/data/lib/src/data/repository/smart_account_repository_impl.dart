@@ -5,12 +5,10 @@ import 'package:domain/domain.dart';
 class SmartAccountRepositoryImpl implements SmartAccountRepository {
   final SmartAccountProvider _provider;
   final SmartAccountApiService _apiService;
-  final RecoveryAccountDatabaseService _databaseService;
 
   const SmartAccountRepositoryImpl(
     this._provider,
     this._apiService,
-    this._databaseService,
   );
 
   @override
@@ -162,39 +160,5 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     }
 
     return accountsDto.map((e) => e.toEntity).toList();
-  }
-
-  @override
-  Future<void> insertRecoveryAccount({
-    required Map<String, dynamic> body,
-  }) async {
-    await _apiService.insertRecoveryAccount(
-      body: body,
-    );
-  }
-
-  @override
-  Future<void> insertLocalRecoveryAccount({
-    required String recoveryAddress,
-    required String smartAccountAddress,
-    required String name,
-  }) async {
-    return _databaseService.saveRecoveryAccount(
-      recoveryAddress: recoveryAddress,
-      smartAccountAddress: smartAccountAddress,
-      name: name,
-    );
-  }
-
-  @override
-  Future<List<LocalRecoveryAccount>> getLocalRecoveryAccounts() async{
-    final accounts = await _databaseService.getAuraAccounts();
-
-    return accounts.map((e) => e.toEntity).toList();
-  }
-
-  @override
-  Future<void> deleteLocalRecoveryAccount({required int id}) {
-    return _databaseService.deleteAccount(id);
   }
 }

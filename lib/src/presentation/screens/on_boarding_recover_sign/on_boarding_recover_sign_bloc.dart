@@ -123,18 +123,18 @@ final class OnBoardingRecoverSignBloc
       );
 
       if (information.status == 0) {
-        await _web3authUseCase.onLogout();
-
         await _accountUseCase.saveAccount(
           address: state.account.smartAccountAddress,
           accountName: state.account.name ?? PyxisAccountConstant.unName,
           type: AuraAccountType.smartAccount,
         );
 
-        _controllerKeyUseCase.saveKey(
+        await _controllerKeyUseCase.saveKey(
           address: state.account.smartAccountAddress,
           key: backupPrivateKey,
         );
+
+        await _web3authUseCase.onLogout();
 
         emit(
           state.copyWith(

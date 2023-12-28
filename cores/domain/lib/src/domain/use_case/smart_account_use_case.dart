@@ -125,40 +125,4 @@ class SmartAccountUseCase {
       ).toJson(),
     );
   }
-
-  Future<void> insertRecoveryAccount({
-    required String recoveryAddress,
-    required String smartAccountAddress,
-    required String name,
-  }) async {
-    return _repository.insertRecoveryAccount(
-      body: InsertRecoveryAccountParameter(
-        recoveryAddress: recoveryAddress,
-        smartAccountAddress: smartAccountAddress,
-        name: name,
-      ).toJson(),
-    );
-  }
-
-  Future<void> insertLocalRecoveryAccount({
-    required String recoveryAddress,
-    required String smartAccountAddress,
-    required String name,
-  }) {
-    return _repository.insertLocalRecoveryAccount(
-      recoveryAddress: recoveryAddress,
-      smartAccountAddress: smartAccountAddress,
-      name: name,
-    );
-  }
-
-  Future<List<LocalRecoveryAccount>> getLocalRecoveryAccounts() async {
-    return _repository.getLocalRecoveryAccounts();
-  }
-
-  Future<void> deleteRecoveryAccount({
-    required int id,
-  }) {
-    return _repository.deleteLocalRecoveryAccount(id: id);
-  }
 }

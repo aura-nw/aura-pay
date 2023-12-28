@@ -6,7 +6,6 @@ import 'app_configs/pyxis_mobile_config.dart';
 import 'package:flutter/material.dart';
 import 'app_configs/di.dart' as di;
 import 'src/application/provider/local_database/aura_account/aura_account_db.dart';
-import 'src/application/provider/local_database/recovery_account/local_recovery_account_db.dart';
 import 'src/aura_wallet_application.dart';
 import 'src/core/constants/app_local_constant.dart';
 import 'dart:developer' as developer;
@@ -30,7 +29,6 @@ void start(PyxisMobileConfig config) async {
     isar = await Isar.open(
       [
         AuraAccountDbSchema,
-        LocalRecoveryAccountDbSchema,
       ],
       directory: path,
       name: AppLocalConstant.accountDbName,

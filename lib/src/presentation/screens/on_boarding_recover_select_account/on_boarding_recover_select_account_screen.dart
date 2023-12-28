@@ -6,6 +6,7 @@ import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
+import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
@@ -162,7 +163,7 @@ class _OnBoardingRecoverSelectAccountScreenState
                                                 .smartAccountAddress
                                                 .addressView,
                                             smartAccountName:
-                                                account.name ?? '',
+                                                account.name ?? PyxisAccountConstant.unName,
                                             onTap: () {
                                               _bloc.add(
                                                 OnBoardingRecoverSelectAccountEventSelectAccount(

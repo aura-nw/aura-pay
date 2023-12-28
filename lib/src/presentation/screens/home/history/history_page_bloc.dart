@@ -195,6 +195,7 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
     emit(
       state.copyWith(
         currentTab: TransactionHistoryEnum.values[event.index],
+        status: HistoryPageStatus.loaded,
       ),
     );
 

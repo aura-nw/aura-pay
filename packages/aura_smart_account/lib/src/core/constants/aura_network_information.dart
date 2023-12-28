@@ -21,11 +21,11 @@ sealed class AuraNetWorkInformationConstant {
     bech32Hrp: 'aura',
     denom: 'uaura',
     grpcTransportSecure: false,
-    codeId: 1570,
+    codeId: 1575,
     recoverContractAddress:
-        'aura1md0j2me0jannnx5eudufwuuuq5pj0g6wahqvqeqle5mz4av8syeq029cg2',
+        'aura1ac6g8ge26chel0cerqcmdzkld2v360gq40rhc8xvygph3y62mfzqkmllum',
     pluginManagerAddress:
-        'aura12mkmnqnrxvp3083m8ueac2l72g8k2rs52tp9mw0q4upt5akmz2jsqv0knq',
+        'aura133c4k078ydh0yulp8pwkt7nfdudrkrtuyxrmw672ye2zc4xnc4ssm8hp3m',
   );
   static const AuraNetworkInfo euphoriaChannel = AuraNetworkInfo(
     host: 'rpc.euphoria.aura.network',
@@ -34,11 +34,11 @@ sealed class AuraNetWorkInformationConstant {
     chainId: 'euphoria-2',
     bech32Hrp: '',
     denom: 'ueaura',
-    codeId: 736,
+    codeId: 1643,
     recoverContractAddress:
-        'aura1lmq568d3m3n04fq2ca27mjsx2522gljhqcgf3ptcyq2pm3es7y7sxnnqrz',
+        'aura135ndwy99qret8rgcv2wpcl3hqj7v823lvzy8ctklm670zv5zq55qswaeaj',
     pluginManagerAddress:
-        'aura1y6ww7g6c5yc36363guep6zu004fc3wmdll0ass8ule4syzfceqvsamk8tp',
+        'aura1suyqmdpn6x8e3j34zqvzhnw8mh5dkxq7y4vwndlu7cy0q5p9vswsrz2ln9',
   );
   static const AuraNetworkInfo productionChannel = AuraNetworkInfo(
     host: 'rpc.aura.network',

@@ -162,58 +162,34 @@ class _HistoryPageState extends State<HistoryPage> {
                                 }
                                 return HistoryPageCanLoadMoreSelector(
                                   builder: (canLoadMore) {
-                                    return CombinedListView(
-                                      onRefresh: () => _bloc.add(
-                                        const HistoryPageEventOnRefresh(),
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: Spacing.spacing07,
                                       ),
-                                      onLoadMore: () {
-                                        if (canLoadMore) {
-                                          _bloc.add(
-                                            const HistoryPageEventOnLoadMore(),
-                                          );
-                                        }
-                                      },
-                                      data: transactions,
-                                      builder: (transaction, index) {
-                                        Widget widget = const SizedBox();
+                                      child: CombinedListView(
+                                        onRefresh: () => _bloc.add(
+                                          const HistoryPageEventOnRefresh(),
+                                        ),
+                                        onLoadMore: () {
+                                          if (canLoadMore) {
+                                            _bloc.add(
+                                              const HistoryPageEventOnLoadMore(),
+                                            );
+                                          }
+                                        },
+                                        data: transactions,
+                                        builder: (transaction, index) {
+                                          Widget widget = const SizedBox();
 
-                                        final hasPreviousIndex = transactions
-                                            .constantIndex(index - 1);
+                                          final hasPreviousIndex = transactions
+                                              .constantIndex(index - 1);
 
-                                        final String dateFormat =
-                                            AppDateTime.formatDateDMMMYYY(
-                                          transaction.timeStamp,
-                                        );
-
-                                        if (!hasPreviousIndex) {
-                                          widget = Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                dateFormat,
-                                                style: AppTypoGraPhy
-                                                    .bodyMedium02
-                                                    .copyWith(
-                                                  color: appTheme
-                                                      .contentColorBlack,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: BoxSize.boxSize06,
-                                              ),
-                                            ],
-                                          );
-                                        } else {
-                                          final previousItem =
-                                              transactions[index - 1];
-
-                                          final String preDateFormat =
+                                          final String dateFormat =
                                               AppDateTime.formatDateDMMMYYY(
-                                            previousItem.timeStamp,
+                                            transaction.timeStamp,
                                           );
 
-                                          if (preDateFormat != dateFormat) {
+                                          if (!hasPreviousIndex) {
                                             widget = Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -232,36 +208,67 @@ class _HistoryPageState extends State<HistoryPage> {
                                                 ),
                                               ],
                                             );
+                                          } else {
+                                            final previousItem =
+                                                transactions[index - 1];
+
+                                            final String preDateFormat =
+                                                AppDateTime.formatDateDMMMYYY(
+                                              previousItem.timeStamp,
+                                            );
+
+                                            if (preDateFormat != dateFormat) {
+                                              widget = Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    dateFormat,
+                                                    style: AppTypoGraPhy
+                                                        .bodyMedium02
+                                                        .copyWith(
+                                                      color: appTheme
+                                                          .contentColorBlack,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: BoxSize.boxSize06,
+                                                  ),
+                                                ],
+                                              );
+                                            }
                                           }
-                                        }
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            widget,
-                                            TransactionWidget(
-                                              key: ValueKey(transaction),
-                                              onTap: () {
-                                                _showTransactionDetail(
-                                                    transaction, appTheme);
-                                              },
-                                              status: transaction.isSuccess,
-                                              msgs: transaction.messages,
-                                              time: transaction.timeStamp,
-                                              appTheme: appTheme,
-                                              accountName: _bloc.state
-                                                      .selectedAccount?.name ??
-                                                  '',
-                                              address: _bloc
-                                                      .state
-                                                      .selectedAccount
-                                                      ?.address ??
-                                                  '',
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                      canLoadMore: canLoadMore,
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              widget,
+                                              TransactionWidget(
+                                                key: ValueKey(transaction),
+                                                onTap: () {
+                                                  _showTransactionDetail(
+                                                      transaction, appTheme);
+                                                },
+                                                status: transaction.isSuccess,
+                                                msgs: transaction.messages,
+                                                time: transaction.timeStamp,
+                                                appTheme: appTheme,
+                                                accountName: _bloc
+                                                        .state
+                                                        .selectedAccount
+                                                        ?.name ??
+                                                    '',
+                                                address: _bloc
+                                                        .state
+                                                        .selectedAccount
+                                                        ?.address ??
+                                                    '',
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                        canLoadMore: canLoadMore,
+                                      ),
                                     );
                                   },
                                 );

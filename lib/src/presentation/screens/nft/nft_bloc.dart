@@ -27,8 +27,8 @@ final class NFTBloc extends Bloc<NFTEvent, NFTState> {
     String? owner,
   }) async {
     return _nftUseCase.getNFTsByAddress(
-      //owner: owner ?? state.owner,
-      owner: 'aura1crh5z8cy0znnj8u48jlttr5h4as8n336jj0gxr',
+      owner: owner ?? state.owner,
+      // owner: 'aura1crh5z8cy0znnj8u48jlttr5h4as8n336jj0gxr',
       environment: _config.environment.environmentString,
       offset: state.offset,
       limit: state.limit,
