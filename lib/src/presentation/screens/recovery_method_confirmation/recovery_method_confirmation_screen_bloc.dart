@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
@@ -7,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
-import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmation/recovery_method_confirmation_screen.dart';
+import 'recovery_method_confirmation_screen.dart';
 import 'recovery_method_confirmation_screen_event.dart';
 import 'recovery_method_confirmation_screen_state.dart';
 
@@ -162,14 +160,6 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
           subValue: recoveryAddress,
         );
 
-        unawaited(
-          _insertRecoveryMethod(
-            recoveryAddress: recoveryAddress,
-            smartAccountAddress: account.address,
-            name: account.name,
-          ),
-        );
-
         emit(
           state.copyWith(
             status: RecoveryMethodConfirmationStatus.onRecoverSuccess,
@@ -189,26 +179,6 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
           status: RecoveryMethodConfirmationStatus.onRecoverFail,
           error: e.toString(),
         ),
-      );
-    }
-  }
-
-  Future<void> _insertRecoveryMethod({
-    required String recoveryAddress,
-    required String smartAccountAddress,
-    required String name,
-  }) async {
-    try {
-      await _smartAccountUseCase.insertRecoveryAccount(
-        recoveryAddress: recoveryAddress,
-        smartAccountAddress: smartAccountAddress,
-        name: name,
-      );
-    } catch (e) {
-      await _smartAccountUseCase.insertLocalRecoveryAccount(
-        recoveryAddress: recoveryAddress,
-        smartAccountAddress: smartAccountAddress,
-        name: name,
       );
     }
   }

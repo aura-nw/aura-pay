@@ -627,26 +627,6 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
       messages.add(msgRecover);
 
-      // Create revoke fee grant and unregister recovery
-      feeGrant.MsgRevokeAllowance revokeAllowance =
-          feeGrant.MsgRevokeAllowance.create()
-            ..granter = smartAccountAddress
-            ..grantee = recoveryAddress;
-
-      // Create msg unregister contract
-      final coswasm.MsgExecuteContract msgUnRegister =
-          coswasm.MsgExecuteContract.create()
-            ..sender = smartAccountAddress
-            ..contract = smartAccountAddress
-            ..msg = AuraSmartAccountConstant.unRegisterRecovery(
-              recoveryContractAddress: auraNetworkInfo.recoverContractAddress,
-            );
-
-      messages.addAll([
-        revokeAllowance,
-        msgUnRegister,
-      ]);
-
       // Get signer data
       final CosmosSignerData signerData = await _getSignerData(recoveryAddress);
 

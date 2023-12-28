@@ -8,7 +8,6 @@ import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:isar/isar.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/aura_account/account_database_service_impl.dart';
-import 'package:pyxis_mobile/src/application/provider/local_database/recovery_account/recovery_account_database_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/normal_storage/normal_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
@@ -213,12 +212,6 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerLazySingleton<RecoveryAccountDatabaseService>(
-    () => RecoveryAccountDatabaseServiceImpl(
-      isar,
-    ),
-  );
-
   ///Repository
 
   getIt.registerLazySingleton<AppSecureRepository>(
@@ -241,7 +234,6 @@ Future<void> initDependency(
     () => SmartAccountRepositoryImpl(
       getIt.get<SmartAccountProvider>(),
       getIt.get<SmartAccountApiService>(),
-      getIt.get<RecoveryAccountDatabaseService>(),
     ),
   );
 

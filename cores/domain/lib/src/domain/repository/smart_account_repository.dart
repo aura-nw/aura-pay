@@ -61,18 +61,4 @@ abstract interface class SmartAccountRepository {
   Future<List<PyxisRecoveryAccount>> getRecoveryAccountByAddress({
     required Map<String, dynamic> queries,
   });
-
-  Future<void> insertRecoveryAccount({
-    required Map<String, dynamic> body,
-  });
-
-  Future<void> insertLocalRecoveryAccount({
-    required String recoveryAddress,
-    required String smartAccountAddress,
-    required String name,
-  });
-
-  Future<List<LocalRecoveryAccount>> getLocalRecoveryAccounts();
-
-  Future<void> deleteLocalRecoveryAccount({required int id,});
 }

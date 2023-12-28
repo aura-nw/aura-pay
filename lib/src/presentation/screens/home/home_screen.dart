@@ -8,7 +8,6 @@ import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
-import 'package:pyxis_mobile/src/application/workers/sync_recovery_account_worker.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
@@ -57,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
 
   @override
   void initState() {
-    SyncRecoveryAccountWorker().start();
     _bloc.registerCallBack(_onEmitAccountChange);
     _bloc.add(
       const HomeScreenEventOnInit(),
@@ -141,10 +139,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
                         animation: _receiveWidgetController,
                         child: HomeScreenAccountsSelector(
                           builder: (accounts) {
-                            final account = accounts.first;
+                            final account = accounts.firstOrNull;
                             return ReceiveTokenWidget(
-                              accountName: account.name,
-                              address: account.address,
+                              accountName: account?.name ?? '',
+                              address: account?.address ?? '',
                               theme: appTheme,
                               onSwipeUp: () async {
                                 if (_receiveWidgetController.isCompleted) {
@@ -155,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
                               },
                               onShareAddress: () {
                                 ShareNetWork.shareWalletAddress(
-                                  account.address,
+                                  account?.address ?? '',
                                 );
                               },
                               onCopyAddress: _onCopyAddress,

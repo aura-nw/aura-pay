@@ -58,7 +58,7 @@ class PyxisMobileConfig {
       jsonDecode(configs['PYXIS_NETWORK_CONFIG']);
 
   String get pyxisBaseUrl => pyxisNetworkConfig['baseUrl'];
-  String get pyxisVersion => pyxisNetworkConfig['baseUrl'];
+  String get pyxisVersion => pyxisNetworkConfig['version'];
 
   String get horoScopeUrl => horoScopeConfig['baseUrl'];
 
