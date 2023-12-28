@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
+import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'send_transaction_confirmation_event.dart';
 import 'send_transaction_confirmation_state.dart';
@@ -127,7 +128,12 @@ class SendTransactionConfirmationBloc extends Bloc<
         );
       }
 
-      information = await _checkTransactionInfo(information.txHash, 0);
+      information = await TransactionHelper.checkTransactionInfo(
+        information.txHash,
+        0,
+        config: config,
+        transactionUseCase: _transactionUseCase,
+      );
 
       if (information.status == 0) {
         emit(
@@ -151,26 +157,6 @@ class SendTransactionConfirmationBloc extends Bloc<
           errorMsg: e.toString(),
         ),
       );
-    }
-  }
-
-  Future<TransactionInformation> _checkTransactionInfo(
-      String txHash, int times) async {
-    await Future.delayed(
-      const Duration(
-        seconds: 1,
-      ),
-    );
-    try {
-      return await _transactionUseCase.getTransactionDetail(
-        txHash: txHash,
-        environment: config.environment.environmentString,
-      );
-    } catch (e) {
-      if (times == 4) {
-        rethrow;
-      }
-      return _checkTransactionInfo(txHash, times + 1);
     }
   }
 }

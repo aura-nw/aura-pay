@@ -23,10 +23,10 @@ final class OnboardingRecoverSelectAccountStatusSelector extends BlocSelector<
 final class OnboardingRecoverSelectAccountAccountsSelector extends BlocSelector<
     OnBoardingRecoverSelectAccountBloc,
     OnboardingRecoverSelectAccountState,
-    List<AuraAccount>> {
+    List<PyxisRecoveryAccount>> {
   OnboardingRecoverSelectAccountAccountsSelector({
     Key? key,
-    required Widget Function(List<AuraAccount>) builder,
+    required Widget Function(List<PyxisRecoveryAccount>) builder,
   }) : super(
           key: key,
           selector: (state) => state.accounts,
@@ -39,10 +39,10 @@ final class OnboardingRecoverSelectAccountAccountsSelector extends BlocSelector<
 final class OnboardingRecoverSelectAccountAccountSelectedSelector extends BlocSelector<
     OnBoardingRecoverSelectAccountBloc,
     OnboardingRecoverSelectAccountState,
-    AuraAccount?> {
+    PyxisRecoveryAccount?> {
   OnboardingRecoverSelectAccountAccountSelectedSelector({
     Key? key,
-    required Widget Function(AuraAccount?) builder,
+    required Widget Function(PyxisRecoveryAccount?) builder,
   }) : super(
           key: key,
           selector: (state) => state.selectedAccount,

@@ -4,6 +4,7 @@ sealed class AssetLogoPath {
   static const String _baseLogoPath = '${_baseAsset}logo/';
   static const String logo = '${_baseLogoPath}logo_pyxis.svg';
   static const String logoDark = '${_baseLogoPath}logo_pyxis_dark.svg';
+  static const String logoOpacity = '${_baseLogoPath}logo_pyxis_opacity.svg';
 }
 
 sealed class AssetImagePath {
@@ -239,4 +240,8 @@ sealed class AssetIconPath {
   /// Recovery confirmation
   static const String recoveryConfirmation =
       '${_baseIconPath}ic_recovery_confirmation.svg';
+
+  /// NFTs
+  static const String nftList = '${_baseIconPath}ic_nft_list.svg';
+  static const String nftGrid = '${_baseIconPath}ic_nft_grid.svg';
 }

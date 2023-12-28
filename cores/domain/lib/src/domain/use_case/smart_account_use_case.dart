@@ -1,6 +1,5 @@
 import 'dart:typed_data';
-import 'package:domain/src/domain/entities/entities.dart';
-import 'package:domain/src/domain/repository/repository.dart';
+import 'package:domain/domain.dart';
 
 class SmartAccountUseCase {
   final SmartAccountRepository _repository;
@@ -88,7 +87,7 @@ class SmartAccountUseCase {
     String? fee,
     int? gasLimit,
     bool isReadyRegister = false,
-    String ?revokePreAddress,
+    String? revokePreAddress,
   }) async {
     return _repository.setRecoveryMethod(
       userPrivateKey: userPrivateKey,
@@ -115,5 +114,51 @@ class SmartAccountUseCase {
       fee: fee,
       gasLimit: gasLimit,
     );
+  }
+
+  Future<List<PyxisRecoveryAccount>> getRecoveryAccountByAddress({
+    required String recoveryAddress,
+  }) {
+    return _repository.getRecoveryAccountByAddress(
+      queries: QueryRecoveryAccountParameter(
+        recoveryAddress: recoveryAddress,
+      ).toJson(),
+    );
+  }
+
+  Future<void> insertRecoveryAccount({
+    required String recoveryAddress,
+    required String smartAccountAddress,
+    required String name,
+  }) async {
+    return _repository.insertRecoveryAccount(
+      body: InsertRecoveryAccountParameter(
+        recoveryAddress: recoveryAddress,
+        smartAccountAddress: smartAccountAddress,
+        name: name,
+      ).toJson(),
+    );
+  }
+
+  Future<void> insertLocalRecoveryAccount({
+    required String recoveryAddress,
+    required String smartAccountAddress,
+    required String name,
+  }) {
+    return _repository.insertLocalRecoveryAccount(
+      recoveryAddress: recoveryAddress,
+      smartAccountAddress: smartAccountAddress,
+      name: name,
+    );
+  }
+
+  Future<List<LocalRecoveryAccount>> getLocalRecoveryAccounts() async {
+    return _repository.getLocalRecoveryAccounts();
+  }
+
+  Future<void> deleteRecoveryAccount({
+    required int id,
+  }) {
+    return _repository.deleteLocalRecoveryAccount(id: id);
   }
 }

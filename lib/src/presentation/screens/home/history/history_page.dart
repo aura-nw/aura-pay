@@ -240,6 +240,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                           children: [
                                             widget,
                                             TransactionWidget(
+                                              key: ValueKey(transaction),
                                               onTap: () {
                                                 _showTransactionDetail(
                                                     transaction, appTheme);

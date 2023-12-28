@@ -7,13 +7,16 @@ import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:isar/isar.dart';
-import 'package:pyxis_mobile/src/application/provider/local_database/account_database_service_impl.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/aura_account/account_database_service_impl.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/recovery_account/recovery_account_database_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/normal_storage/normal_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/service/balance/token_api_service_impl.dart';
+import 'package:pyxis_mobile/src/application/service/nft/nft_api_service_impl.dart';
+import 'package:pyxis_mobile/src/application/service/smart_account/smart_account_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/transaction/transaction_api_service_impl.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
@@ -21,6 +24,7 @@ import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/nft/nft_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_bloc.dart';
@@ -130,6 +134,19 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<NFTApiServiceGenerate>(
+    () => NFTApiServiceGenerate(
+      getIt.get<Dio>(),
+    ),
+  );
+
+  getIt.registerLazySingleton(
+    () => SmartAccountApiServiceGenerate(
+      getIt.get<Dio>(),
+      baseUrl: config.pyxisBaseUrl + config.pyxisVersion,
+    ),
+  );
+
   ///Api service
 
   getIt.registerLazySingleton<TransactionApiServiceGenerate>(
@@ -146,6 +163,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<BalanceApiService>(
     () => BalanceApiServiceImpl(
       getIt.get<BalanceApiServiceGenerator>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<SmartAccountApiService>(
+    () => SmartAccountApiServiceImpl(
+      getIt.get<SmartAccountApiServiceGenerate>(),
     ),
   );
 
@@ -184,6 +207,18 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<NFTApiService>(
+    () => NFTApiServiceImpl(
+      getIt.get<NFTApiServiceGenerate>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<RecoveryAccountDatabaseService>(
+    () => RecoveryAccountDatabaseServiceImpl(
+      isar,
+    ),
+  );
+
   ///Repository
 
   getIt.registerLazySingleton<AppSecureRepository>(
@@ -205,6 +240,8 @@ Future<void> initDependency(
   getIt.registerLazySingleton<SmartAccountRepository>(
     () => SmartAccountRepositoryImpl(
       getIt.get<SmartAccountProvider>(),
+      getIt.get<SmartAccountApiService>(),
+      getIt.get<RecoveryAccountDatabaseService>(),
     ),
   );
 
@@ -233,6 +270,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<BalanceRepository>(
     () => BalanceRepositoryImpl(
       getIt.get<BalanceApiService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<NFTRepository>(
+    () => NFTRepositoryImpl(
+      getIt.get<NFTApiService>(),
     ),
   );
 
@@ -287,6 +330,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<BalanceUseCase>(
     () => BalanceUseCase(
       getIt.get<BalanceRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton(
+    () => NFTUseCase(
+      getIt.get<NFTRepository>(),
     ),
   );
 
@@ -449,12 +498,14 @@ Future<void> initDependency(
   getIt.registerFactoryParam<OnBoardingRecoverSelectAccountBloc, GoogleAccount,
       dynamic>(
     (googleAccount, _) => OnBoardingRecoverSelectAccountBloc(
-      getIt.get<AuraAccountUseCase>(),
+      getIt.get<SmartAccountUseCase>(),
+      getIt.get<WalletUseCase>(),
+      getIt.get<Web3AuthUseCase>(),
       googleAccount: googleAccount,
     ),
   );
 
-  getIt.registerFactoryParam<OnBoardingRecoverSignBloc, AuraAccount,
+  getIt.registerFactoryParam<OnBoardingRecoverSignBloc, PyxisRecoveryAccount,
       GoogleAccount>(
     (account, googleAccount) => OnBoardingRecoverSignBloc(
       getIt.get<WalletUseCase>(),
@@ -462,6 +513,7 @@ Future<void> initDependency(
       getIt.get<ControllerKeyUseCase>(),
       getIt.get<Web3AuthUseCase>(),
       getIt.get<TransactionUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
       account: account,
       googleAccount: googleAccount,
     ),
@@ -470,12 +522,14 @@ Future<void> initDependency(
   getIt.registerFactoryParam<SingedInRecoverSelectAccountBloc, GoogleAccount,
       dynamic>(
     (googleAccount, _) => SingedInRecoverSelectAccountBloc(
-      getIt.get<AuraAccountUseCase>(),
+      getIt.get<SmartAccountUseCase>(),
+      getIt.get<Web3AuthUseCase>(),
+      getIt.get<WalletUseCase>(),
       googleAccount: googleAccount,
     ),
   );
 
-  getIt.registerFactoryParam<SignedInRecoverSignBloc, AuraAccount,
+  getIt.registerFactoryParam<SignedInRecoverSignBloc, PyxisRecoveryAccount,
       GoogleAccount>(
     (account, googleAccount) => SignedInRecoverSignBloc(
       getIt.get<WalletUseCase>(),
@@ -502,6 +556,13 @@ Future<void> initDependency(
   getIt.registerFactory<SettingChangePasscodeCubit>(
     () => SettingChangePasscodeCubit(
       getIt.get<AppSecureUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<NFTBloc>(
+    () => NFTBloc(
+      getIt.get<NFTUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
     ),
   );
 }

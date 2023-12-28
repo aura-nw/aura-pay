@@ -7,6 +7,9 @@ PODS:
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - GenericJSON (2.0.2)
   - GoogleDataTransport (9.2.5):
     - GoogleUtilities/Environment (~> 7.7)
@@ -86,6 +89,9 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - sqflite (0.0.3):
+    - Flutter
+    - FMDB (>= 2.7.5)
   - Toast (4.0.0)
   - TorusSessionManager (3.0.1):
     - CryptoSwift (~> 1.8.0)
@@ -120,6 +126,7 @@ DEPENDENCIES:
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - web3auth_flutter (from `.symlinks/plugins/web3auth_flutter/ios`)
 
@@ -127,6 +134,7 @@ SPEC REPOS:
   trunk:
     - BigInt
     - CryptoSwift
+    - FMDB
     - GenericJSON
     - GoogleDataTransport
     - GoogleMLKit
@@ -173,6 +181,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   web3auth_flutter:
@@ -184,6 +194,7 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GenericJSON: 79a840eeb77030962e8cf02a62d36bd413b67626
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
@@ -209,6 +220,7 @@ SPEC CHECKSUMS:
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
+  sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   TorusSessionManager: 829495789427b7ad7e29f2b535092a44f3900b42
   url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b

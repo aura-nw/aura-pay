@@ -47,3 +47,15 @@ final class BaseResponseV1<T> extends BaseResponse<T> {
     );
   }
 }
+
+final class PyxisBaseResponse extends BaseResponse<Map<String,dynamic>> {
+  const PyxisBaseResponse({
+    super.data,
+  });
+
+  factory PyxisBaseResponse.fromJson(Map<String, dynamic> json) {
+    return PyxisBaseResponse(
+      data: json,
+    );
+  }
+}

@@ -359,5 +359,16 @@
   "signed_in_recover_sign_screen_update_key_content" : "Update ${address} to ${newAddress}",
   "signed_in_recover_sign_screen_transaction_fee" : "Transaction fee",
   "signed_in_recover_sign_screen_button_confirm_title" : "Confirm",
-  "signed_in_recover_sign_screen_loading" : "Recovering"
+  "signed_in_recover_sign_screen_loading" : "Recovering",
+
+  "nft_screen_app_bar_title" : "NFTs",
+  "nft_screen_total" : "Total NFTs",
+  "nft_screen_no_nft_found" : "No NFT found",
+  "nft_screen_token_standard" : "CW721",
+
+  "nft_detail_screen_name" : "Name",
+  "nft_detail_screen_blockChain" : "Blockchain",
+  "nft_detail_screen_contract_address" : "Contract address",
+  "nft_detail_screen_token_standard" : "CW721",
+  "nft_detail_screen_token_standard_title" : "Token standard"
 }

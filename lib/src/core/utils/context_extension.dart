@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 extension ContextExtension on BuildContext {
@@ -14,4 +16,7 @@ extension ContextExtension on BuildContext {
   double get statusBar => query.padding.top;
 
   double get ratio => query.devicePixelRatio;
+
+  bool get isTablet => w >= 600;
+  double get cacheImageTarget => max(450, w);
 }

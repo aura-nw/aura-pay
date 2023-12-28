@@ -24,10 +24,10 @@ final class SingedInRecoverSelectAccountStatusSelector extends BlocSelector<
 final class SignedInRecoverSelectAccountAccountsSelector extends BlocSelector<
     SingedInRecoverSelectAccountBloc,
     SingedInRecoverSelectAccountState,
-    List<AuraAccount>> {
+    List<PyxisRecoveryAccount>> {
   SignedInRecoverSelectAccountAccountsSelector({
     Key? key,
-    required Widget Function(List<AuraAccount>) builder,
+    required Widget Function(List<PyxisRecoveryAccount>) builder,
   }) : super(
           key: key,
           selector: (state) => state.accounts,
@@ -40,10 +40,10 @@ final class SignedInRecoverSelectAccountAccountsSelector extends BlocSelector<
 final class SignedInRecoverSelectAccountAccountSelectedSelector extends BlocSelector<
     SingedInRecoverSelectAccountBloc,
     SingedInRecoverSelectAccountState,
-    AuraAccount?> {
+    PyxisRecoveryAccount?> {
   SignedInRecoverSelectAccountAccountSelectedSelector({
     Key? key,
-    required Widget Function(AuraAccount?) builder,
+    required Widget Function(PyxisRecoveryAccount?) builder,
   }) : super(
           key: key,
           selector: (state) => state.selectedAccount,

@@ -10,6 +10,7 @@ import 'package:pyxis_mobile/src/application/global/localization/localization_ma
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
+import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
@@ -28,7 +29,7 @@ import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/transaction_common/change_fee_form_widget.dart';
 
 class SignedInRecoverSignScreen extends StatefulWidget {
-  final AuraAccount account;
+  final PyxisRecoveryAccount account;
   final GoogleAccount googleAccount;
 
   const SignedInRecoverSignScreen({
@@ -48,7 +49,7 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
 
   @override
   void initState() {
-    _bloc = getIt.get(
+    _bloc = getIt.get<SignedInRecoverSignBloc>(
       param1: widget.account,
       param2: widget.googleAccount,
     );
@@ -63,7 +64,6 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
           value: _bloc,
           child: BlocListener<SignedInRecoverSignBloc, SignedInRecoverSignState>(
             listener: (context, state) {
-              print(state.status);
               switch (state.status) {
                 case SignedInRecoverSignStatus.none:
                   break;
@@ -177,8 +177,9 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
                           SelectedSmartAccountWidget(
                             appTheme: appTheme,
                             smartAccountAddress:
-                                widget.account.address.addressView,
-                            smartAccountName: widget.account.name,
+                                widget.account.smartAccountAddress.addressView,
+                            smartAccountName: widget.account.name ??
+                                PyxisAccountConstant.unName,
                           ),
                           const SizedBox(
                             height: BoxSize.boxSize04,
@@ -235,7 +236,9 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
                                                 .signedInRecoverSignScreenUpdateKeyContent,
                                             {
                                               'address': widget
-                                                  .account.address.addressView,
+                                                  .account
+                                                  .smartAccountAddress
+                                                  .addressView,
                                               'newAddress':
                                                   widget.googleAccount.email,
                                             },

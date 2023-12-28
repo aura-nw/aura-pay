@@ -129,4 +129,14 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
       );
     });
   }
+
+  @override
+  Future<AuraAccountDto?> getAccountByAddress({
+    required String address,
+  }) {
+    return _isar.auraAccountDbs
+        .filter()
+        .accountAddressEqualTo(address)
+        .findFirst();
+  }
 }

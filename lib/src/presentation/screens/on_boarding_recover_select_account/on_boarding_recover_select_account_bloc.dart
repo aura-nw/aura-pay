@@ -6,11 +6,13 @@ import 'on_boarding_recover_select_account_state.dart';
 
 final class OnBoardingRecoverSelectAccountBloc extends Bloc<
     OnBoardingRecoverSelectAccountEvent, OnboardingRecoverSelectAccountState> {
-  /// Fake after get from server
-  final AuraAccountUseCase _accountUseCase;
+  final SmartAccountUseCase _smartAccountUseCase;
+  final WalletUseCase _walletUseCase;
+  final Web3AuthUseCase _web3authUseCase;
 
   OnBoardingRecoverSelectAccountBloc(
-    this._accountUseCase, {
+    this._smartAccountUseCase,
+    this._walletUseCase, this._web3authUseCase,{
     required GoogleAccount googleAccount,
   }) : super(
           OnboardingRecoverSelectAccountState(
@@ -31,13 +33,18 @@ final class OnBoardingRecoverSelectAccountBloc extends Bloc<
       ),
     );
     try {
-      List<AuraAccount> accounts = await _accountUseCase.getAccounts();
+      final String backupPrivateKey = await _web3authUseCase.getPrivateKey();
 
-      accounts = accounts
-          .where(
-            (e) => e.method?.value == state.googleAccount.email,
-          )
-          .toList();
+      final wallet = await _walletUseCase.importWallet(
+        privateKeyOrPassPhrase: backupPrivateKey,
+      );
+
+      final String recoveryAddress = wallet.bech32Address;
+
+      final List<PyxisRecoveryAccount> accounts =
+          await _smartAccountUseCase.getRecoveryAccountByAddress(
+        recoveryAddress: recoveryAddress,
+      );
 
       emit(
         state.copyWith(
@@ -59,7 +66,7 @@ final class OnBoardingRecoverSelectAccountBloc extends Bloc<
     OnBoardingRecoverSelectAccountEventSelectAccount event,
     Emitter<OnboardingRecoverSelectAccountState> emit,
   ) {
-    if(state.selectedAccount?.id == event.account.id) return;
+    if (state.selectedAccount?.id == event.account.id) return;
 
     emit(
       state.copyWith(

@@ -90,7 +90,11 @@ class _HomePageState extends State<HomePage>
                   ),
                   ChainTriggerWidget(
                     appTheme: appTheme,
-                    onNFTsTap: () {},
+                    onNFTsTap: () {
+                      AppNavigator.push(
+                        RoutePath.nft,
+                      );
+                    },
                     onReceiveTap: widget.onReceiveTap,
                     onSendTap: () async {
                       await AppNavigator.push(

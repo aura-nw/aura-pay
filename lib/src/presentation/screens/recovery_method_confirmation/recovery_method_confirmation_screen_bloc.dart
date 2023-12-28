@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
+import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmation/recovery_method_confirmation_screen.dart';
 import 'recovery_method_confirmation_screen_event.dart';
 import 'recovery_method_confirmation_screen_state.dart';
@@ -22,7 +25,8 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     this._controllerKeyUseCase,
     this._walletUseCase,
     this._web3authUseCase,
-    this._accountUseCase,this._transactionUseCase, {
+    this._accountUseCase,
+    this._transactionUseCase, {
     required RecoveryMethodConfirmationArgument argument,
   }) : super(
           RecoveryMethodConfirmationState(
@@ -141,7 +145,12 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
         revokePreAddress: state.argument.account.method?.subValue,
       );
 
-      information = await _checkTransactionInfo(information.txHash, 0);
+      information = await TransactionHelper.checkTransactionInfo(
+        information.txHash,
+        0,
+        transactionUseCase: _transactionUseCase,
+        config: config,
+      );
 
       if (information.status == 0) {
         await _web3authUseCase.onLogout();
@@ -151,6 +160,14 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
           method: method,
           value: recoveryValue,
           subValue: recoveryAddress,
+        );
+
+        unawaited(
+          _insertRecoveryMethod(
+            recoveryAddress: recoveryAddress,
+            smartAccountAddress: account.address,
+            name: account.name,
+          ),
         );
 
         emit(
@@ -176,23 +193,23 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     }
   }
 
-  Future<TransactionInformation> _checkTransactionInfo(
-      String txHash, int times) async {
-    await Future.delayed(
-      const Duration(
-        seconds: 1,
-      ),
-    );
+  Future<void> _insertRecoveryMethod({
+    required String recoveryAddress,
+    required String smartAccountAddress,
+    required String name,
+  }) async {
     try {
-      return await _transactionUseCase.getTransactionDetail(
-        txHash: txHash,
-        environment: config.environment.environmentString,
+      await _smartAccountUseCase.insertRecoveryAccount(
+        recoveryAddress: recoveryAddress,
+        smartAccountAddress: smartAccountAddress,
+        name: name,
       );
     } catch (e) {
-      if (times == 4) {
-        rethrow;
-      }
-      return _checkTransactionInfo(txHash, times + 1);
+      await _smartAccountUseCase.insertLocalRecoveryAccount(
+        recoveryAddress: recoveryAddress,
+        smartAccountAddress: smartAccountAddress,
+        name: name,
+      );
     }
   }
 }

@@ -12,6 +12,10 @@ final class AuraAccountUseCase {
     return _repository.getAccounts();
   }
 
+  Future<AuraAccount?> getAccountByAddress({required String address,}) {
+    return _repository.getAccountByAddress(address: address);
+  }
+
   Future<AuraAccount?> getFirstAccount() {
     return _repository.getFirstAccount();
   }

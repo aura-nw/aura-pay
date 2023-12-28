@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
+import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 
 import 'signed_in_recover_sign_event.dart';
@@ -25,7 +26,7 @@ final class SignedInRecoverSignBloc
     this._web3authUseCase,
     this._accountUseCase,
     this._transactionUseCase, {
-    required AuraAccount account,
+    required PyxisRecoveryAccount account,
     required GoogleAccount googleAccount,
   }) : super(
           SignedInRecoverSignState(
@@ -112,7 +113,7 @@ final class SignedInRecoverSignBloc
           backupPrivateKey,
         ),
         recoverAddress: wallet.bech32Address,
-        smartAccountAddress: state.account.address,
+        smartAccountAddress: state.account.smartAccountAddress,
       );
 
       information = await TransactionHelper.checkTransactionInfo(
@@ -125,14 +126,26 @@ final class SignedInRecoverSignBloc
       if (information.status == 0) {
         await _web3authUseCase.onLogout();
 
-        await _accountUseCase.updateAccount(
-          id: state.account.id,
-          method: null,
-          useNullable: true,
+        final localAccount = await _accountUseCase.getAccountByAddress(
+          address: state.account.smartAccountAddress,
         );
 
+        if (localAccount != null) {
+          await _accountUseCase.updateAccount(
+            id: localAccount.id,
+            method: null,
+            useNullable: true,
+          );
+        } else {
+          await _accountUseCase.saveAccount(
+            address: state.account.smartAccountAddress,
+            type: AuraAccountType.smartAccount,
+            accountName: state.account.name ?? PyxisAccountConstant.unName,
+          );
+        }
+
         await _controllerKeyUseCase.saveKey(
-          address: state.account.address,
+          address: state.account.smartAccountAddress,
           key: backupPrivateKey,
         );
 

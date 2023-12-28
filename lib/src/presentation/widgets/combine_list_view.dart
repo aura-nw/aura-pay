@@ -75,11 +75,27 @@ class _CombinedListViewState<T> extends State<CombinedListView<T>> {
           onRefresh: () async => widget.onRefresh(),
         ),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+          padding: EdgeInsets.zero,
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (_, index) => widget.builder(widget.data[index],index),
               childCount: widget.data.length,
+              addAutomaticKeepAlives: true,
+              findChildIndexCallback: (key) {
+                final ValueKey<T?> contactKey = key as ValueKey<T>;
+
+                final data = contactKey.value;
+
+                if (data != null && widget.data.contains(data) == true) {
+                  final index = widget.data.indexOf(data);
+
+                  if (index > 0) return index;
+
+                  return null;
+                }
+
+                return null;
+              },
             ),
           ),
         ),

@@ -13,7 +13,7 @@ enum OnBoardingRecoverSignStatus {
 class OnBoardingRecoverSignState with _$OnBoardingRecoverSignState {
   const factory OnBoardingRecoverSignState({
     required GoogleAccount googleAccount,
-    required AuraAccount account,
+    required PyxisRecoveryAccount account,
     @Default(OnBoardingRecoverSignStatus.none)
     OnBoardingRecoverSignStatus status,
     String ?error,

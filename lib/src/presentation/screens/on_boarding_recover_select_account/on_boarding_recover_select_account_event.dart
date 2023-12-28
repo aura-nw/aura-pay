@@ -10,6 +10,6 @@ class OnBoardingRecoverSelectAccountEvent
       OnBoardingRecoverSelectAccountEventFetchAccount;
 
   const factory OnBoardingRecoverSelectAccountEvent.selectAccount({
-    required AuraAccount account,
+    required PyxisRecoveryAccount account,
   }) = OnBoardingRecoverSelectAccountEventSelectAccount;
 }

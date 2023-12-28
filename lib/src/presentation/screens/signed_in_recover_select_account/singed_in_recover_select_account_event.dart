@@ -10,6 +10,6 @@ class SingedInRecoverSelectAccountEvent
       SingedInRecoverSelectAccountEventFetchAccount;
 
   const factory SingedInRecoverSelectAccountEvent.selectAccount({
-    required AuraAccount account,
+    required PyxisRecoveryAccount account,
   }) = SingedInRecoverSelectAccountEventSelectAccount;
 }

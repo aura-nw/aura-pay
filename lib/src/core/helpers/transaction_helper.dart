@@ -65,7 +65,7 @@ sealed class TransactionHelper {
   }) async {
     await Future.delayed(
       const Duration(
-        seconds: 1,
+        seconds: 3,
       ),
     );
     try {

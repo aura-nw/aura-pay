@@ -3,6 +3,7 @@ import 'package:domain/domain.dart';
 
 abstract interface class AccountDatabaseService {
   Future<AuraAccountDto?> getAccount(int id);
+  Future<AuraAccountDto?> getAccountByAddress({required String address});
 
   Future<void> saveAccount({
     required String address,

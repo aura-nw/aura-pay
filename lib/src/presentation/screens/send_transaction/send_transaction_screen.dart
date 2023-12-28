@@ -476,6 +476,10 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
       final result = await AppNavigator.push(
         RoutePath.scanner,
       );
+
+      if(result is String){
+        _recipientController.text = result;
+      }
     } else {
       // If not granted, show a permission dialog
       if (context.mounted) {
@@ -491,6 +495,10 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                 final result = await AppNavigator.push(
                   RoutePath.scanner,
                 );
+
+                if(result is String){
+                  _recipientController.text = result;
+                }
               },
               reject: () {
                 // If permission is rejected, navigate to system settings

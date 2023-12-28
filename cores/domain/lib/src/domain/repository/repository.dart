@@ -7,3 +7,4 @@ export 'app_secure_repository.dart';
 export 'wallet_repository.dart';
 export 'transaction_repository.dart';
 export 'balance_repository.dart';
+export 'nft_repository.dart';

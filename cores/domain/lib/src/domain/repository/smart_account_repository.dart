@@ -47,7 +47,7 @@ abstract interface class SmartAccountRepository {
     String? fee,
     int? gasLimit,
     bool isReadyRegister = false,
-    String ?revokePreAddress,
+    String? revokePreAddress,
   });
 
   Future<TransactionInformation> recoverSmartAccount({
@@ -57,4 +57,22 @@ abstract interface class SmartAccountRepository {
     String? fee,
     int? gasLimit,
   });
+
+  Future<List<PyxisRecoveryAccount>> getRecoveryAccountByAddress({
+    required Map<String, dynamic> queries,
+  });
+
+  Future<void> insertRecoveryAccount({
+    required Map<String, dynamic> body,
+  });
+
+  Future<void> insertLocalRecoveryAccount({
+    required String recoveryAddress,
+    required String smartAccountAddress,
+    required String name,
+  });
+
+  Future<List<LocalRecoveryAccount>> getLocalRecoveryAccounts();
+
+  Future<void> deleteLocalRecoveryAccount({required int id,});
 }
