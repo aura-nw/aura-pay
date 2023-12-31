@@ -11,7 +11,7 @@ extension PyxisEnvironmentMapper on PyxisEnvironment {
       case PyxisEnvironment.serenity:
         return 'serenity';
       case PyxisEnvironment.staging:
-        return 'auratestnet';
+        return 'euphoria';
       case PyxisEnvironment.production:
         return 'auratestnet';
     }

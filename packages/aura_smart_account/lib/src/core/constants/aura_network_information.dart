@@ -28,9 +28,9 @@ sealed class AuraNetWorkInformationConstant {
         'aura133c4k078ydh0yulp8pwkt7nfdudrkrtuyxrmw672ye2zc4xnc4ssm8hp3m',
   );
   static const AuraNetworkInfo euphoriaChannel = AuraNetworkInfo(
-    host: 'rpc.euphoria.aura.network',
+    host: 'grpc.euphoria.aura.network',
     port: 9090,
-    grpcTransportSecure: true,
+    grpcTransportSecure: false,
     chainId: 'euphoria-2',
     bech32Hrp: '',
     denom: 'ueaura',
