@@ -15,6 +15,7 @@ abstract interface class SmartAccountRepository {
     String? memo,
     String? fee,
     int? gasLimit,
+    String ?granter,
   });
 
   Future<TransactionInformation> sendToken({

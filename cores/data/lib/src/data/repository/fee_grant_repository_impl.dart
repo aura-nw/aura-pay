@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:data/src/data/dto/grant_fee_dto.dart';
 import 'package:data/src/data/resource/remote/api_service.dart';
 import 'package:domain/domain.dart';
 
@@ -9,7 +10,7 @@ final class FeeGrantRepositoryImpl implements FeeGrantRepository {
   const FeeGrantRepositoryImpl(this._apiService);
 
   @override
-  Future<void> grantFee({
+  Future<GrantFee> grantFee({
     required Map<String, dynamic> body,
     String? baseUrl,
   }) async {
@@ -19,6 +20,12 @@ final class FeeGrantRepositoryImpl implements FeeGrantRepository {
 
     log(baseResponse.data.toString());
 
-    baseResponse.handleResponse();
+    final data = baseResponse.handleResponse();
+
+    GrantFeeDto grantFeeDto = GrantFeeDto.fromJson(
+      data['rsInsert'],
+    );
+
+    return grantFeeDto.toEntity;
   }
 }

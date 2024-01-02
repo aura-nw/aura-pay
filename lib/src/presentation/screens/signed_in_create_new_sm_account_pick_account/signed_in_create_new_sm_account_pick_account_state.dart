@@ -7,8 +7,9 @@ part 'signed_in_create_new_sm_account_pick_account_state.freezed.dart';
 enum SignedInCreateNewPickAccountStatus {
   init,
   onLoading,
-  onCheckAddressEnoughFee,
-  onCheckAddressUnEnoughFee,
+  onActiveSmartAccount,
+  onActiveSmartAccountSuccess,
+  onGrantFeeError,
   onCheckAddressError,
 }
 

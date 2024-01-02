@@ -450,6 +450,10 @@ Future<void> initDependency(
     () => SignedInCreateNewSmAccountPickAccountBloc(
       getIt.get<WalletUseCase>(),
       getIt.get<SmartAccountUseCase>(),
+      getIt.get<TransactionUseCase>(),
+      getIt.get<FeeGrantUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
     ),
   );
 

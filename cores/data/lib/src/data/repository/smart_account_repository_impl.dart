@@ -16,6 +16,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     String? memo,
     String? fee,
     int? gasLimit,
+    String ?granter,
   }) async {
     return await _provider.activeSmartAccount(
       userPrivateKey: userPrivateKey,
@@ -24,6 +25,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
       gasLimit: gasLimit,
       salt: salt,
       memo: memo,
+      granter: granter,
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:domain/src/domain/entities/entities.dart';
 import 'package:domain/src/domain/entities/requests/fee_grant_parameter.dart';
 import 'package:domain/src/domain/repository/fee_grant_repository.dart';
 
@@ -6,7 +7,7 @@ final class FeeGrantUseCase{
 
   const FeeGrantUseCase(this._repository);
 
-  Future<void> grantFee({
+  Future<GrantFee> grantFee({
     required String pubKey,
     required String deviceId,
     required String smAddress,

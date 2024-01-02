@@ -67,13 +67,17 @@ class _SignedInCreateNewSmAccountPickAccountScreenState
                 case SignedInCreateNewPickAccountStatus.onLoading:
                   _showLoadingDialog(appTheme);
                   break;
-                case SignedInCreateNewPickAccountStatus.onCheckAddressEnoughFee:
+                case SignedInCreateNewPickAccountStatus.onActiveSmartAccount:
+                  AppNavigator.pop();
+                  _showLoadingDialog(appTheme);
+                  break;
+                case SignedInCreateNewPickAccountStatus
+                      .onActiveSmartAccountSuccess:
                   AppNavigator.pop();
 
                   AppNavigator.replaceAllWith(RoutePath.home);
                   break;
-                case SignedInCreateNewPickAccountStatus
-                      .onCheckAddressUnEnoughFee:
+                case SignedInCreateNewPickAccountStatus.onGrantFeeError:
                   AppNavigator.pop();
 
                   AppNavigator.push(

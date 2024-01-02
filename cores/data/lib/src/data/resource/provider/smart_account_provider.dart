@@ -15,6 +15,7 @@ abstract interface class SmartAccountProvider {
     String? memo,
     String? fee,
     int? gasLimit,
+    String ?granter,
   });
 
   Future<int> simulateFee(

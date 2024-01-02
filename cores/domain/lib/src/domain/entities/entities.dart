@@ -6,3 +6,4 @@ export 'pyxis_transaction.dart';
 export 'pyxis_balance.dart';
 export 'nft_information.dart';
 export 'pyxis_recovery_account.dart';
+export 'grant_fee.dart';

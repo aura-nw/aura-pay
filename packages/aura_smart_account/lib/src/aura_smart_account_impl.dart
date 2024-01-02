@@ -108,6 +108,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     Uint8List? salt,
     String? memo,
     AuraSmartAccountFee? fee,
+    String ?granter,
   }) async {
     try {
       // Get pub key from private key
@@ -159,6 +160,10 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
               amount: fee.fee,
             ),
           );
+      }
+
+      if(granter != null){
+        feeSign.granter = granter;
       }
 
       // Broadcast TxBytes

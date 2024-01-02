@@ -68,12 +68,12 @@ class OnBoardingPickAccountBloc
         salt: saltBytes,
       );
 
-      bool grantFeeSuccess = await _grantFee(
+      final GrantFee? grantFee = await _grantFee(
         publicKey: wallet.publicKey,
         smartAccount: smartAccount,
       );
 
-      if (grantFeeSuccess) {
+      if (grantFee != null) {
         emit(state.copyWith(
           status: OnBoardingPickAccountStatus.onActiveSmartAccount,
         ));
@@ -86,6 +86,7 @@ class OnBoardingPickAccountBloc
           smartAccountAddress: smartAccount,
           salt: saltBytes,
           memo: 'Active smart account',
+          granter: grantFee.granter,
         );
 
         transactionInformation = await TransactionHelper.checkTransactionInfo(
@@ -131,7 +132,6 @@ class OnBoardingPickAccountBloc
         );
       }
     } catch (e) {
-      print('error ${e.toString()}');
       emit(
         state.copyWith(
           status: OnBoardingPickAccountStatus.onCheckAddressError,
@@ -141,7 +141,7 @@ class OnBoardingPickAccountBloc
     }
   }
 
-  Future<bool> _grantFee({
+  Future<GrantFee?> _grantFee({
     required Uint8List publicKey,
     required String smartAccount,
   }) async {
@@ -154,14 +154,13 @@ class OnBoardingPickAccountBloc
       //0CE45424-BC2B-4E37-9766-E3B80C06B905
       final String deviceId = await DeviceHelper.getDeviceId();
 
-      await _feeGrantUseCase.grantFee(
+      return _feeGrantUseCase.grantFee(
         pubKey: AuraSmartAccountHelper.encodeByte(smPubKey),
         deviceId: deviceId,
         smAddress: smartAccount,
       );
-      return true;
     } catch (e) {
-      return false;
+      return null;
     }
   }
 

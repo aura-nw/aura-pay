@@ -49,11 +49,12 @@ abstract interface class AuraSmartAccount {
   });
 
   /// Active a smart account
-  /// This method has to pass six parameters include: [userPrivateKey] as Uint8List,
+  /// This method has to pass seven parameters include: [userPrivateKey] as Uint8List,
   /// [smartAccountAddress] as String,
   /// [salt] as Uint8List?,
   /// [memo] as String?,
   /// [fee] as [AuraSmartAccountFee]?,
+  /// [granter] as [String]?,
   /// Response a [TxResponse]
   /// It can throw [AuraSmartAccountError]
   Future<TxResponse> activeSmartAccount({
@@ -62,6 +63,7 @@ abstract interface class AuraSmartAccount {
     Uint8List? salt,
     String? memo,
     AuraSmartAccountFee? fee,
+    String ?granter,
   });
 
   /// Simulate send token fee
