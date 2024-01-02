@@ -8,10 +8,7 @@ import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/aura_smart_account_base_widget.dart';
 
 final class HistoryAccountWidget extends AuraSmartAccountBaseWidget {
-  final VoidCallback onShowMoreAccount;
-
   const HistoryAccountWidget({
-    required this.onShowMoreAccount,
     required super.appTheme,
     required super.address,
     required super.accountName,
@@ -32,12 +29,8 @@ final class HistoryAccountWidget extends AuraSmartAccountBaseWidget {
 
   @override
   Widget actionFormBuilder(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onShowMoreAccount,
-      child: SvgPicture.asset(
-        AssetIconPath.historyArrowDown,
-      ),
+    return SvgPicture.asset(
+      AssetIconPath.historyArrowDown,
     );
   }
 

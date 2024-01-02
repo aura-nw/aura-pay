@@ -122,8 +122,8 @@ Future<void> initDependency(
   getIt.registerLazySingleton<RecoveryObserver>(
     () => RecoveryObserver(),
   );
-  getIt.registerLazySingleton<HomePageObserver>(
-    () => HomePageObserver(),
+  getIt.registerLazySingleton<HomeScreenObserver>(
+    () => HomeScreenObserver(),
   );
 
   getIt.registerLazySingleton<BalanceApiServiceGenerator>(

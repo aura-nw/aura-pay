@@ -85,37 +85,37 @@ class ChainTriggerWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: BoxSize.boxSize07,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: onTXsLimitTap,
-                  child: _triggerBuilder(
-                    AssetIconPath.homeTxLimit,
-                    LanguageKey.homePageTxLimit,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: onStakeTap,
-                  child: _triggerBuilder(
-                    AssetIconPath.homeStake,
-                    LanguageKey.homePageStake,
-                  ),
-                ),
-              ),
-              const Expanded(
-                child: SizedBox(),
-              ),
-            ],
-          ),
+          // const SizedBox(
+          //   height: BoxSize.boxSize07,
+          // ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Expanded(
+          //       child: GestureDetector(
+          //         behavior: HitTestBehavior.opaque,
+          //         onTap: onTXsLimitTap,
+          //         child: _triggerBuilder(
+          //           AssetIconPath.homeTxLimit,
+          //           LanguageKey.homePageTxLimit,
+          //         ),
+          //       ),
+          //     ),
+          //     Expanded(
+          //       child: GestureDetector(
+          //         behavior: HitTestBehavior.opaque,
+          //         onTap: onStakeTap,
+          //         child: _triggerBuilder(
+          //           AssetIconPath.homeStake,
+          //           LanguageKey.homePageStake,
+          //         ),
+          //       ),
+          //     ),
+          //     const Expanded(
+          //       child: SizedBox(),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

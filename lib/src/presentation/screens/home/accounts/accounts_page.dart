@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
@@ -13,6 +14,7 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/helpers/app_launcher.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/account_manager_action_form.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/remove_account_form_widget.dart';
@@ -34,6 +36,8 @@ class AccountsPage extends StatefulWidget {
 
 class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
   late HomeScreenBloc _homeScreenBloc;
+
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
   @override
   void didChangeDependencies() {
@@ -171,6 +175,9 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                                           account,
                                         );
                                       },
+                                      onChoose: () {
+                                        _onChooseAccount(account);
+                                      },
                                       isSmartAccount: account.isSmartAccount,
                                     ),
                                     const SizedBox(
@@ -289,6 +296,21 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
           );
         },
       ),
+    );
+  }
+
+  void _onChooseAccount(AuraAccount account) {
+    HomeScreenBloc.of(context).add(
+      HomeScreenEventOnChooseAccount(
+        account,
+      ),
+    );
+
+    // refresh token home
+    _observer.emit(
+      emitParam: {
+        HomeScreenObserver.onSelectedAccountChangeEvent: account,
+      },
     );
   }
 }

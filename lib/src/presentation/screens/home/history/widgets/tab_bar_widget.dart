@@ -41,17 +41,29 @@ class _HistoryTabBarWidgetState extends State<HistoryTabBarWidget> {
   }
 
   @override
+  void didUpdateWidget(covariant HistoryTabBarWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(widget.selectedIndex != oldWidget.selectedIndex){
+      selectedTab = widget.selectedIndex;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
-          child: Row(
-            children: List.generate(
-              _titleKey.length,
-              (index) {
-                final String key = _titleKey[index];
-                return Expanded(
-                  child: GestureDetector(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Spacing.spacing07,
+            ),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(
+                _titleKey.length,
+                (index) {
+                  final String key = _titleKey[index];
+                  return GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () {
                       if(index == selectedTab) return;
@@ -67,9 +79,9 @@ class _HistoryTabBarWidgetState extends State<HistoryTabBarWidget> {
                       appTheme: widget.appTheme,
                       isSelected: selectedTab == index,
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         ),

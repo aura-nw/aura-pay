@@ -98,30 +98,32 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
   // Override the accountNameBuilder method
   @override
   Widget accountNameBuilder(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          accountName,
-          style: AppTypoGraPhy.heading02.copyWith(
-            color: appTheme.contentColorWhite,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: (){
+        onCopy(
+          address,
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            accountName,
+            style: AppTypoGraPhy.heading02.copyWith(
+              color: appTheme.contentColorWhite,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        const SizedBox(
-          width: BoxSize.boxSize04,
-        ),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => onCopy(
-            address,
+          const SizedBox(
+            width: BoxSize.boxSize04,
           ),
-          child: SvgPicture.asset(
+          SvgPicture.asset(
             AssetIconPath.homeCopy,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -131,8 +133,15 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onShowMoreAccount,
-      child: SvgPicture.asset(
-        AssetIconPath.homeArrowDown,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: Spacing.spacing04,
+          bottom: Spacing.spacing04,
+          left: Spacing.spacing04,
+        ),
+        child: SvgPicture.asset(
+          AssetIconPath.homeArrowDown,
+        ),
       ),
     );
   }

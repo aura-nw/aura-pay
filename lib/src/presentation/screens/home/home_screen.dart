@@ -40,7 +40,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin , CustomFlutterToast{
+class _HomeScreenState extends State<HomeScreen>
+    with TickerProviderStateMixin, CustomFlutterToast {
   late HomeScreenSection currentSection;
 
   late AnimationController _receiveWidgetController;
@@ -48,14 +49,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
 
   final HomeScreenBloc _bloc = getIt.get<HomeScreenBloc>();
 
-  final HomePageObserver _observer = getIt.get<HomePageObserver>();
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
-  void _onEmitAccountChange(){
-    _observer.emit(emitParam: true);
+  void _onEmitAccountChange() {
+    _observer.emit(
+      emitParam: {
+        HomeScreenObserver.onListenAccountChangeEvent: true,
+      },
+    );
+  }
+
+  void _onHomePageDrop(Map<String,dynamic> event){
+    if(event[HomeScreenObserver.onHomePageDropdownClickEvent] == true){
+      // Change to account page. Index = 1. Maybe change index late.
+      if(currentSection.index != 1){
+        setState(() {
+          currentSection = HomeScreenSection.accounts;
+        });
+      }
+    }
   }
 
   @override
   void initState() {
+    _observer.addListener(_onHomePageDrop);
     _bloc.registerCallBack(_onEmitAccountChange);
     _bloc.add(
       const HomeScreenEventOnInit(),
@@ -86,6 +103,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
 
   void _onReceiveTap() {
     _receiveWidgetController.forward();
+  }
+
+  @override
+  void dispose() {
+    _observer.removeListener(_onHomePageDrop);
+    _bloc.registerCallBack(_onEmitAccountChange);
+    super.dispose();
   }
 
   @override
@@ -214,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
     }
   }
 
-  void _onCopyAddress(String address)async{
+  void _onCopyAddress(String address) async {
     await Clipboard.setData(
       ClipboardData(text: address),
     );

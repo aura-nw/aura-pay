@@ -149,10 +149,6 @@ sealed class AssetIconPath {
   /// History page
   static const String historyArrowDown =
       '${_baseIconPath}ic_history_arrow_down.svg';
-  static const String historyCopyActive =
-      '${_baseIconPath}ic_history_copy_active.svg';
-  static const String historyCopy = '${_baseIconPath}ic_history_copy.svg';
-  static const String historyMore = '${_baseIconPath}ic_history_more.svg';
   static const String historyReceiveLogoCircle =
       '${_baseIconPath}ic_history_receive_logo_circle.svg';
   static const String historyReceiveLogo =

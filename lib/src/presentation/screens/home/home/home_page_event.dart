@@ -18,4 +18,6 @@ class HomePageEvent with _$HomePageEvent {
   const factory HomePageEvent.updateBalance({
     required List<PyxisBalance> balances,
   }) = HomePageEventOnUpdateBalances;
+
+  const factory HomePageEvent.onHideTokenValue() = HomePageEventOnHideTokenValue;
 }

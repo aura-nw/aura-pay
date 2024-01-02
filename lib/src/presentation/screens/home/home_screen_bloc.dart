@@ -124,9 +124,13 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     _broadCast = callback;
   }
 
+  void _removeCallBack(){
+    _broadCast = null;
+  }
+
   @override
   Future<void> close() {
-    _broadCast = null;
+    _removeCallBack();
     return super.close();
   }
 
