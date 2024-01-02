@@ -82,12 +82,12 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           final BalanceUseCase horoScropeBalanceUseCase =
               balanceUseCaseFactory(horoScopeDio);
 
-          final BalanceUseCase auraNetworkBalanceUseCase =
-              balanceUseCaseFactory(auraNetworkDio);
+          final TokenUseCase auraNetworkTokenUseCase =
+          tokenUseCaseFactory(auraNetworkDio);
 
           await _getBalances(horoScropeBalanceUseCase, message, sendPort);
 
-          await _getPrice(auraNetworkBalanceUseCase, message, sendPort);
+          await _getPrice(auraNetworkTokenUseCase, message, sendPort);
         } catch (error) {
           // Send the error back to the main isolate
           sendPort.send({'error': error.toString()});
@@ -114,10 +114,10 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
-  static Future<void> _getPrice(BalanceUseCase auraNetworkBalanceUseCase,
+  static Future<void> _getPrice(TokenUseCase tokenUseCase,
       Map<String, dynamic> message, SendPort sendPort) async {
     try {
-      final price = await auraNetworkBalanceUseCase.getTokenPrice();
+      final price = await tokenUseCase.getAuraTokenPrice();
 
       // Send the API response back to the main isolate
       sendPort.send({

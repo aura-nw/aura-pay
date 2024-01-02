@@ -1,4 +1,4 @@
-abstract class ControllerKeyRepository {
+abstract interface class ControllerKeyRepository {
   Future<void> saveKey({
     required String address,
     required String key,

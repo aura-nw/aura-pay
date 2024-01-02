@@ -211,6 +211,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
         address: account.address,
         name: account.name,
         appTheme: appTheme,
+        isSmartAccount: account.isSmartAccount,
         onRemove: () {
           AppNavigator.pop();
 

@@ -115,14 +115,4 @@ class SmartAccountUseCase {
       gasLimit: gasLimit,
     );
   }
-
-  Future<List<PyxisRecoveryAccount>> getRecoveryAccountByAddress({
-    required String recoveryAddress,
-  }) {
-    return _repository.getRecoveryAccountByAddress(
-      queries: QueryRecoveryAccountParameter(
-        recoveryAddress: recoveryAddress,
-      ).toJson(),
-    );
-  }
 }

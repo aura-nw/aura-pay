@@ -13,9 +13,11 @@ import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_stor
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
-import 'package:pyxis_mobile/src/application/service/balance/token_api_service_impl.dart';
+import 'package:pyxis_mobile/src/application/service/balance/balance_api_service_impl.dart';
+import 'package:pyxis_mobile/src/application/service/grant_fee/grant_fee_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/nft/nft_api_service_impl.dart';
-import 'package:pyxis_mobile/src/application/service/smart_account/smart_account_api_service_impl.dart';
+import 'package:pyxis_mobile/src/application/service/recovery/recovery_api_service_impl.dart';
+import 'package:pyxis_mobile/src/application/service/token/token_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/transaction/transaction_api_service_impl.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
@@ -132,6 +134,12 @@ Future<void> initDependency(
       baseUrl: config.horoScopeUrl + config.horoScopeVersion,
     ),
   );
+  getIt.registerLazySingleton<TokenApiServiceGenerator>(
+    () => TokenApiServiceGenerator(
+      getIt.get<Dio>(),
+      baseUrl: config.auraNetworkBaseUrl + config.auraNetworkVersion,
+    ),
+  );
 
   getIt.registerLazySingleton<NFTApiServiceGenerate>(
     () => NFTApiServiceGenerate(
@@ -140,7 +148,14 @@ Future<void> initDependency(
   );
 
   getIt.registerLazySingleton(
-    () => SmartAccountApiServiceGenerate(
+    () => RecoveryApiServiceGenerate(
+      getIt.get<Dio>(),
+      baseUrl: config.hasuraBaseUrl + config.hasuraVersion,
+    ),
+  );
+
+  getIt.registerLazySingleton(
+    () => GrantFeeApiServiceGenerate(
       getIt.get<Dio>(),
       baseUrl: config.pyxisBaseUrl + config.pyxisVersion,
     ),
@@ -164,10 +179,21 @@ Future<void> initDependency(
       getIt.get<BalanceApiServiceGenerator>(),
     ),
   );
+  getIt.registerLazySingleton<TokenApiService>(
+    () => TokenApiServiceImpl(
+      getIt.get<TokenApiServiceGenerator>(),
+    ),
+  );
 
-  getIt.registerLazySingleton<SmartAccountApiService>(
-    () => SmartAccountApiServiceImpl(
-      getIt.get<SmartAccountApiServiceGenerate>(),
+  getIt.registerLazySingleton<RecoveryApiService>(
+    () => RecoveryApiServiceImpl(
+      getIt.get<RecoveryApiServiceGenerate>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<GrantFeeApiService>(
+    () => GrantFeeApiServiceImpl(
+      getIt.get<GrantFeeApiServiceGenerate>(),
     ),
   );
 
@@ -233,7 +259,6 @@ Future<void> initDependency(
   getIt.registerLazySingleton<SmartAccountRepository>(
     () => SmartAccountRepositoryImpl(
       getIt.get<SmartAccountProvider>(),
-      getIt.get<SmartAccountApiService>(),
     ),
   );
 
@@ -264,10 +289,27 @@ Future<void> initDependency(
       getIt.get<BalanceApiService>(),
     ),
   );
+  getIt.registerLazySingleton<TokenRepository>(
+    () => TokenRepositoryImpl(
+      getIt.get<TokenApiService>(),
+    ),
+  );
 
   getIt.registerLazySingleton<NFTRepository>(
     () => NFTRepositoryImpl(
       getIt.get<NFTApiService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<RecoveryRepository>(
+    () => RecoveryRepositoryImpl(
+      getIt.get<RecoveryApiService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<FeeGrantRepository>(
+    () => FeeGrantRepositoryImpl(
+      getIt.get<GrantFeeApiService>(),
     ),
   );
 
@@ -325,9 +367,27 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<TokenUseCase>(
+    () => TokenUseCase(
+      getIt.get<TokenRepository>(),
+    ),
+  );
+
   getIt.registerLazySingleton(
     () => NFTUseCase(
       getIt.get<NFTRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<RecoveryUseCase>(
+    () => RecoveryUseCase(
+      getIt.get<RecoveryRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<FeeGrantUseCase>(
+    () => FeeGrantUseCase(
+      getIt.get<FeeGrantRepository>(),
     ),
   );
 
@@ -343,6 +403,10 @@ Future<void> initDependency(
     () => OnBoardingPickAccountBloc(
       getIt.get<WalletUseCase>(),
       getIt.get<SmartAccountUseCase>(),
+      getIt.get<TransactionUseCase>(),
+      getIt.get<FeeGrantUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
     ),
   );
 
@@ -493,6 +557,7 @@ Future<void> initDependency(
       getIt.get<SmartAccountUseCase>(),
       getIt.get<WalletUseCase>(),
       getIt.get<Web3AuthUseCase>(),
+      getIt.get<RecoveryUseCase>(),
       googleAccount: googleAccount,
     ),
   );
@@ -517,6 +582,7 @@ Future<void> initDependency(
       getIt.get<SmartAccountUseCase>(),
       getIt.get<Web3AuthUseCase>(),
       getIt.get<WalletUseCase>(),
+      getIt.get<RecoveryUseCase>(),
       googleAccount: googleAccount,
     ),
   );

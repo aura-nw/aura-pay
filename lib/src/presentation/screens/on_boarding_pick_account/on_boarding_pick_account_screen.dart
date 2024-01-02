@@ -66,12 +66,16 @@ class _OnBoardingPickAccountScreenState
                 case OnBoardingPickAccountStatus.onLoading:
                   _showLoadingDialog(appTheme);
                   break;
-                case OnBoardingPickAccountStatus.onCheckAddressEnoughFee:
+                case OnBoardingPickAccountStatus.onActiveSmartAccount:
+                  AppNavigator.pop();
+                  _showLoadingDialog(appTheme);
+                  break;
+                case OnBoardingPickAccountStatus.onActiveSmartAccountSuccess:
                   AppNavigator.pop();
 
                   AppNavigator.replaceAllWith(RoutePath.home);
                   break;
-                case OnBoardingPickAccountStatus.onCheckAddressUnEnoughFee:
+                case OnBoardingPickAccountStatus.onGrantFeeError:
                   AppNavigator.pop();
 
                   AppNavigator.push(
@@ -208,6 +212,16 @@ class _OnBoardingPickAccountScreenState
   }
 
   void _showLoadingDialog(AppTheme appTheme) {
+    DialogProvider.showLoadingDialog(
+      context,
+      content: AppLocalizationManager.of(context).translate(
+        LanguageKey.onBoardingCreateNewSmartAccountScreenDialogLoadingTitle,
+      ),
+      appTheme: appTheme,
+    );
+  }
+
+  void _showActiveSmartAccount(AppTheme appTheme) {
     DialogProvider.showLoadingDialog(
       context,
       content: AppLocalizationManager.of(context).translate(

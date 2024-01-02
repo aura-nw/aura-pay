@@ -8,3 +8,6 @@ export 'wallet_repository_impl.dart';
 export 'transaction_repository_impl.dart';
 export 'balance_repository_impl.dart';
 export 'nft_repository_impl.dart';
+export 'recovery_repository_impl.dart';
+export 'fee_grant_repository_impl.dart';
+export 'token_repository_impl.dart';

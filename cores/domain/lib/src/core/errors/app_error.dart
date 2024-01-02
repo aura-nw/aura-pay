@@ -1,5 +1,5 @@
 class AppError {
-  final int code;
+  final String code;
   final String ?message;
 
   const AppError({

@@ -9,13 +9,6 @@ final class BalanceRepositoryImpl implements BalanceRepository {
   );
 
   @override
-  Future<double> getTokenPrice() async {
-    final response = await _balanceApiService.getTokenPrice();
-
-    return double.tryParse( response.data) ?? 0;
-  }
-
-  @override
   Future<List<PyxisBalance>> getBalances({
     required Map<String, dynamic> body,
     required String environment,

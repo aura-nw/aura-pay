@@ -126,21 +126,33 @@ final class SignedInRecoverSignBloc
       if (information.status == 0) {
         await _web3authUseCase.onLogout();
 
-        final localAccount = await _accountUseCase.getAccountByAddress(
+        AuraAccount ? localAccount = await _accountUseCase.getAccountByAddress(
           address: state.account.smartAccountAddress,
         );
 
         if (localAccount != null) {
           await _accountUseCase.updateAccount(
             id: localAccount.id,
-            method: null,
-            useNullable: true,
+            method: AuraSmartAccountRecoveryMethod.web3Auth,
+            value: state.googleAccount.email,
+            subValue: wallet.bech32Address,
           );
         } else {
           await _accountUseCase.saveAccount(
             address: state.account.smartAccountAddress,
             type: AuraAccountType.smartAccount,
             accountName: state.account.name ?? PyxisAccountConstant.unName,
+          );
+
+          localAccount = await _accountUseCase.getAccountByAddress(
+            address: state.account.smartAccountAddress,
+          );
+
+          await _accountUseCase.updateAccount(
+            id: localAccount!.id,
+            method: AuraSmartAccountRecoveryMethod.web3Auth,
+            value: state.googleAccount.email,
+            subValue: wallet.bech32Address,
           );
         }
 

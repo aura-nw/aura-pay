@@ -12,7 +12,7 @@ class AccountItemWidget extends AuraSmartAccountBaseWidget {
   final bool onUsing;
   final bool isSmartAccount;
   final VoidCallback onMoreTap;
-  final VoidCallback ?onChoose;
+  final VoidCallback? onChoose;
 
   const AccountItemWidget({
     this.onUsing = false,
@@ -130,7 +130,10 @@ class AccountItemWidget extends AuraSmartAccountBaseWidget {
 }
 
 class AccountItemImportedWidget extends AuraSmartAccountBaseWidget {
+  final bool isSmartAccount;
+
   const AccountItemImportedWidget({
+    this.isSmartAccount = false,
     required super.appTheme,
     required super.address,
     required super.accountName,
@@ -151,31 +154,33 @@ class AccountItemImportedWidget extends AuraSmartAccountBaseWidget {
 
   @override
   Widget actionFormBuilder(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Spacing.spacing03,
-        vertical: Spacing.spacing02,
-      ),
-      decoration: BoxDecoration(
-        color: appTheme.surfaceColorGrayDark,
-        borderRadius: BorderRadius.circular(
-          BorderRadiusSize.borderRadiusRound,
-        ),
-      ),
-      child: AppLocalizationProvider(
-        builder: (localization, _) {
-          return Text(
-            localization.translate(
-              LanguageKey.accountsPageImported,
+    return isSmartAccount
+        ? const SizedBox.shrink()
+        : Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Spacing.spacing03,
+              vertical: Spacing.spacing02,
             ),
-            style: AppTypoGraPhy.body02.copyWith(
-              color: appTheme.contentColorBlack,
+            decoration: BoxDecoration(
+              color: appTheme.surfaceColorGrayDark,
+              borderRadius: BorderRadius.circular(
+                BorderRadiusSize.borderRadiusRound,
+              ),
             ),
-            textAlign: TextAlign.end,
+            child: AppLocalizationProvider(
+              builder: (localization, _) {
+                return Text(
+                  localization.translate(
+                    LanguageKey.accountsPageImported,
+                  ),
+                  style: AppTypoGraPhy.body02.copyWith(
+                    color: appTheme.contentColorBlack,
+                  ),
+                  textAlign: TextAlign.end,
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
   }
 
   @override

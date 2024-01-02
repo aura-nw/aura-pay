@@ -1,11 +1,11 @@
 import 'package:data/data.dart';
 
 abstract class TransactionApiService {
-  Future<BaseResponseV2> getTransaction({
+  Future<AuraBaseResponseV2> getTransaction({
     required Map<String, dynamic> body
   });
 
-  Future<BaseResponseV2> getTransactionDetail({
+  Future<AuraBaseResponseV2> getTransactionDetail({
     required Map<String, dynamic> body
   });
 }

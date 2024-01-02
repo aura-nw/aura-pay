@@ -21,21 +21,6 @@ sealed class TransactionHelper {
     return msgSend;
   }
 
-  static MsgRecover parseMsgRecover(Map<String, dynamic> msg) {
-    MsgRecover msgRecover = MsgRecover.create();
-
-    return msgRecover;
-  }
-
-  static MsgExecuteContract parseMsgExecuteContract(Map<String, dynamic> msg) {
-    MsgExecuteContract msgExecuteContract = MsgExecuteContract.create()
-      ..msg = utf8.encode(msg['msg'].toString())
-      ..contract = msg['contract']
-      ..sender = msg['sender'];
-
-    return msgExecuteContract;
-  }
-
   static bool validateMsgSetRecovery(Map<String, dynamic> msg) {
     final String type = msg['@type'];
 
@@ -65,7 +50,7 @@ sealed class TransactionHelper {
   }) async {
     await Future.delayed(
       const Duration(
-        seconds: 3,
+        milliseconds: 2500,
       ),
     );
     try {
@@ -74,7 +59,7 @@ sealed class TransactionHelper {
         environment: config.environment.environmentString,
       );
     } catch (e) {
-      if (times == 4) {
+      if (times == 5) {
         rethrow;
       }
       return checkTransactionInfo(

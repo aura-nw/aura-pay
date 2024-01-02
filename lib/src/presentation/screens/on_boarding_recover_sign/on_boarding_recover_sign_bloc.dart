@@ -129,6 +129,19 @@ final class OnBoardingRecoverSignBloc
           type: AuraAccountType.smartAccount,
         );
 
+        final localAccount = await _accountUseCase.getAccountByAddress(
+          address: state.account.smartAccountAddress,
+        );
+
+        if(localAccount != null){
+          await _accountUseCase.updateAccount(
+            id: localAccount.id,
+            method: AuraSmartAccountRecoveryMethod.web3Auth,
+            value: state.googleAccount.email,
+            subValue: wallet.bech32Address,
+          );
+        }
+
         await _controllerKeyUseCase.saveKey(
           address: state.account.smartAccountAddress,
           key: backupPrivateKey,

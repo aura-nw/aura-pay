@@ -4,11 +4,8 @@ import 'package:domain/domain.dart';
 
 class SmartAccountRepositoryImpl implements SmartAccountRepository {
   final SmartAccountProvider _provider;
-  final SmartAccountApiService _apiService;
-
   const SmartAccountRepositoryImpl(
     this._provider,
-    this._apiService,
   );
 
   @override
@@ -132,33 +129,5 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     );
 
     return response.toEntity;
-  }
-
-  @override
-  Future<List<PyxisRecoveryAccount>> getRecoveryAccountByAddress({
-    required Map<String, dynamic> queries,
-  }) async {
-    final response = await _apiService.getRecoveryAccountByAddress(
-      queries: queries,
-    );
-
-    const String accounts = 'pyxis_recovery_account';
-
-    final data = response.data ??
-        {
-          accounts: [],
-        };
-
-    final List<PyxisRecoveryAccountDto> accountsDto =
-        List.empty(growable: true);
-
-    for (final json in data[accounts]) {
-      final PyxisRecoveryAccountDto accountDto =
-          PyxisRecoveryAccountDto.fromJson(json);
-
-      accountsDto.add(accountDto);
-    }
-
-    return accountsDto.map((e) => e.toEntity).toList();
   }
 }

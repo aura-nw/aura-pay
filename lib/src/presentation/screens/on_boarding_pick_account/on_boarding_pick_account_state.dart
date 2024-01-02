@@ -7,8 +7,9 @@ part 'on_boarding_pick_account_state.freezed.dart';
 enum OnBoardingPickAccountStatus {
   init,
   onLoading,
-  onCheckAddressEnoughFee,
-  onCheckAddressUnEnoughFee,
+  onActiveSmartAccount,
+  onActiveSmartAccountSuccess,
+  onGrantFeeError,
   onCheckAddressError,
 }
 

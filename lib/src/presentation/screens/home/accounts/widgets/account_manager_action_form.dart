@@ -18,6 +18,7 @@ class AccountManagerActionForm extends StatelessWidget {
   final AppTheme appTheme;
   final String address;
   final String name;
+  final bool isSmartAccount;
 
   const AccountManagerActionForm({
     required this.appTheme,
@@ -27,6 +28,7 @@ class AccountManagerActionForm extends StatelessWidget {
     required this.onViewOnAuraScan,
     required this.address,
     required this.name,
+    this.isSmartAccount = false,
     super.key,
   });
 
@@ -70,6 +72,7 @@ class AccountManagerActionForm extends StatelessWidget {
                     appTheme: appTheme,
                     address: address,
                     accountName: name,
+                    isSmartAccount: isSmartAccount,
                   ),
                 ),
                 const SizedBox(
@@ -103,44 +106,47 @@ class AccountManagerActionForm extends StatelessWidget {
             ),
           ),
           const HoLiZonTalDividerWidget(),
-          const SizedBox(
-            height: BoxSize.boxSize07,
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: onRemove,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Spacing.spacing06,
+          if (!isSmartAccount)
+            ...[
+              const SizedBox(
+                height: BoxSize.boxSize07,
               ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    AssetIconPath.accountsRemove,
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: onRemove,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing06,
                   ),
-                  const SizedBox(
-                    width: BoxSize.boxSize04,
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        AssetIconPath.accountsRemove,
+                      ),
+                      const SizedBox(
+                        width: BoxSize.boxSize04,
+                      ),
+                      Expanded(
+                        child: AppLocalizationProvider(
+                          builder: (localization, _) {
+                            return Text(
+                              localization.translate(
+                                LanguageKey.accountsPageRemove,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypoGraPhy.bodyMedium03.copyWith(
+                                color: appTheme.contentColorDanger,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    child: AppLocalizationProvider(
-                      builder: (localization, _) {
-                        return Text(
-                          localization.translate(
-                            LanguageKey.accountsPageRemove,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypoGraPhy.bodyMedium03.copyWith(
-                            color: appTheme.contentColorDanger,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
+                ),
+              )
+            ]
         ],
       ),
     );

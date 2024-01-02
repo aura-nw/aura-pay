@@ -5,4 +5,4 @@ export 'query_balances_parameter.dart';
 export 'query_transaction_detail_parameter.dart';
 export 'query_nft_by_address_parameter.dart';
 export 'query_recovery_account_parameter.dart';
-export 'insert_recovery_account_parameter.dart';
+export 'fee_grant_parameter.dart';

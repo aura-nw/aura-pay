@@ -29,6 +29,8 @@ dependencies:
   mobile_scanner: ^3.5.5
   image_picker: ^1.0.4
   crypto: ^3.0.3
+  android_id: ^0.3.6
+  device_info_plus: ^9.1.1
 
   #local db
   isar: ^3.1.0

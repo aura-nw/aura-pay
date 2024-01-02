@@ -57,8 +57,4 @@ abstract interface class SmartAccountRepository {
     String? fee,
     int? gasLimit,
   });
-
-  Future<List<PyxisRecoveryAccount>> getRecoveryAccountByAddress({
-    required Map<String, dynamic> queries,
-  });
 }
