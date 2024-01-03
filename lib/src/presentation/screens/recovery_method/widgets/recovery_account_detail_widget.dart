@@ -49,126 +49,126 @@ class RecoveryAccountDetailWidget extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Spacing.spacing04,
-                    vertical: Spacing.spacing05,
-                  ),
-                  margin: const EdgeInsets.only(
-                    top: Spacing.spacing06,
-                  ),
-                  decoration: BoxDecoration(
-                    color: appTheme.surfaceColorGrayLight,
-                    borderRadius: BorderRadius.circular(
-                      BorderRadiusSize.borderRadius05,
+                GestureDetector(
+                  onTap: onCopyAddress,
+                  behavior: HitTestBehavior.opaque,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Spacing.spacing04,
+                      vertical: Spacing.spacing05,
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        AssetIconPath.commonSmartAccountAvatarDefault,
+                    margin: const EdgeInsets.only(
+                      top: Spacing.spacing06,
+                    ),
+                    decoration: BoxDecoration(
+                      color: appTheme.surfaceColorGrayLight,
+                      borderRadius: BorderRadius.circular(
+                        BorderRadiusSize.borderRadius05,
                       ),
-                      const SizedBox(
-                        width: BoxSize.boxSize05,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              accountName,
-                              style: AppTypoGraPhy.heading02.copyWith(
-                                color: appTheme.contentColor700,
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          AssetIconPath.commonSmartAccountAvatarDefault,
+                        ),
+                        const SizedBox(
+                          width: BoxSize.boxSize05,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                accountName,
+                                style: AppTypoGraPhy.heading02.copyWith(
+                                  color: appTheme.contentColor700,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: BoxSize.boxSize02,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  address.addressView,
-                                  style: AppTypoGraPhy.body03.copyWith(
-                                    color: appTheme.contentColor700,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: BoxSize.boxSize04,
-                                ),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: onCopyAddress,
-                                  child: SvgPicture.asset(
-                                    AssetIconPath.recoveryMethodCopy,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            if (recoveryMethod != null) ...[
                               const SizedBox(
                                 height: BoxSize.boxSize02,
                               ),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: '${recoveryMethod ?? ''}: ',
-                                      style: AppTypoGraPhy.body02.copyWith(
-                                        color: appTheme.contentColor500,
-                                      ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    address.addressView,
+                                    style: AppTypoGraPhy.body03.copyWith(
+                                      color: appTheme.contentColor700,
                                     ),
-                                    TextSpan(
-                                      text: recoveryValue ?? '',
-                                      style:
-                                          AppTypoGraPhy.bodyMedium02.copyWith(
-                                        color: appTheme.contentColorBlack,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(
+                                    width: BoxSize.boxSize04,
+                                  ),
+                                  SvgPicture.asset(
+                                    AssetIconPath.recoveryMethodCopy,
+                                  ),
+                                ],
                               ),
-                            ] else
-                              const SizedBox.shrink(),
-                          ],
+                              if (recoveryMethod != null) ...[
+                                const SizedBox(
+                                  height: BoxSize.boxSize02,
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: '${recoveryMethod ?? ''}: ',
+                                        style: AppTypoGraPhy.body02.copyWith(
+                                          color: appTheme.contentColor500,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: recoveryValue ?? '',
+                                        style:
+                                            AppTypoGraPhy.bodyMedium02.copyWith(
+                                          color: appTheme.contentColorBlack,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ] else
+                                const SizedBox.shrink(),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: BoxSize.boxSize07,
-                ),
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: onChangeRecoverMethod,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        AssetIconPath.recoveryMethodChange,
-                      ),
-                      const SizedBox(
-                        width: BoxSize.boxSize06,
-                      ),
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return Text(
-                            localization.translate(
-                              LanguageKey
-                                  .recoveryMethodScreenChangeRecoveryMethod,
-                            ),
-                            style: AppTypoGraPhy.bodyMedium03.copyWith(
-                              color: appTheme.contentColor700,
-                            ),
-                          );
-                        },
-                      )
-                    ],
-                  ),
-                ),
+                // const SizedBox(
+                //   height: BoxSize.boxSize07,
+                // ),
+                // GestureDetector(
+                //   behavior: HitTestBehavior.opaque,
+                //   onTap: onChangeRecoverMethod,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       SvgPicture.asset(
+                //         AssetIconPath.recoveryMethodChange,
+                //       ),
+                //       const SizedBox(
+                //         width: BoxSize.boxSize06,
+                //       ),
+                //       AppLocalizationProvider(
+                //         builder: (localization, _) {
+                //           return Text(
+                //             localization.translate(
+                //               LanguageKey
+                //                   .recoveryMethodScreenChangeRecoveryMethod,
+                //             ),
+                //             style: AppTypoGraPhy.bodyMedium03.copyWith(
+                //               color: appTheme.contentColor700,
+                //             ),
+                //           );
+                //         },
+                //       )
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),

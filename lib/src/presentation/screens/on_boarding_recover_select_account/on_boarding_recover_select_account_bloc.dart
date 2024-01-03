@@ -9,10 +9,13 @@ final class OnBoardingRecoverSelectAccountBloc extends Bloc<
   final SmartAccountUseCase _smartAccountUseCase;
   final WalletUseCase _walletUseCase;
   final Web3AuthUseCase _web3authUseCase;
+  final RecoveryUseCase _recoveryUseCase;
 
   OnBoardingRecoverSelectAccountBloc(
     this._smartAccountUseCase,
-    this._walletUseCase, this._web3authUseCase,{
+    this._walletUseCase,
+    this._web3authUseCase,
+    this._recoveryUseCase, {
     required GoogleAccount googleAccount,
   }) : super(
           OnboardingRecoverSelectAccountState(
@@ -42,7 +45,7 @@ final class OnBoardingRecoverSelectAccountBloc extends Bloc<
       final String recoveryAddress = wallet.bech32Address;
 
       final List<PyxisRecoveryAccount> accounts =
-          await _smartAccountUseCase.getRecoveryAccountByAddress(
+          await _recoveryUseCase.getRecoveryAccountByAddress(
         recoveryAddress: recoveryAddress,
       );
 

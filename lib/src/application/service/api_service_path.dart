@@ -4,5 +4,5 @@ sealed class ApiServicePath{
 
 
   static const String recoveryAccounts = '/get_list_recover_account';
-  static const String insertRecovery = '/recovery_account';
+  static const String grantFee = '/fee-grant/grantFee';
 }

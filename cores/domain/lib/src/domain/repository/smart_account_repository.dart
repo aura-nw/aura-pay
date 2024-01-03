@@ -15,6 +15,7 @@ abstract interface class SmartAccountRepository {
     String? memo,
     String? fee,
     int? gasLimit,
+    String ?granter,
   });
 
   Future<TransactionInformation> sendToken({
@@ -56,9 +57,5 @@ abstract interface class SmartAccountRepository {
     required String smartAccountAddress,
     String? fee,
     int? gasLimit,
-  });
-
-  Future<List<PyxisRecoveryAccount>> getRecoveryAccountByAddress({
-    required Map<String, dynamic> queries,
   });
 }

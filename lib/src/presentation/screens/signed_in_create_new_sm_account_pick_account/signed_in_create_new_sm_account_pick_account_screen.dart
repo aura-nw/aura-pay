@@ -67,13 +67,17 @@ class _SignedInCreateNewSmAccountPickAccountScreenState
                 case SignedInCreateNewPickAccountStatus.onLoading:
                   _showLoadingDialog(appTheme);
                   break;
-                case SignedInCreateNewPickAccountStatus.onCheckAddressEnoughFee:
+                case SignedInCreateNewPickAccountStatus.onActiveSmartAccount:
+                  AppNavigator.pop();
+                  _showActiveSmartAccount(appTheme);
+                  break;
+                case SignedInCreateNewPickAccountStatus
+                      .onActiveSmartAccountSuccess:
                   AppNavigator.pop();
 
                   AppNavigator.replaceAllWith(RoutePath.home);
                   break;
-                case SignedInCreateNewPickAccountStatus
-                      .onCheckAddressUnEnoughFee:
+                case SignedInCreateNewPickAccountStatus.onGrantFeeError:
                   AppNavigator.pop();
 
                   AppNavigator.push(
@@ -214,6 +218,16 @@ class _SignedInCreateNewSmAccountPickAccountScreenState
       context,
       content: AppLocalizationManager.of(context).translate(
         LanguageKey.signedInCreateNewSmartAccountScreenDialogLoadingTitle,
+      ),
+      appTheme: appTheme,
+    );
+  }
+
+  void _showActiveSmartAccount(AppTheme appTheme) {
+    DialogProvider.showLoadingDialog(
+      context,
+      content: AppLocalizationManager.of(context).translate(
+        LanguageKey.signedInCreateNewSmartAccountScreenDialogLoadingCreateTitle,
       ),
       appTheme: appTheme,
     );

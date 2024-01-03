@@ -11,9 +11,9 @@ extension PyxisEnvironmentMapper on PyxisEnvironment {
       case PyxisEnvironment.serenity:
         return 'serenity';
       case PyxisEnvironment.staging:
-        return 'auratestnet';
+        return 'euphoria';
       case PyxisEnvironment.production:
-        return 'auratestnet';
+        return 'xstaxy';
     }
   }
 
@@ -54,10 +54,18 @@ class PyxisMobileConfig {
   Map<String, dynamic> get auraNetWorkConfig =>
       jsonDecode(configs['AURA_NET_WORK_CONFIG']);
 
+  Map<String, dynamic> get hasuraNetworkConfig =>
+      jsonDecode(configs['HASURA_NETWORK_CONFIG']);
+
   Map<String, dynamic> get pyxisNetworkConfig =>
       jsonDecode(configs['PYXIS_NETWORK_CONFIG']);
 
+  String get hasuraBaseUrl => hasuraNetworkConfig['baseUrl'];
+
+  String get hasuraVersion => hasuraNetworkConfig['version'];
+
   String get pyxisBaseUrl => pyxisNetworkConfig['baseUrl'];
+
   String get pyxisVersion => pyxisNetworkConfig['version'];
 
   String get horoScopeUrl => horoScopeConfig['baseUrl'];

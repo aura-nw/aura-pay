@@ -13,14 +13,14 @@ class TransactionApiServiceImpl implements TransactionApiService {
   const TransactionApiServiceImpl(this._apiServiceGenerate);
 
   @override
-  Future<BaseResponseV2> getTransaction({
+  Future<AuraBaseResponseV2> getTransaction({
     required Map<String, dynamic> body,
   }) {
     return _apiServiceGenerate.getTransactions(body);
   }
 
   @override
-  Future<BaseResponseV2> getTransactionDetail({
+  Future<AuraBaseResponseV2> getTransactionDetail({
     required Map<String, dynamic> body,
   }) {
     return _apiServiceGenerate.getTransactionDetail(body);
@@ -33,12 +33,12 @@ abstract class TransactionApiServiceGenerate {
       _TransactionApiServiceGenerate;
 
   @POST(ApiServicePath.graphiql)
-  Future<BaseResponseV2> getTransactions(
+  Future<AuraBaseResponseV2> getTransactions(
     @Body() Map<String, dynamic> body,
   );
 
   @POST(ApiServicePath.graphiql)
-  Future<BaseResponseV2> getTransactionDetail(
+  Future<AuraBaseResponseV2> getTransactionDetail(
     @Body() Map<String, dynamic> body,
   );
 }

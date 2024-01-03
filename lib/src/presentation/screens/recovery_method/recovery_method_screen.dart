@@ -58,7 +58,7 @@ class _RecoveryMethodScreenState extends State<RecoveryMethodScreen>
       );
 
       await Future.delayed(const Duration(
-        microseconds: 1100,
+        microseconds: 2500,
       ));
       if (context.mounted) {
         showSuccessToast(

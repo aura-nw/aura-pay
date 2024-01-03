@@ -11,7 +11,7 @@ final class TransactionRepositoryImpl implements TransactionRepository {
     required Map<String, dynamic> body,
     required String environment,
   }) async {
-    final BaseResponseV2 response = await _apiService.getTransaction(
+    final AuraBaseResponseV2 response = await _apiService.getTransaction(
       body: body,
     );
 
@@ -45,7 +45,7 @@ final class TransactionRepositoryImpl implements TransactionRepository {
   @override
   Future<TransactionInformation> getTransactionDetail(
       {required Map<String, dynamic> body, required String environment}) async {
-    final BaseResponseV2 responseV2 =
+    final AuraBaseResponseV2 responseV2 =
         await _apiService.getTransactionDetail(body: body);
 
     final data = responseV2.handleResponse();

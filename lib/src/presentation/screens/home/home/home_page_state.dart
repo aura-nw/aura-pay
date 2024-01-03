@@ -8,5 +8,6 @@ class HomePageState with _$HomePageState {
   const factory HomePageState({
     @Default([]) List<PyxisBalance> balances,
     double ?price,
+    @Default(false) bool hideTokenValue,
   }) = _HomePageState;
 }

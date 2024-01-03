@@ -8,7 +8,7 @@ extension ExceptionMapper on AppError {
 }
 
 class PyxisException {
-  final int code;
+  final String code;
   final String message;
 
   const PyxisException({required this.code, required this.message});

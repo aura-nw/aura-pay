@@ -14,6 +14,7 @@ import 'package:aura_smart_account/src/proto/cosmos/tx/v1beta1/export.dart'
 import 'package:aura_smart_account/src/proto/google/protobuf/export.dart' as pb;
 import 'package:aura_smart_account/src/proto/cosmos/crypto/secp256k1/export.dart'
     as secp256;
+import 'package:hex/hex.dart';
 import 'wallet_helper.dart';
 
 typedef AccountDeserializer = Account Function(pb.Any);
@@ -146,5 +147,9 @@ sealed class AuraSmartAccountHelper {
     );
 
     return pubKeyGenerate;
+  }
+
+  static String encodeByte(Uint8List bytes){
+    return HEX.encode(bytes);
   }
 }

@@ -54,16 +54,76 @@ class _HomeScreenState extends State<HomeScreen>
 
   final HomeScreenBloc _bloc = getIt.get<HomeScreenBloc>();
 
-  final HomePageObserver _observer = getIt.get<HomePageObserver>();
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
   void _onEmitAccountChange() {
-    _observer.emit(emitParam: true);
+    _observer.emit(
+      emitParam: HomeScreenEmitParam(
+        event: HomeScreenObserver.onListenAccountChangeEvent,
+        data: true,
+      ),
+    );
+  }
+
+  void _listenHomeObserver(HomeScreenEmitParam param) {
+    if (param.event == HomeScreenObserver.onHomePageDropdownClickEvent) {
+      if (param.data == true && currentSection.index != 1) {
+        // Change to account page. Index = 1. Maybe change index late.
+        setState(() {
+          currentSection = HomeScreenSection.accounts;
+        });
+      }
+    }
+    // else if (param.event ==
+    //     HomeScreenObserver.createSmartAccountSuccessfulEvent) {
+    //   Future.delayed(
+    //     const Duration(
+    //       milliseconds: 2500,
+    //     ),
+    //   ).then(
+    //     (value) {
+    //       showToast(
+    //         AppLocalizationManager.of(context).translate(
+    //           LanguageKey.homeScreenCreateSmartAccountSuccessFul,
+    //         ),
+    //       );
+    //     },
+    //   );
+    // } else if (param.event == HomeScreenObserver.importAccountSuccessfulEvent) {
+    //   Future.delayed(
+    //     const Duration(
+    //       milliseconds: 2500,
+    //     ),
+    //   ).then(
+    //     (value) {
+    //       showToast(
+    //         AppLocalizationManager.of(context).translate(
+    //           LanguageKey.homeScreenImportAccountSuccessFul,
+    //         ),
+    //       );
+    //     },
+    //   );
+    // } else if (param.event ==
+    //     HomeScreenObserver.recoverAccountSuccessfulEvent) {
+    //   Future.delayed(
+    //     const Duration(
+    //       milliseconds: 2500,
+    //     ),
+    //   ).then(
+    //     (value) {
+    //       showToast(
+    //         AppLocalizationManager.of(context).translate(
+    //           LanguageKey.homeScreenRecoverSmartAccountSuccessFul,
+    //         ),
+    //       );
+    //     },
+    //   );
+    // }
   }
 
   @override
   void initState() {
-    GetIt.I.registerSingleton<IBottomSheetService>(BottomSheetService());
-
+    _observer.addListener(_listenHomeObserver);
     _bloc.registerCallBack(_onEmitAccountChange);
     _bloc.add(
       const HomeScreenEventOnInit(),
@@ -94,6 +154,13 @@ class _HomeScreenState extends State<HomeScreen>
 
   void _onReceiveTap() {
     _receiveWidgetController.forward();
+  }
+
+  @override
+  void dispose() {
+    _observer.removeListener(_listenHomeObserver);
+    _bloc.registerCallBack(_onEmitAccountChange);
+    super.dispose();
   }
 
   // Override the build method for the widget

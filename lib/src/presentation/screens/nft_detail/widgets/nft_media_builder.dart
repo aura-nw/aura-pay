@@ -50,7 +50,10 @@ class NFTMediaBuilder extends StatelessWidget {
           appTheme: appTheme,
         );
       case MediaType.audio:
-        return const SizedBox();
+        return NFTImageWidget(
+          url: mediaInfo.image.url ?? '',
+          appTheme: appTheme,
+        );
     }
   }
 }

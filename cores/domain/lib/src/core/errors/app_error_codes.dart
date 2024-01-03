@@ -1,3 +1,3 @@
 class AppErrorCodes {
-  static const int walletConnectError = 10001;
+  static const String walletConnectError = '10001';
 }

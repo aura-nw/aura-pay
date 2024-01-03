@@ -4,8 +4,7 @@ import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/pyxic_mobile.dart';
 
 /// The environment to use
-PyxisEnvironment selectedEnvironment =
-    PyxisEnvironment.serenity; // The environment
+PyxisEnvironment selectedEnvironment = PyxisEnvironment.staging; // The environment
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +18,7 @@ void main() async {
       await dotenv.load(fileName: 'assets/.env.serenity');
       break;
     case PyxisEnvironment.staging:
-      await dotenv.load(fileName: 'assets/.env.staging');
+      await dotenv.load(fileName: 'assets/.env.euphoria');
       break;
     case PyxisEnvironment.production:
       await dotenv.load(fileName: 'assets/.env.prod');

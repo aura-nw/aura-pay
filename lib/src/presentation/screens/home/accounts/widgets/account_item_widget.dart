@@ -12,6 +12,7 @@ class AccountItemWidget extends AuraSmartAccountBaseWidget {
   final bool onUsing;
   final bool isSmartAccount;
   final VoidCallback onMoreTap;
+  final VoidCallback? onChoose;
 
   const AccountItemWidget({
     this.onUsing = false,
@@ -20,96 +21,119 @@ class AccountItemWidget extends AuraSmartAccountBaseWidget {
     required super.address,
     required super.accountName,
     required this.onMoreTap,
+    this.onChoose,
     super.key,
   });
 
   @override
   Widget accountNameBuilder(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          accountName,
-          style: AppTypoGraPhy.heading02.copyWith(
-            color: appTheme.contentColorBlack,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onChoose,
+      child: Row(
+        children: [
+          Text(
+            accountName,
+            style: AppTypoGraPhy.heading02.copyWith(
+              color: appTheme.contentColorBlack,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        if (onUsing) ...[
-          const SizedBox(
-            width: BoxSize.boxSize03,
-          ),
-          SvgPicture.asset(
-            AssetIconPath.accountsCheck,
-          ),
-        ]
-      ],
+          if (onUsing) ...[
+            const SizedBox(
+              width: BoxSize.boxSize03,
+            ),
+            SvgPicture.asset(
+              AssetIconPath.accountsCheck,
+            ),
+          ]
+        ],
+      ),
     );
   }
 
   @override
   Widget actionFormBuilder(BuildContext context) {
-    return Row(
-      children: [
-        if (isSmartAccount) ...[
-          Container(
-            padding: const EdgeInsets.all(
-              Spacing.spacing02,
-            ),
-            margin: const EdgeInsets.only(
-              right: Spacing.spacing06,
-            ),
-            decoration: BoxDecoration(
-              color: appTheme.surfaceColorBrandLight,
-              borderRadius: BorderRadius.circular(
-                BorderRadiusSize.borderRadiusRound,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onMoreTap,
+      child: Padding(
+        padding: isSmartAccount
+            ? EdgeInsets.zero
+            : const EdgeInsets.symmetric(
+                horizontal: Spacing.spacing03,
               ),
-            ),
-            child: AppLocalizationProvider(
-              builder: (localization, _) {
-                return Text(
-                  localization.translate(
-                    LanguageKey.accountsPageSmartAccountLabel,
+        child: Row(
+          children: [
+            if (isSmartAccount) ...[
+              Container(
+                padding: const EdgeInsets.all(
+                  Spacing.spacing02,
+                ),
+                margin: const EdgeInsets.only(
+                  right: Spacing.spacing06,
+                ),
+                decoration: BoxDecoration(
+                  color: appTheme.surfaceColorBrandLight,
+                  borderRadius: BorderRadius.circular(
+                    BorderRadiusSize.borderRadiusRound,
                   ),
-                  style: AppTypoGraPhy.body02.copyWith(
-                    color: appTheme.contentColorBrand,
-                  ),
-                );
-              },
+                ),
+                child: AppLocalizationProvider(
+                  builder: (localization, _) {
+                    return Text(
+                      localization.translate(
+                        LanguageKey.accountsPageSmartAccountLabel,
+                      ),
+                      style: AppTypoGraPhy.body02.copyWith(
+                        color: appTheme.contentColorBrand,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+            SvgPicture.asset(
+              AssetIconPath.accountsMore,
             ),
-          ),
-        ],
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onMoreTap,
-          child: SvgPicture.asset(
-            AssetIconPath.accountsMore,
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
   @override
   Widget addressBuilder(BuildContext context) {
-    return Text(
-      address.addressView,
-      style: AppTypoGraPhy.body02.copyWith(
-        color: appTheme.contentColor500,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onChoose,
+      child: Text(
+        address.addressView,
+        style: AppTypoGraPhy.body02.copyWith(
+          color: appTheme.contentColor500,
+        ),
       ),
     );
   }
 
   @override
   Widget avatarBuilder(BuildContext context) {
-    return SvgPicture.asset(
-      AssetIconPath.commonSmartAccountAvatarDefault,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onChoose,
+      child: SvgPicture.asset(
+        AssetIconPath.commonSmartAccountAvatarDefault,
+      ),
     );
   }
 }
 
 class AccountItemImportedWidget extends AuraSmartAccountBaseWidget {
+  final bool isSmartAccount;
+
   const AccountItemImportedWidget({
+    this.isSmartAccount = false,
     required super.appTheme,
     required super.address,
     required super.accountName,
@@ -130,31 +154,33 @@ class AccountItemImportedWidget extends AuraSmartAccountBaseWidget {
 
   @override
   Widget actionFormBuilder(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal:  Spacing.spacing03,
-        vertical:  Spacing.spacing02,
-      ),
-      decoration: BoxDecoration(
-        color: appTheme.surfaceColorGrayDark,
-        borderRadius: BorderRadius.circular(
-          BorderRadiusSize.borderRadiusRound,
-        ),
-      ),
-      child: AppLocalizationProvider(
-        builder: (localization, _) {
-          return Text(
-            localization.translate(
-              LanguageKey.accountsPageImported,
+    return isSmartAccount
+        ? const SizedBox.shrink()
+        : Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Spacing.spacing03,
+              vertical: Spacing.spacing02,
             ),
-            style: AppTypoGraPhy.body02.copyWith(
-              color: appTheme.contentColorBlack,
+            decoration: BoxDecoration(
+              color: appTheme.surfaceColorGrayDark,
+              borderRadius: BorderRadius.circular(
+                BorderRadiusSize.borderRadiusRound,
+              ),
             ),
-            textAlign: TextAlign.end,
+            child: AppLocalizationProvider(
+              builder: (localization, _) {
+                return Text(
+                  localization.translate(
+                    LanguageKey.accountsPageImported,
+                  ),
+                  style: AppTypoGraPhy.body02.copyWith(
+                    color: appTheme.contentColorBlack,
+                  ),
+                  textAlign: TextAlign.end,
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
   }
 
   @override

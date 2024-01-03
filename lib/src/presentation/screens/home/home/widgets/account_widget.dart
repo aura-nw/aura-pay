@@ -98,30 +98,32 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
   // Override the accountNameBuilder method
   @override
   Widget accountNameBuilder(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          accountName,
-          style: AppTypoGraPhy.heading02.copyWith(
-            color: appTheme.contentColorWhite,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: (){
+        onCopy(
+          address,
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            accountName,
+            style: AppTypoGraPhy.heading02.copyWith(
+              color: appTheme.contentColorWhite,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        const SizedBox(
-          width: BoxSize.boxSize04,
-        ),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => onCopy(
-            address,
+          const SizedBox(
+            width: BoxSize.boxSize04,
           ),
-          child: SvgPicture.asset(
+          SvgPicture.asset(
             AssetIconPath.homeCopy,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -131,8 +133,15 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onShowMoreAccount,
-      child: SvgPicture.asset(
-        AssetIconPath.homeArrowDown,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: Spacing.spacing04,
+          bottom: Spacing.spacing04,
+          left: Spacing.spacing04,
+        ),
+        child: SvgPicture.asset(
+          AssetIconPath.homeArrowDown,
+        ),
       ),
     );
   }
@@ -159,10 +168,7 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
 
 // Define a private class named _HomeAccountReceiveWidget that extends AuraSmartAccountBaseWidget
 final class _HomeAccountReceiveWidget extends AuraSmartAccountBaseWidget {
-  final void Function(String) onCopy;
-
   const _HomeAccountReceiveWidget({
-    required this.onCopy,
     required super.appTheme,
     required super.address,
     required super.accountName,
@@ -203,14 +209,8 @@ final class _HomeAccountReceiveWidget extends AuraSmartAccountBaseWidget {
         const SizedBox(
           width: BoxSize.boxSize04,
         ),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => onCopy(
-            address,
-          ),
-          child: SvgPicture.asset(
-            AssetIconPath.homeReceiveCopyAddress,
-          ),
+        SvgPicture.asset(
+          AssetIconPath.homeReceiveCopyAddress,
         )
       ],
     );
@@ -289,22 +289,25 @@ class AccountCardReceiveWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Spacing.spacing04,
-        vertical: Spacing.spacing05,
-      ),
-      decoration: BoxDecoration(
-        color: appTheme.surfaceColorGrayLight,
-        borderRadius: BorderRadius.circular(
-          BorderRadiusSize.borderRadius05,
+    return GestureDetector(
+      onTap: () => onCopy(address),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: Spacing.spacing04,
+          vertical: Spacing.spacing05,
         ),
-      ),
-      child: _HomeAccountReceiveWidget(
-        onCopy: onCopy,
-        appTheme: appTheme,
-        address: address,
-        accountName: accountName,
+        decoration: BoxDecoration(
+          color: appTheme.surfaceColorGrayLight,
+          borderRadius: BorderRadius.circular(
+            BorderRadiusSize.borderRadius05,
+          ),
+        ),
+        child: _HomeAccountReceiveWidget(
+          appTheme: appTheme,
+          address: address,
+          accountName: accountName,
+        ),
       ),
     );
   }

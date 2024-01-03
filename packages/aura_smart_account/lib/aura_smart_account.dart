@@ -19,6 +19,7 @@ export 'package:aura_smart_account/src/core/definitions/aura_smart_account_error
 export 'package:aura_smart_account/src/core/definitions/fee.dart';
 export 'package:aura_smart_account/src/core/definitions/gas_price.dart';
 export 'package:aura_smart_account/src/core/helpers/cosmos_helper.dart';
+export 'package:aura_smart_account/src/core/helpers/aura_smart_account_helper.dart';
 export 'src/export_type.dart';
 
 /// AuraSmartAccount is an interface. It define some methods to support for aura smart account
@@ -48,11 +49,12 @@ abstract interface class AuraSmartAccount {
   });
 
   /// Active a smart account
-  /// This method has to pass six parameters include: [userPrivateKey] as Uint8List,
+  /// This method has to pass seven parameters include: [userPrivateKey] as Uint8List,
   /// [smartAccountAddress] as String,
   /// [salt] as Uint8List?,
   /// [memo] as String?,
   /// [fee] as [AuraSmartAccountFee]?,
+  /// [granter] as [String]?,
   /// Response a [TxResponse]
   /// It can throw [AuraSmartAccountError]
   Future<TxResponse> activeSmartAccount({
@@ -61,6 +63,7 @@ abstract interface class AuraSmartAccount {
     Uint8List? salt,
     String? memo,
     AuraSmartAccountFee? fee,
+    String ?granter,
   });
 
   /// Simulate send token fee

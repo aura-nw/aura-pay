@@ -6,18 +6,18 @@ abstract class BaseResponse<T> {
   const BaseResponse({this.data});
 }
 
-final class BaseResponseV2<T> extends BaseResponse<T> {
+final class AuraBaseResponseV2<T> extends BaseResponse<T> {
   final int code;
   final String message;
 
-  const BaseResponseV2({
+  const AuraBaseResponseV2({
     required this.code,
     super.data,
     required this.message,
   });
 
-  factory BaseResponseV2.fromJson(Map<String, dynamic> json) {
-    return BaseResponseV2(
+  factory AuraBaseResponseV2.fromJson(Map<String, dynamic> json) {
+    return AuraBaseResponseV2(
       code: json['code'],
       data: json['data'],
       message: json['message'],
@@ -31,31 +31,61 @@ final class BaseResponseV2<T> extends BaseResponse<T> {
 
     throw AppError(
       message: message,
-      code: code,
+      code: code.toString(),
     );
   }
 }
 
-final class BaseResponseV1<T> extends BaseResponse<T> {
-  const BaseResponseV1({
+final class AuraBaseResponseV1<T> extends BaseResponse<T> {
+  const AuraBaseResponseV1({
     super.data,
   });
 
-  factory BaseResponseV1.fromJson(Map<String, dynamic> json) {
-    return BaseResponseV1(
+  factory AuraBaseResponseV1.fromJson(Map<String, dynamic> json) {
+    return AuraBaseResponseV1(
       data: json['data'],
     );
   }
 }
 
-final class PyxisBaseResponse extends BaseResponse<Map<String,dynamic>> {
+final class HasuraBaseResponse<T> extends BaseResponse<T> {
+  const HasuraBaseResponse({
+    super.data,
+  });
+
+  factory HasuraBaseResponse.fromJson(Map<String, dynamic> json) {
+    return HasuraBaseResponse(
+      data: json['data'],
+    );
+  }
+}
+
+final class PyxisBaseResponse<T> extends BaseResponse<T> {
+  final String errorCode;
+  final String message;
+
   const PyxisBaseResponse({
+    required this.errorCode,
+    required this.message,
     super.data,
   });
 
   factory PyxisBaseResponse.fromJson(Map<String, dynamic> json) {
     return PyxisBaseResponse(
-      data: json,
+      errorCode: json['ErrorCode']?.toString() ?? '',
+      message: json['Message'] ?? '',
+      data: json['Data'],
+    );
+  }
+
+  T? handleResponse() {
+    if (errorCode == 'SUCCESSFUL') {
+      return data;
+    }
+
+    throw AppError(
+      message: message,
+      code: errorCode,
     );
   }
 }

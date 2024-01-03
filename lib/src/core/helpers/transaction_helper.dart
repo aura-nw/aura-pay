@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:domain/domain.dart';
-import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/transaction_enum.dart';
 
@@ -19,21 +18,6 @@ sealed class TransactionHelper {
             .toList(),
       );
     return msgSend;
-  }
-
-  static MsgRecover parseMsgRecover(Map<String, dynamic> msg) {
-    MsgRecover msgRecover = MsgRecover.create();
-
-    return msgRecover;
-  }
-
-  static MsgExecuteContract parseMsgExecuteContract(Map<String, dynamic> msg) {
-    MsgExecuteContract msgExecuteContract = MsgExecuteContract.create()
-      ..msg = utf8.encode(msg['msg'].toString())
-      ..contract = msg['contract']
-      ..sender = msg['sender'];
-
-    return msgExecuteContract;
   }
 
   static bool validateMsgSetRecovery(Map<String, dynamic> msg) {
@@ -60,28 +44,25 @@ sealed class TransactionHelper {
   static Future<TransactionInformation> checkTransactionInfo(
     String txHash,
     int times, {
-    required TransactionUseCase transactionUseCase,
-    required PyxisMobileConfig config,
+    required SmartAccountUseCase smartAccountUseCase,
   }) async {
     await Future.delayed(
       const Duration(
-        seconds: 3,
+        milliseconds: 2100,
       ),
     );
     try {
-      return await transactionUseCase.getTransactionDetail(
+      return await smartAccountUseCase.getTx(
         txHash: txHash,
-        environment: config.environment.environmentString,
       );
     } catch (e) {
-      if (times == 4) {
+      if (times == 5) {
         rethrow;
       }
       return checkTransactionInfo(
         txHash,
         times + 1,
-        config: config,
-        transactionUseCase: transactionUseCase,
+        smartAccountUseCase: smartAccountUseCase,
       );
     }
   }

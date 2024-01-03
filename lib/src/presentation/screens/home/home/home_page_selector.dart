@@ -31,3 +31,17 @@ final class HomePagePriceSelector
           ),
         );
 }
+
+final class HomePageHideTokenValueSelector
+    extends BlocSelector<HomePageBloc, HomePageState, bool> {
+  HomePageHideTokenValueSelector({
+    Key? key,
+    required Widget Function(bool) builder,
+  }) : super(
+    key: key,
+    selector: (state) => state.hideTokenValue,
+    builder: (_, hideTokenValue) => builder(
+      hideTokenValue,
+    ),
+  );
+}

@@ -15,13 +15,11 @@ class SignedInCreateNewSmAccountScanFeeBloc extends Bloc<
   final SmartAccountUseCase _smartAccountUseCase;
   final AuraAccountUseCase _accountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
-  final TransactionUseCase _transactionUseCase;
 
   SignedInCreateNewSmAccountScanFeeBloc(
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
-    this._accountUseCase,
-    this._transactionUseCase, {
+    this._accountUseCase, {
     required String smartAccountAddress,
     required Uint8List privateKey,
     required Uint8List salt,
@@ -97,8 +95,7 @@ class SignedInCreateNewSmAccountScanFeeBloc extends Bloc<
       transactionInformation = await TransactionHelper.checkTransactionInfo(
         transactionInformation.txHash,
         0,
-        transactionUseCase: _transactionUseCase,
-        config: config,
+        smartAccountUseCase: _smartAccountUseCase,
       );
 
       if (transactionInformation.status == 0) {

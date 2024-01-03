@@ -23,6 +23,7 @@ class SmartAccountUseCase {
     String? memo,
     String? fee,
     int? gasLimit,
+    String ?granter,
   }) async {
     return _repository.activeSmartAccount(
       userPrivateKey: userPrivateKey,
@@ -31,6 +32,7 @@ class SmartAccountUseCase {
       gasLimit: gasLimit,
       salt: salt,
       memo: memo,
+      granter: granter,
     );
   }
 
@@ -113,16 +115,6 @@ class SmartAccountUseCase {
       smartAccountAddress: smartAccountAddress,
       fee: fee,
       gasLimit: gasLimit,
-    );
-  }
-
-  Future<List<PyxisRecoveryAccount>> getRecoveryAccountByAddress({
-    required String recoveryAddress,
-  }) {
-    return _repository.getRecoveryAccountByAddress(
-      queries: QueryRecoveryAccountParameter(
-        recoveryAddress: recoveryAddress,
-      ).toJson(),
     );
   }
 }

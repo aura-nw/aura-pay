@@ -10,7 +10,7 @@ final class NFTApiServiceImpl implements NFTApiService {
 
   const NFTApiServiceImpl(this._nftApiServiceGenerate);
   @override
-  Future<BaseResponseV2> getNFTsByAddress({
+  Future<AuraBaseResponseV2> getNFTsByAddress({
     required Map<String, dynamic> body,
   }) {
     return _nftApiServiceGenerate.getNFTs(body);
@@ -23,7 +23,7 @@ abstract class NFTApiServiceGenerate {
       _NFTApiServiceGenerate;
 
   @POST(ApiServicePath.graphiql)
-  Future<BaseResponseV2> getNFTs(
+  Future<AuraBaseResponseV2> getNFTs(
     @Body() Map<String, dynamic> body,
   );
 }

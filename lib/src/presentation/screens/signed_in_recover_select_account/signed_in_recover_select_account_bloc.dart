@@ -9,11 +9,13 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
   final SmartAccountUseCase _smartAccountUseCase;
   final WalletUseCase _walletUseCase;
   final Web3AuthUseCase _web3authUseCase;
+  final RecoveryUseCase _recoveryUseCase;
 
   SingedInRecoverSelectAccountBloc(
     this._smartAccountUseCase,
     this._web3authUseCase,
-    this._walletUseCase, {
+    this._walletUseCase,
+    this._recoveryUseCase, {
     required GoogleAccount googleAccount,
   }) : super(
           SingedInRecoverSelectAccountState(
@@ -41,7 +43,7 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
       );
 
       List<PyxisRecoveryAccount> accounts =
-          await _smartAccountUseCase.getRecoveryAccountByAddress(
+          await _recoveryUseCase.getRecoveryAccountByAddress(
         recoveryAddress: wallet.bech32Address,
       );
 

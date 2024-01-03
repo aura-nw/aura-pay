@@ -19,6 +19,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
     String? memo,
     String? fee,
     int? gasLimit,
+    String ?granter,
   }) async {
     AuraSmartAccountFee? smartAccountFee;
 
@@ -35,6 +36,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       memo: memo,
       salt: salt,
       fee: smartAccountFee,
+      granter: granter,
     );
 
     return TransactionInformationDto(

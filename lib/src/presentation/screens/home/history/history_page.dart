@@ -36,10 +36,10 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   final HistoryPageBloc _bloc = getIt.get<HistoryPageBloc>();
 
-  final HomePageObserver _observer = getIt.get<HomePageObserver>();
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
-  void _listenHomePageUpdateAccount(bool status) async {
-    if (status) {
+  void _listenHomePageUpdateAccount(HomeScreenEmitParam param) async {
+    if(param.event == HomeScreenObserver.onListenAccountChangeEvent && param.data == true){
       // update account
       _bloc.add(
         const HistoryPageEventOnUpdateAccount(),
@@ -89,14 +89,17 @@ class _HistoryPageState extends State<HistoryPage> {
                       builder: (accounts) {
                         return HistoryPageSelectedAccountSelector(
                           builder: (selectedAccount) {
-                            return HistoryAccountWidget(
-                              onShowMoreAccount: () {
+                            return GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
                                 _showMoreAccount(
                                     appTheme, accounts, selectedAccount);
                               },
-                              appTheme: appTheme,
-                              address: selectedAccount?.address ?? '',
-                              accountName: selectedAccount?.name ?? '',
+                              child: HistoryAccountWidget(
+                                appTheme: appTheme,
+                                address: selectedAccount?.address ?? '',
+                                accountName: selectedAccount?.name ?? '',
+                              ),
                             );
                           },
                         );
@@ -106,20 +109,15 @@ class _HistoryPageState extends State<HistoryPage> {
                   const SizedBox(
                     height: BoxSize.boxSize07,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Spacing.spacing07,
-                    ),
-                    child: HistoryTabBarWidget(
-                      appTheme: appTheme,
-                      onChange: (index) {
-                        _bloc.add(
-                          HistoryPageEventOnFilter(
-                            index,
-                          ),
-                        );
-                      },
-                    ),
+                  HistoryTabBarWidget(
+                    appTheme: appTheme,
+                    onChange: (index) {
+                      _bloc.add(
+                        HistoryPageEventOnFilter(
+                          index,
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: BoxSize.boxSize05,
