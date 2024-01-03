@@ -31,6 +31,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signe
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:pyxis_mobile/src/presentation/screens/wallet_connect_screen/wallet_connect_screen.dart';
 
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
 import 'presentation/screens/on_boarding_import_key/on_boarding_import_key_screen.dart';
@@ -93,6 +94,8 @@ sealed class RoutePath {
 
   static const String settingChangePassCode =
       '$settingPassCodeAndBioMetric/change_passcode';
+
+  static const String walletConnect = '$home/wallet_connect';
 }
 
 sealed class AppNavigator {
@@ -108,6 +111,15 @@ sealed class AppNavigator {
       case RoutePath.reLogin:
         return _defaultRoute(
           const OnBoardingReLoginScreen(),
+          settings,
+        );
+      case RoutePath.walletConnect:
+        String url = settings.arguments as String;
+
+        return _defaultRoute(
+          WalletConnectScreen(
+            url: url,
+          ),
           settings,
         );
       case RoutePath.getStarted:

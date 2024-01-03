@@ -12,7 +12,8 @@ import 'package:pyxis_mobile/src/application/provider/normal_storage/normal_stor
 import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
-import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
+import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_provider.impl.dart';
+// import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/service/balance/token_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/nft/nft_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/smart_account/smart_account_api_service_impl.dart';
@@ -183,9 +184,9 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerLazySingleton<Web3AuthProvider>(
-    () => const Web3AuthProviderImpl(),
-  );
+  // getIt.registerLazySingleton<Web3AuthProvider>(
+  //   () => const Web3AuthProviderImpl(),
+  // );
 
   /// Local
 

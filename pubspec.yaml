@@ -73,6 +73,7 @@ dependencies:
   share_plus: ^7.2.1
   web3auth_flutter: ^3.1.1
   local_auth: ^2.1.7
+  walletconnect_flutter_v2: ^2.1.11
 
   #core
   data:

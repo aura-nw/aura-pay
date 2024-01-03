@@ -1,13 +1,18 @@
 import 'dart:io';
 
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_mobile/src/application/provider/wallet_connect/bottom_sheet_service.dart';
+import 'package:pyxis_mobile/src/application/provider/wallet_connect/i_botton_sheet_service.dart';
+import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_provider.impl.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
@@ -40,7 +45,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin , CustomFlutterToast{
+class _HomeScreenState extends State<HomeScreen>
+    with TickerProviderStateMixin, CustomFlutterToast {
   late HomeScreenSection currentSection;
 
   late AnimationController _receiveWidgetController;
@@ -50,12 +56,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
 
   final HomePageObserver _observer = getIt.get<HomePageObserver>();
 
-  void _onEmitAccountChange(){
+  void _onEmitAccountChange() {
     _observer.emit(emitParam: true);
   }
 
   @override
   void initState() {
+    GetIt.I.registerSingleton<IBottomSheetService>(BottomSheetService());
+
     _bloc.registerCallBack(_onEmitAccountChange);
     _bloc.add(
       const HomeScreenEventOnInit(),
@@ -88,16 +96,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
     _receiveWidgetController.forward();
   }
 
+  // Override the build method for the widget
   @override
   Widget build(BuildContext context) {
+    // Use the AppThemeBuilder to dynamically set the app theme
     return AppThemeBuilder(
       builder: (appTheme) {
+        // Provide the SendTransactionBloc using BlocProvider
         return BlocProvider.value(
           value: _bloc,
+          // Use HomeScreenStatusSelector to handle different screen statuses
           child: HomeScreenStatusSelector(
             builder: (status) {
+              // Switch statement to handle different screen statuses
               switch (status) {
                 case HomeScreenStatus.loading:
+                  // Display a loading widget when the screen is in loading state
                   return Center(
                     child: AppLoadingWidget(
                       appTheme: appTheme,
@@ -105,8 +119,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
                   );
                 case HomeScreenStatus.loaded:
                 case HomeScreenStatus.error:
+                  // Stack widget to overlay multiple UI components
                   return Stack(
                     children: [
+                      // Main scaffold containing the home screen and bottom navigation bar
                       Scaffold(
                         body: HomeScreenTabBuilder(
                           currentSection: currentSection,
@@ -118,11 +134,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
                           ),
                           appTheme: appTheme,
                           onScanTap: () {
+                            // Show camera permission request when the scan button is tapped
                             _showRequestCameraPermission(
                               appTheme,
                             );
                           },
                           onTabSelect: (index) {
+                            // Handle tab selection and update the current section
                             final HomeScreenSection newSection =
                                 HomeScreenSection.values[index];
 
@@ -135,23 +153,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
                           },
                         ),
                       ),
+                      // AnimatedBuilder for receiving widget animation
                       AnimatedBuilder(
                         animation: _receiveWidgetController,
                         child: HomeScreenAccountsSelector(
                           builder: (accounts) {
+                            // Retrieve the first account (if available)
                             final account = accounts.firstOrNull;
+                            // Display the ReceiveTokenWidget with account details
                             return ReceiveTokenWidget(
                               accountName: account?.name ?? '',
                               address: account?.address ?? '',
                               theme: appTheme,
                               onSwipeUp: () async {
+                                // Reverse the animation when the widget is swiped up
                                 if (_receiveWidgetController.isCompleted) {
                                   await _receiveWidgetController.reverse();
-
                                   _receiveWidgetController.reset();
                                 }
                               },
                               onShareAddress: () {
+                                // Share the wallet address
                                 ShareNetWork.shareWalletAddress(
                                   account?.address ?? '',
                                 );
@@ -160,6 +182,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
                             );
                           },
                         ),
+                        // Apply translation to the child based on the animation value
                         builder: (context, child) {
                           return Transform.translate(
                             offset: Offset(
@@ -184,8 +207,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
     PermissionStatus status =
         await SystemPermissionHelper.getCurrentCameraPermissionStatus();
 
+    String? result;
+
     if (status.isGranted) {
-      final result = await AppNavigator.push(
+      result = await AppNavigator.push(
         RoutePath.scanner,
       );
     } else {
@@ -197,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
             AppNavigator.pop();
             SystemPermissionHelper.requestCameraPermission(
               onSuccessFul: () async {
-                final result = await AppNavigator.push(
+                result = await AppNavigator.push(
                   RoutePath.scanner,
                 );
               },
@@ -212,9 +237,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin ,
         );
       }
     }
+
+    await Future.delayed(Durations.long1);
+    if (result != null) {
+      await AppNavigator.push(
+        RoutePath.walletConnect,
+        result,
+      );
+    }
   }
 
-  void _onCopyAddress(String address)async{
+  void _onCopyAddress(String address) async {
     await Clipboard.setData(
       ClipboardData(text: address),
     );
