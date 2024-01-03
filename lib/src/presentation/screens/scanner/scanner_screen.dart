@@ -44,6 +44,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
                 onDetect: (barcodeCapture) async {
                   if (barcodeCapture.barcodes.isEmpty) return;
 
+                  await _controller.stop();
+
                   final barcode = barcodeCapture.barcodes[0];
 
                   AppNavigator.pop(

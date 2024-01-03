@@ -305,7 +305,9 @@ class _HomeScreenState extends State<HomeScreen>
       }
     }
 
-    await Future.delayed(Durations.long1);
+    await Future.delayed(
+      Durations.long1,
+    );
     if (result != null) {
       await AppNavigator.push(
         RoutePath.walletConnect,

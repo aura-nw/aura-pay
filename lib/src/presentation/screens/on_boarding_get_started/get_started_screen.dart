@@ -1,9 +1,12 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
@@ -76,9 +79,7 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                       text: localization.translate(
                         LanguageKey.onBoardingGetStartedScreenButtonTitle,
                       ),
-                      onPress: () => AppNavigator.replaceWith(
-                        RoutePath.choiceOption,
-                      ),
+                      onPress: _onStartedClick,
                     );
                   },
                 ),
@@ -150,6 +151,19 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _onStartedClick() async {
+    final appSecureUseCase = getIt.get<AppSecureUseCase>();
+
+    final bool hasPassCode = await appSecureUseCase.hasPassCode(
+      key: AppLocalConstant.passCodeKey,
+    );
+
+    AppNavigator.replaceWith(
+      RoutePath.choiceOption,
+      hasPassCode,
     );
   }
 }
