@@ -125,7 +125,17 @@ final class QueryTransactionParameter {
     query QueryTxOfAccount($startTime: timestamptz = null, $endTime: timestamptz = null, $limit: Int = null, $listTxMsgType: [String!] = null, $listTxMsgTypeNotIn: [String!] = null, $heightGT: Int = null, $heightLT: Int = null, $orderHeight: order_by = desc, $receiveAddress: String = null , $sender: String = null) {
   ${environment} {
     transaction(
-      where: {timestamp: {_lte: $endTime, _gte: $startTime}, transaction_messages: {type: {_in: $listTxMsgType, _nin: $listTxMsgTypeNotIn}, _and: {_or: [{ sender: { _eq: $sender}}, {transaction_message_receivers: { address: {_eq: $receiveAddress}}}]}}, _and: [{height: {_gt: $heightGT, _lt: $heightLT}}]}
+      where: {
+        timestamp: {
+          _lte: $endTime, _gte: $startTime
+        }, 
+        _or: [
+        {
+          transaction_messages: {
+            type: {
+              _in: $listTxMsgType, _nin: $listTxMsgTypeNotIn
+            }, 
+            sender: {_eq: $sender}}}, {transaction_messages: {type: {_in: $listTxMsgType, _nin: $listTxMsgTypeNotIn}, transaction_message_receivers: {address: {_eq: $receiveAddress}}}}], _and: [{height: {_gt: $heightGT, _lt: $heightLT}}]}
       limit: $limit
       order_by: {height: $orderHeight}
     ) {
