@@ -166,6 +166,9 @@ sealed class LanguageKey {
   static const String homeScreenBottomNavigatorBarAccounts = 'home_screen_bottom_navigator_bar_accounts';
   static const String homeScreenBottomNavigatorBarHistory = 'home_screen_bottom_navigator_bar_history';
   static const String homeScreenBottomNavigatorBarSetting = 'home_screen_bottom_navigator_bar_setting';
+  static const String homeScreenRecoverSmartAccountSuccessFul = 'home_screen_recover_smart_account_successful';
+  static const String homeScreenImportAccountSuccessFul = 'home_screen_import_account_successful';
+  static const String homeScreenCreateSmartAccountSuccessFul = 'home_screen_create_smart_account_successful';
 
   ///region home page
   static const String homePageSendToken = 'home_page_send_token';

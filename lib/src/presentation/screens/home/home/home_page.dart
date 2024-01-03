@@ -48,33 +48,37 @@ class _HomePageState extends State<HomePage>
 
   void _onHoneDropDownClick() {
     _observer.emit(
-      emitParam: {
-        HomeScreenObserver.onHomePageDropdownClickEvent: true,
-      },
+      emitParam: HomeScreenEmitParam(
+        event: HomeScreenObserver.onHomePageDropdownClickEvent,
+        data: true,
+      ),
     );
   }
 
-  void _onSelectedAccountChange(Map<String,dynamic> event){
-    final data = event[HomeScreenObserver.onSelectedAccountChangeEvent];
+  void _listenHomeObserver(HomeScreenEmitParam param) {
 
-    if(data is AuraAccount){
-      _bloc.add(
-        HomePageEventOnFetchTokenPriceWithAddress(
-          data.address,
-        ),
-      );
+    if(param.event == HomeScreenObserver.onSelectedAccountChangeEvent){
+      final data = param.data;
+      
+      if (data is AuraAccount) {
+        _bloc.add(
+          HomePageEventOnFetchTokenPriceWithAddress(
+            data.address,
+          ),
+        );
+      }
     }
   }
 
   @override
   void initState() {
-    _observer.addListener(_onSelectedAccountChange);
+    _observer.addListener(_listenHomeObserver);
     super.initState();
   }
 
   @override
   void dispose() {
-    _observer.removeListener(_onSelectedAccountChange);
+    _observer.removeListener(_listenHomeObserver);
     super.dispose();
   }
 

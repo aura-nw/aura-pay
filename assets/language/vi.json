@@ -136,6 +136,9 @@
   "home_screen_bottom_navigator_bar_accounts" : "Accounts",
   "home_screen_bottom_navigator_bar_history" : "History",
   "home_screen_bottom_navigator_bar_setting" : "Setting",
+  "home_screen_recover_smart_account_successful" : "Recover smart account successfully",
+  "home_screen_import_account_successful" : "Import account successfully",
+  "home_screen_create_smart_account_successful" : "Smart account created successfully",
 
   "home_page_send_token" : "Send",
   "home_page_receive_token" : "Receive",

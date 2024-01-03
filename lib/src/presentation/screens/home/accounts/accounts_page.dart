@@ -309,9 +309,10 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
 
     // refresh token home
     _observer.emit(
-      emitParam: {
-        HomeScreenObserver.onSelectedAccountChangeEvent: account,
-      },
+      emitParam: HomeScreenEmitParam(
+        event: HomeScreenObserver.onSelectedAccountChangeEvent,
+        data: account,
+      ),
     );
   }
 }

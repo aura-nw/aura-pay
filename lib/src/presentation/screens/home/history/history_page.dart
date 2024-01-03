@@ -38,8 +38,8 @@ class _HistoryPageState extends State<HistoryPage> {
 
   final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
-  void _listenHomePageUpdateAccount(Map<String,dynamic> event) async {
-    if(event[HomeScreenObserver.onListenAccountChangeEvent] == true){
+  void _listenHomePageUpdateAccount(HomeScreenEmitParam param) async {
+    if(param.event == HomeScreenObserver.onListenAccountChangeEvent && param.data == true){
       // update account
       _bloc.add(
         const HistoryPageEventOnUpdateAccount(),
