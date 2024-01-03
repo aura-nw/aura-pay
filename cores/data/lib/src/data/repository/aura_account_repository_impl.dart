@@ -20,12 +20,14 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
   }
 
   @override
-  Future<void> saveAccount(SaveAccountRequestParameter parameter) {
-    return _accountDatabaseService.saveAccount(
+  Future<AuraAccount> saveAccount(SaveAccountRequestParameter parameter) async{
+    final account = await _accountDatabaseService.saveAccount(
       type: parameter.type,
       address: parameter.address,
       accountName: parameter.accountName,
     );
+
+    return account.toEntity;
   }
 
   @override

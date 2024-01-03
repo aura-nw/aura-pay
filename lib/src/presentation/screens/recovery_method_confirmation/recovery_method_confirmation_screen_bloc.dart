@@ -16,15 +16,13 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
   final WalletUseCase _walletUseCase;
   final Web3AuthUseCase _web3authUseCase;
   final AuraAccountUseCase _accountUseCase;
-  final TransactionUseCase _transactionUseCase;
 
   RecoveryMethodConfirmationBloc(
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
     this._walletUseCase,
     this._web3authUseCase,
-    this._accountUseCase,
-    this._transactionUseCase, {
+    this._accountUseCase, {
     required RecoveryMethodConfirmationArgument argument,
   }) : super(
           RecoveryMethodConfirmationState(
@@ -146,8 +144,7 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
       information = await TransactionHelper.checkTransactionInfo(
         information.txHash,
         0,
-        transactionUseCase: _transactionUseCase,
-        config: config,
+        smartAccountUseCase: _smartAccountUseCase,
       );
 
       if (information.status == 0) {

@@ -20,9 +20,9 @@ sealed class AuraScan{
  }
 
  static const String _domainDev = 'https://explorer.dev.aura.network/';
- static const String _domainSerenity = 'https://serenity.aura.network/';
- static const String _domainEuphoria = 'https://euphoria.aura.network/';
- static const String _domainProduction = 'https://aura.network/';
+ static const String _domainSerenity = 'https://serenity.aurascan.io/';
+ static const String _domainEuphoria = 'https://euphoria.aurascan.io/';
+ static const String _domainProduction = 'https://aurascan.io/';
 
  static String account(String address) => '${_domain}account/$address';
  static String transaction(String hash) => '${_domain}transaction/$hash';

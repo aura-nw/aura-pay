@@ -35,25 +35,32 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
   }
 
   @override
-  Future<void> saveAccount({
+  Future<AuraAccountDto> saveAccount({
     required String address,
     required String accountName,
     required AuraAccountType type,
   }) async {
     int currentLength = await _isar.auraAccountDbs.count();
 
+    final AuraAccountDb accountDb = AuraAccountDb(
+      accountName: accountName,
+      accountAddress: address,
+      accountType: type,
+      indexDb: currentLength != 0 ? 1 : 0,
+    );
+
+    int id = accountDb.id;
+
     await _isar.writeTxn(
       () async {
-        final AuraAccountDb accountDb = AuraAccountDb(
-          accountName: accountName,
-          accountAddress: address,
-          accountType: type,
-          indexDb: currentLength != 0 ? 1 : 0,
-        );
-        await _isar.auraAccountDbs.put(
+        id = await _isar.auraAccountDbs.put(
           accountDb,
         );
       },
+    );
+
+    return accountDb.copyWith(
+      id: id,
     );
   }
 

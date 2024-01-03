@@ -8,18 +8,29 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 
 mixin CustomFlutterToast<T extends StatefulWidget> on State<T> {
-  final FToast _fToast = FToast();
+  late FToast _fToast;
+
+  void _init(){
+    _fToast = FToast();
+    _fToast.init(context);
+  }
 
   @override
   void initState() {
     super.initState();
-    _fToast.init(context);
+    _init();
   }
 
   @override
   void dispose() {
     _fToast.removeCustomToast();
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _init();
   }
 
   Widget _buildToast(String message) {

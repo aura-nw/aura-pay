@@ -6,8 +6,6 @@ import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/device.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 import 'on_boarding_pick_account_event.dart';
@@ -17,17 +15,13 @@ class OnBoardingPickAccountBloc
     extends Bloc<OnBoardingPickAccountEvent, OnBoardingPickAccountState> {
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
-  final TransactionUseCase _transactionUseCase;
   final FeeGrantUseCase _feeGrantUseCase;
   final AuraAccountUseCase _accountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
 
-  final config = getIt.get<PyxisMobileConfig>();
-
   OnBoardingPickAccountBloc(
     this._walletUseCase,
     this._smartAccountUseCase,
-    this._transactionUseCase,
     this._feeGrantUseCase,
     this._accountUseCase,
     this._controllerKeyUseCase,
@@ -92,8 +86,7 @@ class OnBoardingPickAccountBloc
         transactionInformation = await TransactionHelper.checkTransactionInfo(
           transactionInformation.txHash,
           0,
-          transactionUseCase: _transactionUseCase,
-          config: config,
+          smartAccountUseCase: _smartAccountUseCase,
         );
 
         if (transactionInformation.status == 0) {

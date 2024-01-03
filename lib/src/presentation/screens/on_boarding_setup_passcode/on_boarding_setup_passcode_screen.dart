@@ -265,7 +265,7 @@ class _OnBoardingSetupPasscodeScreenState
     }
 
     _pageController.animateToPage(
-      1,
+      0,
       duration: const Duration(
         milliseconds: 300,
       ),

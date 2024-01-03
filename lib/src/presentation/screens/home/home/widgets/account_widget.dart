@@ -168,10 +168,7 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
 
 // Define a private class named _HomeAccountReceiveWidget that extends AuraSmartAccountBaseWidget
 final class _HomeAccountReceiveWidget extends AuraSmartAccountBaseWidget {
-  final void Function(String) onCopy;
-
   const _HomeAccountReceiveWidget({
-    required this.onCopy,
     required super.appTheme,
     required super.address,
     required super.accountName,
@@ -212,14 +209,8 @@ final class _HomeAccountReceiveWidget extends AuraSmartAccountBaseWidget {
         const SizedBox(
           width: BoxSize.boxSize04,
         ),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => onCopy(
-            address,
-          ),
-          child: SvgPicture.asset(
-            AssetIconPath.homeReceiveCopyAddress,
-          ),
+        SvgPicture.asset(
+          AssetIconPath.homeReceiveCopyAddress,
         )
       ],
     );
@@ -298,22 +289,25 @@ class AccountCardReceiveWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Spacing.spacing04,
-        vertical: Spacing.spacing05,
-      ),
-      decoration: BoxDecoration(
-        color: appTheme.surfaceColorGrayLight,
-        borderRadius: BorderRadius.circular(
-          BorderRadiusSize.borderRadius05,
+    return GestureDetector(
+      onTap: () => onCopy(address),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: Spacing.spacing04,
+          vertical: Spacing.spacing05,
         ),
-      ),
-      child: _HomeAccountReceiveWidget(
-        onCopy: onCopy,
-        appTheme: appTheme,
-        address: address,
-        accountName: accountName,
+        decoration: BoxDecoration(
+          color: appTheme.surfaceColorGrayLight,
+          borderRadius: BorderRadius.circular(
+            BorderRadiusSize.borderRadius05,
+          ),
+        ),
+        child: _HomeAccountReceiveWidget(
+          appTheme: appTheme,
+          address: address,
+          accountName: accountName,
+        ),
       ),
     );
   }

@@ -15,7 +15,6 @@ final class OnBoardingRecoverSignBloc
   final ControllerKeyUseCase _controllerKeyUseCase;
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
-  final TransactionUseCase _transactionUseCase;
   final AuraAccountUseCase _accountUseCase;
 
   OnBoardingRecoverSignBloc(
@@ -23,7 +22,6 @@ final class OnBoardingRecoverSignBloc
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
     this._web3authUseCase,
-    this._transactionUseCase,
     this._accountUseCase, {
     required PyxisRecoveryAccount account,
     required GoogleAccount googleAccount,
@@ -118,29 +116,22 @@ final class OnBoardingRecoverSignBloc
       information = await TransactionHelper.checkTransactionInfo(
         information.txHash,
         0,
-        config: config,
-        transactionUseCase: _transactionUseCase,
+        smartAccountUseCase: _smartAccountUseCase,
       );
 
       if (information.status == 0) {
-        await _accountUseCase.saveAccount(
+        final account = await _accountUseCase.saveAccount(
           address: state.account.smartAccountAddress,
           accountName: state.account.name ?? PyxisAccountConstant.unName,
           type: AuraAccountType.smartAccount,
         );
 
-        final localAccount = await _accountUseCase.getAccountByAddress(
-          address: state.account.smartAccountAddress,
+        await _accountUseCase.updateAccount(
+          id: account.id,
+          method: AuraSmartAccountRecoveryMethod.web3Auth,
+          value: state.googleAccount.email,
+          subValue: wallet.bech32Address,
         );
-
-        if(localAccount != null){
-          await _accountUseCase.updateAccount(
-            id: localAccount.id,
-            method: AuraSmartAccountRecoveryMethod.web3Auth,
-            value: state.googleAccount.email,
-            subValue: wallet.bech32Address,
-          );
-        }
 
         await _controllerKeyUseCase.saveKey(
           address: state.account.smartAccountAddress,

@@ -6,8 +6,6 @@ import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/device.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 
@@ -19,7 +17,6 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
     SignedInCreateNewSmAccountPickAccountState> {
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
-  final TransactionUseCase _transactionUseCase;
   final FeeGrantUseCase _feeGrantUseCase;
   final AuraAccountUseCase _accountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
@@ -27,7 +24,6 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
   SignedInCreateNewSmAccountPickAccountBloc(
     this._walletUseCase,
     this._smartAccountUseCase,
-    this._transactionUseCase,
     this._feeGrantUseCase,
     this._accountUseCase,
     this._controllerKeyUseCase,
@@ -37,8 +33,6 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
     on(_onChangeAccountName);
     on(_onCreate);
   }
-
-  final config = getIt.get<PyxisMobileConfig>();
 
   void _onCreate(
     SignedInCreateNewPickAccountOnSubmitEvent event,
@@ -94,8 +88,7 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
         transactionInformation = await TransactionHelper.checkTransactionInfo(
           transactionInformation.txHash,
           0,
-          transactionUseCase: _transactionUseCase,
-          config: config,
+          smartAccountUseCase: _smartAccountUseCase,
         );
 
         if (transactionInformation.status == 0) {

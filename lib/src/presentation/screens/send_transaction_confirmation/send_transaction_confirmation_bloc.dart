@@ -14,13 +14,11 @@ class SendTransactionConfirmationBloc extends Bloc<
   final ControllerKeyUseCase _controllerKeyUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
   final WalletUseCase _walletUseCase;
-  final TransactionUseCase _transactionUseCase;
 
   SendTransactionConfirmationBloc(
     this._smartAccountUseCase,
     this._walletUseCase,
-    this._controllerKeyUseCase,
-    this._transactionUseCase, {
+    this._controllerKeyUseCase, {
     required AuraAccount sender,
     required String recipient,
     required String amount,
@@ -43,8 +41,6 @@ class SendTransactionConfirmationBloc extends Bloc<
       const SendTransactionConfirmationEventOnInit(),
     );
   }
-
-  final config = getIt.get<PyxisMobileConfig>();
 
   void _onInit(
     SendTransactionConfirmationEventOnInit event,
@@ -131,8 +127,7 @@ class SendTransactionConfirmationBloc extends Bloc<
       information = await TransactionHelper.checkTransactionInfo(
         information.txHash,
         0,
-        config: config,
-        transactionUseCase: _transactionUseCase,
+        smartAccountUseCase: _smartAccountUseCase,
       );
 
       if (information.status == 0) {

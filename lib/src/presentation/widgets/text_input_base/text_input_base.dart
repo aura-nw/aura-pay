@@ -143,7 +143,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
         Expanded(
           child: TextField(
             controller: _controller,
-            style: AppTypoGraPhy.bodyMedium01,
+            style: AppTypoGraPhy.bodyMedium03,
             enabled: widget.enable,
             autofocus: widget.autoFocus,
             maxLines: widget.maxLine,
@@ -255,7 +255,6 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
   }
 
   void _onTextInputChange() {
-    validate();
     if (!widget.enableClear) return;
     if (_controller.text.trim().isEmpty) {
       enableClear = false;
@@ -275,7 +274,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
 
     _focusNode = widget.focusNode ?? FocusNode(canRequestFocus: true);
 
-    isFocus = widget.autoFocus ? true : false;
+    isFocus = widget.autoFocus;
 
     _focusNode.addListener(_addFocusListener);
   }

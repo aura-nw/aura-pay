@@ -37,6 +37,7 @@
   "on_boarding_create_new_smart_account_screen_text_field_title" : "Pick a name",
   "on_boarding_create_new_smart_account_screen_button_title" : "Create",
   "on_boarding_create_new_smart_account_screen_dialog_loading_title" : "Checking device",
+  "on_boarding_create_new_smart_account_screen_dialog_loading_create_title" : "Creating smart account",
 
 
   "on_boarding_scan_fee_screen_title_region_one" : "Scan QR",
@@ -255,6 +256,7 @@
   "signed_in_create_new_smart_account_screen_text_field_title" : "Pick a name",
   "signed_in_create_new_smart_account_screen_button_title" : "Create",
   "signed_in_create_new_smart_account_screen_dialog_loading_title" : "Checking device",
+  "signed_in_create_new_smart_account_screen_dialog_loading_create_title" : "Creating smart account",
 
 
   "signed_in_scan_fee_screen_title_region_one" : "Scan QR",
@@ -342,7 +344,7 @@
   "recovery_method_confirmation_screen_change_message" : "Set ${account} to recovery for ${address}",
   "recovery_method_confirmation_screen_transaction_fee" : "Transaction fee",
   "recovery_method_confirmation_screen_button_confirm_title" : "Confirm",
-  "recovery_method_confirmation_screen_loading" : "Recovering",
+  "recovery_method_confirmation_screen_loading" : "Processing",
 
   "signed_in_recover_select_account_screen_title_region_one" : "Recover",
   "signed_in_recover_select_account_screen_title_region_two" : "smart account",

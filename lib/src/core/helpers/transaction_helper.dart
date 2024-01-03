@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:domain/domain.dart';
-import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/transaction_enum.dart';
 
@@ -45,18 +44,16 @@ sealed class TransactionHelper {
   static Future<TransactionInformation> checkTransactionInfo(
     String txHash,
     int times, {
-    required TransactionUseCase transactionUseCase,
-    required PyxisMobileConfig config,
+    required SmartAccountUseCase smartAccountUseCase,
   }) async {
     await Future.delayed(
       const Duration(
-        milliseconds: 2500,
+        milliseconds: 2100,
       ),
     );
     try {
-      return await transactionUseCase.getTransactionDetail(
+      return await smartAccountUseCase.getTx(
         txHash: txHash,
-        environment: config.environment.environmentString,
       );
     } catch (e) {
       if (times == 5) {
@@ -65,8 +62,7 @@ sealed class TransactionHelper {
       return checkTransactionInfo(
         txHash,
         times + 1,
-        config: config,
-        transactionUseCase: transactionUseCase,
+        smartAccountUseCase: smartAccountUseCase,
       );
     }
   }

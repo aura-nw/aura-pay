@@ -68,7 +68,7 @@ class _OnBoardingPickAccountScreenState
                   break;
                 case OnBoardingPickAccountStatus.onActiveSmartAccount:
                   AppNavigator.pop();
-                  _showLoadingDialog(appTheme);
+                  _showActiveSmartAccount(appTheme);
                   break;
                 case OnBoardingPickAccountStatus.onActiveSmartAccountSuccess:
                   AppNavigator.pop();
@@ -225,7 +225,7 @@ class _OnBoardingPickAccountScreenState
     DialogProvider.showLoadingDialog(
       context,
       content: AppLocalizationManager.of(context).translate(
-        LanguageKey.onBoardingCreateNewSmartAccountScreenDialogLoadingTitle,
+        LanguageKey.onBoardingCreateNewSmartAccountScreenDialogLoadingCreateTitle,
       ),
       appTheme: appTheme,
     );

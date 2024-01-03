@@ -5,7 +5,7 @@ abstract interface class AccountDatabaseService {
   Future<AuraAccountDto?> getAccount(int id);
   Future<AuraAccountDto?> getAccountByAddress({required String address});
 
-  Future<void> saveAccount({
+  Future<AuraAccountDto> saveAccount({
     required String address,
     required String accountName,
     required AuraAccountType type,

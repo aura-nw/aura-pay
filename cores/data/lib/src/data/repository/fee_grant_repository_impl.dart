@@ -18,8 +18,6 @@ final class FeeGrantRepositoryImpl implements FeeGrantRepository {
       body: body,
     );
 
-    log(baseResponse.data.toString());
-
     final data = baseResponse.handleResponse();
 
     GrantFeeDto grantFeeDto = GrantFeeDto.fromJson(

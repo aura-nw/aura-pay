@@ -17,7 +17,6 @@ final class SignedInRecoverSignBloc
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
   final AuraAccountUseCase _accountUseCase;
-  final TransactionUseCase _transactionUseCase;
 
   SignedInRecoverSignBloc(
     this._walletUseCase,
@@ -25,7 +24,7 @@ final class SignedInRecoverSignBloc
     this._controllerKeyUseCase,
     this._web3authUseCase,
     this._accountUseCase,
-    this._transactionUseCase, {
+    {
     required PyxisRecoveryAccount account,
     required GoogleAccount googleAccount,
   }) : super(
@@ -43,7 +42,6 @@ final class SignedInRecoverSignBloc
     );
   }
 
-  final _config = getIt.get<PyxisMobileConfig>();
   final int _defaultGasLimit = 400000;
 
   void _onInit(
@@ -119,8 +117,7 @@ final class SignedInRecoverSignBloc
       information = await TransactionHelper.checkTransactionInfo(
         information.txHash,
         0,
-        config: _config,
-        transactionUseCase: _transactionUseCase,
+        smartAccountUseCase: _smartAccountUseCase,
       );
 
       if (information.status == 0) {
@@ -130,31 +127,18 @@ final class SignedInRecoverSignBloc
           address: state.account.smartAccountAddress,
         );
 
-        if (localAccount != null) {
-          await _accountUseCase.updateAccount(
-            id: localAccount.id,
-            method: AuraSmartAccountRecoveryMethod.web3Auth,
-            value: state.googleAccount.email,
-            subValue: wallet.bech32Address,
-          );
-        } else {
-          await _accountUseCase.saveAccount(
+        localAccount ??= await _accountUseCase.saveAccount(
             address: state.account.smartAccountAddress,
             type: AuraAccountType.smartAccount,
             accountName: state.account.name ?? PyxisAccountConstant.unName,
           );
 
-          localAccount = await _accountUseCase.getAccountByAddress(
-            address: state.account.smartAccountAddress,
-          );
-
-          await _accountUseCase.updateAccount(
-            id: localAccount!.id,
-            method: AuraSmartAccountRecoveryMethod.web3Auth,
-            value: state.googleAccount.email,
-            subValue: wallet.bech32Address,
-          );
-        }
+        await _accountUseCase.updateAccount(
+          id: localAccount.id,
+          method: AuraSmartAccountRecoveryMethod.web3Auth,
+          value: state.googleAccount.email,
+          subValue: wallet.bech32Address,
+        );
 
         await _controllerKeyUseCase.saveKey(
           address: state.account.smartAccountAddress,

@@ -54,6 +54,8 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
   final TextEditingController _recipientController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
 
+  final GlobalKey<TextInputRecipientState> _recipientKey = GlobalKey();
+
   // Instance of SendTransactionBloc for state management
   final SendTransactionBloc _bloc = getIt.get<SendTransactionBloc>();
 
@@ -199,6 +201,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                                       controller: _recipientController,
                                       onClear: _onClearRecipient,
                                       onChanged: _onChangeRecipientData,
+                                      key: _recipientKey,
                                       onQrTap: () async {
                                         // Handling QR code tap
                                         _showRequestCameraPermission(
@@ -406,18 +409,18 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
   void _onChangeRecipientData(String value, bool isValid) async {
     _recipientController.text = value;
 
-    if (isValid) {
-      // Triggering event for recipient address change
-      _bloc.add(
-        SendTransactionEventOnChangeRecipientAddress(
-          _recipientController.text.trim(),
-        ),
-      );
-    }
+    _recipientKey.currentState?.validate();
+
+    _bloc.add(
+      SendTransactionEventOnChangeRecipientAddress(
+        _recipientController.text.trim(),
+      ),
+    );
   }
 
   void _onClearRecipient() {
     _recipientController.text = '';
+    _recipientKey.currentState?.validate();
 
     _bloc.add(
       SendTransactionEventOnChangeRecipientAddress(
@@ -478,7 +481,12 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
       );
 
       if(result is String){
-        _recipientController.text = result;
+        _onChangeRecipientData(
+          result,
+          WalletAddressValidator.isValidAddress(
+            result.trim(),
+          ),
+        );
       }
     } else {
       // If not granted, show a permission dialog
@@ -497,7 +505,12 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                 );
 
                 if(result is String){
-                  _recipientController.text = result;
+                  _onChangeRecipientData(
+                    result,
+                    WalletAddressValidator.isValidAddress(
+                      result.trim(),
+                    ),
+                  );
                 }
               },
               reject: () {

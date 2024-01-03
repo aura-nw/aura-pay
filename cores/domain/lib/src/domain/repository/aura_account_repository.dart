@@ -10,7 +10,7 @@ abstract interface class AuraAccountRepository {
 
   Future<AuraAccount?> getFirstAccount();
 
-  Future<void> saveAccount(SaveAccountRequestParameter parameter);
+  Future<AuraAccount> saveAccount(SaveAccountRequestParameter parameter);
 
   Future<void> deleteAccount(int id);
 

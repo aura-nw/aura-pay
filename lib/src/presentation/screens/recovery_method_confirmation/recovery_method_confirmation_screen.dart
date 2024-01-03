@@ -107,7 +107,9 @@ class _RecoveryMethodConfirmationScreenState
                   break;
                 case RecoveryMethodConfirmationStatus.onRecoverSuccess:
                   _recoveryObserver.emit(
-                    emitParam: const RecoveryEmitParam(status: true,),
+                    emitParam: const RecoveryEmitParam(
+                      status: true,
+                    ),
                   );
                   AppNavigator.popUntil(
                     RoutePath.recoverMethod,
@@ -338,7 +340,7 @@ class _RecoveryMethodConfirmationScreenState
                             return PrimaryAppButton(
                               text: localization.translate(
                                 LanguageKey
-                                    .sendTransactionConfirmationScreenSend,
+                                    .recoveryMethodConfirmationScreenButtonConfirmTitle,
                               ),
                               onPress: () {
                                 _bloc.add(

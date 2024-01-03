@@ -48,6 +48,7 @@ sealed class LanguageKey {
   static const String onBoardingCreateNewSmartAccountScreenTextFieldTitle = 'on_boarding_create_new_smart_account_screen_text_field_title';
   static const String onBoardingCreateNewSmartAccountScreenButtonTitle = 'on_boarding_create_new_smart_account_screen_button_title';
   static const String onBoardingCreateNewSmartAccountScreenDialogLoadingTitle = 'on_boarding_create_new_smart_account_screen_dialog_loading_title';
+  static const String onBoardingCreateNewSmartAccountScreenDialogLoadingCreateTitle = 'on_boarding_create_new_smart_account_screen_dialog_loading_create_title';
 
   ///endregion
 
@@ -302,6 +303,7 @@ sealed class LanguageKey {
   static const String signedInCreateNewSmartAccountScreenTextFieldTitle = 'signed_in_create_new_smart_account_screen_text_field_title';
   static const String signedInCreateNewSmartAccountScreenButtonTitle = 'signed_in_create_new_smart_account_screen_button_title';
   static const String signedInCreateNewSmartAccountScreenDialogLoadingTitle = 'signed_in_create_new_smart_account_screen_dialog_loading_title';
+  static const String signedInCreateNewSmartAccountScreenDialogLoadingCreateTitle = 'signed_in_create_new_smart_account_screen_dialog_loading_create_title';
 
   ///endregion
 

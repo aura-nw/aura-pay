@@ -69,7 +69,7 @@ class _SignedInCreateNewSmAccountPickAccountScreenState
                   break;
                 case SignedInCreateNewPickAccountStatus.onActiveSmartAccount:
                   AppNavigator.pop();
-                  _showLoadingDialog(appTheme);
+                  _showActiveSmartAccount(appTheme);
                   break;
                 case SignedInCreateNewPickAccountStatus
                       .onActiveSmartAccountSuccess:
@@ -218,6 +218,16 @@ class _SignedInCreateNewSmAccountPickAccountScreenState
       context,
       content: AppLocalizationManager.of(context).translate(
         LanguageKey.signedInCreateNewSmartAccountScreenDialogLoadingTitle,
+      ),
+      appTheme: appTheme,
+    );
+  }
+
+  void _showActiveSmartAccount(AppTheme appTheme) {
+    DialogProvider.showLoadingDialog(
+      context,
+      content: AppLocalizationManager.of(context).translate(
+        LanguageKey.signedInCreateNewSmartAccountScreenDialogLoadingCreateTitle,
       ),
       appTheme: appTheme,
     );
