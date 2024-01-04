@@ -7,7 +7,9 @@ import 'package:pyxis_mobile/src/application/global/localization/app_localizatio
 import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_service.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 
 // Enum định nghĩa các trạng thái khác nhau của WalletConnectScreen
@@ -21,6 +23,7 @@ enum WalletConnectScreenState {
 
 class WalletConnectScreen extends StatefulWidget {
   final String url;
+
   const WalletConnectScreen({super.key, required this.url});
 
   @override
@@ -122,96 +125,141 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
   Widget _buildRequestConnectingState(
       AppTheme appTheme, ProposalData? proposalData) {
     if (true) {
-      return AppLocalizationProvider(builder: (localization, _) {
-        return Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                localization.translate(LanguageKey.walletConnectHeadTitle),
-                style: AppTypoGraPhy.heading02
-                    .copyWith(color: appTheme.contentColorBlack),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                'Title: ${proposalData?.proposer.metadata.url}',
-                style: AppTypoGraPhy.body02
-                    .copyWith(color: appTheme.contentColor500),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 10),
-              Text(
-                localization.translate(LanguageKey.walletConnectWarningMsg),
-                style: AppTypoGraPhy.body02
-                    .copyWith(color: appTheme.contentColor500),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 5),
-
-              SizedBox(
-                width: double.infinity,
-                child: Text(
-                  'Messages',
-                  style: AppTypoGraPhy.utilityLabelDefault
+      return AppLocalizationProvider(
+        builder: (localization, _) {
+          return Padding(
+            padding: const EdgeInsets.all(
+              Spacing.spacing04,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  localization.translate(LanguageKey.walletConnectHeadTitle),
+                  style: AppTypoGraPhy.heading02
                       .copyWith(color: appTheme.contentColorBlack),
                 ),
-              ),
-              const SizedBox(height: 5),
-
-              Container(
-                padding: EdgeInsets.all(12.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  color: appTheme.surfaceColorGrayDefault,
+                const SizedBox(
+                  height: BoxSize.boxSize02,
                 ),
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      AssetIconPath.commonSignMessage,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(localization.translate(LanguageKey.commonSignIn)),
-                        Text('data')
-                      ],
-                    )
-                  ],
+                Text(
+                  'Title: ${proposalData?.proposer.metadata.url}',
+                  style: AppTypoGraPhy.body02
+                      .copyWith(color: appTheme.contentColor500),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              // ...Thêm thông tin khác cần hiển thị
-
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Xử lý khi nhấn vào Approve
-                      _approveConnection();
-                    },
-                    child: const Text('Approve'),
+                const SizedBox(
+                  height: BoxSize.boxSize04,
+                ),
+                Text(
+                  localization.translate(LanguageKey.walletConnectWarningMsg),
+                  style: AppTypoGraPhy.body02
+                      .copyWith(color: appTheme.contentColor500),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: BoxSize.boxSize05,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    'Messages',
+                    style: AppTypoGraPhy.utilityLabelDefault
+                        .copyWith(color: appTheme.contentColorBlack),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Xử lý khi nhấn vào Reject
-                      _rejectConnection();
-                    },
-                    child: const Text('Reject'),
+                ),
+                const SizedBox(
+                  height: BoxSize.boxSize04,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing05,
+                    vertical: Spacing.spacing04,
                   ),
-                ],
-              ),
-            ],
-          ),
-        );
-      });
+                  margin: const EdgeInsets.only(
+                    bottom: BoxSize.boxSize08,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      BorderRadiusSize.borderRadius04,
+                    ),
+                    color: appTheme.surfaceColorGrayDefault,
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        AssetIconPath.commonSignMessage,
+                      ),
+                      const SizedBox(
+                        width: BoxSize.boxSize05,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            localization.translate(
+                              LanguageKey.commonSignIn,
+                            ),
+                            style: AppTypoGraPhy.bodyMedium03.copyWith(
+                              color: appTheme.contentColorBlack,
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: localization.translate(
+                                    LanguageKey.commonSignIn,
+                                  ),
+                                  style: AppTypoGraPhy.bodyMedium02.copyWith(
+                                    color: appTheme.contentColor500,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '[account address]',
+                                  style: AppTypoGraPhy.body02.copyWith(
+                                    color: appTheme.contentColor500,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'to',
+                                  style: AppTypoGraPhy.bodyMedium02.copyWith(
+                                    color: appTheme.contentColor500,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '[URL Dapp]',
+                                  style: AppTypoGraPhy.body02.copyWith(
+                                    color: appTheme.contentColor500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                PrimaryAppButton(
+                  text: localization.translate(
+                    LanguageKey.commonSignIn,
+                  ),
+                ),
+                const SizedBox(
+                  height: BoxSize.boxSize05,
+                ),
+                BorderAppButton(
+                  text: 'Cancel',
+                  borderColor: appTheme.borderColorGrayDark,
+                  textColor: appTheme.contentColorBlack,
+                ),
+              ],
+            ),
+          );
+        },
+      );
     }
 
     if (proposalData == null) {
