@@ -367,6 +367,7 @@ sealed class LanguageKey {
   static const String commonPermissionGalleryContent = 'common_permission_gallery_content';
   static const String commonPermissionAccept = 'common_permission_accept';
   static const String commonPermissionReject = 'common_permission_reject';
+  static const String commonSignIn = 'common_sign_in';
   ///endregion
 
   ///region local auth
@@ -449,4 +450,10 @@ sealed class LanguageKey {
   static const String nftDetailScreenTokenStandard = 'nft_detail_screen_token_standard';
   static const String nftDetailScreenTokenStandardTitle = 'nft_detail_screen_token_standard_title';
   ///
+  
+
+  /// region Wallet Connect
+  static const String walletConnectHeadTitle = 'wallet_connect_screen_head_title';
+  static const String walletConnectWarningMsg = 'wallet_connect_screen_warning_msg';
+  static const String walletConnectMessage = 'wallet_connect_screen_messages';
 }

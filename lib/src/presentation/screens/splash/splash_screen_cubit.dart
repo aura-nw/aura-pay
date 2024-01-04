@@ -1,6 +1,5 @@
 import 'package:domain/domain.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_provider.impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_service.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/local_auth_helper.dart';

@@ -311,6 +311,7 @@
   "common_permission_gallery_content" : "In order to scan a QR code, you must allow Pyxis to access the gallery",
   "common_permission_accept" : "Ok",
   "common_permission_reject" : "Cancel",
+  "common_sign_in" : "Sign in",
 
   "common_local_auth_title" : "Verify to unlock Pyxis",
   "common_local_auth_android_sign_title" : "You have to verify this one to unlock Pyxis. If no, you must verify by passcode",
@@ -375,5 +376,11 @@
   "nft_detail_screen_blockChain" : "Blockchain",
   "nft_detail_screen_contract_address" : "Contract address",
   "nft_detail_screen_token_standard" : "CW721",
-  "nft_detail_screen_token_standard_title" : "Token standard"
+  "nft_detail_screen_token_standard_title" : "Token standard",
+
+  "wallet_connect_screen_head_title" : "Sign in to this site?",
+  "wallet_connect_screen_warning_msg" : "You are about to allow this Dapp to view your balance and activity, make sure you trust this site.",
+  "wallet_connect_screen_messages" : "Messages"
+  
+  
 }

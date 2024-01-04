@@ -10,9 +10,6 @@ import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
-import 'package:pyxis_mobile/src/application/provider/wallet_connect/bottom_sheet_service.dart';
-import 'package:pyxis_mobile/src/application/provider/wallet_connect/i_botton_sheet_service.dart';
-import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_provider.impl.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
@@ -271,6 +268,12 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _showRequestCameraPermission(AppTheme appTheme) async {
+    if (true) {
+      await AppNavigator.push(
+        RoutePath.walletConnect,
+        'result',
+      );
+    }
     PermissionStatus status =
         await SystemPermissionHelper.getCurrentCameraPermissionStatus();
 
