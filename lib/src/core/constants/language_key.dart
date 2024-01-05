@@ -456,4 +456,8 @@ sealed class LanguageKey {
   static const String walletConnectHeadTitle = 'wallet_connect_screen_head_title';
   static const String walletConnectWarningMsg = 'wallet_connect_screen_warning_msg';
   static const String walletConnectMessage = 'wallet_connect_screen_messages';
+  static const String walletConnectSignIn = 'wallet_connect_screen_sign_in';
+  static const String walletConnecReject = 'wallet_connect_screen_reject';
+  static const String walletConnecTo = 'wallet_connect_screen_to';
+  
 }

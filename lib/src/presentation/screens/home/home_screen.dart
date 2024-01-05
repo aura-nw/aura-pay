@@ -22,6 +22,7 @@ import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dar
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_state.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/widgets/tab_builder.dart';
+import 'package:pyxis_mobile/src/presentation/screens/wallet_connect_screen/wallet_connect_screen.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'home/widgets/receive_token_widget.dart';
@@ -71,51 +72,6 @@ class _HomeScreenState extends State<HomeScreen>
         });
       }
     }
-    // else if (param.event ==
-    //     HomeScreenObserver.createSmartAccountSuccessfulEvent) {
-    //   Future.delayed(
-    //     const Duration(
-    //       milliseconds: 2500,
-    //     ),
-    //   ).then(
-    //     (value) {
-    //       showToast(
-    //         AppLocalizationManager.of(context).translate(
-    //           LanguageKey.homeScreenCreateSmartAccountSuccessFul,
-    //         ),
-    //       );
-    //     },
-    //   );
-    // } else if (param.event == HomeScreenObserver.importAccountSuccessfulEvent) {
-    //   Future.delayed(
-    //     const Duration(
-    //       milliseconds: 2500,
-    //     ),
-    //   ).then(
-    //     (value) {
-    //       showToast(
-    //         AppLocalizationManager.of(context).translate(
-    //           LanguageKey.homeScreenImportAccountSuccessFul,
-    //         ),
-    //       );
-    //     },
-    //   );
-    // } else if (param.event ==
-    //     HomeScreenObserver.recoverAccountSuccessfulEvent) {
-    //   Future.delayed(
-    //     const Duration(
-    //       milliseconds: 2500,
-    //     ),
-    //   ).then(
-    //     (value) {
-    //       showToast(
-    //         AppLocalizationManager.of(context).translate(
-    //           LanguageKey.homeScreenRecoverSmartAccountSuccessFul,
-    //         ),
-    //       );
-    //     },
-    //   );
-    // }
   }
 
   @override
@@ -268,12 +224,6 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _showRequestCameraPermission(AppTheme appTheme) async {
-    if (true) {
-      await AppNavigator.push(
-        RoutePath.walletConnect,
-        'result',
-      );
-    }
     PermissionStatus status =
         await SystemPermissionHelper.getCurrentCameraPermissionStatus();
 
@@ -311,10 +261,15 @@ class _HomeScreenState extends State<HomeScreen>
     await Future.delayed(
       Durations.long1,
     );
+
+    String? account = _bloc.state.selectedAccount?.address;
+
     if (result != null) {
+      WalletConnectScreenData connectScreenData =
+          WalletConnectScreenData(url: result!, selectedAccount: account ?? '');
       await AppNavigator.push(
         RoutePath.walletConnect,
-        result,
+        connectScreenData,
       );
     }
   }
