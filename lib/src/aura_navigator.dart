@@ -117,11 +117,12 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.walletConnect:
-        String url = settings.arguments as String;
+        WalletConnectScreenData data =
+            settings.arguments as WalletConnectScreenData;
 
         return _defaultRoute(
           WalletConnectScreen(
-            url: url,
+            data: data,
           ),
           settings,
         );

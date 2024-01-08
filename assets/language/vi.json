@@ -382,6 +382,9 @@
   "wallet_connect_screen_head_title" : "Sign in to this site?",
   "wallet_connect_screen_warning_msg" : "You are about to allow this Dapp to view your balance and activity, make sure you trust this site.",
   "wallet_connect_screen_messages" : "Messages",
+  "wallet_connect_screen_sign_in" : "Sign in",
+  "wallet_connect_screen_reject" : "Cancel",
+  "wallet_connect_screen_to" : "to",
 
   "connect_site_screen_app_bar_title" : "Connected sites",
   "connect_site_screen_content" : "The recovery method can only be set for a Pyxis smart account",

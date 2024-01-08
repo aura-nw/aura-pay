@@ -5,14 +5,16 @@ import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_service.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 
-// Enum định nghĩa các trạng thái khác nhau của WalletConnectScreen
+// Enum defining various states of WalletConnectScreen
 enum WalletConnectScreenState {
   empty,
   onLoading,
@@ -21,24 +23,30 @@ enum WalletConnectScreenState {
   listData,
 }
 
-class WalletConnectScreen extends StatefulWidget {
+class WalletConnectScreenData {
   final String url;
+  final String selectedAccount;
 
-  const WalletConnectScreen({super.key, required this.url});
+  WalletConnectScreenData({required this.url, required this.selectedAccount});
+}
+
+class WalletConnectScreen extends StatefulWidget {
+  final WalletConnectScreenData data;
+
+  const WalletConnectScreen({super.key, required this.data});
 
   @override
   State<WalletConnectScreen> createState() => _WalletConnectScreenState();
 }
 
 class _WalletConnectScreenState extends State<WalletConnectScreen> {
-  // Giả sử rằng bạn có một danh sách các dApp đã kết nối
+  // Suppose you have a list of connected dApps
   List<String> connectedDApps = ['DApp 1', 'DApp 2', 'DApp 3'];
 
   WalletConnectService _walletConnectService = GetIt.I.get();
 
-  // Biến để theo dõi trạng thái hiện tại của màn hình
-  WalletConnectScreenState _screenState =
-      WalletConnectScreenState.onRequestConnecting;
+  // Variable to track the current state of the screen
+  WalletConnectScreenState _screenState = WalletConnectScreenState.onLoading;
 
   SessionProposalEvent? _sessionProposalEvent;
   int? connectionId;
@@ -51,23 +59,23 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
 
   // onConnect
   Future<void> _onConnect() async {
-    // await Future.delayed(Durations.long1);
-    // try {
-    //   final Uri uriData = Uri.parse(widget.url);
-    //   _walletConnectService.getWeb3Wallet().onSessionProposal.subscribe((args) {
-    //     print('WalletConnectScreen _onConnect onSessionProposal: $args');
-    //     _sessionProposalEvent = args;
-    //     connectionId = _sessionProposalEvent?.id;
-    //     setState(() {
-    //       _screenState = WalletConnectScreenState.onRequestConnecting;
-    //     });
-    //   });
-    //   await _walletConnectService.getWeb3Wallet().pair(
-    //         uri: uriData,
-    //       );
-    // } catch (e, s) {
-    //   print('WalletConnectScreen _onConnect error: $e, $s');
-    // }
+    await Future.delayed(Durations.long1);
+    try {
+      final Uri uriData = Uri.parse(widget.data.url);
+      _walletConnectService.getWeb3Wallet().onSessionProposal.subscribe((args) {
+        print('WalletConnectScreen _onConnect onSessionProposal: $args');
+        _sessionProposalEvent = args;
+        connectionId = _sessionProposalEvent?.id;
+        setState(() {
+          _screenState = WalletConnectScreenState.onRequestConnecting;
+        });
+      });
+      await _walletConnectService.getWeb3Wallet().pair(
+            uri: uriData,
+          );
+    } catch (e, s) {
+      print('WalletConnectScreen _onConnect error: $e, $s');
+    }
   }
 
   @override
@@ -82,7 +90,7 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
     });
   }
 
-  // Phương thức để xây dựng nội dung của màn hình dựa trên trạng thái
+  // Method to build the content of the screen based on the state
   Widget _buildBody(AppTheme appTheme) {
     switch (_screenState) {
       case WalletConnectScreenState.empty:
@@ -97,31 +105,31 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
       case WalletConnectScreenState.listData:
         return _buildListDataState();
       default:
-        return Container(); // Trường hợp mặc định
+        return Container(); // Default case
     }
   }
 
-  // Phương thức xây dựng UI cho trạng thái rỗng
+  // Method to build UI for empty state
   Widget _buildEmptyState() {
     return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('DApp Connected will be here'),
-          Text('Danh sách rỗng'),
+          Text('Empty list'),
         ],
       ),
     );
   }
 
-  // Phương thức xây dựng UI cho trạng thái đang tải
+  // Method to build UI for loading state
   Widget _buildLoadingState() {
     return const Center(
       child: CircularProgressIndicator(),
     );
   }
 
-  // Phương thức xây dựng UI cho trạng thái yêu cầu kết nối
+  // Method to build UI for connecting request state
   Widget _buildRequestConnectingState(
       AppTheme appTheme, ProposalData? proposalData) {
     if (true) {
@@ -144,7 +152,7 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
                   height: BoxSize.boxSize02,
                 ),
                 Text(
-                  'Title: ${proposalData?.proposer.metadata.url}',
+                  '${proposalData?.proposer.metadata.url}',
                   style: AppTypoGraPhy.body02
                       .copyWith(color: appTheme.contentColor500),
                   textAlign: TextAlign.center,
@@ -164,7 +172,7 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: Text(
-                    'Messages',
+                    localization.translate(LanguageKey.walletConnectMessage),
                     style: AppTypoGraPhy.utilityLabelDefault
                         .copyWith(color: appTheme.contentColorBlack),
                   ),
@@ -194,64 +202,74 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
                       const SizedBox(
                         width: BoxSize.boxSize05,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            localization.translate(
-                              LanguageKey.commonSignIn,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              localization.translate(
+                                LanguageKey.walletConnectSignIn,
+                              ),
+                              style: AppTypoGraPhy.bodyMedium03.copyWith(
+                                color: appTheme.contentColorBlack,
+                              ),
                             ),
-                            style: AppTypoGraPhy.bodyMedium03.copyWith(
-                              color: appTheme.contentColorBlack,
+                            RichText(
+                              maxLines: 3,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: localization.translate(
+                                      LanguageKey.walletConnectSignIn,
+                                    ),
+                                    style: AppTypoGraPhy.bodyMedium02.copyWith(
+                                      color: appTheme.contentColor500,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        ' ${widget.data.selectedAccount.addressView} ',
+                                    style: AppTypoGraPhy.body02.copyWith(
+                                      color: appTheme.contentColor500,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: localization
+                                        .translate(LanguageKey.walletConnecTo),
+                                    style: AppTypoGraPhy.bodyMedium02.copyWith(
+                                      color: appTheme.contentColor500,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        ' ${proposalData?.proposer.metadata.url}',
+                                    style: AppTypoGraPhy.body02.copyWith(
+                                      color: appTheme.contentColor500,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: localization.translate(
-                                    LanguageKey.commonSignIn,
-                                  ),
-                                  style: AppTypoGraPhy.bodyMedium02.copyWith(
-                                    color: appTheme.contentColor500,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: '[account address]',
-                                  style: AppTypoGraPhy.body02.copyWith(
-                                    color: appTheme.contentColor500,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: 'to',
-                                  style: AppTypoGraPhy.bodyMedium02.copyWith(
-                                    color: appTheme.contentColor500,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: '[URL Dapp]',
-                                  style: AppTypoGraPhy.body02.copyWith(
-                                    color: appTheme.contentColor500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       )
                     ],
                   ),
                 ),
                 PrimaryAppButton(
                   text: localization.translate(
-                    LanguageKey.commonSignIn,
+                    LanguageKey.walletConnectSignIn,
                   ),
+                  onPress: _approveConnection,
                 ),
                 const SizedBox(
                   height: BoxSize.boxSize05,
                 ),
                 BorderAppButton(
-                  text: 'Cancel',
+                  text: localization.translate(
+                    LanguageKey.walletConnecReject,
+                  ),
+                  onPress: _rejectConnection,
                   borderColor: appTheme.borderColorGrayDark,
                   textColor: appTheme.contentColorBlack,
                 ),
@@ -261,66 +279,14 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
         },
       );
     }
-
-    if (proposalData == null) {
-      return const Text('proposalData Empty');
-    }
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Yêu cầu kết nối',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          'Title: ${proposalData.proposer.metadata.name}',
-          style: const TextStyle(fontSize: 16),
-        ),
-        Text(
-          'Description: ${proposalData.proposer.metadata.description}',
-          style: const TextStyle(fontSize: 16),
-        ),
-        Text(
-          'URL: ${proposalData.proposer.metadata.url}',
-          style: const TextStyle(fontSize: 16),
-        ),
-        // ...Thêm thông tin khác cần hiển thị
-
-        const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                // Xử lý khi nhấn vào Approve
-                _approveConnection();
-              },
-              child: const Text('Approve'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Xử lý khi nhấn vào Reject
-                _rejectConnection();
-              },
-              child: const Text('Reject'),
-            ),
-          ],
-        ),
-      ],
-    );
   }
 
-  // Phương thức xây dựng UI cho trạng thái yêu cầu ký giao dịch
+  // Method to build UI for sign request state
   Widget _buildRequestSignState() {
     return Container();
   }
 
-  // Phương thức xây dựng UI cho trạng thái danh sách dApp đã kết nối
+  // Method to build UI for connected dApp list state
   Widget _buildListDataState() {
     return ListView.builder(
       itemCount: connectedDApps.length,
@@ -328,22 +294,25 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
         return ListTile(
           title: Text('DApp: ${connectedDApps[index]}'),
           subtitle: const Text('Subtitle'),
-          // TODO: Thêm xử lý khi nhấn vào một dApp đã kết nối
+          // TODO: Add handling when a connected dApp is tapped
           onTap: () {
-            // Xử lý khi nhấn vào một dApp
+            // Handle when a dApp is tapped
           },
         );
       },
     );
   }
 
-  void _approveConnection() {
-    _walletConnectService
+  Future<void> _approveConnection() async {
+    setState(() {
+      _screenState = WalletConnectScreenState.onLoading;
+    });
+    await _walletConnectService
         .getWeb3Wallet()
         .approveSession(id: connectionId!, namespaces: {
-      'cosmos': const Namespace(accounts: [
-        'cosmos:euphoria-2:aura1k70ltrdhpx97va9ggm5us3kq3avrmh9pfurz7l',
-        'cosmos:cosmoshub-4:aura1k70ltrdhpx97va9ggm5us3kq3avrmh9pfurz7l'
+      'cosmos': Namespace(accounts: [
+        'cosmos:euphoria-2:${widget.data.selectedAccount}',
+        'cosmos:cosmoshub-4:${widget.data.selectedAccount}'
       ], methods: [
         'cosmos_signDirect',
         'cosmos_getAccounts',
@@ -353,7 +322,19 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
         'accountsChanged'
       ]),
     });
+
+    AppNavigator.pop();
   }
 
-  void _rejectConnection() {}
+  Future<void> _rejectConnection() async {
+    setState(() {
+      _screenState = WalletConnectScreenState.onLoading;
+    });
+    await _walletConnectService.getWeb3Wallet().rejectSession(
+          id: connectionId!,
+          reason: Errors.getSdkError(Errors.USER_REJECTED),
+        );
+
+    AppNavigator.pop();
+  }
 }
