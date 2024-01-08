@@ -69,6 +69,16 @@ class _SettingPageState extends State<SettingPage> {
                         );
                       },
                     ),
+                    SettingOptionWidget(
+                      iconPath: AssetIconPath.settingConnectSite,
+                      labelPath: LanguageKey.settingPageConnectSite,
+                      appTheme: appTheme,
+                      onTap: () {
+                        // AppNavigator.push(
+                        //   RoutePath.settingPassCodeAndBioMetric,
+                        // );
+                      },
+                    ),
                   ],
                 ),
               ),

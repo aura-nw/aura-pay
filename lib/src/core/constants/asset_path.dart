@@ -206,6 +206,8 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_setting_help_center.svg';
   static const String settingArrowNext =
       '${_baseIconPath}ic_setting_arrow_next.svg';
+  static const String settingConnectSite =
+      '${_baseIconPath}ic_setting_connect_site.svg';
 
   /// Setting bio and passcode
   static const String settingBioAndPassCodeLock =
@@ -240,4 +242,7 @@ sealed class AssetIconPath {
   /// NFTs
   static const String nftList = '${_baseIconPath}ic_nft_list.svg';
   static const String nftGrid = '${_baseIconPath}ic_nft_grid.svg';
+
+  /// Connect site
+  static const String connectSiteQr = '${_baseIconPath}ic_connect_site_qr.svg';
 }

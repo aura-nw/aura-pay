@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:domain/domain.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,10 +57,9 @@ class _HomePageState extends State<HomePage>
   }
 
   void _listenHomeObserver(HomeScreenEmitParam param) {
-
-    if(param.event == HomeScreenObserver.onSelectedAccountChangeEvent){
+    if (param.event == HomeScreenObserver.onSelectedAccountChangeEvent) {
       final data = param.data;
-      
+
       if (data is AuraAccount) {
         _bloc.add(
           HomePageEventOnFetchTokenPriceWithAddress(
@@ -228,39 +228,53 @@ class _HomePageState extends State<HomePage>
                   const SizedBox(
                     height: BoxSize.boxSize07,
                   ),
-                  HomePageBalanceSelector(
-                    builder: (balances) {
-                      return HomePagePriceSelector(
-                        builder: (price) {
-                          if (balances.isEmpty) {
-                            return Center(
-                              child: EmptyTokenWidget(
-                                appTheme: appTheme,
-                              ),
-                            );
-                          }
-                          return AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return TokenItemWidget(
-                                iconPath: AssetIconPath.commonAuraTokenLogo,
-                                coin: localization.translate(
-                                  LanguageKey.globalPyxisAura,
-                                ),
-                                coinId: localization.translate(
-                                  LanguageKey.globalPyxisAuraId,
-                                ),
-                                appTheme: appTheme,
-                                price:
-                                    '${localization.translate(LanguageKey.homePageTokenPrefix)} ${(price ?? 0).formatPrice}',
-                                balance:
-                                    balances.firstOrNull?.amount.formatAura ??
-                                        '',
+                  Expanded(
+                    child: CustomScrollView(
+                      slivers: [
+                        CupertinoSliverRefreshControl(
+                          onRefresh: () async => _bloc.add(
+                            const HomePageEventOnFetchTokenPrice(),
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: HomePageBalanceSelector(
+                            builder: (balances) {
+                              return HomePagePriceSelector(
+                                builder: (price) {
+                                  if (balances.isEmpty) {
+                                    return Center(
+                                      child: EmptyTokenWidget(
+                                        appTheme: appTheme,
+                                      ),
+                                    );
+                                  }
+                                  return AppLocalizationProvider(
+                                    builder: (localization, _) {
+                                      return TokenItemWidget(
+                                        iconPath:
+                                            AssetIconPath.commonAuraTokenLogo,
+                                        coin: localization.translate(
+                                          LanguageKey.globalPyxisAura,
+                                        ),
+                                        coinId: localization.translate(
+                                          LanguageKey.globalPyxisAuraId,
+                                        ),
+                                        appTheme: appTheme,
+                                        price:
+                                            '${localization.translate(LanguageKey.homePageTokenPrefix)} ${(price ?? 0).formatPrice}',
+                                        balance: balances
+                                                .firstOrNull?.amount.formatAura ??
+                                            '',
+                                      );
+                                    },
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
-                      );
-                    },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

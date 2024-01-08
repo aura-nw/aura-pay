@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
@@ -30,19 +31,28 @@ class NFTLayoutBuilder extends StatelessWidget {
         return NFTInformationSSelector(
           builder: (nFTs) {
             if (nFTs.isEmpty) {
-              return Center(
-                child: AppLocalizationProvider(
-                  builder: (localization, _) {
-                    return Text(
-                      localization.translate(
-                        LanguageKey.nftScreenNoNFTFound,
+              return CustomScrollView(
+                slivers: [
+                  CupertinoSliverRefreshControl(
+                    onRefresh: () async => _onRefresh(context),
+                  ),
+                  SliverFillRemaining(
+                    child: Center(
+                      child: AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return Text(
+                            localization.translate(
+                              LanguageKey.nftScreenNoNFTFound,
+                            ),
+                            style: AppTypoGraPhy.bodyMedium02.copyWith(
+                              color: appTheme.contentColor500,
+                            ),
+                          );
+                        },
                       ),
-                      style: AppTypoGraPhy.bodyMedium02.copyWith(
-                        color: appTheme.contentColor500,
-                      ),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                ],
               );
             }
             return NFTCanLoadMoreSelector(

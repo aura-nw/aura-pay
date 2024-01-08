@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
@@ -142,20 +143,31 @@ class _HistoryPageState extends State<HistoryPage> {
                             return HistoryPageTransactionsSelector(
                               builder: (transactions) {
                                 if (transactions.isEmpty) {
-                                  return Center(
-                                    child: AppLocalizationProvider(
-                                      builder: (localization, _) {
-                                        return Text(
-                                          localization.translate(
-                                            LanguageKey
-                                                .transactionHistoryPageNoTransactionFound,
+                                  return CustomScrollView(
+                                    slivers: [
+                                      CupertinoSliverRefreshControl(
+                                        onRefresh: () async => _bloc.add(
+                                          const HistoryPageEventOnRefresh(),
+                                        ),
+                                      ),
+                                      SliverFillRemaining(
+                                        child: Center(
+                                          child: AppLocalizationProvider(
+                                            builder: (localization, _) {
+                                              return Text(
+                                                localization.translate(
+                                                  LanguageKey
+                                                      .transactionHistoryPageNoTransactionFound,
+                                                ),
+                                                style: AppTypoGraPhy.body02.copyWith(
+                                                  color: appTheme.contentColor500,
+                                                ),
+                                              );
+                                            },
                                           ),
-                                          style: AppTypoGraPhy.body02.copyWith(
-                                            color: appTheme.contentColor500,
-                                          ),
-                                        );
-                                      },
-                                    ),
+                                        ),
+                                      ),
+                                    ],
                                   );
                                 }
                                 return HistoryPageCanLoadMoreSelector(

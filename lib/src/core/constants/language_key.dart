@@ -243,6 +243,7 @@ sealed class LanguageKey {
   static const String settingPagePasscode = 'setting_page_passcode';
   static const String settingPageAddressBook = 'setting_page_address_book';
   static const String settingPageHelpCenter = 'setting_page_help_center';
+  static const String settingPageConnectSite = 'setting_page_connect_site';
   ///
 
   /// region setting change passcode and biometric
@@ -456,4 +457,20 @@ sealed class LanguageKey {
   static const String walletConnectHeadTitle = 'wallet_connect_screen_head_title';
   static const String walletConnectWarningMsg = 'wallet_connect_screen_warning_msg';
   static const String walletConnectMessage = 'wallet_connect_screen_messages';
+
+  ///region connect site
+  static const String connectSiteScreenAppBarTitle = 'connect_site_screen_app_bar_title';
+  static const String connectSiteScreenContent = 'connect_site_screen_content';
+  static const String connectSiteScreenNewConnection = 'connect_site_screen_new_connection';
+  static const String connectSiteScreenDate = 'connect_site_screen_date';
+  static const String connectSiteScreenAccountName = 'connect_site_screen_account_name';
+  static const String connectSiteScreenAddress = 'connect_site_screen_address';
+  static const String connectSiteScreenConnectionType = 'connect_site_screen_connection_type';
+  static const String connectSiteScreenConnectionTypeWalletConnect = 'connect_site_screen_connection_type_wallet_connect';
+  static const String connectSiteScreenDisconnect = 'connect_site_screen_disconnect';
+  static const String connectSiteScreenDisconnectTitle = 'connect_site_screen_disconnect_title';
+  static const String connectSiteScreenDisconnectContentRegionOne = 'connect_site_screen_disconnect_content_region_one';
+  static const String connectSiteScreenDisconnectContentRegionTwo = 'connect_site_screen_disconnect_content_region_two';
+  static const String connectSiteScreenDisconnectCancelButton = 'connect_site_screen_disconnect_cancel_button';
+  static const String connectSiteScreenDisconnectDisconnectButton = 'connect_site_screen_disconnect_disconnect_button';
 }

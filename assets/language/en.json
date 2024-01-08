@@ -206,6 +206,7 @@
   "setting_page_address_book" : "Address book",
   "setting_page_passcode" : "Passcode and Biometrics",
   "setting_page_help_center" : "Help center",
+  "setting_page_connect_site" : "Connected sites",
 
   "setting_passcode_screen_app_bar_title" : "Passcode and Biometrics",
   "setting_passcode_screen_change_passcode" : "Change Passcode",
@@ -380,7 +381,22 @@
 
   "wallet_connect_screen_head_title" : "Sign in to this site?",
   "wallet_connect_screen_warning_msg" : "You are about to allow this Dapp to view your balance and activity, make sure you trust this site.",
-  "wallet_connect_screen_messages" : "Messages"
-  
+  "wallet_connect_screen_messages" : "Messages",
+
+  "connect_site_screen_app_bar_title" : "Connected sites",
+  "connect_site_screen_content" : "The recovery method can only be set for a Pyxis smart account",
+  "connect_site_screen_new_connection" : "New connection",
+  "connect_site_screen_date" : "Date",
+  "connect_site_screen_account_name" : "Account name",
+  "connect_site_screen_address" : "Address",
+  "connect_site_screen_connection_type" : "Connection type",
+  "connect_site_screen_connection_type_wallet_connect" : "WalletConnect",
+  "connect_site_screen_disconnect" : "Disconnect",
+  "connect_site_screen_disconnect_title" : "Disconnect site",
+  "connect_site_screen_disconnect_content_region_one" : "Are you sure to disconnect",
+  "connect_site_screen_disconnect_content_region_two" : "This action can’t be undone.",
+  "connect_site_screen_disconnect_cancel_button" : "Cancel",
+  "connect_site_screen_disconnect_disconnect_button" : "Disconnect"
+
   
 }
