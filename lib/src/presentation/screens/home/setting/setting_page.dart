@@ -74,9 +74,9 @@ class _SettingPageState extends State<SettingPage> {
                       labelPath: LanguageKey.settingPageConnectSite,
                       appTheme: appTheme,
                       onTap: () {
-                        // AppNavigator.push(
-                        //   RoutePath.settingPassCodeAndBioMetric,
-                        // );
+                        AppNavigator.push(
+                          RoutePath.settingConnectSite,
+                        );
                       },
                     ),
                   ],
@@ -94,7 +94,9 @@ class _SettingPageState extends State<SettingPage> {
                   iconPath: AssetIconPath.settingHelpCenter,
                   labelPath: LanguageKey.settingPageHelpCenter,
                   appTheme: appTheme,
-                  onTap: () {},
+                  onTap: () {
+
+                  },
                 ),
               ),
             ],

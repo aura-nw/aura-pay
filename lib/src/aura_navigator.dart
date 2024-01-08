@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
+import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft_detail/nft_detail_screen.dart';
@@ -94,6 +95,8 @@ sealed class RoutePath {
 
   static const String settingChangePassCode =
       '$settingPassCodeAndBioMetric/change_passcode';
+
+  static const String settingConnectSite = '$_setting/connect_site';
 
   static const String walletConnect = '$home/wallet_connect';
 }
@@ -358,6 +361,11 @@ sealed class AppNavigator {
           NFTDetailScreen(
             nftInformation: nftInformation,
           ),
+          settings,
+        );
+      case RoutePath.settingConnectSite:
+        return _defaultRoute(
+          const ConnectSiteScreen(),
           settings,
         );
       default:

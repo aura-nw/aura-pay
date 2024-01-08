@@ -135,7 +135,6 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   ) async {
     final account = await _accountUseCase.getFirstAccount();
 
-    print('run');
     _isolateSendPort?.send(
       _createMsg(
         account?.address,

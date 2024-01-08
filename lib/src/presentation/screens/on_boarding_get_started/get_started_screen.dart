@@ -163,7 +163,7 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
 
     AppNavigator.replaceWith(
       RoutePath.choiceOption,
-      hasPassCode,
+      !hasPassCode,
     );
   }
 }
