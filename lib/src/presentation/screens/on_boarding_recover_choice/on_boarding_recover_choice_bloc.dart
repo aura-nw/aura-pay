@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'on_boarding_recover_choice_event.dart';
 import 'on_boarding_recover_choice_state.dart';
@@ -41,10 +42,14 @@ class OnBoardingRecoverChoiceBloc
         );
       }
     } catch (e) {
+      String errMsg = e.toString();
+      if(e is PlatformException){
+        errMsg = e.message ?? e.toString();
+      }
       emit(
         state.copyWith(
           status: OnBoardingRecoverChoiceStatus.loginFailure,
-          errorMessage: e.toString(),
+          errorMessage: errMsg,
         ),
       );
     }

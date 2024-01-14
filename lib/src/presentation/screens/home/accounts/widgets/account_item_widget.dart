@@ -62,7 +62,7 @@ class AccountItemWidget extends AuraSmartAccountBaseWidget {
         padding: isSmartAccount
             ? EdgeInsets.zero
             : const EdgeInsets.symmetric(
-                horizontal: Spacing.spacing03,
+                horizontal: Spacing.spacing04,
               ),
         child: Row(
           children: [
@@ -185,11 +185,23 @@ class AccountItemImportedWidget extends AuraSmartAccountBaseWidget {
 
   @override
   Widget addressBuilder(BuildContext context) {
-    return Text(
-      address.addressView,
-      style: AppTypoGraPhy.body02.copyWith(
-        color: appTheme.contentColor500,
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          address.addressView,
+          style: AppTypoGraPhy.body02.copyWith(
+            color: appTheme.contentColor500,
+          ),
+        ),
+        const SizedBox(
+          width: BoxSize.boxSize02,
+        ),
+        SvgPicture.asset(
+          AssetIconPath.commonCopy,
+        ),
+      ],
     );
   }
 

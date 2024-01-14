@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
@@ -240,6 +243,9 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
             ),
           );
         },
+        onCopyAddress: (){
+          _copyAddress(account.address);
+        },
       ),
     );
   }
@@ -314,5 +320,24 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
         data: account,
       ),
     );
+  }
+
+  void _copyAddress(String data) async {
+    await Clipboard.setData(
+      ClipboardData(text: data),
+    );
+
+    if (Platform.isIOS) {
+      if (context.mounted) {
+        showToast(
+          AppLocalizationManager.of(context).translateWithParam(
+            LanguageKey.globalPyxisCopyMessage,
+            {
+              'value': 'address',
+            },
+          ),
+        );
+      }
+    }
   }
 }

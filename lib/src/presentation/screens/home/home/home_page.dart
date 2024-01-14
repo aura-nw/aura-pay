@@ -250,21 +250,28 @@ class _HomePageState extends State<HomePage>
                                   }
                                   return AppLocalizationProvider(
                                     builder: (localization, _) {
-                                      return TokenItemWidget(
-                                        iconPath:
-                                            AssetIconPath.commonAuraTokenLogo,
-                                        coin: localization.translate(
-                                          LanguageKey.globalPyxisAura,
-                                        ),
-                                        coinId: localization.translate(
-                                          LanguageKey.globalPyxisAuraId,
-                                        ),
-                                        appTheme: appTheme,
-                                        price:
-                                            '${localization.translate(LanguageKey.homePageTokenPrefix)} ${(price ?? 0).formatPrice}',
-                                        balance: balances
-                                                .firstOrNull?.amount.formatAura ??
-                                            '',
+                                      return HomePageHideTokenValueSelector(
+                                        builder: (hideTokenValue) {
+                                          return TokenItemWidget(
+                                            iconPath: AssetIconPath
+                                                .commonAuraTokenLogo,
+                                            coin: localization.translate(
+                                              LanguageKey.globalPyxisAura,
+                                            ),
+                                            coinId: localization.translate(
+                                              LanguageKey.globalPyxisAuraId,
+                                            ),
+                                            appTheme: appTheme,
+                                            price: hideTokenValue
+                                                ? _hideTokenText
+                                                : '${localization.translate(LanguageKey.homePageTokenPrefix)} ${(price ?? 0).formatPrice}',
+                                            balance: hideTokenValue
+                                                ? _hideTokenText
+                                                : balances.firstOrNull?.amount
+                                                        .formatAura ??
+                                                    '',
+                                          );
+                                        },
                                       );
                                     },
                                   );

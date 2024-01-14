@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'set_recovery_method_screen_event.dart';
@@ -99,10 +100,14 @@ final class SetRecoveryMethodScreenBloc
         }
       }
     } catch (e) {
+      String errMsg = e.toString();
+      if(e is PlatformException){
+        errMsg = e.message ?? e.toString();
+      }
       emit(
         state.copyWith(
           status: SetRecoveryMethodScreenStatus.loginFail,
-          error: e.toString(),
+          error: errMsg,
         ),
       );
     }

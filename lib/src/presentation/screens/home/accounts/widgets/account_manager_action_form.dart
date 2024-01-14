@@ -15,6 +15,7 @@ class AccountManagerActionForm extends StatelessWidget {
   final VoidCallback onRenameAddress;
   final VoidCallback onViewOnAuraScan;
   final VoidCallback onRemove;
+  final VoidCallback onCopyAddress;
   final AppTheme appTheme;
   final String address;
   final String name;
@@ -23,6 +24,7 @@ class AccountManagerActionForm extends StatelessWidget {
   const AccountManagerActionForm({
     required this.appTheme,
     required this.onRemove,
+    required this.onCopyAddress,
     required this.onRenameAddress,
     required this.onShareAddress,
     required this.onViewOnAuraScan,
@@ -54,25 +56,28 @@ class AccountManagerActionForm extends StatelessWidget {
                     appTheme: appTheme,
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Spacing.spacing04,
-                    vertical: Spacing.spacing05,
-                  ),
-                  margin: const EdgeInsets.only(
-                    top: Spacing.spacing06,
-                  ),
-                  decoration: BoxDecoration(
-                    color: appTheme.surfaceColorGrayLight,
-                    borderRadius: BorderRadius.circular(
-                      BorderRadiusSize.borderRadius05,
+                GestureDetector(
+                  onTap: onCopyAddress,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Spacing.spacing04,
+                      vertical: Spacing.spacing05,
                     ),
-                  ),
-                  child: AccountItemImportedWidget(
-                    appTheme: appTheme,
-                    address: address,
-                    accountName: name,
-                    isSmartAccount: isSmartAccount,
+                    margin: const EdgeInsets.only(
+                      top: Spacing.spacing06,
+                    ),
+                    decoration: BoxDecoration(
+                      color: appTheme.surfaceColorGrayLight,
+                      borderRadius: BorderRadius.circular(
+                        BorderRadiusSize.borderRadius05,
+                      ),
+                    ),
+                    child: AccountItemImportedWidget(
+                      appTheme: appTheme,
+                      address: address,
+                      accountName: name,
+                      isSmartAccount: isSmartAccount,
+                    ),
                   ),
                 ),
                 const SizedBox(

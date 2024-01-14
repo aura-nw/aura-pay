@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/wallet_address_validator.dart';
+import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'send_transaction_event.dart';
@@ -127,7 +128,7 @@ final class SendTransactionBloc
         ..toAddress = state.recipientAddress
         ..amount.add(
           Coin.create()
-            ..amount = state.amount
+            ..amount = state.amount.toDenom
             ..denom = config.deNom,
         );
 
@@ -154,6 +155,7 @@ final class SendTransactionBloc
         ),
       );
     } catch (e) {
+      print('run error ${e.toString()}');
       emit(
         state.copyWith(
           status: SendTransactionStatus.estimateFeeError,

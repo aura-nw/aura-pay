@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'signed_in_recover_choice_event.dart';
 import 'signed_in_recover_choice_state.dart';
@@ -40,10 +41,14 @@ class SignedInRecoverChoiceBloc
         );
       }
     } catch (e) {
+      String errMsg = e.toString();
+      if(e is PlatformException){
+        errMsg = e.message ?? e.toString();
+      }
       emit(
         state.copyWith(
           status: SignedInRecoverChoiceStatus.loginFailure,
-          errorMessage: e.toString(),
+          errorMessage: errMsg,
         ),
       );
     }

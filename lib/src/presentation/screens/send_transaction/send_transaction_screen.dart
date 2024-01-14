@@ -322,7 +322,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                                       suffix: GestureDetector(
                                         behavior: HitTestBehavior.opaque,
                                         onTap: () => _onChangeAmount(
-                                          _bloc.state.balance,
+                                          _bloc.state.balance.formatAura,
                                           true,
                                         ),
                                         child: Padding(

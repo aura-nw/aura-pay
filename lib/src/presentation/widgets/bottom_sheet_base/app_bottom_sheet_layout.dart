@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 
@@ -17,26 +18,36 @@ class AppBottomSheetLayout extends StatelessWidget {
       builder: (appTheme) {
         return PopScope(
           canPop: false,
-          child: Scaffold(
-            backgroundColor: appTheme.bodyColorOverlay.withOpacity(
-              0.6,
-            ),
-            body: Stack(
-              children: [
-                Positioned(
-                  bottom: BoxSize.boxSize10,
-                  child: SizedBox(
-                    width: context.w,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Spacing.spacing07,
-                        vertical: Spacing.spacing08,
+          child: GestureDetector(
+            onTap: (){
+              AppNavigator.pop();
+            },
+            child: Scaffold(
+              backgroundColor: appTheme.bodyColorOverlay.withOpacity(
+                0.6,
+              ),
+              body: Stack(
+                children: [
+                  Positioned(
+                    bottom: BoxSize.boxSize10,
+                    child: GestureDetector(
+                      onTap: (){
+                        // Don't close this dialog when users click to child widget
+                      },
+                      child: SizedBox(
+                        width: context.w,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Spacing.spacing07,
+                            vertical: Spacing.spacing08,
+                          ),
+                          child: child,
+                        ),
                       ),
-                      child: child,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -44,7 +55,8 @@ class AppBottomSheetLayout extends StatelessWidget {
     );
   }
 
-  static Future<T?> showFullScreenDialog<T>(BuildContext context, {
+  static Future<T?> showFullScreenDialog<T>(
+    BuildContext context, {
     required Widget child,
   }) {
     return showGeneralDialog<T>(
@@ -53,8 +65,8 @@ class AppBottomSheetLayout extends StatelessWidget {
         const end = Offset.zero;
         const curve = Curves.ease;
 
-        var tween = Tween(begin: begin, end: end).chain(
-            CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),

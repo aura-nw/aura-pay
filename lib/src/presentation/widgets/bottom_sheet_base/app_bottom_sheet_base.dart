@@ -84,8 +84,13 @@ class AppBottomSheetBaseState<R extends AppBottomSheetBase> extends State<R> {
                         AppNavigator.pop();
                       }
                     },
-                    child: SvgPicture.asset(
-                      AssetIconPath.commonCloseBottomSheet,
+                    child: Padding(
+                      padding: const EdgeInsets.all(
+                        Spacing.spacing03,
+                      ),
+                      child: SvgPicture.asset(
+                        AssetIconPath.commonCloseBottomSheet,
+                      ),
                     ),
                   ),
                 ],
