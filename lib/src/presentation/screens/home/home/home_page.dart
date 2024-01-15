@@ -230,6 +230,9 @@ class _HomePageState extends State<HomePage>
                   ),
                   Expanded(
                     child: CustomScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: BouncingScrollPhysics(),
+                      ),
                       slivers: [
                         CupertinoSliverRefreshControl(
                           onRefresh: () async => _bloc.add(

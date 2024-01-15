@@ -144,6 +144,9 @@ class _HistoryPageState extends State<HistoryPage> {
                               builder: (transactions) {
                                 if (transactions.isEmpty) {
                                   return CustomScrollView(
+                                    physics: const AlwaysScrollableScrollPhysics(
+                                      parent: BouncingScrollPhysics(),
+                                    ),
                                     slivers: [
                                       CupertinoSliverRefreshControl(
                                         onRefresh: () async => _bloc.add(

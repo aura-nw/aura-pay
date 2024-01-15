@@ -11,3 +11,5 @@ export 'nft_repository.dart';
 export 'fee_grant_repository.dart';
 export 'recovery_repository.dart';
 export 'token_repository.dart';
+export 'auth_repository.dart';
+export 'device_management_repository.dart';

@@ -6,3 +6,5 @@ export 'query_transaction_detail_parameter.dart';
 export 'query_nft_by_address_parameter.dart';
 export 'query_recovery_account_parameter.dart';
 export 'fee_grant_parameter.dart';
+export 'register_device_parameter.dart';
+export 'sign_in_parameter.dart';

@@ -32,6 +32,9 @@ class NFTLayoutBuilder extends StatelessWidget {
           builder: (nFTs) {
             if (nFTs.isEmpty) {
               return CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics(),
+                ),
                 slivers: [
                   CupertinoSliverRefreshControl(
                     onRefresh: () async => _onRefresh(context),
