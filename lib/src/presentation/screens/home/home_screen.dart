@@ -7,9 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_cubit.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
@@ -88,7 +91,22 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
     currentSection = HomeScreenSection.home;
+    testing();
     super.initState();
+  }
+
+  Future<void> testing() async {
+    await Future.delayed(Duration(seconds: 5));
+    print("Testing");
+
+    // WalletConnectCubit.of(context).connect("data");
+
+    // await Future.delayed(Duration(seconds: 5));
+    BlocProvider.of<AppGlobalCubit>(context).changeState(
+      AppGlobalState(status: AppGlobalStatus.unauthorized),
+    );
+
+    return;
   }
 
   @override

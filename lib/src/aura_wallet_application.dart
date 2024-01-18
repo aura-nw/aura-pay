@@ -1,5 +1,7 @@
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
+import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_cubit.dart';
+import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,6 +103,9 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
               BlocProvider(
                 create: (_) => AppGlobalCubit(),
               ),
+              BlocProvider(
+                create: (_) => WalletConnectCubit(),
+              ),
             ],
             child: Builder(builder: (context) {
               return MultiBlocListener(
@@ -124,6 +129,10 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                       }
                     },
                   ),
+                  BlocListener<WalletConnectCubit, WalletConnectState>(
+                      listenWhen: (previous, current) =>
+                          current.status != previous.status,
+                      listener: walletConnectListener)
                 ],
                 child: child ?? const SizedBox(),
               );
@@ -132,5 +141,26 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
         },
       ),
     );
+  }
+
+  void walletConnectListener(BuildContext context, WalletConnectState state) {
+    switch (state.status) {
+      case WalletConnectStatus.onConnect:
+        // If the user is authorized, navigate to the home screen
+        AppNavigator.replaceAllWith(
+          RoutePath.sendTransaction,
+        );
+        break;
+      case WalletConnectStatus.none:
+        // If the user is authorized, navigate to the home screen
+        AppNavigator.replaceAllWith(
+          RoutePath.reLogin,
+        );
+        break;
+      case WalletConnectStatus.onRequest:
+        // If the user is unauthorized, navigate to the get started screen
+        AppNavigator.replaceAllWith(RoutePath.scanQrFee);
+        break;
+    }
   }
 }

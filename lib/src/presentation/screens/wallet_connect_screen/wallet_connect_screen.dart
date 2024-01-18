@@ -312,7 +312,8 @@ class _WalletConnectScreenState extends State<WalletConnectScreen> {
         .approveSession(id: connectionId!, namespaces: {
       'cosmos': Namespace(accounts: [
         'cosmos:euphoria-2:${widget.data.selectedAccount}',
-        'cosmos:cosmoshub-4:${widget.data.selectedAccount}'
+        'cosmos:cosmoshub-4:${widget.data.selectedAccount}',
+        'cosmos:xstaxy-1:${widget.data.selectedAccount}',
       ], methods: [
         'cosmos_signDirect',
         'cosmos_getAccounts',

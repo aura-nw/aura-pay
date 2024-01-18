@@ -3,8 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 
+enum WalletConnectEvent {
+  connect,
+  sign,
+}
+
 class WalletConnectService {
-  static const String projectId = 'a2c114bca03d3d9baedd1012bda2fd89';
+  static const String projectId = '85289c08fad8fae4ca3eb5e525005bf3';
+
+  final Map<WalletConnectEvent, void Function(dynamic)> _call = {};
+
+  void addListener(WalletConnectEvent event, void Function(dynamic) callback) {
+    _call[event] = callback;
+  }
 
   Web3Wallet? _web3Wallet;
 
@@ -43,8 +54,9 @@ class WalletConnectService {
 
     await _web3Wallet!.init();
 
-    WalletConnectUtils.registerChain('cosmos:euphoria-2', _web3Wallet!);
-    WalletConnectUtils.registerChain('cosmos:cosmoshub-4', _web3Wallet!);
+    WalletConnectServiceUtils.registerChain('cosmos:euphoria-2', _web3Wallet!);
+    WalletConnectServiceUtils.registerChain('cosmos:cosmoshub-4', _web3Wallet!);
+    WalletConnectServiceUtils.registerChain('cosmos:xstaxy-1', _web3Wallet!);
 
     // Setup our listeners
     print('web3wallet create');
@@ -60,7 +72,6 @@ class WalletConnectService {
         .subscribe(_onRelayClientError);
   }
 
-  @override
   Future<void> init() async {
     // Await the initialization of the web3wallet
     print('web3wallet init');
@@ -125,18 +136,53 @@ class WalletConnectService {
   }
 
   void _onSessionConnect(SessionConnect? args) {
+    print('#KhoaHM SessionConnect $args');
+
     if (args != null) {
       print(args);
       sessions.value.add(args.session);
+      _call[WalletConnectEvent.connect]!(args.session);
     }
   }
 
   Future<void> _onAuthRequest(AuthRequest? args) async {
     print('#KhoaHM _onAuthRequest $args');
   }
+
+  void registerEventCallBack(
+      {required void Function(SessionConnect? args) onSessionConnect,
+      required void Function(SessionRequestEvent? args) onSessionRequest,
+      required void Function(SessionProposalEvent? args) onSessionProposal,
+      required void Function(SessionProposalErrorEvent? args)
+          onSessionProposalError,
+      required void Function(PairingEvent? args) onPairingCreate,
+      required void Function(PairingInvalidEvent? args) onPairingInvalid,
+      required void Function(ErrorEvent? args) onRelayClientError,
+      required void Function(StoreSyncEvent? args) onPairingsSync,
+      required Future<void> Function(AuthRequest? args) onAuthRequest}) {
+    this.onSessionConnect = onSessionConnect;
+    this.onSessionRequest = onSessionRequest;
+    this.onSessionProposal = onSessionProposal;
+    this.onSessionProposalError = onSessionProposalError;
+    this.onPairingCreate = onPairingCreate;
+    this.onPairingInvalid = onPairingInvalid;
+    this.onRelayClientError = onRelayClientError;
+    this.onPairingsSync = onPairingsSync;
+    this.onAuthRequest = onAuthRequest;
+  }
+
+  Function(SessionConnect? args)? onSessionConnect;
+  Function(SessionRequestEvent? args)? onSessionRequest;
+  Function(SessionProposalEvent? args)? onSessionProposal;
+  Function(SessionProposalErrorEvent? args)? onSessionProposalError;
+  Function(PairingEvent? args)? onPairingCreate;
+  Function(PairingInvalidEvent? args)? onPairingInvalid;
+  Function(ErrorEvent? args)? onRelayClientError;
+  Function(StoreSyncEvent? args)? onPairingsSync;
+  Future<void> Function(AuthRequest? args)? onAuthRequest;
 }
 
-class WalletConnectUtils {
+class WalletConnectServiceUtils {
   static registerChain(String chainId, Web3Wallet web3wallet) {
     web3wallet.registerEventEmitter(chainId: chainId, event: 'chainChanged');
     web3wallet.registerEventEmitter(chainId: chainId, event: 'accountsChanged');
