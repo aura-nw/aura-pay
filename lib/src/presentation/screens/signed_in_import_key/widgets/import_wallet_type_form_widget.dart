@@ -72,6 +72,7 @@ class _ImportWalletTypeWidgetState
                 onTap: () {
                   _onItemTap(item);
                 },
+                behavior: HitTestBehavior.opaque,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -175,60 +176,60 @@ class _ImportWalletTypeSelectWidgetState
   Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (appTheme) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              children: [
-                buildLabel(appTheme),
-                const SizedBox(
-                  height: BoxSize.boxSize03,
-                ),
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Spacing.spacing0,
-                vertical: Spacing.spacing02,
-              ),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: appTheme.borderColorGrayDefault,
-                    width: BorderSize.border01,
-                  ),
-                ),
-              ),
-              alignment: Alignment.center,
-              child: Row(
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: _showChoiceOption,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
                 children: [
-                  Expanded(
-                    child: _selectedOption.isEmpty
-                        ? const SizedBox.shrink()
-                        : Text(
-                            _selectedOption[0].value[0],
-                            style: AppTypoGraPhy.body03.copyWith(
-                              color: appTheme.contentColorUnKnow,
-                            ),
-                          ),
-                  ),
+                  buildLabel(appTheme),
                   const SizedBox(
-                    width: BoxSize.boxSize05,
+                    height: BoxSize.boxSize03,
                   ),
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: _showChoiceOption,
-                    child: Padding(
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Spacing.spacing0,
+                  vertical: Spacing.spacing02,
+                ),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: appTheme.borderColorGrayDefault,
+                      width: BorderSize.border01,
+                    ),
+                  ),
+                ),
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: _selectedOption.isEmpty
+                          ? const SizedBox.shrink()
+                          : Text(
+                              _selectedOption[0].value[0],
+                              style: AppTypoGraPhy.body03.copyWith(
+                                color: appTheme.contentColorUnKnow,
+                              ),
+                            ),
+                    ),
+                    const SizedBox(
+                      width: BoxSize.boxSize05,
+                    ),
+                    Padding(
                       padding: const EdgeInsets.all(Spacing.spacing02),
                       child: SvgPicture.asset(
                         AssetIconPath.commonArrowDown,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

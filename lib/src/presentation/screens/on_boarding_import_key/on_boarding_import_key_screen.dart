@@ -70,8 +70,7 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
       builder: (appTheme) {
         return BlocProvider.value(
           value: _bloc,
-          child:
-              BlocListener<OnBoardingImportKeyBloc, OnBoardingImportKeyState>(
+          child: BlocListener<OnBoardingImportKeyBloc, OnBoardingImportKeyState>(
             listener: (context, state) {
               switch (state.status) {
                 case OnBoardingImportKeyStatus.init:
@@ -231,11 +230,11 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                       return TextInputNormalSuffixWidget(
                                         suffix: _passWordIsHide
                                             ? SvgPicture.asset(
-                                          AssetIconPath.commonEyeHide,
-                                        )
+                                                AssetIconPath.commonEyeHide,
+                                              )
                                             : SvgPicture.asset(
-                                          AssetIconPath.commonEyeActive,
-                                        ),
+                                                AssetIconPath.commonEyeActive,
+                                              ),
                                         isRequired: true,
                                         key: _inputPrivateGlobalKey,
                                         maxLine: 1,

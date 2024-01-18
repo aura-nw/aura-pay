@@ -52,7 +52,7 @@
   "on_boarding_scan_fee_screen_dialog_warning_button_title" : "Dismiss",
 
   "on_boarding_import_key_screen_title_region_one" : "Import",
-  "on_boarding_import_key_screen_title_region_two" : "Smart account",
+  "on_boarding_import_key_screen_title_region_two" : "wallet",
   "on_boarding_import_key_screen_account_type" : "Account type",
   "on_boarding_import_key_screen_smart_account_type" : "Pyxis smart account",
   "on_boarding_import_key_screen_normal_account_type" : "Normal wallet",
@@ -276,7 +276,7 @@
 
 
   "signed_in_import_key_screen_title_region_one" : "Import",
-  "signed_in_import_key_screen_title_region_two" : "Smart account",
+  "signed_in_import_key_screen_title_region_two" : "wallet",
   "signed_in_import_key_screen_account_type" : "Account type",
   "signed_in_import_key_screen_smart_account_type" : "Pyxis smart account",
   "signed_in_import_key_screen_normal_account_type" : "Normal wallet",
@@ -400,4 +400,6 @@
   "connect_site_screen_disconnect_content_region_two" : "This action can’t be undone.",
   "connect_site_screen_disconnect_cancel_button" : "Cancel",
   "connect_site_screen_disconnect_disconnect_button" : "Disconnect"
+
+
 }
