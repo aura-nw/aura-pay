@@ -155,7 +155,6 @@ final class SendTransactionBloc
         ),
       );
     } catch (e) {
-      print('run error ${e.toString()}');
       emit(
         state.copyWith(
           status: SendTransactionStatus.estimateFeeError,

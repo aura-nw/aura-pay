@@ -51,7 +51,6 @@ sealed class LocalAuthHelper {
         ),
       );
     } catch (e) {
-      print('e 1 ${e.toString()}');
       return false;
     }
   }

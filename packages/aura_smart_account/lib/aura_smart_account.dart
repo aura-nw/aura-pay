@@ -21,6 +21,7 @@ export 'package:aura_smart_account/src/core/definitions/gas_price.dart';
 export 'package:aura_smart_account/src/core/helpers/cosmos_helper.dart';
 export 'package:aura_smart_account/src/core/helpers/aura_smart_account_helper.dart';
 export 'src/export_type.dart';
+export 'src/core/utils/crypto_util.dart';
 
 /// AuraSmartAccount is an interface. It define some methods to support for aura smart account
 /// See more [https://github.com/aura-nw/aura/tree/main/proto/aura/smartaccount/]

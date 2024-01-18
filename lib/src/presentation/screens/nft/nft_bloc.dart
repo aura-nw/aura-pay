@@ -46,7 +46,9 @@ final class NFTBloc extends Bloc<NFTEvent, NFTState> {
     try {
       final account = await _accountUseCase.getFirstAccount();
 
-      final NFTsInformation nftInformation = await _getNFTsInformation();
+      final NFTsInformation nftInformation = await _getNFTsInformation(
+        owner: account?.address,
+      );
 
       emit(
         state.copyWith(

@@ -10,4 +10,12 @@ sealed class CryptoHelper{
 
     return digest.toString();
   }
+
+  static Uint8List hashStringToByteBySha256(String value){
+    final Uint8List bytes = utf8.encode(value);
+
+    final Digest digest = sha256.convert(bytes);
+
+    return Uint8List.fromList(digest.bytes);
+  }
 }

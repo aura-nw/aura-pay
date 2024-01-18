@@ -11,3 +11,5 @@ export 'nft_use_case.dart';
 export 'fee_grant_use_case.dart';
 export 'recovery_use_case.dart';
 export 'token_use_case.dart';
+export 'auth_use_case.dart';
+export 'device_management_use_case.dart';

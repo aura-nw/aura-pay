@@ -13,8 +13,10 @@ import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_stor
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider.dart';
+import 'package:pyxis_mobile/src/application/service/auth/auth_api_service_impl.dart';
 
 import 'package:pyxis_mobile/src/application/service/balance/balance_api_service_impl.dart';
+import 'package:pyxis_mobile/src/application/service/device_management/device_management_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/grant_fee/grant_fee_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/nft/nft_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/recovery/recovery_api_service_impl.dart';
@@ -162,6 +164,20 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<AuthApiServiceGenerate>(
+    () => AuthApiServiceGenerate(
+      getIt.get<Dio>(),
+      baseUrl: config.pyxisBaseUrl + config.pyxisVersion,
+    ),
+  );
+
+  getIt.registerLazySingleton<DeviceManagementApiServiceGenerate>(
+    () => DeviceManagementApiServiceGenerate(
+      getIt.get<Dio>(),
+      baseUrl: config.pyxisBaseUrl + config.pyxisVersion,
+    ),
+  );
+
   ///Api service
 
   getIt.registerLazySingleton<TransactionApiServiceGenerate>(
@@ -195,6 +211,18 @@ Future<void> initDependency(
   getIt.registerLazySingleton<GrantFeeApiService>(
     () => GrantFeeApiServiceImpl(
       getIt.get<GrantFeeApiServiceGenerate>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<AuthApiService>(
+        () => AuthApiServiceImpl(
+      getIt.get<AuthApiServiceGenerate>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<DeviceManagementApiService>(
+        () => DeviceManagementApiServiceImpl(
+      getIt.get<DeviceManagementApiServiceGenerate>(),
     ),
   );
 
@@ -314,6 +342,19 @@ Future<void> initDependency(
     ),
   );
 
+
+  getIt.registerLazySingleton<AuthRepository>(
+        () => AuthRepositoryImpl(
+      getIt.get<AuthApiService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<DeviceManagementRepository>(
+        () => DeviceManagementRepositoryImpl(
+      getIt.get<DeviceManagementApiService>(),
+    ),
+  );
+
   ///Use case
   getIt.registerLazySingleton<AppSecureUseCase>(
     () => AppSecureUseCase(
@@ -392,11 +433,24 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<AuthUseCase>(
+        () => AuthUseCase(
+      getIt.get<AuthRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<DeviceManagementUseCase>(
+        () => DeviceManagementUseCase(
+      getIt.get<DeviceManagementRepository>(),
+    ),
+  );
+
   ///Bloc
   getIt.registerFactory<SplashScreenCubit>(
     () => SplashScreenCubit(
       getIt.get<AppSecureUseCase>(),
       getIt.get<AuraAccountUseCase>(),
+      getIt.get<AuthUseCase>(),
     ),
   );
 
