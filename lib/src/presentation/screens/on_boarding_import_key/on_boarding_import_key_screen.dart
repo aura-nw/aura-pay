@@ -229,8 +229,12 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                   return AppLocalizationProvider(
                                     builder: (localization, _) {
                                       return TextInputNormalSuffixWidget(
-                                        suffix: SvgPicture.asset(
+                                        suffix: _passWordIsHide
+                                            ? SvgPicture.asset(
                                           AssetIconPath.commonEyeHide,
+                                        )
+                                            : SvgPicture.asset(
+                                          AssetIconPath.commonEyeActive,
                                         ),
                                         isRequired: true,
                                         key: _inputPrivateGlobalKey,
@@ -277,9 +281,13 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                                   return AppLocalizationProvider(
                                     builder: (localization, _) {
                                       return TextInputNormalSuffixWidget(
-                                        suffix: SvgPicture.asset(
-                                          AssetIconPath.commonEyeHide,
-                                        ),
+                                        suffix: _passWordIsHide
+                                            ? SvgPicture.asset(
+                                                AssetIconPath.commonEyeHide,
+                                              )
+                                            : SvgPicture.asset(
+                                                AssetIconPath.commonEyeActive,
+                                              ),
                                         isRequired: true,
                                         maxLine: 1,
                                         key: _inputPassPhraseGlobalKey,

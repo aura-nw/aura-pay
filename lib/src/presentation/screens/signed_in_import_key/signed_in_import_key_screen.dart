@@ -223,8 +223,12 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                                   return AppLocalizationProvider(
                                     builder: (localization, _) {
                                       return TextInputNormalSuffixWidget(
-                                        suffix: SvgPicture.asset(
+                                        suffix: _passWordIsHide
+                                            ? SvgPicture.asset(
                                           AssetIconPath.commonEyeHide,
+                                        )
+                                            : SvgPicture.asset(
+                                          AssetIconPath.commonEyeActive,
                                         ),
                                         isRequired: true,
                                         key: _inputPrivateGlobalKey,
@@ -275,8 +279,12 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                                   return AppLocalizationProvider(
                                     builder: (localization, _) {
                                       return TextInputNormalSuffixWidget(
-                                        suffix: SvgPicture.asset(
+                                        suffix: _passWordIsHide
+                                            ? SvgPicture.asset(
                                           AssetIconPath.commonEyeHide,
+                                        )
+                                            : SvgPicture.asset(
+                                          AssetIconPath.commonEyeActive,
                                         ),
                                         isRequired: true,
                                         maxLine: 1,
