@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mobile_scanner/mobile_scanner_web.dart';
 import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_service.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
