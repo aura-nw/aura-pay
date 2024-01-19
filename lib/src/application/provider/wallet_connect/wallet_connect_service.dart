@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 
 enum WalletConnectEvent {
@@ -82,9 +83,7 @@ class WalletConnectService {
     auth.value = _web3Wallet!.completeRequests.getAll();
   }
 
-  @override
   FutureOr onDispose() {
-    print('web3wallet dispose');
     _web3Wallet!.core.pairing.onPairingInvalid.unsubscribe(_onPairingInvalid);
     _web3Wallet!.pairings.onSync.unsubscribe(_onPairingsSync);
     _web3Wallet!.onSessionProposal.unsubscribe(_onSessionProposal);
@@ -96,7 +95,6 @@ class WalletConnectService {
         .unsubscribe(_onRelayClientError);
   }
 
-  @override
   Web3Wallet getWeb3Wallet() {
     return _web3Wallet!;
   }
@@ -106,47 +104,49 @@ class WalletConnectService {
     if (args != null) {
       pairings.value = _web3Wallet!.pairings.getAll();
     }
+    onPairingsSync?.call(args);
   }
 
   void _onRelayClientError(ErrorEvent? args) {
     print('#KhoaHM _onRelayClientError $args');
     debugPrint('[$runtimeType] _onRelayClientError ${args?.error}');
+    onRelayClientError?.call(args);
   }
 
   void _onSessionProposalError(SessionProposalErrorEvent? args) {
     print('#KhoaHM _onSessionProposalError $args');
     debugPrint('[$runtimeType] _onSessionProposalError $args');
+    onSessionProposalError?.call(args);
   }
 
   void _onSessionProposal(SessionProposalEvent? args) async {
     print('#KhoaHM _onSessionProposal $args');
+    onSessionProposal?.call(args);
   }
 
   void _onPairingInvalid(PairingInvalidEvent? args) {
     debugPrint('[$runtimeType] _onPairingInvalid $args');
+    onPairingInvalid?.call(args);
   }
 
   void _onPairingCreate(PairingEvent? args) {
     debugPrint('[$runtimeType] _onPairingCreate $args');
+    onPairingCreate?.call(args);
   }
 
   void _onSessionRequest(SessionRequestEvent? args) {
     print('#KhoaHM _onSessionRequest $args');
-    if (args == null) return;
+    onSessionRequest?.call(args);
   }
 
   void _onSessionConnect(SessionConnect? args) {
     print('#KhoaHM SessionConnect $args');
-
-    if (args != null) {
-      print(args);
-      sessions.value.add(args.session);
-      _call[WalletConnectEvent.connect]!(args.session);
-    }
+    onSessionConnect?.call(args);
   }
 
-  Future<void> _onAuthRequest(AuthRequest? args) async {
+  void _onAuthRequest(AuthRequest? args) async {
     print('#KhoaHM _onAuthRequest $args');
+    onAuthRequest?.call(args);
   }
 
   void registerEventCallBack(
@@ -159,7 +159,7 @@ class WalletConnectService {
       required void Function(PairingInvalidEvent? args) onPairingInvalid,
       required void Function(ErrorEvent? args) onRelayClientError,
       required void Function(StoreSyncEvent? args) onPairingsSync,
-      required Future<void> Function(AuthRequest? args) onAuthRequest}) {
+      required void Function(AuthRequest? args) onAuthRequest}) {
     this.onSessionConnect = onSessionConnect;
     this.onSessionRequest = onSessionRequest;
     this.onSessionProposal = onSessionProposal;
@@ -179,7 +179,30 @@ class WalletConnectService {
   Function(PairingInvalidEvent? args)? onPairingInvalid;
   Function(ErrorEvent? args)? onRelayClientError;
   Function(StoreSyncEvent? args)? onPairingsSync;
-  Future<void> Function(AuthRequest? args)? onAuthRequest;
+  Function(AuthRequest? args)? onAuthRequest;
+
+  void approveConnection(ConnectingData connectingData) {
+    _web3Wallet?.approveSession(id: connectingData.sessionId, namespaces: {
+      'cosmos': Namespace(accounts: [
+        'cosmos:euphoria-2:${connectingData.account}',
+        'cosmos:cosmoshub-4:${connectingData.account}',
+        'cosmos:xstaxy-1:${connectingData.account}',
+      ], methods: [
+        'cosmos_signDirect',
+        'cosmos_getAccounts',
+        'cosmos_signAmino'
+      ], events: [
+        'chainChanged',
+        'accountsChanged'
+      ]),
+    });
+  }
+
+  void rejectConnection(ConnectingData connectingData) {
+    _web3Wallet?.rejectSession(
+        id: connectingData.sessionId,
+        reason: Errors.getSdkError(Errors.USER_REJECTED));
+  }
 }
 
 class WalletConnectServiceUtils {

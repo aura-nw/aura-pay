@@ -12,3 +12,10 @@ class WalletConnectState with _$WalletConnectState {
     String? error,
   }) = _WalletConnectState;
 }
+
+class ConnectingData {
+  final int sessionId;
+  final String account;
+
+  ConnectingData(this.sessionId, this.account);
+}

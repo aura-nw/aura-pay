@@ -12,6 +12,7 @@ import 'package:pyxis_mobile/src/application/provider/normal_storage/normal_stor
 import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
+import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_service.dart';
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider.dart';
 import 'package:pyxis_mobile/src/application/service/auth/auth_api_service_impl.dart';
 
@@ -120,6 +121,10 @@ Future<void> initDependency(
     () => dio,
   );
 
+  getIt.registerLazySingleton<WalletConnectService>(
+    () => WalletConnectService(),
+  );
+
   getIt.registerLazySingleton<PyxisMobileConfig>(
     () => config,
   );
@@ -215,13 +220,13 @@ Future<void> initDependency(
   );
 
   getIt.registerLazySingleton<AuthApiService>(
-        () => AuthApiServiceImpl(
+    () => AuthApiServiceImpl(
       getIt.get<AuthApiServiceGenerate>(),
     ),
   );
 
   getIt.registerLazySingleton<DeviceManagementApiService>(
-        () => DeviceManagementApiServiceImpl(
+    () => DeviceManagementApiServiceImpl(
       getIt.get<DeviceManagementApiServiceGenerate>(),
     ),
   );
@@ -342,15 +347,14 @@ Future<void> initDependency(
     ),
   );
 
-
   getIt.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImpl(
+    () => AuthRepositoryImpl(
       getIt.get<AuthApiService>(),
     ),
   );
 
   getIt.registerLazySingleton<DeviceManagementRepository>(
-        () => DeviceManagementRepositoryImpl(
+    () => DeviceManagementRepositoryImpl(
       getIt.get<DeviceManagementApiService>(),
     ),
   );
@@ -434,13 +438,13 @@ Future<void> initDependency(
   );
 
   getIt.registerLazySingleton<AuthUseCase>(
-        () => AuthUseCase(
+    () => AuthUseCase(
       getIt.get<AuthRepository>(),
     ),
   );
 
   getIt.registerLazySingleton<DeviceManagementUseCase>(
-        () => DeviceManagementUseCase(
+    () => DeviceManagementUseCase(
       getIt.get<DeviceManagementRepository>(),
     ),
   );

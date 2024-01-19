@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_service.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
@@ -9,48 +9,70 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
   static const String projectId = '85289c08fad8fae4ca3eb5e525005bf3';
 
   late Web3Wallet _web3Wallet;
-
-  /// The list of requests from the dapp
-  /// Potential types include, but aren't limited to:
-  /// [SessionProposalEvent], [AuthRequest]
-  @override
-  ValueNotifier<List<PairingInfo>> pairings =
-      ValueNotifier<List<PairingInfo>>([]);
-  @override
-  ValueNotifier<List<SessionData>> sessions =
-      ValueNotifier<List<SessionData>>([]);
-  @override
-  ValueNotifier<List<StoredCacao>> auth = ValueNotifier<List<StoredCacao>>([]);
+  bool _isInit = false;
 
   final WalletConnectService _walletConnectService =
-      GetIt.I.get<WalletConnectService>();
+      getIt.get<WalletConnectService>();
+
+  String? targetAccount;
 
   WalletConnectCubit() : super((const WalletConnectState())) {
+    // _w[core] SessionID
+    _init();
+  }
+  // This function initializes the WalletConnectService
+  Future _init() async {
+    // Create the WalletConnectService
+    await _walletConnectService.create();
+    // Initialize the WalletConnectService
+    await _walletConnectService.init();
+    // Get the Web3Wallet from the WalletConnectService
     _web3Wallet = _walletConnectService.getWeb3Wallet();
+    // Register callbacks for various events in the WalletConnectService
     _walletConnectService.registerEventCallBack(
-      onSessionConnect: _onSessionConnect,
-      onSessionRequest: _onSessionRequest,
-      onSessionProposal: _onSessionProposal,
-      onSessionProposalError: _onSessionProposalError,
-      onPairingCreate: _onPairingCreate,
-      onPairingInvalid: _onPairingInvalid,
-      onRelayClientError: _onRelayClientError,
       onPairingsSync: _onPairingsSync,
+      onRelayClientError: _onRelayClientError,
+      onSessionProposalError: _onSessionProposalError,
+      onSessionProposal: _onSessionProposal,
+      onPairingInvalid: _onPairingInvalid,
+      onPairingCreate: _onPairingCreate,
+      onSessionRequest: _onSessionRequest,
+      onSessionConnect: _onSessionConnect,
       onAuthRequest: _onAuthRequest,
     );
+    // Set the initialization flag to true
+    _isInit = true;
   }
 
-  ///
-  ///
-  Future<void> connect(String url) async {
+  // This function connects to a wallet using a URL and an account
+  Future<void> connect(String url, String account) async {
+    // Check if the WalletConnectCubit is initialized
+    if (!_isInit) {
+      throw Exception('WalletConnectCubit is not init');
+    }
+    // Set the target account
+    targetAccount = account;
     try {
+      // Parse the URL into a Uri object
       final Uri uriData = Uri.parse(url);
+      // Pair the wallet with the Uri
       await _web3Wallet.pair(
         uri: uriData,
       );
     } catch (e, s) {
+      // Print any errors that occur during the connection process
       print('WalletConnectScreen _onConnect error: $e, $s');
     }
+  }
+
+  // This function approves a connection using ConnectingData
+  Future<void> approveConnection(ConnectingData connectingData) async {
+    _walletConnectService.approveConnection(connectingData);
+  }
+
+  // This function rejects a connection using ConnectingData
+  void rejectConnection(ConnectingData connectingData) {
+    _walletConnectService.rejectConnection(connectingData);
   }
 
   void request() {
@@ -67,9 +89,6 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
 
   void _onPairingsSync(StoreSyncEvent? args) {
     print('#KhoaHM _onPairingsSync $args');
-    if (args != null) {
-      pairings.value = _web3Wallet!.pairings.getAll();
-    }
   }
 
   void _onRelayClientError(ErrorEvent? args) {
@@ -85,11 +104,10 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
   void _onSessionProposal(SessionProposalEvent? args) async {
     print('WalletConnectScreen _onConnect onSessionProposal: $args');
 
-    // _sessionProposalEvent = args;
-    // connectionId = _sessionProposalEvent?.id;
-    // setState(() {
-    //   _screenState = WalletConnectScreenState.onRequestConnecting;
-    // });
+    ConnectingData connectingData =
+        ConnectingData(args!.id, targetAccount ?? '');
+    emit(state.copyWith(
+        status: WalletConnectStatus.onConnect, data: connectingData));
   }
 
   void _onPairingInvalid(PairingInvalidEvent? args) {
@@ -107,14 +125,9 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
 
   void _onSessionConnect(SessionConnect? args) {
     print('#KhoaHM SessionConnect $args');
-
-    if (args != null) {
-      print(args);
-      sessions.value.add(args.session);
-    }
   }
 
-  Future<void> _onAuthRequest(AuthRequest? args) async {
+  void _onAuthRequest(AuthRequest? args) async {
     print('#KhoaHM _onAuthRequest $args');
   }
 

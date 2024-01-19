@@ -91,15 +91,13 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
     currentSection = HomeScreenSection.home;
-    testing();
+    // testing();
     super.initState();
   }
 
   Future<void> testing() async {
     await Future.delayed(Duration(seconds: 5));
     print("Testing");
-
-    // WalletConnectCubit.of(context).connect("data");
 
     // await Future.delayed(Duration(seconds: 5));
     BlocProvider.of<AppGlobalCubit>(context).changeState(
@@ -276,19 +274,17 @@ class _HomeScreenState extends State<HomeScreen>
       }
     }
 
-    await Future.delayed(
-      Durations.long1,
-    );
-
-    String? account = _bloc.state.selectedAccount?.address;
-
     if (result != null) {
-      WalletConnectScreenData connectScreenData =
-          WalletConnectScreenData(url: result!, selectedAccount: account ?? '');
-      await AppNavigator.push(
-        RoutePath.walletConnect,
-        connectScreenData,
-      );
+      String? account = _bloc.state.selectedAccount?.address;
+      WalletConnectCubit.of(context).connect(result ?? '', account ?? '');
+
+      // if (result != null) {
+      //   WalletConnectScreenData connectScreenData =
+      //       WalletConnectScreenData(url: result!, selectedAccount: account ?? '');
+      //   await AppNavigator.push(
+      //     RoutePath.walletConnect,
+      //     connectScreenData,
+      //   );
     }
   }
 
