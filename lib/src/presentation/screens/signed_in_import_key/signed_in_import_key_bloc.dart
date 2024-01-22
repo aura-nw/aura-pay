@@ -2,6 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 
 import 'signed_in_import_key_state.dart';
 import 'singed_in_import_key_event.dart';
@@ -25,6 +26,24 @@ class SignedInImportKeyBloc
     on(_onSelectImportType);
     on(_onInputKey);
     on(_onImport);
+    on(_onInit);
+
+    add(
+      const SignedInImportKeyOnInit(),
+    );
+  }
+
+  void _onInit(
+    SignedInImportKeyOnInit event,
+    Emitter<SignedInImportKeyState> emit,
+  ) async {
+    final accounts = await _accountUseCase.getAccounts();
+
+    emit(
+      state.copyWith(
+        accounts: accounts,
+      ),
+    );
   }
 
   void _onSelectAccountType(
@@ -85,22 +104,35 @@ class SignedInImportKeyBloc
             privateKeyOrPassPhrase: state.key,
           );
 
-          await _accountUseCase.saveAccount(
-            address: wallet.bech32Address,
-            type: AuraAccountType.normal,
-            accountName: PyxisAccountConstant.unName,
-          );
+          final bool isExistsAccount = state.accounts.firstWhereOrNull(
+                (ac) => ac.address == wallet.bech32Address,
+              ) !=
+              null;
 
-          await _controllerKeyUseCase.saveKey(
-            address: wallet.bech32Address,
-            key: state.key,
-          );
+          if(isExistsAccount){
+            emit(
+              state.copyWith(
+                status: SignedInImportKeyStatus.existsAccount,
+              ),
+            );
+          }else{
+            await _accountUseCase.saveAccount(
+              address: wallet.bech32Address,
+              type: AuraAccountType.normal,
+              accountName: PyxisAccountConstant.unName,
+            );
 
-          emit(
-            state.copyWith(
+            await _controllerKeyUseCase.saveKey(
+              address: wallet.bech32Address,
+              key: state.key,
+            );
+
+            emit(
+              state.copyWith(
                 status: SignedInImportKeyStatus.onImportAccountSuccess,
-                walletAddress: wallet.bech32Address),
-          );
+              ),
+            );
+          }
           break;
       }
     } catch (e) {

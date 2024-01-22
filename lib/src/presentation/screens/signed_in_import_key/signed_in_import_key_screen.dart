@@ -74,6 +74,13 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
               switch (state.status) {
                 case SignedInImportKeyStatus.init:
                   break;
+                case SignedInImportKeyStatus.existsAccount:
+                  showToast(
+                    AppLocalizationManager.of(context).translate(
+                      LanguageKey.signedInImportKeyScreenExistsAccount,
+                    ),
+                  );
+                  break;
                 case SignedInImportKeyStatus.onImportAccountError:
                   AppNavigator.pop();
 
@@ -225,11 +232,11 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                                       return TextInputNormalSuffixWidget(
                                         suffix: _passWordIsHide
                                             ? SvgPicture.asset(
-                                          AssetIconPath.commonEyeHide,
-                                        )
+                                                AssetIconPath.commonEyeHide,
+                                              )
                                             : SvgPicture.asset(
-                                          AssetIconPath.commonEyeActive,
-                                        ),
+                                                AssetIconPath.commonEyeActive,
+                                              ),
                                         isRequired: true,
                                         key: _inputPrivateGlobalKey,
                                         maxLine: 1,
@@ -281,11 +288,11 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                                       return TextInputNormalSuffixWidget(
                                         suffix: _passWordIsHide
                                             ? SvgPicture.asset(
-                                          AssetIconPath.commonEyeHide,
-                                        )
+                                                AssetIconPath.commonEyeHide,
+                                              )
                                             : SvgPicture.asset(
-                                          AssetIconPath.commonEyeActive,
-                                        ),
+                                                AssetIconPath.commonEyeActive,
+                                              ),
                                         isRequired: true,
                                         maxLine: 1,
                                         key: _inputPassPhraseGlobalKey,

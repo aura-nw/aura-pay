@@ -5,6 +5,8 @@ part 'singed_in_import_key_event.freezed.dart';
 
 @freezed
 class SignedInImportKeyEvent with _$SignedInImportKeyEvent {
+  const factory SignedInImportKeyEvent.onInit() = SignedInImportKeyOnInit;
+
   const factory SignedInImportKeyEvent.onSelectAccountType({
     required PyxisWalletType accountType,
   }) = SignedInImportKeyOnSelectAccountTypeEvent;
@@ -17,5 +19,6 @@ class SignedInImportKeyEvent with _$SignedInImportKeyEvent {
     required String key,
   }) = SignedInImportKeyOnInputKeyEvent;
 
-  const factory SignedInImportKeyEvent.onSubmit() = SignedInImportKeyOnSubmitEvent;
+  const factory SignedInImportKeyEvent.onSubmit() =
+      SignedInImportKeyOnSubmitEvent;
 }
