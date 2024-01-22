@@ -1,11 +1,14 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:hex/hex.dart';
-import 'package:pointycastle/asn1/primitives/asn1_integer.dart';
-import 'package:pointycastle/asn1/primitives/asn1_sequence.dart';
-import 'package:pointycastle/export.dart';
+import 'package:pointycastle/macs/hmac.dart';
+import 'package:pointycastle/pointycastle.dart';
+import 'package:pointycastle/random/fortuna_random.dart';
+import 'dart:typed_data';
+import 'package:pointycastle/digests/sha256.dart';
+import 'package:pointycastle/ecc/curves/secp256k1.dart';
+import 'package:pointycastle/signers/ecdsa_signer.dart';
+sealed class CryptoUtil{
 
-sealed class CryptoUtil {
   static SecureRandom createSecureRandom({
     required String seed,
   }) {
@@ -28,33 +31,7 @@ sealed class CryptoUtil {
     return secureRandom;
   }
 
-  static AsymmetricKeyPair<ECPublicKey, ECPrivateKey> createKeyPair({
-    required String seed,
-  }) {
-    final SecureRandom secureRandom = createSecureRandom(
-      seed: seed,
-    );
-
-    final KeyGenerator keyGenerator = ECKeyGenerator();
-    final ParametersWithRandom keyGenParams = ParametersWithRandom(
-      ECKeyGeneratorParameters(
-        ECDomainParameters(
-          'secp256k1',
-        ),
-      ),
-      secureRandom,
-    );
-    keyGenerator.init(keyGenParams);
-    AsymmetricKeyPair keyPair = keyGenerator.generateKeyPair();
-
-    final publicKey = keyPair.publicKey as ECPublicKey;
-
-    final privateKey = keyPair.privateKey as ECPrivateKey;
-
-    return AsymmetricKeyPair(publicKey, privateKey);
-  }
-
-  static Uint8List createSignatureByPrivateKey({
+  static Uint8List createSignature({
     required String message,
     required String seed,
     required ECPrivateKey privateKey,
@@ -77,7 +54,7 @@ sealed class CryptoUtil {
             secureRandom,
           ));
     ECSignature signature =
-        signer.generateSignature(messageBytes) as ECSignature;
+    signer.generateSignature(messageBytes) as ECSignature;
 
     // Convert the signature to a DER-encoded bytes
     ASN1Sequence sequence = ASN1Sequence(
@@ -90,8 +67,27 @@ sealed class CryptoUtil {
 
     return derSignature;
   }
-  
-  static String encodeBytes(Uint8List bytes){
-    return HEX.encode(bytes);
+
+  static Uint8List getPublicKeyByKeyPair(AsymmetricKeyPair<ECPublicKey, ECPrivateKey> keyPair) {
+    return keyPair.publicKey.Q!.getEncoded(true);
+  }
+
+  static AsymmetricKeyPair<ECPublicKey, ECPrivateKey> generateKeyPairByPrivateKey(
+      Uint8List privateKeyBytes,
+      ) {
+    final domainParams = ECCurve_secp256k1();
+
+    final privateKey = ECPrivateKey(
+      BigInt.parse(HEX.encode(privateKeyBytes), radix: 16),
+      domainParams,
+    );
+
+    final publicKey =
+    ECPublicKey(privateKey.parameters!.G * privateKey.d, domainParams);
+
+    return AsymmetricKeyPair(
+      publicKey,
+      privateKey,
+    );
   }
 }

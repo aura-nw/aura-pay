@@ -356,6 +356,7 @@
   "signed_in_recover_select_account_screen_content" : "Select an account to recover.",
   "signed_in_recover_select_account_screen_button_title" : "Recover",
   "signed_in_recover_select_account_no_account_found" : "No account found",
+  "signed_in_recover_select_account_exists_message" : "This smart account is using on this device",
 
   "signed_in_recover_sign_screen_title_region_one" : "Account recovery",
   "signed_in_recover_sign_screen_title_region_two" : "Successful",
