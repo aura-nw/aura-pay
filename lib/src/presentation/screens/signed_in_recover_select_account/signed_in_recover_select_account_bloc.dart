@@ -1,21 +1,22 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 
 import 'singed_in_recover_select_account_event.dart';
 import 'singed_in_recover_select_account_state.dart';
 
 final class SingedInRecoverSelectAccountBloc extends Bloc<
     SingedInRecoverSelectAccountEvent, SingedInRecoverSelectAccountState> {
-  final SmartAccountUseCase _smartAccountUseCase;
   final WalletUseCase _walletUseCase;
   final Web3AuthUseCase _web3authUseCase;
   final RecoveryUseCase _recoveryUseCase;
+  final AuraAccountUseCase _auraAccountUseCase;
 
   SingedInRecoverSelectAccountBloc(
-    this._smartAccountUseCase,
     this._web3authUseCase,
     this._walletUseCase,
-    this._recoveryUseCase, {
+    this._recoveryUseCase,
+    this._auraAccountUseCase, {
     required GoogleAccount googleAccount,
   }) : super(
           SingedInRecoverSelectAccountState(
@@ -36,6 +37,9 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
       ),
     );
     try {
+      final List<AuraAccount> auraAccounts =
+          await _auraAccountUseCase.getAccounts();
+
       final String backupPrivateKey = await _web3authUseCase.getPrivateKey();
 
       final wallet = await _walletUseCase.importWallet(
@@ -51,6 +55,7 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
         state.copyWith(
           status: SingedInRecoverSelectAccountStatus.loaded,
           accounts: accounts,
+          auraAccounts: auraAccounts,
         ),
       );
     } catch (e) {
@@ -69,10 +74,25 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
   ) {
     if (state.selectedAccount?.id == event.account.id) return;
 
-    emit(
-      state.copyWith(
-        selectedAccount: event.account,
-      ),
-    );
+    // Check exists account
+    bool isExistsAccount = state.auraAccounts.firstWhereOrNull(
+            (ac) => ac.address == event.account.smartAccountAddress) !=
+        null;
+
+    // If exists account. Show error message to users.
+    if (isExistsAccount) {
+      emit(
+        state.copyWith(
+          status: SingedInRecoverSelectAccountStatus.existsAccount,
+        ),
+      );
+    }else{
+      // If not. Choose this account.
+      emit(
+        state.copyWith(
+          selectedAccount: event.account,
+        ),
+      );
+    }
   }
 }

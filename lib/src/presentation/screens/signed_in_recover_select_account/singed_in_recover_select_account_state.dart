@@ -7,6 +7,7 @@ enum SingedInRecoverSelectAccountStatus {
   loading,
   loaded,
   error,
+  existsAccount,
 }
 
 @freezed
@@ -17,6 +18,7 @@ class SingedInRecoverSelectAccountState
     SingedInRecoverSelectAccountStatus status,
     String ?error,
     @Default([]) List<PyxisRecoveryAccount> accounts,
+    @Default([]) List<AuraAccount> auraAccounts,
     PyxisRecoveryAccount ?selectedAccount,
     required GoogleAccount googleAccount,
   }) = _SingedInRecoverSelectAccountState;
