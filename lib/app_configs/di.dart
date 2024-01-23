@@ -12,6 +12,7 @@ import 'package:pyxis_mobile/src/application/provider/normal_storage/normal_stor
 import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet/wallet_provider.dart';
+import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_service.dart';
 import 'package:pyxis_mobile/src/application/provider/web3_auth/web3_auth_provider.dart';
 import 'package:pyxis_mobile/src/application/service/auth/auth_api_service_impl.dart';
 
@@ -120,6 +121,10 @@ Future<void> initDependency(
     () => dio,
   );
 
+  getIt.registerLazySingleton<WalletConnectService>(
+    () => WalletConnectService(),
+  );
+
   getIt.registerLazySingleton<PyxisMobileConfig>(
     () => config,
   );
@@ -215,13 +220,13 @@ Future<void> initDependency(
   );
 
   getIt.registerLazySingleton<AuthApiService>(
-        () => AuthApiServiceImpl(
+    () => AuthApiServiceImpl(
       getIt.get<AuthApiServiceGenerate>(),
     ),
   );
 
   getIt.registerLazySingleton<DeviceManagementApiService>(
-        () => DeviceManagementApiServiceImpl(
+    () => DeviceManagementApiServiceImpl(
       getIt.get<DeviceManagementApiServiceGenerate>(),
     ),
   );
@@ -342,15 +347,15 @@ Future<void> initDependency(
     ),
   );
 
-
   getIt.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImpl(
+    () => AuthRepositoryImpl(
       getIt.get<AuthApiService>(),
+      getIt.get<SecureStorageService>(),
     ),
   );
 
   getIt.registerLazySingleton<DeviceManagementRepository>(
-        () => DeviceManagementRepositoryImpl(
+    () => DeviceManagementRepositoryImpl(
       getIt.get<DeviceManagementApiService>(),
     ),
   );
@@ -424,23 +429,25 @@ Future<void> initDependency(
   getIt.registerLazySingleton<RecoveryUseCase>(
     () => RecoveryUseCase(
       getIt.get<RecoveryRepository>(),
+      getIt.get<AuthRepository>(),
     ),
   );
 
   getIt.registerLazySingleton<FeeGrantUseCase>(
     () => FeeGrantUseCase(
       getIt.get<FeeGrantRepository>(),
+      getIt.get<AuthRepository>(),
     ),
   );
 
   getIt.registerLazySingleton<AuthUseCase>(
-        () => AuthUseCase(
+    () => AuthUseCase(
       getIt.get<AuthRepository>(),
     ),
   );
 
   getIt.registerLazySingleton<DeviceManagementUseCase>(
-        () => DeviceManagementUseCase(
+    () => DeviceManagementUseCase(
       getIt.get<DeviceManagementRepository>(),
     ),
   );
@@ -451,6 +458,8 @@ Future<void> initDependency(
       getIt.get<AppSecureUseCase>(),
       getIt.get<AuraAccountUseCase>(),
       getIt.get<AuthUseCase>(),
+      getIt.get<DeviceManagementUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
     ),
   );
 
@@ -461,6 +470,8 @@ Future<void> initDependency(
       getIt.get<FeeGrantUseCase>(),
       getIt.get<AuraAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
+      getIt.get<DeviceManagementUseCase>(),
+      getIt.get<AuthUseCase>(),
     ),
   );
 
@@ -470,6 +481,8 @@ Future<void> initDependency(
       getIt.get<SmartAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
       getIt.get<AuraAccountUseCase>(),
+      getIt.get<AuthUseCase>(),
+      getIt.get<DeviceManagementUseCase>(),
     ),
   );
 
@@ -540,6 +553,9 @@ Future<void> initDependency(
     () => OnBoardingReLoginBloc(
       getIt.get<AppSecureUseCase>(),
       getIt.get<AuraAccountUseCase>(),
+      getIt.get<AuthUseCase>(),
+      getIt.get<DeviceManagementUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
     ),
   );
 
@@ -611,6 +627,8 @@ Future<void> initDependency(
       getIt.get<WalletUseCase>(),
       getIt.get<Web3AuthUseCase>(),
       getIt.get<RecoveryUseCase>(),
+      getIt.get<AuthUseCase>(),
+      getIt.get<DeviceManagementUseCase>(),
       googleAccount: googleAccount,
     ),
   );
@@ -623,6 +641,7 @@ Future<void> initDependency(
       getIt.get<ControllerKeyUseCase>(),
       getIt.get<Web3AuthUseCase>(),
       getIt.get<AuraAccountUseCase>(),
+      getIt.get<AuthUseCase>(),
       account: account,
       googleAccount: googleAccount,
     ),
@@ -631,10 +650,10 @@ Future<void> initDependency(
   getIt.registerFactoryParam<SingedInRecoverSelectAccountBloc, GoogleAccount,
       dynamic>(
     (googleAccount, _) => SingedInRecoverSelectAccountBloc(
-      getIt.get<SmartAccountUseCase>(),
       getIt.get<Web3AuthUseCase>(),
       getIt.get<WalletUseCase>(),
       getIt.get<RecoveryUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
       googleAccount: googleAccount,
     ),
   );

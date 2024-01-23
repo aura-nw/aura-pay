@@ -22,4 +22,30 @@ final class AuthUseCase {
 
     return token;
   }
+
+  Future<void> saveAccessToken({
+    required String key,
+    required String accessToken,
+  }) async {
+    return _repository.saveAccessToken(
+      key: key,
+      accessToken: accessToken,
+    );
+  }
+
+  Future<String?> getCurrentAccessToken({
+    required String key,
+  }) async {
+    return _repository.getAccessToken(
+      key: key,
+    );
+  }
+
+  Future<void> removeCurrentAccessToken({
+    required String key,
+  }) async {
+    return _repository.removeCurrentAccessToken(
+      key: key,
+    );
+  }
 }

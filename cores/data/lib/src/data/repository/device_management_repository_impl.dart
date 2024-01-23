@@ -10,8 +10,13 @@ final class DeviceManagementRepositoryImpl
   @override
   Future<String> register({
     required Map<String, dynamic> body,
-  }) {
-    // TODO: implement register
-    throw UnimplementedError();
+  }) async {
+    final response = await _deviceManagementApiService.register(
+      body: body,
+    );
+
+    final data = response.handleResponse();
+
+    return data['AccessToken'];
   }
 }
