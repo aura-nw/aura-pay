@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:data/src/data/resource/local/secure_storage_service.dart';
 import 'package:data/src/data/resource/remote/auth_api_service.dart';
 import 'package:domain/domain.dart';
@@ -18,6 +20,7 @@ final class AuthRepositoryImpl implements AuthRepository {
     final response = await _authApiService.signIn(
       body: body,
     );
+    log(response.toString());
 
     final data = response.handleResponse();
 

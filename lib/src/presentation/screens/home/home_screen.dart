@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
     currentSection = HomeScreenSection.home;
-    testing();
+    // testing();
     super.initState();
   }
 

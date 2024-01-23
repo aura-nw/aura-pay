@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_service.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
@@ -23,21 +24,21 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
   ValueNotifier<List<StoredCacao>> auth = ValueNotifier<List<StoredCacao>>([]);
 
   final WalletConnectService _walletConnectService =
-      GetIt.I.get<WalletConnectService>();
+      getIt.get<WalletConnectService>();
 
   WalletConnectCubit() : super((const WalletConnectState())) {
-    _web3Wallet = _walletConnectService.getWeb3Wallet();
-    _walletConnectService.registerEventCallBack(
-      onSessionConnect: _onSessionConnect,
-      onSessionRequest: _onSessionRequest,
-      onSessionProposal: _onSessionProposal,
-      onSessionProposalError: _onSessionProposalError,
-      onPairingCreate: _onPairingCreate,
-      onPairingInvalid: _onPairingInvalid,
-      onRelayClientError: _onRelayClientError,
-      onPairingsSync: _onPairingsSync,
-      onAuthRequest: _onAuthRequest,
-    );
+    // _web3Wallet = _walletConnectService.getWeb3Wallet();
+    // _walletConnectService.registerEventCallBack(
+    //   onSessionConnect: _onSessionConnect,
+    //   onSessionRequest: _onSessionRequest,
+    //   onSessionProposal: _onSessionProposal,
+    //   onSessionProposalError: _onSessionProposalError,
+    //   onPairingCreate: _onPairingCreate,
+    //   onPairingInvalid: _onPairingInvalid,
+    //   onRelayClientError: _onRelayClientError,
+    //   onPairingsSync: _onPairingsSync,
+    //   onAuthRequest: _onAuthRequest,
+    // );
   }
 
   ///

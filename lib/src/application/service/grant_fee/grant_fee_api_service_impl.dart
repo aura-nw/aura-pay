@@ -13,8 +13,12 @@ final class GrantFeeApiServiceImpl implements GrantFeeApiService {
   @override
   Future<PyxisBaseResponse> grantFee({
     required Map<String, dynamic> body,
+    required String accessToken,
   }) {
-    return _apiServiceGenerate.grantFee(body);
+    return _apiServiceGenerate.grantFee(
+      body,
+      accessToken,
+    );
   }
 }
 
@@ -27,6 +31,7 @@ abstract class GrantFeeApiServiceGenerate {
 
   @POST(ApiServicePath.grantFee)
   Future<PyxisBaseResponse> grantFee(
-      @Body() Map<String, dynamic> body,
-      );
+    @Body() Map<String, dynamic> body,
+    @Header('Authorization') String accessToken,
+  );
 }

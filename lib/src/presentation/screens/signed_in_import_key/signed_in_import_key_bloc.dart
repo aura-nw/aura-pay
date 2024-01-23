@@ -1,7 +1,11 @@
+import 'dart:async';
+
+import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
+import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 
 import 'signed_in_import_key_state.dart';
@@ -13,12 +17,16 @@ class SignedInImportKeyBloc
   final SmartAccountUseCase _smartAccountUseCase;
   final AuraAccountUseCase _accountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
+  final AuthUseCase _authUseCase;
+  final DeviceManagementUseCase _deviceManagementUseCase;
 
   SignedInImportKeyBloc(
     this._walletUseCase,
     this._smartAccountUseCase,
     this._accountUseCase,
     this._controllerKeyUseCase,
+    this._authUseCase,
+    this._deviceManagementUseCase,
   ) : super(
           const SignedInImportKeyState(),
         ) {
@@ -116,6 +124,13 @@ class SignedInImportKeyBloc
               ),
             );
           }else{
+            // Register device to create access token
+            unawaited(
+              _createToken(
+                address: wallet.bech32Address,
+              ),
+            );
+
             await _accountUseCase.saveAccount(
               address: wallet.bech32Address,
               type: AuraAccountType.normal,
@@ -142,6 +157,28 @@ class SignedInImportKeyBloc
           status: SignedInImportKeyStatus.onImportAccountError,
         ),
       );
+    }
+  }
+
+  Future<void> _createToken({
+    required String address,
+  }) async {
+    try{
+      final String accessToken = await AuthHelper.registerOrSignIn(
+        deviceManagementUseCase: _deviceManagementUseCase,
+        authUseCase: _authUseCase,
+        privateKey: AuraWalletHelper.getPrivateKeyFromString(
+          state.key,
+        ),
+      );
+
+      await AuthHelper.saveTokenByWalletAddress(
+        authUseCase: _authUseCase,
+        walletAddress: address,
+        accessToken: accessToken,
+      );
+    }catch(e){
+      LogProvider.log(e.toString());
     }
   }
 }

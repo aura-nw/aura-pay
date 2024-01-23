@@ -75,6 +75,7 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                 case SignedInImportKeyStatus.init:
                   break;
                 case SignedInImportKeyStatus.existsAccount:
+                  AppNavigator.pop();
                   showToast(
                     AppLocalizationManager.of(context).translate(
                       LanguageKey.signedInImportKeyScreenExistsAccount,

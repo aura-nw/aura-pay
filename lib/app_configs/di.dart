@@ -509,6 +509,8 @@ Future<void> initDependency(
     () => HomeScreenBloc(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
+      getIt.get<AuthUseCase>(),
+      getIt.get<DeviceManagementUseCase>(),
     ),
   );
 
@@ -519,6 +521,8 @@ Future<void> initDependency(
       getIt.get<FeeGrantUseCase>(),
       getIt.get<AuraAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
+      getIt.get<DeviceManagementUseCase>(),
+      getIt.get<AuthUseCase>(),
     ),
   );
 
@@ -541,6 +545,8 @@ Future<void> initDependency(
       getIt.get<SmartAccountUseCase>(),
       getIt.get<AuraAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
+      getIt.get<AuthUseCase>(),
+      getIt.get<DeviceManagementUseCase>(),
     ),
   );
 
@@ -654,6 +660,8 @@ Future<void> initDependency(
       getIt.get<WalletUseCase>(),
       getIt.get<RecoveryUseCase>(),
       getIt.get<AuraAccountUseCase>(),
+      getIt.get<AuthUseCase>(),
+      getIt.get<DeviceManagementUseCase>(),
       googleAccount: googleAccount,
     ),
   );
@@ -666,6 +674,7 @@ Future<void> initDependency(
       getIt.get<ControllerKeyUseCase>(),
       getIt.get<Web3AuthUseCase>(),
       getIt.get<AuraAccountUseCase>(),
+      getIt.get<AuthUseCase>(),
       account: account,
       googleAccount: googleAccount,
     ),

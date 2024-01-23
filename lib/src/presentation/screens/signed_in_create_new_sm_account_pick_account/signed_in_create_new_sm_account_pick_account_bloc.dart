@@ -6,6 +6,7 @@ import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 import 'package:pyxis_mobile/src/core/helpers/device.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 
@@ -20,6 +21,8 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
   final FeeGrantUseCase _feeGrantUseCase;
   final AuraAccountUseCase _accountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
+  final DeviceManagementUseCase _deviceManagementUseCase;
+  final AuthUseCase _authUseCase;
 
   SignedInCreateNewSmAccountPickAccountBloc(
     this._walletUseCase,
@@ -27,6 +30,8 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
     this._feeGrantUseCase,
     this._accountUseCase,
     this._controllerKeyUseCase,
+    this._deviceManagementUseCase,
+    this._authUseCase,
   ) : super(
           const SignedInCreateNewSmAccountPickAccountState(),
         ) {
@@ -64,6 +69,22 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
         salt: saltBytes,
       );
 
+      /// Register device or sign in by device
+      final String accessToken = await AuthHelper.registerOrSignIn(
+        deviceManagementUseCase: _deviceManagementUseCase,
+        authUseCase: _authUseCase,
+        privateKey: AuraWalletHelper.getPrivateKeyFromString(
+          wallet.privateKey!,
+        ),
+      );
+
+      /// Save token by smart account address
+      await AuthHelper.saveTokenByWalletAddress(
+        authUseCase: _authUseCase,
+        walletAddress: smartAccount,
+        accessToken: accessToken,
+      );
+
       final GrantFee? grantFee = await _grantFee(
         publicKey: wallet.publicKey,
         smartAccount: smartAccount,
@@ -75,7 +96,7 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
         ));
 
         TransactionInformation transactionInformation =
-        await _smartAccountUseCase.activeSmartAccount(
+            await _smartAccountUseCase.activeSmartAccount(
           userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(
             wallet.privateKey!,
           ),
@@ -104,7 +125,8 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
           );
 
           emit(state.copyWith(
-            status: SignedInCreateNewPickAccountStatus.onActiveSmartAccountSuccess,
+            status:
+                SignedInCreateNewPickAccountStatus.onActiveSmartAccountSuccess,
           ));
         } else {
           emit(
@@ -155,8 +177,8 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
     try {
       /// call api grant fee for smart account
       final Uint8List smPubKey =
-      AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(
-          publicKey);
+          AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(
+              publicKey);
 
       //0CE45424-BC2B-4E37-9766-E3B80C06B905
       final String deviceId = await DeviceHelper.getDeviceId();
@@ -165,6 +187,9 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
         pubKey: AuraSmartAccountHelper.encodeByte(smPubKey),
         deviceId: deviceId,
         smAddress: smartAccount,
+        tokenKey: AuthHelper.createAccessTokenKey(
+          walletAddress: smartAccount,
+        ),
       );
     } catch (e) {
       return null;

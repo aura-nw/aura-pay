@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:data/src/data/resource/remote/device_management_api_service.dart';
 import 'package:domain/domain.dart';
 
@@ -14,6 +16,8 @@ final class DeviceManagementRepositoryImpl
     final response = await _deviceManagementApiService.register(
       body: body,
     );
+
+    log(response.toString());
 
     final data = response.handleResponse();
 

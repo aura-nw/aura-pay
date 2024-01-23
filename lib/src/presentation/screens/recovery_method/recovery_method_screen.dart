@@ -58,8 +58,9 @@ class _RecoveryMethodScreenState extends State<RecoveryMethodScreen>
       );
 
       await Future.delayed(const Duration(
-        microseconds: 2500,
+        milliseconds: 2000,
       ));
+
       if (context.mounted) {
         showSuccessToast(
           AppLocalizationManager.of(context).translate(

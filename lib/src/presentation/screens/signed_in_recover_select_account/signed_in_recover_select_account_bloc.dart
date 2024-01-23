@@ -1,5 +1,7 @@
+import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 
 import 'singed_in_recover_select_account_event.dart';
@@ -11,12 +13,16 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
   final Web3AuthUseCase _web3authUseCase;
   final RecoveryUseCase _recoveryUseCase;
   final AuraAccountUseCase _auraAccountUseCase;
+  final AuthUseCase _authUseCase;
+  final DeviceManagementUseCase _deviceManagementUseCase;
 
   SingedInRecoverSelectAccountBloc(
     this._web3authUseCase,
     this._walletUseCase,
     this._recoveryUseCase,
-    this._auraAccountUseCase, {
+    this._auraAccountUseCase,
+    this._authUseCase,
+    this._deviceManagementUseCase, {
     required GoogleAccount googleAccount,
   }) : super(
           SingedInRecoverSelectAccountState(
@@ -46,9 +52,28 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
         privateKeyOrPassPhrase: backupPrivateKey,
       );
 
+      final String accessToken = await AuthHelper.registerOrSignIn(
+        deviceManagementUseCase: _deviceManagementUseCase,
+        authUseCase: _authUseCase,
+        privateKey: AuraWalletHelper.getPrivateKeyFromString(
+          backupPrivateKey,
+        ),
+      );
+
+      final String recoveryAddress = wallet.bech32Address;
+
+      await AuthHelper.saveTokenByWalletAddress(
+        authUseCase: _authUseCase,
+        walletAddress: recoveryAddress,
+        accessToken: accessToken,
+      );
+
       List<PyxisRecoveryAccount> accounts =
           await _recoveryUseCase.getRecoveryAccountByAddress(
-        recoveryAddress: wallet.bech32Address,
+        recoveryAddress: recoveryAddress,
+        tokenKey: AuthHelper.createAccessTokenKey(
+          walletAddress: recoveryAddress,
+        ),
       );
 
       emit(
@@ -86,7 +111,7 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
           status: SingedInRecoverSelectAccountStatus.existsAccount,
         ),
       );
-    }else{
+    } else {
       // If not. Choose this account.
       emit(
         state.copyWith(

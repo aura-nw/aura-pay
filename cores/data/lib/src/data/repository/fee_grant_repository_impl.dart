@@ -12,10 +12,11 @@ final class FeeGrantRepositoryImpl implements FeeGrantRepository {
   @override
   Future<GrantFee> grantFee({
     required Map<String, dynamic> body,
-    String? baseUrl,
+    required String accessToken,
   }) async {
     final baseResponse = await _apiService.grantFee(
       body: body,
+      accessToken: accessToken,
     );
 
     final data = baseResponse.handleResponse();

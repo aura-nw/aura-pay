@@ -119,7 +119,7 @@ sealed class AuthHelper {
   }) async {
     // Remove the access token
     await authUseCase.removeCurrentAccessToken(
-      key: _createAccessTokenKey(
+      key: createAccessTokenKey(
         walletAddress: walletAddress,
       ),
     );
@@ -132,7 +132,7 @@ sealed class AuthHelper {
     required String accessToken,
   }) async {
     return authUseCase.saveAccessToken(
-      key: _createAccessTokenKey(
+      key: createAccessTokenKey(
         walletAddress: walletAddress,
       ),
       accessToken: accessToken,
@@ -155,7 +155,7 @@ sealed class AuthHelper {
     required String walletAddress,
   }) async {
     return await authUseCase.getCurrentAccessToken(
-      key: _createAccessTokenKey(
+      key: createAccessTokenKey(
         walletAddress: walletAddress,
       ),
     );
@@ -223,7 +223,7 @@ sealed class AuthHelper {
   }) async {
     // Retrieve the current access token associated with the wallet address
     final String? currentAccessToken = await authUseCase.getCurrentAccessToken(
-      key: _createAccessTokenKey(
+      key: createAccessTokenKey(
         walletAddress: walletAddress,
       ),
     );
@@ -251,7 +251,7 @@ sealed class AuthHelper {
   }
 
   /// Creates the key for accessing the current access token based on the provided wallet address.
-  static String _createAccessTokenKey({
+  static String createAccessTokenKey({
     required String walletAddress,
   }) {
     return AppLocalConstant.currentAccessToken + walletAddress;

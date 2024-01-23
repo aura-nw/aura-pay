@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
+import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 
 import 'signed_in_recover_sign_event.dart';
@@ -17,6 +18,7 @@ final class SignedInRecoverSignBloc
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
   final AuraAccountUseCase _accountUseCase;
+  final AuthUseCase _authUseCase;
 
   SignedInRecoverSignBloc(
     this._walletUseCase,
@@ -24,6 +26,7 @@ final class SignedInRecoverSignBloc
     this._controllerKeyUseCase,
     this._web3authUseCase,
     this._accountUseCase,
+    this._authUseCase,
     {
     required PyxisRecoveryAccount account,
     required GoogleAccount googleAccount,
@@ -121,7 +124,23 @@ final class SignedInRecoverSignBloc
       );
 
       if (information.status == 0) {
-        await _web3authUseCase.onLogout();
+
+        final String? accessToken = await AuthHelper.getCurrentToken(
+          authUseCase: _authUseCase,
+          walletAddress: wallet.bech32Address,
+        );
+
+        await AuthHelper.removeCurrentToken(
+          authUseCase: _authUseCase,
+          walletAddress: wallet.bech32Address,
+        );
+
+        if (accessToken != null) {
+          await _authUseCase.saveAccessToken(
+            key: state.account.smartAccountAddress,
+            accessToken: accessToken,
+          );
+        }
 
         AuraAccount ? localAccount = await _accountUseCase.getAccountByAddress(
           address: state.account.smartAccountAddress,
@@ -144,6 +163,8 @@ final class SignedInRecoverSignBloc
           address: state.account.smartAccountAddress,
           key: backupPrivateKey,
         );
+
+        await _web3authUseCase.onLogout();
 
         emit(
           state.copyWith(

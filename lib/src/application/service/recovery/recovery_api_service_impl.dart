@@ -13,8 +13,12 @@ final class RecoveryApiServiceImpl implements RecoveryApiService {
   @override
   Future<HasuraBaseResponse> getRecoveryAccountByAddress({
     required Map<String, dynamic> queries,
+    required String accessToken,
   }) {
-    return _apiServiceGenerate.getRecoveryAccountByAddress(queries);
+    return _apiServiceGenerate.getRecoveryAccountByAddress(
+      queries,
+      accessToken,
+    );
   }
 }
 
@@ -28,5 +32,6 @@ abstract class RecoveryApiServiceGenerate {
   @GET(ApiServicePath.recoveryAccounts)
   Future<HasuraBaseResponse> getRecoveryAccountByAddress(
     @Queries() Map<String, dynamic> queries,
+    @Header('Authorization') String accessToken,
   );
 }

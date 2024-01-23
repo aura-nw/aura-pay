@@ -1,7 +1,12 @@
+import 'dart:async';
+
+import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_mobile/src/core/utils/debounce.dart';
 import 'home_screen_event.dart';
 
 import 'home_screen_state.dart';
@@ -9,10 +14,14 @@ import 'home_screen_state.dart';
 class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   final AuraAccountUseCase _accountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
+  final AuthUseCase _authUseCase;
+  final DeviceManagementUseCase _deviceManagementUseCase;
 
   HomeScreenBloc(
     this._accountUseCase,
     this._controllerKeyUseCase,
+    this._authUseCase,
+    this._deviceManagementUseCase,
   ) : super(
           const HomeScreenState(),
         ) {
@@ -21,7 +30,39 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     on(_onRenameAccount);
     on(_onRemoveAccount);
     on(_onChooseAccount);
+
+    _denounce.addObserver(_onRefreshToken);
   }
+
+  void _onRefreshToken(Map<String, dynamic> data) async {
+    try {
+      final String privateKey = data['private_key'];
+      final String address = data['address'];
+
+      final String accessToken = await AuthHelper.signIn(
+        authUseCase: _authUseCase,
+        deviceManagementUseCase: _deviceManagementUseCase,
+        privateKey: AuraWalletHelper.getPrivateKeyFromString(
+          privateKey,
+        ),
+        walletAddress: address,
+      );
+
+      await AuthHelper.saveTokenByWalletAddress(
+        authUseCase: _authUseCase,
+        walletAddress: address,
+        accessToken: accessToken,
+      );
+    } catch (e) {
+      LogProvider.log(e.toString());
+    }
+  }
+
+  final Denounce<Map<String, dynamic>> _denounce = Denounce(
+    const Duration(
+      seconds: 2,
+    ),
+  );
 
   void _onRenameAccount(
     HomeScreenEventOnRenameAccount event,
@@ -47,6 +88,11 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
 
     await _controllerKeyUseCase.deleteKey(
       address: event.address,
+    );
+
+    await AuthHelper.removeCurrentToken(
+      authUseCase: _authUseCase,
+      walletAddress: event.address,
     );
 
     add(
@@ -89,7 +135,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     emit(state.copyWith(
       accounts: accounts,
       selectedAccount: accounts.firstWhereOrNull(
-            (e) => e.index == 0,
+        (e) => e.index == 0,
       ),
     ));
   }
@@ -103,6 +149,15 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     emit(state.copyWith(
       selectedAccount: event.account,
     ));
+
+    final String? privateKey = await _controllerKeyUseCase.getKey(
+      address: event.account.address,
+    );
+
+    _denounce.onDenounce({
+      'private_key': privateKey,
+      'address': event.account.address,
+    });
 
     await _accountUseCase.updateChangeIndex(
       id: event.account.id,
@@ -124,13 +179,14 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     _broadCast = callback;
   }
 
-  void _removeCallBack(){
+  void _removeCallBack() {
     _broadCast = null;
   }
 
   @override
   Future<void> close() {
     _removeCallBack();
+    _denounce.removeObserver(_onRefreshToken);
     return super.close();
   }
 
