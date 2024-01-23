@@ -339,6 +339,7 @@ sealed class LanguageKey {
   static const String signedInImportKeyScreenInvalidPrivateKey = 'signed_in_import_key_screen_invalid_private_key';
   static const String signedInImportKeyScreenInvalidPassPhrase = 'signed_in_import_key_screen_invalid_passphrase';
   static const String signedInImportKeyScreenDialogLoadingTitle = 'signed_in_import_key_screen_dialog_loading_title';
+  static const String signedInImportKeyScreenExistsAccount = 'signed_in_import_key_screen_exists_account';
   ///endregion
 
 
@@ -422,6 +423,7 @@ sealed class LanguageKey {
   static const String signedInRecoverSelectAccountScreenContent = 'signed_in_recover_select_account_screen_content';
   static const String signedInRecoverSelectAccountScreenButtonTitle = 'signed_in_recover_select_account_screen_button_title';
   static const String signedInRecoverSelectAccountScreenNoAccountFound = 'signed_in_recover_select_account_no_account_found';
+  static const String signedInRecoverSelectAccountScreenExistsMessage = 'signed_in_recover_select_account_exists_message';
  ///
 
   ///region signed in recover sign
