@@ -1,8 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:aura_smart_account/aura_smart_account.dart';
+import 'package:aura_wallet_core/aura_wallet_core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
+
+import 'package:convert/convert.dart';
 
 enum WalletConnectEvent {
   connect,
@@ -31,6 +38,8 @@ class WalletConnectService {
       ValueNotifier<List<SessionData>>([]);
   @override
   ValueNotifier<List<StoredCacao>> auth = ValueNotifier<List<StoredCacao>>([]);
+
+  WalletUseCase? _walletUseCase;
 
   Future<void> create() async {
     // Create the web3wallet
@@ -122,6 +131,7 @@ class WalletConnectService {
   void _onSessionProposal(SessionProposalEvent? args) async {
     print('#KhoaHM _onSessionProposal $args');
     onSessionProposal?.call(args);
+    // args.params.generatedNamespaces
   }
 
   void _onPairingInvalid(PairingInvalidEvent? args) {
@@ -137,6 +147,21 @@ class WalletConnectService {
   void _onSessionRequest(SessionRequestEvent? args) {
     print('#KhoaHM _onSessionRequest $args');
     onSessionRequest?.call(args);
+
+    // // Load the private key
+    // final keys = GetIt.I<IKeyService>().getKeysForChain(getChainId());
+    // final credentials = EthPrivateKey.fromHex(keys[0].privateKey);
+
+    // final signedMessage = hex.encode(
+    //   credentials.signPersonalMessageToUint8List(
+    //     Uint8List.fromList(utf8.encode(message)),
+    //   ),
+    // );
+
+    // final r = {'id': id, 'result': signedMessage, 'jsonrpc': '2.0'};
+    // final response = JsonRpcResponse.fromJson(r);
+    // print(r);
+    // _web3Wallet?.respondSessionRequest(topic: topic, response: response);
   }
 
   void _onSessionConnect(SessionConnect? args) {
@@ -203,6 +228,52 @@ class WalletConnectService {
         id: connectingData.sessionId,
         reason: Errors.getSdkError(Errors.USER_REJECTED));
   }
+
+  void approveAuthRequest(RequestAuthData requestAuthData) {
+    _web3Wallet?.respondAuthRequest(id: requestAuthData.id, iss: '0x12345678');
+  }
+
+  void rejectAuthRequest(RequestAuthData requestAuthData) {
+    _web3Wallet?.respondAuthRequest(
+        id: requestAuthData.id,
+        iss: '0x12345678',
+        error: Errors.getSdkError(Errors.USER_REJECTED));
+  }
+
+  void approveRequest(RequestSessionData requestSessionData) async {
+    _walletUseCase ??= getIt.get();
+    final topic = requestSessionData.topic;
+
+    String passPhrase =
+        "sunset try feed sing blouse ripple slow bonus heart club owner chuckle";
+
+    final wallet =
+        await _walletUseCase!.importWallet(privateKeyOrPassPhrase: passPhrase);
+
+    String publicKey = AuraSmartAccountHelper.encodeByte(wallet.publicKey);
+    print('publicKey: $publicKey');
+
+    List<Map<String, String>> messages = [
+      {
+        'algo': 'secp256k1',
+        'address': 'aura1wxtnmdyplfv2f56pel7whckl4ka84e9rvus8hu',
+        "pubkey": 'AubiROgK4oQKi6ku2UiOvaRALQCFY43it3k0qCkBtMyq',
+      }
+    ];
+
+    //02e6e244e80ae2840a8ba92ed9488ebda4402d0085638de2b77934a82901b4ccaa
+
+    final r = {
+      'id': requestSessionData.id,
+      'result': messages,
+      'jsonrpc': '2.0'
+    };
+    final response = JsonRpcResponse.fromJson(r);
+    print(r);
+    _web3Wallet?.respondSessionRequest(topic: topic, response: response);
+  }
+
+  void rejectRequest(RequestSessionData requestSessionData) {}
 }
 
 class WalletConnectServiceUtils {
@@ -222,7 +293,18 @@ class WalletConnectServiceUtils {
     // Setup our accounts
     web3wallet.registerAccount(
       chainId: chainId,
-      accountAddress: '0xeaa05f75445a4beacc73e8fbf07ddb3a76a80a0c',
+      accountAddress: 'aura1wxtnmdyplfv2f56pel7whckl4ka84e9rvus8hu',
     );
+  }
+
+  static String getUtf8Message(String maybeHex) {
+    if (maybeHex.startsWith('0x')) {
+      final List<int> decoded = hex.decode(
+        maybeHex.substring(2),
+      );
+      return utf8.decode(decoded);
+    }
+
+    return maybeHex;
   }
 }

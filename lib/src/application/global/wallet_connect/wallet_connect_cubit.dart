@@ -121,6 +121,26 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
   void _onSessionRequest(SessionRequestEvent? args) {
     print('#KhoaHM _onSessionRequest $args');
     if (args == null) return;
+
+    final id = args.id;
+    final topic = args.topic;
+    final parameters = args.params;
+    final method = args.method;
+
+    RequestSessionData requestSessionData = RequestSessionData(
+      id: id,
+      topic: topic,
+      method: method,
+      chainId: args.chainId,
+      params: parameters,
+    );
+
+    // final String message =
+    //     WalletConnectServiceUtils.getUtf8Message(method);
+
+    debugPrint('On session request event: $id, $topic, $method');
+    emit(state.copyWith(
+        status: WalletConnectStatus.onRequest, data: requestSessionData));
   }
 
   void _onSessionConnect(SessionConnect? args) {
@@ -129,8 +149,35 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
 
   void _onAuthRequest(AuthRequest? args) async {
     print('#KhoaHM _onAuthRequest $args');
+    RequestAuthData requestAuthData = RequestAuthData(
+      id: args!.id,
+      aud: args.payloadParams.aud,
+      domain: args.payloadParams.domain,
+      version: args.payloadParams.version,
+      nonce: args.payloadParams.nonce,
+      iat: args.payloadParams.iat,
+    );
+
+    emit(state.copyWith(
+        status: WalletConnectStatus.onRequestAuth, data: requestAuthData));
   }
 
   static WalletConnectCubit of(BuildContext context) =>
       BlocProvider.of<WalletConnectCubit>(context);
+
+  void approveAuthRequest(RequestAuthData requestAuthData) {
+    _walletConnectService.approveAuthRequest(requestAuthData);
+  }
+
+  void rejectAuthRequest(RequestAuthData requestAuthData) {
+    _walletConnectService.rejectAuthRequest(requestAuthData);
+  }
+
+  void approveRequest(RequestSessionData requestSessionData) {
+    _walletConnectService.approveRequest(requestSessionData);
+  }
+
+  void rejectRequest(RequestSessionData requestSessionData) {
+    _walletConnectService.rejectRequest(requestSessionData);
+  }
 }

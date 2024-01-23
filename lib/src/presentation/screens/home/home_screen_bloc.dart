@@ -89,7 +89,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     emit(state.copyWith(
       accounts: accounts,
       selectedAccount: accounts.firstWhereOrNull(
-            (e) => e.index == 0,
+        (e) => e.index == 0,
       ),
     ));
   }
@@ -124,7 +124,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     _broadCast = callback;
   }
 
-  void _removeCallBack(){
+  void _removeCallBack() {
     _broadCast = null;
   }
 

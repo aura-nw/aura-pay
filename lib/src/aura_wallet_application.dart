@@ -130,8 +130,8 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                     },
                   ),
                   BlocListener<WalletConnectCubit, WalletConnectState>(
-                      listenWhen: (previous, current) =>
-                          current.status != previous.status,
+                      // listenWhen: (previous, current) =>
+                      //     current.status != previous.status,
                       listener: (_, state) =>
                           walletConnectListener(builderContext, state))
                 ],
@@ -198,6 +198,39 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
 
         break;
       // Case when the status is none
+      case WalletConnectStatus.onRequestAuth:
+        RequestAuthData requestAuthData = state.data as RequestAuthData;
+
+        await showDialog(
+            context: AppNavigator.navigatorKey.currentContext!,
+            builder: (context) => AlertDialog(
+                  title: Text('Request Auth'),
+                  content: Text(
+                      'Do you want to connect to ${requestAuthData.domain}?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        context
+                            .read<WalletConnectCubit>()
+                            .approveAuthRequest(requestAuthData);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Approve'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context
+                            .read<WalletConnectCubit>()
+                            .rejectAuthRequest(requestAuthData);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Reject'),
+                    ),
+                  ],
+                ));
+
+        break;
+      // Case when the status is none
       case WalletConnectStatus.none:
         // If the user is authorized, navigate to the home screen
         // Replace all routes with the reLogin route
@@ -207,9 +240,34 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
         break;
       // Case when the status is onRequest
       case WalletConnectStatus.onRequest:
-        // If the user is unauthorized, navigate to the get started screen
-        // Replace all routes with the scanQrFee route
-        AppNavigator.replaceAllWith(RoutePath.scanQrFee);
+        RequestSessionData requestSessionData =
+            state.data as RequestSessionData;
+
+        await showDialog(
+            context: AppNavigator.navigatorKey.currentContext!,
+            builder: (context) => AlertDialog(
+                    title: Text('Request'),
+                    content: Text(requestSessionData.method),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          context
+                              .read<WalletConnectCubit>()
+                              .approveRequest(requestSessionData);
+                          Navigator.pop(context);
+                        },
+                        child: const Text('OK'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context
+                              .read<WalletConnectCubit>()
+                              .rejectRequest(requestSessionData);
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Reject'),
+                      ),
+                    ]));
         break;
     }
   }

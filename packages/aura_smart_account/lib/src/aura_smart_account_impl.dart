@@ -26,7 +26,6 @@ import 'package:protobuf/protobuf.dart';
 
 import 'core/constants/smart_account_constant.dart';
 import 'core/constants/smart_account_error_code.dart';
-import 'core/helpers/aura_smart_account_helper.dart';
 import 'core/helpers/wallet_helper.dart';
 
 import 'dart:developer' as dev;
@@ -108,7 +107,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     Uint8List? salt,
     String? memo,
     AuraSmartAccountFee? fee,
-    String ?granter,
+    String? granter,
   }) async {
     try {
       // Get pub key from private key
@@ -162,7 +161,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
           );
       }
 
-      if(granter != null){
+      if (granter != null) {
         feeSign.granter = granter;
       }
 
@@ -467,7 +466,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     required String recoverAddress,
     AuraSmartAccountFee? fee,
     bool isReadyRegister = false,
-    String ?revokePreAddress,
+    String? revokePreAddress,
   }) async {
     try {
       // Get pub key from private key

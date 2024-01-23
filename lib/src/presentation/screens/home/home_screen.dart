@@ -276,6 +276,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     if (result != null) {
       String? account = _bloc.state.selectedAccount?.address;
+      account = 'aura1wxtnmdyplfv2f56pel7whckl4ka84e9rvus8hu';
       WalletConnectCubit.of(context).connect(result ?? '', account ?? '');
 
       // if (result != null) {
