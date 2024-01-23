@@ -83,11 +83,9 @@ final class HomeAccountChangeWidget extends AuraSmartAccountBaseWidget {
 
 // Define a private class named _HomeAccountWidget that extends AuraSmartAccountBaseWidget
 final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
-  final VoidCallback onShowMoreAccount;
   final void Function(String) onCopy;
 
   const _HomeAccountWidget({
-    required this.onShowMoreAccount,
     required this.onCopy,
     required super.appTheme,
     required super.address,
@@ -130,18 +128,14 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
   // Override the actionFormBuilder method
   @override
   Widget actionFormBuilder(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onShowMoreAccount,
-      child: Padding(
-        padding: const EdgeInsets.only(
-          top: Spacing.spacing04,
-          bottom: Spacing.spacing04,
-          left: Spacing.spacing04,
-        ),
-        child: SvgPicture.asset(
-          AssetIconPath.homeArrowDown,
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: Spacing.spacing04,
+        bottom: Spacing.spacing04,
+        left: Spacing.spacing04,
+      ),
+      child: SvgPicture.asset(
+        AssetIconPath.homeArrowDown,
       ),
     );
   }
@@ -244,29 +238,31 @@ class AccountCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(
-        Spacing.spacing06,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          BorderRadiusSize.borderRadius05,
+    return GestureDetector(
+      onTap: onShowMoreAccount,
+      child: Container(
+        padding: const EdgeInsets.all(
+          Spacing.spacing06,
         ),
-        gradient: LinearGradient(
-          colors: [
-            appTheme.surfaceColorBlack,
-            const Color(
-              0xff302E5C,
-            ),
-          ],
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            BorderRadiusSize.borderRadius05,
+          ),
+          gradient: LinearGradient(
+            colors: [
+              appTheme.surfaceColorBlack,
+              const Color(
+                0xff302E5C,
+              ),
+            ],
+          ),
         ),
-      ),
-      child: _HomeAccountWidget(
-        onShowMoreAccount: onShowMoreAccount,
-        onCopy: onCopy,
-        appTheme: appTheme,
-        address: address,
-        accountName: accountName,
+        child: _HomeAccountWidget(
+          onCopy: onCopy,
+          appTheme: appTheme,
+          address: address,
+          accountName: accountName,
+        ),
       ),
     );
   }
