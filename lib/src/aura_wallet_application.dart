@@ -243,11 +243,14 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
         RequestSessionData requestSessionData =
             state.data as RequestSessionData;
 
+        String title = requestSessionData.method;
+        String content = '${requestSessionData.params}';
+
         await showDialog(
             context: AppNavigator.navigatorKey.currentContext!,
             builder: (context) => AlertDialog(
-                    title: Text('Request'),
-                    content: Text(requestSessionData.method),
+                    title: Text(title),
+                    content: Text(content),
                     actions: [
                       TextButton(
                         onPressed: () {

@@ -116,16 +116,16 @@ sealed class AppNavigator {
           const OnBoardingReLoginScreen(),
           settings,
         );
-      case RoutePath.walletConnect:
-        WalletConnectScreenData data =
-            settings.arguments as WalletConnectScreenData;
+      // case RoutePath.walletConnect:
+      //   WalletConnectScreenData data =
+      //       settings.arguments as WalletConnectScreenData;
 
-        return _defaultRoute(
-          WalletConnectScreen(
-            data: data,
-          ),
-          settings,
-        );
+      //   return _defaultRoute(
+      //     WalletConnectScreen(
+      //       data: data,
+      //     ),
+      //     settings,
+      //   );
       case RoutePath.getStarted:
         return _defaultRoute(
           const OnBoardingGetStartedScreen(),
