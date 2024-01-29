@@ -1,8 +1,12 @@
+import 'dart:typed_data';
+
+import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
+import 'wallet_connect_state.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'dart:developer' as developer;
 
@@ -16,10 +20,16 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
 
   String? targetAccount;
 
+  // final SmartAccountUseCase _smartAccountUseCase =
+  //     getIt.get<SmartAccountUseCase>();
+  final ControllerKeyUseCase _controllerKeyUseCase =
+      getIt.get<ControllerKeyUseCase>();
+
   WalletConnectCubit() : super((const WalletConnectState())) {
     // _w[core] SessionID
     _init();
   }
+
   // This function initializes the WalletConnectService
   Future _init() async {
     // Create the WalletConnectService
@@ -135,7 +145,7 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
     debugPrint('[$runtimeType] _onPairingCreate $args');
   }
 
-  void _onSessionRequest(SessionRequestEvent? args) {
+  void _onSessionRequest(SessionRequestEvent? args) async{
     print('#PyxisDebug _onSessionRequest $args');
     if (args == null) return;
 
@@ -160,7 +170,7 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
             {
               'algo': 'secp256k1',
               'address': _getAddress(),
-              "pubkey": _getPublicKey(),
+              "pubkey": await _getPublicKey(),
             }
           ]);
 
@@ -207,12 +217,13 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
         id: requestAuthData.id, iss: requestAuthData.version);
   }
 
-  void approveRequest(RequestSessionData requestSessionData) {
+  void approveRequest(RequestSessionData requestSessionData) async{
     if (requestSessionData.method == 'cosmos_signAmino') {
       try {
         Map<String, dynamic> msg = AuraCoreHelper.signAmino(
-            signDoc: requestSessionData.params['signDoc'],
-            privateKeyHex: _getPriKey());
+          signDoc: requestSessionData.params['signDoc'],
+          privateKeyHex: await _getPriKey(),
+        );
         _walletConnectService.approveRequest(
             id: requestSessionData.id,
             topic: requestSessionData.topic,
@@ -240,14 +251,25 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
   }
 
   String _getAddress() {
-    return '';
+    return targetAccount ?? '';
   }
 
-  String _getPublicKey() {
-    return '';
+  Future<String> _getPublicKey() async {
+    final privateKey = await _getPrivateKeyBytes();
+    final publicKey = AuraWalletHelper.getPublicKeyFromPrivateKey(privateKey);
+
+    return AuraSmartAccountHelper.encodeByte(publicKey);
   }
 
-  String _getPriKey() {
-    return '';
+  Future<String> _getPriKey() async{
+    final privateKey = await _getPrivateKeyBytes();
+
+    return AuraWalletHelper.getPrivateKeyFromBytes(privateKey);
+  }
+
+  Future<Uint8List> _getPrivateKeyBytes()async{
+    final String ? controllerKey = await _controllerKeyUseCase.getKey(address: targetAccount ?? '');
+
+    return AuraWalletHelper.getPrivateKeyFromString(controllerKey ?? '');
   }
 }
