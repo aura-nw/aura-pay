@@ -318,21 +318,21 @@
                             }
                         },
                         {
-                            "name": "Warning/S Light",
-                            "type": "color",
-                            "isAlias": true,
-                            "value": {
-                                "collection": "[ Color ] - Base",
-                                "name": "Orange/50"
-                            }
-                        },
-                        {
                             "name": "Success/Dark",
                             "type": "color",
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Green/400"
+                            }
+                        },
+                        {
+                            "name": "Warning/S Light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Orange/50"
                             }
                         },
                         {
@@ -354,21 +354,21 @@
                             }
                         },
                         {
-                            "name": "Warning/Dark",
-                            "type": "color",
-                            "isAlias": true,
-                            "value": {
-                                "collection": "[ Color ] - Base",
-                                "name": "Orange/400"
-                            }
-                        },
-                        {
                             "name": "Danger/S Light",
                             "type": "color",
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Red/50"
+                            }
+                        },
+                        {
+                            "name": "Warning/Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Orange/400"
                             }
                         },
                         {
@@ -396,6 +396,15 @@
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Red/500"
+                            }
+                        },
+                        {
+                            "name": "Unknown/S Light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/100"
                             }
                         },
                         {
@@ -432,6 +441,15 @@
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Gray/700"
+                            }
+                        },
+                        {
+                            "name": "Unknown/S Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Gray/800"
                             }
                         },
                         {
@@ -561,12 +579,30 @@
                             }
                         },
                         {
+                            "name": "Surface/Unknown light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Unknown/S Light"
+                            }
+                        },
+                        {
                             "name": "Surface/Unknown",
                             "type": "color",
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
                                 "name": "Unknown/Light"
+                            }
+                        },
+                        {
+                            "name": "Surface/Unknown dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Unknown/Default"
                             }
                         },
                         {
@@ -741,12 +777,30 @@
                             }
                         },
                         {
+                            "name": "Border/Unknown light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Unknown/Light"
+                            }
+                        },
+                        {
                             "name": "Border/Unknown",
                             "type": "color",
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
                                 "name": "Unknown/Default"
+                            }
+                        },
+                        {
+                            "name": "Border/Unknown dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Unknown/Dark"
                             }
                         },
                         {
@@ -837,7 +891,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Gray/300"
+                                "name": "Gray/400"
                             }
                         },
                         {
@@ -846,7 +900,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Gray/500"
+                                "name": "Gray/600"
                             }
                         },
                         {
@@ -855,7 +909,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Gray/700"
+                                "name": "Gray/800"
                             }
                         },
                         {
@@ -864,7 +918,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Gray/800"
+                                "name": "Gray/950"
                             }
                         },
                         {
@@ -1335,15 +1389,6 @@
                             }
                         },
                         {
-                            "name": "Divider/Color",
-                            "type": "color",
-                            "isAlias": true,
-                            "value": {
-                                "collection": "[ Color ] - Context",
-                                "name": "Border/Gray default"
-                            }
-                        },
-                        {
                             "name": "Input/Input/Disable",
                             "type": "color",
                             "isAlias": true,
@@ -1353,12 +1398,21 @@
                             }
                         },
                         {
-                            "name": "Input/Input/Border/Color/Default",
+                            "name": "Divider/Color",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Border/Gray default"
+                            }
+                        },
+                        {
+                            "name": "Input/Input/Background/Default",
                             "type": "color",
                             "isAlias": true,
                             "value": {
                                 "collection": "Components",
-                                "name": "Input/_Base/Border/Default"
+                                "name": "Input/Background color"
                             }
                         },
                         {
@@ -1368,12 +1422,12 @@
                             "value": "#FFFFFF"
                         },
                         {
-                            "name": "Input/Input/Background/Default",
+                            "name": "Input/Input/Border/Color/Default",
                             "type": "color",
                             "isAlias": true,
                             "value": {
                                 "collection": "Components",
-                                "name": "Input/Background color"
+                                "name": "Input/_Base/Border/Default"
                             }
                         },
                         {
@@ -1401,6 +1455,12 @@
                             "value": "#FFFFFF"
                         },
                         {
+                            "name": "Navbar/Color 3",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF"
+                        },
+                        {
                             "name": "Input/Input/Border/Color/Success",
                             "type": "color",
                             "isAlias": true,
@@ -1408,12 +1468,6 @@
                                 "collection": "[ Color ] - Context",
                                 "name": "Border/Success"
                             }
-                        },
-                        {
-                            "name": "Navbar/Color 3",
-                            "type": "color",
-                            "isAlias": false,
-                            "value": "#FFFFFF"
                         },
                         {
                             "name": "Input/Input/Background/Disable",
@@ -1443,6 +1497,12 @@
                             }
                         },
                         {
+                            "name": "Link/Color 5",
+                            "type": "color",
+                            "isAlias": false,
+                            "value": "#FFFFFF"
+                        },
+                        {
                             "name": "Input/Input/Padding/Default",
                             "type": "number",
                             "isAlias": true,
@@ -1450,12 +1510,6 @@
                                 "collection": "[ Units ] - Foundations",
                                 "name": "Spacing/06"
                             }
-                        },
-                        {
-                            "name": "Link/Color 5",
-                            "type": "color",
-                            "isAlias": false,
-                            "value": "#FFFFFF"
                         },
                         {
                             "name": "Input/Input/Padding/lg",
@@ -3809,6 +3863,60 @@
                                         },
                                         "radius": 0,
                                         "spread": 2
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "Shadown/sm",
+                            "type": "effect",
+                            "isAlias": false,
+                            "value": {
+                                "effects": [
+                                    {
+                                        "type": "DROP_SHADOW",
+                                        "color": {
+                                            "r": 0,
+                                            "g": 0,
+                                            "b": 0,
+                                            "a": 0.04
+                                        },
+                                        "offset": {
+                                            "x": 0,
+                                            "y": 0.9913280606269836
+                                        },
+                                        "radius": 2.087289571762085,
+                                        "spread": 0
+                                    },
+                                    {
+                                        "type": "DROP_SHADOW",
+                                        "color": {
+                                            "r": 0,
+                                            "g": 0,
+                                            "b": 0,
+                                            "a": 0.07
+                                        },
+                                        "offset": {
+                                            "x": 0,
+                                            "y": 1.5248132944107056
+                                        },
+                                        "radius": 2.8136484622955322,
+                                        "spread": 0
+                                    },
+                                    {
+                                        "type": "DROP_SHADOW",
+                                        "color": {
+                                            "r": 0,
+                                            "g": 0,
+                                            "b": 0,
+                                            "a": 0.11
+                                        },
+                                        "offset": {
+                                            "x": 0,
+                                            "y": 2
+                                        },
+                                        "radius": 5,
+                                        "spread": 0
                                     }
                                 ]
                             }
