@@ -117,4 +117,10 @@ class SmartAccountUseCase {
       gasLimit: gasLimit,
     );
   }
+
+  Future<String> getCosmosPubKeyByAddress({
+    required String address,
+  }){
+    return _repository.getCosmosPubKeyByAddress(address: address);
+  }
 }

@@ -114,20 +114,9 @@ sealed class AuraSmartAccountHelper {
     return txSign;
   }
 
-  static Future<Account> getAccount({
-    required String address,
-    required auth.QueryClient queryClient,
+  static Future<Account> deserializerAccounts({
+    required auth.QueryAccountResponse response,
   }) async {
-    // Create ath account request
-    final auth.QueryAccountRequest queryAccountRequest =
-        auth.QueryAccountRequest(
-      address: address,
-    );
-
-    // Get account
-    final auth.QueryAccountResponse response =
-        await queryClient.account(queryAccountRequest);
-
     // Get Account from key
     final String key = _deserializerAccounts.keys
         .singleWhere((element) => response.account.typeUrl.contains(element));

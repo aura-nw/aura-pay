@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
@@ -306,9 +307,8 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
   // Get signer data from sm account address
   Future<CosmosSignerData> _getSignerData(String smAccountAddress) async {
     // Get account from smart account
-    final Account accountResponse = await AuraSmartAccountHelper.getAccount(
+    final Account accountResponse = await _getAccountByAddress(
       address: smAccountAddress,
-      queryClient: queryAuthClient,
     );
 
     // create signer data
@@ -681,5 +681,37 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       // Handle error
       throw _getError(e);
     }
+  }
+
+  @override
+  Future<String> getCosmosPubKeyByAddress({required String address}) async {
+    final Account accountResponse = await _getAccountByAddress(
+      address: address,
+    );
+
+     final pubKey = accountResponse.pubKey();
+
+     return base64Encode(pubKey.value);
+  }
+
+  Future<Account> _getAccountByAddress({
+    required String address,
+  }) async {
+    // Create ath account request
+    final auth.QueryAccountRequest queryAccountRequest =
+        auth.QueryAccountRequest(
+      address: address,
+    );
+
+    // Get account
+    final auth.QueryAccountResponse response =
+        await queryAuthClient.account(queryAccountRequest);
+
+    final Account accountResponse =
+        await AuraSmartAccountHelper.deserializerAccounts(
+      response: response,
+    );
+
+    return accountResponse;
   }
 }

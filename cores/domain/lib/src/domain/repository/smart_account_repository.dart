@@ -58,4 +58,8 @@ abstract interface class SmartAccountRepository {
     String? fee,
     int? gasLimit,
   });
+
+  Future<String> getCosmosPubKeyByAddress({
+    required String address,
+  });
 }

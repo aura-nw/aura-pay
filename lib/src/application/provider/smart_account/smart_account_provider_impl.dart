@@ -194,4 +194,11 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       rawLog: response.rawLog,
     );
   }
+
+  @override
+  Future<String> getCosmosPubKeyByAddress({
+    required String address,
+  }){
+    return _auraSmartAccount.getCosmosPubKeyByAddress(address: address);
+  }
 }
