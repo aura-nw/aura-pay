@@ -446,7 +446,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
       double am = double.parse(amount);
 
       // Get the total balance from the bloc's state
-      double total = double.parse(_bloc.state.balance);
+      double total = double.parse(_bloc.state.balance.formatAura);
 
       // Return true if amount is greater than 0 and less than or equal to the total balance
       return am > 0 && am <= total;
