@@ -240,6 +240,9 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _showRequestCameraPermission(AppTheme appTheme) async {
+    String? account = _bloc.state.selectedAccount?.address;
+    WalletConnectCubit.of(context).registerSmartAccount(account ?? '');
+
     PermissionStatus status =
         await SystemPermissionHelper.getCurrentCameraPermissionStatus();
 

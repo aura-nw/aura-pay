@@ -20,8 +20,8 @@ import 'wallet_helper.dart';
 typedef AccountDeserializer = Account Function(pb.Any);
 
 sealed class AuraSmartAccountHelper {
-
-  static AuraNetworkInfo getNetworkInfoFromEnvironment(AuraSmartAccountEnvironment environment){
+  static AuraNetworkInfo getNetworkInfoFromEnvironment(
+      AuraSmartAccountEnvironment environment) {
     switch (environment) {
       case AuraSmartAccountEnvironment.test:
         return AuraNetWorkInformationConstant.testChannel;
@@ -52,7 +52,6 @@ sealed class AuraSmartAccountHelper {
     required tx.Fee fee,
     String? memo,
   }) async {
-
     // Create pub key
     pb.Any pubKeyAny = pb.Any.create()
       ..value = pubKey
@@ -149,7 +148,7 @@ sealed class AuraSmartAccountHelper {
     return pubKeyGenerate;
   }
 
-  static String encodeByte(Uint8List bytes){
+  static String encodeByte(Uint8List bytes) {
     return HEX.encode(bytes);
   }
 }

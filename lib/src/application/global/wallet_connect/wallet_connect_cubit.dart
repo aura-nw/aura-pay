@@ -145,7 +145,7 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
     debugPrint('[$runtimeType] _onPairingCreate $args');
   }
 
-  void _onSessionRequest(SessionRequestEvent? args) async{
+  void _onSessionRequest(SessionRequestEvent? args) async {
     print('#PyxisDebug _onSessionRequest $args');
     if (args == null) return;
 
@@ -217,7 +217,7 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
         id: requestAuthData.id, iss: requestAuthData.version);
   }
 
-  void approveRequest(RequestSessionData requestSessionData) async{
+  void approveRequest(RequestSessionData requestSessionData) async {
     if (requestSessionData.method == 'cosmos_signAmino') {
       try {
         Map<String, dynamic> msg = AuraCoreHelper.signAmino(
@@ -261,15 +261,15 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
     return AuraSmartAccountHelper.encodeByte(publicKey);
   }
 
-  Future<String> _getPriKey() async{
+  Future<String> _getPriKey() async {
     final privateKey = await _getPrivateKeyBytes();
 
     return AuraWalletHelper.getPrivateKeyFromBytes(privateKey);
   }
 
-  Future<Uint8List> _getPrivateKeyBytes()async{
-    final String ? controllerKey = await _controllerKeyUseCase.getKey(address: targetAccount ?? '');
-
+  Future<Uint8List> _getPrivateKeyBytes() async {
+    final String? controllerKey =
+        await _controllerKeyUseCase.getKey(address: targetAccount ?? '');
     return AuraWalletHelper.getPrivateKeyFromString(controllerKey ?? '');
   }
 }
