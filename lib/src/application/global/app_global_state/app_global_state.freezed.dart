@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AppGlobalState {
   AppGlobalStatus get status => throw _privateConstructorUsedError;
+  OnBoardingStatus get onBoardingStatus => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppGlobalStateCopyWith<AppGlobalState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $AppGlobalStateCopyWith<$Res> {
           AppGlobalState value, $Res Function(AppGlobalState) then) =
       _$AppGlobalStateCopyWithImpl<$Res, AppGlobalState>;
   @useResult
-  $Res call({AppGlobalStatus status});
+  $Res call({AppGlobalStatus status, OnBoardingStatus onBoardingStatus});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$AppGlobalStateCopyWithImpl<$Res, $Val extends AppGlobalState>
   @override
   $Res call({
     Object? status = null,
+    Object? onBoardingStatus = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AppGlobalStatus,
+      onBoardingStatus: null == onBoardingStatus
+          ? _value.onBoardingStatus
+          : onBoardingStatus // ignore: cast_nullable_to_non_nullable
+              as OnBoardingStatus,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$AppGlobalStateImplCopyWith<$Res>
       __$$AppGlobalStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AppGlobalStatus status});
+  $Res call({AppGlobalStatus status, OnBoardingStatus onBoardingStatus});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$AppGlobalStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
+    Object? onBoardingStatus = null,
   }) {
     return _then(_$AppGlobalStateImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AppGlobalStatus,
+      onBoardingStatus: null == onBoardingStatus
+          ? _value.onBoardingStatus
+          : onBoardingStatus // ignore: cast_nullable_to_non_nullable
+              as OnBoardingStatus,
     ));
   }
 }
@@ -92,27 +103,34 @@ class __$$AppGlobalStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AppGlobalStateImpl implements _AppGlobalState {
-  const _$AppGlobalStateImpl({this.status = AppGlobalStatus.unauthorized});
+  const _$AppGlobalStateImpl(
+      {this.status = AppGlobalStatus.unauthorized,
+      this.onBoardingStatus = OnBoardingStatus.none});
 
   @override
   @JsonKey()
   final AppGlobalStatus status;
+  @override
+  @JsonKey()
+  final OnBoardingStatus onBoardingStatus;
 
   @override
   String toString() {
-    return 'AppGlobalState(status: $status)';
+    return 'AppGlobalState(status: $status, onBoardingStatus: $onBoardingStatus)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppGlobalStateImpl &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.onBoardingStatus, onBoardingStatus) ||
+                other.onBoardingStatus == onBoardingStatus));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status);
+  int get hashCode => Object.hash(runtimeType, status, onBoardingStatus);
 
   @JsonKey(ignore: true)
   @override
@@ -123,11 +141,14 @@ class _$AppGlobalStateImpl implements _AppGlobalState {
 }
 
 abstract class _AppGlobalState implements AppGlobalState {
-  const factory _AppGlobalState({final AppGlobalStatus status}) =
-      _$AppGlobalStateImpl;
+  const factory _AppGlobalState(
+      {final AppGlobalStatus status,
+      final OnBoardingStatus onBoardingStatus}) = _$AppGlobalStateImpl;
 
   @override
   AppGlobalStatus get status;
+  @override
+  OnBoardingStatus get onBoardingStatus;
   @override
   @JsonKey(ignore: true)
   _$$AppGlobalStateImplCopyWith<_$AppGlobalStateImpl> get copyWith =>

@@ -91,22 +91,7 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
     currentSection = HomeScreenSection.home;
-    // testing();
     super.initState();
-  }
-
-  Future<void> testing() async {
-    await Future.delayed(Duration(seconds: 5));
-    print("Testing");
-
-    // WalletConnectCubit.of(context).connect("data");
-
-    // await Future.delayed(Duration(seconds: 5));
-    BlocProvider.of<AppGlobalCubit>(context).changeState(
-      AppGlobalState(status: AppGlobalStatus.unauthorized),
-    );
-
-    return;
   }
 
   @override

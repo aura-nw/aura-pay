@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
+import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
@@ -73,7 +75,12 @@ class _OnBoardingPickAccountScreenState
                 case OnBoardingPickAccountStatus.onActiveSmartAccountSuccess:
                   AppNavigator.pop();
 
-                  AppNavigator.replaceAllWith(RoutePath.home);
+                  AppGlobalCubit.of(context).changeState(
+                    const AppGlobalState(
+                      status: AppGlobalStatus.authorized,
+                      onBoardingStatus: OnBoardingStatus.createSmAccountSuccess,
+                    ),
+                  );
                   break;
                 case OnBoardingPickAccountStatus.onGrantFeeError:
                   AppNavigator.pop();
@@ -225,7 +232,8 @@ class _OnBoardingPickAccountScreenState
     DialogProvider.showLoadingDialog(
       context,
       content: AppLocalizationManager.of(context).translate(
-        LanguageKey.onBoardingCreateNewSmartAccountScreenDialogLoadingCreateTitle,
+        LanguageKey
+            .onBoardingCreateNewSmartAccountScreenDialogLoadingCreateTitle,
       ),
       appTheme: appTheme,
     );

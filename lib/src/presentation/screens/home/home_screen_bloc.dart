@@ -82,6 +82,36 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     HomeScreenEventOnRemoveAccount event,
     Emitter<HomeScreenState> emit,
   ) async {
+    final firstAccount = state.accounts.firstOrNull;
+
+    if (firstAccount?.id == event.id) {
+      if (state.accounts.length > 1) {
+        final account = state.accounts[1];
+        emit(state.copyWith(
+          selectedAccount: account,
+        ));
+
+        final String? privateKey = await _controllerKeyUseCase.getKey(
+          address: account.address,
+        );
+
+        _denounce.onDenounce({
+          'private_key': privateKey,
+          'address': account.address,
+        });
+
+        await _accountUseCase.updateChangeIndex(
+          id: account.id,
+        );
+
+        add(
+          HomeScreenEventOnChooseAccount(
+            state.accounts[1],
+          ),
+        );
+      }
+    }
+
     await _accountUseCase.deleteAccount(
       event.id,
     );

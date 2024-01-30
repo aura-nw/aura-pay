@@ -86,6 +86,7 @@ class _OnBoardingRecoverSignScreenState
                   AppGlobalCubit.of(context).changeState(
                     const AppGlobalState(
                       status: AppGlobalStatus.authorized,
+                      onBoardingStatus: OnBoardingStatus.createSmAccountSuccess,
                     ),
                   );
                   break;

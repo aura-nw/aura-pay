@@ -93,6 +93,7 @@ class _OnBoardingScanFeeScreenState extends State<OnBoardingScanFeeScreen>
                   AppGlobalCubit.of(context).changeState(
                     const AppGlobalState(
                       status: AppGlobalStatus.authorized,
+                      onBoardingStatus: OnBoardingStatus.createSmAccountSuccess,
                     ),
                   );
 
