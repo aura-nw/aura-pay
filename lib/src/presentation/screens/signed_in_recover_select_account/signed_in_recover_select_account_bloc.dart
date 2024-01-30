@@ -52,21 +52,21 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
         privateKeyOrPassPhrase: backupPrivateKey,
       );
 
-      final String accessToken = await AuthHelper.registerOrSignIn(
-        deviceManagementUseCase: _deviceManagementUseCase,
-        authUseCase: _authUseCase,
-        privateKey: AuraWalletHelper.getPrivateKeyFromString(
-          backupPrivateKey,
-        ),
-      );
+      // final String accessToken = await AuthHelper.registerOrSignIn(
+      //   deviceManagementUseCase: _deviceManagementUseCase,
+      //   authUseCase: _authUseCase,
+      //   privateKey: AuraWalletHelper.getPrivateKeyFromString(
+      //     backupPrivateKey,
+      //   ),
+      // );
 
       final String recoveryAddress = wallet.bech32Address;
 
-      await AuthHelper.saveTokenByWalletAddress(
-        authUseCase: _authUseCase,
-        walletAddress: recoveryAddress,
-        accessToken: accessToken,
-      );
+      // await AuthHelper.saveTokenByWalletAddress(
+      //   authUseCase: _authUseCase,
+      //   walletAddress: recoveryAddress,
+      //   accessToken: accessToken,
+      // );
 
       List<PyxisRecoveryAccount> accounts =
           await _recoveryUseCase.getRecoveryAccountByAddress(

@@ -50,19 +50,19 @@ final class OnBoardingRecoverSelectAccountBloc extends Bloc<
 
       final String recoveryAddress = wallet.bech32Address;
 
-      final String accessToken = await AuthHelper.registerOrSignIn(
-        deviceManagementUseCase: _deviceManagementUseCase,
-        authUseCase: _authUseCase,
-        privateKey: AuraWalletHelper.getPrivateKeyFromString(
-          backupPrivateKey,
-        ),
-      );
-
-      await AuthHelper.saveTokenByWalletAddress(
-        authUseCase: _authUseCase,
-        walletAddress: recoveryAddress,
-        accessToken: accessToken,
-      );
+      // final String accessToken = await AuthHelper.registerOrSignIn(
+      //   deviceManagementUseCase: _deviceManagementUseCase,
+      //   authUseCase: _authUseCase,
+      //   privateKey: AuraWalletHelper.getPrivateKeyFromString(
+      //     backupPrivateKey,
+      //   ),
+      // );
+      //
+      // await AuthHelper.saveTokenByWalletAddress(
+      //   authUseCase: _authUseCase,
+      //   walletAddress: recoveryAddress,
+      //   accessToken: accessToken,
+      // );
 
       final List<PyxisRecoveryAccount> accounts =
           await _recoveryUseCase.getRecoveryAccountByAddress(

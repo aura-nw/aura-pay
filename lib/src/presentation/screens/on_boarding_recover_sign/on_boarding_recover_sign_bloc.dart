@@ -123,22 +123,22 @@ final class OnBoardingRecoverSignBloc
       );
 
       if (information.status == 0) {
-        final String? accessToken = await AuthHelper.getCurrentToken(
-          authUseCase: _authUseCase,
-          walletAddress: wallet.bech32Address,
-        );
-
-        await AuthHelper.removeCurrentToken(
-          authUseCase: _authUseCase,
-          walletAddress: wallet.bech32Address,
-        );
-
-        if (accessToken != null) {
-          await _authUseCase.saveAccessToken(
-            key: state.account.smartAccountAddress,
-            accessToken: accessToken,
-          );
-        }
+        // final String? accessToken = await AuthHelper.getCurrentToken(
+        //   authUseCase: _authUseCase,
+        //   walletAddress: wallet.bech32Address,
+        // );
+        //
+        // await AuthHelper.removeCurrentToken(
+        //   authUseCase: _authUseCase,
+        //   walletAddress: wallet.bech32Address,
+        // );
+        //
+        // if (accessToken != null) {
+        //   await _authUseCase.saveAccessToken(
+        //     key: state.account.smartAccountAddress,
+        //     accessToken: accessToken,
+        //   );
+        // }
 
         final account = await _accountUseCase.saveAccount(
           address: state.account.smartAccountAddress,

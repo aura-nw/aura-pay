@@ -63,6 +63,19 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
   final GlobalKey<TextInputNormalSuffixState> _inputPassPhraseGlobalKey =
       GlobalKey();
 
+  final FocusNode _privateKeyFocusNode = FocusNode();
+  final FocusNode _passPhraseFocusNode = FocusNode();
+
+  void _unFocus(){
+    if(_privateKeyFocusNode.hasFocus){
+      _privateKeyFocusNode.unfocus();
+    }
+
+    if(_passPhraseFocusNode.hasFocus){
+      _passPhraseFocusNode.unfocus();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppThemeBuilder(
@@ -231,6 +244,7 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                                   return AppLocalizationProvider(
                                     builder: (localization, _) {
                                       return TextInputNormalSuffixWidget(
+                                        focusNode: _privateKeyFocusNode,
                                         suffix: _passWordIsHide
                                             ? SvgPicture.asset(
                                                 AssetIconPath.commonEyeHide,
@@ -287,6 +301,7 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                                   return AppLocalizationProvider(
                                     builder: (localization, _) {
                                       return TextInputNormalSuffixWidget(
+                                        focusNode: _passPhraseFocusNode,
                                         suffix: _passWordIsHide
                                             ? SvgPicture.asset(
                                                 AssetIconPath.commonEyeHide,
@@ -371,6 +386,7 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                                 }
 
                                 if (isValid) {
+                                  _unFocus();
                                   _bloc.add(
                                     const SignedInImportKeyOnSubmitEvent(),
                                   );

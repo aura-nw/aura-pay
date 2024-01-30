@@ -79,20 +79,20 @@ class OnBoardingPickAccountBloc
       final String deviceId = await DeviceHelper.getDeviceId();
 
       /// Register device or sign in by device
-      final String accessToken = await AuthHelper.registerOrSignIn(
-        deviceManagementUseCase: _deviceManagementUseCase,
-        authUseCase: _authUseCase,
-        privateKey: AuraWalletHelper.getPrivateKeyFromString(
-          wallet.privateKey!,
-        ),
-      );
-
-      /// Save token by smart account address
-      await AuthHelper.saveTokenByWalletAddress(
-        authUseCase: _authUseCase,
-        walletAddress: smartAccount,
-        accessToken: accessToken,
-      );
+      // final String accessToken = await AuthHelper.registerOrSignIn(
+      //   deviceManagementUseCase: _deviceManagementUseCase,
+      //   authUseCase: _authUseCase,
+      //   privateKey: AuraWalletHelper.getPrivateKeyFromString(
+      //     wallet.privateKey!,
+      //   ),
+      // );
+      //
+      // /// Save token by smart account address
+      // await AuthHelper.saveTokenByWalletAddress(
+      //   authUseCase: _authUseCase,
+      //   walletAddress: smartAccount,
+      //   accessToken: accessToken,
+      // );
 
       /// Check device fee grant
       final GrantFee? grantFee = await _grantFee(

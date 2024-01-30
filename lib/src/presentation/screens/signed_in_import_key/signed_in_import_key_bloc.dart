@@ -164,19 +164,19 @@ class SignedInImportKeyBloc
     required String address,
   }) async {
     try{
-      final String accessToken = await AuthHelper.registerOrSignIn(
-        deviceManagementUseCase: _deviceManagementUseCase,
-        authUseCase: _authUseCase,
-        privateKey: AuraWalletHelper.getPrivateKeyFromString(
-          state.key,
-        ),
-      );
-
-      await AuthHelper.saveTokenByWalletAddress(
-        authUseCase: _authUseCase,
-        walletAddress: address,
-        accessToken: accessToken,
-      );
+      // final String accessToken = await AuthHelper.registerOrSignIn(
+      //   deviceManagementUseCase: _deviceManagementUseCase,
+      //   authUseCase: _authUseCase,
+      //   privateKey: AuraWalletHelper.getPrivateKeyFromString(
+      //     state.key,
+      //   ),
+      // );
+      //
+      // await AuthHelper.saveTokenByWalletAddress(
+      //   authUseCase: _authUseCase,
+      //   walletAddress: address,
+      //   accessToken: accessToken,
+      // );
     }catch(e){
       LogProvider.log(e.toString());
     }

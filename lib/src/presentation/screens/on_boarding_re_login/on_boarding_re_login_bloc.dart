@@ -114,18 +114,18 @@ final class OnBoardingReLoginBloc
   }) async {
     try {
       // Sign in to refresh access token.
-      final String accessToken = await AuthHelper.signIn(
-        authUseCase: _authUseCase,
-        privateKey: privateKey,
-        walletAddress: address,
-        deviceManagementUseCase: _deviceManagementUseCase,
-      );
-
-      await AuthHelper.saveTokenByWalletAddress(
-        authUseCase: _authUseCase,
-        walletAddress: address,
-        accessToken: accessToken,
-      );
+      // final String accessToken = await AuthHelper.signIn(
+      //   authUseCase: _authUseCase,
+      //   privateKey: privateKey,
+      //   walletAddress: address,
+      //   deviceManagementUseCase: _deviceManagementUseCase,
+      // );
+      //
+      // await AuthHelper.saveTokenByWalletAddress(
+      //   authUseCase: _authUseCase,
+      //   walletAddress: address,
+      //   accessToken: accessToken,
+      // );
     } catch (e) {
       // Don't handle exception
       LogProvider.log(

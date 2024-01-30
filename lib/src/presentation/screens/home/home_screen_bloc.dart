@@ -36,23 +36,23 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
 
   void _onRefreshToken(Map<String, dynamic> data) async {
     try {
-      final String privateKey = data['private_key'];
-      final String address = data['address'];
-
-      final String accessToken = await AuthHelper.signIn(
-        authUseCase: _authUseCase,
-        deviceManagementUseCase: _deviceManagementUseCase,
-        privateKey: AuraWalletHelper.getPrivateKeyFromString(
-          privateKey,
-        ),
-        walletAddress: address,
-      );
-
-      await AuthHelper.saveTokenByWalletAddress(
-        authUseCase: _authUseCase,
-        walletAddress: address,
-        accessToken: accessToken,
-      );
+      // final String privateKey = data['private_key'];
+      // final String address = data['address'];
+      //
+      // final String accessToken = await AuthHelper.signIn(
+      //   authUseCase: _authUseCase,
+      //   deviceManagementUseCase: _deviceManagementUseCase,
+      //   privateKey: AuraWalletHelper.getPrivateKeyFromString(
+      //     privateKey,
+      //   ),
+      //   walletAddress: address,
+      // );
+      //
+      // await AuthHelper.saveTokenByWalletAddress(
+      //   authUseCase: _authUseCase,
+      //   walletAddress: address,
+      //   accessToken: accessToken,
+      // );
     } catch (e) {
       LogProvider.log(e.toString());
     }
@@ -90,10 +90,10 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       address: event.address,
     );
 
-    await AuthHelper.removeCurrentToken(
-      authUseCase: _authUseCase,
-      walletAddress: event.address,
-    );
+    // await AuthHelper.removeCurrentToken(
+    //   authUseCase: _authUseCase,
+    //   walletAddress: event.address,
+    // );
 
     add(
       const HomeScreenEventOnReFetchAccount(),

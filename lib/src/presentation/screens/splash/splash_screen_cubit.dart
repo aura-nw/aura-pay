@@ -100,12 +100,12 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
   }) async {
     try {
       // Sign in to refresh access token.
-      await AuthHelper.signIn(
-        authUseCase: _authUseCase,
-        privateKey: privateKey,
-        walletAddress: address,
-        deviceManagementUseCase: _deviceManagementUseCase,
-      );
+      // await AuthHelper.signIn(
+      //   authUseCase: _authUseCase,
+      //   privateKey: privateKey,
+      //   walletAddress: address,
+      //   deviceManagementUseCase: _deviceManagementUseCase,
+      // );
     } catch (e) {
       // Don't handle exception
       LogProvider.log(
