@@ -9,6 +9,9 @@ import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.da
     as aura;
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
     as auth;
+import 'package:aura_smart_account/src/proto/cosmos/crypto/ed25519/export.dart' as ed25519;
+import 'package:aura_smart_account/src/proto/cosmos/crypto/secp256k1/export.dart'
+    as secp256k1;
 import 'package:aura_smart_account/src/proto/cosmos/feegrant/v1beta1/export.dart'
     as feeGrant;
 import 'package:aura_smart_account/src/proto/cosmos/bank/v1beta1/export.dart'
@@ -30,6 +33,14 @@ import 'core/constants/smart_account_error_code.dart';
 import 'core/helpers/wallet_helper.dart';
 
 import 'dart:developer' as dev;
+
+void main() async {
+  final test = AuraSmartAccountImpl(AuraSmartAccountEnvironment.euphoria);
+
+  test.getCosmosPubKeyByAddress(
+      address:
+          'aura1j745pq20jucvgze0k7watllj74r50w5e6hld34hzgk3t2qzq0uxsjs8svp');
+}
 
 /// [AuraSmartAccountImpl] class is implementation of [AuraSmartAccount]
 class AuraSmartAccountImpl implements AuraSmartAccount {
@@ -689,9 +700,22 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       address: address,
     );
 
-     final pubKey = accountResponse.pubKey();
+    final pb.Any pubKeyAny = accountResponse.pubKey();
 
-     return base64Encode(pubKey.value);
+    switch (pubKeyAny.typeUrl) {
+      case '/cosmos.crypto.secp256k1.PubKey':
+        secp256k1.PubKey pubKey = secp256k1.PubKey.fromBuffer(pubKeyAny.value);
+
+        return base64Encode(pubKey.key);
+      case '/cosmos.crypto.ed25519.PubKey':
+        ed25519.PubKey pubKey = ed25519.PubKey.fromBuffer(pubKeyAny.value);
+        return base64Encode(pubKey.key);
+      default:
+        throw AuraSmartAccountError(
+          code: SmartAccountErrorCode.errorUnSupportPubKeyType,
+          errorMsg: 'Pubkey type URL ${pubKeyAny.typeUrl} not recognized',
+        );
+    }
   }
 
   Future<Account> _getAccountByAddress({
