@@ -34,14 +34,6 @@ import 'core/helpers/wallet_helper.dart';
 
 import 'dart:developer' as dev;
 
-void main() async {
-  final test = AuraSmartAccountImpl(AuraSmartAccountEnvironment.euphoria);
-
-  test.getCosmosPubKeyByAddress(
-      address:
-          'aura1j745pq20jucvgze0k7watllj74r50w5e6hld34hzgk3t2qzq0uxsjs8svp');
-}
-
 /// [AuraSmartAccountImpl] class is implementation of [AuraSmartAccount]
 class AuraSmartAccountImpl implements AuraSmartAccount {
   final AuraSmartAccountEnvironment environment;
