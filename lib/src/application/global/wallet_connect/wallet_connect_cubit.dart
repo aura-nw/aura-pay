@@ -20,8 +20,8 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
 
   String? targetAccount;
 
-  // final SmartAccountUseCase _smartAccountUseCase =
-  //     getIt.get<SmartAccountUseCase>();
+  final SmartAccountUseCase _smartAccountUseCase =
+      getIt.get<SmartAccountUseCase>();
   final ControllerKeyUseCase _controllerKeyUseCase =
       getIt.get<ControllerKeyUseCase>();
 
@@ -223,6 +223,7 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
         Map<String, dynamic> msg = AuraCoreHelper.signAmino(
           signDoc: requestSessionData.params['signDoc'],
           privateKeyHex: await _getPriKey(),
+          pubKeyHex: await _getPublicKey(),
         );
         _walletConnectService.approveRequest(
             id: requestSessionData.id,
@@ -251,19 +252,19 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
   }
 
   String _getAddress() {
+    // return 'aura1wxtnmdyplfv2f56pel7whckl4ka84e9rvus8hu';
     return targetAccount ?? '';
   }
 
   Future<String> _getPublicKey() async {
-    final privateKey = await _getPrivateKeyBytes();
-    final publicKey = AuraWalletHelper.getPublicKeyFromPrivateKey(privateKey);
-
-    return AuraSmartAccountHelper.encodeByte(publicKey);
+    // return 'AubiROgK4oQKi6ku2UiOvaRALQCFY43it3k0qCkBtMyq';
+    return _smartAccountUseCase.getCosmosPubKeyByAddress(
+        address: targetAccount ?? '');
   }
 
   Future<String> _getPriKey() async {
+    // return 'af36a6f38c6775569c9d8ffa73169072d169ae099c069fa3360799863b7bf893';
     final privateKey = await _getPrivateKeyBytes();
-
     return AuraWalletHelper.getPrivateKeyFromBytes(privateKey);
   }
 

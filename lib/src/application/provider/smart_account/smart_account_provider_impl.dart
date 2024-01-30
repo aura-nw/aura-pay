@@ -19,7 +19,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
     String? memo,
     String? fee,
     int? gasLimit,
-    String ?granter,
+    String? granter,
   }) async {
     AuraSmartAccountFee? smartAccountFee;
 
@@ -103,11 +103,10 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
   }
 
   @override
-  Future<int> simulateFee({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    dynamic msg
-  }) {
+  Future<int> simulateFee(
+      {required Uint8List userPrivateKey,
+      required String smartAccountAddress,
+      dynamic msg}) {
     return _auraSmartAccount.simulateFee(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
@@ -137,7 +136,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
     String? fee,
     int? gasLimit,
     bool isReadyRegister = false,
-    String ?revokePreAddress,
+    String? revokePreAddress,
   }) async {
     AuraSmartAccountFee? smartAccountFee;
     if (fee != null && gasLimit != null) {
@@ -198,7 +197,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
   @override
   Future<String> getCosmosPubKeyByAddress({
     required String address,
-  }){
+  }) {
     return _auraSmartAccount.getCosmosPubKeyByAddress(address: address);
   }
 }
