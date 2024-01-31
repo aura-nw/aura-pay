@@ -82,6 +82,56 @@ class _HomePageState extends State<HomePage>
     super.initState();
   }
 
+  void _listenOnBoardingStatus() async {
+    await Future.delayed(const Duration(
+      milliseconds: 1100,
+    ));
+    
+    if (context.mounted) {
+      final state = AppGlobalCubit.of(context).state;
+
+      switch (state.onBoardingStatus) {
+        case OnBoardingStatus.none:
+          break;
+        case OnBoardingStatus.importSmartAccountSuccessFul:
+          showToast(
+            AppLocalizationManager.of(context).translate(
+              LanguageKey.homeScreenImportAccountSuccessFul,
+            ),
+          );
+
+          AppGlobalCubit.of(context)
+              .changeOnBoardingStatus(OnBoardingStatus.none);
+          break;
+        case OnBoardingStatus.recoverSmartAccountSuccess:
+          showToast(
+            AppLocalizationManager.of(context).translate(
+              LanguageKey.homeScreenRecoverSmartAccountSuccessFul,
+            ),
+          );
+
+          AppGlobalCubit.of(context)
+              .changeOnBoardingStatus(OnBoardingStatus.none);
+          break;
+        case OnBoardingStatus.createSmAccountSuccess:
+          showToast(
+            AppLocalizationManager.of(context).translate(
+              LanguageKey.homeScreenCreateSmartAccountSuccessFul,
+            ),
+          );
+          AppGlobalCubit.of(context)
+              .changeOnBoardingStatus(OnBoardingStatus.none);
+          break;
+      }
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _listenOnBoardingStatus();
+  }
+
   @override
   void dispose() {
     _observer.removeListener(_listenHomeObserver);
@@ -92,246 +142,207 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (appTheme) {
-        return BlocListener<AppGlobalCubit, AppGlobalState>(
-          listener: (context, state) {
-            print('run state ${state.onBoardingStatus}');
-            switch (state.onBoardingStatus) {
-              case OnBoardingStatus.none:
-                break;
-              case OnBoardingStatus.importSmartAccountSuccessFul:
-                showToast(
-                  AppLocalizationManager.of(context).translate(
-                    LanguageKey.homeScreenImportAccountSuccessFul,
-                  ),
-                );
-
-                AppGlobalCubit.of(context)
-                    .changeOnBoardingStatus(OnBoardingStatus.none);
-                break;
-              case OnBoardingStatus.recoverSmartAccountSuccess:
-                showToast(
-                  AppLocalizationManager.of(context).translate(
-                    LanguageKey.homeScreenRecoverSmartAccountSuccessFul,
-                  ),
-                );
-
-                AppGlobalCubit.of(context)
-                    .changeOnBoardingStatus(OnBoardingStatus.none);
-                break;
-              case OnBoardingStatus.createSmAccountSuccess:
-                showToast(
-                  AppLocalizationManager.of(context).translate(
-                    LanguageKey.homeScreenCreateSmartAccountSuccessFul,
-                  ),
-                );
-                AppGlobalCubit.of(context)
-                    .changeOnBoardingStatus(OnBoardingStatus.none);
-                break;
-            }
-          },
-          child: BlocProvider.value(
-            value: _bloc,
-            child: Scaffold(
-              appBar: HomeAppBarWidget(
-                appTheme: appTheme,
-                onNotificationTap: () {},
+        return BlocProvider.value(
+          value: _bloc,
+          child: Scaffold(
+            appBar: HomeAppBarWidget(
+              appTheme: appTheme,
+              onNotificationTap: () {},
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.spacing07,
+                vertical: Spacing.spacing04,
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing07,
-                  vertical: Spacing.spacing04,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    HomeScreenAccountsSelector(
-                      builder: (accounts) {
-                        return HomeScreenSelectedAccountSelector(
-                          builder: (selectedAccount) {
-                            return AccountCardWidget(
-                              address: selectedAccount?.address ?? '',
-                              accountName: selectedAccount?.name ?? '',
-                              appTheme: appTheme,
-                              onShowMoreAccount: _onHoneDropDownClick,
-                              onCopy: _copyAddress,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HomeScreenAccountsSelector(
+                    builder: (accounts) {
+                      return HomeScreenSelectedAccountSelector(
+                        builder: (selectedAccount) {
+                          return AccountCardWidget(
+                            address: selectedAccount?.address ?? '',
+                            accountName: selectedAccount?.name ?? '',
+                            appTheme: appTheme,
+                            onShowMoreAccount: _onHoneDropDownClick,
+                            onCopy: _copyAddress,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize07,
+                  ),
+                  ChainTriggerWidget(
+                    appTheme: appTheme,
+                    onNFTsTap: () {
+                      AppNavigator.push(
+                        RoutePath.nft,
+                      );
+                    },
+                    onReceiveTap: widget.onReceiveTap,
+                    onSendTap: () async {
+                      await AppNavigator.push(
+                        RoutePath.sendTransaction,
+                      );
+
+                      _bloc.add(
+                        const HomePageEventOnFetchTokenPrice(),
+                      );
+                    },
+                    onStakeTap: () {},
+                    onTXsLimitTap: () {},
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize07,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _bloc.add(
+                        const HomePageEventOnHideTokenValue(),
+                      );
+                    },
+                    behavior: HitTestBehavior.opaque,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        AppLocalizationProvider(
+                          builder: (localization, _) {
+                            return Text(
+                              localization.translate(
+                                LanguageKey.homePageTotalTokensValue,
+                              ),
+                              style: AppTypoGraPhy.body02.copyWith(
+                                color: appTheme.contentColor500,
+                              ),
                             );
                           },
-                        );
-                      },
+                        ),
+                        const SizedBox(
+                          width: BoxSize.boxSize02,
+                        ),
+                        HomePageHideTokenValueSelector(
+                          builder: (hideTokenValue) {
+                            return hideTokenValue
+                                ? SvgPicture.asset(AssetIconPath.commonEyeHide)
+                                : SvgPicture.asset(
+                                    AssetIconPath.commonEyeActive,
+                                  );
+                          },
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: BoxSize.boxSize07,
-                    ),
-                    ChainTriggerWidget(
-                      appTheme: appTheme,
-                      onNFTsTap: () {
-                        AppNavigator.push(
-                          RoutePath.nft,
-                        );
-                      },
-                      onReceiveTap: widget.onReceiveTap,
-                      onSendTap: () async {
-                        await AppNavigator.push(
-                          RoutePath.sendTransaction,
-                        );
-
-                        _bloc.add(
-                          const HomePageEventOnFetchTokenPrice(),
-                        );
-                      },
-                      onStakeTap: () {},
-                      onTXsLimitTap: () {},
-                    ),
-                    const SizedBox(
-                      height: BoxSize.boxSize07,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _bloc.add(
-                          const HomePageEventOnHideTokenValue(),
-                        );
-                      },
-                      behavior: HitTestBehavior.opaque,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return Text(
-                                localization.translate(
-                                  LanguageKey.homePageTotalTokensValue,
-                                ),
-                                style: AppTypoGraPhy.body02.copyWith(
-                                  color: appTheme.contentColor500,
-                                ),
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize02,
+                  ),
+                  AppLocalizationProvider(
+                    builder: (localization, _) {
+                      return HomePagePriceSelector(
+                        builder: (price) {
+                          return HomePageBalanceSelector(
+                            builder: (balances) {
+                              return HomePageHideTokenValueSelector(
+                                builder: (hideTokenValue) {
+                                  return RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: hideTokenValue
+                                              ? ''
+                                              : localization.translate(
+                                                  LanguageKey
+                                                      .homePageTokenPrefix,
+                                                ),
+                                          style:
+                                              AppTypoGraPhy.heading03.copyWith(
+                                            color: appTheme.contentColorBrand,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: hideTokenValue
+                                              ? _hideTokenText
+                                              : '  ${(balances.firstOrNull?.amount ?? '').formatTotalPrice(price ?? 0)}',
+                                          style:
+                                              AppTypoGraPhy.heading03.copyWith(
+                                            color: appTheme.contentColor700,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize07,
+                  ),
+                  Expanded(
+                    child: CustomScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: BouncingScrollPhysics(),
+                      ),
+                      slivers: [
+                        CupertinoSliverRefreshControl(
+                          onRefresh: () async => _bloc.add(
+                            const HomePageEventOnFetchTokenPrice(),
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: HomePageBalanceSelector(
+                            builder: (balances) {
+                              return HomePagePriceSelector(
+                                builder: (price) {
+                                  if (balances.isEmpty) {
+                                    return Center(
+                                      child: EmptyTokenWidget(
+                                        appTheme: appTheme,
+                                      ),
+                                    );
+                                  }
+                                  return AppLocalizationProvider(
+                                    builder: (localization, _) {
+                                      return HomePageHideTokenValueSelector(
+                                        builder: (hideTokenValue) {
+                                          return TokenItemWidget(
+                                            iconPath: AssetIconPath
+                                                .commonAuraTokenLogo,
+                                            coin: localization.translate(
+                                              LanguageKey.globalPyxisAura,
+                                            ),
+                                            coinId: localization.translate(
+                                              LanguageKey.globalPyxisAuraId,
+                                            ),
+                                            appTheme: appTheme,
+                                            price: hideTokenValue
+                                                ? _hideTokenText
+                                                : '${localization.translate(LanguageKey.homePageTokenPrefix)} ${(price ?? 0).formatPrice}',
+                                            balance: hideTokenValue
+                                                ? _hideTokenText
+                                                : balances.firstOrNull?.amount
+                                                        .formatAura ??
+                                                    '',
+                                          );
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
                               );
                             },
                           ),
-                          const SizedBox(
-                            width: BoxSize.boxSize02,
-                          ),
-                          HomePageHideTokenValueSelector(
-                            builder: (hideTokenValue) {
-                              return hideTokenValue
-                                  ? SvgPicture.asset(
-                                      AssetIconPath.commonEyeHide)
-                                  : SvgPicture.asset(
-                                      AssetIconPath.commonEyeActive,
-                                    );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: BoxSize.boxSize02,
-                    ),
-                    AppLocalizationProvider(
-                      builder: (localization, _) {
-                        return HomePagePriceSelector(
-                          builder: (price) {
-                            return HomePageBalanceSelector(
-                              builder: (balances) {
-                                return HomePageHideTokenValueSelector(
-                                  builder: (hideTokenValue) {
-                                    return RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: hideTokenValue
-                                                ? ''
-                                                : localization.translate(
-                                                    LanguageKey
-                                                        .homePageTokenPrefix,
-                                                  ),
-                                            style: AppTypoGraPhy.heading03
-                                                .copyWith(
-                                              color: appTheme.contentColorBrand,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: hideTokenValue
-                                                ? _hideTokenText
-                                                : '  ${(balances.firstOrNull?.amount ?? '').formatTotalPrice(price ?? 0)}',
-                                            style: AppTypoGraPhy.heading03
-                                                .copyWith(
-                                              color: appTheme.contentColor700,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: BoxSize.boxSize07,
-                    ),
-                    Expanded(
-                      child: CustomScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(
-                          parent: BouncingScrollPhysics(),
                         ),
-                        slivers: [
-                          CupertinoSliverRefreshControl(
-                            onRefresh: () async => _bloc.add(
-                              const HomePageEventOnFetchTokenPrice(),
-                            ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: HomePageBalanceSelector(
-                              builder: (balances) {
-                                return HomePagePriceSelector(
-                                  builder: (price) {
-                                    if (balances.isEmpty) {
-                                      return Center(
-                                        child: EmptyTokenWidget(
-                                          appTheme: appTheme,
-                                        ),
-                                      );
-                                    }
-                                    return AppLocalizationProvider(
-                                      builder: (localization, _) {
-                                        return HomePageHideTokenValueSelector(
-                                          builder: (hideTokenValue) {
-                                            return TokenItemWidget(
-                                              iconPath: AssetIconPath
-                                                  .commonAuraTokenLogo,
-                                              coin: localization.translate(
-                                                LanguageKey.globalPyxisAura,
-                                              ),
-                                              coinId: localization.translate(
-                                                LanguageKey.globalPyxisAuraId,
-                                              ),
-                                              appTheme: appTheme,
-                                              price: hideTokenValue
-                                                  ? _hideTokenText
-                                                  : '${localization.translate(LanguageKey.homePageTokenPrefix)} ${(price ?? 0).formatPrice}',
-                                              balance: hideTokenValue
-                                                  ? _hideTokenText
-                                                  : balances.firstOrNull?.amount
-                                                          .formatAura ??
-                                                      '',
-                                            );
-                                          },
-                                        );
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -146,64 +146,70 @@ class _SingedInRecoverSelectAccountScreenState
                             ),
                             Expanded(
                               child:
-                                  SignedInRecoverSelectAccountAccountsSelector(
-                                builder: (accounts) {
-                                  if (accounts.isEmpty) {
-                                    return Center(
-                                      child: AppLocalizationProvider(
-                                        builder: (localization, _) {
-                                          return Text(
-                                            localization.translate(
-                                              LanguageKey
-                                                  .signedInRecoverSelectAccountScreenNoAccountFound,
+                              SignedInRecoverSelectAccountAuraAccountsSelector(
+                                builder: (auraAccounts) {
+                                  return SignedInRecoverSelectAccountAccountsSelector(
+                                    builder: (accounts) {
+                                      if (accounts.isEmpty) {
+                                        return Center(
+                                          child: AppLocalizationProvider(
+                                            builder: (localization, _) {
+                                              return Text(
+                                                localization.translate(
+                                                  LanguageKey
+                                                      .signedInRecoverSelectAccountScreenNoAccountFound,
+                                                ),
+                                                style: AppTypoGraPhy.bodyMedium02
+                                                    .copyWith(
+                                                  color: appTheme.contentColor500,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      }
+                                      return ListView.builder(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: Spacing.spacing07,
+                                        ),
+                                        reverse: true,
+                                        itemCount: accounts.length,
+                                        itemBuilder: (context, index) {
+                                          final account = accounts[index];
+
+                                          final localAccount = auraAccounts.firstWhereOrNull((ac) => ac.address == account.smartAccountAddress);
+
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: Spacing.spacing05,
                                             ),
-                                            style: AppTypoGraPhy.bodyMedium02
-                                                .copyWith(
-                                              color: appTheme.contentColor500,
+                                            child: SignedInRecoverSelectAccountAccountSelectedSelector(
+                                              builder: (selectedAccount) {
+                                                return SmartAccountWidget(
+                                                  appTheme: appTheme,
+                                                  smartAccountAddress: account
+                                                      .smartAccountAddress
+                                                      .addressView,
+                                                  smartAccountName: localAccount?.name ?? account.name ??
+                                                      PyxisAccountConstant.unName,
+                                                  onTap: () {
+                                                    _bloc.add(
+                                                      SingedInRecoverSelectAccountEventSelectAccount(
+                                                        account: account,
+                                                      ),
+                                                    );
+                                                  },
+                                                  isSelected: selectedAccount?.id ==
+                                                      account.id,
+                                                );
+                                              },
                                             ),
                                           );
                                         },
-                                      ),
-                                    );
-                                  }
-                                  return ListView.builder(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: Spacing.spacing07,
-                                    ),
-                                    reverse: true,
-                                    itemCount: accounts.length,
-                                    itemBuilder: (context, index) {
-                                      final account = accounts[index];
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: Spacing.spacing05,
-                                        ),
-                                        child:
-                                            SignedInRecoverSelectAccountAccountSelectedSelector(
-                                          builder: (selectedAccount) {
-                                            return SmartAccountWidget(
-                                              appTheme: appTheme,
-                                              smartAccountAddress: account
-                                                  .smartAccountAddress
-                                                  .addressView,
-                                              smartAccountName: account.name ??
-                                                  PyxisAccountConstant.unName,
-                                              onTap: () {
-                                                _bloc.add(
-                                                  SingedInRecoverSelectAccountEventSelectAccount(
-                                                    account: account,
-                                                  ),
-                                                );
-                                              },
-                                              isSelected: selectedAccount?.id ==
-                                                  account.id,
-                                            );
-                                          },
-                                        ),
                                       );
                                     },
                                   );
-                                },
+                                }
                               ),
                             ),
                             AppLocalizationProvider(

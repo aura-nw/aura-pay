@@ -52,3 +52,19 @@ final class SignedInRecoverSelectAccountAccountSelectedSelector extends BlocSele
           ),
         );
 }
+
+final class SignedInRecoverSelectAccountAuraAccountsSelector extends BlocSelector<
+    SingedInRecoverSelectAccountBloc,
+    SingedInRecoverSelectAccountState,
+    List<AuraAccount>> {
+  SignedInRecoverSelectAccountAuraAccountsSelector({
+    Key? key,
+    required Widget Function(List<AuraAccount>) builder,
+  }) : super(
+    key: key,
+    selector: (state) => state.auraAccounts,
+    builder: (_, accounts) => builder(
+      accounts,
+    ),
+  );
+}
