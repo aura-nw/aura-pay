@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
@@ -8,6 +9,9 @@ import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.da
     as aura;
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
     as auth;
+import 'package:aura_smart_account/src/proto/cosmos/crypto/ed25519/export.dart' as ed25519;
+import 'package:aura_smart_account/src/proto/cosmos/crypto/secp256k1/export.dart'
+    as secp256k1;
 import 'package:aura_smart_account/src/proto/cosmos/feegrant/v1beta1/export.dart'
     as feeGrant;
 import 'package:aura_smart_account/src/proto/cosmos/bank/v1beta1/export.dart'
@@ -26,7 +30,6 @@ import 'package:protobuf/protobuf.dart';
 
 import 'core/constants/smart_account_constant.dart';
 import 'core/constants/smart_account_error_code.dart';
-import 'core/helpers/aura_smart_account_helper.dart';
 import 'core/helpers/wallet_helper.dart';
 
 import 'dart:developer' as dev;
@@ -108,7 +111,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     Uint8List? salt,
     String? memo,
     AuraSmartAccountFee? fee,
-    String ?granter,
+    String? granter,
   }) async {
     try {
       // Get pub key from private key
@@ -162,7 +165,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
           );
       }
 
-      if(granter != null){
+      if (granter != null) {
         feeSign.granter = granter;
       }
 
@@ -307,9 +310,8 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
   // Get signer data from sm account address
   Future<CosmosSignerData> _getSignerData(String smAccountAddress) async {
     // Get account from smart account
-    final Account accountResponse = await AuraSmartAccountHelper.getAccount(
+    final Account accountResponse = await _getAccountByAddress(
       address: smAccountAddress,
-      queryClient: queryAuthClient,
     );
 
     // create signer data
@@ -467,7 +469,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     required String recoverAddress,
     AuraSmartAccountFee? fee,
     bool isReadyRegister = false,
-    String ?revokePreAddress,
+    String? revokePreAddress,
   }) async {
     try {
       // Get pub key from private key
@@ -682,5 +684,50 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       // Handle error
       throw _getError(e);
     }
+  }
+
+  @override
+  Future<String> getCosmosPubKeyByAddress({required String address}) async {
+    final Account accountResponse = await _getAccountByAddress(
+      address: address,
+    );
+
+    final pb.Any pubKeyAny = accountResponse.pubKey();
+
+    switch (pubKeyAny.typeUrl) {
+      case '/cosmos.crypto.secp256k1.PubKey':
+        secp256k1.PubKey pubKey = secp256k1.PubKey.fromBuffer(pubKeyAny.value);
+
+        return base64Encode(pubKey.key);
+      case '/cosmos.crypto.ed25519.PubKey':
+        ed25519.PubKey pubKey = ed25519.PubKey.fromBuffer(pubKeyAny.value);
+        return base64Encode(pubKey.key);
+      default:
+        throw AuraSmartAccountError(
+          code: SmartAccountErrorCode.errorUnSupportPubKeyType,
+          errorMsg: 'Pubkey type URL ${pubKeyAny.typeUrl} not recognized',
+        );
+    }
+  }
+
+  Future<Account> _getAccountByAddress({
+    required String address,
+  }) async {
+    // Create ath account request
+    final auth.QueryAccountRequest queryAccountRequest =
+        auth.QueryAccountRequest(
+      address: address,
+    );
+
+    // Get account
+    final auth.QueryAccountResponse response =
+        await queryAuthClient.account(queryAccountRequest);
+
+    final Account accountResponse =
+        await AuraSmartAccountHelper.deserializerAccounts(
+      response: response,
+    );
+
+    return accountResponse;
   }
 }

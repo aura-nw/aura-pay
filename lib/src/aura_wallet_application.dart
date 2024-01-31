@@ -107,7 +107,7 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                 create: (_) => WalletConnectCubit(),
               ),
             ],
-            child: Builder(builder: (context) {
+            child: Builder(builder: (builderContext) {
               return MultiBlocListener(
                 listeners: [
                   BlocListener<AppGlobalCubit, AppGlobalState>(
@@ -130,9 +130,10 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                     },
                   ),
                   BlocListener<WalletConnectCubit, WalletConnectState>(
-                      listenWhen: (previous, current) =>
-                          current.status != previous.status,
-                      listener: walletConnectListener)
+                      // listenWhen: (previous, current) =>
+                      //     current.status != previous.status,
+                      listener: (_, state) =>
+                          walletConnectListener(builderContext, state))
                 ],
                 child: child ?? const SizedBox(),
               );
@@ -143,23 +144,133 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
     );
   }
 
-  void walletConnectListener(BuildContext context, WalletConnectState state) {
+  // This function listens for changes in the WalletConnectState and performs actions based on the current status.
+  Future walletConnectListener(
+      BuildContext builderContext, WalletConnectState state) async {
+    // Switch statement to handle different WalletConnectStatus
     switch (state.status) {
+      // Case when the status is onConnect
       case WalletConnectStatus.onConnect:
         // If the user is authorized, navigate to the home screen
-        AppNavigator.replaceAllWith(
-          RoutePath.sendTransaction,
-        );
+        // Check if the state data is of type ConnectingData
+        if (state.data is ConnectingData) {
+          // Cast the state data to ConnectingData
+          ConnectingData connectingData = state.data as ConnectingData;
+          // Show a dialog asking the user whether they want to connect to a certain account
+          await showDialog<void>(
+              context: AppNavigator.navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                // Return an AlertDialog
+                return AlertDialog(
+                  // Set the title of the dialog
+                  title: Text('Connect to ${connectingData.account}'),
+                  // Set the content of the dialog
+                  content: Text(
+                      'Do you want to connect to ${connectingData.account}?'),
+                  // Set the actions of the dialog
+                  actions: [
+                    // Approve button
+                    TextButton(
+                        onPressed: () {
+                          // Approve the connection
+                          context
+                              .read<WalletConnectCubit>()
+                              .approveConnection(connectingData);
+                          // Close the dialog
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Approve')),
+                    // Reject button
+                    TextButton(
+                        onPressed: () {
+                          // Reject the connection
+                          context
+                              .read<WalletConnectCubit>()
+                              .rejectConnection(connectingData);
+                          // Close the dialog
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Reject')),
+                  ],
+                );
+              });
+        }
+
         break;
+      // Case when the status is none
+      case WalletConnectStatus.onRequestAuth:
+        RequestAuthData requestAuthData = state.data as RequestAuthData;
+
+        await showDialog(
+            context: AppNavigator.navigatorKey.currentContext!,
+            builder: (context) => AlertDialog(
+                  title: Text('Request Auth'),
+                  content: Text(
+                      'Do you want to connect to ${requestAuthData.domain}?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        context
+                            .read<WalletConnectCubit>()
+                            .approveAuthRequest(requestAuthData);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Approve'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context
+                            .read<WalletConnectCubit>()
+                            .rejectAuthRequest(requestAuthData);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Reject'),
+                    ),
+                  ],
+                ));
+
+        break;
+      // Case when the status is none
       case WalletConnectStatus.none:
         // If the user is authorized, navigate to the home screen
+        // Replace all routes with the reLogin route
         AppNavigator.replaceAllWith(
           RoutePath.reLogin,
         );
         break;
+      // Case when the status is onRequest
       case WalletConnectStatus.onRequest:
-        // If the user is unauthorized, navigate to the get started screen
-        AppNavigator.replaceAllWith(RoutePath.scanQrFee);
+        RequestSessionData requestSessionData =
+            state.data as RequestSessionData;
+
+        String title = requestSessionData.method;
+        String content = '${requestSessionData.params}';
+
+        await showDialog(
+            context: AppNavigator.navigatorKey.currentContext!,
+            builder: (context) => AlertDialog(
+                    title: Text(title),
+                    content: Text(content),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          context
+                              .read<WalletConnectCubit>()
+                              .approveRequest(requestSessionData);
+                          Navigator.pop(context);
+                        },
+                        child: const Text('OK'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context
+                              .read<WalletConnectCubit>()
+                              .rejectRequest(requestSessionData);
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Reject'),
+                      ),
+                    ]));
         break;
     }
   }

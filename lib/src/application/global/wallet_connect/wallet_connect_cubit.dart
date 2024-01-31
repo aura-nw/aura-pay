@@ -1,57 +1,110 @@
+import 'dart:typed_data';
+
+import 'package:aura_smart_account/aura_smart_account.dart';
+import 'package:aura_wallet_core/aura_wallet_core.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
-import 'package:pyxis_mobile/src/application/provider/wallet_connect/wallet_connect_service.dart';
+import 'wallet_connect_state.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
+import 'dart:developer' as developer;
 
 class WalletConnectCubit extends Cubit<WalletConnectState> {
   static const String projectId = '85289c08fad8fae4ca3eb5e525005bf3';
 
-  late Web3Wallet _web3Wallet;
-
-  /// The list of requests from the dapp
-  /// Potential types include, but aren't limited to:
-  /// [SessionProposalEvent], [AuthRequest]
-  @override
-  ValueNotifier<List<PairingInfo>> pairings =
-      ValueNotifier<List<PairingInfo>>([]);
-  @override
-  ValueNotifier<List<SessionData>> sessions =
-      ValueNotifier<List<SessionData>>([]);
-  @override
-  ValueNotifier<List<StoredCacao>> auth = ValueNotifier<List<StoredCacao>>([]);
+  bool _isInit = false;
 
   final WalletConnectService _walletConnectService =
       getIt.get<WalletConnectService>();
 
+  String? targetAccount;
+
+  final SmartAccountUseCase _smartAccountUseCase =
+      getIt.get<SmartAccountUseCase>();
+  final ControllerKeyUseCase _controllerKeyUseCase =
+      getIt.get<ControllerKeyUseCase>();
+
   WalletConnectCubit() : super((const WalletConnectState())) {
-    // _web3Wallet = _walletConnectService.getWeb3Wallet();
-    // _walletConnectService.registerEventCallBack(
-    //   onSessionConnect: _onSessionConnect,
-    //   onSessionRequest: _onSessionRequest,
-    //   onSessionProposal: _onSessionProposal,
-    //   onSessionProposalError: _onSessionProposalError,
-    //   onPairingCreate: _onPairingCreate,
-    //   onPairingInvalid: _onPairingInvalid,
-    //   onRelayClientError: _onRelayClientError,
-    //   onPairingsSync: _onPairingsSync,
-    //   onAuthRequest: _onAuthRequest,
-    // );
+    // _w[core] SessionID
+    _init();
   }
 
-  ///
-  ///
-  Future<void> connect(String url) async {
+  // This function initializes the WalletConnectService
+  Future _init() async {
+    // Create the WalletConnectService
+    await _walletConnectService.create(
+      name: 'Pyxis',
+      description: 'Pyxis',
+      url: 'https://walletconnect.com/',
+      icon:
+          'https://github.com/WalletConnect/Web3ModalFlutter/blob/master/assets/png/logo_wc.png',
+      nativeRedirect: 'pyxis://',
+      universalRedirect: 'https://pyxis.finance',
+    );
+
+    _walletConnectService.registerChain('cosmos:euphoria-2');
+    _walletConnectService.registerChain('cosmos:cosmoshub-4');
+    _walletConnectService.registerChain('cosmos:xstaxy-1');
+
+    _walletConnectService.registerAccount(
+        'cosmos:euphoria-2', 'aura1wxtnmdyplfv2f56pel7whckl4ka84e9rvus8hu');
+    _walletConnectService.registerAccount(
+        'cosmos:cosmoshub-4', 'aura1wxtnmdyplfv2f56pel7whckl4ka84e9rvus8hu');
+    _walletConnectService.registerAccount(
+        'cosmos:xstaxy-1', 'aura1wxtnmdyplfv2f56pel7whckl4ka84e9rvus8hu');
+
+    // Register callbacks for various events in the WalletConnectService
+    _walletConnectService.registerEventCallBack(
+      onPairingsSync: _onPairingsSync,
+      onRelayClientError: _onRelayClientError,
+      onSessionProposalError: _onSessionProposalError,
+      onSessionProposal: _onSessionProposal,
+      onPairingInvalid: _onPairingInvalid,
+      onPairingCreate: _onPairingCreate,
+      onSessionRequest: _onSessionRequest,
+      onSessionConnect: _onSessionConnect,
+      onAuthRequest: _onAuthRequest,
+    );
+
+    _walletConnectService.preload();
+
+    print('inited');
+
+    // Set the initialization flag to true
+    _isInit = true;
+  }
+
+  // This function connects to a wallet using a URL and an account
+  Future<void> connect(String url, String account) async {
+    // Check if the WalletConnectCubit is initialized
+    if (!_isInit) {
+      throw Exception('WalletConnectCubit is not init');
+    }
+    // Set the target account
+    targetAccount = account;
     try {
+      // Parse the URL into a Uri object
       final Uri uriData = Uri.parse(url);
-      await _web3Wallet.pair(
+      // Pair the wallet with the Uri
+      await _walletConnectService.connect(
         uri: uriData,
       );
     } catch (e, s) {
+      // Print any errors that occur during the connection process
       print('WalletConnectScreen _onConnect error: $e, $s');
     }
+  }
+
+  // This function approves a connection using ConnectingData
+  Future<void> approveConnection(ConnectingData connectingData) async {
+    _walletConnectService.approveConnection(
+        sessionId: connectingData.sessionId, account: _getAddress());
+  }
+
+  // This function rejects a connection using ConnectingData
+  void rejectConnection(ConnectingData connectingData) {
+    _walletConnectService.rejectConnection(sessionId: connectingData.sessionId);
   }
 
   void request() {
@@ -62,35 +115,26 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
     emit(state.copyWith(status: WalletConnectStatus.none));
   }
 
-  Web3Wallet getWeb3Wallet() {
-    return _web3Wallet!;
-  }
-
   void _onPairingsSync(StoreSyncEvent? args) {
-    print('#KhoaHM _onPairingsSync $args');
-    if (args != null) {
-      pairings.value = _web3Wallet!.pairings.getAll();
-    }
+    print('#PyxisDebug _onPairingsSync $args');
   }
 
   void _onRelayClientError(ErrorEvent? args) {
-    print('#KhoaHM _onRelayClientError $args');
+    print('#PyxisDebug _onRelayClientError $args');
     debugPrint('[$runtimeType] _onRelayClientError ${args?.error}');
   }
 
   void _onSessionProposalError(SessionProposalErrorEvent? args) {
-    print('#KhoaHM _onSessionProposalError $args');
+    print('#PyxisDebug _onSessionProposalError $args');
     debugPrint('[$runtimeType] _onSessionProposalError $args');
   }
 
   void _onSessionProposal(SessionProposalEvent? args) async {
     print('WalletConnectScreen _onConnect onSessionProposal: $args');
 
-    // _sessionProposalEvent = args;
-    // connectionId = _sessionProposalEvent?.id;
-    // setState(() {
-    //   _screenState = WalletConnectScreenState.onRequestConnecting;
-    // });
+    ConnectingData connectingData = ConnectingData(args!.id, _getAddress());
+    emit(state.copyWith(
+        status: WalletConnectStatus.onConnect, data: connectingData));
   }
 
   void _onPairingInvalid(PairingInvalidEvent? args) {
@@ -101,24 +145,132 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
     debugPrint('[$runtimeType] _onPairingCreate $args');
   }
 
-  void _onSessionRequest(SessionRequestEvent? args) {
-    print('#KhoaHM _onSessionRequest $args');
+  void _onSessionRequest(SessionRequestEvent? args) async {
+    print('#PyxisDebug _onSessionRequest $args');
     if (args == null) return;
+
+    final id = args.id;
+    final topic = args.topic;
+    final parameters = args.params;
+    final method = args.method;
+
+    RequestSessionData requestSessionData = RequestSessionData(
+      id: id,
+      topic: topic,
+      method: method,
+      chainId: args.chainId,
+      params: parameters,
+    );
+
+    if (method == 'cosmos_getAccounts') {
+      _walletConnectService.approveRequest(
+          id: requestSessionData.id,
+          topic: requestSessionData.topic,
+          msg: [
+            {
+              'algo': 'secp256k1',
+              'address': _getAddress(),
+              "pubkey": await _getPublicKey(),
+            }
+          ]);
+
+      return;
+    }
+
+    // final String message =
+    //     WalletConnectServiceUtils.getUtf8Message(method);
+
+    debugPrint('On session request event: $id, $topic, $method');
+    emit(state.copyWith(
+        status: WalletConnectStatus.onRequest, data: requestSessionData));
   }
 
   void _onSessionConnect(SessionConnect? args) {
-    print('#KhoaHM SessionConnect $args');
-
-    if (args != null) {
-      print(args);
-      sessions.value.add(args.session);
-    }
+    print('#PyxisDebug SessionConnect $args');
   }
 
-  Future<void> _onAuthRequest(AuthRequest? args) async {
-    print('#KhoaHM _onAuthRequest $args');
+  void _onAuthRequest(AuthRequest? args) async {
+    print('#PyxisDebug _onAuthRequest $args');
+    RequestAuthData requestAuthData = RequestAuthData(
+      id: args!.id,
+      aud: args.payloadParams.aud,
+      domain: args.payloadParams.domain,
+      version: args.payloadParams.version,
+      nonce: args.payloadParams.nonce,
+      iat: args.payloadParams.iat,
+    );
+
+    emit(state.copyWith(
+        status: WalletConnectStatus.onRequestAuth, data: requestAuthData));
   }
 
   static WalletConnectCubit of(BuildContext context) =>
       BlocProvider.of<WalletConnectCubit>(context);
+
+  void approveAuthRequest(RequestAuthData requestAuthData) {
+    _walletConnectService.approveAuthRequest(
+        id: requestAuthData.id, iss: requestAuthData.version);
+  }
+
+  void rejectAuthRequest(RequestAuthData requestAuthData) {
+    _walletConnectService.rejectAuthRequest(
+        id: requestAuthData.id, iss: requestAuthData.version);
+  }
+
+  void approveRequest(RequestSessionData requestSessionData) async {
+    if (requestSessionData.method == 'cosmos_signAmino') {
+      try {
+        Map<String, dynamic> msg = AuraCoreHelper.signAmino(
+          signDoc: requestSessionData.params['signDoc'],
+          privateKeyHex: await _getPriKey(),
+          pubKeyHex: await _getPublicKey(),
+        );
+        _walletConnectService.approveRequest(
+            id: requestSessionData.id,
+            topic: requestSessionData.topic,
+            msg: msg);
+      } catch (e, s) {
+        print(e);
+        developer.log(e.toString(), stackTrace: s);
+      }
+      return;
+    }
+
+    _walletConnectService.approveRequest(
+        id: requestSessionData.id, topic: requestSessionData.topic, msg: []);
+  }
+
+  void rejectRequest(RequestSessionData requestSessionData) {
+    _walletConnectService.rejectRequest(
+        id: requestSessionData.id, topic: requestSessionData.topic);
+  }
+
+  void registerSmartAccount(String address) {
+    _walletConnectService.registerAccount('cosmos:euphoria-2', address);
+    _walletConnectService.registerAccount('cosmos:cosmoshub-4', address);
+    _walletConnectService.registerAccount('cosmos:xstaxy-1', address);
+  }
+
+  String _getAddress() {
+    // return 'aura1wxtnmdyplfv2f56pel7whckl4ka84e9rvus8hu';
+    return targetAccount ?? '';
+  }
+
+  Future<String> _getPublicKey() async {
+    // return 'AubiROgK4oQKi6ku2UiOvaRALQCFY43it3k0qCkBtMyq';
+    return _smartAccountUseCase.getCosmosPubKeyByAddress(
+        address: targetAccount ?? '');
+  }
+
+  Future<String> _getPriKey() async {
+    // return 'af36a6f38c6775569c9d8ffa73169072d169ae099c069fa3360799863b7bf893';
+    final privateKey = await _getPrivateKeyBytes();
+    return AuraWalletHelper.getPrivateKeyFromBytes(privateKey);
+  }
+
+  Future<Uint8List> _getPrivateKeyBytes() async {
+    final String? controllerKey =
+        await _controllerKeyUseCase.getKey(address: targetAccount ?? '');
+    return AuraWalletHelper.getPrivateKeyFromString(controllerKey ?? '');
+  }
 }

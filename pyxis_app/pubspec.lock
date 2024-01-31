@@ -140,11 +140,9 @@ packages:
   aura_wallet_core:
     dependency: transitive
     description:
-      path: "."
-      ref: core_wallet
-      resolved-ref: ede272ca33d3836d56307df015fc2a4d6136d0d6
-      url: "https://github.com/aura-nw/aura-wallet-core.git"
-    source: git
+      path: "../packages/aura_wallet_core"
+      relative: true
+    source: path
     version: "0.0.1"
   base_x:
     dependency: transitive

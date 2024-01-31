@@ -132,4 +132,11 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
 
     return response.toEntity;
   }
+
+  @override
+  Future<String> getCosmosPubKeyByAddress({
+    required String address,
+  }){
+    return _provider.getCosmosPubKeyByAddress(address: address);
+  }
 }

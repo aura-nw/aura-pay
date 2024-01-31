@@ -10,6 +10,7 @@ import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_cubit.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/aura_scan.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
@@ -307,6 +308,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
   }
 
   void _onChooseAccount(AuraAccount account) {
+    WalletConnectCubit.of(context).registerSmartAccount(account.address);
     HomeScreenBloc.of(context).add(
       HomeScreenEventOnChooseAccount(
         account,

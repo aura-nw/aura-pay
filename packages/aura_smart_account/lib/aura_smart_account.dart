@@ -65,7 +65,7 @@ abstract interface class AuraSmartAccount {
     Uint8List? salt,
     String? memo,
     AuraSmartAccountFee? fee,
-    String ?granter,
+    String? granter,
   });
 
   /// Simulate send token fee
@@ -132,7 +132,7 @@ abstract interface class AuraSmartAccount {
     required String recoverAddress,
     AuraSmartAccountFee? fee,
     bool isReadyRegister = false,
-    String ?revokePreAddress,
+    String? revokePreAddress,
   });
 
   /// recover new pub key for smart account
@@ -149,5 +149,11 @@ abstract interface class AuraSmartAccount {
     required String recoveryAddress,
     required String smartAccountAddress,
     AuraSmartAccountFee? fee,
+  });
+
+
+  /// Get cosmos pub key by address
+  Future<String> getCosmosPubKeyByAddress({
+    required String address,
   });
 }
