@@ -69,6 +69,10 @@ class _HomePageState extends State<HomePage>
           ),
         );
       }
+    } else if (param.event == HomeScreenObserver.onSendTokenSuccessFulEvent) {
+      _bloc.add(
+        const HomePageEventOnFetchTokenPrice(),
+      );
     }
   }
 
@@ -90,6 +94,7 @@ class _HomePageState extends State<HomePage>
       builder: (appTheme) {
         return BlocListener<AppGlobalCubit, AppGlobalState>(
           listener: (context, state) {
+            print('run state ${state.onBoardingStatus}');
             switch (state.onBoardingStatus) {
               case OnBoardingStatus.none:
                 break;

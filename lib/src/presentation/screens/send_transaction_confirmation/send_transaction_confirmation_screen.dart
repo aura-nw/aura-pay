@@ -12,6 +12,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
@@ -51,6 +52,16 @@ class _SendTransactionConfirmationScreenState
     extends State<SendTransactionConfirmationScreen> with CustomFlutterToast {
   late SendTransactionConfirmationBloc _bloc;
 
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
+
+  void _emitSendTransactionSuccessFul() {
+    _observer.emit(
+      emitParam: HomeScreenEmitParam(
+        event: HomeScreenObserver.onSendTokenSuccessFulEvent,
+      ),
+    );
+  }
+
   @override
   void initState() {
     _bloc = getIt.get<SendTransactionConfirmationBloc>(
@@ -86,6 +97,8 @@ class _SendTransactionConfirmationScreenState
                   break;
                 case SendTransactionConfirmationStatus.success:
                   AppNavigator.pop();
+
+                  _emitSendTransactionSuccessFul();
 
                   AppNavigator.push(
                     RoutePath.sendTransactionSuccessFul,

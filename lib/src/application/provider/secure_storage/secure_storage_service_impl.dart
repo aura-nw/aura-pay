@@ -23,10 +23,15 @@ final class SecureStorageServiceImpl implements SecureStorageService {
   }
 
   @override
-  Future<String?> getValue(String key) {
-    return _storage.read(
-      key: key,
-    );
+  Future<String?> getValue(String key) async{
+    final bool constantKey = await constantValue(key);
+
+    if(constantKey){
+      return _storage.read(
+        key: key,
+      );
+    }
+    return null;
   }
 
   @override

@@ -14,9 +14,7 @@ enum TransactionHistoryEnum implements Comparable<TransactionHistoryEnum> {
   send([
     TransactionType.Send,
   ]),
-  receive([
-    TransactionType.Send,
-  ]),
+  receive([]),
   executeContract([
     TransactionType.ExecuteContract,
   ]),
@@ -29,14 +27,7 @@ enum TransactionHistoryEnum implements Comparable<TransactionHistoryEnum> {
   const TransactionHistoryEnum(this.messages);
 
   QueryTransactionType get convertToQueryType {
-    if (index == 1) {
-      return QueryTransactionType.send;
-    } else if (index == 2) {
-      return QueryTransactionType.receive;
-    } else if (index == 3) {
-      return QueryTransactionType.send;
-    }
-    return QueryTransactionType.all;
+    return QueryTransactionType.values[index];
   }
 
   @override

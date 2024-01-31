@@ -183,7 +183,7 @@
   "transaction_history_page_send" : "Send",
   "transaction_history_page_receive" : "Receive",
   "transaction_history_page_stake" : "Stake",
-  "transaction_history_page_recovery_tab" : "Recovery",
+  "transaction_history_page_recovery_tab" : "Recover",
   "transaction_history_page_set_recovery_tab" : "Set Recovery",
   "transaction_history_page_recovery" : "Recover smart account",
   "transaction_history_page_set_recovery" : "Set recovery method",

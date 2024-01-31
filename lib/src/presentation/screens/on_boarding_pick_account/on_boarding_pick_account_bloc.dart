@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:developer' as dev;
 
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
@@ -66,8 +67,6 @@ class OnBoardingPickAccountBloc
         pubKey: wallet.publicKey,
         salt: saltBytes,
       );
-
-      print('smart account address ${smartAccount}');
 
       /// call api grant fee for smart account
       final Uint8List smPubKey =
@@ -158,7 +157,9 @@ class OnBoardingPickAccountBloc
           ),
         );
       }
-    } catch (e) {
+    } catch (e, s) {
+
+      dev.log(e.toString(), stackTrace: s);
       print(e.toString());
       emit(
         state.copyWith(

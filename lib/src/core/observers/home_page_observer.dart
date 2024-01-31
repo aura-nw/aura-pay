@@ -23,6 +23,8 @@ final class HomeScreenObserver
   static String onListenAccountChangeEvent = 'ON_LISTEN_ACCOUNT_CHANGE_EVENT';
   static String onSelectedAccountChangeEvent =
       'ON_SELECTED_ACCOUNT_CHANGE_EVENT';
+  static String onSendTokenSuccessFulEvent =
+      'ON_SEND_TOKEN_SUCCESSFUL_EVENT';
   static String onHomePageDropdownClickEvent =
       'ON_HOME_PAGE_DROP_DOWN_CLICK_EVENT';
 
