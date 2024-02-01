@@ -126,100 +126,103 @@ class _HomeScreenState extends State<HomeScreen>
     return AppThemeBuilder(
       builder: (appTheme) {
         // Provide the SendTransactionBloc using BlocProvider
-        return BlocProvider.value(
-          value: _bloc,
-          // Use HomeScreenStatusSelector to handle different screen statuses
-          child: HomeScreenStatusSelector(
-            builder: (status) {
-              // Switch statement to handle different screen statuses
-              switch (status) {
-                case HomeScreenStatus.loading:
-                  // Display a loading widget when the screen is in loading state
-                  return Center(
-                    child: AppLoadingWidget(
-                      appTheme: appTheme,
-                    ),
-                  );
-                case HomeScreenStatus.loaded:
-                case HomeScreenStatus.error:
-                  // Stack widget to overlay multiple UI components
-                  return Stack(
-                    children: [
-                      // Main scaffold containing the home screen and bottom navigation bar
-                      Scaffold(
-                        body: HomeScreenTabBuilder(
-                          currentSection: currentSection,
-                          onReceiveTap: _onReceiveTap,
-                        ),
-                        bottomNavigationBar: BottomNavigatorBarWidget(
-                          currentIndex: HomeScreenSection.values.indexOf(
-                            currentSection,
+        return PopScope(
+          canPop: false,
+          child: BlocProvider.value(
+            value: _bloc,
+            // Use HomeScreenStatusSelector to handle different screen statuses
+            child: HomeScreenStatusSelector(
+              builder: (status) {
+                // Switch statement to handle different screen statuses
+                switch (status) {
+                  case HomeScreenStatus.loading:
+                    // Display a loading widget when the screen is in loading state
+                    return Center(
+                      child: AppLoadingWidget(
+                        appTheme: appTheme,
+                      ),
+                    );
+                  case HomeScreenStatus.loaded:
+                  case HomeScreenStatus.error:
+                    // Stack widget to overlay multiple UI components
+                    return Stack(
+                      children: [
+                        // Main scaffold containing the home screen and bottom navigation bar
+                        Scaffold(
+                          body: HomeScreenTabBuilder(
+                            currentSection: currentSection,
+                            onReceiveTap: _onReceiveTap,
                           ),
-                          appTheme: appTheme,
-                          onScanTap: () {
-                            // Show camera permission request when the scan button is tapped
-                            _showRequestCameraPermission(
-                              appTheme,
-                            );
-                          },
-                          onTabSelect: (index) {
-                            // Handle tab selection and update the current section
-                            final HomeScreenSection newSection =
-                                HomeScreenSection.values[index];
-
-                            if (currentSection == newSection) {
-                              return;
-                            }
-                            setState(() {
-                              currentSection = newSection;
-                            });
-                          },
-                        ),
-                      ),
-                      // AnimatedBuilder for receiving widget animation
-                      AnimatedBuilder(
-                        animation: _receiveWidgetController,
-                        child: HomeScreenAccountsSelector(
-                          builder: (accounts) {
-                            // Retrieve the first account (if available)
-                            final account = accounts.firstOrNull;
-                            // Display the ReceiveTokenWidget with account details
-                            return ReceiveTokenWidget(
-                              accountName: account?.name ?? '',
-                              address: account?.address ?? '',
-                              theme: appTheme,
-                              onSwipeUp: () async {
-                                // Reverse the animation when the widget is swiped up
-                                if (_receiveWidgetController.isCompleted) {
-                                  await _receiveWidgetController.reverse();
-                                  _receiveWidgetController.reset();
-                                }
-                              },
-                              onShareAddress: () {
-                                // Share the wallet address
-                                ShareNetWork.shareWalletAddress(
-                                  account?.address ?? '',
-                                );
-                              },
-                              onCopyAddress: _onCopyAddress,
-                            );
-                          },
-                        ),
-                        // Apply translation to the child based on the animation value
-                        builder: (context, child) {
-                          return Transform.translate(
-                            offset: Offset(
-                              0,
-                              _receiveAnimation.value,
+                          bottomNavigationBar: BottomNavigatorBarWidget(
+                            currentIndex: HomeScreenSection.values.indexOf(
+                              currentSection,
                             ),
-                            child: child ?? const SizedBox.shrink(),
-                          );
-                        },
-                      ),
-                    ],
-                  );
-              }
-            },
+                            appTheme: appTheme,
+                            onScanTap: () {
+                              // Show camera permission request when the scan button is tapped
+                              _showRequestCameraPermission(
+                                appTheme,
+                              );
+                            },
+                            onTabSelect: (index) {
+                              // Handle tab selection and update the current section
+                              final HomeScreenSection newSection =
+                                  HomeScreenSection.values[index];
+
+                              if (currentSection == newSection) {
+                                return;
+                              }
+                              setState(() {
+                                currentSection = newSection;
+                              });
+                            },
+                          ),
+                        ),
+                        // AnimatedBuilder for receiving widget animation
+                        AnimatedBuilder(
+                          animation: _receiveWidgetController,
+                          child: HomeScreenAccountsSelector(
+                            builder: (accounts) {
+                              // Retrieve the first account (if available)
+                              final account = accounts.firstOrNull;
+                              // Display the ReceiveTokenWidget with account details
+                              return ReceiveTokenWidget(
+                                accountName: account?.name ?? '',
+                                address: account?.address ?? '',
+                                theme: appTheme,
+                                onSwipeUp: () async {
+                                  // Reverse the animation when the widget is swiped up
+                                  if (_receiveWidgetController.isCompleted) {
+                                    await _receiveWidgetController.reverse();
+                                    _receiveWidgetController.reset();
+                                  }
+                                },
+                                onShareAddress: () {
+                                  // Share the wallet address
+                                  ShareNetWork.shareWalletAddress(
+                                    account?.address ?? '',
+                                  );
+                                },
+                                onCopyAddress: _onCopyAddress,
+                              );
+                            },
+                          ),
+                          // Apply translation to the child based on the animation value
+                          builder: (context, child) {
+                            return Transform.translate(
+                              offset: Offset(
+                                0,
+                                _receiveAnimation.value,
+                              ),
+                              child: child ?? const SizedBox.shrink(),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                }
+              },
+            ),
           ),
         );
       },
