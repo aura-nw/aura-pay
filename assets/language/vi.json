@@ -214,7 +214,7 @@
   "setting_passcode_screen_set_new_passcode_successful" : "Passcode has been set",
 
 
-  "setting_change_passcode_screen_enter_your_password" : "Enter you passcode",
+  "setting_change_passcode_screen_enter_your_password" : "Enter your passcode",
   "setting_change_passcode_screen_input_passcode_invalid" : "Passcode does wrong",
   "setting_change_passcode_screen_create_new_pass_code" : "Create a new passcode",
   "setting_change_passcode_screen_create_new_pass_code_content" : "Set an app passcode to protects your data and funds",
