@@ -295,7 +295,17 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                 status: AppGlobalStatus.unauthorized,
               ),
             );
+          }else{
+            if(account.index == 0){
+              _observer.emit(
+                emitParam: HomeScreenEmitParam(
+                  event: HomeScreenObserver.onSelectedAccountChangeEvent,
+                  data: _homeScreenBloc.state.accounts[1],
+                ),
+              );
+            }
           }
+
           _homeScreenBloc.add(
             HomeScreenEventOnRemoveAccount(
               account.id,
@@ -315,13 +325,15 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
       ),
     );
 
-    // refresh token home
-    _observer.emit(
-      emitParam: HomeScreenEmitParam(
-        event: HomeScreenObserver.onSelectedAccountChangeEvent,
-        data: account,
-      ),
-    );
+    if(account.id != HomeScreenBloc.of(context).state.selectedAccount?.id){
+      // refresh token home
+      _observer.emit(
+        emitParam: HomeScreenEmitParam(
+          event: HomeScreenObserver.onSelectedAccountChangeEvent,
+          data: account,
+        ),
+      );
+    }
   }
 
   void _copyAddress(String data) async {

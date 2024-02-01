@@ -4,6 +4,8 @@ sealed class AppLocalConstant{
 
   // this db name save private key or passPhrase
   static const String keyDbName = 'pyxis_controller_key_db_name';
+  static const String keyDbPrefix = 'pyxis_controller_key_db_prefix';
+  static const String keyStoreAlias = 'pyxis_controller_key_store_alias';
 
 
   // Passcode and biometric key

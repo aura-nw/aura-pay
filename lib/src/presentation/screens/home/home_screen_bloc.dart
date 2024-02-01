@@ -103,12 +103,6 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
         await _accountUseCase.updateChangeIndex(
           id: account.id,
         );
-
-        add(
-          HomeScreenEventOnChooseAccount(
-            state.accounts[1],
-          ),
-        );
       }
     }
 

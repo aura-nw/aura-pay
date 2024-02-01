@@ -84,6 +84,7 @@ Future<void> initDependency(
     aOptions: AndroidOptions(
       encryptedSharedPreferences: true,
       sharedPreferencesName: AppLocalConstant.keyDbName,
+      preferencesKeyPrefix: AppLocalConstant.keyDbPrefix,
     ),
     iOptions: IOSOptions(),
   );
