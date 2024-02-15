@@ -11,9 +11,7 @@ enum TransactionHistoryEnum implements Comparable<TransactionHistoryEnum> {
     TransactionType.ExecuteContract,
     TransactionType.Recover,
   ]),
-  send([
-    TransactionType.Send,
-  ]),
+  send([]),
   receive([]),
   executeContract([
     TransactionType.ExecuteContract,

@@ -33,20 +33,23 @@ final class QueryTransactionParameter {
     };
     switch(queryType){
       case QueryTransactionType.send:
+        json['operationName'] = 'CoinTransfer';
+
         json['variables'] = {
           "limit": limit,
           "sender": sender,
-          "heightLT": heightLt,
-          "listTxMsgType": msgTypes,
+          "height_lt": heightLt,
         };
 
         json['query'] = _querySend();
         break;
       case QueryTransactionType.receive:
+        json['operationName'] = 'CoinTransfer';
+
         json['variables'] = {
           "limit": limit,
           "receiveAddress": receive,
-          "heightLT": heightLt,
+          "height_lt": heightLt,
         };
 
         json['query'] = _queryReceive();
@@ -86,18 +89,18 @@ final class QueryTransactionParameter {
 
   String _queryReceive() {
     const String query = r'''
-      query QueryTxOfAccount($startTime: timestamptz = null, $endTime: timestamptz = null, $limit: Int = null,$heightGT: Int = null, $heightLT: Int = null, $orderHeight: order_by = desc, $receiveAddress: String = null) {
+      query CoinTransfer($receiveAddress: String = null, $start_time: timestamptz = null, $end_time: timestamptz = null, $msg_types_in: [String!] = null, $msg_types_nin: [String!] = null, $height_gt: Int = null, $height_lt: Int = null, $limit: Int = null) {
   ${environment} {
     transaction(
-      where: {timestamp: {_lte: $endTime, _gte: $startTime}, coin_transfers: {to: {_eq: $receiveAddress}, block_height: {_lt: $heightLT, _gt: $heightGT}, message: {type: {_in: null, _nin: null}}}}
+      where: {timestamp: {_lte: $end_time, _gte: $start_time}, coin_transfers: {to: {_eq: $receiveAddress}, block_height: {_lt: $height_lt, _gt: $height_gt}, message: {type: {_in: $msg_types_in, _nin: $msg_types_nin}}}}
       limit: $limit
-      order_by: {height: $orderHeight}
+      order_by: {height: desc}
     ) {
-      hash
-      height
-      fee
-      timestamp
       code
+      hash
+      timestamp
+      fee
+      height
       transaction_messages {
         type
         content
@@ -115,18 +118,18 @@ final class QueryTransactionParameter {
 
   String _querySend(){
     const String query = r'''
-    query QueryTxOfAccount($startTime: timestamptz = null, $endTime: timestamptz = null, $limit: Int = null, $listTxMsgType: [String!] = null, $listTxMsgTypeNotIn: [String!] = null, $heightGT: Int = null, $heightLT: Int = null, $orderHeight: order_by = desc, $sender: String = null) {
+    query CoinTransfer($sender: String = null, $start_time: timestamptz = null, $end_time: timestamptz = null, $msg_types_in: [String!] = null, $msg_types_nin: [String!] = null, $height_gt: Int = null, $height_lt: Int = null, $limit: Int = null) {
   ${environment} {
     transaction(
-      where: {timestamp: {_lte: $endTime, _gte: $startTime}, transaction_messages: {type: {_in: $listTxMsgType, _nin: $listTxMsgTypeNotIn}, sender: {_eq: $sender}}, _and: [{height: {_gt: $heightGT, _lt: $heightLT}}]}
+      where: {timestamp: {_lte: $end_time, _gte: $start_time}, coin_transfers: {from: {_eq: $sender}, block_height: {_lt: $height_lt, _gt: $height_gt}, message: {type: {_in: $msg_types_in, _nin: $msg_types_nin}}}}
       limit: $limit
-      order_by: {height: $orderHeight}
+      order_by: {height: desc}
     ) {
-      hash
-      height
-      fee
-      timestamp
       code
+      hash
+      timestamp
+      fee
+      height
       transaction_messages {
         type
         content

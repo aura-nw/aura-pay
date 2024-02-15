@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 
@@ -11,11 +13,14 @@ final class TransactionRepositoryImpl implements TransactionRepository {
     required Map<String, dynamic> body,
     required String environment,
   }) async {
+    log(body.toString());
     final AuraBaseResponseV2 response = await _apiService.getTransaction(
       body: body,
     );
 
     final data = response.handleResponse();
+
+    log(data.toString());
 
     // Get transaction from chain id or default
     String transaction = 'transaction';
