@@ -34,6 +34,7 @@ import 'widgets/bottom_navigator_bar_widget.dart';
 
 enum HomeScreenSection {
   home,
+  browser,
   accounts,
   history,
   setting,

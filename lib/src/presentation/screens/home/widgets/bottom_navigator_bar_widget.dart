@@ -55,22 +55,16 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
                 .borderRadius05, // Border radius for top right corner
           ),
         ),
-        // border: Border(
-        //   top: BorderSide(
-        //     color: widget.appTheme.borderColorGrayLight,
-        //     width: BorderSize.border01,
-        //   ),
-        // ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildItem(
             AssetIconPath.homeBottomNavigatorBarHome, // Icon path for home tab
-            AssetIconPath
-                .homeBottomNavigatorBarHomeActive, // Active icon path for home tab
-            LanguageKey
-                .homeScreenBottomNavigatorBarHome, // Localization key for home tab label
+            AssetIconPath.homeBottomNavigatorBarHomeActive,
+            // Active icon path for home tab
+            LanguageKey.homeScreenBottomNavigatorBarHome,
+            // Localization key for home tab label
             () {
               widget.onTabSelect(
                   0); // Callback function when home tab is selected
@@ -79,18 +73,31 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
                 0, // Whether the home tab is currently selected
           ),
           _buildItem(
-            AssetIconPath
-                .homeBottomNavigatorBarAccount, // Icon path for account tab
-            AssetIconPath
-                .homeBottomNavigatorBarAccountActive, // Active icon path for account tab
-            LanguageKey
-                .homeScreenBottomNavigatorBarAccounts, // Localization key for account tab label
+            AssetIconPath.homeBottomNavigatorBarHome, // Icon path for home tab
+            AssetIconPath.homeBottomNavigatorBarHomeActive,
+            // Active icon path for home tab
+            LanguageKey.homeScreenBottomNavigatorBarHome,
+            // Localization key for home tab label
             () {
               widget.onTabSelect(
-                  1); // Callback function when account tab is selected
+                  1); // Callback function when home tab is selected
             },
             widget.currentIndex ==
-                1, // Whether the account tab is currently selected
+                1, // Whether the home tab is currently selected
+          ),
+          _buildItem(
+            AssetIconPath
+                .homeBottomNavigatorBarAccount, // Icon path for account tab
+            AssetIconPath.homeBottomNavigatorBarAccountActive,
+            // Active icon path for account tab
+            LanguageKey.homeScreenBottomNavigatorBarAccounts,
+            // Localization key for account tab label
+            () {
+              widget.onTabSelect(
+                  2); // Callback function when account tab is selected
+            },
+            widget.currentIndex ==
+                2, // Whether the account tab is currently selected
           ),
           GestureDetector(
             onTap: widget
@@ -104,30 +111,30 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
           _buildItem(
             AssetIconPath
                 .homeBottomNavigatorBarHistory, // Icon path for history tab
-            AssetIconPath
-                .homeBottomNavigatorBarHistoryActive, // Active icon path for history tab
-            LanguageKey
-                .homeScreenBottomNavigatorBarHistory, // Localization key for history tab label
+            AssetIconPath.homeBottomNavigatorBarHistoryActive,
+            // Active icon path for history tab
+            LanguageKey.homeScreenBottomNavigatorBarHistory,
+            // Localization key for history tab label
             () {
               widget.onTabSelect(
-                  2); // Callback function when history tab is selected
+                  3); // Callback function when history tab is selected
             },
             widget.currentIndex ==
-                2, // Whether the history tab is currently selected
+                3, // Whether the history tab is currently selected
           ),
           _buildItem(
             AssetIconPath
                 .homeBottomNavigatorBarSetting, // Icon path for setting tab
-            AssetIconPath
-                .homeBottomNavigatorBarSettingActive, // Active icon path for setting tab
-            LanguageKey
-                .homeScreenBottomNavigatorBarSetting, // Localization key for setting tab label
+            AssetIconPath.homeBottomNavigatorBarSettingActive,
+            // Active icon path for setting tab
+            LanguageKey.homeScreenBottomNavigatorBarSetting,
+            // Localization key for setting tab label
             () {
               widget.onTabSelect(
-                  3); // Callback function when setting tab is selected
+                  4); // Callback function when setting tab is selected
             },
             widget.currentIndex ==
-                3, // Whether the setting tab is currently selected
+                4, // Whether the setting tab is currently selected
           ),
         ],
       ),

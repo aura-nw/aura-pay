@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_screen.dart';
@@ -99,6 +100,8 @@ sealed class RoutePath {
   static const String settingConnectSite = '$_setting/connect_site';
 
   static const String walletConnect = '$home/wallet_connect';
+
+  static const String browser = '$home/browser';
 }
 
 sealed class AppNavigator {
@@ -367,6 +370,14 @@ sealed class AppNavigator {
       case RoutePath.settingConnectSite:
         return _defaultRoute(
           const ConnectSiteScreen(),
+          settings,
+        );
+      case RoutePath.browser:
+        final String initUrl = settings.arguments as String;
+        return _defaultRoute(
+          BrowserScreen(
+            initUrl: initUrl,
+          ),
           settings,
         );
       default:
