@@ -41,9 +41,9 @@ final class AuraBaseResponseV1<T> extends BaseResponse<T> {
     super.data,
   });
 
-  factory AuraBaseResponseV1.fromJson(Map<String, dynamic> json) {
+  factory AuraBaseResponseV1.fromJson(T json) {
     return AuraBaseResponseV1(
-      data: json['data'],
+      data: json,
     );
   }
 }

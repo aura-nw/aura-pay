@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/factory_creator/factory_creator.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'home_page_event.dart';
 import 'home_page_state.dart';
 
@@ -83,7 +84,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
               balanceUseCaseFactory(horoScopeDio);
 
           final TokenUseCase auraNetworkTokenUseCase =
-          tokenUseCaseFactory(auraNetworkDio);
+              tokenUseCaseFactory(auraNetworkDio);
 
           await _getBalances(horoScropeBalanceUseCase, message, sendPort);
 
@@ -119,9 +120,18 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     try {
       final price = await tokenUseCase.getAuraTokenPrice();
 
+      final auraPrice = price
+              .firstWhereOrNull(
+                (pr) =>
+                    pr.symbol.toLowerCase() ==
+                    message['symbol'].toString().toLowerCase(),
+              )
+              ?.currentPrice ??
+          '0';
+
       // Send the API response back to the main isolate
       sendPort.send({
-        'price': price,
+        'price': double.parse(auraPrice),
       });
     } catch (e) {
       // Send the error back to the main isolate
@@ -160,6 +170,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       'address': address,
       'environment': config.environment.environmentString,
       'auraSmartAccountEnvironment': config.environment.toSME,
+      'symbol': config.symbol,
     };
   }
 

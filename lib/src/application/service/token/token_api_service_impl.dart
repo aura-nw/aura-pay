@@ -13,8 +13,8 @@ class TokenApiServiceImpl implements TokenApiService {
   );
 
   @override
-  Future<AuraBaseResponseV1> getAuraTokenPrice() {
-    return _apiServiceGenerator.getAuraTokenPrice();
+  Future<dynamic> getAuraTokenPrice({required Map<String,dynamic> queries}) async{
+    return _apiServiceGenerator.getAuraTokenPrice(queries);
   }
 
 }
@@ -27,5 +27,5 @@ abstract class TokenApiServiceGenerator {
   }) = _TokenApiServiceGenerator;
 
   @GET(ApiServicePath.auraPrice)
-  Future<AuraBaseResponseV1> getAuraTokenPrice();
+  Future<dynamic> getAuraTokenPrice(@Queries() Map<String,dynamic> queries);
 }

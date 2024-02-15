@@ -1,5 +1,3 @@
-import 'package:data/data.dart';
-
 abstract interface class TokenApiService {
-  Future<AuraBaseResponseV1> getAuraTokenPrice();
+  Future<dynamic> getAuraTokenPrice({required Map<String,dynamic> queries});
 }

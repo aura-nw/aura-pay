@@ -109,6 +109,9 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
         ),
       );
     } catch (e) {
+      LogProvider.log(
+        e.toString(),
+      );
       emit(
         state.copyWith(
           status: HistoryPageStatus.error,
@@ -179,6 +182,9 @@ final class HistoryPageBloc extends Bloc<HistoryPageEvent, HistoryPageState> {
         ),
       );
     } catch (e) {
+      LogProvider.log(
+        e.toString(),
+      );
       emit(
         state.copyWith(
           status: HistoryPageStatus.error,
