@@ -21,72 +21,73 @@ class SiteWidget extends StatelessWidget {
     super.key,
   });
 
-  static const double _size = 50;
+  static const double _size = 40;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CacheNetworkImageExtend(
-          imageUrl: logo,
-          targetWidth: _size * 4,
-          targetHeight: _size * 4,
-          width: _size,
-          height: _size,
-          loadingBuilder: (context, url, onProcess) {
-            return Shimmer.fromColors(
-              baseColor: appTheme.surfaceColorGrayDefault,
-              highlightColor: appTheme.surfaceColorBrandSemiLight,
-              child: Container(
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: Spacing.spacing05, bottom: Spacing.spacing05),
+      child: Row(
+        children: [
+          CacheNetworkImageExtend(
+            imageUrl: logo,
+            targetWidth: _size * 4,
+            targetHeight: _size * 4,
+            width: _size,
+            height: _size,
+            loadingBuilder: (context, url, onProcess) {
+              return Shimmer.fromColors(
+                baseColor: appTheme.surfaceColorGrayDefault,
+                highlightColor: appTheme.surfaceColorBrandSemiLight,
+                child: Container(
+                  width: _size,
+                  height: _size,
+                  decoration: BoxDecoration(
+                    color: appTheme.primaryColor50,
+                  ),
+                ),
+              );
+            },
+            errorBuilder: (context, url, error) {
+              return Container(
                 width: _size,
                 height: _size,
                 decoration: BoxDecoration(
                   color: appTheme.primaryColor50,
                 ),
-              ),
-            );
-          },
-          errorBuilder: (context, url, error) {
-            return Container(
-              width: _size,
-              height: _size,
-              decoration: BoxDecoration(
-                color: appTheme.primaryColor50,
-              ),
-              alignment: Alignment.center,
-              child: SvgPicture.asset(
-                AssetLogoPath.logoOpacity,
-              ),
-            );
-          },
-        ),
-        const SizedBox(
-          width: BoxSize.boxSize05,
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                siteName,
-                style: AppTypoGraPhy.heading02.copyWith(
-                  color: appTheme.contentColorBlack,
+                alignment: Alignment.center,
+                child: SvgPicture.asset(
+                  AssetLogoPath.logoOpacity,
                 ),
-              ),
-              const SizedBox(
-                height: BoxSize.boxSize04,
-              ),
-              Text(
-                siteUrl,
-                style: AppTypoGraPhy.body02.copyWith(
-                  color: appTheme.contentColorBlack,
-                ),
-              ),
-            ],
+              );
+            },
           ),
-        ),
-      ],
+          const SizedBox(
+            width: BoxSize.boxSize05,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  siteName,
+                  style: AppTypoGraPhy.heading02.copyWith(
+                    color: appTheme.contentColorBlack,
+                  ),
+                ),
+                Text(
+                  siteUrl,
+                  style: AppTypoGraPhy.body02.copyWith(
+                    color: appTheme.contentColorBlack,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
