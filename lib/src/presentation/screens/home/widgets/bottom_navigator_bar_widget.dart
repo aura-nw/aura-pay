@@ -73,10 +73,10 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
                 0, // Whether the home tab is currently selected
           ),
           _buildItem(
-            AssetIconPath.homeBottomNavigatorBarHome, // Icon path for home tab
-            AssetIconPath.homeBottomNavigatorBarHomeActive,
+            AssetIconPath.homeBottomNavigatorBarBrowser, // Icon path for home tab
+            AssetIconPath.homeBottomNavigatorBarBrowserActive,
             // Active icon path for home tab
-            LanguageKey.homeScreenBottomNavigatorBarHome,
+            LanguageKey.homeScreenBottomNavigatorBarBrowser,
             // Localization key for home tab label
             () {
               widget.onTabSelect(

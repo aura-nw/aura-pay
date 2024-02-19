@@ -55,11 +55,6 @@ class _BrowserScreenState extends State<BrowserScreen> {
           },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              debugPrint('blocking navigation to ${request.url}');
-              return NavigationDecision.prevent;
-            }
-            debugPrint('allowing navigation to ${request.url}');
             return NavigationDecision.navigate;
           },
           onUrlChange: (UrlChange change) {
@@ -84,7 +79,6 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
     // #docregion platform_features
     if (controller.platform is AndroidWebViewController) {
-      AndroidWebViewController.enableDebugging(true);
       (controller.platform as AndroidWebViewController)
           .setMediaPlaybackRequiresUserGesture(false);
     }
@@ -97,9 +91,10 @@ class _BrowserScreenState extends State<BrowserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: WebViewWidget(
-        controller: _webViewController,
+      body: SafeArea(
+        child: WebViewWidget(
+          controller: _webViewController,
+        ),
       ),
     );
   }

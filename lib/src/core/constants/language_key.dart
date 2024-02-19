@@ -163,6 +163,7 @@ sealed class LanguageKey {
   ///endregion
 
   static const String homeScreenBottomNavigatorBarHome = 'home_screen_bottom_navigator_bar_home';
+  static const String homeScreenBottomNavigatorBarBrowser = 'home_screen_bottom_navigator_bar_browser';
   static const String homeScreenBottomNavigatorBarAccounts = 'home_screen_bottom_navigator_bar_accounts';
   static const String homeScreenBottomNavigatorBarHistory = 'home_screen_bottom_navigator_bar_history';
   static const String homeScreenBottomNavigatorBarSetting = 'home_screen_bottom_navigator_bar_setting';
@@ -479,4 +480,13 @@ sealed class LanguageKey {
   static const String connectSiteScreenDisconnectContentRegionTwo = 'connect_site_screen_disconnect_content_region_two';
   static const String connectSiteScreenDisconnectCancelButton = 'connect_site_screen_disconnect_cancel_button';
   static const String connectSiteScreenDisconnectDisconnectButton = 'connect_site_screen_disconnect_disconnect_button';
+
+  ///region in app browser page
+  static const String inAppBrowserPagePlaceHolder = 'in_app_browser_page_place_holder';
+  static const String inAppBrowserPageEcosystemTab = 'in_app_browser_page_ecosystem_tab';
+  static const String inAppBrowserPageBookMarkTab = 'in_app_browser_page_book_mark_tab';
+  static const String inAppBrowserOpen = 'in_app_browser_page_open';
+  static const String inAppBrowserUndo = 'in_app_browser_page_undo';
+  static const String inAppBrowserDelete = 'in_app_browser_page_delete';
+  static const String inAppBrowserDeleteMessage = 'in_app_browser_page_delete_message';
 }

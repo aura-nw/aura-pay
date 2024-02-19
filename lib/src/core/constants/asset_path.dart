@@ -88,6 +88,8 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_common_aura_token_logo.svg';
   static const String commonArrowNext =
       '${_baseIconPath}ic_common_arrow_next.svg';
+  static const String commonSearch =
+      '${_baseIconPath}ic_common_search.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive =
@@ -108,6 +110,10 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_home_bottom_navigator_bar_setting.svg';
   static const String homeBottomNavigatorBarSettingActive =
       '${_baseIconPath}ic_home_bottom_navigator_bar_setting_active.svg';
+  static const String homeBottomNavigatorBarBrowser =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_browser.svg';
+  static const String homeBottomNavigatorBarBrowserActive =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_browser_active.svg';
 
   /// Home page
   static const String homeNoTokenFound =
@@ -245,4 +251,10 @@ sealed class AssetIconPath {
 
   /// Connect site
   static const String connectSiteQr = '${_baseIconPath}ic_connect_site_qr.svg';
+
+  /// In app browser page
+  static const String inAppBrowserEcosystem =
+      '${_baseIconPath}ic_in_app_browser_ecosystem.svg';
+  static const String inAppBrowserEcosystemWhite =
+      '${_baseIconPath}ic_in_app_browser_ecosystem_white.svg';
 }
