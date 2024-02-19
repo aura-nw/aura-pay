@@ -19,6 +19,7 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'widgets/token_item_widget.dart';
 import 'home_page_event.dart';
 import 'home_page_selector.dart';
@@ -50,11 +51,13 @@ class _HomePageState extends State<HomePage>
   final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
   void _onHoneDropDownClick() {
-    _observer.emit(
-      emitParam: HomeScreenEmitParam(
-        event: HomeScreenObserver.onHomePageDropdownClickEvent,
-        data: true,
-      ),
+    final HomeScreenBloc homeScreenBloc = HomeScreenBloc.of(
+      context,
+    );
+
+    AppNavigator.push(
+      RoutePath.accounts,
+      homeScreenBloc,
     );
   }
 
@@ -73,11 +76,12 @@ class _HomePageState extends State<HomePage>
       _bloc.add(
         const HomePageEventOnFetchTokenPrice(),
       );
-    }else if(param.event == HomeScreenObserver.onSetRecoveryMethodSuccessfulEvent){
+    } else if (param.event ==
+        HomeScreenObserver.onSetRecoveryMethodSuccessfulEvent) {
       _bloc.add(
         const HomePageEventOnFetchTokenPrice(),
       );
-    }else if(param.event == HomeScreenObserver.onRecoverSuccessfulEvent){
+    } else if (param.event == HomeScreenObserver.onRecoverSuccessfulEvent) {
       _bloc.add(
         const HomePageEventOnFetchTokenPrice(),
       );
@@ -94,7 +98,7 @@ class _HomePageState extends State<HomePage>
     await Future.delayed(const Duration(
       milliseconds: 1100,
     ));
-    
+
     if (context.mounted) {
       final state = AppGlobalCubit.of(context).state;
 

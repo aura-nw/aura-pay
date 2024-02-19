@@ -3,9 +3,11 @@ import 'dart:typed_data';
 import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
+import 'package:pyxis_mobile/src/presentation/screens/accounts/accounts_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft_detail/nft_detail_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
@@ -102,6 +104,7 @@ sealed class RoutePath {
   static const String walletConnect = '$home/wallet_connect';
 
   static const String browser = '$home/browser';
+  static const String accounts = '$home/account';
 }
 
 sealed class AppNavigator {
@@ -377,6 +380,15 @@ sealed class AppNavigator {
         return _defaultRoute(
           BrowserScreen(
             initUrl: initUrl,
+          ),
+          settings,
+        );
+      case RoutePath.accounts:
+        final HomeScreenBloc homeScreenBloc =
+            settings.arguments as HomeScreenBloc;
+        return _defaultRoute(
+          AccountsScreen(
+            homeScreenBloc: homeScreenBloc,
           ),
           settings,
         );

@@ -6,7 +6,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/account_item_widget.dart';
+import 'account_item_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/scroll_view_widget.dart';
 
@@ -85,7 +85,7 @@ class AccountManagerActionForm extends StatelessWidget {
                 ),
                 _buildOptions(
                   AssetIconPath.accountsShare,
-                  LanguageKey.accountsPageSendAddress,
+                  LanguageKey.accountsScreenSendAddress,
                   onTap: onShareAddress,
                 ),
                 const SizedBox(
@@ -93,7 +93,7 @@ class AccountManagerActionForm extends StatelessWidget {
                 ),
                 _buildOptions(
                   AssetIconPath.accountsRename,
-                  LanguageKey.accountsPageRenameAccount,
+                  LanguageKey.accountsScreenRenameAccount,
                   onTap: onRenameAddress,
                 ),
                 const SizedBox(
@@ -101,7 +101,7 @@ class AccountManagerActionForm extends StatelessWidget {
                 ),
                 _buildOptions(
                   AssetIconPath.accountsViewOnAuraScan,
-                  LanguageKey.accountsPageViewOnAuraScan,
+                  LanguageKey.accountsScreenViewOnAuraScan,
                   onTap: onViewOnAuraScan,
                 ),
                 const SizedBox(
@@ -136,7 +136,7 @@ class AccountManagerActionForm extends StatelessWidget {
                           builder: (localization, _) {
                             return Text(
                               localization.translate(
-                                LanguageKey.accountsPageRemove,
+                                LanguageKey.accountsScreenRemove,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,

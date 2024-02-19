@@ -37,7 +37,7 @@ class AccountManagerFormWidget extends StatelessWidget {
         children: [
           _buildOptions(
             AssetIconPath.accountsCreateNewSmartAccount,
-            LanguageKey.accountsPageCreateNewSmartAccount,
+            LanguageKey.accountsScreenCreateNewSmartAccount,
             onTap: onCreateTap,
           ),
           const SizedBox(
@@ -45,7 +45,7 @@ class AccountManagerFormWidget extends StatelessWidget {
           ),
           _buildOptions(
             AssetIconPath.accountsImportExistingAccount,
-            LanguageKey.accountsPageImportExistingAccount,
+            LanguageKey.accountsScreenImportExistingAccount,
             onTap: onImportTap,
           ),
           const SizedBox(
@@ -53,7 +53,7 @@ class AccountManagerFormWidget extends StatelessWidget {
           ),
           _buildOptions(
             AssetIconPath.accountsRecoverSmartAccount,
-            LanguageKey.accountsPageRecoverAccount,
+            LanguageKey.accountsScreenRecoverAccount,
             onTap: onRecoverTap,
           ),
         ],

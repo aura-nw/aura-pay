@@ -50,7 +50,7 @@ class _RenameAccountFormWidgetState extends State<RenameAccountFormWidget> {
             builder: (localization, _) {
               return Text(
                 localization.translate(
-                  LanguageKey.accountsPageRenameAccount,
+                  LanguageKey.accountsScreenRenameAccount,
                 ),
                 style: AppTypoGraPhy.heading02.copyWith(
                   color: widget.appTheme.contentColorBlack,
@@ -74,7 +74,7 @@ class _RenameAccountFormWidgetState extends State<RenameAccountFormWidget> {
                       TextSpan(
                         text: localization.translate(
                           LanguageKey
-                              .accountsPageRenameAccountMakeMemorableRegionOne,
+                              .accountsScreenRenameAccountMakeMemorableRegionOne,
                         ),
                       ),
                       TextSpan(
@@ -86,7 +86,7 @@ class _RenameAccountFormWidgetState extends State<RenameAccountFormWidget> {
                       TextSpan(
                         text: localization.translate(
                           LanguageKey
-                              .accountsPageRenameAccountMakeMemorableRegionTwo,
+                              .accountsScreenRenameAccountMakeMemorableRegionTwo,
                         ),
                       ),
                     ],
@@ -102,7 +102,7 @@ class _RenameAccountFormWidgetState extends State<RenameAccountFormWidget> {
             builder: (localization, _) {
               return TextInputNormalWidget(
                 hintText: localization.translate(
-                  LanguageKey.accountsPageRenameAccountHint,
+                  LanguageKey.accountsScreenRenameAccountHint,
                 ),
                 maxLength: 500,
                 maxLine: 1,
@@ -117,7 +117,7 @@ class _RenameAccountFormWidgetState extends State<RenameAccountFormWidget> {
             builder: (localization, _) {
               return PrimaryAppButton(
                 text: localization.translate(
-                  LanguageKey.accountsPageRenameAccountConfirm,
+                  LanguageKey.accountsScreenRenameAccountConfirm,
                 ),
                 onPress: () {
                   widget.onConfirm(

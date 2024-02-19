@@ -1,14 +1,9 @@
 import 'dart:io';
-
-import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
-import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
@@ -25,7 +20,6 @@ import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dar
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_state.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/widgets/tab_builder.dart';
-import 'package:pyxis_mobile/src/presentation/screens/wallet_connect_screen/wallet_connect_screen.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'home/widgets/receive_token_widget.dart';
@@ -35,7 +29,6 @@ import 'widgets/bottom_navigator_bar_widget.dart';
 enum HomeScreenSection {
   home,
   browser,
-  accounts,
   history,
   setting,
 }
@@ -67,20 +60,8 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  void _listenHomeObserver(HomeScreenEmitParam param) {
-    if (param.event == HomeScreenObserver.onHomePageDropdownClickEvent) {
-      if (param.data == true && currentSection.index != 1) {
-        // Change to account page. Index = 1. Maybe change index late.
-        setState(() {
-          currentSection = HomeScreenSection.accounts;
-        });
-      }
-    }
-  }
-
   @override
   void initState() {
-    _observer.addListener(_listenHomeObserver);
     _bloc.registerCallBack(_onEmitAccountChange);
     _bloc.add(
       const HomeScreenEventOnInit(),
@@ -115,7 +96,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void dispose() {
-    _observer.removeListener(_listenHomeObserver);
     _bloc.registerCallBack(_onEmitAccountChange);
     super.dispose();
   }
@@ -270,15 +250,9 @@ class _HomeScreenState extends State<HomeScreen>
 
     if (result != null) {
       String? account = _bloc.state.selectedAccount?.address;
-      WalletConnectCubit.of(context).connect(result ?? '', account ?? '');
-
-      // if (result != null) {
-      //   WalletConnectScreenData connectScreenData =
-      //       WalletConnectScreenData(url: result!, selectedAccount: account ?? '');
-      //   await AppNavigator.push(
-      //     RoutePath.walletConnect,
-      //     connectScreenData,
-      //   );
+      if(context.mounted){
+        WalletConnectCubit.of(context).connect(result ?? '', account ?? '');
+      }
     }
   }
 

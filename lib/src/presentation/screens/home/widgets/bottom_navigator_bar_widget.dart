@@ -85,20 +85,6 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
             widget.currentIndex ==
                 1, // Whether the home tab is currently selected
           ),
-          _buildItem(
-            AssetIconPath
-                .homeBottomNavigatorBarAccount, // Icon path for account tab
-            AssetIconPath.homeBottomNavigatorBarAccountActive,
-            // Active icon path for account tab
-            LanguageKey.homeScreenBottomNavigatorBarAccounts,
-            // Localization key for account tab label
-            () {
-              widget.onTabSelect(
-                  2); // Callback function when account tab is selected
-            },
-            widget.currentIndex ==
-                2, // Whether the account tab is currently selected
-          ),
           GestureDetector(
             onTap: widget
                 .onScanTap, // Callback function when the scan button is tapped
@@ -117,10 +103,10 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
             // Localization key for history tab label
             () {
               widget.onTabSelect(
-                  3); // Callback function when history tab is selected
+                  2); // Callback function when history tab is selected
             },
             widget.currentIndex ==
-                3, // Whether the history tab is currently selected
+                2, // Whether the history tab is currently selected
           ),
           _buildItem(
             AssetIconPath

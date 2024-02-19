@@ -20,9 +20,9 @@ import 'package:pyxis_mobile/src/core/helpers/app_launcher.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/account_manager_action_form.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/remove_account_form_widget.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/accounts/widgets/rename_account_form_widget.dart';
+import 'widgets/account_manager_action_form.dart';
+import 'widgets/remove_account_form_widget.dart';
+import 'widgets/rename_account_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
@@ -31,22 +31,28 @@ import 'widgets/account_item_widget.dart';
 import 'widgets/account_manager_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 
-class AccountsPage extends StatefulWidget {
-  const AccountsPage({super.key});
+class AccountsScreen extends StatefulWidget {
+  final HomeScreenBloc homeScreenBloc;
+
+  const AccountsScreen({
+    required this.homeScreenBloc,
+    super.key,
+  });
 
   @override
-  State<AccountsPage> createState() => _AccountsPageState();
+  State<AccountsScreen> createState() => _AccountsScreenState();
 }
 
-class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
+class _AccountsScreenState extends State<AccountsScreen>
+    with CustomFlutterToast {
   late HomeScreenBloc _homeScreenBloc;
 
   final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _homeScreenBloc = HomeScreenBloc.of(context);
+  void initState() {
+    super.initState();
+    _homeScreenBloc = widget.homeScreenBloc;
   }
 
   @override
@@ -55,9 +61,9 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
       builder: (appTheme) {
         return Scaffold(
           backgroundColor: appTheme.bodyColorBackground,
-          appBar: AppBarWithOnlyTitle(
+          appBar: AppBarWithTitle(
             appTheme: appTheme,
-            titleKey: LanguageKey.accountsPageAppBarTitle,
+            titleKey: LanguageKey.accountsScreenAppBarTitle,
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(
@@ -105,7 +111,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                   builder: (localization, _) {
                     return Text(
                       localization.translate(
-                        LanguageKey.accountsPageUsing,
+                        LanguageKey.accountsScreenUsing,
                       ),
                       style: AppTypoGraPhy.bodyMedium03.copyWith(
                         color: appTheme.contentColorBlack,
@@ -118,6 +124,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                 ),
                 // Home Screen Selected Account Selector
                 HomeScreenSelectedAccountSelector(
+                  bloc: _homeScreenBloc,
                   builder: (account) {
                     return AccountItemWidget(
                       appTheme: appTheme,
@@ -139,6 +146,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                 ),
                 Expanded(
                   child: HomeScreenAccountsSelector(
+                    bloc: _homeScreenBloc,
                     builder: (accounts) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +156,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                             builder: (localization, _) {
                               return Text(
                                 localization.translateWithParam(
-                                  LanguageKey.accountsPageAllAccounts,
+                                  LanguageKey.accountsScreenAllAccounts,
                                   {
                                     'total': accounts.length,
                                   },
@@ -244,7 +252,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
             ),
           );
         },
-        onCopyAddress: (){
+        onCopyAddress: () {
           _copyAddress(account.address);
         },
       ),
@@ -263,7 +271,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
         onConfirm: (newName) {
           showSuccessToast(
             AppLocalizationManager.of(context).translate(
-              LanguageKey.accountsPageRenameAccountSuccess,
+              LanguageKey.accountsScreenRenameAccountSuccess,
             ),
           );
 
@@ -295,8 +303,8 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
                 status: AppGlobalStatus.unauthorized,
               ),
             );
-          }else{
-            if(account.index == 0){
+          } else {
+            if (account.index == 0) {
               _observer.emit(
                 emitParam: HomeScreenEmitParam(
                   event: HomeScreenObserver.onSelectedAccountChangeEvent,
@@ -325,7 +333,7 @@ class _AccountsPageState extends State<AccountsPage> with CustomFlutterToast {
       ),
     );
 
-    if(account.id != HomeScreenBloc.of(context).state.selectedAccount?.id){
+    if (account.id != HomeScreenBloc.of(context).state.selectedAccount?.id) {
       // refresh token home
       _observer.emit(
         emitParam: HomeScreenEmitParam(

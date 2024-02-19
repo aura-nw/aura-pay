@@ -84,7 +84,7 @@ class AccountItemWidget extends AuraSmartAccountBaseWidget {
                   builder: (localization, _) {
                     return Text(
                       localization.translate(
-                        LanguageKey.accountsPageSmartAccountLabel,
+                        LanguageKey.accountsScreenSmartAccountLabel,
                       ),
                       style: AppTypoGraPhy.body02.copyWith(
                         color: appTheme.contentColorBrand,
@@ -171,7 +171,7 @@ class AccountItemImportedWidget extends AuraSmartAccountBaseWidget {
               builder: (localization, _) {
                 return Text(
                   localization.translate(
-                    LanguageKey.accountsPageImported,
+                    LanguageKey.accountsScreenImported,
                   ),
                   style: AppTypoGraPhy.body02.copyWith(
                     color: appTheme.contentColorBlack,

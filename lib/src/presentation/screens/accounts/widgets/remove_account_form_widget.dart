@@ -44,7 +44,7 @@ class RemoveAccountFormWidget extends StatelessWidget {
               return Text(
                 localization.translate(
                   localization.translate(
-                    LanguageKey.accountsPageRemoveTitle,
+                    LanguageKey.accountsScreenRemoveTitle,
                   ),
                 ),
                 style: AppTypoGraPhy.heading02.copyWith(
@@ -66,12 +66,12 @@ class RemoveAccountFormWidget extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: localization.translate(
-                        LanguageKey.accountsPageRemoveContentRegionOne,
+                        LanguageKey.accountsScreenRemoveContentRegionOne,
                       ),
                     ),
                     TextSpan(
                       text: ' ${localization.translateWithParam(
-                        LanguageKey.accountsPageRemoveContentRegionTwo,
+                        LanguageKey.accountsScreenRemoveContentRegionTwo,
                         {
                           'address': address.addressView,
                         },
@@ -82,7 +82,7 @@ class RemoveAccountFormWidget extends StatelessWidget {
                     ),
                     TextSpan(
                       text: localization.translate(
-                        LanguageKey.accountsPageRemoveContentRegionThree,
+                        LanguageKey.accountsScreenRemoveContentRegionThree,
                       ),
                     ),
                   ],
@@ -100,7 +100,7 @@ class RemoveAccountFormWidget extends StatelessWidget {
                   builder: (localization, _) {
                     return BorderAppButton(
                       text: localization.translate(
-                        LanguageKey.accountsPageRemoveCancelTitle,
+                        LanguageKey.accountsScreenRemoveCancelTitle,
                       ),
                       onPress: () {
                         AppNavigator.pop();
@@ -119,7 +119,7 @@ class RemoveAccountFormWidget extends StatelessWidget {
                   builder: (localization, _) {
                     return PrimaryAppButton(
                       text: localization.translate(
-                        LanguageKey.accountsPageRemoveRemoveTitle,
+                        LanguageKey.accountsScreenRemoveRemoveTitle,
                       ),
                       onPress: () {
                         AppNavigator.pop();

@@ -187,30 +187,30 @@ sealed class LanguageKey {
   ///
 
   ///region accounts page
-  static const String accountsPageAppBarTitle = 'accounts_page_app_bar_title';
-  static const String accountsPageCreateNewSmartAccount = 'accounts_page_create_new_smart_account';
-  static const String accountsPageImportExistingAccount = 'accounts_page_import_existing_account';
-  static const String accountsPageRecoverAccount = 'accounts_page_recover_account';
-  static const String accountsPageUsing = 'accounts_page_using';
-  static const String accountsPageAllAccounts = 'accounts_page_all_accounts';
-  static const String accountsPageSmartAccountLabel = 'accounts_page_smart_account_label';
-  static const String accountsPageImported = 'accounts_page_imported';
-  static const String accountsPageSendAddress = 'accounts_page_send_address';
-  static const String accountsPageRenameAccount = 'accounts_page_rename_account';
-  static const String accountsPageRenameAccountHint = 'accounts_page_rename_account_hint';
-  static const String accountsPageRenameAccountMakeMemorableRegionOne = 'accounts_page_rename_account_make_memorable_region_one';
-  static const String accountsPageRenameAccountMakeMemorableRegionTwo = 'accounts_page_rename_account_make_memorable_region_two';
-  static const String accountsPageRenameAccountConfirm = 'accounts_page_rename_confirm';
-  static const String accountsPageRenameAccountSuccess = 'accounts_page_rename_success';
-  static const String accountsPageViewOnAuraScan = 'accounts_page_view_on_aura_scan';
-  static const String accountsPageRemove = 'accounts_page_remove';
-  static const String accountsPageRemoveTitle = 'accounts_page_remove_title';
-  static const String accountsPageRemoveContentRegionOne = 'accounts_page_remove_content_region_one';
-  static const String accountsPageRemoveContentRegionTwo = 'accounts_page_remove_content_region_two';
-  static const String accountsPageRemoveContentRegionThree = 'accounts_page_remove_content_region_three';
-  static const String accountsPageRemoveCancelTitle = 'accounts_page_remove_cancel_title';
-  static const String accountsPageRemoveRemoveTitle = 'accounts_page_remove_remove_title';
-  static const String accountsPageRemoveAccountSuccess = 'accounts_page_remove_account_success';
+  static const String accountsScreenAppBarTitle = 'accounts_screen_app_bar_title';
+  static const String accountsScreenCreateNewSmartAccount = 'accounts_screen_create_new_smart_account';
+  static const String accountsScreenImportExistingAccount = 'accounts_screen_import_existing_account';
+  static const String accountsScreenRecoverAccount = 'accounts_screen_recover_account';
+  static const String accountsScreenUsing = 'accounts_screen_using';
+  static const String accountsScreenAllAccounts = 'accounts_screen_all_accounts';
+  static const String accountsScreenSmartAccountLabel = 'accounts_screen_smart_account_label';
+  static const String accountsScreenImported = 'accounts_screen_imported';
+  static const String accountsScreenSendAddress = 'accounts_screen_send_address';
+  static const String accountsScreenRenameAccount = 'accounts_screen_rename_account';
+  static const String accountsScreenRenameAccountHint = 'accounts_screen_rename_account_hint';
+  static const String accountsScreenRenameAccountMakeMemorableRegionOne = 'accounts_screen_rename_account_make_memorable_region_one';
+  static const String accountsScreenRenameAccountMakeMemorableRegionTwo = 'accounts_screen_rename_account_make_memorable_region_two';
+  static const String accountsScreenRenameAccountConfirm = 'accounts_screen_rename_confirm';
+  static const String accountsScreenRenameAccountSuccess = 'accounts_screen_rename_success';
+  static const String accountsScreenViewOnAuraScan = 'accounts_screen_view_on_aura_scan';
+  static const String accountsScreenRemove = 'accounts_screen_remove';
+  static const String accountsScreenRemoveTitle = 'accounts_screen_remove_title';
+  static const String accountsScreenRemoveContentRegionOne = 'accounts_screen_remove_content_region_one';
+  static const String accountsScreenRemoveContentRegionTwo = 'accounts_screen_remove_content_region_two';
+  static const String accountsScreenRemoveContentRegionThree = 'accounts_screen_remove_content_region_three';
+  static const String accountsScreenRemoveCancelTitle = 'accounts_screen_remove_cancel_title';
+  static const String accountsScreenRemoveRemoveTitle = 'accounts_screen_remove_remove_title';
+  static const String accountsScreenRemoveAccountSuccess = 'accounts_screen_remove_account_success';
   ///
 
   ///region history page
