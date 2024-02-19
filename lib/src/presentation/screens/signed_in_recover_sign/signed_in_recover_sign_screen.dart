@@ -13,6 +13,7 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
@@ -47,6 +48,8 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
     with CustomFlutterToast {
   late SignedInRecoverSignBloc _bloc;
 
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
+
   @override
   void initState() {
     _bloc = getIt.get<SignedInRecoverSignBloc>(
@@ -62,7 +65,8 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
       builder: (appTheme) {
         return BlocProvider.value(
           value: _bloc,
-          child: BlocListener<SignedInRecoverSignBloc, SignedInRecoverSignState>(
+          child:
+              BlocListener<SignedInRecoverSignBloc, SignedInRecoverSignState>(
             listener: (context, state) {
               switch (state.status) {
                 case SignedInRecoverSignStatus.none:
@@ -77,6 +81,11 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
                   AppNavigator.pop();
                   break;
                 case SignedInRecoverSignStatus.onRecoverSuccess:
+                  _observer.emit(
+                    emitParam: HomeScreenEmitParam(
+                      event: HomeScreenObserver.recoverAccountSuccessfulEvent,
+                    ),
+                  );
                   AppNavigator.popUntil(
                     RoutePath.home,
                   );

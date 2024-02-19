@@ -73,6 +73,14 @@ class _HomePageState extends State<HomePage>
       _bloc.add(
         const HomePageEventOnFetchTokenPrice(),
       );
+    }else if(param.event == HomeScreenObserver.onSetRecoveryMethodSuccessfulEvent){
+      _bloc.add(
+        const HomePageEventOnFetchTokenPrice(),
+      );
+    }else if(param.event == HomeScreenObserver.onRecoverSuccessfulEvent){
+      _bloc.add(
+        const HomePageEventOnFetchTokenPrice(),
+      );
     }
   }
 

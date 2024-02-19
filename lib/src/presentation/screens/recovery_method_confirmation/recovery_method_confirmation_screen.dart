@@ -12,6 +12,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
@@ -73,6 +74,9 @@ class _RecoveryMethodConfirmationScreenState
 
   final RecoveryObserver _recoveryObserver = getIt.get<RecoveryObserver>();
 
+  final HomeScreenObserver _homeScreenObserver =
+      getIt.get<HomeScreenObserver>();
+
   @override
   void initState() {
     _bloc = getIt.get<RecoveryMethodConfirmationBloc>(
@@ -106,6 +110,12 @@ class _RecoveryMethodConfirmationScreenState
                   );
                   break;
                 case RecoveryMethodConfirmationStatus.onRecoverSuccess:
+                  _homeScreenObserver.emit(
+                    emitParam: HomeScreenEmitParam(
+                      event:
+                          HomeScreenObserver.onSetRecoveryMethodSuccessfulEvent,
+                    ),
+                  );
                   _recoveryObserver.emit(
                     emitParam: const RecoveryEmitParam(
                       status: true,
