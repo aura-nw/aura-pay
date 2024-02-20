@@ -9,6 +9,7 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/debug.dart';
+import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_detail/site_detail_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_site/widgets/site_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
@@ -17,7 +18,7 @@ import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 
 // Define a screen for connecting to external sites
 class ConnectSiteScreen extends StatefulWidget {
-  const ConnectSiteScreen({super.key});
+  const ConnectSiteScreen({Key? key}) : super(key: key);
 
   @override
   State<ConnectSiteScreen> createState() => _ConnectSiteScreenState();
@@ -84,15 +85,36 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
                     data: listConnectedSites ?? [],
                     // Define the builder function for creating list items
                     builder: (sessionData, index) {
-                      return SiteWidget(
-                        // Display the logo of the site
-                        logo: sessionData.peer.metadata.icons.first,
-                        // Display the name of the site
-                        siteName: sessionData.peer.metadata.name,
-                        // Display the URL of the site
-                        siteUrl: sessionData.peer.metadata.url,
-                        // Pass the app theme to the widget
-                        appTheme: appTheme,
+                      return GestureDetector(
+                        // Handle tap on the list item
+                        onTap: () async {
+                          // Navigate to the site detail screen or perform action
+                          // when a site is tapped
+                          // Example:
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  SiteDetailScreen(sessionData),
+                            ),
+                          );
+                          debug.log('Site tapped: ${sessionData.topic}');
+
+                          listConnectedSites =
+                              GetIt.I.get<WalletConnectService>().sessionsList;
+                          debug.log('listConnectedSites: $listConnectedSites');
+                          setState(() {});
+                        },
+                        child: SiteWidget(
+                          // Display the logo of the site
+                          logo: sessionData.peer.metadata.icons.first,
+                          // Display the name of the site
+                          siteName: sessionData.peer.metadata.name,
+                          // Display the URL of the site
+                          siteUrl: sessionData.peer.metadata.url,
+                          // Pass the app theme to the widget
+                          appTheme: appTheme,
+                        ),
                       );
                     },
                     // Specify whether more items can be loaded
@@ -110,6 +132,17 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
                       text: localization.translate(
                         LanguageKey.connectSiteScreenNewConnection,
                       ),
+                      // Handle tap on the button
+                      onPress: () {
+                        // Perform action when the button is tapped
+                        // Example:
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => NewConnectionScreen(),
+                        //   ),
+                        // );
+                      },
                     );
                   },
                 ),
