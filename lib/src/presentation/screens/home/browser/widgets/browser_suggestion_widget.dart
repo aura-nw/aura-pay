@@ -27,33 +27,39 @@ class BrowserSuggestionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CacheNetworkImageExtend(
-          imageUrl: logo,
-          targetWidth: _size * 4,
-          targetHeight: _size * 4,
-          loadingBuilder: (context, url, onProcess) {
-            return Shimmer.fromColors(
-              baseColor: appTheme.surfaceColorGrayDefault,
-              highlightColor: appTheme.surfaceColorBrandSemiLight,
-              child: Container(
+        ClipRRect(
+          borderRadius: BorderRadius.circular(
+            BorderRadiusSize.borderRadiusRound,
+          ),
+          child: CacheNetworkImageExtend(
+            imageUrl: logo,
+            targetWidth: _size * 4,
+            targetHeight: _size * 4,
+            width: _size,
+            loadingBuilder: (context, url, onProcess) {
+              return Shimmer.fromColors(
+                baseColor: appTheme.surfaceColorGrayDefault,
+                highlightColor: appTheme.surfaceColorBrandSemiLight,
+                child: Container(
+                  width: _size,
+                  height: _size,
+                  decoration: BoxDecoration(
+                    color: appTheme.primaryColor50,
+                  ),
+                ),
+              );
+            },
+            errorBuilder: (context, url, error) {
+              return Container(
                 width: _size,
                 height: _size,
                 decoration: BoxDecoration(
                   color: appTheme.primaryColor50,
                 ),
-              ),
-            );
-          },
-          errorBuilder: (context, url, error) {
-            return Container(
-              width: _size,
-              height: _size,
-              decoration: BoxDecoration(
-                color: appTheme.primaryColor50,
-              ),
-              alignment: Alignment.center,
-            );
-          },
+                alignment: Alignment.center,
+              );
+            },
+          ),
         ),
         const SizedBox(
           width: BoxSize.boxSize05,
@@ -70,7 +76,7 @@ class BrowserSuggestionWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: BoxSize.boxSize04,
+                height: BoxSize.boxSize01,
               ),
               Text(
                 description,

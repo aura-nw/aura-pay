@@ -9,3 +9,4 @@ export 'fee_grant_parameter.dart';
 export 'register_device_parameter.dart';
 export 'sign_in_parameter.dart';
 export 'query_token_market_parameter.dart';
+export 'save_browser_parameter.dart';

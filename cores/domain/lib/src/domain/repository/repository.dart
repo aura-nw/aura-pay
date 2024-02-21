@@ -13,3 +13,4 @@ export 'recovery_repository.dart';
 export 'token_repository.dart';
 export 'auth_repository.dart';
 export 'device_management_repository.dart';
+export 'browser_management_repository.dart';

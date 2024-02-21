@@ -63,10 +63,10 @@ class _TabWidgetState extends State<TabWidget> {
               children: [
                 _indexSelected == 0
                     ? SvgPicture.asset(
-                        AssetIconPath.inAppBrowserEcosystemWhite,
+                        AssetIconPath.browserEcosystemWhite,
                       )
                     : SvgPicture.asset(
-                        AssetIconPath.inAppBrowserEcosystem,
+                        AssetIconPath.browserEcosystem,
                       ),
                 const SizedBox(
                   width: BoxSize.boxSize04,

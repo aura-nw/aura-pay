@@ -6,9 +6,17 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 
 class BrowserBottomNavigatorWidget extends StatelessWidget {
   final AppTheme appTheme;
+  final bool bookMarkActive;
+  final VoidCallback onBack;
+  final VoidCallback onNext;
+  final VoidCallback onBookmarkClick;
 
   const BrowserBottomNavigatorWidget({
     required this.appTheme,
+    this.bookMarkActive = false,
+    required this.onNext,
+    required this.onBack,
+    required this.onBookmarkClick,
     super.key,
   });
 
@@ -23,11 +31,34 @@ class BrowserBottomNavigatorWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SvgPicture.asset(
-            AssetIconPath.commonArrowBack,
+          GestureDetector(
+            onTap: onBack,
+            behavior: HitTestBehavior.opaque,
+            child: SvgPicture.asset(
+              AssetIconPath.commonArrowBack,
+            ),
+          ),
+          GestureDetector(
+            onTap: onBack,
+            behavior: HitTestBehavior.opaque,
+            child: SvgPicture.asset(
+              AssetIconPath.commonArrowNext,
+            ),
           ),
           SvgPicture.asset(
-            AssetIconPath.commonArrowNext,
+            AssetLogoPath.logo,
+          ),
+          GestureDetector(
+            onTap: onBookmarkClick,
+            behavior: HitTestBehavior.opaque,
+              child: bookMarkActive ?
+              SvgPicture.asset(
+                AssetIconPath.inAppBrowserBookMarkActive,
+              )
+                  :
+              SvgPicture.asset(
+                AssetIconPath.inAppBrowserBookMark,
+              ),
           ),
         ],
       ),

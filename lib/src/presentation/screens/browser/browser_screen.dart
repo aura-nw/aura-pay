@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'widgets/browser_bottom_navigator_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // Import for Android features.
@@ -90,12 +93,33 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: WebViewWidget(
-          controller: _webViewController,
+    return AppThemeBuilder(builder: (appTheme) {
+      return Scaffold(
+        backgroundColor: appTheme.bodyColorBackground,
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: WebViewWidget(
+                  controller: _webViewController,
+                ),
+              ),
+              BrowserBottomNavigatorWidget(
+                appTheme: appTheme,
+                onBack: () {
+                  AppNavigator.pop();
+                },
+                onBookmarkClick: () {
+
+                },
+                onNext: () {
+
+                },
+              )
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

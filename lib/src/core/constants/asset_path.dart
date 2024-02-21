@@ -35,8 +35,6 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_onboarding_import_account_check.svg';
   static const String onBoardingImportKeyInformation =
       '${_baseIconPath}ic_onboarding_import_account_information.svg';
-  static const String onBoardingRecoverChoiceGoogle =
-      '${_baseIconPath}ic_onboarding_recover_choice_google.svg';
   static const String onBoardingRecoverChoiceBackupAddress =
       '${_baseIconPath}ic_onboarding_recover_choice_backup_address.svg';
 
@@ -90,16 +88,14 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_common_arrow_next.svg';
   static const String commonSearch =
       '${_baseIconPath}ic_common_search.svg';
+  static const String commonGoogle =
+      '${_baseIconPath}ic_common_google.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive =
       '${_baseIconPath}ic_home_bottom_navigator_bar_home_active.svg';
   static const String homeBottomNavigatorBarHome =
       '${_baseIconPath}ic_home_bottom_navigator_bar_home.svg';
-  static const String homeBottomNavigatorBarAccount =
-      '${_baseIconPath}ic_home_bottom_navigator_bar_account.svg';
-  static const String homeBottomNavigatorBarAccountActive =
-      '${_baseIconPath}ic_home_bottom_navigator_bar_account_active.svg';
   static const String homeBottomNavigatorBarHistory =
       '${_baseIconPath}ic_home_bottom_navigator_bar_history.svg';
   static const String homeBottomNavigatorBarHistoryActive =
@@ -238,8 +234,6 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_set_recovery_method_web3_auth.svg';
   static const String setRecoveryMethodBackupAddress =
       '${_baseIconPath}ic_set_recovery_method_backup_address.svg';
-  static const String setRecoveryMethodGoogle =
-      '${_baseIconPath}ic_set_recovery_method_google.svg';
 
   /// Recovery confirmation
   static const String recoveryConfirmation =
@@ -252,9 +246,15 @@ sealed class AssetIconPath {
   /// Connect site
   static const String connectSiteQr = '${_baseIconPath}ic_connect_site_qr.svg';
 
-  /// In app browser page
-  static const String inAppBrowserEcosystem =
-      '${_baseIconPath}ic_in_app_browser_ecosystem.svg';
-  static const String inAppBrowserEcosystemWhite =
-      '${_baseIconPath}ic_in_app_browser_ecosystem_white.svg';
+  /// Browser page
+  static const String browserEcosystem =
+      '${_baseIconPath}ic_browser_ecosystem.svg';
+  static const String browserEcosystemWhite =
+      '${_baseIconPath}ic_browser_ecosystem_white.svg';
+
+  /// Browser screen
+  static const String inAppBrowserBookMark =
+      '${_baseIconPath}ic_in_app_browser_bookmark.svg';
+  static const String inAppBrowserBookMarkActive =
+      '${_baseIconPath}ic_in_app_browser_bookmark_active.svg';
 }

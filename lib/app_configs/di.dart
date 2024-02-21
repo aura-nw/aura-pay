@@ -8,6 +8,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:isar/isar.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/aura_account/account_database_service_impl.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/browser/browser_database_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/normal_storage/normal_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
@@ -272,6 +273,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<BrowserDataBaseService>(
+    () => BrowserDatabaseServiceImpl(
+      isar,
+    ),
+  );
+
   ///Repository
 
   getIt.registerLazySingleton<AppSecureRepository>(
@@ -357,6 +364,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<DeviceManagementRepository>(
     () => DeviceManagementRepositoryImpl(
       getIt.get<DeviceManagementApiService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<BrowserManagementRepository>(
+    () => BrowserManagementRepositoryImpl(
+      getIt.get<BrowserDataBaseService>(),
     ),
   );
 
@@ -449,6 +462,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<DeviceManagementUseCase>(
     () => DeviceManagementUseCase(
       getIt.get<DeviceManagementRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<BrowserManagementUseCase>(
+    () => BrowserManagementUseCase(
+      getIt.get<BrowserManagementRepository>(),
     ),
   );
 

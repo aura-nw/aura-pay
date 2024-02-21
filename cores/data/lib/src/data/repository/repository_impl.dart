@@ -13,3 +13,4 @@ export 'fee_grant_repository_impl.dart';
 export 'token_repository_impl.dart';
 export 'auth_repository_impl.dart';
 export 'device_management_repository_impl.dart';
+export 'browser_management_repository_impl.dart';

@@ -173,7 +173,7 @@ class _SetRecoveryFormWidgetState extends State<SetRecoveryFormWidget> {
               LanguageKey.setRecoveryMethodScreenConnectGoogleAccountContent,
           titleKey:
               LanguageKey.setRecoveryMethodScreenConnectGoogleAccountTitle,
-          methodIconPath: AssetIconPath.setRecoveryMethodGoogle,
+          methodIconPath: AssetIconPath.commonGoogle,
           appTheme: widget.appTheme,
           isSelected: isGoogleSelected,
           onTap: () {

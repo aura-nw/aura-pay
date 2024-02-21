@@ -73,15 +73,15 @@ class SearchWidget extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(
-                color: appTheme.borderColorBlack,
-                width: BoxSize.boxSize01
+                color: appTheme.borderColorUnKnow,
+                width: BoxSize.boxSize01,
               ),
               borderRadius: BorderRadius.circular(
-                BorderRadiusSize.borderRadius01,
+                BorderRadiusSize.borderRadius02,
               ),
             ),
             padding: const EdgeInsets.all(
-              Spacing.spacing01,
+              Spacing.spacing02,
             ),
             child: Text(
               tabCount.toString(),
