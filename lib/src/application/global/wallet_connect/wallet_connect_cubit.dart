@@ -6,6 +6,8 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/core/utils/debug.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'wallet_connect_state.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'dart:developer' as developer;
@@ -29,6 +31,9 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
     // _w[core] SessionID
     _init();
   }
+
+  static WalletConnectCubit of(BuildContext context) =>
+      BlocProvider.of<WalletConnectCubit>(context);
 
   // This function initializes the WalletConnectService
   Future _init() async {
@@ -76,13 +81,14 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
   }
 
   // This function connects to a wallet using a URL and an account
-  Future<void> connect(String url, String account) async {
+  Future<void> connect(String url) async {
+    print('#1 WalletConnectCubit connect $url');
+
     // Check if the WalletConnectCubit is initialized
     if (!_isInit) {
       throw Exception('WalletConnectCubit is not init');
     }
     // Set the target account
-    targetAccount = account;
     try {
       // Parse the URL into a Uri object
       final Uri uriData = Uri.parse(url);
@@ -98,8 +104,9 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
 
   // This function approves a connection using ConnectingData
   Future<void> approveConnection(ConnectingData connectingData) async {
+    String account = await _getAddress();
     _walletConnectService.approveConnection(
-        sessionId: connectingData.sessionId, account: _getAddress());
+        sessionId: connectingData.sessionId, account: account);
   }
 
   // This function rejects a connection using ConnectingData
@@ -130,9 +137,16 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
   }
 
   void _onSessionProposal(SessionProposalEvent? args) async {
+    print('#3 WalletConnectCubit _onSessionProposal $args');
     print('WalletConnectScreen _onConnect onSessionProposal: $args');
 
-    ConnectingData connectingData = ConnectingData(args!.id, _getAddress());
+    String account = await _getAddress();
+
+    ConnectingData connectingData = ConnectingData(
+        args!.id,
+        account,
+        args.params.proposer.metadata.url,
+        args.params.proposer.metadata.icons[0]);
     emit(state.copyWith(
         status: WalletConnectStatus.onConnect, data: connectingData));
   }
@@ -204,9 +218,6 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
         status: WalletConnectStatus.onRequestAuth, data: requestAuthData));
   }
 
-  static WalletConnectCubit of(BuildContext context) =>
-      BlocProvider.of<WalletConnectCubit>(context);
-
   void approveAuthRequest(RequestAuthData requestAuthData) {
     _walletConnectService.approveAuthRequest(
         id: requestAuthData.id, iss: requestAuthData.version);
@@ -251,8 +262,11 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
     _walletConnectService.registerAccount('cosmos:xstaxy-1', address);
   }
 
-  String _getAddress() {
-    // return 'aura1wxtnmdyplfv2f56pel7whckl4ka84e9rvus8hu';
+  Future<String> _getAddress() async {
+    final AuraAccountUseCase useCase = getIt.get<AuraAccountUseCase>();
+    var account = await useCase.getFirstAccount();
+    targetAccount = account?.address;
+    debug.log('targetAccount: $targetAccount');
     return targetAccount ?? '';
   }
 

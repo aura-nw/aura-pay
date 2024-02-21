@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:domain/domain.dart';
+import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_screen.dart';
@@ -32,6 +33,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signe
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:pyxis_mobile/src/presentation/screens/wallet_connect/wallet_connect_on_connect.dart';
 import 'package:pyxis_mobile/src/presentation/screens/wallet_connect_screen/wallet_connect_screen.dart';
 
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
@@ -99,6 +101,8 @@ sealed class RoutePath {
   static const String settingConnectSite = '$_setting/connect_site';
 
   static const String walletConnect = '$home/wallet_connect';
+  static const String walletConnectOnConnect =
+      '$home/wallet_connect/on_connect';
 }
 
 sealed class AppNavigator {
@@ -116,16 +120,16 @@ sealed class AppNavigator {
           const OnBoardingReLoginScreen(),
           settings,
         );
-      // case RoutePath.walletConnect:
-      //   WalletConnectScreenData data =
-      //       settings.arguments as WalletConnectScreenData;
+      case RoutePath.walletConnectOnConnect:
+        print('KhoaCheck');
+        ConnectingData data = settings.arguments as ConnectingData;
 
-      //   return _defaultRoute(
-      //     WalletConnectScreen(
-      //       data: data,
-      //     ),
-      //     settings,
-      //   );
+        return _defaultRoute(
+          WalletConnectOnConnectScreen(
+            connectingData: data,
+          ),
+          settings,
+        );
       case RoutePath.getStarted:
         return _defaultRoute(
           const OnBoardingGetStartedScreen(),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/utils/debug.dart';
 
 import 'application/global/app_global_state/app_global_cubit.dart';
 import 'application/global/app_global_state/app_global_state.dart';
@@ -156,44 +157,52 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
         if (state.data is ConnectingData) {
           // Cast the state data to ConnectingData
           ConnectingData connectingData = state.data as ConnectingData;
-          // Show a dialog asking the user whether they want to connect to a certain account
-          await showDialog<void>(
-              context: AppNavigator.navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                // Return an AlertDialog
-                return AlertDialog(
-                  // Set the title of the dialog
-                  title: Text('Connect to ${connectingData.account}'),
-                  // Set the content of the dialog
-                  content: Text(
-                      'Do you want to connect to ${connectingData.account}?'),
-                  // Set the actions of the dialog
-                  actions: [
-                    // Approve button
-                    TextButton(
-                        onPressed: () {
-                          // Approve the connection
-                          context
-                              .read<WalletConnectCubit>()
-                              .approveConnection(connectingData);
-                          // Close the dialog
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Approve')),
-                    // Reject button
-                    TextButton(
-                        onPressed: () {
-                          // Reject the connection
-                          context
-                              .read<WalletConnectCubit>()
-                              .rejectConnection(connectingData);
-                          // Close the dialog
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Reject')),
-                  ],
-                );
-              });
+
+          debug.log('Connecting to ${connectingData.account}');
+          debug.log('Connecting to ${connectingData.sessionId}');
+
+          Navigator.of(AppNavigator.navigatorKey.currentContext!).pushNamed(
+              RoutePath.walletConnectOnConnect,
+              arguments: connectingData);
+
+          // // Show a dialog asking the user whether they want to connect to a certain account
+          // await showDialog<void>(
+          //     context: AppNavigator.navigatorKey.currentContext!,
+          //     builder: (BuildContext context) {
+          //       // Return an AlertDialog
+          //       return AlertDialog(
+          //         // Set the title of the dialog
+          //         title: Text('Connect to ${connectingData.account}'),
+          //         // Set the content of the dialog
+          //         content: Text(
+          //             'Do you want to connect to ${connectingData.account}?'),
+          //         // Set the actions of the dialog
+          //         actions: [
+          //           // Approve button
+          //           TextButton(
+          //               onPressed: () {
+          //                 // Approve the connection
+          //                 context
+          //                     .read<WalletConnectCubit>()
+          //                     .approveConnection(connectingData);
+          //                 // Close the dialog
+          //                 Navigator.pop(context);
+          //               },
+          //               child: const Text('Approve')),
+          //           // Reject button
+          //           TextButton(
+          //               onPressed: () {
+          //                 // Reject the connection
+          //                 context
+          //                     .read<WalletConnectCubit>()
+          //                     .rejectConnection(connectingData);
+          //                 // Close the dialog
+          //                 Navigator.pop(context);
+          //               },
+          //               child: const Text('Reject')),
+          //         ],
+          //       );
+          //     });
         }
 
         break;

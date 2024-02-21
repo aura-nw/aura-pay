@@ -21,8 +21,10 @@ class WalletConnectState with _$WalletConnectState {
 class ConnectingData {
   final int sessionId;
   final String account;
+  final String urlConnect;
+  final String logo;
 
-  ConnectingData(this.sessionId, this.account);
+  ConnectingData(this.sessionId, this.account, this.urlConnect, this.logo);
 }
 
 class RequestAuthData {
