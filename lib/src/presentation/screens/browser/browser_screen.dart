@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser/widgets/browser_header_widget.dart';
 import 'widgets/browser_bottom_navigator_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -93,33 +95,53 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppThemeBuilder(builder: (appTheme) {
-      return Scaffold(
-        backgroundColor: appTheme.bodyColorBackground,
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: WebViewWidget(
-                  controller: _webViewController,
+    return AppThemeBuilder(
+      builder: (appTheme) {
+        return Scaffold(
+          backgroundColor: appTheme.bodyColorBackground,
+          body: SafeArea(
+            child: Column(
+              children: [
+                FutureBuilder(
+                  builder: (context, snapshot) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Spacing.spacing07,
+                        vertical: Spacing.spacing06,
+                      ),
+                      child: BrowserHeaderWidget(
+                        appTheme: appTheme,
+                        onViewTap: () {},
+                        onSearchTap: () {},
+                        url: snapshot.data ?? '',
+                      ),
+                    );
+                  },
+                  future: _webViewController.currentUrl(),
                 ),
-              ),
-              BrowserBottomNavigatorWidget(
-                appTheme: appTheme,
-                onBack: () {
-                  AppNavigator.pop();
-                },
-                onBookmarkClick: () {
-
-                },
-                onNext: () {
-
-                },
-              )
-            ],
+                Expanded(
+                  child: WebViewWidget(
+                    controller: _webViewController,
+                  ),
+                ),
+                BrowserBottomNavigatorWidget(
+                  appTheme: appTheme,
+                  onBack: () {
+                    AppNavigator.pop();
+                  },
+                  onBookmarkClick: () {},
+                  onNext: () {},
+                  onHomeClick: () {
+                    AppNavigator.popUntil(
+                      RoutePath.home,
+                    );
+                  },
+                )
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

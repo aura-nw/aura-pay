@@ -82,14 +82,15 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_common_message.svg';
   static const String commonFeeEdit = '${_baseIconPath}ic_common_fee_edit.svg';
 
-  static const String commonAuraTokenLogo =
-      '${_baseIconPath}ic_common_aura_token_logo.svg';
+  static const String commonAura =
+      '${_baseIconPath}ic_common_aura.svg';
+  static const String commonAuraToken =
+      '${_baseIconPath}ic_common_aura_token.svg';
   static const String commonArrowNext =
       '${_baseIconPath}ic_common_arrow_next.svg';
-  static const String commonSearch =
-      '${_baseIconPath}ic_common_search.svg';
-  static const String commonGoogle =
-      '${_baseIconPath}ic_common_google.svg';
+  static const String commonSearch = '${_baseIconPath}ic_common_search.svg';
+  static const String commonGoogle = '${_baseIconPath}ic_common_google.svg';
+  static const String commonMore = '${_baseIconPath}ic_common_more.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive =
@@ -117,6 +118,7 @@ sealed class AssetIconPath {
   static const String homeSendToken = '${_baseIconPath}ic_home_send_token.svg';
   static const String homeReceiveToken =
       '${_baseIconPath}ic_home_receive_token.svg';
+  static const String homeSite = '${_baseIconPath}ic_home_site.svg';
   static const String homeStake = '${_baseIconPath}ic_home_stake.svg';
   static const String homeTxLimit = '${_baseIconPath}ic_home_tx_limit.svg';
   static const String homeNFTs = '${_baseIconPath}ic_home_nfts.svg';
@@ -133,7 +135,6 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_home_receive_copy_address.svg';
 
   ///Accounts page
-  static const String accountsMore = '${_baseIconPath}ic_accounts_more.svg';
   static const String accountsCheck = '${_baseIconPath}ic_accounts_check.svg';
   static const String accountsRemove = '${_baseIconPath}ic_accounts_remove.svg';
   static const String accountsRemoveWarning =
@@ -220,8 +221,6 @@ sealed class AssetIconPath {
   /// Recovery method
   static const String recoveryMethodCheck =
       '${_baseIconPath}ic_recovery_method_check.svg';
-  static const String recoveryMethodMore =
-      '${_baseIconPath}ic_recovery_method_more.svg';
   static const String recoveryMethodWarning =
       '${_baseIconPath}ic_recovery_method_warning.svg';
   static const String recoveryMethodChange =
@@ -257,4 +256,10 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_in_app_browser_bookmark.svg';
   static const String inAppBrowserBookMarkActive =
       '${_baseIconPath}ic_in_app_browser_bookmark_active.svg';
+  static const String inAppBrowserLogo =
+      '${_baseIconPath}ic_in_app_browser_logo.svg';
+  static const String inAppBrowserAccount =
+      '${_baseIconPath}ic_in_app_browser_account.svg';
+  static const String inAppBrowserLock =
+      '${_baseIconPath}ic_in_app_browser_lock.svg';
 }

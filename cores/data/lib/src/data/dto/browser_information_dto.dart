@@ -16,6 +16,7 @@ class BrowserInformationDto {
   final String name;
   final String? description;
   final String url;
+  final bool isBookMark;
 
   const BrowserInformationDto({
     required this.id,
@@ -23,5 +24,6 @@ class BrowserInformationDto {
     required this.name,
     this.description,
     required this.url,
+    this.isBookMark = false,
   });
 }

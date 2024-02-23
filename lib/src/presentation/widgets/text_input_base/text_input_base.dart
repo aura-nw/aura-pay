@@ -536,12 +536,7 @@ final class TextInputOnlyTextFieldWidgetState
   Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (theme) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Spacing.spacing04,
-          ),
-          child: buildTextInput(theme),
-        );
+        return buildTextInput(theme);
       },
     );
   }

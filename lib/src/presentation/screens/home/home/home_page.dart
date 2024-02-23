@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
@@ -160,6 +161,7 @@ class _HomePageState extends State<HomePage>
             appBar: HomeAppBarWidget(
               appTheme: appTheme,
               onNotificationTap: () {},
+              chainName: getIt.get<PyxisMobileConfig>().chainName,
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(
@@ -192,6 +194,11 @@ class _HomePageState extends State<HomePage>
                     onNFTsTap: () {
                       AppNavigator.push(
                         RoutePath.nft,
+                      );
+                    },
+                    onSiteTap: () {
+                      AppNavigator.push(
+                        RoutePath.settingConnectSite,
                       );
                     },
                     onReceiveTap: widget.onReceiveTap,
@@ -325,7 +332,7 @@ class _HomePageState extends State<HomePage>
                                         builder: (hideTokenValue) {
                                           return TokenItemWidget(
                                             iconPath: AssetIconPath
-                                                .commonAuraTokenLogo,
+                                                .commonAuraToken,
                                             coin: localization.translate(
                                               LanguageKey.globalPyxisAura,
                                             ),

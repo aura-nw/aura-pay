@@ -144,6 +144,7 @@
   "home_page_send_token" : "Send",
   "home_page_receive_token" : "Receive",
   "home_page_nft" : "NFTs",
+  "home_page_site" : "Sessions",
   "home_page_tx_limit" : "Txs limit",
   "home_page_tx_stake" : "Stake",
   "home_page_total_token_value" : "Total tokens value",
@@ -410,7 +411,10 @@
   "in_app_browser_page_open" : "Open",
   "in_app_browser_page_undo" : "Undo",
   "in_app_browser_page_delete" : "Delete",
-  "in_app_browser_page_delete_message" : "Delete ${message}"
+  "in_app_browser_page_delete_message" : "Delete ${message}",
+
+  "in_app_browser_search_screen_hint" : "Search or type URL",
+  "in_app_browser_search_screen_search_with_google" : "Search with google"
 
 
 }

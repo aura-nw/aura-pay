@@ -13,6 +13,7 @@ class BrowserInformationDb extends BrowserInformationDto {
   final String browserLogo;
   final String? browserDescription;
   final String browserUrl;
+  final bool isBrowserBookMark;
 
   BrowserInformationDb({
     this.browserId = Isar.autoIncrement,
@@ -20,11 +21,13 @@ class BrowserInformationDb extends BrowserInformationDto {
     required this.browserLogo,
     required this.browserUrl,
     this.browserDescription,
+    this.isBrowserBookMark = false,
   }) : super(
           id: browserId,
           name: browserName,
           logo: browserLogo,
           url: browserUrl,
           description: browserDescription,
+          isBookMark: isBrowserBookMark,
         );
 }

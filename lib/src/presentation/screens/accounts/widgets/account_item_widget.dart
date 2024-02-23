@@ -95,7 +95,7 @@ class AccountItemWidget extends AuraSmartAccountBaseWidget {
               ),
             ],
             SvgPicture.asset(
-              AssetIconPath.accountsMore,
+              AssetIconPath.commonMore,
             ),
           ],
         ),

@@ -107,43 +107,43 @@ class _AccountsScreenState extends State<AccountsScreen>
                   height: BoxSize.boxSize06,
                 ),
                 // App Localization Provider
-                AppLocalizationProvider(
-                  builder: (localization, _) {
-                    return Text(
-                      localization.translate(
-                        LanguageKey.accountsScreenUsing,
-                      ),
-                      style: AppTypoGraPhy.bodyMedium03.copyWith(
-                        color: appTheme.contentColorBlack,
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize07,
-                ),
-                // Home Screen Selected Account Selector
-                HomeScreenSelectedAccountSelector(
-                  bloc: _homeScreenBloc,
-                  builder: (account) {
-                    return AccountItemWidget(
-                      appTheme: appTheme,
-                      address: account?.address ?? '',
-                      accountName: account?.name ?? '',
-                      onMoreTap: () {
-                        _showMoreOptionsDialog(
-                          appTheme,
-                          account!,
-                        );
-                      },
-                      onUsing: true,
-                      isSmartAccount: account?.isSmartAccount ?? false,
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize06,
-                ),
+                // AppLocalizationProvider(
+                //   builder: (localization, _) {
+                //     return Text(
+                //       localization.translate(
+                //         LanguageKey.accountsScreenUsing,
+                //       ),
+                //       style: AppTypoGraPhy.bodyMedium03.copyWith(
+                //         color: appTheme.contentColorBlack,
+                //       ),
+                //     );
+                //   },
+                // ),
+                // const SizedBox(
+                //   height: BoxSize.boxSize07,
+                // ),
+                // // Home Screen Selected Account Selector
+                // HomeScreenSelectedAccountSelector(
+                //   bloc: _homeScreenBloc,
+                //   builder: (account) {
+                //     return AccountItemWidget(
+                //       appTheme: appTheme,
+                //       address: account?.address ?? '',
+                //       accountName: account?.name ?? '',
+                //       onMoreTap: () {
+                //         _showMoreOptionsDialog(
+                //           appTheme,
+                //           account!,
+                //         );
+                //       },
+                //       onUsing: true,
+                //       isSmartAccount: account?.isSmartAccount ?? false,
+                //     );
+                //   },
+                // ),
+                // const SizedBox(
+                //   height: BoxSize.boxSize06,
+                // ),
                 Expanded(
                   child: HomeScreenAccountsSelector(
                     bloc: _homeScreenBloc,

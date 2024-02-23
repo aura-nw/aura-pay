@@ -175,6 +175,7 @@ sealed class LanguageKey {
   static const String homePageSendToken = 'home_page_send_token';
   static const String homePageReceiveToken = 'home_page_receive_token';
   static const String homePageNFTs = 'home_page_nft';
+  static const String homePageSite = 'home_page_site';
   static const String homePageTxLimit = 'home_page_tx_limit';
   static const String homePageStake = 'home_page_tx_stake';
   static const String homePageTotalTokensValue = 'home_page_total_token_value';
@@ -485,8 +486,12 @@ sealed class LanguageKey {
   static const String inAppBrowserPagePlaceHolder = 'in_app_browser_page_place_holder';
   static const String inAppBrowserPageEcosystemTab = 'in_app_browser_page_ecosystem_tab';
   static const String inAppBrowserPageBookMarkTab = 'in_app_browser_page_book_mark_tab';
-  static const String inAppBrowserOpen = 'in_app_browser_page_open';
-  static const String inAppBrowserUndo = 'in_app_browser_page_undo';
-  static const String inAppBrowserDelete = 'in_app_browser_page_delete';
-  static const String inAppBrowserDeleteMessage = 'in_app_browser_page_delete_message';
+  static const String inAppBrowserPageOpen = 'in_app_browser_page_open';
+  static const String inAppBrowserPageUndo = 'in_app_browser_page_undo';
+  static const String inAppBrowserPageDelete = 'in_app_browser_page_delete';
+  static const String inAppBrowserPageDeleteMessage = 'in_app_browser_page_delete_message';
+
+
+  static const String inAppBrowserSearchScreenHint = 'in_app_browser_search_screen_hint';
+  static const String inAppBrowserSearchScreenSearchWithGoogle = 'in_app_browser_search_screen_search_with_google';
 }

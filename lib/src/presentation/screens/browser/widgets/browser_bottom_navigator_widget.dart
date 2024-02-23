@@ -10,6 +10,7 @@ class BrowserBottomNavigatorWidget extends StatelessWidget {
   final VoidCallback onBack;
   final VoidCallback onNext;
   final VoidCallback onBookmarkClick;
+  final VoidCallback onHomeClick;
 
   const BrowserBottomNavigatorWidget({
     required this.appTheme,
@@ -17,6 +18,7 @@ class BrowserBottomNavigatorWidget extends StatelessWidget {
     required this.onNext,
     required this.onBack,
     required this.onBookmarkClick,
+    required this.onHomeClick,
     super.key,
   });
 
@@ -45,20 +47,28 @@ class BrowserBottomNavigatorWidget extends StatelessWidget {
               AssetIconPath.commonArrowNext,
             ),
           ),
-          SvgPicture.asset(
-            AssetLogoPath.logo,
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: onHomeClick,
+            child: SvgPicture.asset(
+              AssetIconPath.inAppBrowserLogo,
+            ),
           ),
           GestureDetector(
             onTap: onBookmarkClick,
             behavior: HitTestBehavior.opaque,
-              child: bookMarkActive ?
-              SvgPicture.asset(
-                AssetIconPath.inAppBrowserBookMarkActive,
-              )
-                  :
-              SvgPicture.asset(
-                AssetIconPath.inAppBrowserBookMark,
-              ),
+            child: bookMarkActive
+                ? SvgPicture.asset(
+                    AssetIconPath.inAppBrowserBookMarkActive,
+                  )
+                : SvgPicture.asset(
+                    AssetIconPath.inAppBrowserBookMark,
+                  ),
+          ),
+          GestureDetector(
+            child: SvgPicture.asset(
+              AssetIconPath.inAppBrowserAccount,
+            ),
           ),
         ],
       ),

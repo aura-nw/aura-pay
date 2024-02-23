@@ -245,12 +245,14 @@ final class _StepWidget extends StatelessWidget {
 ///region home app bar
 class HomeAppBarWidget extends _AppBarBase {
   final VoidCallback onNotificationTap;
+  final String chainName;
 
   const HomeAppBarWidget({
     required super.appTheme,
     super.key,
     required this.onNotificationTap,
-    super.leadingWidth = BoxSize.boxSize14,
+    required this.chainName,
+    super.leadingWidth,
   });
 
   @override
@@ -278,7 +280,35 @@ class HomeAppBarWidget extends _AppBarBase {
 
   @override
   Widget titleBuilder(BuildContext context, AppTheme appTheme) {
-    return const SizedBox();
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Spacing.spacing03,
+        vertical: Spacing.spacing02,
+      ),
+      decoration: BoxDecoration(
+        color: appTheme.surfaceColorGrayDefault,
+        borderRadius: BorderRadius.circular(
+          BorderRadiusSize.borderRadius05,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(
+            AssetIconPath.commonAura,
+          ),
+          const SizedBox(
+            width: BoxSize.boxSize02,
+          ),
+          Text(
+            chainName,
+            style: AppTypoGraPhy.body02.copyWith(
+              color: appTheme.contentColorBlack,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -289,7 +319,7 @@ class HomeAppBarWidget extends _AppBarBase {
           width: BoxSize.boxSize05,
         ),
         SvgPicture.asset(
-          AssetIconPath.homeAppBarLogo,
+          AssetIconPath.inAppBrowserLogo,
         ),
       ],
     );
@@ -342,8 +372,6 @@ class AppBarWithTitle extends _AppBarBase {
 }
 
 ///
-
-
 
 /// region app bar with title non leading
 class AppBarWithOnlyTitle extends _AppBarBase {
