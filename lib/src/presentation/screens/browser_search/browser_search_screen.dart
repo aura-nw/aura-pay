@@ -80,6 +80,12 @@ class _BrowserSearchScreenState extends State<BrowserSearchScreen> {
                             description: browser.description ?? '',
                             logo: browser.logo,
                             appTheme: appTheme,
+                            onTap: () {
+                              AppNavigator.replaceWith(
+                                RoutePath.browser,
+                                browser.url,
+                              );
+                            },
                           ),
                         );
                       },

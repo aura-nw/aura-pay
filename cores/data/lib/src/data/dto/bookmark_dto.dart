@@ -1,7 +1,7 @@
 import 'package:domain/domain.dart';
 
-extension BrowserInformationDtoMapper on BrowserInformationDto {
-  BrowserInformation get toEntity => BrowserInformation(
+extension BookMarkDtoMapper on BookMarkDto {
+  BookMark get toEntity => BookMark(
         id: id,
         logo: logo,
         name: name,
@@ -10,20 +10,18 @@ extension BrowserInformationDtoMapper on BrowserInformationDto {
       );
 }
 
-class BrowserInformationDto {
+class BookMarkDto {
   final int id;
   final String logo;
   final String name;
   final String? description;
   final String url;
-  final bool isBookMark;
 
-  const BrowserInformationDto({
+  const BookMarkDto({
     required this.id,
     required this.logo,
     required this.name,
     this.description,
     required this.url,
-    this.isBookMark = false,
   });
 }

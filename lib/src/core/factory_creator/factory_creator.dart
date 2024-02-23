@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
 import 'package:isar/isar.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/aura_account/aura_account_db.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/bookmark/bookmark_db.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/browser/browser_db.dart';
 import 'package:pyxis_mobile/src/application/provider/smart_account/smart_account_provider_impl.dart';
 import 'package:pyxis_mobile/src/application/service/balance/balance_api_service_impl.dart';
 import 'package:pyxis_mobile/src/application/service/token/token_api_service_impl.dart';
@@ -64,6 +66,8 @@ Future<Isar> getIsar() async {
     isar = await Isar.open(
       [
         AuraAccountDbSchema,
+        BrowserDbSchema,
+        BookMarkDbSchema,
       ],
       directory: '',
       name: AppLocalConstant.accountDbName,

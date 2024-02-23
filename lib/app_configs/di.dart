@@ -8,6 +8,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:isar/isar.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/aura_account/account_database_service_impl.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/bookmark/bookmark_database_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/browser/browser_database_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/normal_storage/normal_storage_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/secure_storage/secure_storage_service_impl.dart';
@@ -27,6 +28,7 @@ import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/browser/browser_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
@@ -274,7 +276,12 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerLazySingleton<BrowserDataBaseService>(
+  getIt.registerLazySingleton<BookMarkDataBaseService>(
+    () => BookMarkDatabaseServiceImpl(
+      isar,
+    ),
+  );
+  getIt.registerLazySingleton<BrowserDatabaseService>(
     () => BrowserDatabaseServiceImpl(
       isar,
     ),
@@ -368,9 +375,15 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<BookMarkRepository>(
+    () => BookMarkRepositoryImpl(
+      getIt.get<BookMarkDataBaseService>(),
+    ),
+  );
+
   getIt.registerLazySingleton<BrowserManagementRepository>(
     () => BrowserManagementRepositoryImpl(
-      getIt.get<BrowserDataBaseService>(),
+      getIt.get<BrowserDatabaseService>(),
     ),
   );
 
@@ -463,6 +476,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<DeviceManagementUseCase>(
     () => DeviceManagementUseCase(
       getIt.get<DeviceManagementRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<BookMarkUseCase>(
+    () => BookMarkUseCase(
+      getIt.get<BookMarkRepository>(),
     ),
   );
 
@@ -725,5 +744,12 @@ Future<void> initDependency(
 
   getIt.registerFactory<BrowserSearchBloc>(
     () => BrowserSearchBloc(),
+  );
+
+  getIt.registerFactory<BrowserPageBloc>(
+    () => BrowserPageBloc(
+      getIt.get<BrowserManagementUseCase>(),
+      getIt.get<BookMarkUseCase>(),
+    ),
   );
 }

@@ -16,7 +16,7 @@ class BrowserSearchBloc extends Bloc<BrowserSearchEvent, BrowserSearchState> {
     BrowserSearchOnQueryEvent event,
     Emitter<BrowserSearchState> emit,
   ) {
-    final List<BrowserInformation> displays = List.empty(
+    final List<BookMark> displays = List.empty(
       growable: true,
     );
 

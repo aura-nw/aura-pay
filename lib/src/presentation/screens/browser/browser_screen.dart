@@ -27,6 +27,8 @@ class BrowserScreen extends StatefulWidget {
 class _BrowserScreenState extends State<BrowserScreen> {
   late WebViewController _webViewController;
 
+  String ?favicon;
+
   @override
   void initState() {
     // #docregion platform_features
@@ -50,30 +52,38 @@ class _BrowserScreenState extends State<BrowserScreen> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
-            debugPrint('WebView is loading (progress : $progress%)');
+
           },
           onPageStarted: (String url) {
-            debugPrint('Page started loading: $url');
+
           },
           onPageFinished: (String url) {
-            debugPrint('Page finished loading: $url');
+            _webViewController.runJavaScript('''
+            var links = document.head.getElementsByTagName('link');
+            for (var i = 0; i < links.length; i++) {
+              if (links[i].rel == 'icon' || links[i].rel == 'shortcut icon') {
+                channels.favicon.postMessage(links[i].href);
+                break;
+              }
+            }
+          ''');
           },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
             return NavigationDecision.navigate;
           },
           onUrlChange: (UrlChange change) {
-            debugPrint('url change to ${change.url}');
+
+
           },
           onHttpAuthRequest: (HttpAuthRequest request) {},
         ),
       )
       ..addJavaScriptChannel(
-        'Toaster',
+        'favicon',
         onMessageReceived: (JavaScriptMessage message) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
+          favicon = message.message;
+          debugPrint('receive icon $favicon');
         },
       )
       ..loadRequest(
@@ -102,22 +112,20 @@ class _BrowserScreenState extends State<BrowserScreen> {
           body: SafeArea(
             child: Column(
               children: [
-                FutureBuilder(
-                  builder: (context, snapshot) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Spacing.spacing07,
-                        vertical: Spacing.spacing06,
-                      ),
-                      child: BrowserHeaderWidget(
-                        appTheme: appTheme,
-                        onViewTap: () {},
-                        onSearchTap: () {},
-                        url: snapshot.data ?? '',
-                      ),
-                    );
-                  },
-                  future: _webViewController.currentUrl(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing07,
+                    vertical: Spacing.spacing06,
+                  ),
+                  child: BrowserHeaderWidget(
+                    appTheme: appTheme,
+                    onViewTap: () {},
+                    onSearchTap: () {},
+                    url: widget.initUrl,
+                    onMoreTap: () {
+
+                    },
+                  ),
                 ),
                 Expanded(
                   child: WebViewWidget(

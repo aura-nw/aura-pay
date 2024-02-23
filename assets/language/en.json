@@ -412,6 +412,7 @@
   "in_app_browser_page_undo" : "Undo",
   "in_app_browser_page_delete" : "Delete",
   "in_app_browser_page_delete_message" : "Delete ${message}",
+  "in_app_browser_page_no_book_mark_found" : "No bookmark found",
 
 
   "in_app_browser_search_screen_hint" : "Search or type URL",

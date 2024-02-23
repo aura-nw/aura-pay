@@ -1,18 +1,23 @@
-import 'package:data/src/data/dto/browser_information_dto.dart';
+import 'package:data/src/data/dto/browser_dto.dart';
+import 'package:data/src/data/dto/bookmark_dto.dart';
 
-abstract interface class BrowserDataBaseService {
+abstract interface class LocalBrowserInterface<P,R>{
   Future<void> add({
-    required String logo,
-    required String name,
-    String? description,
-    required String url,
+    required P parameter
   });
 
   Future<void> delete({
     required int id,
   });
 
-  Future<void> clear();
+  Future<List<R>> getAll();
+}
 
-  Future<List<BrowserInformationDto>> getAll();
+abstract interface class BookMarkDataBaseService
+    implements
+        LocalBrowserInterface<Map<String, dynamic>, BookMarkDto> {}
+
+abstract interface class BrowserDatabaseService
+    implements LocalBrowserInterface<Map<String, dynamic>, BrowserDto> {
+  Future<void> clear();
 }

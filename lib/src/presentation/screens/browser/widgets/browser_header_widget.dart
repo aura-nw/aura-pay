@@ -10,12 +10,14 @@ class BrowserHeaderWidget extends StatelessWidget {
   final int tabCount;
   final VoidCallback onViewTap;
   final VoidCallback onSearchTap;
+  final VoidCallback onMoreTap;
   final String url;
 
   const BrowserHeaderWidget({
     required this.appTheme,
     this.tabCount = 0,
     required this.onViewTap,
+    required this.onMoreTap,
     required this.onSearchTap,
     required this.url,
     super.key,
@@ -81,7 +83,7 @@ class BrowserHeaderWidget extends StatelessWidget {
               ),
             ),
             padding: const EdgeInsets.symmetric(
-              horizontal :Spacing.spacing02,
+              horizontal: Spacing.spacing02,
             ),
             child: Text(
               tabCount.toString(),
@@ -89,6 +91,17 @@ class BrowserHeaderWidget extends StatelessWidget {
                 color: appTheme.contentColor700,
               ),
               textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: Spacing.spacing04,
+            ),
+            child: SvgPicture.asset(
+              AssetIconPath.commonMore,
             ),
           ),
         ),

@@ -1,13 +1,13 @@
 import 'package:domain/domain.dart';
 
-const BrowserInformation haloTrade = BrowserInformation(
+const BookMark haloTrade = BookMark(
   id: -1,
   logo: 'https://halotrade.zone/favicon-32x32.png',
   name: 'Halotrade.zone',
   url: 'https://halotrade.zone',
   description: 'The Aura DeFi central hub',
 );
-const BrowserInformation seekHype = BrowserInformation(
+const BookMark seekHype = BookMark(
   id: -2,
   logo: 'https://staging.seekhype.io/assets/icons/icon-192x192.png',
   name: 'Seekhype',
@@ -15,7 +15,7 @@ const BrowserInformation seekHype = BrowserInformation(
   description: 'The Simplest NFT Marketplace',
 );
 
-const BrowserInformation pyxisSafe = BrowserInformation(
+const BookMark pyxisSafe = BookMark(
   id: -3,
   logo: 'https://halotrade.zone/favicon-32x32.png',
   name: 'Pyxis Safe',
@@ -23,7 +23,7 @@ const BrowserInformation pyxisSafe = BrowserInformation(
   description: 'The multi-signature solution for the Interchain',
 );
 
-const BrowserInformation auraScan = BrowserInformation(
+const BookMark auraScan = BookMark(
   id: -4,
   logo: 'https://aurascan.io/assets/images/logo/title-logo.png',
   name: 'Aurascan',
@@ -31,7 +31,7 @@ const BrowserInformation auraScan = BrowserInformation(
   description: 'The Aura blockchain explorer',
 );
 
-const List<BrowserInformation> auraEcosystems = [
+const List<BookMark> auraEcosystems = [
   haloTrade,
   seekHype,
   pyxisSafe,

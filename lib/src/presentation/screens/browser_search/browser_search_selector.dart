@@ -6,10 +6,10 @@ import 'browser_search_state.dart';
 import 'browser_search_bloc.dart';
 
 class BrowserSearchSystemsSelector extends BlocSelector<BrowserSearchBloc,
-    BrowserSearchState, List<BrowserInformation>> {
+    BrowserSearchState, List<BookMark>> {
   BrowserSearchSystemsSelector({
     Key? key,
-    required Widget Function(List<BrowserInformation>) builder,
+    required Widget Function(List<BookMark>) builder,
   }) : super(
           key: key,
           selector: (state) => state.systems,

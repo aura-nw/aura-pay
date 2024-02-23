@@ -1,47 +1,43 @@
-import 'package:data/src/data/dto/browser_information_dto.dart';
-import 'package:data/src/data/resource/local/browser_database_service.dart';
+import 'package:data/data.dart';
+import 'package:data/src/data/dto/browser_dto.dart';
 import 'package:domain/domain.dart';
 
 final class BrowserManagementRepositoryImpl
     implements BrowserManagementRepository {
-  final BrowserDataBaseService _browserDataBaseService;
+  final LocalBrowserInterface _localBrowserInterface;
 
-  const BrowserManagementRepositoryImpl(this._browserDataBaseService);
+  const BrowserManagementRepositoryImpl(this._localBrowserInterface);
 
   @override
-  Future<void> addNewBookMark({
-    required SaveBrowserParameter parameter,
+  Future<void> addNewBrowser({
+    required Map<String, dynamic> json,
   }) {
-    return _browserDataBaseService.add(
-      logo: parameter.logo,
-      name: parameter.name,
-      url: parameter.url,
-      description: parameter.description,
+    return (_localBrowserInterface as BrowserDatabaseService).add(
+      parameter: json,
     );
   }
 
   @override
-  Future<void> deleteBookMark({
+  Future<void> deleteAll() {
+    return (_localBrowserInterface as BrowserDatabaseService).clear();
+  }
+
+  @override
+  Future<void> deleteBrowser({
     required int id,
   }) {
-    return _browserDataBaseService.delete(
-      id: id,
-    );
+    return _localBrowserInterface.delete(id: id);
   }
 
   @override
-  Future<List<BrowserInformation>> getBookmarks() async {
-    final browsers = await _browserDataBaseService.getAll();
+  Future<List<Browser>> getBrowsers() async {
+    final browsers =
+        await (_localBrowserInterface as BrowserDatabaseService).getAll();
 
     return browsers
         .map(
           (e) => e.toEntity,
         )
         .toList();
-  }
-
-  @override
-  Future<void> deleteAll() {
-    return _browserDataBaseService.clear();
   }
 }

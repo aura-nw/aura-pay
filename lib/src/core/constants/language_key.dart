@@ -490,7 +490,7 @@ sealed class LanguageKey {
   static const String inAppBrowserPageUndo = 'in_app_browser_page_undo';
   static const String inAppBrowserPageDelete = 'in_app_browser_page_delete';
   static const String inAppBrowserPageDeleteMessage = 'in_app_browser_page_delete_message';
-
+  static const String inAppBrowserNoBookMarkFound= 'in_app_browser_page_no_book_mark_found';
 
   static const String inAppBrowserSearchScreenHint = 'in_app_browser_search_screen_hint';
   static const String inAppBrowserSearchScreenSearchWithGoogle = 'in_app_browser_search_screen_search_with_google';

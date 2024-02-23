@@ -80,8 +80,8 @@ class SearchWidget extends StatelessWidget {
                 BorderRadiusSize.borderRadius02,
               ),
             ),
-            padding: const EdgeInsets.all(
-              Spacing.spacing02,
+            padding: const EdgeInsets.symmetric(
+              horizontal: Spacing.spacing02,
             ),
             child: Text(
               tabCount.toString(),

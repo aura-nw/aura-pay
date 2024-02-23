@@ -1,13 +1,19 @@
-final class SaveBrowserParameter{
+final class SaveBrowserParameter {
   final String logo;
-  final String name;
-  final String? description;
+  final String siteName;
   final String url;
 
   const SaveBrowserParameter({
     required this.logo,
-    required this.name,
-    this.description,
+    required this.siteName,
     required this.url,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'logo': logo,
+      'siteName': siteName,
+      'url': url,
+    };
+  }
 }

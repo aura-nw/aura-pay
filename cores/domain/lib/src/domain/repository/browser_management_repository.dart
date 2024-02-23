@@ -1,16 +1,15 @@
-import 'package:domain/src/domain/entities/browser_information.dart';
-import 'package:domain/src/domain/entities/requests/save_browser_parameter.dart';
+import 'package:domain/src/domain/entities/browser.dart';
 
-abstract interface class BrowserManagementRepository {
-  Future<void> addNewBookMark({
-    required SaveBrowserParameter parameter,
+abstract interface class BrowserManagementRepository{
+  Future<void> addNewBrowser({
+    required Map<String,dynamic> json,
   });
 
-  Future<void> deleteBookMark({
+  Future<void> deleteBrowser({
     required int id,
   });
 
   Future<void> deleteAll();
 
-  Future<List<BrowserInformation>> getBookmarks();
+  Future<List<Browser>> getBrowsers();
 }

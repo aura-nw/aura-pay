@@ -1,5 +1,5 @@
-import 'package:domain/src/domain/entities/browser_information.dart';
-import 'package:domain/src/domain/entities/requests/save_browser_parameter.dart';
+import 'package:domain/src/domain/entities/browser.dart';
+import 'package:domain/src/domain/entities/requests/save_bookmark_parameter.dart';
 import 'package:domain/src/domain/repository/browser_management_repository.dart';
 
 final class BrowserManagementUseCase {
@@ -7,37 +7,37 @@ final class BrowserManagementUseCase {
 
   const BrowserManagementUseCase(this._repository);
 
-  Future<void> addNewBookMark({
+  Future<void> addNewBrowser({
     required String logo,
     required String name,
     String? description,
     required String url,
   }) {
-    final SaveBrowserParameter parameter = SaveBrowserParameter(
+    final SaveBookMarkParameter parameter = SaveBookMarkParameter(
       logo: logo,
       name: name,
       url: url,
       description: description,
     );
 
-    return _repository.addNewBookMark(
-      parameter: parameter,
+    return _repository.addNewBrowser(
+      json: parameter.toJson(),
     );
   }
 
-  Future<void> deleteBookMark({
+  Future<void> deleteBrowser({
     required int id,
   }) {
-    return _repository.deleteBookMark(
+    return _repository.deleteBrowser(
       id: id,
     );
   }
 
-  Future<void> deleteAll() {
-    return _repository.deleteAll();
+  Future<List<Browser>> getBrowsers() {
+    return _repository.getBrowsers();
   }
 
-  Future<List<BrowserInformation>> getBookmarks() {
-    return _repository.getBookmarks();
+  Future<void> deleteAll(){
+    return _repository.deleteAll();
   }
 }
