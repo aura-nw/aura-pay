@@ -11,17 +11,20 @@ class BrowserDb extends BrowserDto {
   final String browserUrl;
   final String browserLogo;
   final String browserSiteTitle;
+  final bool browserIsActive;
 
   BrowserDb({
     required this.browserUrl,
     required this.browserLogo,
     required this.browserSiteTitle,
     this.browserId = Isar.autoIncrement,
+    required this.browserIsActive,
   }) : super(
           url: browserUrl,
           logo: browserLogo,
           siteTitle: browserSiteTitle,
           id: browserId,
+          isActive: browserIsActive,
         );
 
   factory BrowserDb.fromJson(Map<String, dynamic> json) {
@@ -29,6 +32,17 @@ class BrowserDb extends BrowserDto {
       browserSiteTitle: json['siteName'],
       browserLogo: json['logo'],
       browserUrl: json['url'],
+      browserIsActive: json['isActive'],
+    );
+  }
+
+  BrowserDb copyWithId(int id) {
+    return BrowserDb(
+      browserUrl: browserUrl,
+      browserLogo: browserLogo,
+      browserSiteTitle: browserSiteTitle,
+      browserIsActive: browserIsActive,
+      browserId: id,
     );
   }
 }

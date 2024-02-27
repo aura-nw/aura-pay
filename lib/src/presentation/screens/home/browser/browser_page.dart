@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
-import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/browser/browser_page_event.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/browser/browser_page_selector.dart';
+import 'browser_page_event.dart';
+import 'browser_page_selector.dart';
+import 'widgets/book_mark_more_action_widget.dart';
 import 'browser_page_bloc.dart';
 import 'widgets/browser_suggestion_widget.dart';
 import 'widgets/tab_widget.dart';
@@ -47,9 +46,13 @@ class _BrowserPageState extends State<BrowserPage> {
                     child: SearchWidget(
                       appTheme: appTheme,
                       onViewTap: () {},
-                      onSearchTap: () {
-                        AppNavigator.push(
+                      onSearchTap: () async {
+                        await AppNavigator.push(
                           RoutePath.browserSearch,
+                        );
+
+                        _bloc.add(
+                          const BrowserPageOnInitEvent(),
                         );
                       },
                     ),
@@ -113,13 +116,19 @@ class _BrowserPageState extends State<BrowserPage> {
                                                 bottom: Spacing.spacing06,
                                               ),
                                               child: GestureDetector(
-                                                onTap: () {
-                                                  AppNavigator.push(
+                                                onTap: () async{
+                                                  await AppNavigator.push(
                                                     RoutePath.browser,
                                                     browser.url,
                                                   );
+
+                                                  _bloc.add(
+                                                    const BrowserPageOnInitEvent(),
+                                                  );
+
                                                 },
-                                                behavior: HitTestBehavior.opaque,
+                                                behavior:
+                                                    HitTestBehavior.opaque,
                                                 child: BrowserSuggestionWidget(
                                                   name: browser.name,
                                                   description:
@@ -131,7 +140,8 @@ class _BrowserPageState extends State<BrowserPage> {
                                                         .symmetric(
                                                       horizontal:
                                                           Spacing.spacing05,
-                                                      vertical: Spacing.spacing02,
+                                                      vertical:
+                                                          Spacing.spacing02,
                                                     ),
                                                     decoration: BoxDecoration(
                                                       borderRadius:
@@ -146,9 +156,11 @@ class _BrowserPageState extends State<BrowserPage> {
                                                     ),
                                                     child:
                                                         AppLocalizationProvider(
-                                                      builder: (localization, _) {
+                                                      builder:
+                                                          (localization, _) {
                                                         return Text(
-                                                          localization.translate(
+                                                          localization
+                                                              .translate(
                                                             LanguageKey
                                                                 .inAppBrowserPageOpen,
                                                           ),
@@ -182,8 +194,11 @@ class _BrowserPageState extends State<BrowserPage> {
                                                   LanguageKey
                                                       .inAppBrowserNoBookMarkFound,
                                                 ),
-                                                style: AppTypoGraPhy.bodyMedium02.copyWith(
-                                                  color: appTheme.contentColor500,
+                                                style: AppTypoGraPhy
+                                                    .bodyMedium02
+                                                    .copyWith(
+                                                  color:
+                                                      appTheme.contentColor500,
                                                 ),
                                               );
                                             },
@@ -201,33 +216,39 @@ class _BrowserPageState extends State<BrowserPage> {
                                             //
                                           },
                                           data: bookMark,
-                                          builder: (browser, _) {
+                                          builder: (bookMark, _) {
                                             return Padding(
                                               padding: const EdgeInsets.only(
                                                 bottom: Spacing.spacing06,
                                               ),
                                               child: GestureDetector(
-                                                onTap: () {
-                                                  AppNavigator.push(
+                                                onTap: () async {
+                                                  await AppNavigator.push(
                                                     RoutePath.browser,
-                                                    browser.url,
+                                                    bookMark.url,
+                                                  );
+
+                                                  _bloc.add(
+                                                    const BrowserPageOnInitEvent(),
                                                   );
                                                 },
-                                                behavior: HitTestBehavior.opaque,
+                                                behavior:
+                                                    HitTestBehavior.opaque,
                                                 child: BrowserSuggestionWidget(
-                                                  name: browser.name,
-                                                  description:
-                                                      browser.description ?? '',
-                                                  logo: browser.logo,
+                                                  name: bookMark.name,
+                                                  description: bookMark.url,
+                                                  logo: bookMark.logo,
                                                   appTheme: appTheme,
-                                                  suffix: GestureDetector(
-                                                    onTap: (){
-
+                                                  suffix:
+                                                      BookMarkMoreActionWidget(
+                                                    appTheme: appTheme,
+                                                    onDelete: () {
+                                                      _bloc.add(
+                                                        BrowserPageOnDeleteBookMarkEvent(
+                                                          id: bookMark.id,
+                                                        ),
+                                                      );
                                                     },
-                                                    behavior: HitTestBehavior.opaque,
-                                                    child: SvgPicture.asset(
-                                                      AssetIconPath.commonMore,
-                                                    ),
                                                   ),
                                                 ),
                                               ),

@@ -21,6 +21,7 @@ import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
 import 'widgets/token_item_widget.dart';
 import 'home_page_event.dart';
 import 'home_page_selector.dart';
@@ -86,6 +87,23 @@ class _HomePageState extends State<HomePage>
       _bloc.add(
         const HomePageEventOnFetchTokenPrice(),
       );
+    }else if(param.event == HomeScreenObserver.onInAppBrowserChooseAccountEvent){
+      final data = param.data;
+
+      if (data is AuraAccount) {
+        HomeScreenBloc.of(
+          context,
+        ).add(
+          HomeScreenEventOnChooseAccount(
+            data,
+          ),
+        );
+        _bloc.add(
+          HomePageEventOnFetchTokenPriceWithAddress(
+            data.address,
+          ),
+        );
+      }
     }
   }
 

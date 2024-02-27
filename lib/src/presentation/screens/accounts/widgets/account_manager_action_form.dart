@@ -84,7 +84,7 @@ class AccountManagerActionForm extends StatelessWidget {
                   height: BoxSize.boxSize07,
                 ),
                 _buildOptions(
-                  AssetIconPath.accountsShare,
+                  AssetIconPath.commonShare,
                   LanguageKey.accountsScreenSendAddress,
                   onTap: onShareAddress,
                 ),

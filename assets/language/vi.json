@@ -415,7 +415,14 @@
   "in_app_browser_page_no_book_mark_found" : "No bookmark found",
 
   "in_app_browser_search_screen_hint" : "Search or type URL",
-  "in_app_browser_search_screen_search_with_google" : "Search with google"
+  "in_app_browser_search_screen_search_with_google" : "Search with google",
+
+
+  "in_app_browser_screen_choose_account_dialog_title" : "Choose account",
+  "in_app_browser_screen_smart_account" : "Smart acc",
+  "in_app_browser_screen_new_tab" : "New tab",
+  "in_app_browser_screen_share" : "Share",
+  "in_app_browser_screen_refresh" : "Refresh"
 
 
 }

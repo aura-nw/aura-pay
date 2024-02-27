@@ -10,22 +10,22 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
   @override
   Future<void> add({
     required Map<String, dynamic> parameter,
-  }) async{
+  }) async {
     final BrowserDb browserDb = BrowserDb.fromJson(parameter);
 
-    await _isar.writeTxn(() async{
+    await _isar.writeTxn(() async {
       await _isar.browserDbs.put(browserDb);
     });
   }
 
   @override
-  Future<void> clear() async{
+  Future<void> clear() async {
     await _isar.browserDbs.where().deleteAll();
   }
 
   @override
-  Future<void> delete({required int id}) async{
-    await _isar.writeTxn(() async{
+  Future<void> delete({required int id}) async {
+    await _isar.writeTxn(() async {
       await _isar.browserDbs.delete(id);
     });
   }
@@ -33,5 +33,25 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
   @override
   Future<List<BrowserDto>> getAll() {
     return _isar.browserDbs.where().findAll();
+  }
+
+  @override
+  Future<void> update({
+    required int id,
+    required Map<String, dynamic> json,
+  }) async {
+    final browser = await _isar.browserDbs.get(id);
+
+    if (browser == null) return;
+
+    final BrowserDb browserDb = BrowserDb.fromJson(json);
+
+    await _isar.writeTxn(() async {
+      await _isar.browserDbs.put(
+        browserDb.copyWithId(
+          browser.id,
+        ),
+      );
+    });
   }
 }

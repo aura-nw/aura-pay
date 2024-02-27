@@ -1,6 +1,8 @@
 import 'package:cache_network_image_extended/cache_network_image_extended.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:shimmer/shimmer.dart';
@@ -57,6 +59,9 @@ class BrowserSuggestionWidget extends StatelessWidget {
                   color: appTheme.primaryColor50,
                 ),
                 alignment: Alignment.center,
+                child: SvgPicture.asset(
+                  AssetIconPath.commonGoogle,
+                ),
               );
             },
           ),

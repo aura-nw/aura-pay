@@ -56,9 +56,9 @@ class BrowserPageBloc extends Bloc<BrowserPageEvent, BrowserPageState> {
   ) async {
     final List<BookMark> disPlayBookMarks = List.empty(growable: true);
 
-    state.bookMarks.removeWhere((e) => e.id == event.id);
-
     disPlayBookMarks.addAll(state.bookMarks);
+
+    disPlayBookMarks.removeWhere((e) => e.id == event.id);
 
     emit(
       state.copyWith(

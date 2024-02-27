@@ -31,4 +31,11 @@ final class BookMarkDatabaseServiceImpl implements BookMarkDataBaseService {
   Future<List<BookMarkDto>> getAll() {
     return _isar.bookMarkDbs.where().findAll();
   }
+
+  @override
+  Future<BookMarkDto?> getBookMarkByUrl({
+    required String url,
+  }) async {
+    return _isar.bookMarkDbs.filter().bookMarkUrlEqualTo(url).findFirst();
+  }
 }

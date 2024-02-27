@@ -327,13 +327,13 @@ class _AccountsScreenState extends State<AccountsScreen>
 
   void _onChooseAccount(AuraAccount account) {
     WalletConnectCubit.of(context).registerSmartAccount(account.address);
-    HomeScreenBloc.of(context).add(
+    _homeScreenBloc.add(
       HomeScreenEventOnChooseAccount(
         account,
       ),
     );
 
-    if (account.id != HomeScreenBloc.of(context).state.selectedAccount?.id) {
+    if (account.id != _homeScreenBloc.state.selectedAccount?.id) {
       // refresh token home
       _observer.emit(
         emitParam: HomeScreenEmitParam(

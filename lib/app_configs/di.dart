@@ -27,6 +27,7 @@ import 'package:pyxis_mobile/src/application/service/transaction/transaction_api
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser/browser_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/browser/browser_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
@@ -748,6 +749,14 @@ Future<void> initDependency(
 
   getIt.registerFactory<BrowserPageBloc>(
     () => BrowserPageBloc(
+      getIt.get<BrowserManagementUseCase>(),
+      getIt.get<BookMarkUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<BrowserBloc>(
+    () => BrowserBloc(
+      getIt.get<AuraAccountUseCase>(),
       getIt.get<BrowserManagementUseCase>(),
       getIt.get<BookMarkUseCase>(),
     ),

@@ -27,6 +27,7 @@ final class HomeScreenObserver
       'ON_SEND_TOKEN_SUCCESSFUL_EVENT';
   static String onSetRecoveryMethodSuccessfulEvent = 'ON_SET_RECOVERY_METHOD_SUCCESSFUL_EVENT';
   static String onRecoverSuccessfulEvent = 'ON_RECOVER_SUCCESSFUL_EVENT';
+  static String onInAppBrowserChooseAccountEvent = 'ON_IN_APP_BROWSER_CHOOSE_ACCOUNT_EVENT';
 
   @override
   void emit({

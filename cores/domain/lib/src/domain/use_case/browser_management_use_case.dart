@@ -1,5 +1,6 @@
 import 'package:domain/src/domain/entities/browser.dart';
-import 'package:domain/src/domain/entities/requests/save_bookmark_parameter.dart';
+import 'package:domain/src/domain/entities/requests/save_browser_parameter.dart';
+import 'package:domain/src/domain/entities/requests/update_browser_parameter.dart';
 import 'package:domain/src/domain/repository/browser_management_repository.dart';
 
 final class BrowserManagementUseCase {
@@ -8,16 +9,16 @@ final class BrowserManagementUseCase {
   const BrowserManagementUseCase(this._repository);
 
   Future<void> addNewBrowser({
-    required String logo,
-    required String name,
-    String? description,
     required String url,
+    required String logo,
+    required String siteName,
+    required bool isActive,
   }) {
-    final SaveBookMarkParameter parameter = SaveBookMarkParameter(
+    final SaveBrowserParameter parameter = SaveBrowserParameter(
       logo: logo,
-      name: name,
+      isActive: isActive,
       url: url,
-      description: description,
+      siteName: siteName,
     );
 
     return _repository.addNewBrowser(
@@ -37,7 +38,26 @@ final class BrowserManagementUseCase {
     return _repository.getBrowsers();
   }
 
-  Future<void> deleteAll(){
+  Future<void> deleteAll() {
     return _repository.deleteAll();
+  }
+
+  Future<void> update({
+    required int id,
+    required String url,
+    required String logo,
+    required String siteName,
+    required bool isActive,
+  }) async {
+    final UpdateBrowserParameter parameter = UpdateBrowserParameter(
+      isActive: isActive,
+      url: url,
+      logo: logo,
+      siteName: siteName,
+    );
+    return _repository.update(
+      id: id,
+      json: parameter.toJson(),
+    );
   }
 }

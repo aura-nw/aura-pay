@@ -40,4 +40,15 @@ final class BrowserManagementRepositoryImpl
         )
         .toList();
   }
+
+  @override
+  Future<void> update({
+    required int id,
+    required Map<String, dynamic> json,
+  }) {
+    return (_localBrowserInterface as BrowserDatabaseService).update(
+      id: id,
+      json: json,
+    );
+  }
 }

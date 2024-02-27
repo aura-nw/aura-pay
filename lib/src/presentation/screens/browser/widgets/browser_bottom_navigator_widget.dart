@@ -1,24 +1,29 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser/browser_selector.dart';
 
 class BrowserBottomNavigatorWidget extends StatelessWidget {
   final AppTheme appTheme;
-  final bool bookMarkActive;
   final VoidCallback onBack;
   final VoidCallback onNext;
   final VoidCallback onBookmarkClick;
   final VoidCallback onHomeClick;
+  final void Function(
+    List<AuraAccount>,
+    AuraAccount?,
+  ) onAccountClick;
 
   const BrowserBottomNavigatorWidget({
     required this.appTheme,
-    this.bookMarkActive = false,
     required this.onNext,
     required this.onBack,
     required this.onBookmarkClick,
     required this.onHomeClick,
+    required this.onAccountClick,
     super.key,
   });
 
@@ -37,15 +42,23 @@ class BrowserBottomNavigatorWidget extends StatelessWidget {
             onTap: onBack,
             behavior: HitTestBehavior.opaque,
             child: SvgPicture.asset(
-              AssetIconPath.commonArrowBack,
+              AssetIconPath.inAppBrowserBack,
             ),
           ),
-          GestureDetector(
-            onTap: onBack,
-            behavior: HitTestBehavior.opaque,
-            child: SvgPicture.asset(
-              AssetIconPath.commonArrowNext,
-            ),
+          BrowserCanGoNextSelector(
+            builder: (canGoNext) {
+              return GestureDetector(
+                onTap: onNext,
+                behavior: HitTestBehavior.opaque,
+                child: canGoNext
+                    ? SvgPicture.asset(
+                        AssetIconPath.inAppBrowserNextBold,
+                      )
+                    : SvgPicture.asset(
+                        AssetIconPath.inAppBrowserNext,
+                      ),
+              );
+            },
           ),
           GestureDetector(
             behavior: HitTestBehavior.opaque,
@@ -57,18 +70,32 @@ class BrowserBottomNavigatorWidget extends StatelessWidget {
           GestureDetector(
             onTap: onBookmarkClick,
             behavior: HitTestBehavior.opaque,
-            child: bookMarkActive
-                ? SvgPicture.asset(
-                    AssetIconPath.inAppBrowserBookMarkActive,
-                  )
-                : SvgPicture.asset(
-                    AssetIconPath.inAppBrowserBookMark,
-                  ),
-          ),
-          GestureDetector(
-            child: SvgPicture.asset(
-              AssetIconPath.inAppBrowserAccount,
+            child: BrowserBookMarkSelector(
+              builder: (bookMark) {
+                return bookMark != null
+                    ? SvgPicture.asset(
+                        AssetIconPath.inAppBrowserBookMarkActive,
+                      )
+                    : SvgPicture.asset(
+                        AssetIconPath.inAppBrowserBookMark,
+                      );
+              },
             ),
+          ),
+          BrowserAccountsSelector(
+            builder: (accounts) {
+              return BrowserSelectedAccountSelector(builder: (selectedAccount) {
+                return GestureDetector(
+                  onTap: () {
+                    onAccountClick(accounts, selectedAccount);
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: SvgPicture.asset(
+                    AssetIconPath.inAppBrowserAccount,
+                  ),
+                );
+              });
+            },
           ),
         ],
       ),

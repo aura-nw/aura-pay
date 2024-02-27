@@ -62,36 +62,38 @@ class _BrowserSearchScreenState extends State<BrowserSearchScreen> {
                   const SizedBox(
                     height: BoxSize.boxSize05,
                   ),
-                  BrowserSearchSystemsSelector(builder: (auraEcosystems) {
-                    return ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Spacing.spacing07,
-                      ),
-                      shrinkWrap: true,
-                      primary: false,
-                      itemBuilder: (context, index) {
-                        final browser = auraEcosystems[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: Spacing.spacing06,
-                          ),
-                          child: BrowserEcosystemSuggestionWidget(
-                            name: browser.name,
-                            description: browser.description ?? '',
-                            logo: browser.logo,
-                            appTheme: appTheme,
-                            onTap: () {
-                              AppNavigator.replaceWith(
-                                RoutePath.browser,
-                                browser.url,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      itemCount: auraEcosystems.length,
-                    );
-                  }),
+                  BrowserSearchSystemsSelector(
+                    builder: (auraEcosystems) {
+                      return ListView.builder(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spacing.spacing07,
+                        ),
+                        shrinkWrap: true,
+                        primary: false,
+                        itemBuilder: (context, index) {
+                          final browser = auraEcosystems[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: Spacing.spacing06,
+                            ),
+                            child: BrowserEcosystemSuggestionWidget(
+                              name: browser.name,
+                              description: browser.description ?? '',
+                              logo: browser.logo,
+                              appTheme: appTheme,
+                              onTap: () {
+                                AppNavigator.replaceWith(
+                                  RoutePath.browser,
+                                  browser.url,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        itemCount: auraEcosystems.length,
+                      );
+                    },
+                  ),
                   BrowserSearchQuerySelector(
                     builder: (query) {
                       if (query.isEmpty) {
@@ -149,9 +151,9 @@ class _BrowserSearchScreenState extends State<BrowserSearchScreen> {
     );
   }
 
-  void _onChange(String value){
+  void _onChange(String value) {
     _bloc.add(
-       BrowserSearchOnQueryEvent(
+      BrowserSearchOnQueryEvent(
         query: value,
       ),
     );

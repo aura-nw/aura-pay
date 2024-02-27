@@ -1,10 +1,10 @@
-final class SaveBrowserParameter {
+final class UpdateBrowserParameter {
   final String logo;
   final String siteName;
   final String url;
   final bool isActive;
 
-  const SaveBrowserParameter({
+  const UpdateBrowserParameter({
     required this.logo,
     required this.siteName,
     required this.url,

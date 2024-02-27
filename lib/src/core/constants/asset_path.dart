@@ -81,6 +81,9 @@ sealed class AssetIconPath {
   static const String commonSignMessage =
       '${_baseIconPath}ic_common_message.svg';
   static const String commonFeeEdit = '${_baseIconPath}ic_common_fee_edit.svg';
+  static const String commonAdd = '${_baseIconPath}ic_common_add.svg';
+  static const String commonRefresh = '${_baseIconPath}ic_common_refresh.svg';
+  static const String commonDelete = '${_baseIconPath}ic_common_delete.svg';
 
   static const String commonAura =
       '${_baseIconPath}ic_common_aura.svg';
@@ -91,6 +94,8 @@ sealed class AssetIconPath {
   static const String commonSearch = '${_baseIconPath}ic_common_search.svg';
   static const String commonGoogle = '${_baseIconPath}ic_common_google.svg';
   static const String commonMore = '${_baseIconPath}ic_common_more.svg';
+  static const String commonAccountCheck = '${_baseIconPath}ic_common_account_check.svg';
+  static const String commonShare = '${_baseIconPath}ic_common_share.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive =
@@ -135,12 +140,10 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_home_receive_copy_address.svg';
 
   ///Accounts page
-  static const String accountsCheck = '${_baseIconPath}ic_accounts_check.svg';
   static const String accountsRemove = '${_baseIconPath}ic_accounts_remove.svg';
   static const String accountsRemoveWarning =
       '${_baseIconPath}ic_accounts_remove_warning.svg';
   static const String accountsRename = '${_baseIconPath}ic_accounts_rename.svg';
-  static const String accountsShare = '${_baseIconPath}ic_accounts_share.svg';
   static const String accountsRecoverSmartAccount =
       '${_baseIconPath}ic_accounts_recover_smart_account.svg';
   static const String accountsImportExistingAccount =
@@ -262,4 +265,10 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_in_app_browser_account.svg';
   static const String inAppBrowserLock =
       '${_baseIconPath}ic_in_app_browser_lock.svg';
+  static const String inAppBrowserNext =
+      '${_baseIconPath}ic_in_app_browser_next.svg';
+  static const String inAppBrowserNextBold =
+      '${_baseIconPath}ic_in_app_browser_next_bold.svg';
+  static const String inAppBrowserBack =
+      '${_baseIconPath}ic_in_app_browser_back.svg';
 }

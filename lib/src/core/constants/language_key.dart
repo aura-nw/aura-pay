@@ -492,6 +492,14 @@ sealed class LanguageKey {
   static const String inAppBrowserPageDeleteMessage = 'in_app_browser_page_delete_message';
   static const String inAppBrowserNoBookMarkFound= 'in_app_browser_page_no_book_mark_found';
 
+  /// region in app browser search screen
   static const String inAppBrowserSearchScreenHint = 'in_app_browser_search_screen_hint';
   static const String inAppBrowserSearchScreenSearchWithGoogle = 'in_app_browser_search_screen_search_with_google';
+
+  /// region in app browser screen
+  static const String inAppBrowserScreenChooseAccountDialogTitle = 'in_app_browser_screen_choose_account_dialog_title';
+  static const String inAppBrowserScreenSmartAccount = 'in_app_browser_screen_smart_account';
+  static const String inAppBrowserScreenNewTab = 'in_app_browser_screen_new_tab';
+  static const String inAppBrowserScreenShare = 'in_app_browser_screen_share';
+  static const String inAppBrowserScreenRefresh = 'in_app_browser_screen_refresh';
 }

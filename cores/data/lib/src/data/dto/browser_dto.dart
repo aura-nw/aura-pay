@@ -6,6 +6,7 @@ extension BrowserDtoMapper on BrowserDto {
         logo: logo,
         siteTitle: siteTitle,
         url: url,
+        isActive: isActive,
       );
 }
 
@@ -14,11 +15,13 @@ class BrowserDto {
   final String siteTitle;
   final String logo;
   final String url;
+  final bool isActive;
 
   const BrowserDto({
     required this.id,
     required this.logo,
     required this.siteTitle,
     required this.url,
+    required this.isActive,
   });
 }

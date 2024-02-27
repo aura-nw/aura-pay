@@ -36,4 +36,11 @@ final class BookMarkRepositoryImpl
         )
         .toList();
   }
+
+  @override
+  Future<BookMark?> getBookMarkByUrl({required String url}) async{
+    final bookMarkDto = await (_browserDataBaseService as BookMarkDataBaseService).getBookMarkByUrl(url: url);
+
+    return bookMarkDto?.toEntity;
+  }
 }

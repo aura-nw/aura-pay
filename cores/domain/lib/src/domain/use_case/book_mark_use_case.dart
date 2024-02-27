@@ -36,4 +36,8 @@ final class BookMarkUseCase {
   Future<List<BookMark>> getBookmarks() {
     return _repository.getBookmarks();
   }
+
+  Future<BookMark?> getBookMarkByUrl({required String url,}){
+    return _repository.getBookMarkByUrl(url: url);
+  }
 }

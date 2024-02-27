@@ -2,7 +2,7 @@ import 'package:domain/src/domain/entities/bookmark.dart';
 
 abstract interface class BookMarkRepository {
   Future<void> addNewBookMark({
-    required Map<String,dynamic> json,
+    required Map<String, dynamic> json,
   });
 
   Future<void> deleteBookMark({
@@ -10,4 +10,8 @@ abstract interface class BookMarkRepository {
   });
 
   Future<List<BookMark>> getBookmarks();
+
+  Future<BookMark?> getBookMarkByUrl({
+    required String url,
+  });
 }

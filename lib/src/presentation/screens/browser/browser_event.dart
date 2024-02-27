@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'browser_event.freezed.dart';
@@ -7,6 +8,11 @@ class BrowserEvent with _$BrowserEvent {
   const factory BrowserEvent.onInit({
     required String url,
   }) = BrowserOnInitEvent;
+
+  const factory BrowserEvent.onUrlChangeEvent({
+    required String url,
+    required bool canGoNext,
+  }) = BrowserOnUrlChangeEvent;
 
   const factory BrowserEvent.onAddNewBrowser({
     required String url,
@@ -21,5 +27,7 @@ class BrowserEvent with _$BrowserEvent {
     String? description,
   }) = BrowserOnBookMarkClickEvent;
 
-  const factory BrowserEvent.onRefreshAccount() = BrowserOnRefreshAccountEvent;
+  const factory BrowserEvent.onRefreshAccount({
+    required AuraAccount? selectedAccount,
+  }) = BrowserOnRefreshAccountEvent;
 }
