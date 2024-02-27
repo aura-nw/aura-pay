@@ -18,6 +18,7 @@ class BrowserEvent with _$BrowserEvent {
     required String url,
     required String siteName,
     required String logo,
+    required String browserImage,
   }) = BrowserOnAddNewBrowserEvent;
 
   const factory BrowserEvent.onBookMarkClick({

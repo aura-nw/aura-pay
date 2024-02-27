@@ -502,4 +502,9 @@ sealed class LanguageKey {
   static const String inAppBrowserScreenNewTab = 'in_app_browser_screen_new_tab';
   static const String inAppBrowserScreenShare = 'in_app_browser_screen_share';
   static const String inAppBrowserScreenRefresh = 'in_app_browser_screen_refresh';
+
+  /// region browser management screen
+  static const String browserManagementScreenCloseAll = 'browser_management_screen_close_all';
+  static const String browserManagementScreenNewTab = 'browser_management_screen_new_tab';
+  static const String browserManagementScreenNoTabFound = 'browser_management_screen_no_tab_found';
 }

@@ -29,6 +29,7 @@ import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser_tab_management/browser_tab_management_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/browser/browser_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page_bloc.dart';
@@ -759,6 +760,12 @@ Future<void> initDependency(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<BrowserManagementUseCase>(),
       getIt.get<BookMarkUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<BrowserTabManagementBloc>(
+    () => BrowserTabManagementBloc(
+      getIt.get<BrowserManagementUseCase>(),
     ),
   );
 }

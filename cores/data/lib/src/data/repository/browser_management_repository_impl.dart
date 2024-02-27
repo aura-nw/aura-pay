@@ -51,4 +51,11 @@ final class BrowserManagementRepositoryImpl
       json: json,
     );
   }
+
+  @override
+  Future<Browser?> getActiveBrowser() async{
+    final browser = await (_localBrowserInterface as BrowserDatabaseService).getActiveBrowser();
+
+    return browser?.toEntity;
+  }
 }

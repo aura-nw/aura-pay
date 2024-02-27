@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
-import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
@@ -9,12 +8,12 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_selector.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/icon_with_text_widget.dart';
 
 class BrowserHeaderWidget extends StatelessWidget {
   final AppTheme appTheme;
   final VoidCallback onViewTap;
   final VoidCallback onSearchTap;
-  final VoidCallback onMoreTap;
   final String url;
   final VoidCallback onShareTap;
   final VoidCallback onAddNewTab;
@@ -23,7 +22,6 @@ class BrowserHeaderWidget extends StatelessWidget {
   const BrowserHeaderWidget({
     required this.appTheme,
     required this.onViewTap,
-    required this.onMoreTap,
     required this.onSearchTap,
     required this.url,
     required this.onShareTap,
@@ -190,29 +188,10 @@ final class _BrowserPopupMenuItemWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
           horizontal: Spacing.spacing04,
         ),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              svgIconPath,
-            ),
-            const SizedBox(
-              width: BoxSize.boxSize05,
-            ),
-            Expanded(
-              child: AppLocalizationProvider(
-                builder: (localization, _) {
-                  return Text(
-                    localization.translate(
-                      titlePath,
-                    ),
-                    style: AppTypoGraPhy.bodyMedium03.copyWith(
-                      color: appTheme.contentColor700,
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
+        child: IconWithTextWidget(
+          titlePath: titlePath,
+          svgIconPath: svgIconPath,
+          appTheme: appTheme,
         ),
       ),
     );

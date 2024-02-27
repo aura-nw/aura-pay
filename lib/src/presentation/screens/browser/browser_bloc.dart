@@ -60,11 +60,33 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
 
     final browsers = await _browserManagementUseCase.getBrowsers();
 
+    final activeBrowser = browsers.firstWhereOrNull((br) => br.isActive);
+
+    if (activeBrowser != null) {
+      await _browserManagementUseCase.update(
+        id: activeBrowser.id,
+        url: event.url,
+        logo: activeBrowser.logo,
+        siteName: activeBrowser.siteTitle,
+        screenShotUri: activeBrowser.screenShotUri,
+        isActive: true,
+      );
+      // update active browser
+    } else {
+      // create new browser
+      await _browserManagementUseCase.addNewBrowser(
+        url: event.url,
+        logo: '',
+        siteName: '',
+        screenShotUri: '',
+      );
+    }
+
     emit(
       state.copyWith(
         currentUrl: event.url,
         accounts: accounts,
-        tabCount: browsers.length,
+        tabCount: browsers.isEmpty ? 1 : browsers.length,
         status: BrowserStatus.loaded,
         selectedAccount: accounts.firstWhereOrNull(
           (e) => e.index == 0,
@@ -113,7 +135,7 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
       logo: event.logo,
       siteName: event.siteName,
       url: event.url,
-      isActive: true,
+      screenShotUri: event.browserImage,
     );
 
     final browsers = await _browserManagementUseCase.getBrowsers();

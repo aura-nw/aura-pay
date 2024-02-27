@@ -31,6 +31,7 @@ dependencies:
   crypto: ^3.0.3
   android_id: ^0.3.6
   device_info_plus: ^9.1.1
+  screenshot: ^2.1.0
 
   #local db
   isar: ^3.1.0

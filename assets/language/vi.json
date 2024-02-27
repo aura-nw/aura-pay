@@ -422,7 +422,12 @@
   "in_app_browser_screen_smart_account" : "Smart acc",
   "in_app_browser_screen_new_tab" : "New tab",
   "in_app_browser_screen_share" : "Share",
-  "in_app_browser_screen_refresh" : "Refresh"
+  "in_app_browser_screen_refresh" : "Refresh",
+
+
+  "browser_management_screen_close_all" : "Close all",
+  "browser_management_screen_new_tab" : "New tab",
+  "browser_management_screen_no_tab_found" : "No tab found"
 
 
 }

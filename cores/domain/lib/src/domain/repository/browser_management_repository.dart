@@ -17,4 +17,6 @@ abstract interface class BrowserManagementRepository {
   Future<void> deleteAll();
 
   Future<List<Browser>> getBrowsers();
+
+  Future<Browser?> getActiveBrowser();
 }

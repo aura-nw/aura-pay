@@ -12,13 +12,13 @@ final class BrowserManagementUseCase {
     required String url,
     required String logo,
     required String siteName,
-    required bool isActive,
+    required String screenShotUri,
   }) {
     final SaveBrowserParameter parameter = SaveBrowserParameter(
       logo: logo,
-      isActive: isActive,
       url: url,
       siteName: siteName,
+      screenShotUri: screenShotUri,
     );
 
     return _repository.addNewBrowser(
@@ -47,6 +47,7 @@ final class BrowserManagementUseCase {
     required String url,
     required String logo,
     required String siteName,
+    required String screenShotUri,
     required bool isActive,
   }) async {
     final UpdateBrowserParameter parameter = UpdateBrowserParameter(
@@ -54,10 +55,15 @@ final class BrowserManagementUseCase {
       url: url,
       logo: logo,
       siteName: siteName,
+      screenShotUri: screenShotUri,
     );
     return _repository.update(
       id: id,
       json: parameter.toJson(),
     );
+  }
+
+  Future<Browser?> getActiveBrowser(){
+    return _repository.getActiveBrowser();
   }
 }

@@ -11,9 +11,15 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
   Future<void> add({
     required Map<String, dynamic> parameter,
   }) async {
-    final BrowserDb browserDb = BrowserDb.fromJson(parameter);
+    final BrowserDb browserDb = BrowserDb.fromAddJson(parameter);
+
+    final browsers =
+        await _isar.browserDbs.filter().browserIsActiveEqualTo(true).findAll();
 
     await _isar.writeTxn(() async {
+      await _isar.browserDbs.putAll(
+        browsers.map((e) => e.copyWithActive(false)).toList(),
+      );
       await _isar.browserDbs.put(browserDb);
     });
   }
@@ -32,7 +38,7 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
 
   @override
   Future<List<BrowserDto>> getAll() {
-    return _isar.browserDbs.where().findAll();
+    return _isar.browserDbs.where().sortByBrowserIsActive().findAll();
   }
 
   @override
@@ -46,12 +52,19 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
 
     final BrowserDb browserDb = BrowserDb.fromJson(json);
 
-    await _isar.writeTxn(() async {
-      await _isar.browserDbs.put(
-        browserDb.copyWithId(
-          browser.id,
-        ),
-      );
-    });
+    await _isar.writeTxn(
+      () async {
+        await _isar.browserDbs.put(
+          browserDb.copyWithId(
+            browser.id,
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Future<BrowserDto?> getActiveBrowser() {
+    return _isar.browserDbs.filter().browserIsActiveEqualTo(true).findFirst();
   }
 }

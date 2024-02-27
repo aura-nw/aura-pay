@@ -26,4 +26,6 @@ abstract interface class BrowserDatabaseService
     required int id,
     required Map<String, dynamic> json,
   });
+
+  Future<BrowserDto?> getActiveBrowser();
 }

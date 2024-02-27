@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
@@ -8,6 +9,7 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
+import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'browser_event.dart';
 import 'browser_bloc.dart';
 import 'browser_selector.dart';
@@ -15,6 +17,8 @@ import 'widgets/browser_header_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'widgets/browser_bottom_navigator_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import 'package:screenshot/screenshot.dart';
 
 // Import for Android features.
 import 'package:webview_flutter_android/webview_flutter_android.dart';
@@ -39,8 +43,9 @@ class BrowserScreen extends StatefulWidget {
 class _BrowserScreenState extends State<BrowserScreen> {
   late WebViewController _webViewController;
 
+  late ScreenshotController _screenShotController;
+
   String? favicon;
-  String siteName = '';
 
   final BrowserBloc _bloc = getIt.get<BrowserBloc>();
 
@@ -67,7 +72,15 @@ class _BrowserScreenState extends State<BrowserScreen> {
         canGoNext: canGoNext,
       ),
     );
+
+    // if(context.mounted){
+    //   _screenShotController.captureAndSave(
+    //     'directory',
+    //     pixelRatio: context.ratio,
+    //   );
+    // }
   }
+
 
   @override
   void initState() {
@@ -76,6 +89,8 @@ class _BrowserScreenState extends State<BrowserScreen> {
         url: widget.initUrl,
       ),
     );
+
+    _screenShotController = ScreenshotController();
     // #docregion platform_features
     late final PlatformWebViewControllerCreationParams params;
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
@@ -152,20 +167,22 @@ class _BrowserScreenState extends State<BrowserScreen> {
                       builder: (url) {
                         return BrowserHeaderWidget(
                           appTheme: appTheme,
-                          onViewTap: () {},
+                          onViewTap: _onViewTabManagement,
                           onSearchTap: () {},
                           url: url,
-                          onMoreTap: () {},
                           onRefresh: _onRefreshPage,
-                          onAddNewTab: () {},
+                          onAddNewTab: _onAddNewTab,
                           onShareTap: _onShareBrowserPage,
                         );
                       },
                     ),
                   ),
                   Expanded(
-                    child: WebViewWidget(
-                      controller: _webViewController,
+                    child: Screenshot(
+                      controller: _screenShotController,
+                      child: WebViewWidget(
+                        controller: _webViewController,
+                      ),
                     ),
                   ),
                   BrowserBottomNavigatorWidget(
@@ -270,9 +287,24 @@ class _BrowserScreenState extends State<BrowserScreen> {
     );
   }
 
-  void _onAddNewTab() {}
+  void _onAddNewTab() {
+    _bloc.add(
+      const BrowserOnAddNewBrowserEvent(
+        url: 'https://www.google.com/search',
+        siteName: 'Google search',
+        logo: '',
+        browserImage: '',
+      ),
+    );
+  }
 
   void _onRefreshPage() async {
     await _webViewController.reload();
+  }
+
+  void _onViewTabManagement() {
+    AppNavigator.push(
+      RoutePath.browserTabManagement,
+    );
   }
 }

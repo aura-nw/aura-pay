@@ -45,7 +45,15 @@ class _BrowserPageState extends State<BrowserPage> {
                     ),
                     child: SearchWidget(
                       appTheme: appTheme,
-                      onViewTap: () {},
+                      onViewTap: () async {
+                        await AppNavigator.push(
+                          RoutePath.browserTabManagement,
+                        );
+
+                        _bloc.add(
+                          const BrowserPageOnInitEvent(),
+                        );
+                      },
                       onSearchTap: () async {
                         await AppNavigator.push(
                           RoutePath.browserSearch,
@@ -116,7 +124,7 @@ class _BrowserPageState extends State<BrowserPage> {
                                                 bottom: Spacing.spacing06,
                                               ),
                                               child: GestureDetector(
-                                                onTap: () async{
+                                                onTap: () async {
                                                   await AppNavigator.push(
                                                     RoutePath.browser,
                                                     browser.url,
@@ -125,7 +133,6 @@ class _BrowserPageState extends State<BrowserPage> {
                                                   _bloc.add(
                                                     const BrowserPageOnInitEvent(),
                                                   );
-
                                                 },
                                                 behavior:
                                                     HitTestBehavior.opaque,

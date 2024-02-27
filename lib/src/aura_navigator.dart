@@ -6,6 +6,7 @@ import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/presentation/screens/accounts/accounts_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser_tab_management/browser_tab_management_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
@@ -106,6 +107,7 @@ sealed class RoutePath {
 
   static const String browser = '$home/browser';
   static const String browserSearch = '$home/search';
+  static const String browserTabManagement = '$home/tab_management';
   static const String accounts = '$home/account';
 }
 
@@ -397,6 +399,11 @@ sealed class AppNavigator {
       case RoutePath.browserSearch:
         return _defaultRoute(
           const BrowserSearchScreen(),
+          settings,
+        );
+      case RoutePath.browserTabManagement:
+        return _defaultRoute(
+          const BrowserTabManagementScreen(),
           settings,
         );
       default:
