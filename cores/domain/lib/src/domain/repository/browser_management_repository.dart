@@ -5,7 +5,7 @@ abstract interface class BrowserManagementRepository {
     required Map<String, dynamic> json,
   });
 
-  Future<void> update({
+  Future<Browser> update({
     required int id,
     required Map<String, dynamic> json,
   });

@@ -1,6 +1,6 @@
 import 'package:data/data.dart';
 import 'package:isar/isar.dart';
-import 'package:pyxis_mobile/src/application/provider/local_database/browser/browser_db.dart';
+import 'browser_db.dart';
 
 final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
   final Isar _isar;
@@ -30,7 +30,7 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
 
   @override
   Future<void> clear() async {
-    await _isar.writeTxn(() async{
+    await _isar.writeTxn(() async {
       await _isar.browserDbs.where().deleteAll();
     });
   }
@@ -48,24 +48,28 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
   }
 
   @override
-  Future<void> update({
+  Future<BrowserDto> update({
     required int id,
     required Map<String, dynamic> json,
   }) async {
-    final browser = await _isar.browserDbs.get(id);
-
-    if (browser == null) return;
-
     final BrowserDb browserDb = BrowserDb.fromJson(json);
 
     final List<BrowserDb> browserDbs = List.empty(growable: true);
 
-    if(browserDb.isActive){
-      final browsers =
-      await _isar.browserDbs.filter().browserIsActiveEqualTo(true).findAll();
+    if (browserDb.isActive) {
+      final browsers = await _isar.browserDbs
+          .filter()
+          .browserIsActiveEqualTo(true)
+          .findAll();
 
-      browserDbs.addAll(browsers);
+      browserDbs.addAll(
+        browsers.where((br) => br.id != id).toList(),
+      );
     }
+
+    final updateBrowser = browserDb.copyWithId(
+      id,
+    );
 
     await _isar.writeTxn(
       () async {
@@ -73,12 +77,12 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
           browserDbs.map((e) => e.copyWithActive(false)).toList(),
         );
         await _isar.browserDbs.put(
-          browserDb.copyWithId(
-            browser.id,
-          ),
+          updateBrowser,
         );
       },
     );
+
+    return updateBrowser;
   }
 
   @override

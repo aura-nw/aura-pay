@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 
 part 'browser_event.freezed.dart';
 
@@ -12,6 +13,7 @@ class BrowserEvent with _$BrowserEvent {
     required bool canGoNext,
     String? title,
     String? logo,
+    String? imagePath,
   }) = BrowserOnUrlChangeEvent;
 
   const factory BrowserEvent.onAddNewBrowser({
@@ -32,7 +34,8 @@ class BrowserEvent with _$BrowserEvent {
     required AuraAccount? selectedAccount,
   }) = BrowserOnRefreshAccountEvent;
 
-  const factory BrowserEvent.onUpdateBrowserImage({
-    String? path,
-  }) = BrowserOnUpdateBrowserImage;
+  const factory BrowserEvent.onReceivedTabResult({
+    required String url,
+    required BrowserScreenOptionArgument option,
+  }) = BrowserOnReceivedTabResultEvent;
 }

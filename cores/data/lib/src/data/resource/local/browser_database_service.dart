@@ -22,7 +22,7 @@ abstract interface class BrowserDatabaseService
     implements LocalBrowserInterface<Map<String, dynamic>, BrowserDto> {
   Future<void> clear();
 
-  Future<void> update({
+  Future<BrowserDto> update({
     required int id,
     required Map<String, dynamic> json,
   });

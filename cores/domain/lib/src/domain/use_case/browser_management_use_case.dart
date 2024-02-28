@@ -46,7 +46,7 @@ final class BrowserManagementUseCase {
     return _repository.deleteAll();
   }
 
-  Future<void> update({
+  Future<Browser> update({
     required int id,
     required String url,
     required String logo,

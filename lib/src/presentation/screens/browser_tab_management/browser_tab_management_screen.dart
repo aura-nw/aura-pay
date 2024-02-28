@@ -18,7 +18,12 @@ import 'browser_tab_management_bloc.dart';
 import 'browser_tab_management_selector.dart';
 
 class BrowserTabManagementScreen extends StatefulWidget {
-  const BrowserTabManagementScreen({super.key});
+  final bool isCloseAndReplace;
+
+  const BrowserTabManagementScreen({
+    this.isCloseAndReplace = true,
+    super.key,
+  });
 
   @override
   State<BrowserTabManagementScreen> createState() =>
@@ -47,13 +52,10 @@ class _BrowserTabManagementScreenState
                   break;
                 case BrowserTabManagementStatus.closeAllSuccess:
                 case BrowserTabManagementStatus.addTabSuccess:
-                  AppNavigator.replaceWith(
-                    RoutePath.browser,
-                    _createBrowserArgument(
-                      _bloc.googleSearchUrl,
-                      type: BrowserOpenType.chooseOther,
-                      id: state.activeBrowser?.id,
-                    ),
+                  _backOrReplace(
+                    _bloc.googleSearchUrl,
+                    id: state.activeBrowser?.id,
+                    type: BrowserOpenType.chooseOther,
                   );
                   break;
               }
@@ -114,13 +116,10 @@ class _BrowserTabManagementScreenState
                                       return GestureDetector(
                                         behavior: HitTestBehavior.opaque,
                                         onTap: () {
-                                          AppNavigator.replaceWith(
-                                            RoutePath.browser,
-                                            _createBrowserArgument(
-                                              browser.url,
-                                              type: BrowserOpenType.chooseOther,
-                                              id: browser.id,
-                                            ),
+                                          _backOrReplace(
+                                            browser.url,
+                                            id: browser.id,
+                                            type: BrowserOpenType.chooseOther,
                                           );
                                         },
                                         child: BrowserHistoryWidget(
@@ -171,6 +170,31 @@ class _BrowserTabManagementScreenState
         );
       },
     );
+  }
+
+  void _backOrReplace(
+    String url, {
+    int? id,
+    BrowserOpenType type = BrowserOpenType.normal,
+  }) {
+    if (widget.isCloseAndReplace) {
+      AppNavigator.replaceWith(
+        RoutePath.browser,
+        _createBrowserArgument(
+          url,
+          type: type,
+          id: id,
+        ),
+      );
+    } else {
+      AppNavigator.pop(
+        _createBrowserArgument(
+          url,
+          type: type,
+          id: id,
+        ),
+      );
+    }
   }
 
   Map<String, dynamic> _createBrowserArgument(

@@ -407,8 +407,11 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.browserTabManagement:
+        final bool closeAndReplace = settings.arguments as bool? ?? true;
         return _defaultRoute(
-          const BrowserTabManagementScreen(),
+          BrowserTabManagementScreen(
+            isCloseAndReplace: closeAndReplace,
+          ),
           settings,
         );
       default:

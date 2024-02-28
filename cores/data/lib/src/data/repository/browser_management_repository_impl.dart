@@ -44,14 +44,16 @@ final class BrowserManagementRepositoryImpl
   }
 
   @override
-  Future<void> update({
+  Future<Browser> update({
     required int id,
     required Map<String, dynamic> json,
-  }) {
-    return (_localBrowserInterface as BrowserDatabaseService).update(
+  }) async{
+    final browserDto = await (_localBrowserInterface as BrowserDatabaseService).update(
       id: id,
       json: json,
     );
+
+    return browserDto.toEntity;
   }
 
   @override

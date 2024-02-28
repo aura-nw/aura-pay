@@ -1,6 +1,5 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'browser_event.dart';
@@ -28,26 +27,35 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     on(_onBookMarkClick);
     on(_onAddNewBrowser);
     on(_onRefreshAccount);
-    on(_onUpdateImage);
+    on(_onReceivedTabManagementResult);
   }
 
-  void _onUpdateImage(
-    BrowserOnUpdateBrowserImage event,
+  void _onReceivedTabManagementResult(
+    BrowserOnReceivedTabResultEvent event,
     Emitter<BrowserState> emit,
   ) async {
+    await _browserManagementUseCase.update(
+      id: event.option.choosingId!,
+      url: event.url,
+      logo: '',
+      siteName: getSiteNameFromUrl(event.url),
+      screenShotUri: '',
+      isActive: true,
+    );
 
-    final currentBrowser = state.currentBrowser;
+    // Get all browsers
+    final browsers = await _browserManagementUseCase.getBrowsers();
 
-    if(currentBrowser != null){
-      await _browserManagementUseCase.update(
-        id: currentBrowser.id,
-        url: currentBrowser.url,
-        logo: currentBrowser.logo,
-        siteName: currentBrowser.siteTitle,
-        screenShotUri: event.path ?? currentBrowser.screenShotUri,
-        isActive: currentBrowser.isActive,
-      );
-    }
+    emit(
+      state.copyWith(
+        option: event.option,
+        currentUrl: event.url,
+        currentBrowser: browsers.firstWhereOrNull(
+          (e) => e.isActive,
+        ),
+        tabCount: browsers.length,
+      ),
+    );
   }
 
   void _onUrlChangeEvent(
@@ -56,19 +64,18 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
   ) async {
     final bookMark = await _bookMarkUseCase.getBookMarkByUrl(url: event.url);
 
-    final currentBrowser = state.currentBrowser;
+    Browser ? currentBrowser = state.currentBrowser;
 
-    if(currentBrowser != null){
-      await _browserManagementUseCase.update(
+    if (currentBrowser != null) {
+      currentBrowser = await _browserManagementUseCase.update(
         id: currentBrowser.id,
         url: event.url,
         logo: event.logo ?? currentBrowser.logo,
-        siteName: currentBrowser.siteTitle,
-        screenShotUri: currentBrowser.screenShotUri,
+        siteName: event.title ?? currentBrowser.siteTitle,
+        screenShotUri: event.imagePath ?? currentBrowser.screenShotUri,
         isActive: currentBrowser.isActive,
       );
     }
-
 
     if (bookMark == null) {
       emit(
@@ -82,6 +89,7 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
         state.copyWith(
           currentUrl: event.url,
           bookMark: bookMark,
+          currentBrowser: currentBrowser,
         ),
       );
     }
@@ -97,45 +105,9 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
       ),
     );
 
-    Browser? activeBrowser = await _browserManagementUseCase.getActiveBrowser();
-
-    final uri = Uri.parse(state.currentUrl);
-
-    String name = uri.query.isNotEmpty ? uri.query : uri.host;
-
-    activeBrowser ??= await _browserManagementUseCase.addNewBrowser(
+    final activeBrowser = await _getCurrentBrowser(
       url: state.currentUrl,
-      logo: '',
-      siteName: name,
-      screenShotUri: '',
     );
-
-    switch (state.option.browserOpenType) {
-      case BrowserOpenType.normal:
-        // update current tab
-        await _browserManagementUseCase.update(
-          id: activeBrowser.id,
-          url: state.currentUrl,
-          logo: activeBrowser.logo,
-          siteName: name,
-          screenShotUri: activeBrowser.screenShotUri,
-          isActive: activeBrowser.isActive,
-        );
-        break;
-      case BrowserOpenType.chooseOther:
-        if (activeBrowser.id != state.option.choosingId) {
-          // active browser
-          await _browserManagementUseCase.update(
-            id: state.option.choosingId!,
-            url: state.currentUrl,
-            logo: '',
-            siteName: name,
-            screenShotUri: '',
-            isActive: true,
-          );
-        }
-        break;
-    }
 
     // Get all accounts
     final accounts = await _auraAccountUseCase.getAccounts();
@@ -148,7 +120,7 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
         accounts: accounts,
         tabCount: browsers.isEmpty ? 1 : browsers.length,
         status: BrowserStatus.loaded,
-        currentBrowser: browsers.firstWhereOrNull((e) => e.isActive),
+        currentBrowser: activeBrowser,
         selectedAccount: accounts.firstWhereOrNull(
           (e) => e.index == 0,
         ),
@@ -233,5 +205,26 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
         ),
       ),
     );
+  }
+
+  Future<Browser> _getCurrentBrowser({
+    required String url,
+  }) async {
+    Browser? activeBrowser = await _browserManagementUseCase.getActiveBrowser();
+
+    activeBrowser ??= await _browserManagementUseCase.addNewBrowser(
+      url: url,
+      logo: '',
+      siteName: getSiteNameFromUrl(url),
+      screenShotUri: '',
+    );
+
+    return activeBrowser;
+  }
+
+  String getSiteNameFromUrl(String url){
+    final uri = Uri.parse(url);
+
+    return uri.query.isNotEmpty ? uri.query : uri.host;
   }
 }

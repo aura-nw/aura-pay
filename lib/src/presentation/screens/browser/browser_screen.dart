@@ -13,6 +13,7 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
+import 'package:pyxis_mobile/src/core/utils/debounce.dart';
 import 'browser_event.dart';
 import 'browser_bloc.dart';
 import 'browser_selector.dart';
@@ -60,7 +61,10 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
   late ScreenshotController _screenShotController;
 
+  late Denounce<String> _denounce;
+
   String? favicon;
+  String? preUrl;
 
   final String _googleSearchUrl = 'https://www.google.com/search';
 
@@ -69,8 +73,8 @@ class _BrowserScreenState extends State<BrowserScreen> {
   final HomeScreenObserver _homeScreenObserver =
       getIt.get<HomeScreenObserver>();
 
-  void _runJavaScript() {
-    _webViewController.runJavaScript('''
+  Future<void> _runJavaScript() async {
+    return _webViewController.runJavaScript('''
             var links = document.head.getElementsByTagName('link');
             for (var i = 0; i < links.length; i++) {
               if (links[i].rel == 'icon' || links[i].rel == 'shortcut icon' || links[i].rel == 'apple-touch-icon') {
@@ -82,24 +86,18 @@ class _BrowserScreenState extends State<BrowserScreen> {
   }
 
   void _onUrlChange(UrlChange change) async {
-    final bool canGoNext = await _webViewController.canGoForward();
+    favicon = null;
+    if (change.url == preUrl) return;
 
-    final String? title = await _webViewController.getTitle();
+    preUrl = change.url;
 
-    _bloc.add(
-      BrowserOnUrlChangeEvent(
-        url: change.url ?? widget.initUrl,
-        canGoNext: canGoNext,
-        title: title,
-        logo: favicon,
-      ),
+    _denounce.onDenounce(
+      change.url ?? widget.initUrl,
     );
   }
 
-  void _screenShot() async {
+  Future<String?> _screenShot() async {
     final currentBrowser = _bloc.state.currentBrowser;
-
-    print('current browser $currentBrowser');
 
     if (currentBrowser != null) {
       final directory = await getApplicationDocumentsDirectory();
@@ -107,40 +105,23 @@ class _BrowserScreenState extends State<BrowserScreen> {
       File file = File(currentBrowser.screenShotUri);
 
       if (await file.exists()) {
-        print('exists');
         await file.delete();
       }
 
       if (context.mounted) {
-        final String? path = await _screenShotController.captureAndSave(
+        return _screenShotController.captureAndSave(
           directory.path,
           pixelRatio: context.ratio,
-          fileName: '${currentBrowser.siteTitle.replaceAll(' ', '')}_${currentBrowser.id}',
-        );
-
-        print(path);
-
-        _bloc.add(
-          BrowserOnUpdateBrowserImage(
-            path: path,
-          ),
+          fileName:
+              '${currentBrowser.siteTitle.replaceAll(' ', '')}_${currentBrowser.id}',
         );
       }
     }
+
+    return null;
   }
 
-  @override
-  void initState() {
-    _bloc = getIt.get<BrowserBloc>(
-      param1: widget.option,
-      param2: widget.initUrl,
-    );
-
-    _bloc.add(
-      const BrowserOnInitEvent(),
-    );
-
-    _screenShotController = ScreenshotController();
+  WebViewController _initWebViewController() {
     // #docregion platform_features
     late final PlatformWebViewControllerCreationParams params;
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
@@ -164,12 +145,8 @@ class _BrowserScreenState extends State<BrowserScreen> {
           onProgress: (int progress) {},
           onPageStarted: (String url) {
             favicon = null;
-            _screenShot();
           },
-          onPageFinished: (String url) {
-            _runJavaScript();
-            _screenShot();
-          },
+          onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
             return NavigationDecision.navigate;
@@ -183,11 +160,6 @@ class _BrowserScreenState extends State<BrowserScreen> {
         onMessageReceived: (JavaScriptMessage message) {
           favicon = message.message;
         },
-      )
-      ..loadRequest(
-        Uri.parse(
-          widget.initUrl,
-        ),
       );
 
     // #docregion platform_features
@@ -197,8 +169,63 @@ class _BrowserScreenState extends State<BrowserScreen> {
     }
     // #enddocregion platform_features
 
-    _webViewController = controller;
+    return controller;
+  }
+
+  void _urlChangeObserver(String url) async {
+    await _runJavaScript();
+
+    final bool canGoNext = await _webViewController.canGoForward();
+
+    final String? title = await _webViewController.getTitle();
+
+    final String? path = await _screenShot();
+
+    _bloc.add(
+      BrowserOnUrlChangeEvent(
+        url: url,
+        canGoNext: canGoNext,
+        title: title,
+        logo: favicon,
+        imagePath: path,
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    _denounce = Denounce(
+      const Duration(
+        seconds: 3,
+      ),
+    )..addObserver(_urlChangeObserver);
+
+    _bloc = getIt.get<BrowserBloc>(
+      param1: widget.option,
+      param2: widget.initUrl,
+    );
+
+    _bloc.add(
+      const BrowserOnInitEvent(),
+    );
+
+    _webViewController = _initWebViewController();
+
+    _webViewController.loadRequest(
+      Uri.parse(
+        widget.initUrl,
+      ),
+    );
+
+    _screenShotController = ScreenshotController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _denounce.removeObserver(_urlChangeObserver);
+    _denounce.disPose();
+    super.dispose();
   }
 
   @override
@@ -367,9 +394,38 @@ class _BrowserScreenState extends State<BrowserScreen> {
     await _webViewController.reload();
   }
 
-  void _onViewTabManagement() {
-    AppNavigator.push(
+  void _onViewTabManagement() async {
+    final Map<String, dynamic>? result = await AppNavigator.push(
       RoutePath.browserTabManagement,
+      false,
     );
+
+    if (result != null) {
+      final int? id = result['id'];
+
+      if (id != null && id == _bloc.state.currentBrowser?.id) return;
+
+      _webViewController = _initWebViewController();
+
+      final String url = result['url'];
+
+      final BrowserOpenType type = result['type'];
+
+      _bloc.add(
+        BrowserOnReceivedTabResultEvent(
+          url: url,
+          option: BrowserScreenOptionArgument(
+            choosingId: id,
+            browserOpenType: type,
+          ),
+        ),
+      );
+
+      _webViewController.loadRequest(
+        Uri.parse(
+          url,
+        ),
+      );
+    }
   }
 }
