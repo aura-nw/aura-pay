@@ -17,5 +17,6 @@ class BrowserTabManagementState with _$BrowserTabManagementState {
     @Default(BrowserTabManagementStatus.loading)
     BrowserTabManagementStatus status,
     @Default([]) List<Browser> browsers,
+    Browser ?activeBrowser
   }) = _BrowserTabManagementState;
 }

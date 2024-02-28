@@ -1,7 +1,7 @@
 import 'package:domain/src/domain/entities/browser.dart';
 
 abstract interface class BrowserManagementRepository {
-  Future<void> addNewBrowser({
+  Future<Browser> addNewBrowser({
     required Map<String, dynamic> json,
   });
 
@@ -17,6 +17,8 @@ abstract interface class BrowserManagementRepository {
   Future<void> deleteAll();
 
   Future<List<Browser>> getBrowsers();
+
+  Future<Browser?> getBrowserById(int id);
 
   Future<Browser?> getActiveBrowser();
 }

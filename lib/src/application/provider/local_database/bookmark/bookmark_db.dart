@@ -35,4 +35,14 @@ class BookMarkDb extends BookMarkDto {
       bookMarkDescription: json['description'],
     );
   }
+
+  BookMarkDb copyWithId(int id) {
+    return BookMarkDb(
+      bookMarkName: bookMarkName,
+      bookMarkLogo: bookMarkLogo,
+      bookMarkUrl: bookMarkUrl,
+      bookMarkDescription: bookMarkDescription,
+      bookMarkId: id,
+    );
+  }
 }

@@ -4,6 +4,7 @@ import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'browser_search_selector.dart';
@@ -84,7 +85,9 @@ class _BrowserSearchScreenState extends State<BrowserSearchScreen> {
                               onTap: () {
                                 AppNavigator.replaceWith(
                                   RoutePath.browser,
-                                  browser.url,
+                                  _createBrowserArgument(
+                                    browser.url,
+                                  ),
                                 );
                               },
                             ),
@@ -122,7 +125,11 @@ class _BrowserSearchScreenState extends State<BrowserSearchScreen> {
                                   onTap: () {
                                     AppNavigator.replaceWith(
                                       RoutePath.browser,
-                                      getGoogleQuery(query),
+                                      _createBrowserArgument(
+                                        getGoogleQuery(
+                                          query,
+                                        ),
+                                      ),
                                     );
                                   },
                                 );
@@ -157,5 +164,15 @@ class _BrowserSearchScreenState extends State<BrowserSearchScreen> {
         query: value,
       ),
     );
+  }
+
+  Map<String, dynamic> _createBrowserArgument(
+    String url, {
+    BrowserOpenType type = BrowserOpenType.normal,
+  }) {
+    return {
+      'url': url,
+      'type': type,
+    };
   }
 }

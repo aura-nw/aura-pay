@@ -4,6 +4,7 @@ import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
@@ -45,15 +46,14 @@ class _BrowserTabManagementScreenState
                 case BrowserTabManagementStatus.closeTabSuccess:
                   break;
                 case BrowserTabManagementStatus.closeAllSuccess:
-                  AppNavigator.replaceWith(
-                    RoutePath.browser,
-                    _bloc.googleSearchUrl,
-                  );
-                  break;
                 case BrowserTabManagementStatus.addTabSuccess:
                   AppNavigator.replaceWith(
                     RoutePath.browser,
-                    _bloc.googleSearchUrl,
+                    _createBrowserArgument(
+                      _bloc.googleSearchUrl,
+                      type: BrowserOpenType.chooseOther,
+                      id: state.activeBrowser?.id,
+                    ),
                   );
                   break;
               }
@@ -75,70 +75,77 @@ class _BrowserTabManagementScreenState
                       case BrowserTabManagementStatus.addTabSuccess:
                         return Column(
                           children: [
-                            const SizedBox(
-                              height: BoxSize.boxSize07,
-                            ),
                             Expanded(
-                              child: BrowserTabManagementBrowsersSelector(
-                                  builder: (browsers) {
-                                if (browsers.isEmpty) {
-                                  return Center(
-                                    child: AppLocalizationProvider(
-                                      builder: (localization, _) {
-                                        return Text(
-                                          localization.translate(
-                                            LanguageKey
-                                                .browserManagementScreenNoTabFound,
-                                          ),
-                                          style: AppTypoGraPhy.bodyMedium02
-                                              .copyWith(
-                                            color: appTheme.contentColor500,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                }
-                                return CombinedGridView(
-                                  childCount: 2,
-                                  onRefresh: () async {
-                                    //
-                                  },
-                                  onLoadMore: () {
-                                    //
-                                  },
-                                  data: browsers,
-                                  builder: (browser, index) {
-                                    return GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () {
-                                        AppNavigator.replaceWith(
-                                          RoutePath.browser,
-                                          browser.url,
-                                        );
-                                      },
-                                      child: BrowserHistoryWidget(
-                                        appTheme: appTheme,
-                                        siteName: browser.siteTitle,
-                                        imageUri: browser.screenShotUri,
-                                        logo: browser.logo,
-                                        key: ValueKey(browser),
-                                        onClose: () {
-                                          _bloc.add(
-                                            BrowserTabManagementOnCloseTabEvent(
-                                              id: browser.id,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: Spacing.spacing07,
+                                  vertical: Spacing.spacing06,
+                                ),
+                                child: BrowserTabManagementBrowsersSelector(
+                                    builder: (browsers) {
+                                  if (browsers.isEmpty) {
+                                    return Center(
+                                      child: AppLocalizationProvider(
+                                        builder: (localization, _) {
+                                          return Text(
+                                            localization.translate(
+                                              LanguageKey
+                                                  .browserManagementScreenNoTabFound,
+                                            ),
+                                            style: AppTypoGraPhy.bodyMedium02
+                                                .copyWith(
+                                              color: appTheme.contentColor500,
                                             ),
                                           );
                                         },
                                       ),
                                     );
-                                  },
-                                  canLoadMore: false,
-                                  childAspectRatio: 1.2,
-                                  crossAxisSpacing: Spacing.spacing06,
-                                  mainAxisSpacing: Spacing.spacing07,
-                                );
-                              }),
+                                  }
+                                  return CombinedGridView(
+                                    childCount: 2,
+                                    onRefresh: () async {
+                                      //
+                                    },
+                                    onLoadMore: () {
+                                      //
+                                    },
+                                    data: browsers,
+                                    builder: (browser, index) {
+                                      return GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () {
+                                          AppNavigator.replaceWith(
+                                            RoutePath.browser,
+                                            _createBrowserArgument(
+                                              browser.url,
+                                              type: BrowserOpenType.chooseOther,
+                                              id: browser.id,
+                                            ),
+                                          );
+                                        },
+                                        child: BrowserHistoryWidget(
+                                          appTheme: appTheme,
+                                          siteName: browser.siteTitle,
+                                          imageUri: browser.screenShotUri,
+                                          logo: browser.logo,
+                                          key: ValueKey(browser),
+                                          onClose: () {
+                                            _bloc.add(
+                                              BrowserTabManagementOnCloseTabEvent(
+                                                id: browser.id,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    canLoadMore: false,
+                                    childAspectRatio: 0.75,
+                                    crossAxisSpacing: Spacing.spacing06,
+                                    mainAxisSpacing: Spacing.spacing07,
+                                  );
+                                }),
+                              ),
                             ),
                             BrowserTabManagementBottomWidget(
                               onAddNewTab: () {
@@ -164,5 +171,17 @@ class _BrowserTabManagementScreenState
         );
       },
     );
+  }
+
+  Map<String, dynamic> _createBrowserArgument(
+    String url, {
+    BrowserOpenType type = BrowserOpenType.normal,
+    int? id,
+  }) {
+    return {
+      'url': url,
+      'type': type,
+      'id': id,
+    };
   }
 }

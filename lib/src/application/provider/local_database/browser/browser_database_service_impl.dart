@@ -8,7 +8,7 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
   const BrowserDatabaseServiceImpl(this._isar);
 
   @override
-  Future<void> add({
+  Future<BrowserDto> add({
     required Map<String, dynamic> parameter,
   }) async {
     final BrowserDb browserDb = BrowserDb.fromAddJson(parameter);
@@ -16,17 +16,23 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
     final browsers =
         await _isar.browserDbs.filter().browserIsActiveEqualTo(true).findAll();
 
+    int id = browserDb.id;
+
     await _isar.writeTxn(() async {
       await _isar.browserDbs.putAll(
         browsers.map((e) => e.copyWithActive(false)).toList(),
       );
-      await _isar.browserDbs.put(browserDb);
+      id = await _isar.browserDbs.put(browserDb);
     });
+
+    return browserDb.copyWithId(id);
   }
 
   @override
   Future<void> clear() async {
-    await _isar.browserDbs.where().deleteAll();
+    await _isar.writeTxn(() async{
+      await _isar.browserDbs.where().deleteAll();
+    });
   }
 
   @override
@@ -52,8 +58,20 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
 
     final BrowserDb browserDb = BrowserDb.fromJson(json);
 
+    final List<BrowserDb> browserDbs = List.empty(growable: true);
+
+    if(browserDb.isActive){
+      final browsers =
+      await _isar.browserDbs.filter().browserIsActiveEqualTo(true).findAll();
+
+      browserDbs.addAll(browsers);
+    }
+
     await _isar.writeTxn(
       () async {
+        await _isar.browserDbs.putAll(
+          browserDbs.map((e) => e.copyWithActive(false)).toList(),
+        );
         await _isar.browserDbs.put(
           browserDb.copyWithId(
             browser.id,
@@ -66,5 +84,10 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
   @override
   Future<BrowserDto?> getActiveBrowser() {
     return _isar.browserDbs.filter().browserIsActiveEqualTo(true).findFirst();
+  }
+
+  @override
+  Future<BrowserDto?> getBrowserById(int id) {
+    return _isar.browserDbs.get(id);
   }
 }

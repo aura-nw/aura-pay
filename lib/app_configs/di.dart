@@ -28,6 +28,7 @@ import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_tab_management/browser_tab_management_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/browser/browser_page_bloc.dart';
@@ -755,11 +756,13 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactory<BrowserBloc>(
-    () => BrowserBloc(
+  getIt.registerFactoryParam<BrowserBloc, BrowserScreenOptionArgument, String>(
+    (option, initUrl) => BrowserBloc(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<BrowserManagementUseCase>(),
       getIt.get<BookMarkUseCase>(),
+      option: option,
+      initUrl: initUrl,
     ),
   );
 

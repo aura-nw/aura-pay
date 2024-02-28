@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +8,7 @@ import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
@@ -28,11 +31,23 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 import 'widgets/change_account_form_widget.dart';
 
+class BrowserScreenOptionArgument {
+  final BrowserOpenType browserOpenType;
+  final int? choosingId;
+
+  const BrowserScreenOptionArgument({
+    this.browserOpenType = BrowserOpenType.normal,
+    this.choosingId,
+  });
+}
+
 class BrowserScreen extends StatefulWidget {
   final String initUrl;
+  final BrowserScreenOptionArgument option;
 
   const BrowserScreen({
     required this.initUrl,
+    required this.option,
     super.key,
   });
 
@@ -47,7 +62,9 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
   String? favicon;
 
-  final BrowserBloc _bloc = getIt.get<BrowserBloc>();
+  final String _googleSearchUrl = 'https://www.google.com/search';
+
+  late BrowserBloc _bloc;
 
   final HomeScreenObserver _homeScreenObserver =
       getIt.get<HomeScreenObserver>();
@@ -66,28 +83,61 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
   void _onUrlChange(UrlChange change) async {
     final bool canGoNext = await _webViewController.canGoForward();
+
+    final String? title = await _webViewController.getTitle();
+
     _bloc.add(
       BrowserOnUrlChangeEvent(
         url: change.url ?? widget.initUrl,
         canGoNext: canGoNext,
+        title: title,
+        logo: favicon,
       ),
     );
-
-    // if(context.mounted){
-    //   _screenShotController.captureAndSave(
-    //     'directory',
-    //     pixelRatio: context.ratio,
-    //   );
-    // }
   }
 
+  void _screenShot() async {
+    final currentBrowser = _bloc.state.currentBrowser;
+
+    print('current browser $currentBrowser');
+
+    if (currentBrowser != null) {
+      final directory = await getApplicationDocumentsDirectory();
+
+      File file = File(currentBrowser.screenShotUri);
+
+      if (await file.exists()) {
+        print('exists');
+        await file.delete();
+      }
+
+      if (context.mounted) {
+        final String? path = await _screenShotController.captureAndSave(
+          directory.path,
+          pixelRatio: context.ratio,
+          fileName: '${currentBrowser.siteTitle.replaceAll(' ', '')}_${currentBrowser.id}',
+        );
+
+        print(path);
+
+        _bloc.add(
+          BrowserOnUpdateBrowserImage(
+            path: path,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   void initState() {
+    _bloc = getIt.get<BrowserBloc>(
+      param1: widget.option,
+      param2: widget.initUrl,
+    );
+
     _bloc.add(
-      BrowserOnInitEvent(
-        url: widget.initUrl,
-      ),
+      const BrowserOnInitEvent(),
     );
 
     _screenShotController = ScreenshotController();
@@ -112,9 +162,13 @@ class _BrowserScreenState extends State<BrowserScreen> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {},
-          onPageStarted: (String url) {},
+          onPageStarted: (String url) {
+            favicon = null;
+            _screenShot();
+          },
           onPageFinished: (String url) {
             _runJavaScript();
+            _screenShot();
           },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
@@ -246,13 +300,18 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
   void _onBookMarkClick() async {
     final String? url = await _webViewController.currentUrl();
-    final Uri uri = Uri.parse(url ?? widget.initUrl);
 
-    String name = uri.query.isNotEmpty ? uri.query : uri.host;
+    String? title = await _webViewController.getTitle();
+
+    if (title == null) {
+      final Uri uri = Uri.parse(url ?? widget.initUrl);
+
+      title = uri.query.isNotEmpty ? uri.query : uri.host;
+    }
 
     _bloc.add(
       BrowserOnBookMarkClickEvent(
-        name: name,
+        name: title,
         url: widget.initUrl,
         logo: favicon ?? '',
       ),
@@ -287,13 +346,19 @@ class _BrowserScreenState extends State<BrowserScreen> {
     );
   }
 
-  void _onAddNewTab() {
+  void _onAddNewTab() async {
     _bloc.add(
-      const BrowserOnAddNewBrowserEvent(
-        url: 'https://www.google.com/search',
+      BrowserOnAddNewBrowserEvent(
+        url: _googleSearchUrl,
         siteName: 'Google search',
         logo: '',
         browserImage: '',
+      ),
+    );
+
+    _webViewController.loadRequest(
+      Uri.parse(
+        _googleSearchUrl,
       ),
     );
   }

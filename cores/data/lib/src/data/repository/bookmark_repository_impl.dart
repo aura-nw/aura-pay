@@ -9,12 +9,14 @@ final class BookMarkRepositoryImpl
   const BookMarkRepositoryImpl(this._browserDataBaseService);
 
   @override
-  Future<void> addNewBookMark({
+  Future<BookMark> addNewBookMark({
     required Map<String,dynamic> json,
-  }) {
-    return (_browserDataBaseService as BookMarkDataBaseService).add(
+  }) async{
+    final bookMarkDto = await (_browserDataBaseService as BookMarkDataBaseService).add(
       parameter: json,
     );
+
+    return bookMarkDto.toEntity;
   }
 
   @override

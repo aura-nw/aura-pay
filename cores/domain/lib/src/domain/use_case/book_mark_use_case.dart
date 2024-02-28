@@ -7,7 +7,7 @@ final class BookMarkUseCase {
 
   const BookMarkUseCase(this._repository);
 
-  Future<void> addBookMark({
+  Future<BookMark> addBookMark({
     required String logo,
     required String name,
     String? description,

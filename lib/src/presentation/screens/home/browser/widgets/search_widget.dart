@@ -6,16 +6,15 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/browser/browser_page_selector.dart';
 
 class SearchWidget extends StatelessWidget {
   final AppTheme appTheme;
-  final int tabCount;
   final VoidCallback onViewTap;
   final VoidCallback onSearchTap;
 
   const SearchWidget({
     required this.appTheme,
-    this.tabCount = 0,
     required this.onViewTap,
     required this.onSearchTap,
     super.key,
@@ -83,12 +82,16 @@ class SearchWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: Spacing.spacing02,
             ),
-            child: Text(
-              tabCount.toString(),
-              style: AppTypoGraPhy.heading01.copyWith(
-                color: appTheme.contentColor700,
-              ),
-              textAlign: TextAlign.center,
+            child: BrowserPageTabCountSelector(
+              builder: (tabCount) {
+                return Text(
+                  tabCount.toString(),
+                  style: AppTypoGraPhy.heading01.copyWith(
+                    color: appTheme.contentColor700,
+                  ),
+                  textAlign: TextAlign.center,
+                );
+              }
             ),
           ),
         ),

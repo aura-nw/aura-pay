@@ -2,7 +2,7 @@ import 'package:data/src/data/dto/browser_dto.dart';
 import 'package:data/src/data/dto/bookmark_dto.dart';
 
 abstract interface class LocalBrowserInterface<P, R> {
-  Future<void> add({required P parameter});
+  Future<R> add({required P parameter});
 
   Future<void> delete({
     required int id,
@@ -28,4 +28,6 @@ abstract interface class BrowserDatabaseService
   });
 
   Future<BrowserDto?> getActiveBrowser();
+
+  Future<BrowserDto?> getBrowserById(int id);
 }

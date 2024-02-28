@@ -8,7 +8,7 @@ final class BrowserManagementUseCase {
 
   const BrowserManagementUseCase(this._repository);
 
-  Future<void> addNewBrowser({
+  Future<Browser> addNewBrowser({
     required String url,
     required String logo,
     required String siteName,
@@ -36,6 +36,10 @@ final class BrowserManagementUseCase {
 
   Future<List<Browser>> getBrowsers() {
     return _repository.getBrowsers();
+  }
+
+  Future<Browser?> getBrowserById(int id) {
+    return _repository.getBrowserById(id);
   }
 
   Future<void> deleteAll() {

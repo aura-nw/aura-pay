@@ -56,3 +56,12 @@ enum MediaType{
   video,
   audio,
 }
+
+// In app browser
+enum BrowserOpenType{
+  // When users click or input url. It will update current tab
+  normal,
+  // When users click other tab in tab management screen
+  chooseOther,
+  // maybe add more options late
+}

@@ -5,13 +5,13 @@ part 'browser_event.freezed.dart';
 
 @freezed
 class BrowserEvent with _$BrowserEvent {
-  const factory BrowserEvent.onInit({
-    required String url,
-  }) = BrowserOnInitEvent;
+  const factory BrowserEvent.onInit() = BrowserOnInitEvent;
 
   const factory BrowserEvent.onUrlChangeEvent({
     required String url,
     required bool canGoNext,
+    String? title,
+    String? logo,
   }) = BrowserOnUrlChangeEvent;
 
   const factory BrowserEvent.onAddNewBrowser({
@@ -31,4 +31,8 @@ class BrowserEvent with _$BrowserEvent {
   const factory BrowserEvent.onRefreshAccount({
     required AuraAccount? selectedAccount,
   }) = BrowserOnRefreshAccountEvent;
+
+  const factory BrowserEvent.onUpdateBrowserImage({
+    String? path,
+  }) = BrowserOnUpdateBrowserImage;
 }

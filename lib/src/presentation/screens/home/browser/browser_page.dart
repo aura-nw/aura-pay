@@ -4,6 +4,7 @@ import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
@@ -127,7 +128,9 @@ class _BrowserPageState extends State<BrowserPage> {
                                                 onTap: () async {
                                                   await AppNavigator.push(
                                                     RoutePath.browser,
-                                                    browser.url,
+                                                    _createBrowserArgument(
+                                                      browser.url,
+                                                    ),
                                                   );
 
                                                   _bloc.add(
@@ -232,7 +235,9 @@ class _BrowserPageState extends State<BrowserPage> {
                                                 onTap: () async {
                                                   await AppNavigator.push(
                                                     RoutePath.browser,
-                                                    bookMark.url,
+                                                    _createBrowserArgument(
+                                                      bookMark.url,
+                                                    ),
                                                   );
 
                                                   _bloc.add(
@@ -281,5 +286,15 @@ class _BrowserPageState extends State<BrowserPage> {
         );
       },
     );
+  }
+
+  Map<String, dynamic> _createBrowserArgument(
+    String url, {
+    BrowserOpenType type = BrowserOpenType.normal,
+  }) {
+    return {
+      'url': url,
+      'type': type,
+    };
   }
 }

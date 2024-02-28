@@ -8,14 +8,18 @@ final class BookMarkDatabaseServiceImpl implements BookMarkDataBaseService {
   const BookMarkDatabaseServiceImpl(this._isar);
 
   @override
-  Future<void> add({required Map<String, dynamic> parameter}) async {
-    final BookMarkDb browser = BookMarkDb.fromJson(
+  Future<BookMarkDto> add({required Map<String, dynamic> parameter}) async {
+    final BookMarkDb bookMark = BookMarkDb.fromJson(
       parameter,
     );
 
+    int id = bookMark.id;
+
     await _isar.writeTxn(() async {
-      await _isar.bookMarkDbs.put(browser);
+      id = await _isar.bookMarkDbs.put(bookMark);
     });
+
+    return bookMark.copyWithId(id);
   }
 
   @override

@@ -9,12 +9,14 @@ final class BrowserManagementRepositoryImpl
   const BrowserManagementRepositoryImpl(this._localBrowserInterface);
 
   @override
-  Future<void> addNewBrowser({
+  Future<Browser> addNewBrowser({
     required Map<String, dynamic> json,
-  }) {
-    return (_localBrowserInterface as BrowserDatabaseService).add(
+  }) async{
+    final browserDto = await (_localBrowserInterface as BrowserDatabaseService).add(
       parameter: json,
     );
+
+    return browserDto.toEntity;
   }
 
   @override
@@ -57,5 +59,12 @@ final class BrowserManagementRepositoryImpl
     final browser = await (_localBrowserInterface as BrowserDatabaseService).getActiveBrowser();
 
     return browser?.toEntity;
+  }
+
+  @override
+  Future<Browser?> getBrowserById(int id) async{
+    final browserDto = await (_localBrowserInterface as BrowserDatabaseService).getBrowserById(id);
+
+    return browserDto?.toEntity;
   }
 }

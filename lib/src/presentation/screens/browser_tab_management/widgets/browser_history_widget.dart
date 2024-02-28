@@ -25,7 +25,7 @@ class BrowserHistoryWidget extends StatelessWidget {
     super.key,
   });
 
-  static const double _size = 24;
+  static const double _size = 16;
 
   @override
   Widget build(BuildContext context) {
@@ -41,73 +41,96 @@ class BrowserHistoryWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Row(
-            children: [
-              CacheNetworkImageExtend(
-                imageUrl: logo,
-                targetWidth: _size * 4,
-                targetHeight: _size * 4,
-                width: _size,
-                loadingBuilder: (context, url, onProcess) {
-                  return Shimmer.fromColors(
-                    baseColor: appTheme.surfaceColorGrayDefault,
-                    highlightColor: appTheme.surfaceColorBrandSemiLight,
-                    child: Container(
-                      width: _size,
-                      height: _size,
-                      decoration: BoxDecoration(
-                        color: appTheme.primaryColor50,
-                      ),
-                    ),
-                  );
-                },
-                errorBuilder: (context, url, error) {
-                  return Container(
-                    width: _size,
-                    height: _size,
-                    decoration: BoxDecoration(
-                      color: appTheme.primaryColor50,
-                    ),
-                    alignment: Alignment.center,
-                    child: SvgPicture.asset(
-                      AssetIconPath.commonGoogle,
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(
-                width: BoxSize.boxSize05,
-              ),
-              Expanded(
-                child: Text(
-                  siteName,
-                  style: AppTypoGraPhy.bodyMedium01.copyWith(
-                    color: appTheme.contentColorBlack,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Spacing.spacing02,
+            ),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    BorderRadiusSize.borderRadius04,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  child: CacheNetworkImageExtend(
+                    imageUrl: logo,
+                    targetWidth: _size * 4,
+                    targetHeight: _size * 4,
+                    width: _size,
+                    loadingBuilder: (context, url, onProcess) {
+                      return Shimmer.fromColors(
+                        baseColor: appTheme.surfaceColorGrayDefault,
+                        highlightColor: appTheme.surfaceColorBrandSemiLight,
+                        child: Container(
+                          width: _size,
+                          height: _size,
+                          decoration: BoxDecoration(
+                            color: appTheme.primaryColor50,
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, url, error) {
+                      return Container(
+                        width: _size,
+                        height: _size,
+                        decoration: BoxDecoration(
+                          color: appTheme.primaryColor50,
+                        ),
+                        alignment: Alignment.center,
+                        child: SvgPicture.asset(
+                          AssetIconPath.commonGoogle,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: BoxSize.boxSize05,
-              ),
-              GestureDetector(
-                onTap: onClose,
-                behavior: HitTestBehavior.opaque,
-                child: SvgPicture.asset(
-                  AssetIconPath.commonClose,
+                const SizedBox(
+                  width: BoxSize.boxSize04,
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Text(
+                    siteName,
+                    style: AppTypoGraPhy.bodyMedium01.copyWith(
+                      color: appTheme.contentColorBlack,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const SizedBox(
+                  width: BoxSize.boxSize05,
+                ),
+                GestureDetector(
+                  onTap: onClose,
+                  behavior: HitTestBehavior.opaque,
+                  child: SvgPicture.asset(
+                    AssetIconPath.commonClose,
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(
             height: BoxSize.boxSize05,
           ),
           Expanded(
-            child: Image(
-              fit: BoxFit.cover,
-              image: FileImage(
-                File(imageUri),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(
+                BorderRadiusSize.borderRadius04,
+              ),
+              child: Image(
+                fit: BoxFit.cover,
+                image: FileImage(
+                  File(imageUri),
+                ),
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: double.maxFinite,
+                    height: double.maxFinite,
+                    color: appTheme.surfaceColorGrayLight,
+                  );
+                },
+                width: double.maxFinite,
               ),
             ),
           ),
