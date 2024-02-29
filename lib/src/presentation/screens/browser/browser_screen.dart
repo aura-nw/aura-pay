@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +13,7 @@ import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/debounce.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
 import 'browser_event.dart';
 import 'browser_bloc.dart';
 import 'browser_selector.dart';
@@ -57,7 +57,7 @@ class BrowserScreen extends StatefulWidget {
 }
 
 class _BrowserScreenState extends State<BrowserScreen> {
-  late WebViewController _webViewController;
+  late WebViewController? _webViewController;
 
   late ScreenshotController _screenShotController;
 
@@ -74,7 +74,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
       getIt.get<HomeScreenObserver>();
 
   Future<void> _runJavaScript() async {
-    return _webViewController.runJavaScript('''
+    return _webViewController?.runJavaScript('''
             var links = document.head.getElementsByTagName('link');
             for (var i = 0; i < links.length; i++) {
               if (links[i].rel == 'icon' || links[i].rel == 'shortcut icon' || links[i].rel == 'apple-touch-icon') {
@@ -88,6 +88,15 @@ class _BrowserScreenState extends State<BrowserScreen> {
   void _onUrlChange(UrlChange change) async {
     favicon = null;
     if (change.url == preUrl) return;
+
+    final bool canGoNext = await _webViewController?.canGoForward() ?? false;
+
+    _bloc.add(
+      BrowserOnCheckBookMarkEvent(
+        url: change.url ?? widget.initUrl,
+        canGoNext: canGoNext,
+      ),
+    );
 
     preUrl = change.url;
 
@@ -175,16 +184,13 @@ class _BrowserScreenState extends State<BrowserScreen> {
   void _urlChangeObserver(String url) async {
     await _runJavaScript();
 
-    final bool canGoNext = await _webViewController.canGoForward();
-
-    final String? title = await _webViewController.getTitle();
+    final String? title = await _webViewController?.getTitle();
 
     final String? path = await _screenShot();
 
     _bloc.add(
       BrowserOnUrlChangeEvent(
         url: url,
-        canGoNext: canGoNext,
         title: title,
         logo: favicon,
         imagePath: path,
@@ -211,7 +217,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
     _webViewController = _initWebViewController();
 
-    _webViewController.loadRequest(
+    _webViewController?.loadRequest(
       Uri.parse(
         widget.initUrl,
       ),
@@ -261,9 +267,15 @@ class _BrowserScreenState extends State<BrowserScreen> {
                   Expanded(
                     child: Screenshot(
                       controller: _screenShotController,
-                      child: WebViewWidget(
-                        controller: _webViewController,
-                      ),
+                      child: _webViewController != null
+                          ? WebViewWidget(
+                              controller: _webViewController!,
+                            )
+                          : Center(
+                              child: AppLoadingWidget(
+                                appTheme: appTheme,
+                              ),
+                            ),
                     ),
                   ),
                   BrowserBottomNavigatorWidget(
@@ -326,9 +338,9 @@ class _BrowserScreenState extends State<BrowserScreen> {
   }
 
   void _onBookMarkClick() async {
-    final String? url = await _webViewController.currentUrl();
+    final String? url = await _webViewController?.currentUrl();
 
-    String? title = await _webViewController.getTitle();
+    String? title = await _webViewController?.getTitle();
 
     if (title == null) {
       final Uri uri = Uri.parse(url ?? widget.initUrl);
@@ -352,21 +364,23 @@ class _BrowserScreenState extends State<BrowserScreen> {
   }
 
   void _onNextClick() async {
-    if (await _webViewController.canGoForward()) {
-      await _webViewController.goForward();
+    final canGoForward = await _webViewController?.canGoForward() ?? false;
+    if (canGoForward) {
+      await _webViewController?.goForward();
     }
   }
 
   void _onBackClick() async {
-    if (await _webViewController.canGoBack()) {
-      await _webViewController.goBack();
+    final canGoBack = await _webViewController?.canGoBack() ?? false;
+    if (canGoBack) {
+      await _webViewController?.goBack();
     } else {
       AppNavigator.pop();
     }
   }
 
   void _onShareBrowserPage() async {
-    final url = await _webViewController.currentUrl();
+    final url = await _webViewController?.currentUrl();
 
     await ShareNetWork.shareBrowser(
       url ?? widget.initUrl,
@@ -383,7 +397,19 @@ class _BrowserScreenState extends State<BrowserScreen> {
       ),
     );
 
-    _webViewController.loadRequest(
+    setState(() {
+      _webViewController = null;
+    });
+
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
+
+    setState(() {
+      _webViewController = _initWebViewController();
+    });
+
+    _webViewController?.loadRequest(
       Uri.parse(
         _googleSearchUrl,
       ),
@@ -391,7 +417,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
   }
 
   void _onRefreshPage() async {
-    await _webViewController.reload();
+    await _webViewController?.reload();
   }
 
   void _onViewTabManagement() async {
@@ -405,11 +431,27 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
       if (id != null && id == _bloc.state.currentBrowser?.id) return;
 
-      _webViewController = _initWebViewController();
+      setState(() {
+        _webViewController = null;
+      });
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      setState(() {
+        _webViewController = _initWebViewController();
+      });
 
       final String url = result['url'];
 
       final BrowserOpenType type = result['type'];
+
+      _webViewController?.loadRequest(
+        Uri.parse(
+          url,
+        ),
+      );
 
       _bloc.add(
         BrowserOnReceivedTabResultEvent(
@@ -418,12 +460,6 @@ class _BrowserScreenState extends State<BrowserScreen> {
             choosingId: id,
             browserOpenType: type,
           ),
-        ),
-      );
-
-      _webViewController.loadRequest(
-        Uri.parse(
-          url,
         ),
       );
     }
