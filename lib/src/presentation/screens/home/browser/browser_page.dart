@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
@@ -205,7 +206,7 @@ class _BrowserPageState extends State<BrowserPage> {
                                                     .bodyMedium02
                                                     .copyWith(
                                                   color:
-                                                      appTheme.contentColor500,
+                                                  appTheme.contentColor500,
                                                 ),
                                               );
                                             },

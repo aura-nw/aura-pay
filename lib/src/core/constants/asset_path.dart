@@ -78,8 +78,8 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_common_permission_camera.svg';
   static const String commonPermissionGallery =
       '${_baseIconPath}ic_common_permission_gallery.svg';
-  static const String commonRoundDivider =
-      '${_baseIconPath}ic_common_round_divider.svg';
+  static const String commonTransactionDivider =
+      '${_baseIconPath}ic_common_transaction_divider.svg';
   static const String commonSignMessage =
       '${_baseIconPath}ic_common_message.svg';
   static const String commonFeeEdit = '${_baseIconPath}ic_common_fee_edit.svg';

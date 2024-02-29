@@ -211,7 +211,7 @@ class _RecoveryMethodConfirmationScreenState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SvgPicture.asset(
-                          AssetIconPath.commonRoundDivider,
+                          AssetIconPath.commonTransactionDivider,
                         ),
                         const SizedBox(
                           height: BoxSize.boxSize04,

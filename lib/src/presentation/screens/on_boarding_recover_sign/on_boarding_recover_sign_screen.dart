@@ -159,7 +159,7 @@ class _OnBoardingRecoverSignScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SvgPicture.asset(
-                            AssetIconPath.commonRoundDivider,
+                            AssetIconPath.commonTransactionDivider,
                           ),
                           const SizedBox(
                             height: BoxSize.boxSize05,
