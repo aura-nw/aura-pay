@@ -483,7 +483,17 @@ class _BrowserScreenState extends State<BrowserScreen> {
     if (result != null) {
       final int? id = result['id'];
 
+      final String url = result['url'];
+
       if (id != null && id == _bloc.state.currentBrowser?.id) return;
+
+      // Call update
+      _bloc.add(
+        BrowserOnReceivedTabResultEvent(
+          url: url,
+          choosingId: id,
+        ),
+      );
 
       setState(() {
         // Set current web view = null. It is required to refresh a page.
@@ -499,20 +509,10 @@ class _BrowserScreenState extends State<BrowserScreen> {
         _webViewController = _initWebViewController();
       });
 
-      final String url = result['url'];
-
       // Load request
       _webViewController?.loadRequest(
         Uri.parse(
           url,
-        ),
-      );
-
-      // Call update
-      _bloc.add(
-        BrowserOnReceivedTabResultEvent(
-          url: url,
-          choosingId: id,
         ),
       );
     }
