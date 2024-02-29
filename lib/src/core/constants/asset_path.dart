@@ -11,6 +11,8 @@ sealed class AssetImagePath {
   static const String _baseImagePath = '${_baseAsset}image/';
   static const String onBoardingRecoverBackupAddress =
       '${_baseImagePath}img_on_boarding_recover_backup_address.svg';
+  static const String splashScreen =
+      '${_baseImagePath}img_plash_screen.svg';
 }
 
 sealed class AssetIconPath {

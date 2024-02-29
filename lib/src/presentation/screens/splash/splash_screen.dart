@@ -5,6 +5,7 @@ import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'splash_screen_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'splash_screen_cubit.dart';
@@ -58,11 +59,11 @@ class _SplashScreenState extends State<SplashScreen> {
               }
             },
             child: Scaffold(
-              backgroundColor: theme.surfaceColorBlack,
-              body: Center(
-                child: SvgPicture.asset(
-                  AssetLogoPath.logoDark,
-                ),
+              body: SvgPicture.asset(
+                AssetImagePath.splashScreen,
+                fit: BoxFit.cover,
+                width: context.w,
+                height: context.h,
               ),
             ),
           ),
