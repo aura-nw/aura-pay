@@ -1,7 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
-import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'browser_event.dart';
 import 'browser_state.dart';
 
@@ -14,11 +13,9 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     this._auraAccountUseCase,
     this._browserManagementUseCase,
     this._bookMarkUseCase, {
-    required BrowserScreenOptionArgument option,
     required String initUrl,
   }) : super(
           BrowserState(
-            option: option,
             currentUrl: initUrl,
           ),
         ) {
@@ -35,12 +32,14 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     BrowserOnReceivedTabResultEvent event,
     Emitter<BrowserState> emit,
   ) async {
+    // Get browser by id. Just when users opened the tab management screen and chose a tab.
     final browser = await _browserManagementUseCase
-        .getBrowserById(event.option.choosingId!);
+        .getBrowserById(event.choosingId!);
 
     if (browser != null) {
+      // Update browser
       await _browserManagementUseCase.update(
-        id: event.option.choosingId!,
+        id: event.choosingId!,
         url: event.url,
         logo: browser.logo,
         siteName: getSiteNameFromUrl(event.url),
@@ -52,9 +51,9 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     // Get all browsers
     final browsers = await _browserManagementUseCase.getBrowsers();
 
+    // Update UI
     emit(
       state.copyWith(
-        option: event.option,
         currentUrl: event.url,
         currentBrowser: browser,
         tabCount: browsers.length,
@@ -66,8 +65,10 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     BrowserOnCheckBookMarkEvent event,
     Emitter<BrowserState> emit,
   ) async {
+    // Get bookmark by url
     final bookMark = await _bookMarkUseCase.getBookMarkByUrl(url: event.url);
 
+    // Update UI
     if (bookMark == null) {
       emit(
         state.copyWithBookMarkNull(
@@ -89,10 +90,13 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     BrowserOnUrlChangeEvent event,
     Emitter<BrowserState> emit,
   ) async {
+    // Get current active browser
     Browser? currentBrowser = state.currentBrowser ??
         await _browserManagementUseCase.getActiveBrowser();
 
     if (currentBrowser != null) {
+      // Update active browser with some information.
+      // New url , new title , new image path, new logo
       currentBrowser = await _browserManagementUseCase.update(
         id: currentBrowser.id,
         url: event.url,
@@ -102,18 +106,21 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
         isActive: currentBrowser.isActive,
       );
     }
+
+    // Update UI
+    emit(
+      state.copyWith(
+        currentBrowser: currentBrowser,
+        currentUrl: event.url,
+      ),
+    );
   }
 
   void _onInit(
     BrowserOnInitEvent event,
     Emitter<BrowserState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        status: BrowserStatus.loading,
-      ),
-    );
-
+    // Get current active browser or create new
     final activeBrowser = await _getCurrentBrowser(
       url: state.currentUrl,
     );
@@ -124,11 +131,11 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     // Get all browsers
     final browsers = await _browserManagementUseCase.getBrowsers();
 
+    // Update UI
     emit(
       state.copyWith(
         accounts: accounts,
         tabCount: browsers.isEmpty ? 1 : browsers.length,
-        status: BrowserStatus.loaded,
         currentBrowser: activeBrowser,
         selectedAccount: accounts.firstWhereOrNull(
           (e) => e.index == 0,
@@ -141,26 +148,26 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     BrowserOnBookMarkClickEvent event,
     Emitter<BrowserState> emit,
   ) async {
+    // If current bookmark != null. We will delete this bookmark in bookmark database.
     if (state.bookMark != null) {
       await _bookMarkUseCase.deleteBookMark(
         id: state.bookMark!.id,
       );
 
+      //Update UI
       emit(
         state.copyWithBookMarkNull(),
       );
     } else {
-      await _bookMarkUseCase.addBookMark(
+      // Add new bookmark. It will return a bookmark
+      final bookMark = await _bookMarkUseCase.addBookMark(
         logo: event.logo,
         name: event.name,
         url: event.url,
         description: event.description,
       );
 
-      final bookMark = await _bookMarkUseCase.getBookMarkByUrl(
-        url: event.url,
-      );
-
+      // Update UI
       emit(
         state.copyWith(
           bookMark: bookMark,
@@ -173,6 +180,7 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     BrowserOnAddNewBrowserEvent event,
     Emitter<BrowserState> emit,
   ) async {
+    // Add a new browser
     final activeBrowser = await _browserManagementUseCase.addNewBrowser(
       logo: event.logo,
       siteName: event.siteName,
@@ -180,8 +188,10 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
       screenShotUri: event.browserImage,
     );
 
+    // Get all browsers
     final browsers = await _browserManagementUseCase.getBrowsers();
 
+    // Update UI
     emit(
       state.copyWith(
         tabCount: browsers.length,

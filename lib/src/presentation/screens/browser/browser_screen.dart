@@ -7,7 +7,6 @@ import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
-import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
@@ -32,23 +31,11 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 import 'widgets/change_account_form_widget.dart';
 
-class BrowserScreenOptionArgument {
-  final BrowserOpenType browserOpenType;
-  final int? choosingId;
-
-  const BrowserScreenOptionArgument({
-    this.browserOpenType = BrowserOpenType.normal,
-    this.choosingId,
-  });
-}
-
 class BrowserScreen extends StatefulWidget {
   final String initUrl;
-  final BrowserScreenOptionArgument option;
 
   const BrowserScreen({
     required this.initUrl,
-    required this.option,
     super.key,
   });
 
@@ -57,22 +44,32 @@ class BrowserScreen extends StatefulWidget {
 }
 
 class _BrowserScreenState extends State<BrowserScreen> {
+  /// Declare a web view controller
   late WebViewController? _webViewController;
 
+  /// Declare a screen shot controller
   late ScreenshotController _screenShotController;
 
+  /// Declare a denounce helper
   late Denounce<String> _denounce;
 
+  /// Declare a favicon. It can be receive after the web view loaded.
   String? favicon;
+
+  /// Declare a preUrl as old url after the url of web view changes.
   String? preUrl;
 
+  /// Declare a default site url
   final String _googleSearchUrl = 'https://www.google.com/search';
 
+  /// Declare a Browser bloc
   late BrowserBloc _bloc;
 
+  /// Get home screen observer instance
   final HomeScreenObserver _homeScreenObserver =
-      getIt.get<HomeScreenObserver>();
+  getIt.get<HomeScreenObserver>();
 
+  /// Run script method. It includes the script to get the favicon of website.
   Future<void> _runJavaScript() async {
     return _webViewController?.runJavaScript('''
             var links = document.head.getElementsByTagName('link');
@@ -85,12 +82,17 @@ class _BrowserScreenState extends State<BrowserScreen> {
           ''');
   }
 
+  /// On web view changes url
   void _onUrlChange(UrlChange change) async {
+    // Set favicon = null
     favicon = null;
+    // Check PreUrl and url changes. If they are the same. Doesn't handle function
     if (change.url == preUrl) return;
 
+    // Check web view can go next
     final bool canGoNext = await _webViewController?.canGoForward() ?? false;
 
+    // Call check book mark.
     _bloc.add(
       BrowserOnCheckBookMarkEvent(
         url: change.url ?? widget.initUrl,
@@ -98,38 +100,48 @@ class _BrowserScreenState extends State<BrowserScreen> {
       ),
     );
 
+    // Set preUrl = url changes
     preUrl = change.url;
 
+    // Run denounce observer
     _denounce.onDenounce(
       change.url ?? widget.initUrl,
     );
   }
 
+  /// Screenshot current web view page.
   Future<String?> _screenShot() async {
     final currentBrowser = _bloc.state.currentBrowser;
 
     if (currentBrowser != null) {
+      // Get pyxis application directory
       final directory = await getApplicationDocumentsDirectory();
 
       File file = File(currentBrowser.screenShotUri);
 
+      // Check file exists
       if (await file.exists()) {
+        // Delete file
         await file.delete();
       }
 
       if (context.mounted) {
+        // Capture current web view page and save return a image path
         return _screenShotController.captureAndSave(
           directory.path,
           pixelRatio: context.ratio,
           fileName:
-              '${currentBrowser.siteTitle.replaceAll(' ', '')}_${currentBrowser.id}',
+          '${currentBrowser.siteTitle.replaceAll(' ', '')}_${currentBrowser
+              .id}',
         );
       }
     }
 
+    // return default
     return null;
   }
 
+  /// Init web view controller
   WebViewController _initWebViewController() {
     // #docregion platform_features
     late final PlatformWebViewControllerCreationParams params;
@@ -143,7 +155,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
     }
 
     final WebViewController controller =
-        WebViewController.fromPlatformCreationParams(params);
+    WebViewController.fromPlatformCreationParams(params);
     // #enddocregion platform_features
 
     controller
@@ -167,6 +179,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
       ..addJavaScriptChannel(
         'favicon',
         onMessageReceived: (JavaScriptMessage message) {
+          // receive favicon
           favicon = message.message;
         },
       );
@@ -178,16 +191,22 @@ class _BrowserScreenState extends State<BrowserScreen> {
     }
     // #enddocregion platform_features
 
+    // return controller
     return controller;
   }
 
+  /// Handle url changes. It will update current browser
   void _urlChangeObserver(String url) async {
+    // Run script get favicon
     await _runJavaScript();
 
+    // Get current web view title
     final String? title = await _webViewController?.getTitle();
 
+    // Get web view screenshot image path
     final String? path = await _screenShot();
 
+    // Call update in bloc.
     _bloc.add(
       BrowserOnUrlChangeEvent(
         url: url,
@@ -200,23 +219,28 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
   @override
   void initState() {
+    // Give a instance of denounce and register an observer
     _denounce = Denounce(
       const Duration(
         seconds: 3,
       ),
-    )..addObserver(_urlChangeObserver);
+    )
+      ..addObserver(_urlChangeObserver);
 
+    // create a instance of bloc. Passes two parameters
     _bloc = getIt.get<BrowserBloc>(
-      param1: widget.option,
-      param2: widget.initUrl,
+      param1: widget.initUrl,
     );
 
+    // Call init event
     _bloc.add(
       const BrowserOnInitEvent(),
     );
 
+    // init web view controller
     _webViewController = _initWebViewController();
 
+    // load default request by init url
     _webViewController?.loadRequest(
       Uri.parse(
         widget.initUrl,
@@ -229,6 +253,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
   @override
   void dispose() {
+    // Remove observer
     _denounce.removeObserver(_urlChangeObserver);
     _denounce.disPose();
     super.dispose();
@@ -269,13 +294,13 @@ class _BrowserScreenState extends State<BrowserScreen> {
                       controller: _screenShotController,
                       child: _webViewController != null
                           ? WebViewWidget(
-                              controller: _webViewController!,
-                            )
+                        controller: _webViewController!,
+                      )
                           : Center(
-                              child: AppLoadingWidget(
-                                appTheme: appTheme,
-                              ),
-                            ),
+                        child: AppLoadingWidget(
+                          appTheme: appTheme,
+                        ),
+                      ),
                     ),
                   ),
                   BrowserBottomNavigatorWidget(
@@ -301,11 +326,11 @@ class _BrowserScreenState extends State<BrowserScreen> {
     );
   }
 
-  void _showChoosingAccount(
-    AppTheme appTheme,
-    List<AuraAccount> accounts,
-    AuraAccount? selectedAccount,
-  ) async {
+  /// Show choosing dialog account
+  void _showChoosingAccount(AppTheme appTheme,
+      List<AuraAccount> accounts,
+      AuraAccount? selectedAccount,) async {
+    // Show dialog. It can receive an account or null.
     final account = await DialogProvider.showCustomDialog<AuraAccount>(
       context,
       appTheme: appTheme,
@@ -322,6 +347,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
     if (account != null) {
       if (account.id == _bloc.state.selectedAccount?.id) return;
 
+      // Update account in home page.
       _homeScreenObserver.emit(
         emitParam: HomeScreenEmitParam(
           event: HomeScreenObserver.onInAppBrowserChooseAccountEvent,
@@ -329,6 +355,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
         ),
       );
 
+      // Call refresh account
       _bloc.add(
         BrowserOnRefreshAccountEvent(
           selectedAccount: account,
@@ -337,9 +364,12 @@ class _BrowserScreenState extends State<BrowserScreen> {
     }
   }
 
+  /// On users click book mark
   void _onBookMarkClick() async {
+    // Get current site url
     final String? url = await _webViewController?.currentUrl();
 
+    // Get current site title
     String? title = await _webViewController?.getTitle();
 
     if (title == null) {
@@ -348,6 +378,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
       title = uri.query.isNotEmpty ? uri.query : uri.host;
     }
 
+    // Call update in bloc
     _bloc.add(
       BrowserOnBookMarkClickEvent(
         name: title,
@@ -357,46 +388,63 @@ class _BrowserScreenState extends State<BrowserScreen> {
     );
   }
 
+  /// On users click home
   void _onHomeClick() {
+    // return to home page.
     AppNavigator.popUntil(
       RoutePath.home,
     );
   }
 
+  /// On users click next
   void _onNextClick() async {
+    // Check current web view can go next
     final canGoForward = await _webViewController?.canGoForward() ?? false;
     if (canGoForward) {
+      // Go next
       await _webViewController?.goForward();
     }
   }
 
+  /// On users click back
   void _onBackClick() async {
+    // Check current web view can go back
     final canGoBack = await _webViewController?.canGoBack() ?? false;
     if (canGoBack) {
+      // Go back
       await _webViewController?.goBack();
     } else {
+      // If not. Back to pre page
       AppNavigator.pop();
     }
   }
 
+  /// On users click share
   void _onShareBrowserPage() async {
+    // Get current web view url
     final url = await _webViewController?.currentUrl();
 
+    // Call share method
     await ShareNetWork.shareBrowser(
       url ?? widget.initUrl,
     );
   }
 
+  /// On users click add new tab
   void _onAddNewTab() async {
+    // Call add new site
     _bloc.add(
       BrowserOnAddNewBrowserEvent(
         url: _googleSearchUrl,
-        siteName: 'Google search',
+        siteName: _bloc.getSiteNameFromUrl(
+          _googleSearchUrl,
+        ),
         logo: '',
         browserImage: '',
       ),
     );
 
+    // Set current web view = null. It is required to refresh a page.
     setState(() {
       _webViewController = null;
     });
@@ -406,9 +454,11 @@ class _BrowserScreenState extends State<BrowserScreen> {
     );
 
     setState(() {
+      // Init web view
       _webViewController = _initWebViewController();
     });
 
+    // Load new request
     _webViewController?.loadRequest(
       Uri.parse(
         _googleSearchUrl,
@@ -416,11 +466,15 @@ class _BrowserScreenState extends State<BrowserScreen> {
     );
   }
 
+  /// On users click refresh current site.
   void _onRefreshPage() async {
+    // Call reload
     await _webViewController?.reload();
   }
 
+  /// On users click view tab management
   void _onViewTabManagement() async {
+    // Push to browser tab management screen with parameter
     final Map<String, dynamic>? result = await AppNavigator.push(
       RoutePath.browserTabManagement,
       false,
@@ -432,6 +486,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
       if (id != null && id == _bloc.state.currentBrowser?.id) return;
 
       setState(() {
+        // Set current web view = null. It is required to refresh a page.
         _webViewController = null;
       });
 
@@ -440,26 +495,24 @@ class _BrowserScreenState extends State<BrowserScreen> {
       );
 
       setState(() {
+        // Init web view
         _webViewController = _initWebViewController();
       });
 
       final String url = result['url'];
 
-      final BrowserOpenType type = result['type'];
-
+      // Load request
       _webViewController?.loadRequest(
         Uri.parse(
           url,
         ),
       );
 
+      // Call update
       _bloc.add(
         BrowserOnReceivedTabResultEvent(
           url: url,
-          option: BrowserScreenOptionArgument(
-            choosingId: id,
-            browserOpenType: type,
-          ),
+          choosingId: id,
         ),
       );
     }

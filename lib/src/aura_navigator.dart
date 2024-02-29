@@ -380,15 +380,11 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.browser:
-        final Map<String, dynamic> argument =
-            settings.arguments as Map<String, dynamic>;
+        final String initUrl =
+            settings.arguments as String;
         return _defaultRoute(
           BrowserScreen(
-            initUrl: argument['url'],
-            option: BrowserScreenOptionArgument(
-              browserOpenType: argument['type'],
-              choosingId: argument['id'],
-            ),
+            initUrl: initUrl,
           ),
           settings,
         );

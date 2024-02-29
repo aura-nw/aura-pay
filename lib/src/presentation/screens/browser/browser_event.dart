@@ -40,6 +40,6 @@ class BrowserEvent with _$BrowserEvent {
 
   const factory BrowserEvent.onReceivedTabResult({
     required String url,
-    required BrowserScreenOptionArgument option,
+    required int ? choosingId,
   }) = BrowserOnReceivedTabResultEvent;
 }

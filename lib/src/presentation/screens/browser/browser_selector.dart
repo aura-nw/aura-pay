@@ -33,20 +33,6 @@ class BrowserSelectedAccountSelector
         );
 }
 
-class BrowserStatusSelector
-    extends BlocSelector<BrowserBloc, BrowserState, BrowserStatus> {
-  BrowserStatusSelector({
-    Key? key,
-    required Widget Function(BrowserStatus) builder,
-  }) : super(
-          key: key,
-          selector: (state) => state.status,
-          builder: (_, status) => builder(
-            status,
-          ),
-        );
-}
-
 class BrowserTabCountSelector
     extends BlocSelector<BrowserBloc, BrowserState, int> {
   BrowserTabCountSelector({

@@ -4,7 +4,6 @@ import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
-import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
@@ -55,7 +54,6 @@ class _BrowserTabManagementScreenState
                   _backOrReplace(
                     _bloc.googleSearchUrl,
                     id: state.activeBrowser?.id,
-                    type: BrowserOpenType.chooseOther,
                   );
                   break;
               }
@@ -119,7 +117,6 @@ class _BrowserTabManagementScreenState
                                           _backOrReplace(
                                             browser.url,
                                             id: browser.id,
-                                            type: BrowserOpenType.chooseOther,
                                           );
                                         },
                                         child: BrowserHistoryWidget(
@@ -175,36 +172,28 @@ class _BrowserTabManagementScreenState
   void _backOrReplace(
     String url, {
     int? id,
-    BrowserOpenType type = BrowserOpenType.normal,
   }) {
     if (widget.isCloseAndReplace) {
       AppNavigator.replaceWith(
         RoutePath.browser,
-        _createBrowserArgument(
-          url,
-          type: type,
-          id: id,
-        ),
+        url,
       );
     } else {
       AppNavigator.pop(
-        _createBrowserArgument(
+        _createBrowserResult(
           url,
-          type: type,
           id: id,
         ),
       );
     }
   }
 
-  Map<String, dynamic> _createBrowserArgument(
+  Map<String, dynamic> _createBrowserResult(
     String url, {
-    BrowserOpenType type = BrowserOpenType.normal,
     int? id,
   }) {
     return {
       'url': url,
-      'type': type,
       'id': id,
     };
   }

@@ -756,12 +756,11 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<BrowserBloc, BrowserScreenOptionArgument, String>(
-    (option, initUrl) => BrowserBloc(
+  getIt.registerFactoryParam<BrowserBloc, String, dynamic>(
+    (initUrl, _) => BrowserBloc(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<BrowserManagementUseCase>(),
       getIt.get<BookMarkUseCase>(),
-      option: option,
       initUrl: initUrl,
     ),
   );
