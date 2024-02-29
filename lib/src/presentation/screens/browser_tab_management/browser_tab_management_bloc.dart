@@ -22,6 +22,7 @@ class BrowserTabManagementBloc
     );
   }
 
+  // Default site information
   final String googleSearchUrl = 'https://www.google.com/search';
   final String _googleSearchName = 'Google search';
 
@@ -49,6 +50,7 @@ class BrowserTabManagementBloc
     BrowserTabManagementOnCloseTabEvent event,
     Emitter<BrowserTabManagementState> emit,
   ) async {
+    // If browsers have only element. It looks like the BrowserTabManagementOnClearEvent
     if (state.browsers.length == 1) {
       add(
         const BrowserTabManagementOnClearEvent(),
@@ -57,26 +59,30 @@ class BrowserTabManagementBloc
       List<Browser> browsers = List.empty(growable: true)
         ..addAll(state.browsers);
 
+      // Remove element by id
       browsers.removeWhere(
         (browser) => browser.id == event.id,
       );
 
+      // Remove element in browser database
+      await _browserManagementUseCase.deleteBrowser(
+        id: event.id,
+      );
+      // Update UI
       emit(
         state.copyWith(
           browsers: browsers,
         ),
       );
-
+      // Get active browser
       final activeBrowser = browsers.firstWhereOrNull((e) => e.isActive);
 
+      // If activeBrowser null. We have to update a new active browser which is the first element
       if (activeBrowser == null) {
-        final browser = state.browsers[0];
+        Browser browser = state.browsers[0];
 
-        await _browserManagementUseCase.deleteBrowser(
-          id: event.id,
-        );
-
-        await _browserManagementUseCase.update(
+        // Update browser by id. It returns a browser after update
+        browser = await _browserManagementUseCase.update(
           id: browser.id,
           url: browser.url,
           logo: browser.logo,
@@ -85,14 +91,11 @@ class BrowserTabManagementBloc
           isActive: true,
         );
 
-        browsers = await _browserManagementUseCase.getBrowsers();
-
+        // Update UI
         emit(
           state.copyWith(
             browsers: browsers,
-            activeBrowser: browsers.firstWhereOrNull(
-              (br) => br.isActive,
-            ),
+            activeBrowser: browser,
             status: BrowserTabManagementStatus.closeTabSuccess,
           ),
         );
@@ -104,16 +107,19 @@ class BrowserTabManagementBloc
     BrowserTabManagementOnAddNewTabEvent event,
     Emitter<BrowserTabManagementState> emit,
   ) async {
+    // Create a new browser
     final browser = await _createNewSite();
 
+    // Update UI
     emit(
       state.copyWith(
-          status: BrowserTabManagementStatus.addTabSuccess,
-          activeBrowser: browser,
-          browsers: [
-            browser,
-            ...state.browsers,
-          ]),
+        status: BrowserTabManagementStatus.addTabSuccess,
+        activeBrowser: browser,
+        browsers: [
+          browser,
+          ...state.browsers,
+        ],
+      ),
     );
   }
 
@@ -121,10 +127,13 @@ class BrowserTabManagementBloc
     BrowserTabManagementOnClearEvent event,
     Emitter<BrowserTabManagementState> emit,
   ) async {
+    // Clear all browser in browser database
     await _browserManagementUseCase.deleteAll();
 
+    // Create a new browser
     final browser = await _createNewSite();
 
+    // Update UI
     emit(
       state.copyWith(
         status: BrowserTabManagementStatus.closeAllSuccess,
