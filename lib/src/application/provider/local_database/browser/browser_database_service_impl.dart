@@ -44,7 +44,7 @@ final class BrowserDatabaseServiceImpl implements BrowserDatabaseService {
 
   @override
   Future<List<BrowserDto>> getAll() {
-    return _isar.browserDbs.where().sortByBrowserIsActive().findAll();
+    return _isar.browserDbs.where().sortByBrowserIsActiveDesc().findAll();
   }
 
   @override

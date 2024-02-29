@@ -28,20 +28,26 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     on(_onAddNewBrowser);
     on(_onRefreshAccount);
     on(_onReceivedTabManagementResult);
+    on(_onCheckBookMark);
   }
 
   void _onReceivedTabManagementResult(
     BrowserOnReceivedTabResultEvent event,
     Emitter<BrowserState> emit,
   ) async {
-    await _browserManagementUseCase.update(
-      id: event.option.choosingId!,
-      url: event.url,
-      logo: '',
-      siteName: getSiteNameFromUrl(event.url),
-      screenShotUri: '',
-      isActive: true,
-    );
+    final browser = await _browserManagementUseCase
+        .getBrowserById(event.option.choosingId!);
+
+    if (browser != null) {
+      await _browserManagementUseCase.update(
+        id: event.option.choosingId!,
+        url: event.url,
+        logo: browser.logo,
+        siteName: getSiteNameFromUrl(event.url),
+        screenShotUri: browser.screenShotUri,
+        isActive: true,
+      );
+    }
 
     // Get all browsers
     final browsers = await _browserManagementUseCase.getBrowsers();
@@ -50,32 +56,17 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
       state.copyWith(
         option: event.option,
         currentUrl: event.url,
-        currentBrowser: browsers.firstWhereOrNull(
-          (e) => e.isActive,
-        ),
+        currentBrowser: browser,
         tabCount: browsers.length,
       ),
     );
   }
 
-  void _onUrlChangeEvent(
-    BrowserOnUrlChangeEvent event,
+  void _onCheckBookMark(
+    BrowserOnCheckBookMarkEvent event,
     Emitter<BrowserState> emit,
   ) async {
     final bookMark = await _bookMarkUseCase.getBookMarkByUrl(url: event.url);
-
-    Browser ? currentBrowser = state.currentBrowser;
-
-    if (currentBrowser != null) {
-      currentBrowser = await _browserManagementUseCase.update(
-        id: currentBrowser.id,
-        url: event.url,
-        logo: event.logo ?? currentBrowser.logo,
-        siteName: event.title ?? currentBrowser.siteTitle,
-        screenShotUri: event.imagePath ?? currentBrowser.screenShotUri,
-        isActive: currentBrowser.isActive,
-      );
-    }
 
     if (bookMark == null) {
       emit(
@@ -89,8 +80,26 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
         state.copyWith(
           currentUrl: event.url,
           bookMark: bookMark,
-          currentBrowser: currentBrowser,
         ),
+      );
+    }
+  }
+
+  void _onUrlChangeEvent(
+    BrowserOnUrlChangeEvent event,
+    Emitter<BrowserState> emit,
+  ) async {
+    Browser? currentBrowser = state.currentBrowser ??
+        await _browserManagementUseCase.getActiveBrowser();
+
+    if (currentBrowser != null) {
+      currentBrowser = await _browserManagementUseCase.update(
+        id: currentBrowser.id,
+        url: event.url,
+        logo: event.logo ?? currentBrowser.logo,
+        siteName: event.title ?? currentBrowser.siteTitle,
+        screenShotUri: event.imagePath ?? currentBrowser.screenShotUri,
+        isActive: currentBrowser.isActive,
       );
     }
   }
@@ -222,7 +231,7 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     return activeBrowser;
   }
 
-  String getSiteNameFromUrl(String url){
+  String getSiteNameFromUrl(String url) {
     final uri = Uri.parse(url);
 
     return uri.query.isNotEmpty ? uri.query : uri.host;

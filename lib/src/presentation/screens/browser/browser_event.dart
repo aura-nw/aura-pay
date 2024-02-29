@@ -10,11 +10,15 @@ class BrowserEvent with _$BrowserEvent {
 
   const factory BrowserEvent.onUrlChangeEvent({
     required String url,
-    required bool canGoNext,
     String? title,
     String? logo,
     String? imagePath,
   }) = BrowserOnUrlChangeEvent;
+
+  const factory BrowserEvent.onCheckBookMark({
+    required String url,
+    required bool canGoNext,
+  }) = BrowserOnCheckBookMarkEvent;
 
   const factory BrowserEvent.onAddNewBrowser({
     required String url,
