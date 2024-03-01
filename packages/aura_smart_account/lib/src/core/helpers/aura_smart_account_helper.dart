@@ -5,16 +5,25 @@ import 'package:aura_smart_account/src/core/definitions/account.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 import 'package:aura_smart_account/src/core/definitions/cosmos_signer_data.dart';
 import 'package:aura_smart_account/src/core/definitions/grpc_network_info.dart';
+import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
+    as aura;
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
     as auth;
+import 'package:aura_smart_account/src/proto/cosmos/feegrant/v1beta1/export.dart'
+    as feeGrant;
 import 'package:aura_smart_account/src/proto/cosmos/tx/signing/v1beta1/export.dart'
     as signing;
 import 'package:aura_smart_account/src/proto/cosmos/tx/v1beta1/export.dart'
     as tx;
+import 'package:aura_smart_account/src/proto/cosmwasm/wasm/v1/export.dart'
+    as wasm;
 import 'package:aura_smart_account/src/proto/google/protobuf/export.dart' as pb;
 import 'package:aura_smart_account/src/proto/cosmos/crypto/secp256k1/export.dart'
     as secp256;
+import 'package:aura_smart_account/src/proto/cosmos/base/v1beta1/export.dart'
+    as base;
 import 'package:hex/hex.dart';
+import 'package:protobuf/protobuf.dart' as protobuf;
 import 'wallet_helper.dart';
 
 typedef AccountDeserializer = Account Function(pb.Any);
@@ -139,5 +148,108 @@ sealed class AuraSmartAccountHelper {
 
   static String encodeByte(Uint8List bytes) {
     return HEX.encode(bytes);
+  }
+
+  static List<protobuf.GeneratedMessage> createSetRecoveryMethodMsg({
+    required String smartAccountAddress,
+    required String recoverAddress,
+    bool isReadyRegister = false,
+    String? revokePreAddress,
+    required String denom,
+    required String recoverContractAddress,
+  }) {
+    final List<protobuf.GeneratedMessage> messages = List.empty(growable: true);
+
+    // Create revoke fee grant if need
+    if (isReadyRegister) {
+      feeGrant.MsgRevokeAllowance revokeAllowance =
+          feeGrant.MsgRevokeAllowance.create()
+            ..granter = smartAccountAddress
+            ..grantee = revokePreAddress ?? '';
+
+      // Create msg unregister contract
+      final wasm.MsgExecuteContract msgUnRegister =
+          wasm.MsgExecuteContract.create()
+            ..sender = smartAccountAddress
+            ..contract = smartAccountAddress
+            ..msg = AuraSmartAccountConstant.unRegisterRecovery(
+              recoveryContractAddress: recoverContractAddress,
+            );
+
+      messages.addAll([
+        revokeAllowance,
+        msgUnRegister,
+      ]);
+    }
+
+    // Create grant fee for recover address
+
+    feeGrant.BasicAllowance basicAllowance = feeGrant.BasicAllowance.create()
+      ..spendLimit.add(
+        base.Coin.create()
+          ..denom = denom
+          ..amount = AuraSmartAccountConstant.maxFeeGrant,
+      );
+
+    feeGrant.AllowedMsgAllowance allowance =
+        feeGrant.AllowedMsgAllowance.create()
+          ..allowance = pb.Any.pack(
+            basicAllowance,
+            typeUrlPrefix: '',
+          )
+          ..allowedMessages.add(
+            AuraSmartAccountConstant.msgRecoverTypeUrl,
+          );
+
+    // Create fee grant
+    feeGrant.MsgGrantAllowance msgGrant = feeGrant.MsgGrantAllowance.create()
+      ..granter = smartAccountAddress
+      ..grantee = recoverAddress
+      ..allowance = pb.Any.pack(
+        allowance,
+        typeUrlPrefix: '',
+      );
+
+    // Create msg execute
+    wasm.MsgExecuteContract msgExecuteContract =
+        wasm.MsgExecuteContract.create()
+          ..sender = smartAccountAddress
+          ..contract = smartAccountAddress
+          ..msg = AuraSmartAccountConstant.setRecoveryMsg(
+            smartAccountAddress: smartAccountAddress,
+            recoverAddress: recoverAddress,
+            recoveryContractAddress: recoverContractAddress,
+          );
+
+    // Add message to sign
+    messages.addAll([msgExecuteContract, msgGrant]);
+
+    return messages;
+  }
+
+  static aura.MsgRecover createRecoveryMsg({
+    required Uint8List privateKey,
+    required String recoveryAddress,
+    required String smartAccountAddress,
+  }) {
+    // Get pub key from private key
+    final Uint8List pubKey = WalletHelper.getPublicKeyFromPrivateKey(
+      privateKey,
+    );
+
+    // Generate a pub key from user pub key
+    final Uint8List pubKeyGenerate = generateSmartAccountPubKeyFromUserPubKey(
+      pubKey,
+    );
+
+    // Create new pub key
+    final pb.Any newPubKey = pb.Any.create()
+      ..typeUrl = AuraSmartAccountConstant.pubKeyTypeUrl
+      ..value = pubKeyGenerate;
+    return aura.MsgRecover()
+      ..address = smartAccountAddress
+      ..creator = recoveryAddress
+      ..publicKey = newPubKey
+      ..credentials = '';
   }
 }

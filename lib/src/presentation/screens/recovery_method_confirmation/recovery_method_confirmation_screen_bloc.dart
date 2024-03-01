@@ -51,6 +51,34 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     RecoveryMethodConfirmationEventOnInit event,
     Emitter<RecoveryMethodConfirmationState> emit,
   ) async {
+    final auraSmNetworkInfo =
+        AuraSmartAccountHelper.getNetworkInfoFromEnvironment(
+      config.environment.toSME,
+    );
+
+    String recoveryAddress = '';
+    if (state.argument is RecoveryMethodConfirmationGoogleArgument) {
+      final String backupPrivateKey = await _web3authUseCase.getPrivateKey();
+
+      final wallet = await _walletUseCase.importWallet(
+        privateKeyOrPassPhrase: backupPrivateKey,
+      );
+
+      recoveryAddress = wallet.bech32Address;
+    } else {
+      recoveryAddress = state.argument.data;
+    }
+
+    final List<GeneratedMessage> setRecoveryMessages =
+        AuraSmartAccountHelper.createSetRecoveryMethodMsg(
+      smartAccountAddress: state.argument.account.address,
+      recoverAddress: recoveryAddress,
+      denom: auraSmNetworkInfo.denom,
+      recoverContractAddress: auraSmNetworkInfo.recoverContractAddress,
+      isReadyRegister: state.argument.account.isVerified,
+      revokePreAddress: state.argument.account.method?.subValue,
+    );
+
     // Set default gas
     final highFee = CosmosHelper.calculateFee(
       _defaultGasLimit,
@@ -75,8 +103,51 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
         highTransactionFee: highFee.amount[0].amount,
         lowTransactionFee: lowFee.amount[0].amount,
         transactionFee: fee.amount[0].amount,
+        messages: setRecoveryMessages.whereType<MsgExecuteContract>().toList(),
       ),
     );
+
+    // final String smAddress = state.argument.account.address;
+    //
+    // final String? smPrivateKey = await _controllerKeyUseCase.getKey(
+    //   address: smAddress,
+    // );
+    //
+    // final int gasEstimation = await _smartAccountUseCase.simulateFee(
+    //   userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(
+    //     smPrivateKey!,
+    //   ),
+    //   smartAccountAddress: smAddress,
+    //   msgs: setRecoveryMessages,
+    // );
+    //
+    // final highFeeAfterEstimate = CosmosHelper.calculateFee(
+    //   gasEstimation,
+    //   deNom: config.deNom,
+    //   gasPrice: GasPriceStep.high.value,
+    // );
+    //
+    // final feeAfterEstimate = CosmosHelper.calculateFee(
+    //   gasEstimation,
+    //   deNom: config.deNom,
+    //   gasPrice: GasPriceStep.average.value,
+    // );
+    //
+    // final lowFeeAfterEstimate = CosmosHelper.calculateFee(
+    //   gasEstimation,
+    //   deNom: config.deNom,
+    //   gasPrice: GasPriceStep.low.value,
+    // );
+    //
+    // emit(
+    //   state.copyWith(
+    //     highTransactionFee: highFeeAfterEstimate.amount[0].amount,
+    //     lowTransactionFee: lowFeeAfterEstimate.amount[0].amount,
+    //     transactionFee: feeAfterEstimate.amount[0].amount,
+    //   ),
+    // );
+    //
+    // print('gasEstimation = ${gasEstimation}');
   }
 
   void _onChangeMemo(

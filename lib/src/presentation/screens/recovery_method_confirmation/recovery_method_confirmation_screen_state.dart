@@ -1,3 +1,4 @@
+import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'recovery_method_confirmation_screen.dart';
@@ -25,5 +26,6 @@ class RecoveryMethodConfirmationState with _$RecoveryMethodConfirmationState {
     @Default('') String lowTransactionFee,
     @Default(false) bool isShowFullMsg,
     String ?memo,
+    @Default([]) List<MsgExecuteContract> messages,
   }) = _RecoveryMethodConfirmationState;
 }

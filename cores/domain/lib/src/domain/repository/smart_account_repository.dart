@@ -15,7 +15,7 @@ abstract interface class SmartAccountRepository {
     String? memo,
     String? fee,
     int? gasLimit,
-    String ?granter,
+    String? granter,
   });
 
   Future<TransactionInformation> sendToken({
@@ -32,10 +32,11 @@ abstract interface class SmartAccountRepository {
     required String address,
   });
 
-  Future<int> simulateFee(
-      {required Uint8List userPrivateKey,
-      required String smartAccountAddress,
-      dynamic msg});
+  Future<int> simulateFee({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required List<dynamic> msgs,
+  });
 
   Future<TransactionInformation> getTx({
     required String txHash,

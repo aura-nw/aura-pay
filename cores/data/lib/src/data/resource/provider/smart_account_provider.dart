@@ -15,13 +15,14 @@ abstract interface class SmartAccountProvider {
     String? memo,
     String? fee,
     int? gasLimit,
-    String ?granter,
+    String? granter,
   });
 
-  Future<int> simulateFee(
-      {required Uint8List userPrivateKey,
-      required String smartAccountAddress,
-      dynamic msg});
+  Future<int> simulateFee({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required List<dynamic> msgs,
+  });
 
   Future<String> getToken({
     required String address,
@@ -48,7 +49,7 @@ abstract interface class SmartAccountProvider {
     String? fee,
     int? gasLimit,
     bool isReadyRegister = false,
-    String ?revokePreAddress,
+    String? revokePreAddress,
   });
 
   Future<TransactionInformationDto> recoverSmartAccount({

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
@@ -7,7 +10,9 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_mobile/src/core/utils/json_formatter.dart';
 import 'package:pyxis_mobile/src/presentation/screens/recovery_method_confirmation/recovery_method_confirmation_screen_selector.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/scroll_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/transaction_box_widget.dart';
 
 class RecoveryMessageWidget extends StatelessWidget {
@@ -23,6 +28,29 @@ class RecoveryMessageWidget extends StatelessWidget {
     required this.onChangeViewData,
     super.key,
   });
+
+  String _parserMsg(List<MsgExecuteContract> messages) {
+    final List<String> listObj = messages.map(
+      (e) {
+        final Map<String, dynamic> json =
+            e.toProto3Json() as Map<String, dynamic>;
+
+        final msg = json['msg'];
+        if (msg is String) {
+          final map = utf8.decode(
+            base64Decode(msg),
+          );
+          
+
+          json['msg'] = jsonDecode(map);
+        }
+
+        return prettyJson(json);
+      },
+    ).toList();
+
+    return listObj.join('\n');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +117,29 @@ class RecoveryMessageWidget extends StatelessWidget {
           appTheme: appTheme,
           child: RecoveryMethodConfirmationScreenIsShowFullMsgSelector(
             builder: (isShowFullMsg) {
-              if (isShowFullMsg) {}
+              if (isShowFullMsg) {
+                return RecoveryMethodConfirmationScreenMessagesSelector(
+                  builder: (messages) {
+                    return ScrollBarWidget(
+                      appTheme: appTheme,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          maxHeight: BoxSize.boxSize15,
+                          minHeight: BoxSize.boxSize13,
+                        ),
+                        child: SingleChildScrollView(
+                          child: Text(
+                            _parserMsg(messages),
+                            style: AppTypoGraPhy.body02.copyWith(
+                              color: appTheme.contentColor500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
               return Row(
                 children: [
                   SvgPicture.asset(

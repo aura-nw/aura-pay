@@ -137,7 +137,9 @@ final class SendTransactionBloc
           privateKeyString,
         ),
         smartAccountAddress: sender.address,
-        msg: msgSend,
+        msgs: [
+          msgSend,
+        ],
       );
 
       final fee = CosmosHelper.calculateFee(

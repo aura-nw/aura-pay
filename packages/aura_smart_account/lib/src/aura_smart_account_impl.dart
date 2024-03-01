@@ -9,19 +9,16 @@ import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.da
     as aura;
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
     as auth;
-import 'package:aura_smart_account/src/proto/cosmos/crypto/ed25519/export.dart' as ed25519;
+import 'package:aura_smart_account/src/proto/cosmos/crypto/ed25519/export.dart'
+    as ed25519;
 import 'package:aura_smart_account/src/proto/cosmos/crypto/secp256k1/export.dart'
     as secp256k1;
-import 'package:aura_smart_account/src/proto/cosmos/feegrant/v1beta1/export.dart'
-    as feeGrant;
 import 'package:aura_smart_account/src/proto/cosmos/bank/v1beta1/export.dart'
     as bank;
 import 'package:aura_smart_account/src/proto/cosmos/base/v1beta1/export.dart'
     as base;
 import 'package:aura_smart_account/src/proto/cosmos/tx/v1beta1/export.dart'
     as tx;
-import 'package:aura_smart_account/src/proto/cosmwasm/wasm/v1/export.dart'
-    as coswasm;
 import 'package:aura_smart_account/src/proto/google/protobuf/export.dart' as pb;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
@@ -30,7 +27,6 @@ import 'package:protobuf/protobuf.dart';
 
 import 'core/constants/smart_account_constant.dart';
 import 'core/constants/smart_account_error_code.dart';
-import 'core/helpers/wallet_helper.dart';
 
 import 'dart:developer' as dev;
 
@@ -238,9 +234,10 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
 
       if (fee == null) {
         final int gasEstimation = await simulateFee(
-            userPrivateKey: userPrivateKey,
-            smartAccountAddress: smartAccountAddress,
-            msg: msgSend);
+          userPrivateKey: userPrivateKey,
+          smartAccountAddress: smartAccountAddress,
+          msgs: [msgSend],
+        );
 
         feeSign = CosmosHelper.calculateFee(
           gasEstimation,
@@ -392,11 +389,10 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
   }
 
   @override
-  Future<int> simulateFee({
-    required Uint8List userPrivateKey,
-    required String smartAccountAddress,
-    required GeneratedMessage msg,
-  }) async {
+  Future<int> simulateFee(
+      {required Uint8List userPrivateKey,
+      required String smartAccountAddress,
+      required List<GeneratedMessage> msgs}) async {
     try {
       // Get pub key from private key
       final Uint8List pubKey = WalletHelper.getPublicKeyFromPrivateKey(
@@ -417,12 +413,12 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
       final tx.Tx txSign = await AuraSmartAccountHelper.sign(
         privateKey: userPrivateKey,
         pubKey: pubKeyGenerate,
-        messages: [
-          pb.Any.pack(
-            msg,
-            typeUrlPrefix: '',
-          ),
-        ],
+        messages: msgs
+            .map((e) => pb.Any.pack(
+                  e,
+                  typeUrlPrefix: '',
+                ))
+            .toList(),
         signerData: signerData,
         fee: tx.Fee.create(),
       );
@@ -483,72 +479,16 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         pubKey,
       );
 
-      // Create empty messages to broadcast
-      List<GeneratedMessage> messages = List.empty(growable: true);
-
-      // Create revoke fee grant if need
-      if (isReadyRegister) {
-        feeGrant.MsgRevokeAllowance revokeAllowance =
-            feeGrant.MsgRevokeAllowance.create()
-              ..granter = smartAccountAddress
-              ..grantee = revokePreAddress ?? '';
-
-        // Create msg unregister contract
-        final coswasm.MsgExecuteContract msgUnRegister =
-            coswasm.MsgExecuteContract.create()
-              ..sender = smartAccountAddress
-              ..contract = smartAccountAddress
-              ..msg = AuraSmartAccountConstant.unRegisterRecovery(
-                recoveryContractAddress: auraNetworkInfo.recoverContractAddress,
-              );
-
-        messages.addAll([
-          revokeAllowance,
-          msgUnRegister,
-        ]);
-      }
-
-      // Create msg execute
-      final coswasm.MsgExecuteContract msgExecuteContract =
-          coswasm.MsgExecuteContract.create()
-            ..sender = smartAccountAddress
-            ..contract = smartAccountAddress
-            ..msg = AuraSmartAccountConstant.setRecoveryMsg(
-              smartAccountAddress: smartAccountAddress,
-              recoverAddress: recoverAddress,
-              recoveryContractAddress: auraNetworkInfo.recoverContractAddress,
-            );
-
-      // Create grant fee for recover address
-
-      feeGrant.BasicAllowance basicAllowance = feeGrant.BasicAllowance.create()
-        ..spendLimit.add(
-          base.Coin.create()
-            ..denom = auraNetworkInfo.denom
-            ..amount = AuraSmartAccountConstant.maxFeeGrant,
-        );
-
-      feeGrant.AllowedMsgAllowance allowance =
-          feeGrant.AllowedMsgAllowance.create()
-            ..allowance = pb.Any.pack(
-              basicAllowance,
-              typeUrlPrefix: '',
-            )
-            ..allowedMessages.add(
-              AuraSmartAccountConstant.msgRecoverTypeUrl,
-            );
-
-      // Create fee grant
-      feeGrant.MsgGrantAllowance msgGrant = feeGrant.MsgGrantAllowance.create()
-        ..granter = smartAccountAddress
-        ..grantee = recoverAddress
-        ..allowance = pb.Any.pack(
-          allowance,
-          typeUrlPrefix: '',
-        );
-
-      // Add message to sign
-      messages.addAll([msgExecuteContract, msgGrant]);
+      // Create messages to broadcast
+      List<GeneratedMessage> messages =
+          AuraSmartAccountHelper.createSetRecoveryMethodMsg(
+        smartAccountAddress: smartAccountAddress,
+        recoverAddress: recoverAddress,
+        denom: auraNetworkInfo.denom,
+        recoverContractAddress: auraNetworkInfo.recoverContractAddress,
+        isReadyRegister: isReadyRegister,
+        revokePreAddress: revokePreAddress,
+      );
 
       // Create fee
       late tx.Fee feeSign;
