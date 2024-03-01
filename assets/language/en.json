@@ -351,11 +351,17 @@
   "recovery_method_confirmation_screen_content_region_one" : "Please confirm to add",
   "recovery_method_confirmation_screen_content_region_two" : "as the backup account of",
   "recovery_method_confirmation_screen_messages" : "Messages",
+  "recovery_method_confirmation_screen_view_data" : "View data",
+  "recovery_method_confirmation_screen_memo" : "Memo",
+  "recovery_method_confirmation_screen_memo_hint" : "(Empty)",
   "recovery_method_confirmation_screen_change_recovery" : "Change Recovery",
   "recovery_method_confirmation_screen_change_message" : "Set ${account} to recovery for ${address}",
   "recovery_method_confirmation_screen_transaction_fee" : "Transaction fee",
   "recovery_method_confirmation_screen_button_confirm_title" : "Confirm",
   "recovery_method_confirmation_screen_loading" : "Processing",
+  "recovery_method_confirmation_screen_insufficient_amount_title" : "Insufficient Amount",
+  "recovery_method_confirmation_screen_insufficient_amount_content" : "You do not have sufficient amount to proceed with this transaction. Please send AURA to your account or go to Send page",
+
 
   "signed_in_recover_select_account_screen_title_region_one" : "Recover",
   "signed_in_recover_select_account_screen_title_region_two" : "smart account",

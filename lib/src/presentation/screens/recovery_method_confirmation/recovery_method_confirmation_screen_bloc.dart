@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'recovery_method_confirmation_screen.dart';
 import 'recovery_method_confirmation_screen_event.dart';
 import 'recovery_method_confirmation_screen_state.dart';
@@ -16,13 +17,15 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
   final WalletUseCase _walletUseCase;
   final Web3AuthUseCase _web3authUseCase;
   final AuraAccountUseCase _accountUseCase;
+  final BalanceUseCase _balanceUseCase;
 
   RecoveryMethodConfirmationBloc(
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
     this._walletUseCase,
     this._web3authUseCase,
-    this._accountUseCase, {
+    this._accountUseCase,
+    this._balanceUseCase, {
     required RecoveryMethodConfirmationArgument argument,
   }) : super(
           RecoveryMethodConfirmationState(
@@ -32,6 +35,8 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     on(_onInit);
     on(_onChangeFee);
     on(_onConfirm);
+    on(_onChangeMemo);
+    on(_onChangeShowFullMsg);
 
     add(
       const RecoveryMethodConfirmationEventOnInit(),
@@ -74,6 +79,30 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     );
   }
 
+  void _onChangeMemo(
+    RecoveryMethodConfirmationEventOnChangeMemo event,
+    Emitter<RecoveryMethodConfirmationState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        memo: event.memo,
+        status: RecoveryMethodConfirmationStatus.none,
+      ),
+    );
+  }
+
+  void _onChangeShowFullMsg(
+    RecoveryMethodConfirmationEventOnChangeShowFullMsg event,
+    Emitter<RecoveryMethodConfirmationState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        isShowFullMsg: !state.isShowFullMsg,
+        status: RecoveryMethodConfirmationStatus.none,
+      ),
+    );
+  }
+
   void _onChangeFee(
     RecoveryMethodConfirmationEventOnChangeFee event,
     Emitter<RecoveryMethodConfirmationState> emit,
@@ -98,6 +127,24 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
 
     try {
       final AuraAccount account = state.argument.account;
+
+      final balances = await _balanceUseCase.getBalances(
+        address: account.address,
+        environment: config.environment.environmentString,
+      );
+
+      final activeBalance =
+          balances.firstWhereOrNull((e) => e.denom == config.deNom);
+
+      if (state.transactionFee.compareTo(activeBalance?.amount ?? '0') != -1) {
+        emit(
+          state.copyWith(
+            status: RecoveryMethodConfirmationStatus.insufficientBalance,
+          ),
+        );
+
+        return;
+      }
 
       final String? smPrivateKey = await _controllerKeyUseCase.getKey(
         address: account.address,

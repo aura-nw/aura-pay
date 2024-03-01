@@ -664,6 +664,7 @@ Future<void> initDependency(
       getIt.get<WalletUseCase>(),
       getIt.get<Web3AuthUseCase>(),
       getIt.get<AuraAccountUseCase>(),
+      getIt.get<BalanceUseCase>(),
       argument: argument,
     ),
   );

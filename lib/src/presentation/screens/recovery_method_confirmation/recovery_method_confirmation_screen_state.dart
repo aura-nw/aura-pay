@@ -7,6 +7,7 @@ part 'recovery_method_confirmation_screen_state.freezed.dart';
 enum RecoveryMethodConfirmationStatus {
   none,
   onRecovering,
+  insufficientBalance,
   onRecoverSuccess,
   onRecoverFail,
   onUnRegisterRecoverFail,
@@ -22,5 +23,7 @@ class RecoveryMethodConfirmationState with _$RecoveryMethodConfirmationState {
     @Default('') String transactionFee,
     @Default('') String highTransactionFee,
     @Default('') String lowTransactionFee,
+    @Default(false) bool isShowFullMsg,
+    String ?memo,
   }) = _RecoveryMethodConfirmationState;
 }

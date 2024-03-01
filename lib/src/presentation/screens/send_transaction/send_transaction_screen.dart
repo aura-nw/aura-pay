@@ -118,273 +118,286 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                 appTheme: appTheme,
                 titleKey: LanguageKey.sendTransactionScreenAppBarTitle,
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing07,
-                  vertical: Spacing.spacing05,
-                ),
-                child: SendTransactionStatusSelector(builder: (status) {
-                  switch (status) {
-                    case SendTransactionStatus.loading:
-                      // Displaying loading widget when in loading state
-                      return Center(
-                        child: AppLoadingWidget(
-                          appTheme: appTheme,
-                        ),
-                      );
-                    case SendTransactionStatus.error:
-                    case SendTransactionStatus.onEstimateFee:
-                    case SendTransactionStatus.estimateFeeSuccess:
-                    case SendTransactionStatus.estimateFeeError:
-                    case SendTransactionStatus.loaded:
-                      // Building the main column for the screen
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: ListView(
-                              padding: EdgeInsets.zero,
-                              children: [
-                                // Displaying sender information
-                                AppLocalizationProvider(
-                                  builder: (localization, _) {
-                                    return Text(
-                                      localization.translate(
-                                        LanguageKey
-                                            .sendTransactionScreenSendFrom,
-                                      ),
-                                      style: AppTypoGraPhy.utilityLabelDefault
-                                          .copyWith(
-                                        color: appTheme.contentColorBlack,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: BoxSize.boxSize04,
-                                ),
-                                SendTransactionSenderSelector(
-                                  builder: (sender) {
-                                    // Displaying sender widget
-                                    return SenderWidget(
-                                      appTheme: appTheme,
-                                      address: sender?.address ?? '',
-                                      accountName: sender?.name ?? '',
-                                    );
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: BoxSize.boxSize07,
-                                ),
-                                AppLocalizationProvider(
-                                  builder: (localization, _) {
-                                    return Text(
-                                      localization.translate(
-                                        LanguageKey
-                                            .sendTransactionScreenRecipientLabel,
-                                      ),
-                                      style: AppTypoGraPhy.utilityLabelDefault
-                                          .copyWith(
-                                        color: appTheme.contentColorBlack,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                AppLocalizationProvider(
-                                  builder: (localization, _) {
-                                    return TextInputRecipientWidget(
-                                      // Input field for recipient address
-                                      hintText: localization.translate(
-                                        LanguageKey
-                                            .sendTransactionScreenRecipientHint,
-                                      ),
-                                      controller: _recipientController,
-                                      onClear: _onClearRecipient,
-                                      onChanged: _onChangeRecipientData,
-                                      key: _recipientKey,
-                                      onQrTap: () async {
-                                        // Handling QR code tap
-                                        _showRequestCameraPermission(
-                                          appTheme,
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing07,
+                    vertical: Spacing.spacing05,
+                  ),
+                  child: SendTransactionStatusSelector(
+                    builder: (status) {
+                      switch (status) {
+                        case SendTransactionStatus.loading:
+                          // Displaying loading widget when in loading state
+                          return Center(
+                            child: AppLoadingWidget(
+                              appTheme: appTheme,
+                            ),
+                          );
+                        case SendTransactionStatus.error:
+                        case SendTransactionStatus.onEstimateFee:
+                        case SendTransactionStatus.estimateFeeSuccess:
+                        case SendTransactionStatus.estimateFeeError:
+                        case SendTransactionStatus.loaded:
+                          // Building the main column for the screen
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: ListView(
+                                  padding: EdgeInsets.zero,
+                                  children: [
+                                    // Displaying sender information
+                                    AppLocalizationProvider(
+                                      builder: (localization, _) {
+                                        return Text(
+                                          localization.translate(
+                                            LanguageKey
+                                                .sendTransactionScreenSendFrom,
+                                          ),
+                                          style: AppTypoGraPhy
+                                              .utilityLabelDefault
+                                              .copyWith(
+                                            color: appTheme.contentColorBlack,
+                                          ),
                                         );
                                       },
-                                      onPaste: _onGetClipBoardData,
-                                      constraintManager: ConstraintManager(
-                                          isValidOnChanged: true)
-                                        ..custom(
-                                          errorMessage: localization.translate(
+                                    ),
+                                    const SizedBox(
+                                      height: BoxSize.boxSize04,
+                                    ),
+                                    SendTransactionSenderSelector(
+                                      builder: (sender) {
+                                        // Displaying sender widget
+                                        return SenderWidget(
+                                          appTheme: appTheme,
+                                          address: sender?.address ?? '',
+                                          accountName: sender?.name ?? '',
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: BoxSize.boxSize07,
+                                    ),
+                                    AppLocalizationProvider(
+                                      builder: (localization, _) {
+                                        return Text(
+                                          localization.translate(
                                             LanguageKey
-                                                .sendTransactionScreenRecipientInValid,
+                                                .sendTransactionScreenRecipientLabel,
                                           ),
-                                          customValid: (recipient) {
-                                            // Validating recipient address
-                                            return WalletAddressValidator
-                                                .isValidAddress(recipient);
+                                          style: AppTypoGraPhy
+                                              .utilityLabelDefault
+                                              .copyWith(
+                                            color: appTheme.contentColorBlack,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    AppLocalizationProvider(
+                                      builder: (localization, _) {
+                                        return TextInputRecipientWidget(
+                                          // Input field for recipient address
+                                          hintText: localization.translate(
+                                            LanguageKey
+                                                .sendTransactionScreenRecipientHint,
+                                          ),
+                                          controller: _recipientController,
+                                          onClear: _onClearRecipient,
+                                          onChanged: _onChangeRecipientData,
+                                          key: _recipientKey,
+                                          onQrTap: () async {
+                                            // Handling QR code tap
+                                            _showRequestCameraPermission(
+                                              appTheme,
+                                            );
+                                          },
+                                          onPaste: _onGetClipBoardData,
+                                          constraintManager: ConstraintManager(
+                                              isValidOnChanged: true)
+                                            ..custom(
+                                              errorMessage:
+                                                  localization.translate(
+                                                LanguageKey
+                                                    .sendTransactionScreenRecipientInValid,
+                                              ),
+                                              customValid: (recipient) {
+                                                // Validating recipient address
+                                                return WalletAddressValidator
+                                                    .isValidAddress(recipient);
+                                              },
+                                            ),
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: BoxSize.boxSize07,
+                                    ),
+                                    AppLocalizationProvider(
+                                      builder: (localization, _) {
+                                        return Text(
+                                          localization.translate(
+                                            LanguageKey
+                                                .sendTransactionScreenAmount,
+                                          ),
+                                          style: AppTypoGraPhy
+                                              .utilityLabelDefault
+                                              .copyWith(
+                                            color: appTheme.contentColorBlack,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: BoxSize.boxSize05,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        // Displaying Aura token information
+                                        Container(
+                                          padding: const EdgeInsets.all(
+                                            Spacing.spacing03,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              BorderRadiusSize
+                                                  .borderRadiusRound,
+                                            ),
+                                            color:
+                                                appTheme.surfaceColorGrayLight,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                AssetIconPath.commonAuraToken,
+                                              ),
+                                              const SizedBox(
+                                                width: BoxSize.boxSize04,
+                                              ),
+                                              AppLocalizationProvider(
+                                                builder: (localization, _) {
+                                                  return Text(
+                                                    localization.translate(
+                                                      LanguageKey
+                                                          .globalPyxisAura,
+                                                    ),
+                                                    style: AppTypoGraPhy
+                                                        .bodyMedium03
+                                                        .copyWith(
+                                                      color: appTheme
+                                                          .contentColorBlack,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        // Displaying the account balance
+                                        AppLocalizationProvider(
+                                          builder: (localization, _) {
+                                            return SendTransactionBalanceSelector(
+                                              builder: (balance) {
+                                                return Text(
+                                                  '${localization.translate(
+                                                    LanguageKey
+                                                        .sendTransactionScreenBalance,
+                                                  )}: ${balance.formatAura} ${localization.translate(
+                                                    LanguageKey.globalPyxisAura,
+                                                  )}',
+                                                  style: AppTypoGraPhy
+                                                      .bodyMedium02
+                                                      .copyWith(
+                                                    color: appTheme
+                                                        .contentColor500,
+                                                  ),
+                                                );
+                                              },
+                                            );
                                           },
                                         ),
-                                    );
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: BoxSize.boxSize07,
-                                ),
-                                AppLocalizationProvider(
-                                  builder: (localization, _) {
-                                    return Text(
-                                      localization.translate(
-                                        LanguageKey.sendTransactionScreenAmount,
-                                      ),
-                                      style: AppTypoGraPhy.utilityLabelDefault
-                                          .copyWith(
-                                        color: appTheme.contentColorBlack,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: BoxSize.boxSize05,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // Displaying Aura token information
-                                    Container(
-                                      padding: const EdgeInsets.all(
-                                        Spacing.spacing03,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          BorderRadiusSize.borderRadiusRound,
-                                        ),
-                                        color: appTheme.surfaceColorGrayLight,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            AssetIconPath.commonAuraToken,
+                                      ],
+                                    ),
+                                    // Input field for transaction amount
+                                    AppLocalizationProvider(
+                                      builder: (localization, _) {
+                                        return TextInputNormalSuffixWidget(
+                                          hintText: localization.translate(
+                                            LanguageKey
+                                                .sendTransactionScreenBalanceHint,
                                           ),
-                                          const SizedBox(
-                                            width: BoxSize.boxSize04,
-                                          ),
-                                          AppLocalizationProvider(
-                                            builder: (localization, _) {
-                                              return Text(
+                                          onChanged: _onChangeAmount,
+                                          controller: _amountController,
+                                          // Suffix widget for maximum amount
+                                          suffix: GestureDetector(
+                                            behavior: HitTestBehavior.opaque,
+                                            onTap: () => _onChangeAmount(
+                                              _bloc.state.balance.formatAura,
+                                              true,
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(
+                                                Spacing.spacing03,
+                                              ),
+                                              child: Text(
                                                 localization.translate(
-                                                  LanguageKey.globalPyxisAura,
+                                                  LanguageKey
+                                                      .sendTransactionScreenAmountMax,
                                                 ),
                                                 style: AppTypoGraPhy
                                                     .bodyMedium03
                                                     .copyWith(
-                                                  color: appTheme
-                                                      .contentColorBlack,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    // Displaying the account balance
-                                    AppLocalizationProvider(
-                                      builder: (localization, _) {
-                                        return SendTransactionBalanceSelector(
-                                          builder: (balance) {
-                                            return Text(
-                                              '${localization.translate(
-                                                LanguageKey
-                                                    .sendTransactionScreenBalance,
-                                              )}: ${balance.formatAura} ${localization.translate(
-                                                LanguageKey.globalPyxisAura,
-                                              )}',
-                                              style: AppTypoGraPhy.bodyMedium02
-                                                  .copyWith(
-                                                color: appTheme.contentColor500,
+                                                        color: appTheme
+                                                            .contentColorBrand),
                                               ),
-                                            );
-                                          },
+                                            ),
+                                          ),
+                                          constraintManager: ConstraintManager()
+                                            ..custom(
+                                              errorMessage:
+                                                  localization.translate(
+                                                LanguageKey
+                                                    .sendTransactionScreenAmountInValid,
+                                              ),
+                                              customValid: _checkValidAmount,
+                                            ),
                                         );
                                       },
                                     ),
                                   ],
                                 ),
-                                // Input field for transaction amount
-                                AppLocalizationProvider(
-                                  builder: (localization, _) {
-                                    return TextInputNormalSuffixWidget(
-                                      hintText: localization.translate(
-                                        LanguageKey
-                                            .sendTransactionScreenBalanceHint,
-                                      ),
-                                      onChanged: _onChangeAmount,
-                                      controller: _amountController,
-                                      // Suffix widget for maximum amount
-                                      suffix: GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () => _onChangeAmount(
-                                          _bloc.state.balance.formatAura,
-                                          true,
+                              ),
+                              // Checking if the transaction is ready to submit
+                              AppLocalizationProvider(
+                                builder: (localization, _) {
+                                  return SendTransactionIsReadySubmitSelector(
+                                    builder: (isReadySubmit) {
+                                      // Displaying the submit button
+                                      return PrimaryAppButton(
+                                        text: localization.translate(
+                                          LanguageKey
+                                              .sendTransactionScreenButtonNextTitle,
                                         ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(
-                                            Spacing.spacing03,
-                                          ),
-                                          child: Text(
-                                            localization.translate(
-                                              LanguageKey
-                                                  .sendTransactionScreenAmountMax,
-                                            ),
-                                            style: AppTypoGraPhy.bodyMedium03
-                                                .copyWith(
-                                                    color: appTheme
-                                                        .contentColorBrand),
-                                          ),
-                                        ),
-                                      ),
-                                      constraintManager: ConstraintManager()
-                                        ..custom(
-                                          errorMessage: localization.translate(
-                                            LanguageKey
-                                                .sendTransactionScreenAmountInValid,
-                                          ),
-                                          customValid: _checkValidAmount,
-                                        ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          // Checking if the transaction is ready to submit
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return SendTransactionIsReadySubmitSelector(
-                                builder: (isReadySubmit) {
-                                  // Displaying the submit button
-                                  return PrimaryAppButton(
-                                    text: localization.translate(
-                                      LanguageKey
-                                          .sendTransactionScreenButtonNextTitle,
-                                    ),
-                                    isDisable: !isReadySubmit,
-                                    onPress: () async {
-                                      // Triggering event for fee estimation
-                                      _bloc.add(
-                                        const SendTransactionEventOnEstimateFee(),
+                                        isDisable: !isReadySubmit,
+                                        onPress: () async {
+                                          // Triggering event for fee estimation
+                                          _bloc.add(
+                                            const SendTransactionEventOnEstimateFee(),
+                                          );
+                                        },
                                       );
                                     },
                                   );
                                 },
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize08,
-                          ),
-                        ],
-                      );
-                  }
-                }),
+                              ),
+                            ],
+                          );
+                      }
+                    },
+                  ),
+                ),
               ),
             ),
           ),
@@ -480,7 +493,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
         RoutePath.scanner,
       );
 
-      if(result is String){
+      if (result is String) {
         _onChangeRecipientData(
           result,
           WalletAddressValidator.isValidAddress(
@@ -504,7 +517,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
                   RoutePath.scanner,
                 );
 
-                if(result is String){
+                if (result is String) {
                   _onChangeRecipientData(
                     result,
                     WalletAddressValidator.isValidAddress(

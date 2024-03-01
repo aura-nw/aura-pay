@@ -16,3 +16,17 @@ final class RecoveryMethodConfirmationScreenFeeSelector extends BlocSelector<
           ),
         );
 }
+
+final class RecoveryMethodConfirmationScreenIsShowFullMsgSelector extends BlocSelector<
+    RecoveryMethodConfirmationBloc, RecoveryMethodConfirmationState, bool> {
+  RecoveryMethodConfirmationScreenIsShowFullMsgSelector({
+    Key? key,
+    required Widget Function(bool) builder,
+  }) : super(
+          key: key,
+          selector: (state) => state.isShowFullMsg,
+          builder: (_, isShowFullMsg) => builder(
+            isShowFullMsg,
+          ),
+        );
+}

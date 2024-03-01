@@ -91,118 +91,120 @@ class _RecoveryMethodScreenState extends State<RecoveryMethodScreen>
               appTheme: appTheme,
               titleKey: LanguageKey.recoveryMethodScreenAppBarTitle,
             ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Spacing.spacing07,
-                vertical: Spacing.spacing04,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppLocalizationProvider(
-                    builder: (localization, _) {
-                      return Text(
-                        localization.translate(
-                          LanguageKey.recoveryMethodScreenContent,
-                        ),
-                        style: AppTypoGraPhy.body02.copyWith(
-                          color: appTheme.contentColor700,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: BoxSize.boxSize08,
-                  ),
-                  Expanded(
-                    child: RecoveryMethodScreenStatusSelector(
-                      builder: (status) {
-                        switch (status) {
-                          case RecoveryMethodScreenStatus.loading:
-                            return Center(
-                              child: AppLoadingWidget(
-                                appTheme: appTheme,
-                              ),
-                            );
-                          case RecoveryMethodScreenStatus.loaded:
-                          case RecoveryMethodScreenStatus.error:
-                            return RecoveryMethodScreenAccountsSelector(
-                              builder: (accounts) {
-                                if (accounts.isEmpty) {
-                                  return Center(
-                                    child: AppLocalizationProvider(
-                                      builder: (localization, _) {
-                                        return Text(
-                                          localization.translate(
-                                            localization.translate(
-                                              LanguageKey
-                                                  .recoveryMethodScreenNoAccountFound,
-                                            ),
-                                          ),
-                                          style: AppTypoGraPhy.body02.copyWith(
-                                            color: appTheme.contentColor500,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                }
-                                return ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  itemCount: accounts.length,
-                                  itemBuilder: (context, index) {
-                                    final account = accounts[index];
-                                    String? recoveryMethod;
-                                    String? recoverValue =
-                                        account.method?.value;
-
-                                    if (account.isVerified) {
-                                      String? recoveryType;
-
-                                      recoverValue = account.method?.method ==
-                                              AuraSmartAccountRecoveryMethod
-                                                  .web3Auth
-                                          ? recoverValue
-                                          : recoverValue.addressView;
-
-                                      recoveryType = account.method?.method ==
-                                              AuraSmartAccountRecoveryMethod
-                                                  .web3Auth
-                                          ? LanguageKey
-                                              .recoveryMethodScreenGoogle
-                                          : LanguageKey
-                                              .recoveryMethodScreenBackupAddress;
-
-                                      recoveryMethod =
-                                          AppLocalizationManager.of(context)
-                                              .translate(
-                                        recoveryType,
-                                      );
-                                    }
-
-                                    return AccountRecoveryWidget(
-                                      accountName: account.name,
-                                      address: account.address,
-                                      isVerified: account.isVerified,
-                                      appTheme: appTheme,
-                                      recoveryMethod: recoveryMethod,
-                                      recoveryValue: recoverValue,
-                                      onTap: () => _onAccountTap(
-                                        account,
-                                        appTheme,
-                                        recoveryMethod,
-                                        recoverValue,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                        }
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Spacing.spacing07,
+                  vertical: Spacing.spacing05,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppLocalizationProvider(
+                      builder: (localization, _) {
+                        return Text(
+                          localization.translate(
+                            LanguageKey.recoveryMethodScreenContent,
+                          ),
+                          style: AppTypoGraPhy.body02.copyWith(
+                            color: appTheme.contentColor700,
+                          ),
+                        );
                       },
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      height: BoxSize.boxSize08,
+                    ),
+                    Expanded(
+                      child: RecoveryMethodScreenStatusSelector(
+                        builder: (status) {
+                          switch (status) {
+                            case RecoveryMethodScreenStatus.loading:
+                              return Center(
+                                child: AppLoadingWidget(
+                                  appTheme: appTheme,
+                                ),
+                              );
+                            case RecoveryMethodScreenStatus.loaded:
+                            case RecoveryMethodScreenStatus.error:
+                              return RecoveryMethodScreenAccountsSelector(
+                                builder: (accounts) {
+                                  if (accounts.isEmpty) {
+                                    return Center(
+                                      child: AppLocalizationProvider(
+                                        builder: (localization, _) {
+                                          return Text(
+                                            localization.translate(
+                                              localization.translate(
+                                                LanguageKey
+                                                    .recoveryMethodScreenNoAccountFound,
+                                              ),
+                                            ),
+                                            style: AppTypoGraPhy.body02.copyWith(
+                                              color: appTheme.contentColor500,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  }
+                                  return ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    itemCount: accounts.length,
+                                    itemBuilder: (context, index) {
+                                      final account = accounts[index];
+                                      String? recoveryMethod;
+                                      String? recoverValue =
+                                          account.method?.value;
+              
+                                      if (account.isVerified) {
+                                        String? recoveryType;
+              
+                                        recoverValue = account.method?.method ==
+                                                AuraSmartAccountRecoveryMethod
+                                                    .web3Auth
+                                            ? recoverValue
+                                            : recoverValue.addressView;
+              
+                                        recoveryType = account.method?.method ==
+                                                AuraSmartAccountRecoveryMethod
+                                                    .web3Auth
+                                            ? LanguageKey
+                                                .recoveryMethodScreenGoogle
+                                            : LanguageKey
+                                                .recoveryMethodScreenBackupAddress;
+              
+                                        recoveryMethod =
+                                            AppLocalizationManager.of(context)
+                                                .translate(
+                                          recoveryType,
+                                        );
+                                      }
+              
+                                      return AccountRecoveryWidget(
+                                        accountName: account.name,
+                                        address: account.address,
+                                        isVerified: account.isVerified,
+                                        appTheme: appTheme,
+                                        recoveryMethod: recoveryMethod,
+                                        recoveryValue: recoverValue,
+                                        onTap: () => _onAccountTap(
+                                          account,
+                                          appTheme,
+                                          recoveryMethod,
+                                          recoverValue,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

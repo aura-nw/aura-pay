@@ -420,6 +420,11 @@ sealed class LanguageKey {
   static const String recoveryMethodConfirmationScreenTransactionFee = 'recovery_method_confirmation_screen_transaction_fee';
   static const String recoveryMethodConfirmationScreenButtonConfirmTitle = 'recovery_method_confirmation_screen_button_confirm_title';
   static const String recoveryMethodConfirmationScreenRecovering = 'recovery_method_confirmation_screen_loading';
+  static const String recoveryMethodConfirmationScreenInsufficientAmountTitle = 'recovery_method_confirmation_screen_insufficient_amount_title';
+  static const String recoveryMethodConfirmationScreenInsufficientAmountContent = 'recovery_method_confirmation_screen_insufficient_amount_content';
+  static const String recoveryMethodConfirmationScreenViewData = 'recovery_method_confirmation_screen_view_data';
+  static const String recoveryMethodConfirmationScreenMemo = 'recovery_method_confirmation_screen_memo';
+  static const String recoveryMethodConfirmationScreenMemoHint = 'recovery_method_confirmation_screen_memo_hint';
   ///
 
   ///region

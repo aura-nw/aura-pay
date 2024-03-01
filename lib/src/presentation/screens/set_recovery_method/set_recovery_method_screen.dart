@@ -95,88 +95,87 @@ class _SetRecoveryMethodScreenState extends State<SetRecoveryMethodScreen>
                 appTheme: appTheme,
                 titleKey: LanguageKey.setRecoveryMethodScreenAppBarTitle,
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing07,
-                  vertical: Spacing.spacing04,
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          AccountWidget(
-                            appTheme: appTheme,
-                            address: widget.account.address,
-                            accountName: widget.account.name,
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize07,
-                          ),
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return Text(
-                                localization.translate(
-                                  LanguageKey.setRecoveryMethodScreenContent,
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing07,
+                    vertical: Spacing.spacing05,
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            AccountWidget(
+                              appTheme: appTheme,
+                              address: widget.account.address,
+                              accountName: widget.account.name,
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize07,
+                            ),
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return Text(
+                                  localization.translate(
+                                    LanguageKey.setRecoveryMethodScreenContent,
+                                  ),
+                                  style: AppTypoGraPhy.body02.copyWith(
+                                    color: appTheme.contentColor700,
+                                  ),
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize06,
+                            ),
+                            SetRecoveryMethodScreenMethodSelector(
+                                builder: (selectedMethod) {
+                              return SetRecoveryFormWidget(
+                                appTheme: appTheme,
+                                selectedMethod: selectedMethod,
+                                onAddressChange: (address, isValid) {
+                                  _bloc.add(
+                                    SetRecoveryMethodScreenEventOnChangeRecoveryAddress(
+                                      address,
+                                      isValid,
+                                    ),
+                                  );
+                                },
+                                onChange: (method) {
+                                  _bloc.add(
+                                    SetRecoveryMethodScreenEventOnChangeMethod(
+                                      method,
+                                    ),
+                                  );
+                                },
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return SetRecoveryMethodScreenIsReadySelector(
+                            builder: (isReady) {
+                              return PrimaryAppButton(
+                                isDisable: !isReady,
+                                text: localization.translate(
+                                  LanguageKey
+                                      .setRecoveryMethodScreenSetButtonTitle,
                                 ),
-                                style: AppTypoGraPhy.body02.copyWith(
-                                  color: appTheme.contentColor700,
-                                ),
+                                onPress: () {
+                                  _bloc.add(
+                                    const SetRecoveryMethodScreenEventOnSet(),
+                                  );
+                                },
                               );
                             },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize06,
-                          ),
-                          SetRecoveryMethodScreenMethodSelector(
-                              builder: (selectedMethod) {
-                            return SetRecoveryFormWidget(
-                              appTheme: appTheme,
-                              selectedMethod: selectedMethod,
-                              onAddressChange: (address, isValid) {
-                                _bloc.add(
-                                  SetRecoveryMethodScreenEventOnChangeRecoveryAddress(
-                                    address,
-                                    isValid,
-                                  ),
-                                );
-                              },
-                              onChange: (method) {
-                                _bloc.add(
-                                  SetRecoveryMethodScreenEventOnChangeMethod(
-                                    method,
-                                  ),
-                                );
-                              },
-                            );
-                          }),
-                        ],
+                          );
+                        },
                       ),
-                    ),
-                    AppLocalizationProvider(
-                      builder: (localization, _) {
-                        return SetRecoveryMethodScreenIsReadySelector(
-                          builder: (isReady) {
-                            return PrimaryAppButton(
-                              isDisable: !isReady,
-                              text: localization.translate(
-                                LanguageKey
-                                    .setRecoveryMethodScreenSetButtonTitle,
-                              ),
-                              onPress: () {
-                                _bloc.add(
-                                  const SetRecoveryMethodScreenEventOnSet(),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: BoxSize.boxSize08,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
