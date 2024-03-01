@@ -139,66 +139,32 @@ class _AccountsScreenState extends State<AccountsScreen>
                                 final account = accounts[index];
                                 return Column(
                                   children: [
-                                    Column(
-                                      children: [
-                                        HomeScreenSelectedAccountSelector(
-                                          bloc: _homeScreenBloc,
-                                          builder: (selectedAccount) {
-                                            return AccountItemWidget(
-                                              appTheme: appTheme,
-                                              address: account.address,
-                                              accountName: account.name,
-                                              onMoreTap: () {
-                                                _showMoreOptionsDialog(
-                                                  appTheme,
-                                                  account,
-                                                );
-                                              },
-                                              onChoose: () {
-                                                _onChooseAccount(account);
-                                              },
-                                              isSmartAccount:
-                                                  account.isSmartAccount,
-                                              onUsing:
-                                                  account.id == selectedAccount?.id,
+                                    HomeScreenSelectedAccountSelector(
+                                      bloc: _homeScreenBloc,
+                                      builder: (selectedAccount) {
+                                        return AccountItemWidget(
+                                          appTheme: appTheme,
+                                          address: account.address,
+                                          accountName: account.name,
+                                          onMoreTap: () {
+                                            _showMoreOptionsDialog(
+                                              appTheme,
+                                              account,
                                             );
                                           },
-                                        ),
-                                        const SizedBox(
-                                          height: BoxSize.boxSize07,
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        HomeScreenSelectedAccountSelector(
-                                          bloc: _homeScreenBloc,
-                                          builder: (selectedAccount) {
-                                            return AccountItemWidget(
-                                              appTheme: appTheme,
-                                              address: account.address,
-                                              accountName: account.name,
-                                              onMoreTap: () {
-                                                _showMoreOptionsDialog(
-                                                  appTheme,
-                                                  account,
-                                                );
-                                              },
-                                              onChoose: () {
-                                                _onChooseAccount(account);
-                                              },
-                                              isSmartAccount:
-                                              true,
-                                              onUsing:
+                                          onChoose: () {
+                                            _onChooseAccount(account);
+                                          },
+                                          isSmartAccount:
+                                              account.isSmartAccount,
+                                          onUsing:
                                               account.id == selectedAccount?.id,
-                                            );
-                                          },
-                                        ),
-                                        const SizedBox(
-                                          height: BoxSize.boxSize07,
-                                        ),
-                                      ],
-                                    )
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: BoxSize.boxSize07,
+                                    ),
                                   ],
                                 );
                               },

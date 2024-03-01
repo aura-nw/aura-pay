@@ -10,7 +10,7 @@ import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_state.dart';
+import 'on_boarding_recover_select_account_state.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
 import 'on_boarding_recover_select_account_bloc.dart';
 import 'on_boarding_recover_select_account_event.dart';
@@ -57,164 +57,166 @@ class _OnBoardingRecoverSelectAccountScreenState
               onViewMoreInformationTap: () {},
               appTheme: appTheme,
             ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Spacing.spacing07,
-                vertical: Spacing.spacing08,
-              ),
-              child: OnboardingRecoverSelectAccountStatusSelector(
-                builder: (status) {
-                  switch (status) {
-                    case OnboardingRecoverSelectAccountStatus.loading:
-                      return Center(
-                        child: AppLoadingWidget(
-                          appTheme: appTheme,
-                        ),
-                      );
-                    case OnboardingRecoverSelectAccountStatus.loaded:
-                    case OnboardingRecoverSelectAccountStatus.error:
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: localization.translate(
-                                        LanguageKey
-                                            .onBoardingRecoverSelectAccountScreenTitleRegionOne,
-                                      ),
-                                      style: AppTypoGraPhy.heading06.copyWith(
-                                        color: appTheme.contentColorBlack,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: ' ${localization.translate(
-                                        LanguageKey
-                                            .onBoardingRecoverSelectAccountScreenTitleRegionTwo,
-                                      )}',
-                                      style: AppTypoGraPhy.heading05.copyWith(
-                                        color: appTheme.contentColorBrand,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Spacing.spacing07,
+                  vertical: Spacing.spacing05,
+                ),
+                child: OnboardingRecoverSelectAccountStatusSelector(
+                  builder: (status) {
+                    switch (status) {
+                      case OnboardingRecoverSelectAccountStatus.loading:
+                        return Center(
+                          child: AppLoadingWidget(
+                            appTheme: appTheme,
                           ),
-                          const SizedBox(
-                            height: BoxSize.boxSize05,
-                          ),
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return Text(
-                                localization.translate(
-                                  LanguageKey
-                                      .onBoardingRecoverSelectAccountScreenContent,
-                                ),
-                                style: AppTypoGraPhy.body03.copyWith(
-                                  color: appTheme.contentColor500,
-                                ),
-                              );
-                            },
-                          ),
-                          Expanded(
-                            child:
-                                OnboardingRecoverSelectAccountAccountsSelector(
-                              builder: (accounts) {
-                                if (accounts.isEmpty) {
-                                  return Center(
-                                    child: AppLocalizationProvider(
-                                      builder: (localization, _) {
-                                        return Text(
-                                          localization.translate(
-                                            LanguageKey
-                                                .onBoardingRecoverSelectAccountScreenNoAccountFound,
-                                          ),
-                                          style: AppTypoGraPhy.bodyMedium02
-                                              .copyWith(
-                                            color: appTheme.contentColor500,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                }
-                                return ListView.builder(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: Spacing.spacing07,
+                        );
+                      case OnboardingRecoverSelectAccountStatus.loaded:
+                      case OnboardingRecoverSelectAccountStatus.error:
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: localization.translate(
+                                          LanguageKey
+                                              .onBoardingRecoverSelectAccountScreenTitleRegionOne,
+                                        ),
+                                        style: AppTypoGraPhy.heading06.copyWith(
+                                          color: appTheme.contentColorBlack,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: ' ${localization.translate(
+                                          LanguageKey
+                                              .onBoardingRecoverSelectAccountScreenTitleRegionTwo,
+                                        )}',
+                                        style: AppTypoGraPhy.heading05.copyWith(
+                                          color: appTheme.contentColorBrand,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  reverse: true,
-                                  itemCount: accounts.length,
-                                  itemBuilder: (context, index) {
-                                    final account = accounts[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.only(
-                                        top: Spacing.spacing05,
-                                      ),
-                                      child:
-                                          OnboardingRecoverSelectAccountAccountSelectedSelector(
-                                        builder: (selectedAccount) {
-                                          return SmartAccountWidget(
-                                            appTheme: appTheme,
-                                            smartAccountAddress: account
-                                                .smartAccountAddress
-                                                .addressView,
-                                            smartAccountName:
-                                                account.name ?? PyxisAccountConstant.unName,
-                                            onTap: () {
-                                              _bloc.add(
-                                                OnBoardingRecoverSelectAccountEventSelectAccount(
-                                                  account: account,
-                                                ),
-                                              );
-                                            },
-                                            isSelected: selectedAccount?.id ==
-                                                account.id,
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize05,
+                            ),
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return Text(
+                                  localization.translate(
+                                    LanguageKey
+                                        .onBoardingRecoverSelectAccountScreenContent,
+                                  ),
+                                  style: AppTypoGraPhy.body03.copyWith(
+                                    color: appTheme.contentColor500,
+                                  ),
+                                );
+                              },
+                            ),
+                            Expanded(
+                              child:
+                                  OnboardingRecoverSelectAccountAccountsSelector(
+                                builder: (accounts) {
+                                  if (accounts.isEmpty) {
+                                    return Center(
+                                      child: AppLocalizationProvider(
+                                        builder: (localization, _) {
+                                          return Text(
+                                            localization.translate(
+                                              LanguageKey
+                                                  .onBoardingRecoverSelectAccountScreenNoAccountFound,
+                                            ),
+                                            style: AppTypoGraPhy.bodyMedium02
+                                                .copyWith(
+                                              color: appTheme.contentColor500,
+                                            ),
                                           );
                                         },
                                       ),
                                     );
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return OnboardingRecoverSelectAccountAccountSelectedSelector(
-                                builder: (account) {
-                                  return PrimaryAppButton(
-                                    text: localization.translate(
-                                      LanguageKey
-                                          .onBoardingRecoverSelectAccountScreenButtonTitle,
+                                  }
+                                  return ListView.builder(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: Spacing.spacing07,
                                     ),
-                                    isDisable: account == null,
-                                    onPress: () {
-                                      AppNavigator.push(
-                                        RoutePath.recoverSign,
-                                        {
-                                          'account': account,
-                                          'google_account':
-                                              widget.googleAccount,
-                                        },
+                                    reverse: true,
+                                    itemCount: accounts.length,
+                                    itemBuilder: (context, index) {
+                                      final account = accounts[index];
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: Spacing.spacing05,
+                                        ),
+                                        child:
+                                            OnboardingRecoverSelectAccountAccountSelectedSelector(
+                                          builder: (selectedAccount) {
+                                            return SmartAccountWidget(
+                                              appTheme: appTheme,
+                                              smartAccountAddress: account
+                                                  .smartAccountAddress
+                                                  .addressView,
+                                              smartAccountName:
+                                                  account.name ?? PyxisAccountConstant.unName,
+                                              onTap: () {
+                                                _bloc.add(
+                                                  OnBoardingRecoverSelectAccountEventSelectAccount(
+                                                    account: account,
+                                                  ),
+                                                );
+                                              },
+                                              isSelected: selectedAccount?.id ==
+                                                  account.id,
+                                            );
+                                          },
+                                        ),
                                       );
-
-                                      // AppNavigator.push(
-                                      //   RoutePath.recoverReviewing,
-                                      // );
                                     },
                                   );
                                 },
-                              );
-                            },
-                          )
-                        ],
-                      );
-                  }
-                },
+                              ),
+                            ),
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return OnboardingRecoverSelectAccountAccountSelectedSelector(
+                                  builder: (account) {
+                                    return PrimaryAppButton(
+                                      text: localization.translate(
+                                        LanguageKey
+                                            .onBoardingRecoverSelectAccountScreenButtonTitle,
+                                      ),
+                                      isDisable: account == null,
+                                      onPress: () {
+                                        AppNavigator.push(
+                                          RoutePath.recoverSign,
+                                          {
+                                            'account': account,
+                                            'google_account':
+                                                widget.googleAccount,
+                                          },
+                                        );
+              
+                                        // AppNavigator.push(
+                                        //   RoutePath.recoverReviewing,
+                                        // );
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            )
+                          ],
+                        );
+                    }
+                  },
+                ),
               ),
             ),
           ),

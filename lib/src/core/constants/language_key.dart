@@ -133,6 +133,9 @@ sealed class LanguageKey {
   static const String onBoardingRecoverSignScreenTransactionFee = 'on_boarding_recover_sign_screen_transaction_fee';
   static const String onBoardingRecoverSignScreenRecovering = 'on_boarding_recover_sign_screen_loading';
   static const String onBoardingRecoverSignScreenConfirmButtonTitle = 'on_boarding_recover_sign_screen_button_confirm_title';
+  static const String onBoardingRecoverSignScreenViewData = 'on_boarding_recover_sign_screen_view_data';
+  static const String onBoardingRecoverSignScreenMemo = 'on_boarding_recover_sign_screen_memo';
+  static const String onBoardingRecoverSignScreenMemoHint = 'on_boarding_recover_sign_screen_memo_hint';
   ///
 
   ///region recover backup address

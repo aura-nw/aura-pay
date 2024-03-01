@@ -11,6 +11,12 @@ class OnBoardingRecoverSignEvent with _$OnBoardingRecoverSignEvent {
     required String fee,
   }) = OnBoardingRecoverSignEventOnChangeFee;
 
+  const factory OnBoardingRecoverSignEvent.onChangeMemo({
+    required String memo,
+  }) = OnBoardingRecoverSignEventOnChangeMemo;
+
+  const factory OnBoardingRecoverSignEvent.onChangeShowFullMsg() = OnBoardingRecoverSignEventOnChangeShowFullMsg;
+
   const factory OnBoardingRecoverSignEvent.onConfirm() =
       OnBoardingRecoverSignEventOnConfirm;
 }
