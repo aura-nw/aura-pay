@@ -33,24 +33,6 @@ class ChainTriggerWidget extends StatelessWidget {
       padding: const EdgeInsets.all(
         Spacing.spacing03,
       ),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(
-            BorderRadiusSize.borderRadius05,
-          ),
-          topLeft: Radius.circular(
-            BorderRadiusSize.borderRadius05,
-          ),
-        ),
-        gradient: LinearGradient(
-          colors: [
-            appTheme.surfaceColorBrandLight,
-            appTheme.surfaceColorBrandLight.withOpacity(0),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
       child: Column(
         children: [
           Row(

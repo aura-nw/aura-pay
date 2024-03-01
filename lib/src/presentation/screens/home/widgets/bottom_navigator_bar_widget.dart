@@ -32,9 +32,12 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: Spacing.spacing06,
-          vertical: Spacing.spacing04), // Padding for the container
+      padding: const EdgeInsets.only(
+        left: Spacing.spacing06,
+        right: Spacing.spacing06,
+        top: Spacing.spacing05,
+        bottom: Spacing.spacing07,
+      ), // Padding for the container
       decoration: BoxDecoration(
         color: widget.appTheme.surfaceColorWhite, // Background color
         boxShadow: [
@@ -73,7 +76,8 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
                 0, // Whether the home tab is currently selected
           ),
           _buildItem(
-            AssetIconPath.homeBottomNavigatorBarBrowser, // Icon path for home tab
+            AssetIconPath.homeBottomNavigatorBarBrowser,
+            // Icon path for home tab
             AssetIconPath.homeBottomNavigatorBarBrowserActive,
             // Active icon path for home tab
             LanguageKey.homeScreenBottomNavigatorBarBrowser,
@@ -92,6 +96,7 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
             child: SvgPicture.asset(
               AssetIconPath
                   .homeBottomNavigatorBarScan, // Icon path for scan button
+              width: BoxSize.boxSize11 - BoxSize.boxSize04,
             ),
           ),
           _buildItem(

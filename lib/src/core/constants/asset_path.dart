@@ -96,6 +96,7 @@ sealed class AssetIconPath {
   static const String commonSearch = '${_baseIconPath}ic_common_search.svg';
   static const String commonGoogle = '${_baseIconPath}ic_common_google.svg';
   static const String commonMore = '${_baseIconPath}ic_common_more.svg';
+  static const String commonMoreActive = '${_baseIconPath}ic_common_more_active.svg';
   static const String commonAccountCheck = '${_baseIconPath}ic_common_account_check.svg';
   static const String commonShare = '${_baseIconPath}ic_common_share.svg';
   static const String commonViewRaw = '${_baseIconPath}ic_common_view_raw.svg';

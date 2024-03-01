@@ -130,9 +130,11 @@ class _HomeScreenState extends State<HomeScreen>
                       children: [
                         // Main scaffold containing the home screen and bottom navigation bar
                         Scaffold(
-                          body: HomeScreenTabBuilder(
-                            currentSection: currentSection,
-                            onReceiveTap: _onReceiveTap,
+                          body: SafeArea(
+                            child: HomeScreenTabBuilder(
+                              currentSection: currentSection,
+                              onReceiveTap: _onReceiveTap,
+                            ),
                           ),
                           bottomNavigationBar: BottomNavigatorBarWidget(
                             currentIndex: HomeScreenSection.values.indexOf(

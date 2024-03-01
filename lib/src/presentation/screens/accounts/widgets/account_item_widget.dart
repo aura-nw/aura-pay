@@ -41,128 +41,105 @@ class AccountItemWidget extends StatelessWidget {
           color: onUsing ? appTheme.surfaceColorBrandLight : null,
           borderRadius: onUsing
               ? BorderRadius.circular(
-            BorderRadiusSize.borderRadius04,
-          )
+                  BorderRadiusSize.borderRadius04,
+                )
               : null,
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SvgPicture.asset(
               AssetIconPath.commonSmartAccountAvatarDefault,
+              width: BoxSize.boxSize09,
             ),
             const SizedBox(
               width: BoxSize.boxSize05,
             ),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Text(
-                    accountName,
-                    style: AppTypoGraPhy.heading01.copyWith(
-                      color: appTheme.contentColorBlack,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: BoxSize.boxSize01,
-                  ),
-                  Text(
-                    address.addressView,
-                    style: AppTypoGraPhy.body02.copyWith(
-                      color: appTheme.contentColor500,
-                    ),
-                  ),
-                  if(isSmartAccount) ... [
-                    const SizedBox(
-                      height: BoxSize.boxSize02,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Spacing.spacing03,
-                        vertical: Spacing.spacing01,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          BorderRadiusSize.borderRadiusRound,
-                        ),
-                        color: appTheme.surfaceColorBrandSemiLight,
-                      ),
-                      child: AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return Text(
-                            localization.translate(
-                              LanguageKey.inAppBrowserScreenSmartAccount,
-                            ),
-                            style: AppTypoGraPhy.body01.copyWith(
-                              color: appTheme.contentColorBrand,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            if (onUsing) ...[
-              const SizedBox(
-                width: BoxSize.boxSize05,
-              ),
-              SvgPicture.asset(
-                AssetIconPath.commonRadioCheck,
-              ),
-              const SizedBox(
-                width: BoxSize.boxSize05,
-              ),
-            ] else
-              const SizedBox.shrink(),
-
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: onMoreTap,
-              child: Padding(
-                padding: isSmartAccount
-                    ? EdgeInsets.zero
-                    : const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing04,
-                ),
-                child: Row(
-                  children: [
-                    if (isSmartAccount) ...[
-                      Container(
-                        padding: const EdgeInsets.all(
-                          Spacing.spacing02,
-                        ),
-                        margin: const EdgeInsets.only(
-                          right: Spacing.spacing06,
-                        ),
-                        decoration: BoxDecoration(
-                          color: appTheme.surfaceColorBrandLight,
-                          borderRadius: BorderRadius.circular(
-                            BorderRadiusSize.borderRadiusRound,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          accountName,
+                          style: AppTypoGraPhy.heading01.copyWith(
+                            color: appTheme.contentColorBlack,
                           ),
                         ),
-                        child: AppLocalizationProvider(
-                          builder: (localization, _) {
-                            return Text(
-                              localization.translate(
-                                LanguageKey.accountsScreenSmartAccountLabel,
-                              ),
-                              style: AppTypoGraPhy.body02.copyWith(
-                                color: appTheme.contentColorBrand,
-                              ),
-                            );
-                          },
+                        const SizedBox(
+                          height: BoxSize.boxSize01,
                         ),
-                      ),
-                    ],
-                    SvgPicture.asset(
-                      AssetIconPath.commonMore,
+                        Text(
+                          address.addressView,
+                          style: AppTypoGraPhy.body02.copyWith(
+                            color: appTheme.contentColor500,
+                          ),
+                        ),
+                        if (isSmartAccount) ...[
+                          const SizedBox(
+                            height: BoxSize.boxSize02,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Spacing.spacing03,
+                              vertical: Spacing.spacing01,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                BorderRadiusSize.borderRadiusRound,
+                              ),
+                              color: appTheme.surfaceColorBrandSemiLight,
+                            ),
+                            child: AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return Text(
+                                  localization.translate(
+                                    LanguageKey.inAppBrowserScreenSmartAccount,
+                                  ),
+                                  style: AppTypoGraPhy.body01.copyWith(
+                                    color: appTheme.contentColorBrand,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  if (onUsing) ...[
+                    const SizedBox(
+                      width: BoxSize.boxSize05,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: SvgPicture.asset(
+                        AssetIconPath.commonRadioCheck,
+                      ),
+                    ),
+                  ] else
+                    const SizedBox.shrink(),
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: onMoreTap,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Spacing.spacing04,
+                      ),
+                      child: onUsing
+                          ? SvgPicture.asset(
+                        AssetIconPath.commonMoreActive,
+                      )
+                          : SvgPicture.asset(
+                        AssetIconPath.commonMore,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+            )
           ],
         ),
       ),

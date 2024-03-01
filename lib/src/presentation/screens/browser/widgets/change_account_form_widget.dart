@@ -42,76 +42,84 @@ class _AccountWidget extends StatelessWidget {
             : null,
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SvgPicture.asset(
             AssetIconPath.commonSmartAccountAvatarDefault,
+            width: BoxSize.boxSize09,
           ),
           const SizedBox(
             width: BoxSize.boxSize05,
           ),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                Text(
-                  accountName,
-                  style: AppTypoGraPhy.heading01.copyWith(
-                    color: appTheme.contentColorBlack,
-                  ),
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize01,
-                ),
-                Text(
-                  address.addressView,
-                  style: AppTypoGraPhy.body02.copyWith(
-                    color: appTheme.contentColor500,
-                  ),
-                ),
-                if(isSmartAccount) ... [
-                  const SizedBox(
-                    height: BoxSize.boxSize02,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Spacing.spacing03,
-                      vertical: Spacing.spacing01,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        BorderRadiusSize.borderRadiusRound,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        accountName,
+                        style: AppTypoGraPhy.heading01.copyWith(
+                          color: appTheme.contentColorBlack,
+                        ),
                       ),
-                      color: appTheme.surfaceColorBrandSemiLight,
-                    ),
-                    child: AppLocalizationProvider(
-                      builder: (localization, _) {
-                        return Text(
-                          localization.translate(
-                            LanguageKey.inAppBrowserScreenSmartAccount,
+                      const SizedBox(
+                        height: BoxSize.boxSize01,
+                      ),
+                      Text(
+                        address.addressView,
+                        style: AppTypoGraPhy.body02.copyWith(
+                          color: appTheme.contentColor500,
+                        ),
+                      ),
+                      if(isSmartAccount) ... [
+                        const SizedBox(
+                          height: BoxSize.boxSize02,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Spacing.spacing03,
+                            vertical: Spacing.spacing01,
                           ),
-                          style: AppTypoGraPhy.body01.copyWith(
-                            color: appTheme.contentColorBrand,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              BorderRadiusSize.borderRadiusRound,
+                            ),
+                            color: appTheme.surfaceColorBrandSemiLight,
                           ),
-                        );
-                      },
-                    ),
+                          child: AppLocalizationProvider(
+                            builder: (localization, _) {
+                              return Text(
+                                localization.translate(
+                                  LanguageKey.inAppBrowserScreenSmartAccount,
+                                ),
+                                style: AppTypoGraPhy.body01.copyWith(
+                                  color: appTheme.contentColorBrand,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-                ],
+                ),
+                if (isSelected) ...[
+                  const SizedBox(
+                    width: BoxSize.boxSize05,
+                  ),
+                  SvgPicture.asset(
+                    AssetIconPath.commonRadioCheck,
+                  ),
+                  const SizedBox(
+                    width: BoxSize.boxSize05,
+                  ),
+                ] else
+                  const SizedBox.shrink(),
               ],
             ),
-          ),
-          if (isSelected) ...[
-            const SizedBox(
-              width: BoxSize.boxSize05,
-            ),
-            SvgPicture.asset(
-              AssetIconPath.commonRadioCheck,
-            ),
-            const SizedBox(
-              width: BoxSize.boxSize05,
-            ),
-          ] else
-            const SizedBox.shrink(),
+          )
         ],
       ),
     );

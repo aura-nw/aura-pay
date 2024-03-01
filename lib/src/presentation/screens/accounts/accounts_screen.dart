@@ -106,44 +106,6 @@ class _AccountsScreenState extends State<AccountsScreen>
                 const SizedBox(
                   height: BoxSize.boxSize06,
                 ),
-                // App Localization Provider
-                // AppLocalizationProvider(
-                //   builder: (localization, _) {
-                //     return Text(
-                //       localization.translate(
-                //         LanguageKey.accountsScreenUsing,
-                //       ),
-                //       style: AppTypoGraPhy.bodyMedium03.copyWith(
-                //         color: appTheme.contentColorBlack,
-                //       ),
-                //     );
-                //   },
-                // ),
-                // const SizedBox(
-                //   height: BoxSize.boxSize07,
-                // ),
-                // // Home Screen Selected Account Selector
-                // HomeScreenSelectedAccountSelector(
-                //   bloc: _homeScreenBloc,
-                //   builder: (account) {
-                //     return AccountItemWidget(
-                //       appTheme: appTheme,
-                //       address: account?.address ?? '',
-                //       accountName: account?.name ?? '',
-                //       onMoreTap: () {
-                //         _showMoreOptionsDialog(
-                //           appTheme,
-                //           account!,
-                //         );
-                //       },
-                //       onUsing: true,
-                //       isSmartAccount: account?.isSmartAccount ?? false,
-                //     );
-                //   },
-                // ),
-                // const SizedBox(
-                //   height: BoxSize.boxSize06,
-                // ),
                 Expanded(
                   child: HomeScreenAccountsSelector(
                     bloc: _homeScreenBloc,
@@ -168,7 +130,7 @@ class _AccountsScreenState extends State<AccountsScreen>
                             },
                           ),
                           const SizedBox(
-                            height: BoxSize.boxSize07,
+                            height: BoxSize.boxSize04,
                           ),
                           Expanded(
                             child: ListView.builder(
@@ -177,24 +139,66 @@ class _AccountsScreenState extends State<AccountsScreen>
                                 final account = accounts[index];
                                 return Column(
                                   children: [
-                                    AccountItemWidget(
-                                      appTheme: appTheme,
-                                      address: account.address,
-                                      accountName: account.name,
-                                      onMoreTap: () {
-                                        _showMoreOptionsDialog(
-                                          appTheme,
-                                          account,
-                                        );
-                                      },
-                                      onChoose: () {
-                                        _onChooseAccount(account);
-                                      },
-                                      isSmartAccount: account.isSmartAccount,
+                                    Column(
+                                      children: [
+                                        HomeScreenSelectedAccountSelector(
+                                          bloc: _homeScreenBloc,
+                                          builder: (selectedAccount) {
+                                            return AccountItemWidget(
+                                              appTheme: appTheme,
+                                              address: account.address,
+                                              accountName: account.name,
+                                              onMoreTap: () {
+                                                _showMoreOptionsDialog(
+                                                  appTheme,
+                                                  account,
+                                                );
+                                              },
+                                              onChoose: () {
+                                                _onChooseAccount(account);
+                                              },
+                                              isSmartAccount:
+                                                  account.isSmartAccount,
+                                              onUsing:
+                                                  account.id == selectedAccount?.id,
+                                            );
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          height: BoxSize.boxSize07,
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(
-                                      height: BoxSize.boxSize07,
-                                    ),
+                                    Column(
+                                      children: [
+                                        HomeScreenSelectedAccountSelector(
+                                          bloc: _homeScreenBloc,
+                                          builder: (selectedAccount) {
+                                            return AccountItemWidget(
+                                              appTheme: appTheme,
+                                              address: account.address,
+                                              accountName: account.name,
+                                              onMoreTap: () {
+                                                _showMoreOptionsDialog(
+                                                  appTheme,
+                                                  account,
+                                                );
+                                              },
+                                              onChoose: () {
+                                                _onChooseAccount(account);
+                                              },
+                                              isSmartAccount:
+                                              true,
+                                              onUsing:
+                                              account.id == selectedAccount?.id,
+                                            );
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          height: BoxSize.boxSize07,
+                                        ),
+                                      ],
+                                    )
                                   ],
                                 );
                               },
