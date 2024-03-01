@@ -21,6 +21,17 @@ class SendTransactionConfirmationAmountSelector extends BlocSelector<
       : super(
           key: key,
           selector: (state) => state.amount,
-          builder: (_, fee) => builder(fee),
+          builder: (_, amount) => builder(amount),
+        );
+}
+
+class SendTransactionConfirmationIsShowFullMessageSelector extends BlocSelector<
+    SendTransactionConfirmationBloc, SendTransactionConfirmationState, bool> {
+  SendTransactionConfirmationIsShowFullMessageSelector(
+      {Key? key, required Widget Function(bool) builder})
+      : super(
+          key: key,
+          selector: (state) => state.isShowFullMessage,
+          builder: (_, isShowFullMessage) => builder(isShowFullMessage),
         );
 }

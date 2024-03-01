@@ -19,6 +19,7 @@ import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/json_formatter.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/scroll_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_base.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/transaction_box_widget.dart';
 import 'widgets/transaction_information_widget.dart';
@@ -154,6 +155,7 @@ class _SendTransactionConfirmationScreenState
                           padding: EdgeInsets.zero,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 AppLocalizationProvider(
                                   builder: (localization, p1) {
@@ -169,6 +171,51 @@ class _SendTransactionConfirmationScreenState
                                     );
                                   },
                                 ),
+                                SendTransactionConfirmationIsShowFullMessageSelector(
+                                  builder: (isShowFullMessage) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        _bloc.add(
+                                          const SendTransactionConfirmationEventOnShowFullMessage(),
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          isShowFullMessage
+                                              ? SvgPicture.asset(
+                                                  AssetIconPath
+                                                      .commonViewRawActive,
+                                                )
+                                              : SvgPicture.asset(
+                                                  AssetIconPath.commonViewRaw,
+                                                ),
+                                          const SizedBox(
+                                            width: BoxSize.boxSize03,
+                                          ),
+                                          AppLocalizationProvider(
+                                            builder: (localization, _) {
+                                              return Text(
+                                                localization.translate(
+                                                  LanguageKey
+                                                      .sendTransactionConfirmationScreenViewData,
+                                                ),
+                                                style: AppTypoGraPhy
+                                                    .bodyMedium02
+                                                    .copyWith(
+                                                  color: isShowFullMessage
+                                                      ? appTheme
+                                                          .contentColorBrand
+                                                      : appTheme
+                                                          .contentColor700,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
                               ],
                             ),
                             const SizedBox(
@@ -177,71 +224,95 @@ class _SendTransactionConfirmationScreenState
                             TransactionBoxWidget(
                               appTheme: appTheme,
                               child:
-                              // Text(
-                              //   prettyJson(
-                              //     msgSend.toProto3Json()
-                              //         as Map<String, dynamic>,
-                              //   ),
-                              // ),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    AssetIconPath.commonSignMessage,
-                                  ),
-                                  const SizedBox(
-                                    width: BoxSize.boxSize04,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AppLocalizationProvider(
-                                          builder: (localization, _) {
-                                            return Text(
-                                              localization.translate(
-                                                LanguageKey
-                                                    .sendTransactionConfirmationScreenSend,
-                                              ),
-                                              style: AppTypoGraPhy
-                                                  .utilityLabelDefault
-                                                  .copyWith(
-                                                color:
-                                                    appTheme.contentColorBlack,
-                                              ),
-                                            );
-                                          },
+                                  SendTransactionConfirmationIsShowFullMessageSelector(
+                                builder: (isShowFullMsg) {
+                                  if (isShowFullMsg) {
+                                    return ScrollBarWidget(
+                                      appTheme: appTheme,
+                                      child: ConstrainedBox(
+                                        constraints: const BoxConstraints(
+                                          maxHeight: BoxSize.boxSize15,
+                                          minHeight: BoxSize.boxSize13,
                                         ),
-                                        const SizedBox(),
-                                        AppLocalizationProvider(
-                                          builder: (localization, p1) {
-                                            return Text(
-                                              localization.translateWithParam(
-                                                LanguageKey
-                                                    .sendTransactionConfirmationScreenContent,
-                                                {
-                                                  'amount': widget.amount,
-                                                  'token_name':
-                                                      localization.translate(
-                                                    LanguageKey.globalPyxisAura,
+                                        child: SingleChildScrollView(
+                                          child: Text(
+                                            prettyJson(
+                                              msgSend.toProto3Json()
+                                                  as Map<String, dynamic>,
+                                            ),
+                                            style:
+                                                AppTypoGraPhy.body02.copyWith(
+                                              color: appTheme.contentColor500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  return Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        AssetIconPath.commonSignMessage,
+                                      ),
+                                      const SizedBox(
+                                        width: BoxSize.boxSize04,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            AppLocalizationProvider(
+                                              builder: (localization, _) {
+                                                return Text(
+                                                  localization.translate(
+                                                    LanguageKey
+                                                        .sendTransactionConfirmationScreenSend,
                                                   ),
-                                                  'address': widget
-                                                      .recipient.addressView,
-                                                },
-                                              ),
-                                              style: AppTypoGraPhy
-                                                  .utilityLabelDefault
-                                                  .copyWith(
-                                                color:
-                                                    appTheme.contentColorBlack,
-                                              ),
-                                            );
-                                          },
+                                                  style: AppTypoGraPhy
+                                                      .utilityLabelDefault
+                                                      .copyWith(
+                                                    color: appTheme
+                                                        .contentColorBlack,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            const SizedBox(),
+                                            AppLocalizationProvider(
+                                              builder: (localization, p1) {
+                                                return Text(
+                                                  localization
+                                                      .translateWithParam(
+                                                    LanguageKey
+                                                        .sendTransactionConfirmationScreenContent,
+                                                    {
+                                                      'amount': widget.amount,
+                                                      'token_name': localization
+                                                          .translate(
+                                                        LanguageKey
+                                                            .globalPyxisAura,
+                                                      ),
+                                                      'address': widget
+                                                          .recipient
+                                                          .addressView,
+                                                    },
+                                                  ),
+                                                  style: AppTypoGraPhy
+                                                      .utilityLabelDefault
+                                                      .copyWith(
+                                                    color: appTheme
+                                                        .contentColorBlack,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
                             ),
                             const SizedBox(
@@ -268,17 +339,33 @@ class _SendTransactionConfirmationScreenState
                             const SizedBox(
                               height: BoxSize.boxSize03,
                             ),
-                            TransactionBoxWidget(
+                            ScrollBarWidget(
                               appTheme: appTheme,
-                              child: AppLocalizationProvider(
-                                builder: (localization, _) {
-                                  return TextInputOnlyTextFieldWidget(
-                                    hintText: localization.translate(
-                                      LanguageKey
-                                          .sendTransactionConfirmationScreenMemoHint,
-                                    ),
-                                  );
-                                },
+                              child: TransactionBoxWidget(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: Spacing.spacing03,
+                                ),
+                                appTheme: appTheme,
+                                child: AppLocalizationProvider(
+                                  builder: (localization, _) {
+                                    return TextInputOnlyTextFieldWidget(
+                                      hintText: localization.translate(
+                                        LanguageKey
+                                            .sendTransactionConfirmationScreenMemoHint,
+                                      ),
+                                      boxConstraints: const BoxConstraints(
+                                        maxHeight: BoxSize.boxSize12,
+                                      ),
+                                      onChanged: (memo, _) {
+                                        _bloc.add(
+                                          SendTransactionConfirmationEventOnChangeMemo(
+                                            memo: memo,
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                             const SizedBox(
@@ -323,106 +410,6 @@ class _SendTransactionConfirmationScreenState
           ),
         );
       },
-    );
-  }
-
-  Widget _buildBottom(
-    AppTheme appTheme,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SvgPicture.asset(
-          AssetIconPath.commonTransactionDivider,
-        ),
-        const SizedBox(
-          height: BoxSize.boxSize04,
-        ),
-        AppLocalizationProvider(
-          builder: (localization, p1) {
-            return Text(
-              localization.translate(
-                LanguageKey.sendTransactionConfirmationScreenMessages,
-              ),
-              style: AppTypoGraPhy.utilityLabelDefault.copyWith(
-                color: appTheme.contentColorBlack,
-              ),
-            );
-          },
-        ),
-        const SizedBox(
-          height: BoxSize.boxSize04,
-        ),
-        Row(
-          children: [
-            SvgPicture.asset(
-              AssetIconPath.commonSignMessage,
-            ),
-            const SizedBox(
-              width: BoxSize.boxSize04,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppLocalizationProvider(
-                    builder: (localization, _) {
-                      return Text(
-                        localization.translate(
-                          LanguageKey.sendTransactionConfirmationScreenSend,
-                        ),
-                        style: AppTypoGraPhy.utilityLabelDefault.copyWith(
-                          color: appTheme.contentColorBlack,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(),
-                  AppLocalizationProvider(
-                    builder: (localization, p1) {
-                      return Text(
-                        localization.translateWithParam(
-                          LanguageKey.sendTransactionConfirmationScreenContent,
-                          {
-                            'amount': widget.amount,
-                            'token_name': localization.translate(
-                              LanguageKey.globalPyxisAura,
-                            ),
-                            'address': widget.recipient.addressView,
-                          },
-                        ),
-                        style: AppTypoGraPhy.utilityLabelDefault.copyWith(
-                          color: appTheme.contentColorBlack,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: BoxSize.boxSize07,
-        ),
-        AppLocalizationProvider(
-          builder: (localization, _) {
-            return PrimaryAppButton(
-              text: localization.translate(
-                LanguageKey.sendTransactionConfirmationScreenSend,
-              ),
-              onPress: () {
-                _bloc.add(
-                  const SendTransactionConfirmationEventOnSendToken(),
-                );
-              },
-            );
-          },
-        ),
-        const SizedBox(
-          height: BoxSize.boxSize08,
-        ),
-      ],
     );
   }
 

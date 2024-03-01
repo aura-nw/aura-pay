@@ -245,6 +245,7 @@
   "send_transaction_confirmation_screen_fee" : "Transaction fee",
   "send_transaction_confirmation_screen_total" : "Total amount",
   "send_transaction_confirmation_screen_messages" : "Messages",
+  "send_transaction_confirmation_screen_view_data" : "View data",
   "send_transaction_confirmation_screen_memo" : "Memo",
   "send_transaction_confirmation_screen_memo_hint" : "(Empty)",
   "send_transaction_confirmation_screen_message_send" : "Send",

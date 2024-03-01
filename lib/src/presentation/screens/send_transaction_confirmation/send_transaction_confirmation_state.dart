@@ -23,6 +23,8 @@ class SendTransactionConfirmationState with _$SendTransactionConfirmationState {
     @Default('') String highTransactionFee,
     @Default('') String lowTransactionFee,
     required int estimationGas,
+    String ?memo,
+    @Default(false) bool isShowFullMessage,
     TransactionInformation? transactionInformation,
   }) = _SendTransactionConfirmationState;
 }

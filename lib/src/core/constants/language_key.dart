@@ -287,6 +287,7 @@ sealed class LanguageKey {
   static const String sendTransactionConfirmationScreenFee = 'send_transaction_confirmation_screen_fee';
   static const String sendTransactionConfirmationScreenTotal = 'send_transaction_confirmation_screen_total';
   static const String sendTransactionConfirmationScreenMessages = 'send_transaction_confirmation_screen_messages';
+  static const String sendTransactionConfirmationScreenViewData = 'send_transaction_confirmation_screen_view_data';
   static const String sendTransactionConfirmationScreenMemo = 'send_transaction_confirmation_screen_memo';
   static const String sendTransactionConfirmationScreenMemoHint = 'send_transaction_confirmation_screen_memo_hint';
   static const String sendTransactionConfirmationScreenSend = 'send_transaction_confirmation_screen_message_send';

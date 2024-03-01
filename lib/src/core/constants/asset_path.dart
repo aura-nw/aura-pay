@@ -98,6 +98,8 @@ sealed class AssetIconPath {
   static const String commonMore = '${_baseIconPath}ic_common_more.svg';
   static const String commonAccountCheck = '${_baseIconPath}ic_common_account_check.svg';
   static const String commonShare = '${_baseIconPath}ic_common_share.svg';
+  static const String commonViewRaw = '${_baseIconPath}ic_common_view_raw.svg';
+  static const String commonViewRawActive = '${_baseIconPath}ic_common_view_raw_active.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive =
@@ -183,7 +185,6 @@ sealed class AssetIconPath {
 
   ///Send transaction
   static const String sendQr = '${_baseIconPath}ic_send_qr.svg';
-  static const String sendAuraCoin = '${_baseIconPath}ic_send_aura_coin.svg';
 
   /// Send transaction confirmation
   static const String sendConfirmation =
