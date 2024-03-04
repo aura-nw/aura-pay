@@ -131,6 +131,7 @@ abstract interface class AuraSmartAccount {
     AuraSmartAccountFee? fee,
     bool isReadyRegister = false,
     String? revokePreAddress,
+    String ?memo,
   });
 
   /// recover new pub key for smart account
@@ -147,6 +148,7 @@ abstract interface class AuraSmartAccount {
     required String recoveryAddress,
     required String smartAccountAddress,
     AuraSmartAccountFee? fee,
+    String ?memo,
   });
 
 

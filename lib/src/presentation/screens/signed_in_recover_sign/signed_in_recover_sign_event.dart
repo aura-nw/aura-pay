@@ -11,6 +11,12 @@ class SignedInRecoverSignEvent with _$SignedInRecoverSignEvent {
     required String fee,
   }) = SignedInRecoverSignEventOnChangeFee;
 
+  const factory SignedInRecoverSignEvent.onChangeMemo({
+    required String memo,
+  }) = SignedInRecoverSignEventOnChangeMemo;
+
+  const factory SignedInRecoverSignEvent.onChangeShowFullMsg() = SignedInRecoverSignEventOnChangeShowFullMsg;
+
   const factory SignedInRecoverSignEvent.onConfirm() =
       SignedInRecoverSignEventOnConfirm;
 }

@@ -2,6 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'browser_state.freezed.dart';
+
 extension BrowserStateExtension on BrowserState {
   BrowserState copyWithBookMarkNull({
     AuraAccount? selectedAccount,
@@ -10,6 +11,7 @@ extension BrowserStateExtension on BrowserState {
     String? url,
     bool? canGoNext,
     Browser? currentBrowser,
+    BrowserStatus ? status,
   }) {
     return BrowserState(
       tabCount: tabCount ?? this.tabCount,
@@ -19,13 +21,24 @@ extension BrowserStateExtension on BrowserState {
       canGoNext: canGoNext ?? this.canGoNext,
       selectedAccount: selectedAccount ?? this.selectedAccount,
       currentBrowser: currentBrowser ?? this.currentBrowser,
+      status: status ?? this.status,
     );
   }
+}
+
+enum BrowserStatus {
+  none,
+  changeBookMarkSuccess,
+  addNewBrowserSuccess,
 }
 
 @freezed
 class BrowserState with _$BrowserState {
   const factory BrowserState({
+    @Default(
+      BrowserStatus.none,
+    )
+    BrowserStatus status,
     @Default([]) List<AuraAccount> accounts,
     AuraAccount? selectedAccount,
     BookMark? bookMark,

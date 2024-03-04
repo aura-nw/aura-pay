@@ -105,6 +105,7 @@ class _OnBoardingRecoverSignScreenState
                     children: [
                       Expanded(
                         child: ListView(
+                          padding: EdgeInsets.zero,
                           children: [
                             AppLocalizationProvider(
                               builder: (localization, _) {

@@ -8,6 +8,7 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'browser_page_event.dart';
 import 'browser_page_selector.dart';
 import 'widgets/book_mark_more_action_widget.dart';
@@ -27,6 +28,29 @@ class BrowserPage extends StatefulWidget {
 
 class _BrowserPageState extends State<BrowserPage> {
   final BrowserPageBloc _bloc = getIt.get();
+
+  final HomeScreenObserver _homeScreenObserver =
+      getIt.get<HomeScreenObserver>();
+
+  void _registerEvent(HomeScreenEmitParam param) {
+    if (param.event == HomeScreenObserver.onInAppBrowserRefreshEvent) {
+      _bloc.add(
+        const BrowserPageOnInitEvent(),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    _homeScreenObserver.addListener(_registerEvent);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _homeScreenObserver.removeListener(_registerEvent);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +230,7 @@ class _BrowserPageState extends State<BrowserPage> {
                                                     .bodyMedium02
                                                     .copyWith(
                                                   color:
-                                                  appTheme.contentColor500,
+                                                      appTheme.contentColor500,
                                                 ),
                                               );
                                             },

@@ -445,6 +445,9 @@ sealed class LanguageKey {
   static const String signedInRecoverSignScreenContent  = 'signed_in_recover_sign_screen_content';
   static const String signedInRecoverSignScreenAccount  = 'signed_in_recover_sign_screen_account';
   static const String signedInRecoverSignScreenMessages  = 'signed_in_recover_sign_screen_messages';
+  static const String signedInRecoverSignScreenViewData  = 'signed_in_recover_sign_screen_view_data';
+  static const String signedInRecoverSignScreenMemo  = 'signed_in_recover_sign_screen_memo';
+  static const String signedInRecoverSignScreenMemoHint  = 'signed_in_recover_sign_screen_memo_hint';
   static const String signedInRecoverSignScreenUpdateKey = 'signed_in_recover_sign_screen_update_key';
   static const String signedInRecoverSignScreenUpdateKeyContent = 'signed_in_recover_sign_screen_update_key_content';
   static const String signedInRecoverSignScreenTransactionFee = 'signed_in_recover_sign_screen_transaction_fee';

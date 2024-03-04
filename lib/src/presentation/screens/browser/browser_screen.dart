@@ -12,6 +12,7 @@ import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/debounce.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser/browser_state.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
 import 'browser_event.dart';
 import 'browser_bloc.dart';
@@ -67,7 +68,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
 
   /// Get home screen observer instance
   final HomeScreenObserver _homeScreenObserver =
-  getIt.get<HomeScreenObserver>();
+      getIt.get<HomeScreenObserver>();
 
   /// Run script method. It includes the script to get the favicon of website.
   Future<void> _runJavaScript() async {
@@ -131,8 +132,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
           directory.path,
           pixelRatio: context.ratio,
           fileName:
-          '${currentBrowser.siteTitle.replaceAll(' ', '')}_${currentBrowser
-              .id}',
+              '${currentBrowser.siteTitle.replaceAll(' ', '')}_${currentBrowser.id}',
         );
       }
     }
@@ -155,7 +155,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
     }
 
     final WebViewController controller =
-    WebViewController.fromPlatformCreationParams(params);
+        WebViewController.fromPlatformCreationParams(params);
     // #enddocregion platform_features
 
     controller
@@ -224,8 +224,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
       const Duration(
         seconds: 3,
       ),
-    )
-      ..addObserver(_urlChangeObserver);
+    )..addObserver(_urlChangeObserver);
 
     // create a instance of bloc. Passes two parameters
     _bloc = getIt.get<BrowserBloc>(
@@ -265,59 +264,73 @@ class _BrowserScreenState extends State<BrowserScreen> {
       builder: (appTheme) {
         return BlocProvider.value(
           value: _bloc,
-          child: Scaffold(
-            backgroundColor: appTheme.bodyColorBackground,
-            body: SafeArea(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Spacing.spacing07,
-                      vertical: Spacing.spacing06,
-                    ),
-                    child: BrowserUrlSelector(
-                      builder: (url) {
-                        return BrowserHeaderWidget(
-                          appTheme: appTheme,
-                          onViewTap: _onViewTabManagement,
-                          onSearchTap: () {},
-                          url: url,
-                          onRefresh: _onRefreshPage,
-                          onAddNewTab: _onAddNewTab,
-                          onShareTap: _onShareBrowserPage,
-                        );
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: Screenshot(
-                      controller: _screenShotController,
-                      child: _webViewController != null
-                          ? WebViewWidget(
-                        controller: _webViewController!,
-                      )
-                          : Center(
-                        child: AppLoadingWidget(
-                          appTheme: appTheme,
-                        ),
+          child: BlocListener<BrowserBloc, BrowserState>(
+            listenWhen: (previous, current) =>
+                previous.status != current.status,
+            listener: (context, state) {
+              switch (state.status) {
+                case BrowserStatus.none:
+                  break;
+                case BrowserStatus.changeBookMarkSuccess:
+                case BrowserStatus.addNewBrowserSuccess:
+                  _onRefreshBrowserPage();
+                  break;
+              }
+            },
+            child: Scaffold(
+              backgroundColor: appTheme.bodyColorBackground,
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Spacing.spacing07,
+                        vertical: Spacing.spacing06,
+                      ),
+                      child: BrowserUrlSelector(
+                        builder: (url) {
+                          return BrowserHeaderWidget(
+                            appTheme: appTheme,
+                            onViewTap: _onViewTabManagement,
+                            onSearchTap: () {},
+                            url: url,
+                            onRefresh: _onRefreshPage,
+                            onAddNewTab: _onAddNewTab,
+                            onShareTap: _onShareBrowserPage,
+                          );
+                        },
                       ),
                     ),
-                  ),
-                  BrowserBottomNavigatorWidget(
-                    appTheme: appTheme,
-                    onBack: _onBackClick,
-                    onBookmarkClick: _onBookMarkClick,
-                    onNext: _onNextClick,
-                    onHomeClick: _onHomeClick,
-                    onAccountClick: (accounts, selectedAccount) {
-                      _showChoosingAccount(
-                        appTheme,
-                        accounts,
-                        selectedAccount,
-                      );
-                    },
-                  )
-                ],
+                    Expanded(
+                      child: Screenshot(
+                        controller: _screenShotController,
+                        child: _webViewController != null
+                            ? WebViewWidget(
+                                controller: _webViewController!,
+                              )
+                            : Center(
+                                child: AppLoadingWidget(
+                                  appTheme: appTheme,
+                                ),
+                              ),
+                      ),
+                    ),
+                    BrowserBottomNavigatorWidget(
+                      appTheme: appTheme,
+                      onBack: _onBackClick,
+                      onBookmarkClick: _onBookMarkClick,
+                      onNext: _onNextClick,
+                      onHomeClick: _onHomeClick,
+                      onAccountClick: (accounts, selectedAccount) {
+                        _showChoosingAccount(
+                          appTheme,
+                          accounts,
+                          selectedAccount,
+                        );
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -327,9 +340,11 @@ class _BrowserScreenState extends State<BrowserScreen> {
   }
 
   /// Show choosing dialog account
-  void _showChoosingAccount(AppTheme appTheme,
-      List<AuraAccount> accounts,
-      AuraAccount? selectedAccount,) async {
+  void _showChoosingAccount(
+    AppTheme appTheme,
+    List<AuraAccount> accounts,
+    AuraAccount? selectedAccount,
+  ) async {
     // Show dialog. It can receive an account or null.
     final account = await DialogProvider.showCustomDialog<AuraAccount>(
       context,
@@ -516,5 +531,13 @@ class _BrowserScreenState extends State<BrowserScreen> {
         ),
       );
     }
+  }
+
+  void _onRefreshBrowserPage() {
+    _homeScreenObserver.emit(
+      emitParam: HomeScreenEmitParam(
+        event: HomeScreenObserver.onInAppBrowserRefreshEvent,
+      ),
+    );
   }
 }

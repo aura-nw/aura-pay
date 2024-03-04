@@ -111,7 +111,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
     return _auraSmartAccount.simulateFee(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
-      msgs: msgs as List<GeneratedMessage>,
+      msgs: msgs.whereType<GeneratedMessage>().toList(),
     );
   }
 
@@ -138,6 +138,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
     int? gasLimit,
     bool isReadyRegister = false,
     String? revokePreAddress,
+    String ?memo,
   }) async {
     AuraSmartAccountFee? smartAccountFee;
     if (fee != null && gasLimit != null) {
@@ -154,6 +155,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       fee: smartAccountFee,
       isReadyRegister: isReadyRegister,
       revokePreAddress: revokePreAddress,
+      memo: memo,
     );
 
     return TransactionInformationDto(
@@ -171,6 +173,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
     required String smartAccountAddress,
     String? fee,
     int? gasLimit,
+    String ?memo,
   }) async {
     AuraSmartAccountFee? smartAccountFee;
     if (fee != null && gasLimit != null) {
@@ -185,6 +188,7 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
       smartAccountAddress: smartAccountAddress,
       recoveryAddress: recoverAddress,
       fee: smartAccountFee,
+      memo: memo,
     );
 
     return TransactionInformationDto(

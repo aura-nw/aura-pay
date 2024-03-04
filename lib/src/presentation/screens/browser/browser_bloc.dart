@@ -32,9 +32,14 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     BrowserOnReceivedTabResultEvent event,
     Emitter<BrowserState> emit,
   ) async {
+    emit(
+      state.copyWith(
+        status: BrowserStatus.none,
+      ),
+    );
     // Get browser by id. Just when users opened the tab management screen and chose a tab.
-    final browser = await _browserManagementUseCase
-        .getBrowserById(event.choosingId!);
+    final browser =
+        await _browserManagementUseCase.getBrowserById(event.choosingId!);
 
     if (browser != null) {
       // Update browser
@@ -57,6 +62,7 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
         currentUrl: event.url,
         currentBrowser: browser,
         tabCount: browsers.length,
+        status: BrowserStatus.addNewBrowserSuccess,
       ),
     );
   }
@@ -148,6 +154,11 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     BrowserOnBookMarkClickEvent event,
     Emitter<BrowserState> emit,
   ) async {
+    emit(
+      state.copyWith(
+        status: BrowserStatus.none,
+      ),
+    );
     // If current bookmark != null. We will delete this bookmark in bookmark database.
     if (state.bookMark != null) {
       await _bookMarkUseCase.deleteBookMark(
@@ -156,7 +167,9 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
 
       //Update UI
       emit(
-        state.copyWithBookMarkNull(),
+        state.copyWithBookMarkNull(
+          status: BrowserStatus.changeBookMarkSuccess,
+        ),
       );
     } else {
       // Add new bookmark. It will return a bookmark
@@ -171,6 +184,7 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
       emit(
         state.copyWith(
           bookMark: bookMark,
+          status: BrowserStatus.changeBookMarkSuccess,
         ),
       );
     }
@@ -180,6 +194,11 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
     BrowserOnAddNewBrowserEvent event,
     Emitter<BrowserState> emit,
   ) async {
+    emit(
+      state.copyWith(
+        status: BrowserStatus.none,
+      ),
+    );
     // Add a new browser
     final activeBrowser = await _browserManagementUseCase.addNewBrowser(
       logo: event.logo,
@@ -196,6 +215,7 @@ class BrowserBloc extends Bloc<BrowserEvent, BrowserState> {
       state.copyWith(
         tabCount: browsers.length,
         currentBrowser: activeBrowser,
+        status: BrowserStatus.addNewBrowserSuccess,
       ),
     );
   }

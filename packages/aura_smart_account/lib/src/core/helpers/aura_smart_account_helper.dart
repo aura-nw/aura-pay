@@ -5,6 +5,7 @@ import 'package:aura_smart_account/src/core/definitions/account.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 import 'package:aura_smart_account/src/core/definitions/cosmos_signer_data.dart';
 import 'package:aura_smart_account/src/core/definitions/grpc_network_info.dart';
+import 'package:aura_smart_account/src/core/utils/string_validator.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
     as aura;
 import 'package:aura_smart_account/src/proto/cosmos/auth/v1beta1/export.dart'
@@ -251,5 +252,43 @@ sealed class AuraSmartAccountHelper {
       ..creator = recoveryAddress
       ..publicKey = newPubKey
       ..credentials = '';
+  }
+
+  static Map<String, dynamic> writeMessageToJson(
+      protobuf.GeneratedMessage? generatedMessage) {
+    if (generatedMessage == null) return {};
+
+    final fieldInfo = generatedMessage.info_.fieldInfo;
+    final json = generatedMessage.writeToJsonMap();
+
+    fieldInfo.forEach(
+      (key, value) {
+        if (json.containsKey(key.toString())) {
+          final field = generatedMessage.getField(key);
+
+          final jsonValue = json[key.toString()];
+
+          json.remove(key.toString());
+
+          if (field is protobuf.GeneratedMessage) {
+            json[value.name] = writeMessageToJson(field);
+          } else if (field is List<protobuf.GeneratedMessage>) {
+            json[value.name] = field.map((e) => writeMessageToJson(e)).toList();
+          } else {
+            json[value.name] = jsonValue;
+
+            if (jsonValue is String) {
+              final base64 = isBase64(jsonValue);
+
+              if (base64) {
+                json[value.name] = deCodeOrNull(jsonValue) ?? jsonValue;
+              }
+            }
+          }
+        }
+      },
+    );
+
+    return json;
   }
 }

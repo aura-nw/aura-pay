@@ -237,8 +237,10 @@ class _SendTransactionConfirmationScreenState
                                         child: SingleChildScrollView(
                                           child: Text(
                                             prettyJson(
-                                              msgSend.toProto3Json()
-                                                  as Map<String, dynamic>,
+                                              AuraSmartAccountHelper
+                                                  .writeMessageToJson(
+                                                msgSend,
+                                              ),
                                             ),
                                             style:
                                                 AppTypoGraPhy.body02.copyWith(
