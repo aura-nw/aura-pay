@@ -173,7 +173,7 @@ class _SetRecoveryFormWidgetState extends State<SetRecoveryFormWidget> {
               LanguageKey.setRecoveryMethodScreenConnectGoogleAccountContent,
           titleKey:
               LanguageKey.setRecoveryMethodScreenConnectGoogleAccountTitle,
-          methodIconPath: AssetIconPath.setRecoveryMethodGoogle,
+          methodIconPath: AssetIconPath.commonGoogle,
           appTheme: widget.appTheme,
           isSelected: isGoogleSelected,
           onTap: () {
@@ -232,8 +232,9 @@ class _SetRecoveryFormWidgetState extends State<SetRecoveryFormWidget> {
           },
           subContent: isBackupAddressSelected
               ? Container(
-                  padding: const EdgeInsets.all(
-                    Spacing.spacing01,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: Spacing.spacing01,
+                    horizontal: Spacing.spacing04,
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(

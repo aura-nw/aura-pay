@@ -28,125 +28,127 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
       builder: (appTheme) {
         return Scaffold(
           backgroundColor: appTheme.bodyColorBackground,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.spacing07,
-              vertical: Spacing.spacing04,
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        AssetLogoPath.logo,
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize06,
-                      ),
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return Text(
-                            localization.translate(
-                              LanguageKey.globalPyxisTitle,
-                            ),
-                            style: AppTypoGraPhy.heading04.copyWith(
-                              color: appTheme.contentColorBlack,
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize03,
-                      ),
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return Text(
-                            localization.translate(
-                              LanguageKey.onBoardingChoiceOptionScreenTitle,
-                            ),
-                            style: AppTypoGraPhy.body03.copyWith(
-                              color: appTheme.contentColor500,
-                            ),
-                            textAlign: TextAlign.center,
-                          );
-                        },
-                      ),
-                    ],
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.spacing07,
+                vertical: Spacing.spacing04,
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          AssetLogoPath.logo,
+                        ),
+                        const SizedBox(
+                          height: BoxSize.boxSize06,
+                        ),
+                        AppLocalizationProvider(
+                          builder: (localization, _) {
+                            return Text(
+                              localization.translate(
+                                LanguageKey.globalPyxisTitle,
+                              ),
+                              style: AppTypoGraPhy.heading04.copyWith(
+                                color: appTheme.contentColorBlack,
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: BoxSize.boxSize03,
+                        ),
+                        AppLocalizationProvider(
+                          builder: (localization, _) {
+                            return Text(
+                              localization.translate(
+                                LanguageKey.onBoardingChoiceOptionScreenTitle,
+                              ),
+                              style: AppTypoGraPhy.body03.copyWith(
+                                color: appTheme.contentColor500,
+                              ),
+                              textAlign: TextAlign.center,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                StatefulBuilder(
-                  builder: (context, setState) {
-                    return AppLocalizationProvider(
-                      builder: (localization, _) {
-                        return Column(
-                          children: [
-                            ChoiceOptionWidget(
-                              theme: appTheme,
-                              isSelected: _selectedIndex == 0,
-                              iconPath:
-                                  AssetIconPath.onBoardingCreateAccountSelected,
-                              title: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenCreateSmartAccountTitle,
+                  StatefulBuilder(
+                    builder: (context, setState) {
+                      return AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return Column(
+                            children: [
+                              ChoiceOptionWidget(
+                                theme: appTheme,
+                                isSelected: _selectedIndex == 0,
+                                iconPath:
+                                    AssetIconPath.onBoardingCreateAccountSelected,
+                                title: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenCreateSmartAccountTitle,
+                                ),
+                                content: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenCreateSmartAccountContent,
+                                ),
+                                onPress: _onCreateSmartAccountClick,
                               ),
-                              content: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenCreateSmartAccountContent,
+                              const SizedBox(
+                                height: BoxSize.boxSize04,
                               ),
-                              onPress: _onCreateSmartAccountClick,
-                            ),
-                            const SizedBox(
-                              height: BoxSize.boxSize04,
-                            ),
-                            HoLiZonTalDividerWithTextWidget(
-                              text: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenDividerText,
+                              HoLiZonTalDividerWithTextWidget(
+                                text: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenDividerText,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: BoxSize.boxSize04,
-                            ),
-                            ChoiceOptionWidget(
-                              theme: appTheme,
-                              isSelected: _selectedIndex == 1,
-                              iconPath: AssetIconPath.onBoardingImportKey,
-                              title: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenImportExistAccountTitle,
+                              const SizedBox(
+                                height: BoxSize.boxSize04,
                               ),
-                              content: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenImportExistAccountContent,
+                              ChoiceOptionWidget(
+                                theme: appTheme,
+                                isSelected: _selectedIndex == 1,
+                                iconPath: AssetIconPath.onBoardingImportKey,
+                                title: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenImportExistAccountTitle,
+                                ),
+                                content: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenImportExistAccountContent,
+                                ),
+                                onPress: _onImportAccountClick,
                               ),
-                              onPress: _onImportAccountClick,
-                            ),
-                            const SizedBox(
-                              height: BoxSize.boxSize07,
-                            ),
-                            ChoiceOptionWidget(
-                              theme: appTheme,
-                              isSelected: _selectedIndex == 2,
-                              iconPath: AssetIconPath.onBoardingRecoverAccount,
-                              title: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenRecoverAccountTitle,
+                              const SizedBox(
+                                height: BoxSize.boxSize07,
                               ),
-                              content: localization.translate(
-                                LanguageKey
-                                    .onBoardingChoiceOptionScreenRecoverAccountContent,
+                              ChoiceOptionWidget(
+                                theme: appTheme,
+                                isSelected: _selectedIndex == 2,
+                                iconPath: AssetIconPath.onBoardingRecoverAccount,
+                                title: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenRecoverAccountTitle,
+                                ),
+                                content: localization.translate(
+                                  LanguageKey
+                                      .onBoardingChoiceOptionScreenRecoverAccountContent,
+                                ),
+                                onPress: _onRecoverAccountClick,
                               ),
-                              onPress: _onRecoverAccountClick,
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                ),
-              ],
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );

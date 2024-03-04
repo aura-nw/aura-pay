@@ -4,8 +4,13 @@ import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
+import 'package:pyxis_mobile/src/presentation/screens/accounts/accounts_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/browser_tab_management/browser_tab_management_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft_detail/nft_detail_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
@@ -103,6 +108,11 @@ sealed class RoutePath {
   static const String walletConnect = '$home/wallet_connect';
   static const String walletConnectOnConnect =
       '$home/wallet_connect/on_connect';
+
+  static const String browser = '$home/browser';
+  static const String browserSearch = '$home/search';
+  static const String browserTabManagement = '$home/tab_management';
+  static const String accounts = '$home/account';
 }
 
 sealed class AppNavigator {
@@ -371,6 +381,36 @@ sealed class AppNavigator {
       case RoutePath.settingConnectSite:
         return _defaultRoute(
           const ConnectSiteScreen(),
+          settings,
+        );
+      case RoutePath.browser:
+        final String initUrl = settings.arguments as String;
+        return _defaultRoute(
+          BrowserScreen(
+            initUrl: initUrl,
+          ),
+          settings,
+        );
+      case RoutePath.accounts:
+        final HomeScreenBloc homeScreenBloc =
+            settings.arguments as HomeScreenBloc;
+        return _defaultRoute(
+          AccountsScreen(
+            homeScreenBloc: homeScreenBloc,
+          ),
+          settings,
+        );
+      case RoutePath.browserSearch:
+        return _defaultRoute(
+          const BrowserSearchScreen(),
+          settings,
+        );
+      case RoutePath.browserTabManagement:
+        final bool closeAndReplace = settings.arguments as bool? ?? true;
+        return _defaultRoute(
+          BrowserTabManagementScreen(
+            isCloseAndReplace: closeAndReplace,
+          ),
           settings,
         );
       default:

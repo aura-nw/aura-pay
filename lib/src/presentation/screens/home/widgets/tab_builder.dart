@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pyxis_mobile/src/presentation/screens/home/accounts/accounts_page.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/browser/browser_page.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
@@ -26,8 +26,8 @@ class HomeScreenTabBuilder extends StatelessWidget {
           ),
         ),
         _buildTab(
-          HomeScreenSection.accounts,
-          const AccountsPage(),
+          HomeScreenSection.browser,
+          const BrowserPage(),
         ),
         _buildTab(
           HomeScreenSection.history,

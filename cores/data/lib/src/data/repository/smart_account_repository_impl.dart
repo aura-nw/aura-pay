@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 
 class SmartAccountRepositoryImpl implements SmartAccountRepository {
   final SmartAccountProvider _provider;
+
   const SmartAccountRepositoryImpl(
     this._provider,
   );
@@ -16,7 +17,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     String? memo,
     String? fee,
     int? gasLimit,
-    String ?granter,
+    String? granter,
   }) async {
     return await _provider.activeSmartAccount(
       userPrivateKey: userPrivateKey,
@@ -72,14 +73,15 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
   }
 
   @override
-  Future<int> simulateFee(
-      {required Uint8List userPrivateKey,
-      required String smartAccountAddress,
-      dynamic msg}) {
+  Future<int> simulateFee({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required List<dynamic> msgs,
+  }) {
     return _provider.simulateFee(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
-      msg: msg,
+      msgs: msgs,
     );
   }
 
@@ -136,7 +138,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
   @override
   Future<String> getCosmosPubKeyByAddress({
     required String address,
-  }){
+  }) {
     return _provider.getCosmosPubKeyByAddress(address: address);
   }
 }

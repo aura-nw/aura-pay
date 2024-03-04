@@ -37,6 +37,8 @@ final class OnBoardingRecoverSignBloc
     on(_onInit);
     on(_onChangeFee);
     on(_onConfirm);
+    on(_onChangeShowFullMsg);
+    on(_onChangeMemo);
 
     add(
       const OnBoardingRecoverSignEventOnInit(),
@@ -46,11 +48,50 @@ final class OnBoardingRecoverSignBloc
   final int _defaultGasLimit = 400000;
   final config = getIt.get<PyxisMobileConfig>();
 
+  void _onChangeMemo(
+    OnBoardingRecoverSignEventOnChangeMemo event,
+    Emitter<OnBoardingRecoverSignState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        memo: event.memo,
+        status: OnBoardingRecoverSignStatus.none,
+      ),
+    );
+  }
+
+  void _onChangeShowFullMsg(
+    OnBoardingRecoverSignEventOnChangeShowFullMsg event,
+    Emitter<OnBoardingRecoverSignState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        isShowFullMsg: !state.isShowFullMsg,
+        status: OnBoardingRecoverSignStatus.none,
+      ),
+    );
+  }
+
   void _onInit(
     OnBoardingRecoverSignEventOnInit event,
     Emitter<OnBoardingRecoverSignState> emit,
   ) async {
     final config = getIt.get<PyxisMobileConfig>();
+
+    final String backupPrivateKey = await _web3authUseCase.getPrivateKey();
+
+    final wallet = await _walletUseCase.importWallet(
+      privateKeyOrPassPhrase: backupPrivateKey,
+    );
+
+    final msg = AuraSmartAccountHelper.createRecoveryMsg(
+      privateKey: AuraWalletHelper.getPrivateKeyFromString(
+        backupPrivateKey,
+      ),
+      recoveryAddress: wallet.bech32Address,
+      smartAccountAddress: state.account.smartAccountAddress,
+    );
+
     // Set default gas
     final highFee = CosmosHelper.calculateFee(
       _defaultGasLimit,
@@ -75,6 +116,7 @@ final class OnBoardingRecoverSignBloc
         highTransactionFee: highFee.amount[0].amount,
         lowTransactionFee: lowFee.amount[0].amount,
         transactionFee: fee.amount[0].amount,
+        msgRecover: msg,
       ),
     );
   }

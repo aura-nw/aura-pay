@@ -133,6 +133,9 @@ sealed class LanguageKey {
   static const String onBoardingRecoverSignScreenTransactionFee = 'on_boarding_recover_sign_screen_transaction_fee';
   static const String onBoardingRecoverSignScreenRecovering = 'on_boarding_recover_sign_screen_loading';
   static const String onBoardingRecoverSignScreenConfirmButtonTitle = 'on_boarding_recover_sign_screen_button_confirm_title';
+  static const String onBoardingRecoverSignScreenViewData = 'on_boarding_recover_sign_screen_view_data';
+  static const String onBoardingRecoverSignScreenMemo = 'on_boarding_recover_sign_screen_memo';
+  static const String onBoardingRecoverSignScreenMemoHint = 'on_boarding_recover_sign_screen_memo_hint';
   ///
 
   ///region recover backup address
@@ -163,6 +166,7 @@ sealed class LanguageKey {
   ///endregion
 
   static const String homeScreenBottomNavigatorBarHome = 'home_screen_bottom_navigator_bar_home';
+  static const String homeScreenBottomNavigatorBarBrowser = 'home_screen_bottom_navigator_bar_browser';
   static const String homeScreenBottomNavigatorBarAccounts = 'home_screen_bottom_navigator_bar_accounts';
   static const String homeScreenBottomNavigatorBarHistory = 'home_screen_bottom_navigator_bar_history';
   static const String homeScreenBottomNavigatorBarSetting = 'home_screen_bottom_navigator_bar_setting';
@@ -174,6 +178,7 @@ sealed class LanguageKey {
   static const String homePageSendToken = 'home_page_send_token';
   static const String homePageReceiveToken = 'home_page_receive_token';
   static const String homePageNFTs = 'home_page_nft';
+  static const String homePageSite = 'home_page_site';
   static const String homePageTxLimit = 'home_page_tx_limit';
   static const String homePageStake = 'home_page_tx_stake';
   static const String homePageTotalTokensValue = 'home_page_total_token_value';
@@ -186,30 +191,30 @@ sealed class LanguageKey {
   ///
 
   ///region accounts page
-  static const String accountsPageAppBarTitle = 'accounts_page_app_bar_title';
-  static const String accountsPageCreateNewSmartAccount = 'accounts_page_create_new_smart_account';
-  static const String accountsPageImportExistingAccount = 'accounts_page_import_existing_account';
-  static const String accountsPageRecoverAccount = 'accounts_page_recover_account';
-  static const String accountsPageUsing = 'accounts_page_using';
-  static const String accountsPageAllAccounts = 'accounts_page_all_accounts';
-  static const String accountsPageSmartAccountLabel = 'accounts_page_smart_account_label';
-  static const String accountsPageImported = 'accounts_page_imported';
-  static const String accountsPageSendAddress = 'accounts_page_send_address';
-  static const String accountsPageRenameAccount = 'accounts_page_rename_account';
-  static const String accountsPageRenameAccountHint = 'accounts_page_rename_account_hint';
-  static const String accountsPageRenameAccountMakeMemorableRegionOne = 'accounts_page_rename_account_make_memorable_region_one';
-  static const String accountsPageRenameAccountMakeMemorableRegionTwo = 'accounts_page_rename_account_make_memorable_region_two';
-  static const String accountsPageRenameAccountConfirm = 'accounts_page_rename_confirm';
-  static const String accountsPageRenameAccountSuccess = 'accounts_page_rename_success';
-  static const String accountsPageViewOnAuraScan = 'accounts_page_view_on_aura_scan';
-  static const String accountsPageRemove = 'accounts_page_remove';
-  static const String accountsPageRemoveTitle = 'accounts_page_remove_title';
-  static const String accountsPageRemoveContentRegionOne = 'accounts_page_remove_content_region_one';
-  static const String accountsPageRemoveContentRegionTwo = 'accounts_page_remove_content_region_two';
-  static const String accountsPageRemoveContentRegionThree = 'accounts_page_remove_content_region_three';
-  static const String accountsPageRemoveCancelTitle = 'accounts_page_remove_cancel_title';
-  static const String accountsPageRemoveRemoveTitle = 'accounts_page_remove_remove_title';
-  static const String accountsPageRemoveAccountSuccess = 'accounts_page_remove_account_success';
+  static const String accountsScreenAppBarTitle = 'accounts_screen_app_bar_title';
+  static const String accountsScreenCreateNewSmartAccount = 'accounts_screen_create_new_smart_account';
+  static const String accountsScreenImportExistingAccount = 'accounts_screen_import_existing_account';
+  static const String accountsScreenRecoverAccount = 'accounts_screen_recover_account';
+  static const String accountsScreenUsing = 'accounts_screen_using';
+  static const String accountsScreenAllAccounts = 'accounts_screen_all_accounts';
+  static const String accountsScreenSmartAccountLabel = 'accounts_screen_smart_account_label';
+  static const String accountsScreenImported = 'accounts_screen_imported';
+  static const String accountsScreenSendAddress = 'accounts_screen_send_address';
+  static const String accountsScreenRenameAccount = 'accounts_screen_rename_account';
+  static const String accountsScreenRenameAccountHint = 'accounts_screen_rename_account_hint';
+  static const String accountsScreenRenameAccountMakeMemorableRegionOne = 'accounts_screen_rename_account_make_memorable_region_one';
+  static const String accountsScreenRenameAccountMakeMemorableRegionTwo = 'accounts_screen_rename_account_make_memorable_region_two';
+  static const String accountsScreenRenameAccountConfirm = 'accounts_screen_rename_confirm';
+  static const String accountsScreenRenameAccountSuccess = 'accounts_screen_rename_success';
+  static const String accountsScreenViewOnAuraScan = 'accounts_screen_view_on_aura_scan';
+  static const String accountsScreenRemove = 'accounts_screen_remove';
+  static const String accountsScreenRemoveTitle = 'accounts_screen_remove_title';
+  static const String accountsScreenRemoveContentRegionOne = 'accounts_screen_remove_content_region_one';
+  static const String accountsScreenRemoveContentRegionTwo = 'accounts_screen_remove_content_region_two';
+  static const String accountsScreenRemoveContentRegionThree = 'accounts_screen_remove_content_region_three';
+  static const String accountsScreenRemoveCancelTitle = 'accounts_screen_remove_cancel_title';
+  static const String accountsScreenRemoveRemoveTitle = 'accounts_screen_remove_remove_title';
+  static const String accountsScreenRemoveAccountSuccess = 'accounts_screen_remove_account_success';
   ///
 
   ///region history page
@@ -285,6 +290,9 @@ sealed class LanguageKey {
   static const String sendTransactionConfirmationScreenFee = 'send_transaction_confirmation_screen_fee';
   static const String sendTransactionConfirmationScreenTotal = 'send_transaction_confirmation_screen_total';
   static const String sendTransactionConfirmationScreenMessages = 'send_transaction_confirmation_screen_messages';
+  static const String sendTransactionConfirmationScreenViewData = 'send_transaction_confirmation_screen_view_data';
+  static const String sendTransactionConfirmationScreenMemo = 'send_transaction_confirmation_screen_memo';
+  static const String sendTransactionConfirmationScreenMemoHint = 'send_transaction_confirmation_screen_memo_hint';
   static const String sendTransactionConfirmationScreenSend = 'send_transaction_confirmation_screen_message_send';
   static const String sendTransactionConfirmationScreenContent = 'send_transaction_confirmation_screen_message_content';
   static const String sendTransactionConfirmationScreenSending = 'send_transaction_confirmation_screen_sending';
@@ -415,6 +423,11 @@ sealed class LanguageKey {
   static const String recoveryMethodConfirmationScreenTransactionFee = 'recovery_method_confirmation_screen_transaction_fee';
   static const String recoveryMethodConfirmationScreenButtonConfirmTitle = 'recovery_method_confirmation_screen_button_confirm_title';
   static const String recoveryMethodConfirmationScreenRecovering = 'recovery_method_confirmation_screen_loading';
+  static const String recoveryMethodConfirmationScreenInsufficientAmountTitle = 'recovery_method_confirmation_screen_insufficient_amount_title';
+  static const String recoveryMethodConfirmationScreenInsufficientAmountContent = 'recovery_method_confirmation_screen_insufficient_amount_content';
+  static const String recoveryMethodConfirmationScreenViewData = 'recovery_method_confirmation_screen_view_data';
+  static const String recoveryMethodConfirmationScreenMemo = 'recovery_method_confirmation_screen_memo';
+  static const String recoveryMethodConfirmationScreenMemoHint = 'recovery_method_confirmation_screen_memo_hint';
   ///
 
   ///region
@@ -479,4 +492,30 @@ sealed class LanguageKey {
   static const String connectSiteScreenDisconnectContentRegionTwo = 'connect_site_screen_disconnect_content_region_two';
   static const String connectSiteScreenDisconnectCancelButton = 'connect_site_screen_disconnect_cancel_button';
   static const String connectSiteScreenDisconnectDisconnectButton = 'connect_site_screen_disconnect_disconnect_button';
+
+  ///region in app browser page
+  static const String inAppBrowserPagePlaceHolder = 'in_app_browser_page_place_holder';
+  static const String inAppBrowserPageEcosystemTab = 'in_app_browser_page_ecosystem_tab';
+  static const String inAppBrowserPageBookMarkTab = 'in_app_browser_page_book_mark_tab';
+  static const String inAppBrowserPageOpen = 'in_app_browser_page_open';
+  static const String inAppBrowserPageUndo = 'in_app_browser_page_undo';
+  static const String inAppBrowserPageDelete = 'in_app_browser_page_delete';
+  static const String inAppBrowserPageDeleteMessage = 'in_app_browser_page_delete_message';
+  static const String inAppBrowserNoBookMarkFound= 'in_app_browser_page_no_book_mark_found';
+
+  /// region in app browser search screen
+  static const String inAppBrowserSearchScreenHint = 'in_app_browser_search_screen_hint';
+  static const String inAppBrowserSearchScreenSearchWithGoogle = 'in_app_browser_search_screen_search_with_google';
+
+  /// region in app browser screen
+  static const String inAppBrowserScreenChooseAccountDialogTitle = 'in_app_browser_screen_choose_account_dialog_title';
+  static const String inAppBrowserScreenSmartAccount = 'in_app_browser_screen_smart_account';
+  static const String inAppBrowserScreenNewTab = 'in_app_browser_screen_new_tab';
+  static const String inAppBrowserScreenShare = 'in_app_browser_screen_share';
+  static const String inAppBrowserScreenRefresh = 'in_app_browser_screen_refresh';
+
+  /// region browser management screen
+  static const String browserManagementScreenCloseAll = 'browser_management_screen_close_all';
+  static const String browserManagementScreenNewTab = 'browser_management_screen_new_tab';
+  static const String browserManagementScreenNoTabFound = 'browser_management_screen_no_tab_found';
 }

@@ -31,6 +31,7 @@ class TextInputWidgetBase extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatter;
   final TextInputType? keyBoardType;
   final bool enableClear;
+  final BoxConstraints? boxConstraints;
 
   const TextInputWidgetBase({
     super.key,
@@ -53,6 +54,7 @@ class TextInputWidgetBase extends StatefulWidget {
     this.physics,
     this.inputFormatter,
     this.keyBoardType,
+    this.boxConstraints,
   });
 
   @override
@@ -176,6 +178,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.zero,
               hintStyle: AppTypoGraPhy.body03,
+              constraints: widget.boxConstraints,
 
               /// This line may be fix in the future.
               counterText: '',
@@ -346,6 +349,8 @@ final class TextInputNormalWidget extends TextInputWidgetBase {
     super.minLine,
     super.onChanged,
     super.physics,
+    super.boxConstraints,
+    super.enableClear,
     super.key,
   });
 
@@ -422,6 +427,8 @@ final class TextInputNormalSuffixWidget extends TextInputWidgetBase {
     super.minLine,
     super.onChanged,
     super.physics,
+    super.boxConstraints,
+    super.enableClear,
     super.key,
   });
 
@@ -519,6 +526,7 @@ final class TextInputOnlyTextFieldWidget extends TextInputWidgetBase {
     super.key,
     super.enableClear,
     super.onClear,
+    super.boxConstraints,
   });
 
   @override
@@ -536,12 +544,7 @@ final class TextInputOnlyTextFieldWidgetState
   Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (theme) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Spacing.spacing04,
-          ),
-          child: buildTextInput(theme),
-        );
+        return buildTextInput(theme);
       },
     );
   }

@@ -107,7 +107,7 @@ class AccountRecoveryWidget extends StatelessWidget {
             ),
             isVerified
                 ? SvgPicture.asset(
-                    AssetIconPath.recoveryMethodMore,
+                    AssetIconPath.commonMore,
                   )
                 : Container(
                     padding: const EdgeInsets.symmetric(

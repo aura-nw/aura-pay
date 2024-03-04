@@ -94,9 +94,7 @@ class _SettingPageState extends State<SettingPage> {
                   iconPath: AssetIconPath.settingHelpCenter,
                   labelPath: LanguageKey.settingPageHelpCenter,
                   appTheme: appTheme,
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                 ),
               ),
             ],

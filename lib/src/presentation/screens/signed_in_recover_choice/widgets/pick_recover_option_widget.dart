@@ -123,7 +123,7 @@ class _PickRecoverOptionWidgetState extends State<PickRecoverOptionWidget> {
                 title: localization.translate(
                   LanguageKey.onBoardingRecoverChoiceScreenGoogleOptionTitle,
                 ),
-                iconPath: AssetIconPath.onBoardingRecoverChoiceGoogle,
+                iconPath: AssetIconPath.commonGoogle,
                 appTheme: widget.appTheme,
                 isSelected: type == RecoverOptionType.google,
                 onTap: () {

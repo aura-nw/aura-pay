@@ -23,7 +23,7 @@ class SmartAccountUseCase {
     String? memo,
     String? fee,
     int? gasLimit,
-    String ?granter,
+    String? granter,
   }) async {
     return _repository.activeSmartAccount(
       userPrivateKey: userPrivateKey,
@@ -64,14 +64,15 @@ class SmartAccountUseCase {
     );
   }
 
-  Future<int> simulateFee(
-      {required Uint8List userPrivateKey,
-      required String smartAccountAddress,
-      dynamic msg}) {
+  Future<int> simulateFee({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required List<dynamic> msgs,
+  }) {
     return _repository.simulateFee(
         userPrivateKey: userPrivateKey,
         smartAccountAddress: smartAccountAddress,
-        msg: msg);
+        msgs: msgs);
   }
 
   Future<TransactionInformation> getTx({
@@ -120,7 +121,7 @@ class SmartAccountUseCase {
 
   Future<String> getCosmosPubKeyByAddress({
     required String address,
-  }){
+  }) {
     return _repository.getCosmosPubKeyByAddress(address: address);
   }
 }

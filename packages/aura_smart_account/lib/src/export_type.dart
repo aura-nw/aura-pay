@@ -7,3 +7,6 @@ show MsgExecuteContract;
 export 'package:aura_smart_account/src/proto/google/protobuf/export.dart' show Any;
 export 'package:aura_smart_account/src/proto/cosmos/base/v1beta1/export.dart'
 show Coin;
+export 'package:protobuf/protobuf.dart' show GeneratedMessage, TypeRegistry;
+export 'package:aura_smart_account/src/proto/cosmos/feegrant/v1beta1/export.dart'
+show MsgGrantAllowance;

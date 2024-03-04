@@ -12,12 +12,14 @@ class ChainTriggerWidget extends StatelessWidget {
   final VoidCallback onSendTap;
   final VoidCallback onReceiveTap;
   final VoidCallback onNFTsTap;
+  final VoidCallback onSiteTap;
   final VoidCallback onTXsLimitTap;
   final VoidCallback onStakeTap;
 
   const ChainTriggerWidget({
     required this.appTheme,
     required this.onNFTsTap,
+    required this.onSiteTap,
     required this.onSendTap,
     required this.onReceiveTap,
     required this.onTXsLimitTap,
@@ -30,24 +32,6 @@ class ChainTriggerWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(
         Spacing.spacing03,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(
-            BorderRadiusSize.borderRadius05,
-          ),
-          topLeft: Radius.circular(
-            BorderRadiusSize.borderRadius05,
-          ),
-        ),
-        gradient: LinearGradient(
-          colors: [
-            appTheme.surfaceColorBrandLight,
-            appTheme.surfaceColorBrandLight.withOpacity(0),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
       ),
       child: Column(
         children: [
@@ -80,6 +64,16 @@ class ChainTriggerWidget extends StatelessWidget {
                   child: _triggerBuilder(
                     AssetIconPath.homeNFTs,
                     LanguageKey.homePageNFTs,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: onSiteTap,
+                  child: _triggerBuilder(
+                    AssetIconPath.homeSite,
+                    LanguageKey.homePageSite,
                   ),
                 ),
               ),

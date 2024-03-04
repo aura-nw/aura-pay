@@ -71,15 +71,13 @@ abstract interface class AuraSmartAccount {
   /// Simulate send token fee
   /// This method has to pass five parameters include: [userPrivateKey] as Uint8List,
   /// [smartAccountAddress] as String,
-  /// [receiverAddress] as String,
-  /// [amount] as String,
-  /// [memo] as String?,
+  /// [msgs] as List<GeneratedMessage>,
   /// Response a [int] is total gas used
   /// It can throw [AuraSmartAccountError]
   Future<int> simulateFee({
     required Uint8List userPrivateKey,
     required String smartAccountAddress,
-    required GeneratedMessage msg,
+    required List<GeneratedMessage> msgs,
   });
 
   /// Query balance from address

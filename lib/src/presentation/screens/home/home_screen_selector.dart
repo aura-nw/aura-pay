@@ -21,10 +21,12 @@ class HomeScreenAccountsSelector
   HomeScreenAccountsSelector({
     Key? key,
     required Widget Function(List<AuraAccount>) builder,
+    HomeScreenBloc? bloc,
   }) : super(
           key: key,
           selector: (state) => state.accounts,
           builder: (_, accounts) => builder(accounts),
+          bloc: bloc,
         );
 }
 
@@ -33,9 +35,11 @@ class HomeScreenSelectedAccountSelector
   HomeScreenSelectedAccountSelector({
     Key? key,
     required Widget Function(AuraAccount?) builder,
+    HomeScreenBloc? bloc,
   }) : super(
           key: key,
           selector: (state) => state.selectedAccount,
           builder: (_, selectedAccount) => builder(selectedAccount),
+          bloc: bloc,
         );
 }

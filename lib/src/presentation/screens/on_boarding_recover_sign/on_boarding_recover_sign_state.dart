@@ -1,5 +1,7 @@
+import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'on_boarding_recover_sign_state.freezed.dart';
 
 enum OnBoardingRecoverSignStatus {
@@ -16,9 +18,12 @@ class OnBoardingRecoverSignState with _$OnBoardingRecoverSignState {
     required PyxisRecoveryAccount account,
     @Default(OnBoardingRecoverSignStatus.none)
     OnBoardingRecoverSignStatus status,
-    String ?error,
+    String? error,
     @Default('') String transactionFee,
     @Default('') String highTransactionFee,
     @Default('') String lowTransactionFee,
+    String? memo,
+    @Default(false) bool isShowFullMsg,
+    MsgRecover? msgRecover,
   }) = _OnBoardingRecoverSignState;
 }

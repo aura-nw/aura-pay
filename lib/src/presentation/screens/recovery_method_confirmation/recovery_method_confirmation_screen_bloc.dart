@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'recovery_method_confirmation_screen.dart';
 import 'recovery_method_confirmation_screen_event.dart';
 import 'recovery_method_confirmation_screen_state.dart';
@@ -16,13 +17,15 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
   final WalletUseCase _walletUseCase;
   final Web3AuthUseCase _web3authUseCase;
   final AuraAccountUseCase _accountUseCase;
+  final BalanceUseCase _balanceUseCase;
 
   RecoveryMethodConfirmationBloc(
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
     this._walletUseCase,
     this._web3authUseCase,
-    this._accountUseCase, {
+    this._accountUseCase,
+    this._balanceUseCase, {
     required RecoveryMethodConfirmationArgument argument,
   }) : super(
           RecoveryMethodConfirmationState(
@@ -32,6 +35,8 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     on(_onInit);
     on(_onChangeFee);
     on(_onConfirm);
+    on(_onChangeMemo);
+    on(_onChangeShowFullMsg);
 
     add(
       const RecoveryMethodConfirmationEventOnInit(),
@@ -46,6 +51,34 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     RecoveryMethodConfirmationEventOnInit event,
     Emitter<RecoveryMethodConfirmationState> emit,
   ) async {
+    final auraSmNetworkInfo =
+        AuraSmartAccountHelper.getNetworkInfoFromEnvironment(
+      config.environment.toSME,
+    );
+
+    String recoveryAddress = '';
+    if (state.argument is RecoveryMethodConfirmationGoogleArgument) {
+      final String backupPrivateKey = await _web3authUseCase.getPrivateKey();
+
+      final wallet = await _walletUseCase.importWallet(
+        privateKeyOrPassPhrase: backupPrivateKey,
+      );
+
+      recoveryAddress = wallet.bech32Address;
+    } else {
+      recoveryAddress = state.argument.data;
+    }
+
+    final List<GeneratedMessage> setRecoveryMessages =
+        AuraSmartAccountHelper.createSetRecoveryMethodMsg(
+      smartAccountAddress: state.argument.account.address,
+      recoverAddress: recoveryAddress,
+      denom: auraSmNetworkInfo.denom,
+      recoverContractAddress: auraSmNetworkInfo.recoverContractAddress,
+      isReadyRegister: state.argument.account.isVerified,
+      revokePreAddress: state.argument.account.method?.subValue,
+    );
+
     // Set default gas
     final highFee = CosmosHelper.calculateFee(
       _defaultGasLimit,
@@ -70,6 +103,73 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
         highTransactionFee: highFee.amount[0].amount,
         lowTransactionFee: lowFee.amount[0].amount,
         transactionFee: fee.amount[0].amount,
+        messages: setRecoveryMessages.whereType<MsgExecuteContract>().toList(),
+      ),
+    );
+
+    // final String smAddress = state.argument.account.address;
+    //
+    // final String? smPrivateKey = await _controllerKeyUseCase.getKey(
+    //   address: smAddress,
+    // );
+    //
+    // final int gasEstimation = await _smartAccountUseCase.simulateFee(
+    //   userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(
+    //     smPrivateKey!,
+    //   ),
+    //   smartAccountAddress: smAddress,
+    //   msgs: setRecoveryMessages,
+    // );
+    //
+    // final highFeeAfterEstimate = CosmosHelper.calculateFee(
+    //   gasEstimation,
+    //   deNom: config.deNom,
+    //   gasPrice: GasPriceStep.high.value,
+    // );
+    //
+    // final feeAfterEstimate = CosmosHelper.calculateFee(
+    //   gasEstimation,
+    //   deNom: config.deNom,
+    //   gasPrice: GasPriceStep.average.value,
+    // );
+    //
+    // final lowFeeAfterEstimate = CosmosHelper.calculateFee(
+    //   gasEstimation,
+    //   deNom: config.deNom,
+    //   gasPrice: GasPriceStep.low.value,
+    // );
+    //
+    // emit(
+    //   state.copyWith(
+    //     highTransactionFee: highFeeAfterEstimate.amount[0].amount,
+    //     lowTransactionFee: lowFeeAfterEstimate.amount[0].amount,
+    //     transactionFee: feeAfterEstimate.amount[0].amount,
+    //   ),
+    // );
+    //
+    // print('gasEstimation = ${gasEstimation}');
+  }
+
+  void _onChangeMemo(
+    RecoveryMethodConfirmationEventOnChangeMemo event,
+    Emitter<RecoveryMethodConfirmationState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        memo: event.memo,
+        status: RecoveryMethodConfirmationStatus.none,
+      ),
+    );
+  }
+
+  void _onChangeShowFullMsg(
+    RecoveryMethodConfirmationEventOnChangeShowFullMsg event,
+    Emitter<RecoveryMethodConfirmationState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        isShowFullMsg: !state.isShowFullMsg,
+        status: RecoveryMethodConfirmationStatus.none,
       ),
     );
   }
@@ -98,6 +198,24 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
 
     try {
       final AuraAccount account = state.argument.account;
+
+      final balances = await _balanceUseCase.getBalances(
+        address: account.address,
+        environment: config.environment.environmentString,
+      );
+
+      final activeBalance =
+          balances.firstWhereOrNull((e) => e.denom == config.deNom);
+
+      if (state.transactionFee.compareTo(activeBalance?.amount ?? '0') != -1) {
+        emit(
+          state.copyWith(
+            status: RecoveryMethodConfirmationStatus.insufficientBalance,
+          ),
+        );
+
+        return;
+      }
 
       final String? smPrivateKey = await _controllerKeyUseCase.getKey(
         address: account.address,

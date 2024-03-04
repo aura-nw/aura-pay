@@ -8,6 +8,12 @@ class RecoveryMethodConfirmationEvent with _$RecoveryMethodConfirmationEvent {
     required String fee,
   }) = RecoveryMethodConfirmationEventOnChangeFee;
 
+  const factory RecoveryMethodConfirmationEvent.onChangeMemo({
+    required String memo,
+  }) = RecoveryMethodConfirmationEventOnChangeMemo;
+
+  const factory RecoveryMethodConfirmationEvent.onChangeShowFullMsg() = RecoveryMethodConfirmationEventOnChangeShowFullMsg;
+
   const factory RecoveryMethodConfirmationEvent.onConfirm() =
       RecoveryMethodConfirmationEventOnConfirm;
 

@@ -135,7 +135,7 @@ final class _HomeAccountWidget extends AuraSmartAccountBaseWidget {
         left: Spacing.spacing04,
       ),
       child: SvgPicture.asset(
-        AssetIconPath.homeArrowDown,
+        AssetIconPath.commonArrowNext,
       ),
     );
   }
@@ -185,28 +185,19 @@ final class _HomeAccountReceiveWidget extends AuraSmartAccountBaseWidget {
   // Override the actionFormBuilder method
   @override
   Widget actionFormBuilder(BuildContext context) {
-    return const SizedBox();
+    return SvgPicture.asset(
+      AssetIconPath.homeReceiveCopyAddress,
+    );
   }
 
   // Override the addressBuilder method
   @override
   Widget addressBuilder(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          address.addressView,
-          style: AppTypoGraPhy.body02.copyWith(
-            color: appTheme.contentColor700,
-          ),
-        ),
-        const SizedBox(
-          width: BoxSize.boxSize04,
-        ),
-        SvgPicture.asset(
-          AssetIconPath.homeReceiveCopyAddress,
-        )
-      ],
+    return Text(
+      address.addressView,
+      style: AppTypoGraPhy.body02.copyWith(
+        color: appTheme.contentColor700,
+      ),
     );
   }
 

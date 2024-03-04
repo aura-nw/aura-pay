@@ -56,3 +56,11 @@ enum MediaType{
   video,
   audio,
 }
+
+// transaction message view type
+enum TransactionMessageViewType{
+  // Normal viewer
+  normal,
+  // view full raw json message
+  viewRaw,
+}

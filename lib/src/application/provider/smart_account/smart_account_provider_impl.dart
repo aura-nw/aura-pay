@@ -103,14 +103,15 @@ class SmartAccountProviderImpl implements SmartAccountProvider {
   }
 
   @override
-  Future<int> simulateFee(
-      {required Uint8List userPrivateKey,
-      required String smartAccountAddress,
-      dynamic msg}) {
+  Future<int> simulateFee({
+    required Uint8List userPrivateKey,
+    required String smartAccountAddress,
+    required List<dynamic> msgs,
+  }) {
     return _auraSmartAccount.simulateFee(
       userPrivateKey: userPrivateKey,
       smartAccountAddress: smartAccountAddress,
-      msg: msg,
+      msgs: msgs as List<GeneratedMessage>,
     );
   }
 

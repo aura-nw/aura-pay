@@ -36,9 +36,33 @@ class SendTransactionConfirmationBloc extends Bloc<
     on(_onInit);
     on(_onChangeFee);
     on(_onSendToken);
+    on(_onChangeMemo);
+    on(_onClickShowFullMessage);
 
     add(
       const SendTransactionConfirmationEventOnInit(),
+    );
+  }
+
+  void _onClickShowFullMessage(
+    SendTransactionConfirmationEventOnShowFullMessage event,
+    Emitter<SendTransactionConfirmationState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        isShowFullMessage: !state.isShowFullMessage,
+      ),
+    );
+  }
+
+  void _onChangeMemo(
+    SendTransactionConfirmationEventOnChangeMemo event,
+    Emitter<SendTransactionConfirmationState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        memo: event.memo,
+      ),
     );
   }
 
@@ -97,14 +121,14 @@ class SendTransactionConfirmationBloc extends Bloc<
       if (state.sender.type == AuraAccountType.smartAccount) {
         // send token by smart account
         information = await _smartAccountUseCase.sendToken(
-          userPrivateKey:
-              AuraWalletHelper.getPrivateKeyFromString(privateKeyString),
-          smartAccountAddress: sender.address,
-          receiverAddress: state.recipient,
-          amount: state.amount.toDenom,
-          fee: state.transactionFee,
-          gasLimit: state.estimationGas,
-        );
+            userPrivateKey:
+                AuraWalletHelper.getPrivateKeyFromString(privateKeyString),
+            smartAccountAddress: sender.address,
+            receiverAddress: state.recipient,
+            amount: state.amount.toDenom,
+            fee: state.transactionFee,
+            gasLimit: state.estimationGas,
+            memo: state.memo);
       } else {
         // send token by normal wallet
 
@@ -117,6 +141,7 @@ class SendTransactionConfirmationBloc extends Bloc<
           amount: state.amount.toDenom,
           fee: state.transactionFee,
           gasLimit: state.estimationGas,
+          memo: state.memo,
         );
 
         information = await wallet.submitTransaction(

@@ -13,6 +13,7 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
@@ -47,6 +48,8 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
     with CustomFlutterToast {
   late SignedInRecoverSignBloc _bloc;
 
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
+
   @override
   void initState() {
     _bloc = getIt.get<SignedInRecoverSignBloc>(
@@ -77,6 +80,11 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
                   AppNavigator.pop();
                   break;
                 case SignedInRecoverSignStatus.onRecoverSuccess:
+                  _observer.emit(
+                    emitParam: HomeScreenEmitParam(
+                      event: HomeScreenObserver.recoverAccountSuccessfulEvent,
+                    ),
+                  );
                   AppNavigator.popUntil(
                     RoutePath.home,
                   );
@@ -88,258 +96,257 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
                 onViewMoreInformationTap: () {},
                 appTheme: appTheme,
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing07,
-                  vertical: Spacing.spacing04,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppLocalizationProvider(
-                      builder: (localization, _) {
-                        return RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: localization.translate(
-                                  LanguageKey
-                                      .signedInRecoverSignScreenTitleRegionOne,
-                                ),
-                                style: AppTypoGraPhy.heading06.copyWith(
-                                  color: appTheme.contentColorBlack,
-                                ),
-                              ),
-                              TextSpan(
-                                text: ' ${localization.translate(
-                                  LanguageKey
-                                      .signedInRecoverSignScreenTitleRegionTwo,
-                                )}',
-                                style: AppTypoGraPhy.heading05.copyWith(
-                                  color: appTheme.contentColorBrand,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: BoxSize.boxSize05,
-                    ),
-                    AppLocalizationProvider(
-                      builder: (localization, _) {
-                        return Text(
-                          localization.translate(
-                            localization.translate(
-                              LanguageKey.signedInRecoverSignScreenContent,
-                            ),
-                          ),
-                          style: AppTypoGraPhy.body03.copyWith(
-                            color: appTheme.contentColor500,
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: BoxSize.boxSize05,
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SvgPicture.asset(
-                            AssetIconPath.commonRoundDivider,
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize05,
-                          ),
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return Text(
-                                localization.translate(
-                                  localization.translate(
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing07,
+                    vertical: Spacing.spacing05,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: localization.translate(
                                     LanguageKey
-                                        .signedInRecoverSignScreenAccount,
+                                        .signedInRecoverSignScreenTitleRegionOne,
+                                  ),
+                                  style: AppTypoGraPhy.heading06.copyWith(
+                                    color: appTheme.contentColorBlack,
                                   ),
                                 ),
-                                style:
-                                    AppTypoGraPhy.utilityLabelDefault.copyWith(
-                                  color: appTheme.contentColorBlack,
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize05,
-                          ),
-                          SelectedSmartAccountWidget(
-                            appTheme: appTheme,
-                            smartAccountAddress:
-                                widget.account.smartAccountAddress.addressView,
-                            smartAccountName: widget.account.name ??
-                                PyxisAccountConstant.unName,
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize04,
-                          ),
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return Text(
-                                localization.translate(
-                                  LanguageKey.signedInRecoverSignScreenMessages,
-                                ),
-                                style:
-                                    AppTypoGraPhy.utilityLabelDefault.copyWith(
-                                  color: appTheme.contentColorBlack,
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize04,
-                          ),
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                AssetIconPath.commonSignMessage,
-                              ),
-                              const SizedBox(
-                                width: BoxSize.boxSize04,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AppLocalizationProvider(
-                                      builder: (localization, _) {
-                                        return Text(
-                                          localization.translate(
-                                            LanguageKey
-                                                .signedInRecoverSignScreenUpdateKey,
-                                          ),
-                                          style: AppTypoGraPhy
-                                              .utilityLabelDefault
-                                              .copyWith(
-                                            color: appTheme.contentColorBlack,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    const SizedBox(),
-                                    AppLocalizationProvider(
-                                      builder: (localization, p1) {
-                                        return Text(
-                                          localization.translateWithParam(
-                                            LanguageKey
-                                                .signedInRecoverSignScreenUpdateKeyContent,
-                                            {
-                                              'address': widget
-                                                  .account
-                                                  .smartAccountAddress
-                                                  .addressView,
-                                              'newAddress':
-                                                  widget.googleAccount.email,
-                                            },
-                                          ),
-                                          style: AppTypoGraPhy.bodyMedium02
-                                              .copyWith(
-                                            color: appTheme.contentColor500,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize04,
-                          ),
-                          const DividerSeparator(),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: Spacing.spacing04,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AppLocalizationProvider(
-                                  builder: (localization, _) {
-                                    return Text(
-                                      localization.translate(
-                                        LanguageKey
-                                            .signedInRecoverSignScreenTransactionFee,
-                                      ),
-                                      style: AppTypoGraPhy.utilityLabelDefault
-                                          .copyWith(
-                                        color: appTheme.contentColorBlack,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                Row(
-                                  children: [
-                                    AppLocalizationProvider(
-                                      builder: (localization, _) {
-                                        return SignedInRecoverSignFeeSelector(
-                                          builder: (fee) {
-                                            return Text(
-                                              '${fee.formatAura} ${localization.translate(
-                                                LanguageKey.globalPyxisAura,
-                                              )}',
-                                              style:
-                                                  AppTypoGraPhy.body03.copyWith(
-                                                color:
-                                                    appTheme.contentColorBlack,
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      width: BoxSize.boxSize04,
-                                    ),
-                                    GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: _onEditFee,
-                                      child: SvgPicture.asset(
-                                        AssetIconPath.commonFeeEdit,
-                                      ),
-                                    ),
-                                  ],
+                                TextSpan(
+                                  text: ' ${localization.translate(
+                                    LanguageKey
+                                        .signedInRecoverSignScreenTitleRegionTwo,
+                                  )}',
+                                  style: AppTypoGraPhy.heading05.copyWith(
+                                    color: appTheme.contentColorBrand,
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize07,
-                          ),
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return PrimaryAppButton(
-                                text: localization.translate(
-                                  LanguageKey
-                                      .signedInRecoverSignScreenConfirmButtonTitle,
-                                ),
-                                onPress: () {
-                                  _bloc.add(
-                                    const SignedInRecoverSignEventOnConfirm(),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize08,
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: BoxSize.boxSize05,
+                      ),
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return Text(
+                            localization.translate(
+                              localization.translate(
+                                LanguageKey.signedInRecoverSignScreenContent,
+                              ),
+                            ),
+                            style: AppTypoGraPhy.body03.copyWith(
+                              color: appTheme.contentColor500,
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: BoxSize.boxSize05,
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SvgPicture.asset(
+                              AssetIconPath.commonTransactionDivider,
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize05,
+                            ),
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return Text(
+                                  localization.translate(
+                                    localization.translate(
+                                      LanguageKey
+                                          .signedInRecoverSignScreenAccount,
+                                    ),
+                                  ),
+                                  style:
+                                      AppTypoGraPhy.utilityLabelDefault.copyWith(
+                                    color: appTheme.contentColorBlack,
+                                  ),
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize05,
+                            ),
+                            SelectedSmartAccountWidget(
+                              appTheme: appTheme,
+                              smartAccountAddress:
+                                  widget.account.smartAccountAddress.addressView,
+                              smartAccountName: widget.account.name ??
+                                  PyxisAccountConstant.unName,
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize04,
+                            ),
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return Text(
+                                  localization.translate(
+                                    LanguageKey.signedInRecoverSignScreenMessages,
+                                  ),
+                                  style:
+                                      AppTypoGraPhy.utilityLabelDefault.copyWith(
+                                    color: appTheme.contentColorBlack,
+                                  ),
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize04,
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AssetIconPath.commonSignMessage,
+                                ),
+                                const SizedBox(
+                                  width: BoxSize.boxSize04,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      AppLocalizationProvider(
+                                        builder: (localization, _) {
+                                          return Text(
+                                            localization.translate(
+                                              LanguageKey
+                                                  .signedInRecoverSignScreenUpdateKey,
+                                            ),
+                                            style: AppTypoGraPhy
+                                                .utilityLabelDefault
+                                                .copyWith(
+                                              color: appTheme.contentColorBlack,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      const SizedBox(),
+                                      AppLocalizationProvider(
+                                        builder: (localization, p1) {
+                                          return Text(
+                                            localization.translateWithParam(
+                                              LanguageKey
+                                                  .signedInRecoverSignScreenUpdateKeyContent,
+                                              {
+                                                'address': widget
+                                                    .account
+                                                    .smartAccountAddress
+                                                    .addressView,
+                                                'newAddress':
+                                                    widget.googleAccount.email,
+                                              },
+                                            ),
+                                            style: AppTypoGraPhy.bodyMedium02
+                                                .copyWith(
+                                              color: appTheme.contentColor500,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize04,
+                            ),
+                            const DividerSeparator(),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: Spacing.spacing04,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  AppLocalizationProvider(
+                                    builder: (localization, _) {
+                                      return Text(
+                                        localization.translate(
+                                          LanguageKey
+                                              .signedInRecoverSignScreenTransactionFee,
+                                        ),
+                                        style: AppTypoGraPhy.utilityLabelDefault
+                                            .copyWith(
+                                          color: appTheme.contentColorBlack,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  Row(
+                                    children: [
+                                      AppLocalizationProvider(
+                                        builder: (localization, _) {
+                                          return SignedInRecoverSignFeeSelector(
+                                            builder: (fee) {
+                                              return Text(
+                                                '${fee.formatAura} ${localization.translate(
+                                                  LanguageKey.globalPyxisAura,
+                                                )}',
+                                                style:
+                                                    AppTypoGraPhy.body03.copyWith(
+                                                  color:
+                                                      appTheme.contentColorBlack,
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        width: BoxSize.boxSize04,
+                                      ),
+                                      GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: _onEditFee,
+                                        child: SvgPicture.asset(
+                                          AssetIconPath.commonFeeEdit,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize07,
+                            ),
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return PrimaryAppButton(
+                                  text: localization.translate(
+                                    LanguageKey
+                                        .signedInRecoverSignScreenConfirmButtonTitle,
+                                  ),
+                                  onPress: () {
+                                    _bloc.add(
+                                      const SignedInRecoverSignEventOnConfirm(),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

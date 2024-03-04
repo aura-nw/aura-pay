@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
@@ -19,6 +20,8 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
 import 'widgets/token_item_widget.dart';
 import 'home_page_event.dart';
 import 'home_page_selector.dart';
@@ -50,11 +53,13 @@ class _HomePageState extends State<HomePage>
   final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
   void _onHoneDropDownClick() {
-    _observer.emit(
-      emitParam: HomeScreenEmitParam(
-        event: HomeScreenObserver.onHomePageDropdownClickEvent,
-        data: true,
-      ),
+    final HomeScreenBloc homeScreenBloc = HomeScreenBloc.of(
+      context,
+    );
+
+    AppNavigator.push(
+      RoutePath.accounts,
+      homeScreenBloc,
     );
   }
 
@@ -73,6 +78,32 @@ class _HomePageState extends State<HomePage>
       _bloc.add(
         const HomePageEventOnFetchTokenPrice(),
       );
+    } else if (param.event ==
+        HomeScreenObserver.onSetRecoveryMethodSuccessfulEvent) {
+      _bloc.add(
+        const HomePageEventOnFetchTokenPrice(),
+      );
+    } else if (param.event == HomeScreenObserver.onRecoverSuccessfulEvent) {
+      _bloc.add(
+        const HomePageEventOnFetchTokenPrice(),
+      );
+    }else if(param.event == HomeScreenObserver.onInAppBrowserChooseAccountEvent){
+      final data = param.data;
+
+      if (data is AuraAccount) {
+        HomeScreenBloc.of(
+          context,
+        ).add(
+          HomeScreenEventOnChooseAccount(
+            data,
+          ),
+        );
+        _bloc.add(
+          HomePageEventOnFetchTokenPriceWithAddress(
+            data.address,
+          ),
+        );
+      }
     }
   }
 
@@ -86,7 +117,7 @@ class _HomePageState extends State<HomePage>
     await Future.delayed(const Duration(
       milliseconds: 1100,
     ));
-    
+
     if (context.mounted) {
       final state = AppGlobalCubit.of(context).state;
 
@@ -148,6 +179,7 @@ class _HomePageState extends State<HomePage>
             appBar: HomeAppBarWidget(
               appTheme: appTheme,
               onNotificationTap: () {},
+              chainName: getIt.get<PyxisMobileConfig>().chainName,
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(
@@ -180,6 +212,11 @@ class _HomePageState extends State<HomePage>
                     onNFTsTap: () {
                       AppNavigator.push(
                         RoutePath.nft,
+                      );
+                    },
+                    onSiteTap: () {
+                      AppNavigator.push(
+                        RoutePath.settingConnectSite,
                       );
                     },
                     onReceiveTap: widget.onReceiveTap,
@@ -313,7 +350,7 @@ class _HomePageState extends State<HomePage>
                                         builder: (hideTokenValue) {
                                           return TokenItemWidget(
                                             iconPath: AssetIconPath
-                                                .commonAuraTokenLogo,
+                                                .commonAuraToken,
                                             coin: localization.translate(
                                               LanguageKey.globalPyxisAura,
                                             ),

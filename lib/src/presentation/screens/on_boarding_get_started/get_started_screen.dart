@@ -22,131 +22,133 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
       builder: (appTheme) {
         return Scaffold(
           backgroundColor: appTheme.bodyColorBackground,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.spacing07,
-              vertical: Spacing.spacing04,
-            ),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: BoxSize.boxSize13,
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        AssetLogoPath.logo,
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize06,
-                      ),
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return Text(
-                            localization.translate(
-                              LanguageKey.globalPyxisTitle,
-                            ),
-                            style: AppTypoGraPhy.heading04.copyWith(
-                              color: appTheme.contentColorBlack,
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize03,
-                      ),
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return Text(
-                            localization.translate(
-                              LanguageKey.onBoardingGetStartedScreenTitle,
-                            ),
-                            textAlign: TextAlign.center,
-                            style: AppTypoGraPhy.body03.copyWith(
-                              color: appTheme.contentColor500,
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.spacing07,
+                vertical: Spacing.spacing04,
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: BoxSize.boxSize13,
                   ),
-                ),
-                AppLocalizationProvider(
-                  builder: (localization, _) {
-                    return PrimaryAppButton(
-                      text: localization.translate(
-                        LanguageKey.onBoardingGetStartedScreenButtonTitle,
-                      ),
-                      onPress: _onStartedClick,
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize04,
-                ),
-                AppLocalizationProvider(
-                  builder: (localization, _) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Spacing.spacing04,
-                      ),
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: localization.translate(
-                                LanguageKey
-                                    .onBoardingGetStartedScreenPrivacyPolicyTitleRegionOne,
-                              ),
-                              style: AppTypoGraPhy.body01.copyWith(
-                                color: appTheme.contentColor500,
-                              ),
-                            ),
-                            TextSpan(
-                              text: localization.translate(
-                                LanguageKey
-                                    .onBoardingGetStartedScreenTermOfService,
-                              ),
-                              style: AppTypoGraPhy.body01.copyWith(
-                                color: appTheme.contentColorBrand,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  /// Open URL or show term service screen
-                                },
-                            ),
-                            TextSpan(
-                              text: localization.translate(
-                                LanguageKey
-                                    .onBoardingGetStartedScreenPrivacyPolicyTitleRegionTwo,
-                              ),
-                              style: AppTypoGraPhy.body01.copyWith(
-                                color: appTheme.contentColor500,
-                              ),
-                            ),
-                            TextSpan(
-                              text: localization.translate(
-                                LanguageKey
-                                    .onBoardingGetStartedScreenPrivacyPolicy,
-                              ),
-                              style: AppTypoGraPhy.body01.copyWith(
-                                color: appTheme.contentColorBrand,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  /// Open URL or show privacy policy screen
-                                },
-                            ),
-                          ],
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          AssetLogoPath.logo,
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+                        const SizedBox(
+                          height: BoxSize.boxSize06,
+                        ),
+                        AppLocalizationProvider(
+                          builder: (localization, _) {
+                            return Text(
+                              localization.translate(
+                                LanguageKey.globalPyxisTitle,
+                              ),
+                              style: AppTypoGraPhy.heading04.copyWith(
+                                color: appTheme.contentColorBlack,
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: BoxSize.boxSize03,
+                        ),
+                        AppLocalizationProvider(
+                          builder: (localization, _) {
+                            return Text(
+                              localization.translate(
+                                LanguageKey.onBoardingGetStartedScreenTitle,
+                              ),
+                              textAlign: TextAlign.center,
+                              style: AppTypoGraPhy.body03.copyWith(
+                                color: appTheme.contentColor500,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  AppLocalizationProvider(
+                    builder: (localization, _) {
+                      return PrimaryAppButton(
+                        text: localization.translate(
+                          LanguageKey.onBoardingGetStartedScreenButtonTitle,
+                        ),
+                        onPress: _onStartedClick,
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    height: BoxSize.boxSize04,
+                  ),
+                  AppLocalizationProvider(
+                    builder: (localization, _) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Spacing.spacing04,
+                        ),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: localization.translate(
+                                  LanguageKey
+                                      .onBoardingGetStartedScreenPrivacyPolicyTitleRegionOne,
+                                ),
+                                style: AppTypoGraPhy.body01.copyWith(
+                                  color: appTheme.contentColor500,
+                                ),
+                              ),
+                              TextSpan(
+                                text: localization.translate(
+                                  LanguageKey
+                                      .onBoardingGetStartedScreenTermOfService,
+                                ),
+                                style: AppTypoGraPhy.body01.copyWith(
+                                  color: appTheme.contentColorBrand,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    /// Open URL or show term service screen
+                                  },
+                              ),
+                              TextSpan(
+                                text: localization.translate(
+                                  LanguageKey
+                                      .onBoardingGetStartedScreenPrivacyPolicyTitleRegionTwo,
+                                ),
+                                style: AppTypoGraPhy.body01.copyWith(
+                                  color: appTheme.contentColor500,
+                                ),
+                              ),
+                              TextSpan(
+                                text: localization.translate(
+                                  LanguageKey
+                                      .onBoardingGetStartedScreenPrivacyPolicy,
+                                ),
+                                style: AppTypoGraPhy.body01.copyWith(
+                                  color: appTheme.contentColorBrand,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    /// Open URL or show privacy policy screen
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );

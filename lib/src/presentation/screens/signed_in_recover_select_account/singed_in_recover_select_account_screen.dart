@@ -80,171 +80,173 @@ class _SingedInRecoverSelectAccountScreenState
                 onViewMoreInformationTap: () {},
                 appTheme: appTheme,
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing07,
-                  vertical: Spacing.spacing08,
-                ),
-                child: SingedInRecoverSelectAccountStatusSelector(
-                  builder: (status) {
-                    switch (status) {
-                      case SingedInRecoverSelectAccountStatus.loading:
-                        return Center(
-                          child: AppLoadingWidget(
-                            appTheme: appTheme,
-                          ),
-                        );
-                      case SingedInRecoverSelectAccountStatus.loaded:
-                      case SingedInRecoverSelectAccountStatus.error:
-                      case SingedInRecoverSelectAccountStatus.existsAccount:
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppLocalizationProvider(
-                              builder: (localization, _) {
-                                return RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: localization.translate(
-                                          LanguageKey
-                                              .signedInRecoverSelectAccountScreenTitleRegionOne,
-                                        ),
-                                        style: AppTypoGraPhy.heading06.copyWith(
-                                          color: appTheme.contentColorBlack,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' ${localization.translate(
-                                          LanguageKey
-                                              .signedInRecoverSelectAccountScreenTitleRegionTwo,
-                                        )}',
-                                        style: AppTypoGraPhy.heading05.copyWith(
-                                          color: appTheme.contentColorBrand,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing07,
+                    vertical: Spacing.spacing05,
+                  ),
+                  child: SingedInRecoverSelectAccountStatusSelector(
+                    builder: (status) {
+                      switch (status) {
+                        case SingedInRecoverSelectAccountStatus.loading:
+                          return Center(
+                            child: AppLoadingWidget(
+                              appTheme: appTheme,
                             ),
-                            const SizedBox(
-                              height: BoxSize.boxSize05,
-                            ),
-                            AppLocalizationProvider(
-                              builder: (localization, _) {
-                                return Text(
-                                  localization.translate(
-                                    LanguageKey
-                                        .signedInRecoverSelectAccountScreenContent,
-                                  ),
-                                  style: AppTypoGraPhy.body03.copyWith(
-                                    color: appTheme.contentColor500,
-                                  ),
-                                );
-                              },
-                            ),
-                            Expanded(
-                              child:
-                              SignedInRecoverSelectAccountAuraAccountsSelector(
-                                builder: (auraAccounts) {
-                                  return SignedInRecoverSelectAccountAccountsSelector(
-                                    builder: (accounts) {
-                                      if (accounts.isEmpty) {
-                                        return Center(
-                                          child: AppLocalizationProvider(
-                                            builder: (localization, _) {
-                                              return Text(
-                                                localization.translate(
-                                                  LanguageKey
-                                                      .signedInRecoverSelectAccountScreenNoAccountFound,
-                                                ),
-                                                style: AppTypoGraPhy.bodyMedium02
-                                                    .copyWith(
-                                                  color: appTheme.contentColor500,
-                                                ),
-                                              );
-                                            },
+                          );
+                        case SingedInRecoverSelectAccountStatus.loaded:
+                        case SingedInRecoverSelectAccountStatus.error:
+                        case SingedInRecoverSelectAccountStatus.existsAccount:
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppLocalizationProvider(
+                                builder: (localization, _) {
+                                  return RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: localization.translate(
+                                            LanguageKey
+                                                .signedInRecoverSelectAccountScreenTitleRegionOne,
                                           ),
-                                        );
-                                      }
-                                      return ListView.builder(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: Spacing.spacing07,
+                                          style: AppTypoGraPhy.heading06.copyWith(
+                                            color: appTheme.contentColorBlack,
+                                          ),
                                         ),
-                                        reverse: true,
-                                        itemCount: accounts.length,
-                                        itemBuilder: (context, index) {
-                                          final account = accounts[index];
-
-                                          final localAccount = auraAccounts.firstWhereOrNull((ac) => ac.address == account.smartAccountAddress);
-
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: Spacing.spacing05,
-                                            ),
-                                            child: SignedInRecoverSelectAccountAccountSelectedSelector(
-                                              builder: (selectedAccount) {
-                                                return SmartAccountWidget(
-                                                  appTheme: appTheme,
-                                                  smartAccountAddress: account
-                                                      .smartAccountAddress
-                                                      .addressView,
-                                                  smartAccountName: localAccount?.name ?? account.name ??
-                                                      PyxisAccountConstant.unName,
-                                                  onTap: () {
-                                                    _bloc.add(
-                                                      SingedInRecoverSelectAccountEventSelectAccount(
-                                                        account: account,
-                                                      ),
-                                                    );
-                                                  },
-                                                  isSelected: selectedAccount?.id ==
-                                                      account.id,
+                                        TextSpan(
+                                          text: ' ${localization.translate(
+                                            LanguageKey
+                                                .signedInRecoverSelectAccountScreenTitleRegionTwo,
+                                          )}',
+                                          style: AppTypoGraPhy.heading05.copyWith(
+                                            color: appTheme.contentColorBrand,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                              const SizedBox(
+                                height: BoxSize.boxSize05,
+                              ),
+                              AppLocalizationProvider(
+                                builder: (localization, _) {
+                                  return Text(
+                                    localization.translate(
+                                      LanguageKey
+                                          .signedInRecoverSelectAccountScreenContent,
+                                    ),
+                                    style: AppTypoGraPhy.body03.copyWith(
+                                      color: appTheme.contentColor500,
+                                    ),
+                                  );
+                                },
+                              ),
+                              Expanded(
+                                child:
+                                SignedInRecoverSelectAccountAuraAccountsSelector(
+                                  builder: (auraAccounts) {
+                                    return SignedInRecoverSelectAccountAccountsSelector(
+                                      builder: (accounts) {
+                                        if (accounts.isEmpty) {
+                                          return Center(
+                                            child: AppLocalizationProvider(
+                                              builder: (localization, _) {
+                                                return Text(
+                                                  localization.translate(
+                                                    LanguageKey
+                                                        .signedInRecoverSelectAccountScreenNoAccountFound,
+                                                  ),
+                                                  style: AppTypoGraPhy.bodyMedium02
+                                                      .copyWith(
+                                                    color: appTheme.contentColor500,
+                                                  ),
                                                 );
                                               },
                                             ),
                                           );
+                                        }
+                                        return ListView.builder(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: Spacing.spacing07,
+                                          ),
+                                          reverse: true,
+                                          itemCount: accounts.length,
+                                          itemBuilder: (context, index) {
+                                            final account = accounts[index];
+
+                                            final localAccount = auraAccounts.firstWhereOrNull((ac) => ac.address == account.smartAccountAddress);
+
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: Spacing.spacing05,
+                                              ),
+                                              child: SignedInRecoverSelectAccountAccountSelectedSelector(
+                                                builder: (selectedAccount) {
+                                                  return SmartAccountWidget(
+                                                    appTheme: appTheme,
+                                                    smartAccountAddress: account
+                                                        .smartAccountAddress
+                                                        .addressView,
+                                                    smartAccountName: localAccount?.name ?? account.name ??
+                                                        PyxisAccountConstant.unName,
+                                                    onTap: () {
+                                                      _bloc.add(
+                                                        SingedInRecoverSelectAccountEventSelectAccount(
+                                                          account: account,
+                                                        ),
+                                                      );
+                                                    },
+                                                    isSelected: selectedAccount?.id ==
+                                                        account.id,
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  }
+                                ),
+                              ),
+                              AppLocalizationProvider(
+                                builder: (localization, _) {
+                                  return SignedInRecoverSelectAccountAccountSelectedSelector(
+                                    builder: (account) {
+                                      return PrimaryAppButton(
+                                        text: localization.translate(
+                                          LanguageKey
+                                              .signedInRecoverSelectAccountScreenButtonTitle,
+                                        ),
+                                        isDisable: account == null,
+                                        onPress: () {
+                                          AppNavigator.push(
+                                            RoutePath.signedInRecoverSign,
+                                            {
+                                              'account': account,
+                                              'google_account':
+                                                  widget.googleAccount,
+                                            },
+                                          );
+
+                                          // AppNavigator.push(
+                                          //   RoutePath.recoverReviewing,
+                                          // );
                                         },
                                       );
                                     },
                                   );
-                                }
-                              ),
-                            ),
-                            AppLocalizationProvider(
-                              builder: (localization, _) {
-                                return SignedInRecoverSelectAccountAccountSelectedSelector(
-                                  builder: (account) {
-                                    return PrimaryAppButton(
-                                      text: localization.translate(
-                                        LanguageKey
-                                            .signedInRecoverSelectAccountScreenButtonTitle,
-                                      ),
-                                      isDisable: account == null,
-                                      onPress: () {
-                                        AppNavigator.push(
-                                          RoutePath.signedInRecoverSign,
-                                          {
-                                            'account': account,
-                                            'google_account':
-                                                widget.googleAccount,
-                                          },
-                                        );
-
-                                        // AppNavigator.push(
-                                        //   RoutePath.recoverReviewing,
-                                        // );
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                            )
-                          ],
-                        );
-                    }
-                  },
+                                },
+                              )
+                            ],
+                          );
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
