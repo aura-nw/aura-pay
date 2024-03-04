@@ -109,106 +109,108 @@ class _OnBoardingPickAccountScreenState
                 onViewMoreInformationTap: () {},
                 currentStep: 1,
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing07,
-                  vertical: Spacing.spacing08,
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        children: [
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return RichText(
-                                text: TextSpan(
-                                  style: AppTypoGraPhy.heading05.copyWith(
-                                    color: appTheme.contentColorBlack,
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing07,
+                    vertical: Spacing.spacing05,
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          padding: EdgeInsets.zero,
+                          children: [
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return RichText(
+                                  text: TextSpan(
+                                    style: AppTypoGraPhy.heading05.copyWith(
+                                      color: appTheme.contentColorBlack,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: localization.translate(
+                                          LanguageKey
+                                              .onBoardingCreateNewSmartAccountScreenTitleRegionOne,
+                                        ),
+                                        style: AppTypoGraPhy.heading06.copyWith(
+                                          color: appTheme.contentColorBrand,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: ' ${localization.translate(
+                                          LanguageKey
+                                              .onBoardingCreateNewSmartAccountScreenTitleRegionTwo,
+                                        )}',
+                                      ),
+                                    ],
                                   ),
-                                  children: [
-                                    TextSpan(
-                                      text: localization.translate(
-                                        LanguageKey
-                                            .onBoardingCreateNewSmartAccountScreenTitleRegionOne,
-                                      ),
-                                      style: AppTypoGraPhy.heading06.copyWith(
-                                        color: appTheme.contentColorBrand,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: ' ${localization.translate(
-                                        LanguageKey
-                                            .onBoardingCreateNewSmartAccountScreenTitleRegionTwo,
-                                      )}',
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize08,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                AssetIconPath.commonLogo,
-                              ),
-                              const SizedBox(
-                                width: BoxSize.boxSize04,
-                              ),
-                              Expanded(
-                                child: AppLocalizationProvider(
-                                  builder: (localization, _) {
-                                    return TextInputNormalWidget(
-                                      label: localization.translate(
-                                        LanguageKey
-                                            .onBoardingCreateNewSmartAccountScreenTextFieldTitle,
-                                      ),
-                                      controller: _accountNameController,
-                                      isRequired: true,
-                                      onChanged: (value, isValid) {
-                                        _bloc.add(
-                                          OnBoardingPickAccountOnPickAccountChangeEvent(
-                                            accountName: value,
-                                          ),
-                                        );
-                                      },
-                                      hintText: 'Input account name',
-                                      maxLength: 255,
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    AppLocalizationProvider(
-                      builder: (localization, _) {
-                        return OnBoardingPickAccountIsReadySubmitSelector(
-                          builder: (isDisable) {
-                            return PrimaryAppButton(
-                              text: localization.translate(
-                                LanguageKey
-                                    .onBoardingCreateNewSmartAccountScreenButtonTitle,
-                              ),
-                              isDisable: !isDisable,
-                              onPress: () {
-                                _bloc.add(
-                                  const OnBoardingPickAccountOnSubmitEvent(),
                                 );
                               },
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ],
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize08,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  AssetIconPath.commonLogo,
+                                ),
+                                const SizedBox(
+                                  width: BoxSize.boxSize04,
+                                ),
+                                Expanded(
+                                  child: AppLocalizationProvider(
+                                    builder: (localization, _) {
+                                      return TextInputNormalWidget(
+                                        label: localization.translate(
+                                          LanguageKey
+                                              .onBoardingCreateNewSmartAccountScreenTextFieldTitle,
+                                        ),
+                                        controller: _accountNameController,
+                                        isRequired: true,
+                                        onChanged: (value, isValid) {
+                                          _bloc.add(
+                                            OnBoardingPickAccountOnPickAccountChangeEvent(
+                                              accountName: value,
+                                            ),
+                                          );
+                                        },
+                                        hintText: 'Input account name',
+                                        maxLength: 255,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return OnBoardingPickAccountIsReadySubmitSelector(
+                            builder: (isDisable) {
+                              return PrimaryAppButton(
+                                text: localization.translate(
+                                  LanguageKey
+                                      .onBoardingCreateNewSmartAccountScreenButtonTitle,
+                                ),
+                                isDisable: !isDisable,
+                                onPress: () {
+                                  _bloc.add(
+                                    const OnBoardingPickAccountOnSubmitEvent(),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

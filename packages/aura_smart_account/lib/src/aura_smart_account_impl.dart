@@ -466,6 +466,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     AuraSmartAccountFee? fee,
     bool isReadyRegister = false,
     String? revokePreAddress,
+    String ?memo,
   }) async {
     try {
       // Get pub key from private key
@@ -521,7 +522,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         msgs: messages,
         signerData: signerData,
         feeSign: feeSign,
-        memo: null,
+        memo: memo,
       );
 
       final int statusCode = broadcastTxResponse.txResponse.code;
@@ -545,6 +546,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
     required String recoveryAddress,
     required String smartAccountAddress,
     AuraSmartAccountFee? fee,
+    String ?memo,
   }) async {
     try {
       // Get pub key from private key
@@ -607,7 +609,7 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
         msgs: messages,
         pubKeyGenerate: pubKeyGenerate,
         signerData: signerData,
-        memo: null,
+        memo: memo,
       );
 
       final int statusCode = broadcastTxResponse.txResponse.code;

@@ -107,110 +107,112 @@ class _OnBoardingScanFeeScreenState extends State<OnBoardingScanFeeScreen>
                 onViewMoreInformationTap: () {},
                 currentStep: 1,
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing07,
-                  vertical: Spacing.spacing08,
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        children: [
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return RichText(
-                                text: TextSpan(
-                                  style: AppTypoGraPhy.heading06.copyWith(
-                                      color: appTheme.contentColorBlack),
-                                  children: [
-                                    TextSpan(
-                                      text: localization.translate(
-                                        LanguageKey
-                                            .onBoardingScanFeeScreenTitleRegionOne,
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing07,
+                    vertical: Spacing.spacing05,
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          padding: EdgeInsets.zero,
+                          children: [
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return RichText(
+                                  text: TextSpan(
+                                    style: AppTypoGraPhy.heading06.copyWith(
+                                        color: appTheme.contentColorBlack),
+                                    children: [
+                                      TextSpan(
+                                        text: localization.translate(
+                                          LanguageKey
+                                              .onBoardingScanFeeScreenTitleRegionOne,
+                                        ),
+                                        style: AppTypoGraPhy.heading06.copyWith(
+                                          color: appTheme.contentColorBrand,
+                                        ),
                                       ),
-                                      style: AppTypoGraPhy.heading06.copyWith(
-                                        color: appTheme.contentColorBrand,
+                                      TextSpan(
+                                        text: ' ${localization.translate(
+                                          LanguageKey
+                                              .onBoardingScanFeeScreenTitleRegionTwo,
+                                        )}',
                                       ),
-                                    ),
-                                    TextSpan(
-                                      text: ' ${localization.translate(
-                                        LanguageKey
-                                            .onBoardingScanFeeScreenTitleRegionTwo,
-                                      )}',
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize05,
-                          ),
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: localization.translate(
-                                        LanguageKey
-                                            .onBoardingScanFeeScreenContentRegionOne,
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize05,
+                            ),
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: localization.translate(
+                                          LanguageKey
+                                              .onBoardingScanFeeScreenContentRegionOne,
+                                        ),
+                                        style:
+                                            AppTypoGraPhy.bodyMedium03.copyWith(
+                                          color: appTheme.contentColor500,
+                                        ),
                                       ),
-                                      style:
-                                          AppTypoGraPhy.bodyMedium03.copyWith(
-                                        color: appTheme.contentColor500,
+                                      TextSpan(
+                                        text: ' ${localization.translate(
+                                          LanguageKey
+                                              .onBoardingScanFeeScreenContentRegionTwo,
+                                        )}',
+                                        style:
+                                            AppTypoGraPhy.bodyMedium03.copyWith(
+                                          color: appTheme.contentColorBrand,
+                                        ),
                                       ),
-                                    ),
-                                    TextSpan(
-                                      text: ' ${localization.translate(
-                                        LanguageKey
-                                            .onBoardingScanFeeScreenContentRegionTwo,
-                                      )}',
-                                      style:
-                                          AppTypoGraPhy.bodyMedium03.copyWith(
-                                        color: appTheme.contentColorBrand,
+                                      TextSpan(
+                                        text: ' ${localization.translate(
+                                          LanguageKey
+                                              .onBoardingScanFeeScreenContentRegionThree,
+                                        )}',
+                                        style:
+                                            AppTypoGraPhy.bodyMedium03.copyWith(
+                                          color: appTheme.contentColor500,
+                                        ),
                                       ),
-                                    ),
-                                    TextSpan(
-                                      text: ' ${localization.translate(
-                                        LanguageKey
-                                            .onBoardingScanFeeScreenContentRegionThree,
-                                      )}',
-                                      style:
-                                          AppTypoGraPhy.bodyMedium03.copyWith(
-                                        color: appTheme.contentColor500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize07,
-                          ),
-                          QrCodeWidget(
-                            rawData: widget.rawAddress,
-                            appTheme: appTheme,
-                          ),
-                        ],
-                      ),
-                    ),
-                    AppLocalizationProvider(
-                      builder: (localization, _) => PrimaryAppButton(
-                        text: localization.translate(
-                          LanguageKey.onBoardingScanFeeScreenButtonTitle,
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize07,
+                            ),
+                            QrCodeWidget(
+                              rawData: widget.rawAddress,
+                              appTheme: appTheme,
+                            ),
+                          ],
                         ),
-                        onPress: () {
-                          _bloc.add(
-                            const OnBoardingScanFeeOnCheckingBalanceEvent(),
-                          );
-                        },
                       ),
-                    ),
-                  ],
+                      AppLocalizationProvider(
+                        builder: (localization, _) => PrimaryAppButton(
+                          text: localization.translate(
+                            LanguageKey.onBoardingScanFeeScreenButtonTitle,
+                          ),
+                          onPress: () {
+                            _bloc.add(
+                              const OnBoardingScanFeeOnCheckingBalanceEvent(),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

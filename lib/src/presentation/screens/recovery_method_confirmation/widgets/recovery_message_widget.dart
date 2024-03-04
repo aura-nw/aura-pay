@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,21 +27,11 @@ class RecoveryMessageWidget extends StatelessWidget {
     super.key,
   });
 
-  String _parserMsg(List<MsgExecuteContract> messages) {
+  String _parserMsg(List<GeneratedMessage> messages) {
     final List<String> listObj = messages.map(
       (e) {
         final Map<String, dynamic> json =
-            e.toProto3Json() as Map<String, dynamic>;
-
-        final msg = json['msg'];
-        if (msg is String) {
-          final map = utf8.decode(
-            base64Decode(msg),
-          );
-          
-
-          json['msg'] = jsonDecode(map);
-        }
+            AuraSmartAccountHelper.writeMessageToJson(e);
 
         return prettyJson(json);
       },

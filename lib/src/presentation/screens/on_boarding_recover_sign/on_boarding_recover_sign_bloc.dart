@@ -156,6 +156,7 @@ final class OnBoardingRecoverSignBloc
         ),
         recoverAddress: wallet.bech32Address,
         smartAccountAddress: state.account.smartAccountAddress,
+        memo: state.memo,
       );
 
       information = await TransactionHelper.checkTransactionInfo(
