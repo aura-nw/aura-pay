@@ -103,7 +103,7 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
         highTransactionFee: highFee.amount[0].amount,
         lowTransactionFee: lowFee.amount[0].amount,
         transactionFee: fee.amount[0].amount,
-        messages: setRecoveryMessages.whereType<MsgExecuteContract>().toList(),
+        messages: setRecoveryMessages.toList(),
       ),
     );
 
@@ -257,6 +257,7 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
         fee: state.transactionFee,
         isReadyRegister: state.argument.account.isVerified,
         revokePreAddress: state.argument.account.method?.subValue,
+        memo: state.memo,
       );
 
       information = await TransactionHelper.checkTransactionInfo(

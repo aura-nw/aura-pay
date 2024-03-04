@@ -9,17 +9,17 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/json_formatter.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_sign/on_boarding_recover_sign_selector.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_sign/signed_in_recover_sign_selector.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/scroll_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/transaction_box_widget.dart';
 
-class OnBoardingRecoveryMessageWidget extends StatelessWidget {
+class SignedInRecoveryMessageWidget extends StatelessWidget {
   final AppTheme appTheme;
   final String newAddress;
   final String address;
   final VoidCallback onChangeViewData;
 
-  const OnBoardingRecoveryMessageWidget({
+  const SignedInRecoveryMessageWidget({
     required this.appTheme,
     required this.newAddress,
     required this.address,
@@ -38,7 +38,7 @@ class OnBoardingRecoveryMessageWidget extends StatelessWidget {
               builder: (localization, _) {
                 return Text(
                   localization.translate(
-                    LanguageKey.onBoardingRecoverSignScreenMessages,
+                    LanguageKey.signedInRecoverSignScreenMessages,
                   ),
                   style: AppTypoGraPhy.utilityLabelDefault.copyWith(
                     color: appTheme.contentColorBlack,
@@ -46,7 +46,7 @@ class OnBoardingRecoveryMessageWidget extends StatelessWidget {
                 );
               },
             ),
-            OnBoardingRecoverSignIsShowFullMsgSelector(
+            SignedInRecoverSignIsShowFullMsgSelector(
               builder: (isShowFullMessage) {
                 return GestureDetector(
                   onTap: onChangeViewData,
@@ -67,7 +67,7 @@ class OnBoardingRecoveryMessageWidget extends StatelessWidget {
                         builder: (localization, _) {
                           return Text(
                             localization.translate(
-                              LanguageKey.onBoardingRecoverSignScreenViewData,
+                              LanguageKey.signedInRecoverSignScreenViewData,
                             ),
                             style: AppTypoGraPhy.bodyMedium02.copyWith(
                               color: isShowFullMessage
@@ -89,10 +89,10 @@ class OnBoardingRecoveryMessageWidget extends StatelessWidget {
         ),
         TransactionBoxWidget(
           appTheme: appTheme,
-          child: OnBoardingRecoverSignIsShowFullMsgSelector(
+          child: SignedInRecoverSignIsShowFullMsgSelector(
             builder: (isShowFullMsg) {
               if (isShowFullMsg) {
-                return OnBoardingRecoverSignMessageSelector(
+                return SignedInRecoverSignMsgSelector(
                   builder: (message) {
                     return ScrollBarWidget(
                       appTheme: appTheme,
@@ -133,7 +133,7 @@ class OnBoardingRecoveryMessageWidget extends StatelessWidget {
                             return Text(
                               localization.translate(
                                 LanguageKey
-                                    .onBoardingRecoverSignScreenUpdateKey,
+                                    .signedInRecoverSignScreenUpdateKey,
                               ),
                               style: AppTypoGraPhy.utilityLabelDefault.copyWith(
                                 color: appTheme.contentColorBlack,
@@ -147,7 +147,7 @@ class OnBoardingRecoveryMessageWidget extends StatelessWidget {
                             return Text(
                               localization.translateWithParam(
                                 LanguageKey
-                                    .onBoardingRecoverSignScreenUpdateKeyContent,
+                                    .signedInRecoverSignScreenUpdateKeyContent,
                                 {
                                   'address': address.addressView,
                                   'newAddress': newAddress,

@@ -50,6 +50,7 @@ abstract interface class SmartAccountRepository {
     int? gasLimit,
     bool isReadyRegister = false,
     String? revokePreAddress,
+    String ?memo,
   });
 
   Future<TransactionInformation> recoverSmartAccount({
@@ -58,6 +59,7 @@ abstract interface class SmartAccountRepository {
     required String smartAccountAddress,
     String? fee,
     int? gasLimit,
+    String ?memo,
   });
 
   Future<String> getCosmosPubKeyByAddress({

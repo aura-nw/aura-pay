@@ -26,6 +26,6 @@ class RecoveryMethodConfirmationState with _$RecoveryMethodConfirmationState {
     @Default('') String lowTransactionFee,
     @Default(false) bool isShowFullMsg,
     String ?memo,
-    @Default([]) List<MsgExecuteContract> messages,
+    @Default([]) List<GeneratedMessage> messages,
   }) = _RecoveryMethodConfirmationState;
 }

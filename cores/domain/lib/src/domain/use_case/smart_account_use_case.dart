@@ -91,6 +91,7 @@ class SmartAccountUseCase {
     int? gasLimit,
     bool isReadyRegister = false,
     String? revokePreAddress,
+    String? memo,
   }) async {
     return _repository.setRecoveryMethod(
       userPrivateKey: userPrivateKey,
@@ -100,6 +101,7 @@ class SmartAccountUseCase {
       fee: fee,
       isReadyRegister: isReadyRegister,
       revokePreAddress: revokePreAddress,
+      memo: memo,
     );
   }
 
@@ -109,6 +111,7 @@ class SmartAccountUseCase {
     required String smartAccountAddress,
     String? fee,
     int? gasLimit,
+    String? memo,
   }) async {
     return _repository.recoverSmartAccount(
       privateKey: privateKey,
@@ -116,6 +119,7 @@ class SmartAccountUseCase {
       smartAccountAddress: smartAccountAddress,
       fee: fee,
       gasLimit: gasLimit,
+      memo: memo,
     );
   }
 

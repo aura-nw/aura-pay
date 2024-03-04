@@ -33,10 +33,10 @@ final class RecoveryMethodConfirmationScreenIsShowFullMsgSelector extends BlocSe
 }
 
 final class RecoveryMethodConfirmationScreenMessagesSelector extends BlocSelector<
-    RecoveryMethodConfirmationBloc, RecoveryMethodConfirmationState, List<MsgExecuteContract>> {
+    RecoveryMethodConfirmationBloc, RecoveryMethodConfirmationState, List<GeneratedMessage>> {
   RecoveryMethodConfirmationScreenMessagesSelector({
     Key? key,
-    required Widget Function(List<MsgExecuteContract>) builder,
+    required Widget Function(List<GeneratedMessage>) builder,
   }) : super(
           key: key,
           selector: (state) => state.messages,

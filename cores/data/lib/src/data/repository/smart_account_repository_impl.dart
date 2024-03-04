@@ -102,6 +102,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     int? gasLimit,
     bool isReadyRegister = false,
     String? revokePreAddress,
+    String ?memo,
   }) async {
     final response = await _provider.setRecoveryMethod(
       userPrivateKey: userPrivateKey,
@@ -111,6 +112,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
       gasLimit: gasLimit,
       isReadyRegister: isReadyRegister,
       revokePreAddress: revokePreAddress,
+      memo: memo,
     );
 
     return response.toEntity;
@@ -123,6 +125,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
     required String smartAccountAddress,
     String? fee,
     int? gasLimit,
+    String ?memo,
   }) async {
     final response = await _provider.recoverSmartAccount(
       privateKey: privateKey,
@@ -130,6 +133,7 @@ class SmartAccountRepositoryImpl implements SmartAccountRepository {
       recoverAddress: recoverAddress,
       fee: fee,
       gasLimit: gasLimit,
+      memo: memo,
     );
 
     return response.toEntity;

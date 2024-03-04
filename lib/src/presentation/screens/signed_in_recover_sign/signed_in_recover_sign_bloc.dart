@@ -26,8 +26,7 @@ final class SignedInRecoverSignBloc
     this._controllerKeyUseCase,
     this._web3authUseCase,
     this._accountUseCase,
-    this._authUseCase,
-    {
+    this._authUseCase, {
     required PyxisRecoveryAccount account,
     required GoogleAccount googleAccount,
   }) : super(
@@ -39,9 +38,35 @@ final class SignedInRecoverSignBloc
     on(_onInit);
     on(_onChangeFee);
     on(_onConfirm);
+    on(_onChangeMemo);
+    on(_onChangeShowFullMsg);
 
     add(
       const SignedInRecoverSignEventOnInit(),
+    );
+  }
+
+  void _onChangeMemo(
+    SignedInRecoverSignEventOnChangeMemo event,
+    Emitter<SignedInRecoverSignState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        memo: event.memo,
+        status: SignedInRecoverSignStatus.none,
+      ),
+    );
+  }
+
+  void _onChangeShowFullMsg(
+    SignedInRecoverSignEventOnChangeShowFullMsg event,
+    Emitter<SignedInRecoverSignState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        isShowFullMsg: !state.isShowFullMsg,
+        status: SignedInRecoverSignStatus.none,
+      ),
     );
   }
 
@@ -52,6 +77,20 @@ final class SignedInRecoverSignBloc
     Emitter<SignedInRecoverSignState> emit,
   ) async {
     final config = getIt.get<PyxisMobileConfig>();
+
+    final String backupPrivateKey = await _web3authUseCase.getPrivateKey();
+
+    final wallet = await _walletUseCase.importWallet(
+      privateKeyOrPassPhrase: backupPrivateKey,
+    );
+
+    final msg = AuraSmartAccountHelper.createRecoveryMsg(
+      privateKey: AuraWalletHelper.getPrivateKeyFromString(
+        backupPrivateKey,
+      ),
+      recoveryAddress: wallet.bech32Address,
+      smartAccountAddress: state.account.smartAccountAddress,
+    );
     // Set default gas
     final highFee = CosmosHelper.calculateFee(
       _defaultGasLimit,
@@ -76,6 +115,7 @@ final class SignedInRecoverSignBloc
         highTransactionFee: highFee.amount[0].amount,
         lowTransactionFee: lowFee.amount[0].amount,
         transactionFee: fee.amount[0].amount,
+        msgRecover: msg,
       ),
     );
   }
@@ -115,6 +155,7 @@ final class SignedInRecoverSignBloc
         ),
         recoverAddress: wallet.bech32Address,
         smartAccountAddress: state.account.smartAccountAddress,
+        memo: state.memo,
       );
 
       information = await TransactionHelper.checkTransactionInfo(
@@ -124,7 +165,6 @@ final class SignedInRecoverSignBloc
       );
 
       if (information.status == 0) {
-
         // final String? accessToken = await AuthHelper.getCurrentToken(
         //   authUseCase: _authUseCase,
         //   walletAddress: wallet.bech32Address,
@@ -142,15 +182,15 @@ final class SignedInRecoverSignBloc
         //   );
         // }
 
-        AuraAccount ? localAccount = await _accountUseCase.getAccountByAddress(
+        AuraAccount? localAccount = await _accountUseCase.getAccountByAddress(
           address: state.account.smartAccountAddress,
         );
 
         localAccount ??= await _accountUseCase.saveAccount(
-            address: state.account.smartAccountAddress,
-            type: AuraAccountType.smartAccount,
-            accountName: state.account.name ?? PyxisAccountConstant.unName,
-          );
+          address: state.account.smartAccountAddress,
+          type: AuraAccountType.smartAccount,
+          accountName: state.account.name ?? PyxisAccountConstant.unName,
+        );
 
         await _accountUseCase.updateAccount(
           id: localAccount.id,
