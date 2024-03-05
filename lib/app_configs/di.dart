@@ -31,6 +31,7 @@ import 'package:pyxis_mobile/src/presentation/screens/browser/browser_bloc.dart'
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_tab_management/browser_tab_management_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_wallet/connect_wallet_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/browser/browser_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
@@ -776,6 +777,12 @@ Future<void> initDependency(
   getIt.registerFactory<ConnectWalletCubit>(
     () => ConnectWalletCubit(
       getIt.get<AuraAccountUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<ConnectSiteCubit>(
+    () => ConnectSiteCubit(
+      getIt.get<WalletConnectService>(),
     ),
   );
 }

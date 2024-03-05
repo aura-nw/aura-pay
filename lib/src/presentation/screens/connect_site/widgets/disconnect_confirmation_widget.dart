@@ -6,11 +6,11 @@ import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 
-class RemoveAccountContentFormWidget extends StatelessWidget {
+class DisconnectConfirmationContentWidget extends StatelessWidget {
   final AppTheme appTheme;
   final String address;
 
-  const RemoveAccountContentFormWidget({
+  const DisconnectConfirmationContentWidget({
     required this.appTheme,
     required this.address,
     super.key,
@@ -19,16 +19,12 @@ class RemoveAccountContentFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         AppLocalizationProvider(
           builder: (localization, _) {
             return Text(
               localization.translate(
-                localization.translate(
-                  LanguageKey.accountsScreenRemoveTitle,
-                ),
+                LanguageKey.connectSiteScreenDisconnectTitle,
               ),
               style: AppTypoGraPhy.heading02.copyWith(
                 color: appTheme.contentColorBlack,
@@ -43,29 +39,27 @@ class RemoveAccountContentFormWidget extends StatelessWidget {
           builder: (localization, _) {
             return RichText(
               text: TextSpan(
-                style: AppTypoGraPhy.bodyMedium02.copyWith(
+                style: AppTypoGraPhy.body02.copyWith(
                   color: appTheme.contentColor500,
                 ),
                 children: [
                   TextSpan(
                     text: localization.translate(
-                      LanguageKey.accountsScreenRemoveContentRegionOne,
+                      LanguageKey.connectSiteScreenDisconnectContentRegionOne,
                     ),
                   ),
                   TextSpan(
-                    text: ' ${localization.translateWithParam(
-                      LanguageKey.accountsScreenRemoveContentRegionTwo,
-                      {
-                        'address': address.addressView,
-                      },
-                    )} ',
+                    text: ' ${address.addressView}',
                     style: AppTypoGraPhy.bodyMedium03.copyWith(
                       color: appTheme.contentColorDanger,
                     ),
                   ),
+                  const TextSpan(
+                    text: '? '
+                  ),
                   TextSpan(
                     text: localization.translate(
-                      LanguageKey.accountsScreenRemoveContentRegionThree,
+                      LanguageKey.connectSiteScreenDisconnectContentRegionTwo,
                     ),
                   ),
                 ],

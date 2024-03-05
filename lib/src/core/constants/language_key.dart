@@ -495,6 +495,7 @@ sealed class LanguageKey {
   static const String connectSiteScreenDisconnectContentRegionTwo = 'connect_site_screen_disconnect_content_region_two';
   static const String connectSiteScreenDisconnectCancelButton = 'connect_site_screen_disconnect_cancel_button';
   static const String connectSiteScreenDisconnectDisconnectButton = 'connect_site_screen_disconnect_disconnect_button';
+  static const String connectSiteScreenNoSiteFound = 'connect_site_screen_no_site_found';
 
   ///region in app browser page
   static const String inAppBrowserPagePlaceHolder = 'in_app_browser_page_place_holder';

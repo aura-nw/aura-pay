@@ -52,4 +52,4 @@ phyxis_mobile_dev.iml
 *.g.dart
 
 packages/aura_wallet_core
-packages/aura-wallet-core
+packages/aura_wallet_core

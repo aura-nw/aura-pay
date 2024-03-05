@@ -418,6 +418,7 @@
   "connect_site_screen_disconnect_content_region_two" : "This action can’t be undone.",
   "connect_site_screen_disconnect_cancel_button" : "Cancel",
   "connect_site_screen_disconnect_disconnect_button" : "Disconnect",
+  "connect_site_screen_no_site_found" : "No site found",
 
   "in_app_browser_page_place_holder" : "Search or type URL",
   "in_app_browser_page_ecosystem_tab" : "Ecosystem",
