@@ -161,48 +161,10 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
           debug.log('Connecting to ${connectingData.account}');
           debug.log('Connecting to ${connectingData.sessionId}');
 
-          Navigator.of(AppNavigator.navigatorKey.currentContext!).pushNamed(
-              RoutePath.walletConnectOnConnect,
-              arguments: connectingData);
-
-          // // Show a dialog asking the user whether they want to connect to a certain account
-          // await showDialog<void>(
-          //     context: AppNavigator.navigatorKey.currentContext!,
-          //     builder: (BuildContext context) {
-          //       // Return an AlertDialog
-          //       return AlertDialog(
-          //         // Set the title of the dialog
-          //         title: Text('Connect to ${connectingData.account}'),
-          //         // Set the content of the dialog
-          //         content: Text(
-          //             'Do you want to connect to ${connectingData.account}?'),
-          //         // Set the actions of the dialog
-          //         actions: [
-          //           // Approve button
-          //           TextButton(
-          //               onPressed: () {
-          //                 // Approve the connection
-          //                 context
-          //                     .read<WalletConnectCubit>()
-          //                     .approveConnection(connectingData);
-          //                 // Close the dialog
-          //                 Navigator.pop(context);
-          //               },
-          //               child: const Text('Approve')),
-          //           // Reject button
-          //           TextButton(
-          //               onPressed: () {
-          //                 // Reject the connection
-          //                 context
-          //                     .read<WalletConnectCubit>()
-          //                     .rejectConnection(connectingData);
-          //                 // Close the dialog
-          //                 Navigator.pop(context);
-          //               },
-          //               child: const Text('Reject')),
-          //         ],
-          //       );
-          //     });
+          AppNavigator.push(
+            RoutePath.walletConnectOnConnect,
+            connectingData,
+          );
         }
 
         break;

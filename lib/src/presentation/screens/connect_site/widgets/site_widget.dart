@@ -30,38 +30,43 @@ class SiteWidget extends StatelessWidget {
           top: Spacing.spacing05, bottom: Spacing.spacing05),
       child: Row(
         children: [
-          CacheNetworkImageExtend(
-            imageUrl: logo,
-            targetWidth: _size * 4,
-            targetHeight: _size * 4,
-            width: _size,
-            height: _size,
-            loadingBuilder: (context, url, onProcess) {
-              return Shimmer.fromColors(
-                baseColor: appTheme.surfaceColorGrayDefault,
-                highlightColor: appTheme.surfaceColorBrandSemiLight,
-                child: Container(
+          ClipRRect(
+            borderRadius: BorderRadius.circular(
+              BorderRadiusSize.borderRadiusRound,
+            ),
+            child: CacheNetworkImageExtend(
+              imageUrl: logo,
+              targetWidth: _size * 4,
+              targetHeight: _size * 4,
+              width: _size,
+              height: _size,
+              loadingBuilder: (context, url, onProcess) {
+                return Shimmer.fromColors(
+                  baseColor: appTheme.surfaceColorGrayDefault,
+                  highlightColor: appTheme.surfaceColorBrandSemiLight,
+                  child: Container(
+                    width: _size,
+                    height: _size,
+                    decoration: BoxDecoration(
+                      color: appTheme.primaryColor50,
+                    ),
+                  ),
+                );
+              },
+              errorBuilder: (context, url, error) {
+                return Container(
                   width: _size,
                   height: _size,
                   decoration: BoxDecoration(
                     color: appTheme.primaryColor50,
                   ),
-                ),
-              );
-            },
-            errorBuilder: (context, url, error) {
-              return Container(
-                width: _size,
-                height: _size,
-                decoration: BoxDecoration(
-                  color: appTheme.primaryColor50,
-                ),
-                alignment: Alignment.center,
-                child: SvgPicture.asset(
-                  AssetLogoPath.logoOpacity,
-                ),
-              );
-            },
+                  alignment: Alignment.center,
+                  child: SvgPicture.asset(
+                    AssetLogoPath.logoOpacity,
+                  ),
+                );
+              },
+            ),
           ),
           const SizedBox(
             width: BoxSize.boxSize05,

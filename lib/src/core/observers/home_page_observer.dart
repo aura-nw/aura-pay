@@ -29,6 +29,7 @@ final class HomeScreenObserver
   static String onRecoverSuccessfulEvent = 'ON_RECOVER_SUCCESSFUL_EVENT';
   static String onInAppBrowserChooseAccountEvent = 'ON_IN_APP_BROWSER_CHOOSE_ACCOUNT_EVENT';
   static String onInAppBrowserRefreshEvent = 'ON_IN_APP_BROWSER_REFRESH_EVENT';
+  static String onConnectWalletChooseAccountEvent = 'ON_CONNECT_WALLET_CHOOSE_ACCOUNT_EVENT';
 
   @override
   void emit({

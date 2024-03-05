@@ -9,6 +9,7 @@ import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dar
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_tab_management/browser_tab_management_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/connect_wallet/connect_wallet_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_screen.dart';
@@ -38,9 +39,6 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signe
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:pyxis_mobile/src/presentation/screens/wallet_connect/wallet_connect_on_connect.dart';
-import 'package:pyxis_mobile/src/presentation/screens/wallet_connect_screen/wallet_connect_screen.dart';
-
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
 import 'presentation/screens/on_boarding_import_key/on_boarding_import_key_screen.dart';
 import 'presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_screen.dart';
@@ -131,11 +129,9 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.walletConnectOnConnect:
-        print('KhoaCheck');
-        ConnectingData data = settings.arguments as ConnectingData;
-
+        final ConnectingData data = settings.arguments as ConnectingData;
         return _defaultRoute(
-          WalletConnectOnConnectScreen(
+          ConnectWalletScreen(
             connectingData: data,
           ),
           settings,

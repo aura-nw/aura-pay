@@ -86,6 +86,8 @@ sealed class AssetIconPath {
   static const String commonAdd = '${_baseIconPath}ic_common_add.svg';
   static const String commonRefresh = '${_baseIconPath}ic_common_refresh.svg';
   static const String commonDelete = '${_baseIconPath}ic_common_delete.svg';
+  static const String commonRemoveWarning =
+      '${_baseIconPath}ic_common_remove_warning.svg';
 
   static const String commonAura =
       '${_baseIconPath}ic_common_aura.svg';
@@ -146,8 +148,6 @@ sealed class AssetIconPath {
 
   ///Accounts page
   static const String accountsRemove = '${_baseIconPath}ic_accounts_remove.svg';
-  static const String accountsRemoveWarning =
-      '${_baseIconPath}ic_accounts_remove_warning.svg';
   static const String accountsRename = '${_baseIconPath}ic_accounts_rename.svg';
   static const String accountsRecoverSmartAccount =
       '${_baseIconPath}ic_accounts_recover_smart_account.svg';
@@ -275,4 +275,8 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_in_app_browser_next_bold.svg';
   static const String inAppBrowserBack =
       '${_baseIconPath}ic_in_app_browser_back.svg';
+
+  /// Connect wallet screen
+  static const String connectWalletLock = '${_baseIconPath}ic_connect_wallet_lock.svg';
+  static const String connectWalletClose = '${_baseIconPath}ic_connect_wallet_close.svg';
 }

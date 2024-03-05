@@ -259,39 +259,40 @@ class _AccountsScreenState extends State<AccountsScreen>
   }
 
   void _showRemoveDialog(AppTheme appTheme, AuraAccount account) {
-    DialogProvider.showCustomDialog(
+    DialogProvider.showRemoveDialog(
       context,
-      appTheme: appTheme,
-      canBack: true,
-      widget: RemoveAccountFormWidget(
+      cancelKey: LanguageKey.accountsScreenRemoveCancelTitle,
+      confirmKey: LanguageKey.accountsScreenRemoveRemoveTitle,
+      content: RemoveAccountContentFormWidget(
         appTheme: appTheme,
         address: account.address,
-        onRemove: () {
-          if (_homeScreenBloc.state.accounts.length == 1) {
-            AppGlobalCubit.of(context).changeState(
-              const AppGlobalState(
-                status: AppGlobalStatus.unauthorized,
-              ),
-            );
-          } else {
-            if (account.index == 0) {
-              _observer.emit(
-                emitParam: HomeScreenEmitParam(
-                  event: HomeScreenObserver.onSelectedAccountChangeEvent,
-                  data: _homeScreenBloc.state.accounts[1],
-                ),
-              );
-            }
-          }
-
-          _homeScreenBloc.add(
-            HomeScreenEventOnRemoveAccount(
-              account.id,
-              account.address,
+      ),
+      onRemove: () {
+        if (_homeScreenBloc.state.accounts.length == 1) {
+          AppGlobalCubit.of(context).changeState(
+            const AppGlobalState(
+              status: AppGlobalStatus.unauthorized,
             ),
           );
-        },
-      ),
+        } else {
+          if (account.index == 0) {
+            _observer.emit(
+              emitParam: HomeScreenEmitParam(
+                event: HomeScreenObserver.onSelectedAccountChangeEvent,
+                data: _homeScreenBloc.state.accounts[1],
+              ),
+            );
+          }
+        }
+
+        _homeScreenBloc.add(
+          HomeScreenEventOnRemoveAccount(
+            account.id,
+            account.address,
+          ),
+        );
+      },
+      appTheme: appTheme,
     );
   }
 

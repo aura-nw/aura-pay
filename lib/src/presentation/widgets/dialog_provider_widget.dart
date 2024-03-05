@@ -258,6 +258,76 @@ final class _PermissionDialog extends _DialogProviderWidget {
   }
 }
 
+final class _RemoveDialog extends _DialogProviderWidget {
+  final String cancelKey;
+  final String confirmKey;
+  final VoidCallback onRemove;
+  final Widget content;
+  const _RemoveDialog({
+    required this.cancelKey,
+    required this.confirmKey,
+    required this.onRemove,
+    required this.content,
+    super.key,
+  });
+
+  @override
+  Widget? bottomBuilder(BuildContext content, AppTheme appTheme) {
+    return Row(
+      children: [
+        Expanded(
+          child: AppLocalizationProvider(
+            builder: (localization, _) {
+              return BorderAppButton(
+                text: localization.translate(
+                  cancelKey,
+                ),
+                onPress: () {
+                  AppNavigator.pop();
+                },
+                textColor: appTheme.contentColorBlack,
+                borderColor: appTheme.borderColorGrayDefault,
+              );
+            },
+          ),
+        ),
+        const SizedBox(
+          width: BoxSize.boxSize07,
+        ),
+        Expanded(
+          child: AppLocalizationProvider(
+            builder: (localization, _) {
+              return PrimaryAppButton(
+                text: localization.translate(
+                  confirmKey,
+                ),
+                onPress: () {
+                  AppNavigator.pop();
+
+                  onRemove();
+                },
+                backGroundColor: appTheme.surfaceColorDangerDark,
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget contentBuilder(BuildContext context, AppTheme appTheme) {
+    return content;
+  }
+
+  @override
+  Widget? headerBuilder(BuildContext context, AppTheme appTheme) {
+    return SvgPicture.asset(
+      AssetIconPath.commonRemoveWarning,
+    );
+  }
+}
+
 sealed class DialogProvider {
   static Widget _mainDialog(
     Widget child, {
@@ -372,6 +442,30 @@ sealed class DialogProvider {
           ),
           appTheme: appTheme,
           canBack: true,
+        );
+      },
+    );
+  }
+
+  static Future<T?> showRemoveDialog<T>(
+      BuildContext context, {
+        required String cancelKey,
+        required String confirmKey,
+        required Widget content,
+        required VoidCallback onRemove,
+        required AppTheme appTheme,
+      }) async {
+    return showDialog<T?>(
+      context: context,
+      builder: (_) {
+        return _mainDialog(
+          _RemoveDialog(
+            cancelKey: cancelKey,
+            content: content,
+            confirmKey: confirmKey,
+            onRemove: onRemove,
+          ),
+          appTheme: appTheme,
         );
       },
     );

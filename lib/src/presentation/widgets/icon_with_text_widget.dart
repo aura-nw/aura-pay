@@ -9,17 +9,22 @@ final class IconWithTextWidget extends StatelessWidget {
   final String titlePath;
   final String svgIconPath;
   final AppTheme appTheme;
+  final TextStyle ?style;
+  final MainAxisAlignment mainAxisAlignment;
 
   const IconWithTextWidget({
     required this.titlePath,
     required this.svgIconPath,
     required this.appTheme,
+    this.style,
+    this.mainAxisAlignment = MainAxisAlignment.start,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: mainAxisAlignment,
       children: [
         SvgPicture.asset(
           svgIconPath,
@@ -33,7 +38,7 @@ final class IconWithTextWidget extends StatelessWidget {
               localization.translate(
                 titlePath,
               ),
-              style: AppTypoGraPhy.bodyMedium03.copyWith(
+              style: style ?? AppTypoGraPhy.bodyMedium03.copyWith(
                 color: appTheme.contentColor700,
               ),
             );

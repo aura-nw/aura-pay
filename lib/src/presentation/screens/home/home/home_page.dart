@@ -88,22 +88,29 @@ class _HomePageState extends State<HomePage>
         const HomePageEventOnFetchTokenPrice(),
       );
     }else if(param.event == HomeScreenObserver.onInAppBrowserChooseAccountEvent){
-      final data = param.data;
+      _onChooseNewAccount(param);
+    }
+    else if(param.event == HomeScreenObserver.onConnectWalletChooseAccountEvent){
+      _onChooseNewAccount(param);
+    }
+  }
 
-      if (data is AuraAccount) {
-        HomeScreenBloc.of(
-          context,
-        ).add(
-          HomeScreenEventOnChooseAccount(
-            data,
-          ),
-        );
-        _bloc.add(
-          HomePageEventOnFetchTokenPriceWithAddress(
-            data.address,
-          ),
-        );
-      }
+  void _onChooseNewAccount(HomeScreenEmitParam param){
+    final data = param.data;
+
+    if (data is AuraAccount) {
+      HomeScreenBloc.of(
+        context,
+      ).add(
+        HomeScreenEventOnChooseAccount(
+          data,
+        ),
+      );
+      _bloc.add(
+        HomePageEventOnFetchTokenPriceWithAddress(
+          data.address,
+        ),
+      );
     }
   }
 

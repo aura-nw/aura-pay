@@ -39,8 +39,7 @@ class _BrowserTabManagementScreenState
       builder: (appTheme) {
         return BlocProvider.value(
           value: _bloc,
-          child:
-              BlocListener<BrowserTabManagementBloc, BrowserTabManagementState>(
+          child: BlocListener<BrowserTabManagementBloc, BrowserTabManagementState>(
             listener: (context, state) {
               switch (state.status) {
                 case BrowserTabManagementStatus.loading:
@@ -58,108 +57,111 @@ class _BrowserTabManagementScreenState
                   break;
               }
             },
-            child: Scaffold(
-              body: SafeArea(
-                child: BrowserTabManagementStatusSelector(
-                  builder: (status) {
-                    switch (status) {
-                      case BrowserTabManagementStatus.loading:
-                        return Center(
-                          child: AppLoadingWidget(
-                            appTheme: appTheme,
-                          ),
-                        );
-                      case BrowserTabManagementStatus.loaded:
-                      case BrowserTabManagementStatus.closeAllSuccess:
-                      case BrowserTabManagementStatus.closeTabSuccess:
-                      case BrowserTabManagementStatus.addTabSuccess:
-                        return Column(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: Spacing.spacing07,
-                                  vertical: Spacing.spacing06,
-                                ),
-                                child: BrowserTabManagementBrowsersSelector(
-                                    builder: (browsers) {
-                                  if (browsers.isEmpty) {
-                                    return Center(
-                                      child: AppLocalizationProvider(
-                                        builder: (localization, _) {
-                                          return Text(
-                                            localization.translate(
-                                              LanguageKey
-                                                  .browserManagementScreenNoTabFound,
-                                            ),
-                                            style: AppTypoGraPhy.bodyMedium02
-                                                .copyWith(
-                                              color: appTheme.contentColor500,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  }
-                                  return CombinedGridView(
-                                    childCount: 2,
-                                    onRefresh: () async {
-                                      //
-                                    },
-                                    onLoadMore: () {
-                                      //
-                                    },
-                                    data: browsers,
-                                    builder: (browser, index) {
-                                      return GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () {
-                                          _backOrReplace(
-                                            browser.url,
-                                            id: browser.id,
-                                          );
-                                        },
-                                        child: BrowserHistoryWidget(
-                                          appTheme: appTheme,
-                                          siteName: browser.siteTitle,
-                                          imageUri: browser.screenShotUri,
-                                          logo: browser.logo,
-                                          key: ValueKey(browser),
-                                          onClose: () {
-                                            _bloc.add(
-                                              BrowserTabManagementOnCloseTabEvent(
-                                                id: browser.id,
+            child: PopScope(
+              canPop: false,
+              child: Scaffold(
+                body: SafeArea(
+                  child: BrowserTabManagementStatusSelector(
+                    builder: (status) {
+                      switch (status) {
+                        case BrowserTabManagementStatus.loading:
+                          return Center(
+                            child: AppLoadingWidget(
+                              appTheme: appTheme,
+                            ),
+                          );
+                        case BrowserTabManagementStatus.loaded:
+                        case BrowserTabManagementStatus.closeAllSuccess:
+                        case BrowserTabManagementStatus.closeTabSuccess:
+                        case BrowserTabManagementStatus.addTabSuccess:
+                          return Column(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: Spacing.spacing07,
+                                    vertical: Spacing.spacing06,
+                                  ),
+                                  child: BrowserTabManagementBrowsersSelector(
+                                      builder: (browsers) {
+                                    if (browsers.isEmpty) {
+                                      return Center(
+                                        child: AppLocalizationProvider(
+                                          builder: (localization, _) {
+                                            return Text(
+                                              localization.translate(
+                                                LanguageKey
+                                                    .browserManagementScreenNoTabFound,
+                                              ),
+                                              style: AppTypoGraPhy.bodyMedium02
+                                                  .copyWith(
+                                                color: appTheme.contentColor500,
                                               ),
                                             );
                                           },
                                         ),
                                       );
-                                    },
-                                    canLoadMore: false,
-                                    childAspectRatio: 0.75,
-                                    crossAxisSpacing: Spacing.spacing06,
-                                    mainAxisSpacing: Spacing.spacing07,
-                                  );
-                                }),
+                                    }
+                                    return CombinedGridView(
+                                      childCount: 2,
+                                      onRefresh: () async {
+                                        //
+                                      },
+                                      onLoadMore: () {
+                                        //
+                                      },
+                                      data: browsers,
+                                      builder: (browser, index) {
+                                        return GestureDetector(
+                                          behavior: HitTestBehavior.opaque,
+                                          onTap: () {
+                                            _backOrReplace(
+                                              browser.url,
+                                              id: browser.id,
+                                            );
+                                          },
+                                          child: BrowserHistoryWidget(
+                                            appTheme: appTheme,
+                                            siteName: browser.siteTitle,
+                                            imageUri: browser.screenShotUri,
+                                            logo: browser.logo,
+                                            key: ValueKey(browser),
+                                            onClose: () {
+                                              _bloc.add(
+                                                BrowserTabManagementOnCloseTabEvent(
+                                                  id: browser.id,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      canLoadMore: false,
+                                      childAspectRatio: 0.75,
+                                      crossAxisSpacing: Spacing.spacing06,
+                                      mainAxisSpacing: Spacing.spacing07,
+                                    );
+                                  }),
+                                ),
                               ),
-                            ),
-                            BrowserTabManagementBottomWidget(
-                              onAddNewTab: () {
-                                _bloc.add(
-                                  const BrowserTabManagementOnAddNewTabEvent(),
-                                );
-                              },
-                              onCloseAll: () {
-                                _bloc.add(
-                                  const BrowserTabManagementOnClearEvent(),
-                                );
-                              },
-                              appTheme: appTheme,
-                            ),
-                          ],
-                        );
-                    }
-                  },
+                              BrowserTabManagementBottomWidget(
+                                onAddNewTab: () {
+                                  _bloc.add(
+                                    const BrowserTabManagementOnAddNewTabEvent(),
+                                  );
+                                },
+                                onCloseAll: () {
+                                  _bloc.add(
+                                    const BrowserTabManagementOnClearEvent(),
+                                  );
+                                },
+                                appTheme: appTheme,
+                              ),
+                            ],
+                          );
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
