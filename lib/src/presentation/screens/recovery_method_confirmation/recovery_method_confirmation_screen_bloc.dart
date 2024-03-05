@@ -57,12 +57,15 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
     );
 
     String recoveryAddress = '';
+    String publicKey = '';
     if (state.argument is RecoveryMethodConfirmationGoogleArgument) {
       final String backupPrivateKey = await _web3authUseCase.getPrivateKey();
 
       final wallet = await _walletUseCase.importWallet(
         privateKeyOrPassPhrase: backupPrivateKey,
       );
+
+      publicKey = AuraSmartAccountHelper.encodeByte(wallet.publicKey);
 
       recoveryAddress = wallet.bech32Address;
     } else {
@@ -104,6 +107,7 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
         lowTransactionFee: lowFee.amount[0].amount,
         transactionFee: fee.amount[0].amount,
         messages: setRecoveryMessages.toList(),
+        publicKey: publicKey,
       ),
     );
 

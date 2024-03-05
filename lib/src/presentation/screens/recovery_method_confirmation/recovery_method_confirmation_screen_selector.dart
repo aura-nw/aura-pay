@@ -45,3 +45,17 @@ final class RecoveryMethodConfirmationScreenMessagesSelector extends BlocSelecto
           ),
         );
 }
+
+final class RecoveryMethodConfirmationScreenPubKeySelector extends BlocSelector<
+    RecoveryMethodConfirmationBloc, RecoveryMethodConfirmationState, String> {
+  RecoveryMethodConfirmationScreenPubKeySelector({
+    Key? key,
+    required Widget Function(String) builder,
+  }) : super(
+          key: key,
+          selector: (state) => state.publicKey,
+          builder: (_, publicKey) => builder(
+            publicKey,
+          ),
+        );
+}

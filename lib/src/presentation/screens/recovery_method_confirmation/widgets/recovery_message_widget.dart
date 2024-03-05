@@ -15,13 +15,11 @@ import 'package:pyxis_mobile/src/presentation/widgets/transaction_box_widget.dar
 
 class RecoveryMessageWidget extends StatelessWidget {
   final AppTheme appTheme;
-  final String recoverData;
   final String address;
   final VoidCallback onChangeViewData;
 
   const RecoveryMessageWidget({
     required this.appTheme,
-    required this.recoverData,
     required this.address,
     required this.onChangeViewData,
     super.key,
@@ -156,18 +154,33 @@ class RecoveryMessageWidget extends StatelessWidget {
                         const SizedBox(),
                         AppLocalizationProvider(
                           builder: (localization, _) {
-                            return Text(
-                              localization.translateWithParam(
-                                LanguageKey
-                                    .recoveryMethodConfirmationScreenMessage,
-                                {
-                                  'account': recoverData,
-                                  'address': address.addressView,
-                                },
-                              ),
-                              style: AppTypoGraPhy.bodyMedium02.copyWith(
-                                color: appTheme.contentColor500,
-                              ),
+                            return RecoveryMethodConfirmationScreenPubKeySelector(
+                              builder: (publicKey) {
+                                return RichText(
+                                  text: TextSpan(
+                                    style: AppTypoGraPhy.bodyMedium02.copyWith(
+                                      color: appTheme.contentColorBlack,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: address.addressView,
+                                      ),
+                                      TextSpan(
+                                        text: ' ${localization.translate(
+                                          LanguageKey
+                                              .recoveryMethodConfirmationScreenMessage,
+                                        )}: ',
+                                        style: AppTypoGraPhy.body02.copyWith(
+                                          color: appTheme.contentColor500,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: publicKey.addressView,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
                             );
                           },
                         ),

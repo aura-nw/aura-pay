@@ -28,82 +28,93 @@ class InsufficientAmountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            AppLocalizationProvider(
-              builder: (localization, _) {
-                return Text(
-                  localization.translate(
-                    LanguageKey
-                        .recoveryMethodConfirmationScreenInsufficientAmountTitle,
-                  ),
-                  style: AppTypoGraPhy.heading02.copyWith(
-                    color: appTheme.contentColorBlack,
-                  ),
-                );
-              },
-            ),
-            GestureDetector(
-              onTap: () => AppNavigator.pop(),
-              behavior: HitTestBehavior.opaque,
-              child: SvgPicture.asset(
-                AssetIconPath.commonCloseBottomSheet,
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Spacing.spacing06,
+        vertical: Spacing.spacing05,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: AppLocalizationProvider(
+                  builder: (localization, _) {
+                    return Text(
+                      localization.translate(
+                        LanguageKey
+                            .recoveryMethodConfirmationScreenInsufficientAmountTitle,
+                      ),
+                      style: AppTypoGraPhy.heading02.copyWith(
+                        color: appTheme.contentColorBlack,
+                      ),
+                      textAlign: TextAlign.center,
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: BoxSize.boxSize07,
-        ),
-        AppLocalizationProvider(
-          builder: (localization, _) {
-            return Text(
-              localization.translate(
-                LanguageKey
-                    .recoveryMethodConfirmationScreenInsufficientAmountContent,
+              GestureDetector(
+                onTap: () => AppNavigator.pop(),
+                behavior: HitTestBehavior.opaque,
+                child: SvgPicture.asset(
+                  AssetIconPath.commonCloseBottomSheet,
+                ),
               ),
-              style: AppTypoGraPhy.body02.copyWith(
-                color: appTheme.contentColor500,
+            ],
+          ),
+          const SizedBox(
+            height: BoxSize.boxSize07,
+          ),
+          AppLocalizationProvider(
+            builder: (localization, _) {
+              return Text(
+                localization.translate(
+                  LanguageKey
+                      .recoveryMethodConfirmationScreenInsufficientAmountContent,
+                ),
+                style: AppTypoGraPhy.body02.copyWith(
+                  color: appTheme.contentColor500,
+                ),
+                textAlign: TextAlign.center,
+              );
+            },
+          ),
+          const SizedBox(
+            height: BoxSize.boxSize07,
+          ),
+          QrImageView(
+            data: address,
+            version: QrVersions.auto,
+            padding: EdgeInsets.zero,
+            backgroundColor: appTheme.bodyColorBackground,
+            size: context.w / 2,
+          ),
+          const SizedBox(
+            height: BoxSize.boxSize07,
+          ),
+          GestureDetector(
+            onTap: () => onCopy(address),
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              padding: const EdgeInsets.all(
+                Spacing.spacing04,
               ),
-            );
-          },
-        ),
-        const SizedBox(
-          height: BoxSize.boxSize07,
-        ),
-        QrImageView(
-          data: address,
-          version: QrVersions.auto,
-          padding: EdgeInsets.zero,
-          backgroundColor: appTheme.bodyColorBackground,
-          size: context.w / 2,
-        ),
-        const SizedBox(
-          height: BoxSize.boxSize07,
-        ),
-        GestureDetector(
-          onTap: () => onCopy(address),
-          behavior: HitTestBehavior.opaque,
-          child: Container(
-            padding: const EdgeInsets.all(
-              Spacing.spacing04,
-            ),
-            decoration: BoxDecoration(
-              color: appTheme.surfaceColorGrayLight,
-              borderRadius: BorderRadius.circular(
-                BorderRadiusSize.borderRadius05,
+              decoration: BoxDecoration(
+                color: appTheme.surfaceColorGrayLight,
+                borderRadius: BorderRadius.circular(
+                  BorderRadiusSize.borderRadius05,
+                ),
               ),
-            ),
-            child: _InsufficientAccountWidget(
-              appTheme: appTheme,
-              address: address,
-              accountName: accountName,
+              child: _InsufficientAccountWidget(
+                appTheme: appTheme,
+                address: address,
+                accountName: accountName,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

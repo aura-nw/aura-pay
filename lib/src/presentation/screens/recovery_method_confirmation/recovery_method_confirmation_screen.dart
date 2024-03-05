@@ -208,7 +208,6 @@ class _RecoveryMethodConfirmationScreenState
                             ),
                             RecoveryMessageWidget(
                               appTheme: appTheme,
-                              recoverData: recoverData,
                               address: widget.argument.account.address,
                               onChangeViewData: _onChangeViewData,
                             ),
