@@ -783,6 +783,7 @@ Future<void> initDependency(
   getIt.registerFactory<ConnectSiteCubit>(
     () => ConnectSiteCubit(
       getIt.get<WalletConnectService>(),
+      getIt.get<AuraAccountUseCase>(),
     ),
   );
 }
