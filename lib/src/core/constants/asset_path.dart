@@ -275,4 +275,8 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_in_app_browser_next_bold.svg';
   static const String inAppBrowserBack =
       '${_baseIconPath}ic_in_app_browser_back.svg';
+
+  /// Connect wallet screen
+  static const String connectWalletLock = '${_baseIconPath}ic_connect_wallet_lock.svg';
+  static const String connectWalletClose = '${_baseIconPath}ic_connect_wallet_close.svg';
 }

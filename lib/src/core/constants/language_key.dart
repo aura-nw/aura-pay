@@ -521,4 +521,13 @@ sealed class LanguageKey {
   static const String browserManagementScreenCloseAll = 'browser_management_screen_close_all';
   static const String browserManagementScreenNewTab = 'browser_management_screen_new_tab';
   static const String browserManagementScreenNoTabFound = 'browser_management_screen_no_tab_found';
+
+  /// region connect wallet screen
+  static const String connectWalletScreenConnectToSite = 'connect_wallet_screen_connect_to_site';
+  static const String connectWalletScreenReason = 'connect_wallet_screen_reason';
+  static const String connectWalletScreenReasonOne = 'connect_wallet_screen_reason_one';
+  static const String connectWalletScreenReasonTwo = 'connect_wallet_screen_reason_two';
+  static const String connectWalletScreenReasonThree = 'connect_wallet_screen_reason_three';
+  static const String connectWalletScreenButtonTitle = 'connect_wallet_screen_button_title';
+  static const String connectWalletScreenChooseAccount = 'connect_wallet_screen_choose_account';
 }

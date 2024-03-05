@@ -42,100 +42,103 @@ class _BrowserSearchScreenState extends State<BrowserSearchScreen> {
       builder: (appTheme) {
         return BlocProvider.value(
           value: _bloc,
-          child: Scaffold(
-            body: SafeArea(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Spacing.spacing07,
-                      vertical: Spacing.spacing06,
+          child: PopScope(
+            canPop: false,
+            child: Scaffold(
+              body: SafeArea(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Spacing.spacing07,
+                        vertical: Spacing.spacing06,
+                      ),
+                      child: SearchWidget(
+                        controller: _searchController,
+                        appTheme: appTheme,
+                        onClear: _onClearSearch,
+                        onChanged: _onChange,
+                      ),
                     ),
-                    child: SearchWidget(
-                      controller: _searchController,
-                      appTheme: appTheme,
-                      onClear: _onClearSearch,
-                      onChanged: _onChange,
+                    const SizedBox(
+                      height: BoxSize.boxSize05,
                     ),
-                  ),
-                  const SizedBox(
-                    height: BoxSize.boxSize05,
-                  ),
-                  BrowserSearchSystemsSelector(
-                    builder: (auraEcosystems) {
-                      return ListView.builder(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Spacing.spacing07,
-                        ),
-                        shrinkWrap: true,
-                        primary: false,
-                        itemBuilder: (context, index) {
-                          final browser = auraEcosystems[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: Spacing.spacing06,
-                            ),
-                            child: BrowserEcosystemSuggestionWidget(
-                              name: browser.name,
-                              description: browser.description ?? '',
-                              logo: browser.logo,
-                              appTheme: appTheme,
-                              onTap: () {
-                                AppNavigator.replaceWith(
-                                  RoutePath.browser,
-                                  browser.url,
-                                );
-                              },
-                            ),
-                          );
-                        },
-                        itemCount: auraEcosystems.length,
-                      );
-                    },
-                  ),
-                  BrowserSearchQuerySelector(
-                    builder: (query) {
-                      if (query.isEmpty) {
-                        return const SizedBox.shrink();
-                      }
-                      return Column(
-                        children: [
-                          const HoLiZonTalDividerWidget(),
-                          const SizedBox(
-                            height: BoxSize.boxSize06,
+                    BrowserSearchSystemsSelector(
+                      builder: (auraEcosystems) {
+                        return ListView.builder(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Spacing.spacing07,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: Spacing.spacing07,
-                              vertical: Spacing.spacing02,
+                          shrinkWrap: true,
+                          primary: false,
+                          itemBuilder: (context, index) {
+                            final browser = auraEcosystems[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: Spacing.spacing06,
+                              ),
+                              child: BrowserEcosystemSuggestionWidget(
+                                name: browser.name,
+                                description: browser.description ?? '',
+                                logo: browser.logo,
+                                appTheme: appTheme,
+                                onTap: () {
+                                  AppNavigator.replaceWith(
+                                    RoutePath.browser,
+                                    browser.url,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          itemCount: auraEcosystems.length,
+                        );
+                      },
+                    ),
+                    BrowserSearchQuerySelector(
+                      builder: (query) {
+                        if (query.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+                        return Column(
+                          children: [
+                            const HoLiZonTalDividerWidget(),
+                            const SizedBox(
+                              height: BoxSize.boxSize06,
                             ),
-                            child: AppLocalizationProvider(
-                              builder: (localization, _) {
-                                return GoogleSuggestionResultWidget(
-                                  description: localization.translate(
-                                    LanguageKey
-                                        .inAppBrowserSearchScreenSearchWithGoogle,
-                                  ),
-                                  appTheme: appTheme,
-                                  name: query,
-                                  onTap: () {
-                                    AppNavigator.replaceWith(
-                                      RoutePath.browser,
-                                      getGoogleQuery(
-                                        query,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: Spacing.spacing07,
+                                vertical: Spacing.spacing02,
+                              ),
+                              child: AppLocalizationProvider(
+                                builder: (localization, _) {
+                                  return GoogleSuggestionResultWidget(
+                                    description: localization.translate(
+                                      LanguageKey
+                                          .inAppBrowserSearchScreenSearchWithGoogle,
+                                    ),
+                                    appTheme: appTheme,
+                                    name: query,
+                                    onTap: () {
+                                      AppNavigator.replaceWith(
+                                        RoutePath.browser,
+                                        getGoogleQuery(
+                                          query,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

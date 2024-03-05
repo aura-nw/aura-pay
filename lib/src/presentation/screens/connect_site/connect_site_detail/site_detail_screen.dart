@@ -26,9 +26,9 @@ class SiteDetailScreen extends StatelessWidget {
                 // Handle disconnect action
                 // Example:
                 // disconnectSession();
-                WalletConnectService walletConnectService =
-                    GetIt.I.get<WalletConnectService>();
-                await walletConnectService.disconnectSession(sessionData);
+                // WalletConnectService walletConnectService =
+                //     GetIt.I.get<WalletConnectService>();
+                // await walletConnectService.disconnectSession(sessionData);
                 Navigator.pop(context);
               },
               child: Text('Disconnect'),

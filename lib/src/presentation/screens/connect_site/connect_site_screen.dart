@@ -32,7 +32,7 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
     super.initState();
 
     // Initialize the list of connected sites
-    listConnectedSites = GetIt.I.get<WalletConnectService>().sessionsList;
+    // listConnectedSites = GetIt.I.get<WalletConnectService>().sessionsList;
     debug.log('listConnectedSites: $listConnectedSites');
   }
 
@@ -100,8 +100,8 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
                           );
                           debug.log('Site tapped: ${sessionData.topic}');
 
-                          listConnectedSites =
-                              GetIt.I.get<WalletConnectService>().sessionsList;
+                          // listConnectedSites =
+                          //     GetIt.I.get<WalletConnectService>().sessionsList;
                           debug.log('listConnectedSites: $listConnectedSites');
                           setState(() {});
                         },

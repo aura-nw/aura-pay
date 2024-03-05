@@ -441,7 +441,15 @@
 
   "browser_management_screen_close_all" : "Close all",
   "browser_management_screen_new_tab" : "New tab",
-  "browser_management_screen_no_tab_found" : "No tab found"
+  "browser_management_screen_no_tab_found" : "No tab found",
 
+
+  "connect_wallet_screen_connect_to_site" : "Connect to this site?",
+  "connect_wallet_screen_reason" : "This site will be able to:",
+  "connect_wallet_screen_reason_one" : "View your wallet balance and activity",
+  "connect_wallet_screen_reason_two" : "Request approval for transactions",
+  "connect_wallet_screen_reason_three" : "Move funds without your permission",
+  "connect_wallet_screen_button_title" : "Connect",
+  "connect_wallet_screen_choose_account" : "Choose account"
 
 }
