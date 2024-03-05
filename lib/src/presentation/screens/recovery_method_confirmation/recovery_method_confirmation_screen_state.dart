@@ -27,5 +27,6 @@ class RecoveryMethodConfirmationState with _$RecoveryMethodConfirmationState {
     @Default(false) bool isShowFullMsg,
     String ?memo,
     @Default([]) List<GeneratedMessage> messages,
+    @Default('') String publicKey,
   }) = _RecoveryMethodConfirmationState;
 }

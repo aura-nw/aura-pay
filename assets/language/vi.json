@@ -358,7 +358,7 @@
   "recovery_method_confirmation_screen_memo" : "Memo",
   "recovery_method_confirmation_screen_memo_hint" : "(Empty)",
   "recovery_method_confirmation_screen_change_recovery" : "Change Recovery",
-  "recovery_method_confirmation_screen_change_message" : "Set ${account} to recovery for ${address}",
+  "recovery_method_confirmation_screen_change_message" : "Change recovery method Recovery key",
   "recovery_method_confirmation_screen_transaction_fee" : "Transaction fee",
   "recovery_method_confirmation_screen_button_confirm_title" : "Confirm",
   "recovery_method_confirmation_screen_loading" : "Processing",
