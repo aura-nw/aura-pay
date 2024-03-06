@@ -1,6 +1,6 @@
 sealed class ApiServicePath{
   static const String graphiql = '/graphql';
-  static const String auraPrice = '/cw20-tokens/token-market';
+  static const String tokenMarket = '/cw20-tokens/token-market';
 
 
   static const String recoveryAccounts = '/get_list_recover_account';

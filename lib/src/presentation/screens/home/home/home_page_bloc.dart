@@ -118,7 +118,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   static Future<void> _getPrice(TokenUseCase tokenUseCase,
       Map<String, dynamic> message, SendPort sendPort) async {
     try {
-      final price = await tokenUseCase.getAuraTokenPrice();
+      final price = await tokenUseCase.getTokenMarkets();
 
       final auraPrice = price
               .firstWhereOrNull(

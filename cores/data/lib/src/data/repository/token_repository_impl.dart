@@ -8,10 +8,10 @@ final class TokenRepositoryImpl implements TokenRepository {
   const TokenRepositoryImpl(this._tokenApiService);
 
   @override
-  Future<List<TokenMarket>> getAuraTokenPrice({
+  Future<List<TokenMarket>> getTokenMarkets({
     required Map<String, dynamic> queries,
   }) async {
-    final response = await _tokenApiService.getAuraTokenPrice(
+    final response = await _tokenApiService.getTokenMarkets(
       queries: queries,
     );
 

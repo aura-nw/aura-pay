@@ -7,13 +7,13 @@ final class TokenUseCase {
 
   const TokenUseCase(this._repository);
 
-  Future<List<TokenMarket>> getAuraTokenPrice({
+  Future<List<TokenMarket>> getTokenMarkets({
     bool onlyIbc = true,
   }) async {
     final QueryTokenMarketParameter parameter = QueryTokenMarketParameter(
       onlyIbc: onlyIbc,
     );
-    return _repository.getAuraTokenPrice(
+    return _repository.getTokenMarkets(
       queries: parameter.toJson(),
     );
   }
