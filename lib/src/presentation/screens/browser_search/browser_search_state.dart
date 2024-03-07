@@ -7,7 +7,7 @@ part 'browser_search_state.freezed.dart';
 @freezed
 class BrowserSearchState with _$BrowserSearchState {
   const factory BrowserSearchState({
-    @Default(auraEcosystems) List<BookMark> systems,
+    @Default(AuraEcosystem.auraEcosystems) List<BookMark> systems,
     @Default('') String query,
   }) = _BrowserSearchState;
 }

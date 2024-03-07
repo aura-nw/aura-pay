@@ -21,9 +21,9 @@ class BrowserSearchBloc extends Bloc<BrowserSearchEvent, BrowserSearchState> {
     );
 
     if (event.query.isEmpty) {
-      displays.addAll(auraEcosystems);
+      displays.addAll(AuraEcosystem.auraEcosystems);
     } else {
-      final mapByQuery = auraEcosystems
+      final mapByQuery = AuraEcosystem.auraEcosystems
           .where(
             (system) => system.name.toLowerCase().contains(
               event.query.toLowerCase(),

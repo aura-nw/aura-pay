@@ -206,7 +206,7 @@ final class DefaultAppTheme implements AppTheme {
   Color surfaceColorGrayDefault = const Color(0xffECECEE);
 
   @override
-  Color surfaceColorGrayLight = const Color(0xffF7F7F8);
+  Color surfaceColorGrayLight = const Color(0xffF4F4F6);
 
   @override
   Color surfaceColorSuccess = const Color(0xffBAF3D8);

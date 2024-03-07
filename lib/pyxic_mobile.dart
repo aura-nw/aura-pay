@@ -13,6 +13,8 @@ import 'src/aura_wallet_application.dart';
 import 'src/core/constants/app_local_constant.dart';
 import 'dart:developer' as developer;
 
+import 'src/core/constants/aura_ecosystem.dart';
+
 /// Starts the Pyxis Mobile application.
 ///
 /// This method initializes the Isar database, initializes the dependency injection,
@@ -55,6 +57,9 @@ void start(PyxisMobileConfig config) async {
 
   // Call this to detect aura domain. It supports for app launcher
   AuraScan.init(config.environment);
+
+  // Call this to detect aura ecosystems. It supports for in app browser
+  AuraEcosystem.init(config.environment);
 
   // Run the AuraWalletApplication
   runApp(const AuraWalletApplication());
