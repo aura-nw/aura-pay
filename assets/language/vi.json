@@ -451,6 +451,17 @@
   "connect_wallet_screen_reason_two" : "Request approval for transactions",
   "connect_wallet_screen_reason_three" : "Move funds without your permission",
   "connect_wallet_screen_button_title" : "Connect",
-  "connect_wallet_screen_choose_account" : "Choose account"
+  "connect_wallet_screen_choose_account" : "Choose account",
+  
+
+  "connect_wallet_confirm_transaction_screen_app_bar_title" : "Confirm transaction",
+  "connect_wallet_confirm_transaction_screen_messages" : "Messages",
+  "connect_wallet_confirm_transaction_screen_view_data" : "View data",
+  "connect_wallet_confirm_transaction_screen_memo" : "Memo",
+  "connect_wallet_confirm_transaction_screen_memo_hint" : "(Empty)",
+  "connect_wallet_confirm_transaction_screen_transaction_fee" : "Transaction fee",
+  "connect_wallet_confirm_transaction_screen_button_confirm_title" : "Approve",
+  "connect_wallet_confirm_transaction_screen_loading" : "Processing",
+  "connect_wallet_confirm_transaction_screen_request_from" : "Request from"
 
 }

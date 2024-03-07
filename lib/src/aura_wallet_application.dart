@@ -217,32 +217,39 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
         String title = requestSessionData.method;
         String content = '${requestSessionData.params}';
 
-        await showDialog(
-            context: AppNavigator.navigatorKey.currentContext!,
-            builder: (context) => AlertDialog(
-                    title: Text(title),
-                    content: Text(content),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          context
-                              .read<WalletConnectCubit>()
-                              .approveRequest(requestSessionData);
-                          Navigator.pop(context);
-                        },
-                        child: const Text('OK'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          context
-                              .read<WalletConnectCubit>()
-                              .rejectRequest(requestSessionData);
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Reject'),
-                      ),
-                    ]));
-        break;
+        // If the user is authorized, navigate to the home screen
+        // Replace all routes with the reLogin route
+        AppNavigator.push(
+          RoutePath.walletConnectConfirmTransaction,
+          requestSessionData,
+        );
+
+      // await showDialog(
+      //     context: AppNavigator.navigatorKey.currentContext!,
+      //     builder: (context) => AlertDialog(
+      //             title: Text(title),
+      //             content: Text(content),
+      //             actions: [
+      //               TextButton(
+      //                 onPressed: () {
+      //                   context
+      //                       .read<WalletConnectCubit>()
+      //                       .approveRequest(requestSessionData);
+      //                   Navigator.pop(context);
+      //                 },
+      //                 child: const Text('OK'),
+      //               ),
+      //               TextButton(
+      //                 onPressed: () {
+      //                   context
+      //                       .read<WalletConnectCubit>()
+      //                       .rejectRequest(requestSessionData);
+      //                   Navigator.pop(context);
+      //                 },
+      //                 child: const Text('Reject'),
+      //               ),
+      //             ]));
+      // break;
     }
   }
 }

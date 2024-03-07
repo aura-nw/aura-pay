@@ -183,7 +183,7 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
           msg: [
             {
               'algo': 'secp256k1',
-              'address': _getAddress(),
+              'address': await _getAddress(),
               "pubkey": await _getPublicKey(),
             }
           ]);
