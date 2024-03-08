@@ -390,21 +390,21 @@
                             }
                         },
                         {
-                            "name": "Danger/Dark",
-                            "type": "color",
-                            "isAlias": true,
-                            "value": {
-                                "collection": "[ Color ] - Base",
-                                "name": "Red/500"
-                            }
-                        },
-                        {
                             "name": "Unknown/S Light",
                             "type": "color",
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Gray/100"
+                            }
+                        },
+                        {
+                            "name": "Danger/Dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Red/500"
                             }
                         },
                         {
@@ -561,6 +561,15 @@
                             }
                         },
                         {
+                            "name": "Surface/Warning light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Context",
+                                "name": "Warning/S Light"
+                            }
+                        },
+                        {
                             "name": "Surface/Warning",
                             "type": "color",
                             "isAlias": true,
@@ -684,6 +693,33 @@
                             "value": {
                                 "collection": "[ Color ] - Base",
                                 "name": "Gray/Black"
+                            }
+                        },
+                        {
+                            "name": "Border/Gray opacity light",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Black opacity 1"
+                            }
+                        },
+                        {
+                            "name": "Border/Gray opacity default",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Black opacity 2"
+                            }
+                        },
+                        {
+                            "name": "Border/Gray opacity dark",
+                            "type": "color",
+                            "isAlias": true,
+                            "value": {
+                                "collection": "[ Color ] - Base",
+                                "name": "Opacity/Black opacity 3"
                             }
                         },
                         {
@@ -3876,10 +3912,10 @@
                                     {
                                         "type": "DROP_SHADOW",
                                         "color": {
-                                            "r": 0,
-                                            "g": 0,
-                                            "b": 0,
-                                            "a": 0.04
+                                            "r": 90,
+                                            "g": 87,
+                                            "b": 168,
+                                            "a": 0.08
                                         },
                                         "offset": {
                                             "x": 0,
@@ -3891,10 +3927,10 @@
                                     {
                                         "type": "DROP_SHADOW",
                                         "color": {
-                                            "r": 0,
-                                            "g": 0,
-                                            "b": 0,
-                                            "a": 0.07
+                                            "r": 90,
+                                            "g": 87,
+                                            "b": 168,
+                                            "a": 0.18
                                         },
                                         "offset": {
                                             "x": 0,
@@ -3906,10 +3942,10 @@
                                     {
                                         "type": "DROP_SHADOW",
                                         "color": {
-                                            "r": 0,
-                                            "g": 0,
-                                            "b": 0,
-                                            "a": 0.11
+                                            "r": 90,
+                                            "g": 87,
+                                            "b": 168,
+                                            "a": 0.25
                                         },
                                         "offset": {
                                             "x": 0,
