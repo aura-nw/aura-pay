@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/constants/aura_ecosystem.dart';
 import 'browser_page_event.dart';
 import 'browser_page_state.dart';
 
@@ -11,7 +12,9 @@ class BrowserPageBloc extends Bloc<BrowserPageEvent, BrowserPageState> {
     this._browserManagementUseCase,
     this._bookMarkUseCase,
   ) : super(
-          const BrowserPageState(),
+          BrowserPageState(
+            ecosystems: AuraEcosystem.auraEcosystems,
+          ),
         ) {
     on(_onInit);
     on(_onTabChange);

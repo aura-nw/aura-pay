@@ -7,7 +7,9 @@ import 'browser_search_state.dart';
 class BrowserSearchBloc extends Bloc<BrowserSearchEvent, BrowserSearchState> {
   BrowserSearchBloc()
       : super(
-          const BrowserSearchState(),
+           BrowserSearchState(
+            systems: AuraEcosystem.auraEcosystems,
+          ),
         ){
     on(_onQuery);
   }

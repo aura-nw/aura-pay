@@ -136,7 +136,12 @@ const BookMark auraScan = BookMark(
 );
 
 sealed class AuraEcosystem{
-  static const List<BookMark> auraEcosystems = [];
+  static List<BookMark> auraEcosystems = [
+    haloTradeEuphoria,
+    seekHypeStaging,
+    pyxisSafeStaging,
+    auraScanEuphoria,
+  ];
 
   static void init(PyxisEnvironment pyxisEnvironment){
     switch(pyxisEnvironment){
