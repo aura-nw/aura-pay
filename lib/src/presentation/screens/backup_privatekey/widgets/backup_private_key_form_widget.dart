@@ -17,8 +17,19 @@ class BackupPrivateKeyFormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SvgPicture.asset(
-          '',
+        Container(
+          padding: const EdgeInsets.all(
+            Spacing.spacing04,
+          ),
+          height: BoxSize.boxSize14,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              BorderRadiusSize.borderRadius04,
+            ),
+          ),
+          child: SvgPicture.asset(
+            '',
+          ),
         ),
         const SizedBox(
           height: BoxSize.boxSize03,
