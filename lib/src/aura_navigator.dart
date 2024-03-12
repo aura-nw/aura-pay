@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:pyxis_mobile/src/core/app_routes.dart';
-import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/presentation/screens/accounts/accounts_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_screen.dart';
@@ -142,19 +141,13 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.choiceOption:
-        bool needToSetPassCode = settings.arguments as bool? ?? true;
         return _defaultRoute(
-          OnBoardingChoiceOptionScreen(
-            needToSetPassCode: needToSetPassCode,
-          ),
+          const OnBoardingChoiceOptionScreen(),
           settings,
         );
       case RoutePath.setupPasscode:
-        final OnboardingType type = settings.arguments as OnboardingType;
         return _defaultRoute(
-          OnBoardingSetupPasscodeScreen(
-            onboardingType: type,
-          ),
+          const OnBoardingSetupPasscodeScreen(),
           settings,
         );
       case RoutePath.settingPassCodeAndBioMetric:
@@ -229,7 +222,7 @@ sealed class AppNavigator {
       case RoutePath.sendTransaction:
         final String? initRecipientAddress = settings.arguments as String?;
         return _defaultRoute(
-           SendTransactionScreen(
+          SendTransactionScreen(
             initAddress: initRecipientAddress,
           ),
           settings,

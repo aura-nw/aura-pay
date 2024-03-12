@@ -163,9 +163,14 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
       key: AppLocalConstant.passCodeKey,
     );
 
-    AppNavigator.replaceWith(
-      RoutePath.choiceOption,
-      !hasPassCode,
-    );
+    if(hasPassCode){
+      AppNavigator.replaceWith(
+        RoutePath.reLogin,
+      );
+    }else{
+      AppNavigator.replaceWith(
+        RoutePath.setupPasscode,
+      );
+    }
   }
 }

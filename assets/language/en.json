@@ -27,7 +27,7 @@
   "on_boarding_choice_option_screen_divider_text" : "Or",
 
   "on_boarding_setup_passcode_screen_create_title" : "Create your Passcode",
-  "on_boarding_setup_passcode_screen_create_content" : "Set a app passcode to protects your data and funds",
+  "on_boarding_setup_passcode_screen_create_content" : "For better security, set a passcode that needs to be entered to unlock Pyxis when you turn it on",
   "on_boarding_setup_passcode_screen_confirm_title" : "Confirm your passcode",
   "on_boarding_setup_passcode_screen_confirm_not_match" : "Passcode does not match",
 

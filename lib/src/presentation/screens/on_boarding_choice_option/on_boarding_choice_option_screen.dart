@@ -4,7 +4,6 @@ import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
-import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
@@ -13,10 +12,7 @@ import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 
 // ignore: must_be_immutable
 class OnBoardingChoiceOptionScreen extends StatelessWidget {
-  final bool needToSetPassCode;
-
   const OnBoardingChoiceOptionScreen({
-    this.needToSetPassCode = true,
     super.key,
   });
 
@@ -157,41 +153,20 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
   }
 
   void _onCreateSmartAccountClick() {
-    if (needToSetPassCode) {
-      AppNavigator.push(
-        RoutePath.setupPasscode,
-        OnboardingType.create,
-      );
-    }else{
-      AppNavigator.push(
-        RoutePath.pickAccountName,
-      );
-    }
+    AppNavigator.push(
+      RoutePath.pickAccountName,
+    );
   }
 
   void _onImportAccountClick() {
-    if(needToSetPassCode){
-      AppNavigator.push(
-        RoutePath.setupPasscode,
-        OnboardingType.import,
-      );
-    }else{
-      AppNavigator.push(
-        RoutePath.importFirstPage,
-      );
-    }
+    AppNavigator.push(
+      RoutePath.importFirstPage,
+    );
   }
 
   void _onRecoverAccountClick() {
-    if(needToSetPassCode){
-      AppNavigator.push(
-        RoutePath.setupPasscode,
-        OnboardingType.recover,
-      );
-    }else{
-      AppNavigator.push(
-        RoutePath.recoverChoice
-      );
-    }
+    AppNavigator.push(
+        RoutePath.recoverChoice,
+    );
   }
 }

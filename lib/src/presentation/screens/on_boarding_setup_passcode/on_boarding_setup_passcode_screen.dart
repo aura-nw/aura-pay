@@ -6,7 +6,6 @@ import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
-import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
@@ -17,10 +16,7 @@ import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/key_board_number_widget.dart';
 
 class OnBoardingSetupPasscodeScreen extends StatefulWidget {
-  final OnboardingType onboardingType;
-
   const OnBoardingSetupPasscodeScreen({
-    required this.onboardingType,
     super.key,
   });
 
@@ -31,7 +27,8 @@ class OnBoardingSetupPasscodeScreen extends StatefulWidget {
 
 class _OnBoardingSetupPasscodeScreenState
     extends State<OnBoardingSetupPasscodeScreen> {
-  final OnBoardingSetupPasscodeBloc _bloc = getIt.get<OnBoardingSetupPasscodeBloc>();
+  final OnBoardingSetupPasscodeBloc _bloc =
+      getIt.get<OnBoardingSetupPasscodeBloc>();
 
   int _fillIndex = -1;
 
@@ -48,9 +45,10 @@ class _OnBoardingSetupPasscodeScreenState
       builder: (appTheme) {
         return BlocProvider.value(
           value: _bloc,
-          child: BlocListener<OnBoardingSetupPasscodeBloc,OnBoardingSetupPasscodeState>(
+          child: BlocListener<OnBoardingSetupPasscodeBloc,
+              OnBoardingSetupPasscodeState>(
             listener: (context, state) {
-              switch(state.status){
+              switch (state.status) {
                 case OnBoardingSetupPasscodeStatus.init:
                   break;
                 case OnBoardingSetupPasscodeStatus.onSavePasscode:
@@ -62,106 +60,125 @@ class _OnBoardingSetupPasscodeScreenState
             },
             child: Scaffold(
               backgroundColor: appTheme.bodyColorBackground,
-              appBar: AppBarStepWidget(
+              appBar: NormalAppBarWidget(
                 appTheme: appTheme,
                 onViewMoreInformationTap: () {},
               ),
               body: Column(
                 children: [
                   Expanded(
-                    child: PageView(
-                      controller: _pageController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        Column(
-                          children: [
-                            AppLocalizationProvider(
-                              builder: (localization, _) {
-                                return Text(
-                                  localization.translate(
-                                    LanguageKey
-                                        .onBoardingSetupPasscodeScreenCreateTitle,
-                                  ),
-                                  style: AppTypoGraPhy.bodyMedium04.copyWith(
-                                    color: appTheme.contentColorBlack,
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(
-                              height: Spacing.spacing04,
-                            ),
-                            AppLocalizationProvider(
-                              builder: (localization, _) {
-                                return Text(
-                                  localization.translate(
-                                    LanguageKey
-                                        .onBoardingSetupPasscodeScreenCreateContent,
-                                  ),
-                                  style: AppTypoGraPhy.utilityLabelSm
-                                      .copyWith(
-                                    color: appTheme.contentColor500,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                );
-                              },
-                            ),
-                            const SizedBox(
-                              height: Spacing.spacing10,
-                            ),
-                            InputPasswordWidget(
-                              length: 6,
-                              appTheme: appTheme,
-                              fillIndex: _fillIndex,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            AppLocalizationProvider(
-                              builder: (localization, _) {
-                                return Text(
-                                  localization.translate(
-                                    LanguageKey
-                                        .onBoardingSetupPasscodeScreenConfirmTitle,
-                                  ),
-                                  style: AppTypoGraPhy.bodyMedium04.copyWith(
-                                    color: appTheme.contentColorBlack,
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(
-                              height: Spacing.spacing10,
-                            ),
-                            InputPasswordWidget(
-                              length: 6,
-                              appTheme: appTheme,
-                              fillIndex: _fillIndex,
-                            ),
-                            if (_wrongConfirmPassword) ...[
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: Spacing.spacing07,
+                        horizontal: Spacing.spacing05,
+                      ),
+                      child: PageView(
+                        controller: _pageController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                          Column(
+                            children: [
+                              SvgPicture.asset(
+                                AssetIconPath.onBoardingSetupPasscodeLock,
+                              ),
                               const SizedBox(
-                                height: Spacing.spacing04,
+                                height: Spacing.spacing05,
                               ),
                               AppLocalizationProvider(
                                 builder: (localization, _) {
                                   return Text(
                                     localization.translate(
                                       LanguageKey
-                                          .onBoardingSetupPasscodeScreenConfirmNotMatch,
+                                          .onBoardingSetupPasscodeScreenCreateTitle,
                                     ),
-                                    style: AppTypoGraPhy.utilityHelperSm.copyWith(
-                                      color: appTheme.contentColorDanger,
+                                    style: AppTypoGraPhy.heading02.copyWith(
+                                      color: appTheme.contentColorBlack,
+                                    ),
+                                  );
+                                },
+                              ),
+                              const SizedBox(
+                                height: Spacing.spacing02,
+                              ),
+                              AppLocalizationProvider(
+                                builder: (localization, _) {
+                                  return Text(
+                                    localization.translate(
+                                      LanguageKey
+                                          .onBoardingSetupPasscodeScreenCreateContent,
+                                    ),
+                                    style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                                      color: appTheme.contentColor500,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                     textAlign: TextAlign.center,
                                   );
                                 },
                               ),
-                            ] else
-                              const SizedBox()
-                          ],
-                        ),
-                      ],
+                              const SizedBox(
+                                height: Spacing.spacing10,
+                              ),
+                              InputPasswordWidget(
+                                length: 6,
+                                appTheme: appTheme,
+                                fillIndex: _fillIndex,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              SvgPicture.asset(
+                                AssetIconPath.onBoardingSetupPasscodeLock,
+                              ),
+                              const SizedBox(
+                                height: Spacing.spacing05,
+                              ),
+                              AppLocalizationProvider(
+                                builder: (localization, _) {
+                                  return Text(
+                                    localization.translate(
+                                      LanguageKey
+                                          .onBoardingSetupPasscodeScreenConfirmTitle,
+                                    ),
+                                    style: AppTypoGraPhy.heading02.copyWith(
+                                      color: appTheme.contentColorBlack,
+                                    ),
+                                  );
+                                },
+                              ),
+                              const SizedBox(
+                                height: Spacing.spacing10,
+                              ),
+                              InputPasswordWidget(
+                                length: 6,
+                                appTheme: appTheme,
+                                fillIndex: _fillIndex,
+                              ),
+                              if (_wrongConfirmPassword) ...[
+                                const SizedBox(
+                                  height: Spacing.spacing04,
+                                ),
+                                AppLocalizationProvider(
+                                  builder: (localization, _) {
+                                    return Text(
+                                      localization.translate(
+                                        LanguageKey
+                                            .onBoardingSetupPasscodeScreenConfirmNotMatch,
+                                      ),
+                                      style:
+                                          AppTypoGraPhy.utilityHelperSm.copyWith(
+                                        color: appTheme.contentColorDanger,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    );
+                                  },
+                                ),
+                              ] else
+                                const SizedBox()
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   KeyboardNumberWidget(
@@ -185,20 +202,18 @@ class _OnBoardingSetupPasscodeScreenState
 
     _fillIndex--;
 
-    if(_pageController.page == 0){
-
-      if(_password.isEmpty) return;
+    if (_pageController.page == 0) {
+      if (_password.isEmpty) return;
       _password.removeLast();
-    }else{
-
-      if(_confirmPassword.isEmpty) return;
+    } else {
+      if (_confirmPassword.isEmpty) return;
       _confirmPassword.removeLast();
     }
 
     setState(() {});
   }
 
-  void _onKeyBoardTap(String text) async{
+  void _onKeyBoardTap(String text) async {
     if (_pageController.page == 0) {
       /// create password
       _fillIndex++;
@@ -230,7 +245,7 @@ class _OnBoardingSetupPasscodeScreenState
 
         String passWord = _password.join();
 
-        if(_wrongConfirmPassword) {
+        if (_wrongConfirmPassword) {
           setState(() {});
 
           return;
@@ -242,38 +257,9 @@ class _OnBoardingSetupPasscodeScreenState
     setState(() {});
   }
 
-  void _onSavePassWordDone(){
-    _fillIndex = -1;
-
-
-    switch (widget.onboardingType) {
-      case OnboardingType.create:
-        AppNavigator.push(
-          RoutePath.pickAccountName,
-        );
-        break;
-      case OnboardingType.import:
-        AppNavigator.push(
-          RoutePath.importFirstPage,
-        );
-        break;
-      case OnboardingType.recover:
-        AppNavigator.push(
-          RoutePath.recoverChoice,
-        );
-        break;
-    }
-
-    _pageController.animateToPage(
-      0,
-      duration: const Duration(
-        milliseconds: 300,
-      ),
-      curve: Curves.bounceIn,
+  void _onSavePassWordDone() {
+    AppNavigator.replaceAllWith(
+      RoutePath.choiceOption,
     );
-
-    _confirmPassword.clear();
-
-    _password.clear();
   }
 }

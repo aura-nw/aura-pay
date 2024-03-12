@@ -25,12 +25,6 @@ enum ImportWalletType{
   passPhrase,
 }
 
-enum OnboardingType{
-  create,
-  import,
-  recover,
-}
-
 enum RecoverOptionType{
   google,
   backupAddress,

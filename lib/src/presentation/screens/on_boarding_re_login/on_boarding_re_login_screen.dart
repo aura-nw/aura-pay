@@ -15,7 +15,7 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/widgets/forgot_passcode_form_widget.dart';
+import 'widgets/forgot_passcode_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_layout.dart';
 import 'on_boarding_re_login_bloc.dart';
 import 'on_boarding_re_login_event.dart';

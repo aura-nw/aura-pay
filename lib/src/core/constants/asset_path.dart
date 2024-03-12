@@ -39,6 +39,8 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_onboarding_import_account_information.svg';
   static const String onBoardingRecoverChoiceBackupAddress =
       '${_baseIconPath}ic_onboarding_recover_choice_backup_address.svg';
+  static const String onBoardingSetupPasscodeLock =
+      '${_baseIconPath}ic_on_boarding_setup_passcode_lock.svg';
 
   ///common
   static const String commonCopy = '${_baseIconPath}ic_common_copy.svg';
