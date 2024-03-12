@@ -117,6 +117,7 @@ final class PrimaryAppButton extends StatelessWidget {
   final VoidCallback? onPress;
   final double? minWidth;
   final Color? backGroundColor;
+  final TextStyle? textStyle;
 
   const PrimaryAppButton({
     super.key,
@@ -127,6 +128,7 @@ final class PrimaryAppButton extends StatelessWidget {
     this.onPress,
     this.minWidth,
     this.backGroundColor,
+    this.textStyle,
   });
 
   @override
@@ -140,7 +142,7 @@ final class PrimaryAppButton extends StatelessWidget {
           color: backGroundColor ?? theme.primaryDefault,
           disableColor: theme.primaryColor50,
           minWidth: minWidth,
-          textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
+          textStyle: textStyle ?? AppTypoGraPhy.bodyMedium03.copyWith(
             color: theme.contentColorWhite,
           ),
           theme: theme,

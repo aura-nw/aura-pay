@@ -53,24 +53,24 @@ final class SendTransactionBloc
 
       emit(
         state.copyWith(
-          status: SendTransactionStatus.loaded,
-          sender: account,
-          balance: balances
-                  .firstWhereOrNull(
-                    (element) => element.denom == config.deNom,
-                  )
-                  ?.amount ??
-              '0',
-        ),
+            status: SendTransactionStatus.loaded,
+            sender: account,
+            balance: balances
+                    .firstWhereOrNull(
+                      (element) => element.denom == config.deNom,
+                    )
+                    ?.amount ??
+                '0',
+            recipientAddress: event.initRecipientAddress ?? ''),
       );
     } catch (e) {
       // Set default balance
       emit(
         state.copyWith(
-          status: SendTransactionStatus.error,
-          error: e.toString(),
-          balance: '0',
-        ),
+            status: SendTransactionStatus.error,
+            error: e.toString(),
+            balance: '0',
+            recipientAddress: event.initRecipientAddress ?? ''),
       );
     }
   }

@@ -16,6 +16,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/helpers/scan_validator.dart';
 import 'package:pyxis_mobile/src/core/helpers/system_permission_helper.dart';
 import 'package:pyxis_mobile/src/core/helpers/wallet_address_validator.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
@@ -41,7 +42,8 @@ import 'send_transaction_state.dart';
 
 // The main widget for the SendTransactionScreen
 class SendTransactionScreen extends StatefulWidget {
-  const SendTransactionScreen({super.key});
+  final String ? initAddress;
+  const SendTransactionScreen({this.initAddress,super.key});
 
   @override
   State<SendTransactionScreen> createState() => _SendTransactionScreenState();
@@ -63,8 +65,12 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
   void initState() {
     // Adding the initial event to the bloc when the screen is initialized
     _bloc.add(
-      const SendTransactionEventOnInit(),
+      SendTransactionEventOnInit(initRecipientAddress: widget.initAddress),
     );
+
+    if(widget.initAddress != null){
+      _recipientController.text = widget.initAddress ?? '';
+    }
     super.initState();
   }
 
@@ -489,18 +495,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
     // Check if camera permission is granted
     if (status.isGranted) {
       // If granted, navigate to the scanner screen
-      final result = await AppNavigator.push(
-        RoutePath.scanner,
-      );
-
-      if (result is String) {
-        _onChangeRecipientData(
-          result,
-          WalletAddressValidator.isValidAddress(
-            result.trim(),
-          ),
-        );
-      }
+      _onPushAndReceiveScanResult();
     } else {
       // If not granted, show a permission dialog
       if (context.mounted) {
@@ -513,18 +508,7 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
             SystemPermissionHelper.requestCameraPermission(
               onSuccessFul: () async {
                 // If permission is granted, navigate to the scanner screen
-                final result = await AppNavigator.push(
-                  RoutePath.scanner,
-                );
-
-                if (result is String) {
-                  _onChangeRecipientData(
-                    result,
-                    WalletAddressValidator.isValidAddress(
-                      result.trim(),
-                    ),
-                  );
-                }
+                _onPushAndReceiveScanResult();
               },
               reject: () {
                 // If permission is rejected, navigate to system settings
@@ -537,6 +521,21 @@ class _SendTransactionScreenState extends State<SendTransactionScreen>
           contentKey: LanguageKey.commonPermissionCameraContent,
         );
       }
+    }
+  }
+
+  void _onPushAndReceiveScanResult()async{
+    final result = await AppNavigator.push(
+      RoutePath.scanner,
+    );
+
+    if (result is ScanResult) {
+      _onChangeRecipientData(
+        result.raw,
+        WalletAddressValidator.isValidAddress(
+          result.raw.trim(),
+        ),
+      );
     }
   }
 }

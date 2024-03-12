@@ -87,7 +87,8 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
                                               LanguageKey
                                                   .connectSiteScreenNoSiteFound,
                                             ),
-                                            style: AppTypoGraPhy.bodyMedium02.copyWith(
+                                            style: AppTypoGraPhy.bodyMedium02
+                                                .copyWith(
                                               color: appTheme.contentColor500,
                                             ),
                                           );
@@ -148,6 +149,10 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
                                   ),
                                   // Handle tap on the button
                                   onPress: () {},
+                                  textStyle:
+                                      AppTypoGraPhy.bodyMedium03.copyWith(
+                                    color: appTheme.contentColorBrandDark,
+                                  ),
                                 );
                               },
                             ),

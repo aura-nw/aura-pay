@@ -42,7 +42,7 @@ sealed class SystemPermissionHelper {
     PermissionStatus status = await getCurrentPhotoPermissionStatus();
 
     if (status.isDenied || status.isPermanentlyDenied) {
-      status = await Permission.camera.request();
+      status = await Permission.photos.request();
     }else{
       onSuccessFul();
 

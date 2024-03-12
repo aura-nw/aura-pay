@@ -136,20 +136,16 @@ const BookMark auraScan = BookMark(
 );
 
 sealed class AuraEcosystem{
-  static List<BookMark> auraEcosystems = [
-    haloTradeEuphoria,
-    seekHypeStaging,
-    pyxisSafeStaging,
-    auraScanEuphoria,
-  ];
+  static late List<BookMark> auraEcosystems;
 
   static void init(PyxisEnvironment pyxisEnvironment){
+    auraEcosystems = List.empty(growable: true);
     switch(pyxisEnvironment){
       case PyxisEnvironment.dev:
         auraEcosystems.addAll([
           haloTradeDev,
           seekHypeDev,
-          pyxisSafeDev,
+          // pyxisSafeDev,
           auraScanDev,
         ]);
         break;
@@ -157,7 +153,7 @@ sealed class AuraEcosystem{
         auraEcosystems.addAll([
           haloTradeSerenity,
           seekHypeSerenity,
-          pyxisSafeSerenity,
+          // pyxisSafeSerenity,
           auraScanSerenity,
         ]);
         break;
@@ -165,7 +161,7 @@ sealed class AuraEcosystem{
         auraEcosystems.addAll([
           haloTradeEuphoria,
           seekHypeStaging,
-          pyxisSafeStaging,
+          // pyxisSafeStaging,
           auraScanEuphoria,
         ]);
         break;
@@ -173,7 +169,7 @@ sealed class AuraEcosystem{
         auraEcosystems.addAll([
           haloTrade,
           seekHype,
-          pyxisSafe,
+          // pyxisSafe,
           auraScan
         ]);
         break;

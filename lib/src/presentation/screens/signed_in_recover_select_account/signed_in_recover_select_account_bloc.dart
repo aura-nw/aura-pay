@@ -1,4 +1,3 @@
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
@@ -105,10 +104,11 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
         null;
 
     // If exists account. Show error message to users.
-    if (isExistsAccount) {
+    if (isExistsAccount && !state.preSelectStatus) {
       emit(
         state.copyWith(
           status: SingedInRecoverSelectAccountStatus.existsAccount,
+          preSelectStatus: isExistsAccount,
         ),
       );
     } else {
@@ -116,6 +116,7 @@ final class SingedInRecoverSelectAccountBloc extends Bloc<
       emit(
         state.copyWith(
           selectedAccount: event.account,
+          preSelectStatus: isExistsAccount,
         ),
       );
     }

@@ -368,6 +368,8 @@ sealed class LanguageKey {
   ///region scanner
   static const String scannerScreenAppBarTitle = 'scanner_screen_app_bar_title';
   static const String scannerScreenUploadPhoto = 'scanner_screen_upload_photo';
+  static const String scannerScreenInValidQrCode = 'scanner_screen_invalid_qr_code';
+  static const String scannerScreenConfirm = 'scanner_screen_confirm';
   ///endregion
 
   ///region permission

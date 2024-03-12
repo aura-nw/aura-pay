@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
@@ -33,9 +32,14 @@ class _BrowserPageState extends State<BrowserPage> {
       getIt.get<HomeScreenObserver>();
 
   void _registerEvent(HomeScreenEmitParam param) {
-    if (param.event == HomeScreenObserver.onInAppBrowserRefreshEvent) {
+    if (param.event == HomeScreenObserver.onInAppBrowserRefreshBookMarkEvent) {
       _bloc.add(
-        const BrowserPageOnInitEvent(),
+        const BrowserPageOnRefreshBookMarkEvent(),
+      );
+    } else if (param.event ==
+        HomeScreenObserver.onInAppBrowserRefreshBrowserEvent) {
+      _bloc.add(
+        const BrowserPageOnRefreshTabEvent(),
       );
     }
   }

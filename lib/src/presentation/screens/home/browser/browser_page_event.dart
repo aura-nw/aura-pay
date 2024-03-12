@@ -13,4 +13,8 @@ class BrowserPageEvent with _$BrowserPageEvent {
   const factory BrowserPageEvent.onDeleteBookMark({
     required int id,
   }) = BrowserPageOnDeleteBookMarkEvent;
+
+  const factory BrowserPageEvent.onRefreshBookMark() = BrowserPageOnRefreshBookMarkEvent;
+
+  const factory BrowserPageEvent.onRefreshTab() = BrowserPageOnRefreshTabEvent;
 }

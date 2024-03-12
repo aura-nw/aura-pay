@@ -95,6 +95,24 @@ class ConnectSiteDetailFormWidget extends StatelessWidget {
           const SizedBox(
             height: BoxSize.boxSize04,
           ),
+          Text(
+            siteName,
+            style: AppTypoGraPhy.heading02.copyWith(
+              color: appTheme.contentColorBlack,
+            ),
+          ),
+          const SizedBox(
+            height: BoxSize.boxSize01,
+          ),
+          Text(
+            url,
+            style: AppTypoGraPhy.body02.copyWith(
+              color: appTheme.contentColor500,
+            ),
+          ),
+          const SizedBox(
+            height: BoxSize.boxSize04,
+          ),
           Container(
             padding: const EdgeInsets.all(
               Spacing.spacing05,

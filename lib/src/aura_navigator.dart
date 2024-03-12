@@ -227,8 +227,11 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.sendTransaction:
+        final String? initRecipientAddress = settings.arguments as String?;
         return _defaultRoute(
-          const SendTransactionScreen(),
+           SendTransactionScreen(
+            initAddress: initRecipientAddress,
+          ),
           settings,
         );
       case RoutePath.sendTransactionConfirmation:

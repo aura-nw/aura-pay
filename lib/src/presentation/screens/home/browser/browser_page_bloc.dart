@@ -19,6 +19,8 @@ class BrowserPageBloc extends Bloc<BrowserPageEvent, BrowserPageState> {
     on(_onInit);
     on(_onTabChange);
     on(_onDeleteBookMark);
+    on(_onRefreshBookMarkEvent);
+    on(_onRefreshBrowserEvent);
 
     add(
       const BrowserPageOnInitEvent(),
@@ -71,6 +73,32 @@ class BrowserPageBloc extends Bloc<BrowserPageEvent, BrowserPageState> {
 
     await _bookMarkUseCase.deleteBookMark(
       id: event.id,
+    );
+  }
+
+  void _onRefreshBookMarkEvent(
+    BrowserPageOnRefreshBookMarkEvent event,
+    Emitter<BrowserPageState> emit,
+  ) async {
+    final bookMarks = await _bookMarkUseCase.getBookmarks();
+
+    emit(
+      state.copyWith(
+        bookMarks: bookMarks,
+      ),
+    );
+  }
+
+  void _onRefreshBrowserEvent(
+    BrowserPageOnRefreshTabEvent event,
+    Emitter<BrowserPageState> emit,
+  ) async {
+    final browsers = await _browserManagementUseCase.getBrowsers();
+
+    emit(
+      state.copyWith(
+        tabCount: browsers.length,
+      ),
     );
   }
 }

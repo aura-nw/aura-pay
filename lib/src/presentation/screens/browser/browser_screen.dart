@@ -12,7 +12,7 @@ import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/context_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/debounce.dart';
-import 'package:pyxis_mobile/src/presentation/screens/browser/browser_state.dart';
+import 'browser_state.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_loading_widget.dart';
 import 'browser_event.dart';
 import 'browser_bloc.dart';
@@ -272,8 +272,10 @@ class _BrowserScreenState extends State<BrowserScreen> {
                 case BrowserStatus.none:
                   break;
                 case BrowserStatus.changeBookMarkSuccess:
+                  _onRefreshBookMarkBrowserPage();
+                  break;
                 case BrowserStatus.addNewBrowserSuccess:
-                  _onRefreshBrowserPage();
+                  _onRefreshTabBrowserPage();
                   break;
               }
             },
@@ -397,7 +399,7 @@ class _BrowserScreenState extends State<BrowserScreen> {
     _bloc.add(
       BrowserOnBookMarkClickEvent(
         name: title,
-        url: widget.initUrl,
+        url: url ?? widget.initUrl,
         logo: favicon ?? '',
       ),
     );
@@ -533,10 +535,20 @@ class _BrowserScreenState extends State<BrowserScreen> {
     }
   }
 
-  void _onRefreshBrowserPage() {
+  /// Call refresh book mark in browser page
+  void _onRefreshBookMarkBrowserPage() {
     _homeScreenObserver.emit(
       emitParam: HomeScreenEmitParam(
-        event: HomeScreenObserver.onInAppBrowserRefreshEvent,
+        event: HomeScreenObserver.onInAppBrowserRefreshBookMarkEvent,
+      ),
+    );
+  }
+
+  /// Call refresh tab in browser page
+  void _onRefreshTabBrowserPage() {
+    _homeScreenObserver.emit(
+      emitParam: HomeScreenEmitParam(
+        event: HomeScreenObserver.onInAppBrowserRefreshBrowserEvent,
       ),
     );
   }

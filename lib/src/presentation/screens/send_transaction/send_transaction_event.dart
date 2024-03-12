@@ -3,7 +3,7 @@ part 'send_transaction_event.freezed.dart';
 
 @freezed
 class SendTransactionEvent with _$SendTransactionEvent{
-  const factory SendTransactionEvent.onInit() = SendTransactionEventOnInit;
+  const factory SendTransactionEvent.onInit({String ?initRecipientAddress,}) = SendTransactionEventOnInit;
 
   const factory SendTransactionEvent.onChangeRecipientAddress(String address) = SendTransactionEventOnChangeRecipientAddress;
 

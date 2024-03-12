@@ -64,3 +64,13 @@ enum TransactionMessageViewType{
   // view full raw json message
   viewRaw,
 }
+
+// Define scanner result
+enum ScanResultType{
+  // Aura address
+  walletAddress,
+  // Wallet connect
+  walletConnect,
+  //Other. Doesn't support now
+  other,
+}

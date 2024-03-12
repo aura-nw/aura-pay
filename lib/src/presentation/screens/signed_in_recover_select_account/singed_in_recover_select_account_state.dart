@@ -21,5 +21,6 @@ class SingedInRecoverSelectAccountState
     @Default([]) List<AuraAccount> auraAccounts,
     PyxisRecoveryAccount ?selectedAccount,
     required GoogleAccount googleAccount,
+    @Default(false) bool preSelectStatus,
   }) = _SingedInRecoverSelectAccountState;
 }

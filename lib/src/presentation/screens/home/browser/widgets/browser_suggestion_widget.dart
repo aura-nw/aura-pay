@@ -79,6 +79,8 @@ class BrowserSuggestionWidget extends StatelessWidget {
                 style: AppTypoGraPhy.heading02.copyWith(
                   color: appTheme.contentColorBlack,
                 ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(
                 height: BoxSize.boxSize01,
@@ -88,6 +90,8 @@ class BrowserSuggestionWidget extends StatelessWidget {
                 style: AppTypoGraPhy.body02.copyWith(
                   color: appTheme.contentColor500,
                 ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

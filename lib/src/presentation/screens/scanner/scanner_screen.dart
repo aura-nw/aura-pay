@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -7,13 +8,16 @@ import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/helpers/image_picker_helper.dart';
+import 'package:pyxis_mobile/src/core/helpers/scan_validator.dart';
 import 'package:pyxis_mobile/src/core/helpers/system_permission_helper.dart';
-import 'package:pyxis_mobile/src/presentation/screens/scanner/widgets/scanner_app_bar_widget.dart';
-import 'package:pyxis_mobile/src/presentation/screens/scanner/widgets/scanner_overlay.dart';
+import 'widgets/invalid_qr_code_widget.dart';
+import 'widgets/scanner_app_bar_widget.dart';
+import 'widgets/scanner_overlay.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -24,9 +28,10 @@ class ScannerScreen extends StatefulWidget {
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
-  final MobileScannerController _controller = MobileScannerController(
-    autoStart: true,
-  );
+  final MobileScannerController _controller =
+      MobileScannerController(autoStart: true, formats: [
+    BarcodeFormat.all,
+  ]);
 
   @override
   void initState() {
@@ -41,17 +46,10 @@ class _ScannerScreenState extends State<ScannerScreen> {
           body: Stack(
             children: [
               MobileScanner(
-                onDetect: (barcodeCapture) async {
-                  if (barcodeCapture.barcodes.isEmpty) return;
-
-                  await _controller.stop();
-
-                  final barcode = barcodeCapture.barcodes[0];
-
-                  AppNavigator.pop(
-                    barcode.rawValue,
-                  );
-                },
+                onDetect: (barcodes) => _onBarcodeCapture(
+                  barcodes,
+                  appTheme,
+                ),
                 controller: _controller,
                 errorBuilder: (_, exception, child) {
                   return const SizedBox.shrink();
@@ -133,22 +131,23 @@ class _ScannerScreenState extends State<ScannerScreen> {
     );
   }
 
-  void _openScan()async{
+  void _openScan() async {
     final String? path = await ImagePickerHelper.pickSingleImage();
 
     if (path == null) return;
 
-    await _controller.analyzeImage(path);
+    await _controller
+        .analyzeImage(path);
   }
 
-  void _showRequestCameraPermission(AppTheme appTheme) async{
+  void _showRequestCameraPermission(AppTheme appTheme) async {
+    PermissionStatus status =
+        await SystemPermissionHelper.getCurrentPhotoPermissionStatus();
 
-    PermissionStatus status = await SystemPermissionHelper.getCurrentPhotoPermissionStatus();
-
-    if(status.isGranted){
+    if (status.isGranted) {
       _openScan();
-    }else{
-      if(context.mounted){
+    } else {
+      if (context.mounted) {
         DialogProvider.showPermissionDialog(
           context,
           appTheme: appTheme,
@@ -168,5 +167,54 @@ class _ScannerScreenState extends State<ScannerScreen> {
         );
       }
     }
+  }
+
+  void _onBarcodeCapture(
+    BarcodeCapture barcodeCapture,
+    AppTheme appTheme,
+  ) async {
+    if (barcodeCapture.barcodes.isEmpty) return;
+
+    await _controller.stop();
+
+    final barcode = barcodeCapture.barcodes[0];
+
+    final ScanResult scanResult =
+        ScanValidator.validateResult(barcode.rawValue ?? '');
+
+    if (scanResult.type == ScanResultType.other) {
+      _showInValidQrCode(appTheme);
+    } else {
+      AppNavigator.pop(
+        scanResult,
+      );
+    }
+  }
+
+  void _showInValidQrCode(
+    AppTheme appTheme,
+  ) {
+    DialogProvider.showCustomDialog(
+      context,
+      appTheme: appTheme,
+      widget: InValidQrCodeWidget(
+        appTheme: appTheme,
+        onConfirm: () async {
+          AppNavigator.pop();
+
+          await Future.delayed(
+            const Duration(
+              milliseconds: 700,
+            ),
+          );
+
+          try{
+            _controller.start();
+          }catch(e){
+            LogProvider.log(e.toString());
+          }
+        },
+      ),
+    );
   }
 }

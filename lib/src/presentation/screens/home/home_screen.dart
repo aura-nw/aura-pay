@@ -10,7 +10,9 @@ import 'package:pyxis_mobile/src/application/global/localization/localization_ma
 import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_cubit.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
+import 'package:pyxis_mobile/src/core/helpers/scan_validator.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/helpers/system_permission_helper.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
@@ -219,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen>
     PermissionStatus status =
         await SystemPermissionHelper.getCurrentCameraPermissionStatus();
 
-    String? result;
+    ScanResult? result;
 
     if (status.isGranted) {
       result = await AppNavigator.push(
@@ -250,20 +252,7 @@ class _HomeScreenState extends State<HomeScreen>
       }
     }
 
-    if (result != null) {
-      String? account = _bloc.state.selectedAccount?.address;
-      if (context.mounted) {
-        WalletConnectCubit.of(context).connect(result ?? '');
-      }
-
-      // if (result != null) {
-      //   WalletConnectScreenData connectScreenData =
-      //       WalletConnectScreenData(url: result!, selectedAccount: account ?? '');
-      //   await AppNavigator.push(
-      //     RoutePath.walletConnect,
-      //     connectScreenData,
-      //   );
-    }
+    return _directToScreen(result);
   }
 
   void _onCopyAddress(String address) async {
@@ -282,6 +271,28 @@ class _HomeScreenState extends State<HomeScreen>
           ),
         );
       }
+    }
+  }
+
+  void _directToScreen(ScanResult? result) async {
+    if (result == null) return;
+    switch (result.type) {
+      case ScanResultType.walletConnect:
+        if (context.mounted) {
+          WalletConnectCubit.of(context).connect(
+            result.raw,
+          );
+        }
+        break;
+      case ScanResultType.walletAddress:
+        AppNavigator.push(
+          RoutePath.sendTransaction,
+          result.raw,
+        );
+
+        break;
+      case ScanResultType.other:
+        break;
     }
   }
 }

@@ -121,14 +121,15 @@ class SendTransactionConfirmationBloc extends Bloc<
       if (state.sender.type == AuraAccountType.smartAccount) {
         // send token by smart account
         information = await _smartAccountUseCase.sendToken(
-            userPrivateKey:
-                AuraWalletHelper.getPrivateKeyFromString(privateKeyString),
-            smartAccountAddress: sender.address,
-            receiverAddress: state.recipient,
-            amount: state.amount.toDenom,
-            fee: state.transactionFee,
-            gasLimit: state.estimationGas,
-            memo: state.memo);
+          userPrivateKey:
+              AuraWalletHelper.getPrivateKeyFromString(privateKeyString),
+          smartAccountAddress: sender.address,
+          receiverAddress: state.recipient,
+          amount: state.amount.toDenom,
+          fee: state.transactionFee,
+          gasLimit: state.estimationGas,
+          memo: state.memo,
+        );
       } else {
         // send token by normal wallet
 
