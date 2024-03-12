@@ -23,14 +23,24 @@ sealed class LanguageKey {
   ///endregion
 
   ///region onboarding choice option
-  static const String onBoardingChoiceOptionScreenTitle = 'on_boarding_choice_option_screen_title';
-  static const String onBoardingChoiceOptionScreenCreateSmartAccountTitle = 'on_boarding_choice_option_screen_create_smart_account_title';
-  static const String onBoardingChoiceOptionScreenCreateSmartAccountContent = 'on_boarding_choice_option_screen_create_smart_account_content';
-  static const String onBoardingChoiceOptionScreenImportExistAccountTitle = 'on_boarding_choice_option_screen_import_exist_account_title';
-  static const String onBoardingChoiceOptionScreenImportExistAccountContent = 'on_boarding_choice_option_screen_import_exist_account_content';
-  static const String onBoardingChoiceOptionScreenRecoverAccountTitle = 'on_boarding_choice_option_screen_recover_account_title';
-  static const String onBoardingChoiceOptionScreenRecoverAccountContent = 'on_boarding_choice_option_screen_recover_account_content';
-  static const String onBoardingChoiceOptionScreenDividerText = 'on_boarding_choice_option_screen_divider_text';
+  static const String onBoardingChoiceOptionScreenAppBarTitle = 'on_boarding_choice_option_screen_app_bar_title';
+  static const String onBoardingChoiceOptionScreenSmartAccountOption = 'on_boarding_choice_option_screen_smart_account_option';
+  static const String onBoardingChoiceOptionScreenRecommended = 'on_boarding_choice_option_screen_recommended';
+  static const String onBoardingChoiceOptionScreenSmartAccountOptionContent = 'on_boarding_choice_option_screen_smart_account_option_content';
+  static const String onBoardingChoiceOptionScreenSmartAccountOptionMore = 'on_boarding_choice_option_screen_smart_account_option_more';
+  static const String onBoardingChoiceOptionScreenSmartAccountOptionCreateNewSmartAccount = 'on_boarding_choice_option_screen_smart_account_option_create_new_smart_account';
+  static const String onBoardingChoiceOptionScreenSmartAccountOptionCreateNewSmartAccountContent = 'on_boarding_choice_option_screen_smart_account_option_create_new_smart_account_content';
+  static const String onBoardingChoiceOptionScreenSmartAccountOptionUseGoogle = 'on_boarding_choice_option_screen_smart_account_option_use_google';
+  static const String onBoardingChoiceOptionScreenSmartAccountOptionUseGoogleContent = 'on_boarding_choice_option_screen_smart_account_option_use_google_content';
+  static const String onBoardingChoiceOptionScreenNormalWalletOption = 'on_boarding_choice_option_screen_normal_wallet_option';
+  static const String onBoardingChoiceOptionScreenNormalWalletOptionContent = 'on_boarding_choice_option_screen_normal_wallet_option_content';
+  static const String onBoardingChoiceOptionScreenNormalWalletOptionMore = 'on_boarding_choice_option_screen_normal_wallet_option_more';
+  static const String onBoardingChoiceOptionScreenNormalWalletOptionCreateWallet = 'on_boarding_choice_option_screen_normal_wallet_option_create_wallet';
+  static const String onBoardingChoiceOptionScreenNormalWalletOptionCreateWalletContent = 'on_boarding_choice_option_screen_normal_wallet_option_create_wallet_content';
+  static const String onBoardingChoiceOptionScreenNormalWalletOptionUseGoogle = 'on_boarding_choice_option_screen_normal_wallet_option_use_google';
+  static const String onBoardingChoiceOptionScreenNormalWalletOptionUseGoogleContent = 'on_boarding_choice_option_screen_normal_wallet_option_use_google_content';
+  static const String onBoardingChoiceOptionScreenNormalWalletOptionImportWallet = 'on_boarding_choice_option_screen_normal_wallet_option_import_wallet';
+  static const String onBoardingChoiceOptionScreenNormalWalletOptionImportWalletContent = 'on_boarding_choice_option_screen_normal_wallet_option_import_wallet_content';
 
   ///endregion
 
@@ -533,4 +543,36 @@ sealed class LanguageKey {
   static const String connectWalletScreenReasonThree = 'connect_wallet_screen_reason_three';
   static const String connectWalletScreenButtonTitle = 'connect_wallet_screen_button_title';
   static const String connectWalletScreenChooseAccount = 'connect_wallet_screen_choose_account';
+
+
+  /// region on boarding create eoa screen
+  static const String onBoardingCreateEoaScreenAppBarTitle = 'on_boarding_create_eoa_screen_app_bar_title';
+  static const String onBoardingCreateEoaScreenCreatingNewWallet = 'on_boarding_create_eoa_screen_creating_new_wallet';
+  static const String onBoardingCreateEoaScreenPleaseWait = 'on_boarding_create_eoa_screen_please_wait';
+
+
+  /// region on boarding recover phrase screen
+  static const String onBoardingRecoverPhraseScreenAppBarTitle = 'on_boarding_recover_phrase_screen_app_bar_title';
+  static const String onBoardingRecoverPhraseScreenRemindTitle = 'on_boarding_recover_phrase_screen_remind_title';
+  static const String onBoardingRecoverPhraseScreenRemindOne = 'on_boarding_recover_phrase_screen_remind_one';
+  static const String onBoardingRecoverPhraseScreenRemindTwo = 'on_boarding_recover_phrase_screen_remind_two';
+  static const String onBoardingRecoverPhraseScreenRemindThree = 'on_boarding_recover_phrase_screen_remind_three';
+  static const String onBoardingRecoverPhraseScreenShowPhraseButtonTitle = 'on_boarding_recover_phrase_screen_show_phrase_button_title';
+  static const String onBoardingRecoverPhraseScreenGoNextButtonTitle = 'on_boarding_recover_phrase_screen_go_next_button_title';
+
+
+  /// region on boarding confirm recovery phrase screen
+  static const String onBoardingConfirmRecoveryPhraseScreenAppBarTitle = 'on_boarding_confirm_recovery_phrase_screen_app_bar_title';
+  static const String onBoardingConfirmRecoveryPhraseScreenContentRegionOne = 'on_boarding_confirm_recovery_phrase_screen_content_region_one';
+  static const String onBoardingConfirmRecoveryPhraseScreenContentRegionTwo = 'on_boarding_confirm_recovery_phrase_screen_content_region_two';
+  static const String onBoardingConfirmRecoveryPhraseScreenContentRegionThree = 'on_boarding_confirm_recovery_phrase_screen_content_region_three';
+  static const String onBoardingConfirmRecoveryPhraseScreenContentRegionFour = 'on_boarding_confirm_recovery_phrase_screen_content_region_four';
+  static const String onBoardingConfirmRecoveryPhraseScreenContentRegionFive = 'on_boarding_confirm_recovery_phrase_screen_content_region_five';
+  static const String onBoardingConfirmRecoveryPhraseScreenHint = 'on_boarding_confirm_recovery_phrase_screen_hint';
+  static const String onBoardingConfirmRecoveryPhraseScreenIncorrectAnswer = 'on_boarding_confirm_recovery_phrase_screen_incorrect_answer';
+  static const String onBoardingConfirmRecoveryPhraseScreenEg = 'on_boarding_confirm_recovery_phrase_screen_eg';
+  static const String onBoardingConfirmRecoveryPhraseScreenDtn = 'on_boarding_confirm_recovery_phrase_screen_dtn';
+  static const String onBoardingConfirmRecoveryPhraseScreenNameYourWallet = 'on_boarding_confirm_recovery_phrase_screen_name_your_wallet';
+  static const String onBoardingConfirmRecoveryPhraseScreenNameYourWalletHint = 'on_boarding_confirm_recovery_phrase_screen_name_your_wallet_hint';
+  static const String onBoardingConfirmRecoveryPhraseScreenConfirmButtonTitle = 'on_boarding_confirm_recovery_phrase_screen_confirm_button_title';
 }

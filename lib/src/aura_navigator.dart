@@ -14,6 +14,8 @@ import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft_detail/nft_detail_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_confirm_recover_phrase/on_boarding_confirm_recover_phrase_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa/on_boarding_create_eao_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup/on_boarding_recover_backup_address_screen.dart';
@@ -40,6 +42,7 @@ import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart'
 import 'package:flutter/material.dart';
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
 import 'presentation/screens/on_boarding_import_key/on_boarding_import_key_screen.dart';
+import 'presentation/screens/on_boarding_recover_phrase/on_boarding_recover_phrase_screen.dart';
 import 'presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_screen.dart';
 import 'presentation/screens/signed_in_recover_select_account/singed_in_recover_select_account_screen.dart';
 import 'presentation/screens/signed_in_recover_sign/signed_in_recover_sign_screen.dart';
@@ -63,6 +66,11 @@ sealed class RoutePath {
   static const String recoverSign = '$_onBoarding/recover_sign';
   static const String recoverBackup = '$_onBoarding/recover_backup';
   static const String recoverBackupDone = '$_onBoarding/recover_backup_done';
+  static const String createNewWallet = '$_onBoarding/create_new_normal_wallet';
+  static const String createNewWalletBackupPhrase =
+      '$createNewWallet/back_up_phrase';
+  static const String createNewWalletConfirmPhrase =
+      '$createNewWallet/confirm_phrase';
 
   static const String home = '${_base}home';
   static const String nft = '$home/nft';
@@ -403,6 +411,21 @@ sealed class AppNavigator {
           BrowserTabManagementScreen(
             isCloseAndReplace: closeAndReplace,
           ),
+          settings,
+        );
+      case RoutePath.createNewWallet:
+        return _defaultRoute(
+          const OnBoardingCreateEAOScreen(),
+          settings,
+        );
+      case RoutePath.createNewWalletBackupPhrase:
+        return _defaultRoute(
+          const OnBoardingRecoverPhraseScreen(),
+          settings,
+        );
+        case RoutePath.createNewWalletConfirmPhrase:
+        return _defaultRoute(
+          const OnBoardingConfirmRecoveryPhraseScreen(),
           settings,
         );
       default:
