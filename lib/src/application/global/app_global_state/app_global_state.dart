@@ -11,7 +11,8 @@ enum OnBoardingStatus{
   none,
   createSmAccountSuccess,
   recoverSmartAccountSuccess,
-  importSmartAccountSuccessFul,
+  importNormalAccountSuccessFul,
+  createNormalAccountSuccessFul,
 }
 
 @freezed

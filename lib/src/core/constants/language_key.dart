@@ -182,6 +182,7 @@ sealed class LanguageKey {
   static const String homeScreenBottomNavigatorBarSetting = 'home_screen_bottom_navigator_bar_setting';
   static const String homeScreenRecoverSmartAccountSuccessFul = 'home_screen_recover_smart_account_successful';
   static const String homeScreenImportAccountSuccessFul = 'home_screen_import_account_successful';
+  static const String homeScreenCreateAccountSuccessFul = 'home_screen_create_account_successful';
   static const String homeScreenCreateSmartAccountSuccessFul = 'home_screen_create_smart_account_successful';
 
   ///region home page
@@ -553,6 +554,7 @@ sealed class LanguageKey {
 
   /// region on boarding recover phrase screen
   static const String onBoardingRecoverPhraseScreenAppBarTitle = 'on_boarding_recover_phrase_screen_app_bar_title';
+  static const String onBoardingRecoverPhraseScreenCopy = 'on_boarding_recover_phrase_screen_copy';
   static const String onBoardingRecoverPhraseScreenRemindTitle = 'on_boarding_recover_phrase_screen_remind_title';
   static const String onBoardingRecoverPhraseScreenRemindOne = 'on_boarding_recover_phrase_screen_remind_one';
   static const String onBoardingRecoverPhraseScreenRemindTwo = 'on_boarding_recover_phrase_screen_remind_two';
@@ -575,4 +577,5 @@ sealed class LanguageKey {
   static const String onBoardingConfirmRecoveryPhraseScreenNameYourWallet = 'on_boarding_confirm_recovery_phrase_screen_name_your_wallet';
   static const String onBoardingConfirmRecoveryPhraseScreenNameYourWalletHint = 'on_boarding_confirm_recovery_phrase_screen_name_your_wallet_hint';
   static const String onBoardingConfirmRecoveryPhraseScreenConfirmButtonTitle = 'on_boarding_confirm_recovery_phrase_screen_confirm_button_title';
+  static const String onBoardingConfirmRecoveryPhraseScreenCreating = 'on_boarding_confirm_recovery_phrase_screen_creating';
 }

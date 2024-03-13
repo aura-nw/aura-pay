@@ -13,6 +13,9 @@ sealed class AssetImagePath {
       '${_baseImagePath}img_on_boarding_recover_backup_address.svg';
   static const String splashScreen =
       '${_baseImagePath}img_plash_screen.svg';
+
+  /// Onboarding recover phrase
+  static const String onBoardingRecoverPhraseHidePhrase = '${_baseImagePath}img_on_boarding_recover_phrase_hide_phrase.svg';
 }
 
 sealed class AssetIconPath {
@@ -107,6 +110,7 @@ sealed class AssetIconPath {
   static const String commonShare = '${_baseIconPath}ic_common_share.svg';
   static const String commonViewRaw = '${_baseIconPath}ic_common_view_raw.svg';
   static const String commonViewRawActive = '${_baseIconPath}ic_common_view_raw_active.svg';
+  static const String commonShowKey = '${_baseIconPath}ic_common_show_key.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive =

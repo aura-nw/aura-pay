@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
+import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_confirm_recover_phrase/on_boarding_confirm_recover_phrase_selector.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/phrase_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_base.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_manager.dart';
@@ -12,11 +15,19 @@ class ConfirmRecoverPhraseContentWidget extends StatelessWidget {
   final TextEditingController confirmPhraseController;
   final TextEditingController walletNameController;
   final AppTheme appTheme;
+  final List<String> words;
+  final String wordSplit;
+  final void Function(String) onChangeWalletName;
+  final void Function(bool) onConfirmChange;
 
   const ConfirmRecoverPhraseContentWidget({
     required this.confirmPhraseController,
     required this.walletNameController,
     required this.appTheme,
+    required this.words,
+    required this.wordSplit,
+    required this.onChangeWalletName,
+    required this.onConfirmChange,
     super.key,
   });
 
@@ -27,28 +38,86 @@ class ConfirmRecoverPhraseContentWidget extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        SvgPicture.asset(''),
+        SvgPicture.asset(
+          AssetIconPath.commonShowKey,
+        ),
         const SizedBox(
-          height: BoxSize.boxSize07,
+          height: BoxSize.boxSize06,
         ),
         AppLocalizationProvider(
           builder: (localization, _) {
-            return Text(
-              localization.translate(
-                '',
+            return RichText(
+              text: TextSpan(
+                style: AppTypoGraPhy.body03.copyWith(
+                  color: appTheme.contentColor700,
+                ),
+                children: [
+                  TextSpan(
+                    text: localization.translate(
+                      LanguageKey
+                          .onBoardingConfirmRecoveryPhraseScreenContentRegionOne,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' ${localization.translate(
+                      LanguageKey
+                          .onBoardingConfirmRecoveryPhraseScreenContentRegionTwo,
+                    )} ',
+                    style: AppTypoGraPhy.bodyMedium03.copyWith(
+                      color: appTheme.contentColorBlack,
+                    ),
+                  ),
+                  TextSpan(
+                    text: localization.translate(
+                      LanguageKey
+                          .onBoardingConfirmRecoveryPhraseScreenContentRegionThree,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' ${localization.translateWithParam(
+                      LanguageKey
+                          .onBoardingConfirmRecoveryPhraseScreenContentRegionFour,
+                      {'words': '4 , 5, 6'},
+                    )} ',
+                    style: AppTypoGraPhy.bodyMedium03.copyWith(
+                      color: appTheme.contentColorBlack,
+                    ),
+                  ),
+                  TextSpan(
+                    text: localization.translate(
+                      LanguageKey
+                          .onBoardingConfirmRecoveryPhraseScreenContentRegionFive,
+                    ),
+                  ),
+                ],
               ),
             );
           },
         ),
-        TextInputNormalWidget(
-          controller: confirmPhraseController,
-          constraintManager: ConstraintManager()
-            ..custom(
-              errorMessage: '',
-              customValid: (text) {
-                return false;
+        const SizedBox(
+          height: BoxSize.boxSize05,
+        ),
+        AppLocalizationProvider(
+          builder: (localization, _) {
+            return TextInputNormalWidget(
+              controller: confirmPhraseController,
+              hintText: localization.translateWithParam(
+                LanguageKey.onBoardingConfirmRecoveryPhraseScreenHint,
+                {'words': '4 , 5, 6'},
+              ),
+              onChanged: (_, isValid) {
+                onConfirmChange(isValid);
               },
-            ),
+              constraintManager: ConstraintManager()
+                ..custom(
+                  errorMessage: localization.translate(
+                    LanguageKey
+                        .onBoardingConfirmRecoveryPhraseScreenIncorrectAnswer,
+                  ),
+                  customValid: _validateWord,
+                ),
+            );
+          },
         ),
         const SizedBox(
           height: BoxSize.boxSize04,
@@ -56,9 +125,11 @@ class ConfirmRecoverPhraseContentWidget extends StatelessWidget {
         AppLocalizationProvider(
           builder: (localization, _) {
             return Text(
-              localization.translateWithParam(
-                '',
-                {},
+              localization.translate(
+                LanguageKey.onBoardingConfirmRecoveryPhraseScreenEg,
+              ),
+              style: AppTypoGraPhy.body01.copyWith(
+                color: appTheme.contentColor500,
               ),
             );
           },
@@ -74,21 +145,57 @@ class ConfirmRecoverPhraseContentWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               BorderRadiusSize.borderRadius03,
             ),
-            color: appTheme.surfaceColorBlack.withOpacity(
-              0.04,
-            ),
+            color: appTheme.surfaceColorGrayDefault,
           ),
           child: Row(
-            children: List.generate(
-              [].length,
-              (index) => Expanded(
-                child: PhraseWidget(
-                  position: index + 1,
-                  word: 'word',
-                  appTheme: appTheme,
+            children: [
+              Expanded(
+                flex: 5,
+                child: Row(
+                  children: List.generate(
+                    words.length,
+                    (index) {
+                      return Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Spacing.spacing02,
+                          ),
+                          child: PhraseWidget(
+                            position: index + 4,
+                            word: words[index],
+                            appTheme: appTheme,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing02,
+                  ),
+                  child: Row(
+                    children: [
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return Text(
+                            localization.translate(
+                              LanguageKey.onBoardingConfirmRecoveryPhraseScreenDtn,
+                            ),
+                            style: AppTypoGraPhy.body02.copyWith(
+                              color: appTheme.contentColorBlack,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(
@@ -100,26 +207,47 @@ class ConfirmRecoverPhraseContentWidget extends StatelessWidget {
             AppLocalizationProvider(
               builder: (localization, _) {
                 return Text(
-                  localization.translate(''),
+                  localization.translate(
+                    LanguageKey
+                        .onBoardingConfirmRecoveryPhraseScreenNameYourWallet,
+                  ),
                   style: AppTypoGraPhy.utilityLabelSm.copyWith(
                     color: appTheme.contentColorBlack,
                   ),
                 );
               },
             ),
-            Text(
-              '${walletNameController.text.trim().length}/$_maxWalletNameLength',
-              style: AppTypoGraPhy.bodyMedium01.copyWith(
-                color: appTheme.contentColor300,
-              ),
+            OnBoardingConfirmRecoverPhraseWalletNameSelector(
+              builder: (walletName) {
+                return Text(
+                  '${walletName.trim().length}/$_maxWalletNameLength',
+                  style: AppTypoGraPhy.bodyMedium01.copyWith(
+                    color: appTheme.contentColor500,
+                  ),
+                );
+              }
             ),
           ],
         ),
-        TextInputNormalWidget(
-          maxLength: _maxWalletNameLength,
-          controller: walletNameController,
+        AppLocalizationProvider(
+          builder: (localization, _) {
+            return TextInputNormalWidget(
+              maxLength: _maxWalletNameLength,
+              controller: walletNameController,
+              hintText: localization.translate(
+                LanguageKey.onBoardingConfirmRecoveryPhraseScreenNameYourWallet,
+              ),
+              onChanged: (walletName, _) {
+                onChangeWalletName(walletName);
+              },
+            );
+          },
         ),
       ],
     );
+  }
+
+  bool _validateWord(String text){
+    return text == wordSplit;
   }
 }

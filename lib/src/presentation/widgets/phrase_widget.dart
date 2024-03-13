@@ -28,22 +28,26 @@ class PhraseWidget extends StatelessWidget {
         const SizedBox(
           width: BoxSize.boxSize01,
         ),
-        Container(
-          padding: const EdgeInsets.all(
-            Spacing.spacing03,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              BorderRadiusSize.borderRadius03,
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(
+              Spacing.spacing03,
             ),
-            color: appTheme.surfaceColorGrayLight,
-          ),
-          child: Text(
-            word,
-            style: AppTypoGraPhy.body02.copyWith(
-              color: appTheme.contentColorBlack,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                BorderRadiusSize.borderRadius03,
+              ),
+              color: appTheme.surfaceColorGrayLight,
             ),
-            textAlign: TextAlign.start,
+            child: Text(
+              word,
+              style: AppTypoGraPhy.body02.copyWith(
+                color: appTheme.contentColorBlack,
+              ),
+              textAlign: TextAlign.start,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
       ],

@@ -90,7 +90,7 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
                       AppGlobalCubit.of(context).changeState(
                         const AppGlobalState(
                           status: AppGlobalStatus.authorized,
-                          onBoardingStatus: OnBoardingStatus.importSmartAccountSuccessFul,
+                          onBoardingStatus: OnBoardingStatus.importNormalAccountSuccessFul,
                         ),
                       );
                       break;

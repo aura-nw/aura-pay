@@ -131,7 +131,17 @@ class _HomePageState extends State<HomePage>
       switch (state.onBoardingStatus) {
         case OnBoardingStatus.none:
           break;
-        case OnBoardingStatus.importSmartAccountSuccessFul:
+        case OnBoardingStatus.createNormalAccountSuccessFul:
+          showToast(
+            AppLocalizationManager.of(context).translate(
+              LanguageKey.homeScreenCreateAccountSuccessFul,
+            ),
+          );
+
+          AppGlobalCubit.of(context)
+              .changeOnBoardingStatus(OnBoardingStatus.none);
+          break;
+        case OnBoardingStatus.importNormalAccountSuccessFul:
           showToast(
             AppLocalizationManager.of(context).translate(
               LanguageKey.homeScreenImportAccountSuccessFul,

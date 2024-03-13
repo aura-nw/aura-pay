@@ -38,10 +38,13 @@ import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_
 import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_confirm_recover_phrase/on_boarding_confirm_recover_phrase_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa/on_boarding_create_eoa_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_phrase/on_boarding_recover_phrase_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_sign/on_boarding_recover_sign_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_bloc.dart';
@@ -783,6 +786,25 @@ Future<void> initDependency(
   getIt.registerFactory<ConnectSiteCubit>(
     () => ConnectSiteCubit(
       getIt.get<WalletConnectService>(),
+    ),
+  );
+
+  getIt.registerFactory<OnBoardingCreateEOACubit>(
+    () => OnBoardingCreateEOACubit(
+      getIt.get<WalletUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<OnBoardingRecoverPhraseCubit>(
+    () => OnBoardingRecoverPhraseCubit(),
+  );
+
+  getIt.registerFactoryParam<OnBoardingConfirmRecoverPhraseBloc, PyxisWallet,
+      dynamic>(
+    (pyxisWallet, _) => OnBoardingConfirmRecoverPhraseBloc(
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
+      pyxisWallet: pyxisWallet,
     ),
   );
 }

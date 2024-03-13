@@ -48,10 +48,11 @@
 
 
   "on_boarding_recover_phrase_screen_app_bar_title" : "Recovery phrase",
+  "on_boarding_recover_phrase_screen_copy" : "Copy",
   "on_boarding_recover_phrase_screen_remind_title" : "Important reminders",
-  "on_boarding_recover_phrase_screen_remind_one" : "If you lose your seed phrase, your assets will be lost forever.",
-  "on_boarding_recover_phrase_screen_remind_two" : "Anyone with your private key can have access to your assets.",
-  "on_boarding_recover_phrase_screen_remind_three" : "If you uninstall Pyxis without backing up the seed phrase, Pyxis cannot retrieve it for you.",
+  "on_boarding_recover_phrase_screen_remind_one" : "• If you lose your seed phrase, your assets will be lost forever.",
+  "on_boarding_recover_phrase_screen_remind_two" : "• Anyone with your private key can have access to your assets.",
+  "on_boarding_recover_phrase_screen_remind_three" : "• If you uninstall Pyxis without backing up the seed phrase, Pyxis cannot retrieve it for you.",
   "on_boarding_recover_phrase_screen_show_phrase_button_title" : "Show Passphrase",
   "on_boarding_recover_phrase_screen_go_next_button_title" : "I Have Memorized",
 
@@ -65,10 +66,11 @@
   "on_boarding_confirm_recovery_phrase_screen_hint" : "Enter last characters of the words number ${words}",
   "on_boarding_confirm_recovery_phrase_screen_incorrect_answer" : "Incorrect answer",
   "on_boarding_confirm_recovery_phrase_screen_eg" : "Eg:",
-  "on_boarding_confirm_recovery_phrase_screen_dtn" : "dtn",
+  "on_boarding_confirm_recovery_phrase_screen_dtn" : "-> dtn",
   "on_boarding_confirm_recovery_phrase_screen_name_your_wallet" : "Name your wallet",
   "on_boarding_confirm_recovery_phrase_screen_name_your_wallet_hint" : "Input your wallet name",
   "on_boarding_confirm_recovery_phrase_screen_confirm_button_title" : "Confirm",
+  "on_boarding_confirm_recovery_phrase_screen_creating" : "Creating...",
 
 
   "on_boarding_create_new_smart_account_screen_title_region_one" : "Create new",
@@ -181,6 +183,7 @@
   "home_screen_bottom_navigator_bar_setting" : "Setting",
   "home_screen_recover_smart_account_successful" : "Recover smart account successfully",
   "home_screen_import_account_successful" : "Import account successfully",
+  "home_screen_create_account_successful" : "Create account successfully",
   "home_screen_create_smart_account_successful" : "Smart account created successfully",
 
   "home_page_send_token" : "Send",

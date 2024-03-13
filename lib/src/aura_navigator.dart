@@ -15,7 +15,7 @@ import 'package:pyxis_mobile/src/presentation/screens/nft/nft_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft_detail/nft_detail_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_confirm_recover_phrase/on_boarding_confirm_recover_phrase_screen.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa/on_boarding_create_eao_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa/on_boarding_create_eoa_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup/on_boarding_recover_backup_address_screen.dart';
@@ -415,17 +415,23 @@ sealed class AppNavigator {
         );
       case RoutePath.createNewWallet:
         return _defaultRoute(
-          const OnBoardingCreateEAOScreen(),
+          const OnBoardingCreateEOAScreen(),
           settings,
         );
       case RoutePath.createNewWalletBackupPhrase:
+        final PyxisWallet pyxisWallet = settings.arguments as PyxisWallet;
         return _defaultRoute(
-          const OnBoardingRecoverPhraseScreen(),
+          OnBoardingRecoverPhraseScreen(
+            pyxisWallet: pyxisWallet,
+          ),
           settings,
         );
-        case RoutePath.createNewWalletConfirmPhrase:
+      case RoutePath.createNewWalletConfirmPhrase:
+        final PyxisWallet pyxisWallet = settings.arguments as PyxisWallet;
         return _defaultRoute(
-          const OnBoardingConfirmRecoveryPhraseScreen(),
+          OnBoardingConfirmRecoveryPhraseScreen(
+            pyxisWallet: pyxisWallet,
+          ),
           settings,
         );
       default:

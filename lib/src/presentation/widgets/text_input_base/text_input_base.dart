@@ -145,7 +145,9 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
         Expanded(
           child: TextField(
             controller: _controller,
-            style: AppTypoGraPhy.bodyMedium03,
+            style: AppTypoGraPhy.body03.copyWith(
+              color: theme.contentColorBlack,
+            ),
             enabled: widget.enable,
             autofocus: widget.autoFocus,
             maxLines: widget.maxLine,
@@ -177,7 +179,9 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
               hintText: widget.hintText,
               border: InputBorder.none,
               contentPadding: EdgeInsets.zero,
-              hintStyle: AppTypoGraPhy.body03,
+              hintStyle: AppTypoGraPhy.body03.copyWith(
+                color: theme.contentColor500,
+              ),
               constraints: widget.boxConstraints,
 
               /// This line may be fix in the future.
