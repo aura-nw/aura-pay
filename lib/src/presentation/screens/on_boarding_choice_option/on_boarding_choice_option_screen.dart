@@ -141,7 +141,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                   .onBoardingChoiceOptionScreenNormalWalletOptionUseGoogleContent,
             ),
             appTheme: appTheme,
-            onTap: () {},
+            onTap: _onCreateNewNormalWalletByGoogle,
           ),
           ChooseOptionWidget(
             title: localization.translate(
@@ -181,6 +181,12 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
   void _onRecoverAccountClick() {
     AppNavigator.push(
       RoutePath.recoverChoice,
+    );
+  }
+
+  void _onCreateNewNormalWalletByGoogle(){
+    AppNavigator.push(
+      RoutePath.createNewWalletByGoogle,
     );
   }
 }

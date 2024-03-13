@@ -24,14 +24,14 @@
   "on_boarding_choice_option_screen_smart_account_option_more" : "Create or Recover",
   "on_boarding_choice_option_screen_smart_account_option_create_new_smart_account" : "Create New Smart Account",
   "on_boarding_choice_option_screen_smart_account_option_create_new_smart_account_content" : "Create a Pyxis account, suitable for everyday crypto",
-  "on_boarding_choice_option_screen_smart_account_option_use_google" : "Google Account",
+  "on_boarding_choice_option_screen_smart_account_option_use_google" : "Recover by Google Account",
   "on_boarding_choice_option_screen_smart_account_option_use_google_content" : "Condition: Your smart account has been set a recovery method",
   "on_boarding_choice_option_screen_normal_wallet_option" : "Normal Wallet",
   "on_boarding_choice_option_screen_normal_wallet_option_content" : "Traditional, mind-your-own wallet like many others out there. You want it the same, we get it.",
   "on_boarding_choice_option_screen_normal_wallet_option_more" : "Create or Import",
   "on_boarding_choice_option_screen_normal_wallet_option_create_wallet" : "Create New Wallet",
   "on_boarding_choice_option_screen_normal_wallet_option_create_wallet_content" : "Create a new wallet use recovery phrase",
-  "on_boarding_choice_option_screen_normal_wallet_option_use_google" : "Create a new wallet use recovery phrase",
+  "on_boarding_choice_option_screen_normal_wallet_option_use_google" : "Use google account",
   "on_boarding_choice_option_screen_normal_wallet_option_use_google_content" : "Create a wallet links to your Google account",
   "on_boarding_choice_option_screen_normal_wallet_option_import_wallet" : "Import Wallet",
   "on_boarding_choice_option_screen_normal_wallet_option_import_wallet_content" : "You can import normal wallets from Pyxis or other wallet providers using a private key or passphrase",
@@ -71,6 +71,18 @@
   "on_boarding_confirm_recovery_phrase_screen_name_your_wallet_hint" : "Input your wallet name",
   "on_boarding_confirm_recovery_phrase_screen_confirm_button_title" : "Confirm",
   "on_boarding_confirm_recovery_phrase_screen_creating" : "Creating...",
+
+
+  "on_boarding_create_eoa_by_google_screen_app_bar_title" : "Sign in Google account",
+  "on_boarding_create_eoa_by_google_screen_creating_new_wallet" : "You will create a wallet links to your Google account",
+  "on_boarding_create_eoa_by_google_screen_please_wait" : "Empowered by Web3Auth",
+
+
+  "on_boarding_create_eoa_by_google_pick_name_screen_app_bar_title" : "Create Normal Wallet",
+  "on_boarding_create_eoa_by_google_pick_name_screen_name_your_wallet" : "Name your wallet",
+  "on_boarding_create_eoa_by_google_pick_name_screen_name_your_wallet_hint" : "Input your wallet name",
+  "on_boarding_create_eoa_by_google_pick_name_screen_name_create_button_title" : "Create",
+  "on_boarding_create_eoa_by_google_pick_name_screen_name_creating" : "Creating...",
 
 
   "on_boarding_create_new_smart_account_screen_title_region_one" : "Create new",

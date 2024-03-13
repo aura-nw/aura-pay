@@ -578,4 +578,17 @@ sealed class LanguageKey {
   static const String onBoardingConfirmRecoveryPhraseScreenNameYourWalletHint = 'on_boarding_confirm_recovery_phrase_screen_name_your_wallet_hint';
   static const String onBoardingConfirmRecoveryPhraseScreenConfirmButtonTitle = 'on_boarding_confirm_recovery_phrase_screen_confirm_button_title';
   static const String onBoardingConfirmRecoveryPhraseScreenCreating = 'on_boarding_confirm_recovery_phrase_screen_creating';
+
+  /// region on boarding create eoa by google screen
+  static const String onBoardingCreateEoaByGoogleScreenAppBarTitle = 'on_boarding_create_eoa_by_google_screen_app_bar_title';
+  static const String onBoardingCreateEoaByGoogleScreenCreatingNewWallet = 'on_boarding_create_eoa_by_google_screen_creating_new_wallet';
+  static const String onBoardingCreateEoaByGoogleScreenPleaseWait = 'on_boarding_create_eoa_by_google_screen_please_wait';
+
+
+  /// region onboarding create eoa by google pick name screen
+  static const String onBoardingCreateEoaByGooglePickNameScreenAppBarTitle = 'on_boarding_create_eoa_by_google_pick_name_screen_app_bar_title';
+  static const String onBoardingCreateEoaByGooglePickNameScreenNameYourWallet = 'on_boarding_create_eoa_by_google_pick_name_screen_name_your_wallet';
+  static const String onBoardingCreateEoaByGooglePickNameScreenNameYourWalletHint = 'on_boarding_create_eoa_by_google_pick_name_screen_name_your_wallet_hint';
+  static const String onBoardingCreateEoaByGooglePickNameScreenCreateButtonTitle = 'on_boarding_create_eoa_by_google_pick_name_screen_name_create_button_title';
+  static const String onBoardingCreateEoaByGooglePickNameScreenCreating = 'on_boarding_create_eoa_by_google_pick_name_screen_name_creating';
 }

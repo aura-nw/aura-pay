@@ -40,6 +40,8 @@ import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_confirm_recover_phrase/on_boarding_confirm_recover_phrase_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa/on_boarding_create_eoa_cubit.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa_by_google/on_boarding_create_eoa_by_google_cubit.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa_by_google_pick_name/on_boarding_create_eoa_by_google_pick_name_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_bloc.dart';
@@ -806,5 +808,20 @@ Future<void> initDependency(
       getIt.get<ControllerKeyUseCase>(),
       pyxisWallet: pyxisWallet,
     ),
+  );
+
+  getIt.registerFactory<OnBoardingCreateEOAByGoogleCubit>(
+        () => OnBoardingCreateEOAByGoogleCubit(
+          getIt.get<Web3AuthUseCase>(),
+        ),
+  );
+
+  getIt.registerFactory<OnBoardingCreateEOAByGooglePickNameBloc>(
+        () => OnBoardingCreateEOAByGooglePickNameBloc(
+          getIt.get<AuraAccountUseCase>(),
+          getIt.get<ControllerKeyUseCase>(),
+          getIt.get<Web3AuthUseCase>(),
+          getIt.get<WalletUseCase>(),
+        ),
   );
 }

@@ -16,6 +16,7 @@ import 'package:pyxis_mobile/src/presentation/screens/nft_detail/nft_detail_scre
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_confirm_recover_phrase/on_boarding_confirm_recover_phrase_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa/on_boarding_create_eoa_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa_by_google_pick_name/on_boarding_create_eoa_by_google_pick_name_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup/on_boarding_recover_backup_address_screen.dart';
@@ -40,6 +41,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signe
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'presentation/screens/on_boarding_create_eoa_by_google/on_boarding_create_eoa_by_google_screen.dart';
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
 import 'presentation/screens/on_boarding_import_key/on_boarding_import_key_screen.dart';
 import 'presentation/screens/on_boarding_recover_phrase/on_boarding_recover_phrase_screen.dart';
@@ -71,6 +73,11 @@ sealed class RoutePath {
       '$createNewWallet/back_up_phrase';
   static const String createNewWalletConfirmPhrase =
       '$createNewWallet/confirm_phrase';
+
+  static const String createNewWalletByGoogle =
+      '$_onBoarding/create_new_normal_wallet_by_google';
+  static const String createNewWalletByGooglePickName =
+      '$createNewWalletByGoogle/pick_name';
 
   static const String home = '${_base}home';
   static const String nft = '$home/nft';
@@ -432,6 +439,16 @@ sealed class AppNavigator {
           OnBoardingConfirmRecoveryPhraseScreen(
             pyxisWallet: pyxisWallet,
           ),
+          settings,
+        );
+      case RoutePath.createNewWalletByGoogle:
+        return _defaultRoute(
+          const OnBoardingCreateEOAByGoogleScreen(),
+          settings,
+        );
+      case RoutePath.createNewWalletByGooglePickName:
+        return _defaultRoute(
+          const OnBoardingCreateEOAByGooglePickNameScreen(),
           settings,
         );
       default:
