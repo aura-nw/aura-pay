@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
@@ -8,61 +10,98 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/widgets/choose_option_form_widget.dart';
+import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'on_boarding_choice_option_cubit.dart';
+import 'widgets/choose_option_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_layout.dart';
+import 'on_boarding_choice_option_state.dart';
 import 'widgets/choice_option_widget.dart';
 
-// ignore: must_be_immutable
-class OnBoardingChoiceOptionScreen extends StatelessWidget {
+class OnBoardingChoiceOptionScreen extends StatefulWidget {
   const OnBoardingChoiceOptionScreen({
     super.key,
   });
+
+  @override
+  State<OnBoardingChoiceOptionScreen> createState() =>
+      _OnBoardingChoiceOptionScreenState();
+}
+
+class _OnBoardingChoiceOptionScreenState
+    extends State<OnBoardingChoiceOptionScreen> with CustomFlutterToast {
+  final OnBoardingChoiceOptionCubit _cubit =
+      getIt.get<OnBoardingChoiceOptionCubit>();
 
   @override
   Widget build(BuildContext context) {
     return AppThemeBuilder(
       builder: (appTheme) {
         return AppLocalizationProvider(builder: (localization, _) {
-          return Scaffold(
-            backgroundColor: appTheme.bodyColorBackground,
-            appBar: NormalAppBarWithOnlyTitleWidget(
-              onViewMoreInformationTap: () {},
-              appTheme: appTheme,
-              title: localization.translate(
-                LanguageKey.onBoardingChoiceOptionScreenAppBarTitle,
-              ),
-            ),
-            body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing07,
-                  vertical: Spacing.spacing05,
+          return BlocProvider.value(
+            value: _cubit,
+            child: BlocListener<OnBoardingChoiceOptionCubit,
+                OnBoardingChoiceOptionState>(
+              listener: (context, state) {
+                switch (state.status) {
+                  case OnBoardingChoiceOptionStatus.none:
+                    break;
+                  case OnBoardingChoiceOptionStatus.loginSuccess:
+                    AppNavigator.push(
+                      RoutePath.recoverSelectAccount,
+                      state.googleAccount,
+                    );
+                    break;
+                  case OnBoardingChoiceOptionStatus.loginFailure:
+                    showToast(state.errorMessage ?? '');
+                    break;
+                  case OnBoardingChoiceOptionStatus.onLogin:
+                    break;
+                }
+              },
+              child: Scaffold(
+                backgroundColor: appTheme.bodyColorBackground,
+                appBar: NormalAppBarWithOnlyTitleWidget(
+                  onViewMoreInformationTap: () {},
+                  appTheme: appTheme,
+                  title: localization.translate(
+                    LanguageKey.onBoardingChoiceOptionScreenAppBarTitle,
+                  ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SvgPicture.asset(
-                      AssetIconPath.onBoardingChoiceOption,
+                body: SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Spacing.spacing07,
+                      vertical: Spacing.spacing05,
                     ),
-                    const SizedBox(
-                      height: BoxSize.boxSize10,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          AssetIconPath.onBoardingChoiceOption,
+                        ),
+                        const SizedBox(
+                          height: BoxSize.boxSize10,
+                        ),
+                        ChoiceOptionsWidget(
+                          appTheme: appTheme,
+                          localization: localization,
+                          onSmartAccountOptionPress: () =>
+                              _showSmartAccountOptions(
+                            context,
+                            appTheme: appTheme,
+                            localization: localization,
+                          ),
+                          onNormalWalletOptionPress: () =>
+                              _showNormalWalletOptions(
+                            context,
+                            localization: localization,
+                            appTheme: appTheme,
+                          ),
+                        ),
+                      ],
                     ),
-                    ChoiceOptionsWidget(
-                      appTheme: appTheme,
-                      localization: localization,
-                      onSmartAccountOptionPress: () => _showSmartAccountOptions(
-                        context,
-                        appTheme: appTheme,
-                        localization: localization,
-                      ),
-                      onNormalWalletOptionPress: () => _showNormalWalletOptions(
-                        context,
-                        localization: localization,
-                        appTheme: appTheme,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -103,7 +142,7 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
                   .onBoardingChoiceOptionScreenSmartAccountOptionUseGoogleContent,
             ),
             appTheme: appTheme,
-            onTap: () {},
+            onTap: _onRecoverAccountClick,
           ),
         ],
       ),
@@ -179,12 +218,10 @@ class OnBoardingChoiceOptionScreen extends StatelessWidget {
   }
 
   void _onRecoverAccountClick() {
-    AppNavigator.push(
-      RoutePath.recoverChoice,
-    );
+    _cubit.onRecoverAccountClick();
   }
 
-  void _onCreateNewNormalWalletByGoogle(){
+  void _onCreateNewNormalWalletByGoogle() {
     AppNavigator.push(
       RoutePath.createNewWalletByGoogle,
     );

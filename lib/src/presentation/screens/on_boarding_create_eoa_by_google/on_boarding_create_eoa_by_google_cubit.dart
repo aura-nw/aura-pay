@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'on_boarding_create_eoa_by_google_state.dart';
 
@@ -25,10 +26,14 @@ class OnBoardingCreateEOAByGoogleCubit
         ),
       );
     } catch (e) {
+      String errMsg = e.toString();
+      if(e is PlatformException){
+        errMsg = e.message ?? e.toString();
+      }
       emit(
         state.copyWith(
           status: OnBoardingCreateEOAByGoogleStatus.error,
-          error: e.toString(),
+          error: errMsg,
         ),
       );
     }

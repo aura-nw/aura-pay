@@ -38,6 +38,7 @@ import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_
 import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_choice_option/on_boarding_choice_option_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_confirm_recover_phrase/on_boarding_confirm_recover_phrase_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa/on_boarding_create_eoa_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa_by_google/on_boarding_create_eoa_by_google_cubit.dart';
@@ -823,5 +824,11 @@ Future<void> initDependency(
           getIt.get<Web3AuthUseCase>(),
           getIt.get<WalletUseCase>(),
         ),
+  );
+
+  getIt.registerFactory<OnBoardingChoiceOptionCubit>(
+        () => OnBoardingChoiceOptionCubit(
+      getIt.get<Web3AuthUseCase>(),
+    ),
   );
 }
