@@ -9,6 +9,7 @@ final class RenameAccountRequestParameter {
   final String? value;
   final String? subValue;
   final bool useNullAble;
+  final  bool ?needBackup;
 
   const RenameAccountRequestParameter({
     required this.id,
@@ -19,5 +20,6 @@ final class RenameAccountRequestParameter {
     this.value,
     this.subValue,
     this.useNullAble = false,
+    this.needBackup,
   });
 }

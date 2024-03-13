@@ -9,6 +9,7 @@ abstract interface class AccountDatabaseService {
     required String address,
     required String accountName,
     required AuraAccountType type,
+    bool needBackup = false,
   });
 
   Future<List<AuraAccountDto>> getAuraAccounts();
@@ -24,6 +25,7 @@ abstract interface class AccountDatabaseService {
     String? value,
     String? subValue,
     bool useNullAble = false,
+    bool ?needBackup,
   });
 
   Future<AuraAccountDto?> getFirstAccount();

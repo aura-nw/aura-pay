@@ -118,10 +118,9 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
               }
             },
             child: Scaffold(
-              appBar: AppBarStepWidget(
+              appBar: NormalAppBarWidget(
                 appTheme: appTheme,
                 onViewMoreInformationTap: () {},
-                currentStep: 1,
               ),
               body: Padding(
                 padding: const EdgeInsets.symmetric(

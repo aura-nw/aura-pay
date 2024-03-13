@@ -9,6 +9,7 @@ extension AuraAccountDtoExtension on AuraAccountDto {
       name: name,
       method: method?.toEntity,
       index: index,
+      needBackup: needBackup,
     );
   }
 }
@@ -30,6 +31,7 @@ class AuraAccountDto {
   final String name;
   final String address;
   final AuraAccountRecoveryMethodDto ?method;
+  final bool needBackup;
 
   const AuraAccountDto({
     required this.id,
@@ -38,6 +40,7 @@ class AuraAccountDto {
     required this.address,
     required this.name,
     this.method,
+    this.needBackup = false,
   });
 }
 

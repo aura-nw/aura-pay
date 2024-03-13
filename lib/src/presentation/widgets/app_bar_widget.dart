@@ -6,7 +6,6 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
-import 'package:pyxis_mobile/src/presentation/widgets/divider_widget.dart';
 
 abstract interface class _AppBarBase extends StatelessWidget
     implements PreferredSizeWidget {
@@ -169,129 +168,6 @@ final class NormalAppBarWithOnlyTitleWidget extends _AppBarBase {
   @override
   Widget? leadingBuilder(BuildContext context, AppTheme appTheme) {
     return const SizedBox.shrink();
-  }
-}
-
-///endregion
-
-///region appbar step widget
-final class AppBarStepWidget extends _AppBarBase {
-  final int currentStep;
-  final VoidCallback onViewMoreInformationTap;
-
-  const AppBarStepWidget({
-    super.key,
-    super.onBack,
-    required super.appTheme,
-    this.currentStep = 1,
-    required this.onViewMoreInformationTap,
-  });
-
-  @override
-  PreferredSizeWidget? bottomBuilder(AppTheme appTheme) {
-    return null;
-  }
-
-  @override
-  Widget titleBuilder(BuildContext context, AppTheme appTheme) {
-    return _StepWidget(
-      stepLength: 3,
-      currentStep: currentStep,
-      appTheme: appTheme,
-    );
-  }
-
-  @override
-  List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme) {
-    return [
-      GestureDetector(
-        onTap: onViewMoreInformationTap,
-        behavior: HitTestBehavior.opaque,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Spacing.spacing04,
-          ),
-          child: SvgPicture.asset(
-            AssetIconPath.commonInformation,
-          ),
-        ),
-      ),
-    ];
-  }
-
-  @override
-  Widget? leadingBuilder(BuildContext context, AppTheme appTheme) {
-    return null;
-  }
-}
-
-final class _StepWidget extends StatelessWidget {
-  final int stepLength;
-  final int currentStep;
-  final AppTheme appTheme;
-
-  const _StepWidget({
-    required this.stepLength,
-    required this.currentStep,
-    required this.appTheme,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          stepLength,
-          (index) {
-            List<Widget> build = List.empty(growable: true);
-            if (currentStep > index) {
-              build.add(
-                SvgPicture.asset(AssetIconPath.onBoardingSuccessStep),
-              );
-
-              if (index < stepLength - 1) {
-                build.add(
-                  HoLiZonTalDividerWidget(
-                    dividerColor: appTheme.borderColorBrand,
-                    width: BoxSize.boxSize10,
-                  ),
-                );
-              }
-            } else if (index == stepLength - 1) {
-              build.add(
-                SvgPicture.asset(AssetIconPath.onBoardingSuccessDisableStep),
-              );
-            } else if (index == currentStep) {
-              build.add(
-                SvgPicture.asset(AssetIconPath.onBoardingActiveStep),
-              );
-              build.add(
-                HoLiZonTalDividerWidget(
-                  dividerColor: appTheme.borderColorBrand,
-                  width: BoxSize.boxSize10,
-                ),
-              );
-            } else {
-              build.add(
-                SvgPicture.asset(AssetIconPath.onBoardingDisableStep),
-              );
-
-              build.add(
-                const HoLiZonTalDividerWidget(
-                  width: BoxSize.boxSize10,
-                ),
-              );
-            }
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: build,
-            );
-          },
-        ),
-      ),
-    );
   }
 }
 

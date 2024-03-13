@@ -20,6 +20,7 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
+import 'widgets/alert_backup_widget.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dart';
 import 'widgets/token_item_widget.dart';
@@ -87,15 +88,16 @@ class _HomePageState extends State<HomePage>
       _bloc.add(
         const HomePageEventOnFetchTokenPrice(),
       );
-    }else if(param.event == HomeScreenObserver.onInAppBrowserChooseAccountEvent){
+    } else if (param.event ==
+        HomeScreenObserver.onInAppBrowserChooseAccountEvent) {
       _onChooseNewAccount(param);
-    }
-    else if(param.event == HomeScreenObserver.onConnectWalletChooseAccountEvent){
+    } else if (param.event ==
+        HomeScreenObserver.onConnectWalletChooseAccountEvent) {
       _onChooseNewAccount(param);
     }
   }
 
-  void _onChooseNewAccount(HomeScreenEmitParam param){
+  void _onChooseNewAccount(HomeScreenEmitParam param) {
     final data = param.data;
 
     if (data is AuraAccount) {
@@ -249,6 +251,26 @@ class _HomePageState extends State<HomePage>
                     onStakeTap: () {},
                     onTXsLimitTap: () {},
                   ),
+                  HomeScreenSelectedAccountSelector(
+                    builder: (selectedAccount) {
+                      if (selectedAccount?.needBackup ?? false) {
+                        return Column(
+                          children: [
+                            const SizedBox(
+                              height: BoxSize.boxSize05,
+                            ),
+                            AlertBackupPrivateKeyWidget(
+                              appTheme: appTheme,
+                              onTap: () {
+
+                              },
+                            ),
+                          ],
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
                   const SizedBox(
                     height: BoxSize.boxSize07,
                   ),
@@ -366,8 +388,8 @@ class _HomePageState extends State<HomePage>
                                       return HomePageHideTokenValueSelector(
                                         builder: (hideTokenValue) {
                                           return TokenItemWidget(
-                                            iconPath: AssetIconPath
-                                                .commonAuraToken,
+                                            iconPath:
+                                                AssetIconPath.commonAuraToken,
                                             coin: localization.translate(
                                               LanguageKey.globalPyxisAura,
                                             ),

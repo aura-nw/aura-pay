@@ -102,10 +102,9 @@ class _OnBoardingScanFeeScreenState extends State<OnBoardingScanFeeScreen>
               }
             },
             child: Scaffold(
-              appBar: AppBarStepWidget(
+              appBar: NormalAppBarWidget(
                 appTheme: appTheme,
                 onViewMoreInformationTap: () {},
-                currentStep: 1,
               ),
               body: SafeArea(
                 child: Padding(

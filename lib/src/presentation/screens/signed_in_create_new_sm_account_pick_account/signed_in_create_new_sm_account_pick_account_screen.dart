@@ -99,10 +99,9 @@ class _SignedInCreateNewSmAccountPickAccountScreenState
             },
             child: Scaffold(
               backgroundColor: appTheme.bodyColorBackground,
-              appBar: AppBarStepWidget(
+              appBar: NormalAppBarWidget(
                 appTheme: appTheme,
                 onViewMoreInformationTap: () {},
-                currentStep: 1,
               ),
               body: Padding(
                 padding: const EdgeInsets.symmetric(

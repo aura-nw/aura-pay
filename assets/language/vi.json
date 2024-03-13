@@ -209,6 +209,8 @@
   "home_page_receive_share_address" : "Share Address",
   "home_page_other_account_form_title" : "Your other account",
   "home_page_sm_account" : "Smart acc",
+  "home_page_alert_backup_title" : "Account need to backup",
+  "home_page_alert_backup_content" : "Click here to backup now for avoid the risk of lost or stolen",
 
   "accounts_screen_app_bar_title" : "Accounts management",
   "accounts_screen_create_new_smart_account" : "Create new smart account",

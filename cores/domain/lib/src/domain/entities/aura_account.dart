@@ -7,6 +7,7 @@ final class AuraAccount {
   final String name;
   final String address;
   final AuraAccountRecoveryMethod? method;
+  final bool needBackup;
 
   const AuraAccount({
     required this.id,
@@ -15,6 +16,7 @@ final class AuraAccount {
     required this.address,
     required this.name,
     this.method,
+    this.needBackup = false,
   });
 
   bool get isSmartAccount => type == AuraAccountType.smartAccount;

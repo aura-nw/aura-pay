@@ -287,4 +287,9 @@ sealed class AssetIconPath {
   /// Connect wallet screen
   static const String connectWalletLock = '${_baseIconPath}ic_connect_wallet_lock.svg';
   static const String connectWalletClose = '${_baseIconPath}ic_connect_wallet_close.svg';
+
+
+  /// Home page
+  static const String homePageAlert = '${_baseIconPath}ic_home_page_alert.svg';
+  static const String homePageAlertNext = '${_baseIconPath}ic_home_page_alert_next.svg';
 }

@@ -54,8 +54,8 @@ class AppBottomSheetBaseState<R extends AppBottomSheetBase> extends State<R> {
       builder: (appTheme) {
         return Container(
           padding: const EdgeInsets.symmetric(
-            horizontal: Spacing.spacing07,
-            vertical: Spacing.spacing06,
+            horizontal: Spacing.spacing05,
+            vertical: Spacing.spacing04,
           ),
           decoration: BoxDecoration(
             color: appTheme.bodyColorBackground,

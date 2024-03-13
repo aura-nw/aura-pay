@@ -12,7 +12,9 @@ final class AuraAccountUseCase {
     return _repository.getAccounts();
   }
 
-  Future<AuraAccount?> getAccountByAddress({required String address,}) {
+  Future<AuraAccount?> getAccountByAddress({
+    required String address,
+  }) {
     return _repository.getAccountByAddress(address: address);
   }
 
@@ -24,11 +26,13 @@ final class AuraAccountUseCase {
     required String address,
     required String accountName,
     required AuraAccountType type,
+    bool needBackup = false,
   }) {
     final SaveAccountRequestParameter parameter = SaveAccountRequestParameter(
       address: address,
       type: type,
       accountName: accountName,
+      needBackup: needBackup,
     );
     return _repository.saveAccount(parameter);
   }
@@ -46,6 +50,7 @@ final class AuraAccountUseCase {
     String? subValue,
     required int id,
     bool useNullable = false,
+    bool? needBackup,
   }) {
     final RenameAccountRequestParameter parameter =
         RenameAccountRequestParameter(
@@ -57,6 +62,7 @@ final class AuraAccountUseCase {
       value: value,
       subValue: subValue,
       useNullAble: useNullable,
+      needBackup: needBackup,
     );
     return _repository.updateAccount(parameter);
   }

@@ -104,10 +104,9 @@ class _OnBoardingPickAccountScreenState
             },
             child: Scaffold(
               backgroundColor: appTheme.bodyColorBackground,
-              appBar: AppBarStepWidget(
+              appBar: NormalAppBarWidget(
                 appTheme: appTheme,
                 onViewMoreInformationTap: () {},
-                currentStep: 1,
               ),
               body: SafeArea(
                 child: Padding(

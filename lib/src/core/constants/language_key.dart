@@ -199,6 +199,8 @@ sealed class LanguageKey {
   static const String homePageReceiveShareAddress = 'home_page_receive_share_address';
   static const String homePageOtherAccountFormTitle = 'home_page_other_account_form_title';
   static const String homePageSmartAccount = 'home_page_sm_account';
+  static const String homePageAlertBackupTitle = 'home_page_alert_backup_title';
+  static const String homePageAlertBackupContent = 'home_page_alert_backup_content';
   ///
 
   ///region accounts page

@@ -102,281 +102,282 @@ class _OnBoardingImportKeyScreenState extends State<OnBoardingImportKeyScreen>
               }
             },
             child: Scaffold(
-              appBar: AppBarStepWidget(
+              appBar: NormalAppBarWidget(
                 appTheme: appTheme,
                 onViewMoreInformationTap: () {},
-                currentStep: 1,
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.spacing07,
-                  vertical: Spacing.spacing08,
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        children: [
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: localization.translate(
-                                        LanguageKey
-                                            .onBoardingImportKeyScreenTitleRegionOne,
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.spacing05,
+                    vertical: Spacing.spacing07,
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          padding: EdgeInsets.zero,
+                          children: [
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: localization.translate(
+                                          LanguageKey
+                                              .onBoardingImportKeyScreenTitleRegionOne,
+                                        ),
+                                        style: AppTypoGraPhy.heading06.copyWith(
+                                          color: appTheme.contentColorBlack,
+                                        ),
                                       ),
-                                      style: AppTypoGraPhy.heading06.copyWith(
-                                        color: appTheme.contentColorBlack,
+                                      TextSpan(
+                                        text: ' ${localization.translate(
+                                          LanguageKey
+                                              .onBoardingImportKeyScreenTitleRegionTwo,
+                                        )}',
+                                        style: AppTypoGraPhy.heading05.copyWith(
+                                          color: appTheme.contentColorBrand,
+                                        ),
                                       ),
-                                    ),
-                                    TextSpan(
-                                      text: ' ${localization.translate(
-                                        LanguageKey
-                                            .onBoardingImportKeyScreenTitleRegionTwo,
-                                      )}',
-                                      style: AppTypoGraPhy.heading05.copyWith(
-                                        color: appTheme.contentColorBrand,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                          // const SizedBox(
-                          //   height: BoxSize.boxSize07,
-                          // ),
-                          // AppLocalizationProvider(
-                          //   builder: (localization, _) {
-                          //     return Row(
-                          //       children: [
-                          //         Text(
-                          //           localization.translate(
-                          //             LanguageKey
-                          //                 .onBoardingImportKeyScreenAccountType,
-                          //           ),
-                          //         ),
-                          //         const SizedBox(
-                          //           width: BoxSize.boxSize03,
-                          //         ),
-                          //         SvgPicture.asset(
-                          //           AssetIconPath
-                          //               .onBoardingImportKeyInformation,
-                          //         ),
-                          //       ],
-                          //     );
-                          //   },
-                          // ),
-                          // const SizedBox(
-                          //   height: BoxSize.boxSize05,
-                          // ),
-                          // OnBoardingImportKeyAccountTypeSelector(
-                          //   builder: (accountType) {
-                          //     return AccountTypeChoiceWidget(
-                          //       onSelected: (selectedAccountType) {
-                          //         if (selectedAccountType != accountType) {
-                          //           _bloc.add(
-                          //             OnBoardingImportKeyOnSelectAccountTypeEvent(
-                          //               accountType: selectedAccountType,
-                          //             ),
-                          //           );
-                          //         }
-                          //       },
-                          //       defaultType: accountType,
-                          //       appTheme: appTheme,
-                          //     );
-                          //   },
-                          // ),
-                          const SizedBox(
-                            height: BoxSize.boxSize07,
-                          ),
-                          AppLocalizationProvider(
-                            builder: (localization, _) {
-                              return OnBoardingImportKeyImportTypeSelector(
-                                builder: (importType) {
-                                  return ImportWalletTypeSelectWidget(
-                                    data: _options.entries.toList(),
-                                    selectedData: _options.entries
-                                        .where((e) => e.key == importType)
-                                        .toList(),
-                                    onChange: (selectedTypes) {
-                                      if (selectedTypes.isNotEmpty) {
-                                        final selectedType =
-                                            selectedTypes[0].key;
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                            // const SizedBox(
+                            //   height: BoxSize.boxSize07,
+                            // ),
+                            // AppLocalizationProvider(
+                            //   builder: (localization, _) {
+                            //     return Row(
+                            //       children: [
+                            //         Text(
+                            //           localization.translate(
+                            //             LanguageKey
+                            //                 .onBoardingImportKeyScreenAccountType,
+                            //           ),
+                            //         ),
+                            //         const SizedBox(
+                            //           width: BoxSize.boxSize03,
+                            //         ),
+                            //         SvgPicture.asset(
+                            //           AssetIconPath
+                            //               .onBoardingImportKeyInformation,
+                            //         ),
+                            //       ],
+                            //     );
+                            //   },
+                            // ),
+                            // const SizedBox(
+                            //   height: BoxSize.boxSize05,
+                            // ),
+                            // OnBoardingImportKeyAccountTypeSelector(
+                            //   builder: (accountType) {
+                            //     return AccountTypeChoiceWidget(
+                            //       onSelected: (selectedAccountType) {
+                            //         if (selectedAccountType != accountType) {
+                            //           _bloc.add(
+                            //             OnBoardingImportKeyOnSelectAccountTypeEvent(
+                            //               accountType: selectedAccountType,
+                            //             ),
+                            //           );
+                            //         }
+                            //       },
+                            //       defaultType: accountType,
+                            //       appTheme: appTheme,
+                            //     );
+                            //   },
+                            // ),
+                            const SizedBox(
+                              height: BoxSize.boxSize07,
+                            ),
+                            AppLocalizationProvider(
+                              builder: (localization, _) {
+                                return OnBoardingImportKeyImportTypeSelector(
+                                  builder: (importType) {
+                                    return ImportWalletTypeSelectWidget(
+                                      data: _options.entries.toList(),
+                                      selectedData: _options.entries
+                                          .where((e) => e.key == importType)
+                                          .toList(),
+                                      onChange: (selectedTypes) {
+                                        if (selectedTypes.isNotEmpty) {
+                                          final selectedType =
+                                              selectedTypes[0].key;
 
-                                        _bloc.add(
-                                          OnBoardingImportKeyOnSelectImportTypeEvent(
-                                            importType: selectedType,
+                                          _bloc.add(
+                                            OnBoardingImportKeyOnSelectImportTypeEvent(
+                                              importType: selectedType,
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: BoxSize.boxSize05,
+                            ),
+                            OnBoardingImportKeyImportTypeSelector(
+                              builder: (selectedType) {
+                                switch (selectedType) {
+                                  case ImportWalletType.privateKey:
+                                    return AppLocalizationProvider(
+                                      builder: (localization, _) {
+                                        return TextInputNormalSuffixWidget(
+                                          suffix: _passWordIsHide
+                                              ? SvgPicture.asset(
+                                                  AssetIconPath.commonEyeHide,
+                                                )
+                                              : SvgPicture.asset(
+                                                  AssetIconPath.commonEyeActive,
+                                                ),
+                                          isRequired: true,
+                                          key: _inputPrivateGlobalKey,
+                                          maxLine: 1,
+                                          onChanged: (value, isValid) {
+                                            if (isValid) {
+                                              _bloc.add(
+                                                  OnBoardingImportKeyOnInputKeyEvent(
+                                                      key: value));
+                                            }
+                                          },
+                                          constraintManager: ConstraintManager(
+                                            isStopWhenFirstFailure: true,
+                                            isValidOnChanged: true,
+                                          )..custom(
+                                              errorMessage: localization
+                                                  .translate(LanguageKey
+                                                      .onBoardingImportKeyScreenInvalidPrivateKey),
+                                              customValid: (value) {
+                                                try {
+                                                  return AuraWalletHelper
+                                                      .checkPrivateKey(
+                                                    value.trim(),
+                                                  );
+                                                } catch (e) {
+                                                  return false;
+                                                }
+                                              },
+                                            ),
+                                          label: localization.translate(
+                                            LanguageKey
+                                                .onBoardingImportKeyScreenPrivateKey,
                                           ),
+                                          obscureText: _passWordIsHide,
+                                          onSuffixTap: () {
+                                            setState(() {
+                                              _passWordIsHide = !_passWordIsHide;
+                                            });
+                                          },
                                         );
-                                      }
-                                    },
-                                  );
+                                      },
+                                    );
+                                  case ImportWalletType.passPhrase:
+                                    return AppLocalizationProvider(
+                                      builder: (localization, _) {
+                                        return TextInputNormalSuffixWidget(
+                                          suffix: _passWordIsHide
+                                              ? SvgPicture.asset(
+                                                  AssetIconPath.commonEyeHide,
+                                                )
+                                              : SvgPicture.asset(
+                                                  AssetIconPath.commonEyeActive,
+                                                ),
+                                          isRequired: true,
+                                          maxLine: 1,
+                                          key: _inputPassPhraseGlobalKey,
+                                          onChanged: (value, isValid) {
+                                            if (isValid) {
+                                              _bloc.add(
+                                                  OnBoardingImportKeyOnInputKeyEvent(
+                                                      key: value));
+                                            }
+                                          },
+                                          constraintManager: ConstraintManager(
+                                            isStopWhenFirstFailure: true,
+                                            isValidOnChanged: true,
+                                          )..custom(
+                                              errorMessage:
+                                                  localization.translate(
+                                                LanguageKey
+                                                    .onBoardingImportKeyScreenInvalidPassPhrase,
+                                              ),
+                                              customValid: (value) {
+                                                try {
+                                                  return AuraWalletHelper
+                                                      .checkMnemonic(
+                                                    mnemonic: value.trim(),
+                                                  );
+                                                } catch (e) {
+                                                  return false;
+                                                }
+                                              },
+                                            ),
+                                          label: localization.translate(
+                                            LanguageKey
+                                                .onBoardingImportKeyScreenPassPhrase,
+                                          ),
+                                          obscureText: _passWordIsHide,
+                                          onSuffixTap: () {
+                                            setState(() {
+                                              _passWordIsHide = !_passWordIsHide;
+                                            });
+                                          },
+                                        );
+                                      },
+                                    );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      AppLocalizationProvider(
+                        builder: (localization, _) {
+                          return OnBoardingImportKeyIsReadySubmitSelector(
+                            builder: (isDisable) {
+                              return PrimaryAppButton(
+                                text: localization.translate(
+                                  LanguageKey
+                                      .onBoardingImportKeyScreenButtonTitle,
+                                ),
+                                isDisable: !isDisable,
+                                onPress: () {
+                                  bool isValid = false;
+
+                                  switch (_bloc.state.importWalletType) {
+                                    case ImportWalletType.privateKey:
+                                      isValid = _inputPrivateGlobalKey
+                                              .currentState
+                                              ?.validate() ??
+                                          false;
+                                      break;
+                                    case ImportWalletType.passPhrase:
+                                      isValid = _inputPassPhraseGlobalKey
+                                              .currentState
+                                              ?.validate() ??
+                                          false;
+                                      break;
+                                  }
+
+                                  if (isValid) {
+                                    _bloc.add(
+                                      const OnBoardingImportKeyOnSubmitEvent(),
+                                    );
+                                  }
                                 },
                               );
                             },
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize05,
-                          ),
-                          OnBoardingImportKeyImportTypeSelector(
-                            builder: (selectedType) {
-                              switch (selectedType) {
-                                case ImportWalletType.privateKey:
-                                  return AppLocalizationProvider(
-                                    builder: (localization, _) {
-                                      return TextInputNormalSuffixWidget(
-                                        suffix: _passWordIsHide
-                                            ? SvgPicture.asset(
-                                                AssetIconPath.commonEyeHide,
-                                              )
-                                            : SvgPicture.asset(
-                                                AssetIconPath.commonEyeActive,
-                                              ),
-                                        isRequired: true,
-                                        key: _inputPrivateGlobalKey,
-                                        maxLine: 1,
-                                        onChanged: (value, isValid) {
-                                          if (isValid) {
-                                            _bloc.add(
-                                                OnBoardingImportKeyOnInputKeyEvent(
-                                                    key: value));
-                                          }
-                                        },
-                                        constraintManager: ConstraintManager(
-                                          isStopWhenFirstFailure: true,
-                                          isValidOnChanged: true,
-                                        )..custom(
-                                            errorMessage: localization
-                                                .translate(LanguageKey
-                                                    .onBoardingImportKeyScreenInvalidPrivateKey),
-                                            customValid: (value) {
-                                              try {
-                                                return AuraWalletHelper
-                                                    .checkPrivateKey(
-                                                  value.trim(),
-                                                );
-                                              } catch (e) {
-                                                return false;
-                                              }
-                                            },
-                                          ),
-                                        label: localization.translate(
-                                          LanguageKey
-                                              .onBoardingImportKeyScreenPrivateKey,
-                                        ),
-                                        obscureText: _passWordIsHide,
-                                        onSuffixTap: () {
-                                          setState(() {
-                                            _passWordIsHide = !_passWordIsHide;
-                                          });
-                                        },
-                                      );
-                                    },
-                                  );
-                                case ImportWalletType.passPhrase:
-                                  return AppLocalizationProvider(
-                                    builder: (localization, _) {
-                                      return TextInputNormalSuffixWidget(
-                                        suffix: _passWordIsHide
-                                            ? SvgPicture.asset(
-                                                AssetIconPath.commonEyeHide,
-                                              )
-                                            : SvgPicture.asset(
-                                                AssetIconPath.commonEyeActive,
-                                              ),
-                                        isRequired: true,
-                                        maxLine: 1,
-                                        key: _inputPassPhraseGlobalKey,
-                                        onChanged: (value, isValid) {
-                                          if (isValid) {
-                                            _bloc.add(
-                                                OnBoardingImportKeyOnInputKeyEvent(
-                                                    key: value));
-                                          }
-                                        },
-                                        constraintManager: ConstraintManager(
-                                          isStopWhenFirstFailure: true,
-                                          isValidOnChanged: true,
-                                        )..custom(
-                                            errorMessage:
-                                                localization.translate(
-                                              LanguageKey
-                                                  .onBoardingImportKeyScreenInvalidPassPhrase,
-                                            ),
-                                            customValid: (value) {
-                                              try {
-                                                return AuraWalletHelper
-                                                    .checkMnemonic(
-                                                  mnemonic: value.trim(),
-                                                );
-                                              } catch (e) {
-                                                return false;
-                                              }
-                                            },
-                                          ),
-                                        label: localization.translate(
-                                          LanguageKey
-                                              .onBoardingImportKeyScreenPassPhrase,
-                                        ),
-                                        obscureText: _passWordIsHide,
-                                        onSuffixTap: () {
-                                          setState(() {
-                                            _passWordIsHide = !_passWordIsHide;
-                                          });
-                                        },
-                                      );
-                                    },
-                                  );
-                              }
-                            },
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                    ),
-                    AppLocalizationProvider(
-                      builder: (localization, _) {
-                        return OnBoardingImportKeyIsReadySubmitSelector(
-                          builder: (isDisable) {
-                            return PrimaryAppButton(
-                              text: localization.translate(
-                                LanguageKey
-                                    .onBoardingImportKeyScreenButtonTitle,
-                              ),
-                              isDisable: !isDisable,
-                              onPress: () {
-                                bool isValid = false;
-
-                                switch (_bloc.state.importWalletType) {
-                                  case ImportWalletType.privateKey:
-                                    isValid = _inputPrivateGlobalKey
-                                            .currentState
-                                            ?.validate() ??
-                                        false;
-                                    break;
-                                  case ImportWalletType.passPhrase:
-                                    isValid = _inputPassPhraseGlobalKey
-                                            .currentState
-                                            ?.validate() ??
-                                        false;
-                                    break;
-                                }
-
-                                if (isValid) {
-                                  _bloc.add(
-                                    const OnBoardingImportKeyOnSubmitEvent(),
-                                  );
-                                }
-                              },
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -12,6 +12,7 @@ extension AuraAccountDbExtension on AuraAccountDb {
     int? id,
     int? index,
     AuraAccountRecoveryMethodDb? methodDb,
+    bool ?needBackup,
   }) {
     return AuraAccountDb(
       accountId: id ?? this.id,
@@ -20,6 +21,7 @@ extension AuraAccountDbExtension on AuraAccountDb {
       accountName: name ?? this.name,
       methodDb: methodDb ?? this.methodDb,
       indexDb: index ?? this.index,
+      needBackupDb: needBackup ?? needBackupDb,
     );
   }
 
@@ -30,6 +32,7 @@ extension AuraAccountDbExtension on AuraAccountDb {
     int? id,
     int? index,
     AuraAccountRecoveryMethodDb? methodDb,
+    bool ?needBackup,
   }) {
     return AuraAccountDb(
       accountId: id ?? this.id,
@@ -38,6 +41,7 @@ extension AuraAccountDbExtension on AuraAccountDb {
       accountName: name ?? this.name,
       methodDb: methodDb,
       indexDb: index ?? this.index,
+      needBackupDb: needBackup ?? needBackupDb,
     );
   }
 }
@@ -72,6 +76,7 @@ class AuraAccountDb extends AuraAccountDto {
   final String accountName;
   final AuraAccountRecoveryMethodDb? methodDb;
   final int indexDb;
+  final bool needBackupDb;
 
   AuraAccountDb({
     this.accountId = Isar.autoIncrement,
@@ -80,6 +85,7 @@ class AuraAccountDb extends AuraAccountDto {
     required this.accountType,
     this.methodDb,
     this.indexDb = 1,
+    this.needBackupDb = false,
   }) : super(
           id: accountId,
           name: accountName,
@@ -87,6 +93,7 @@ class AuraAccountDb extends AuraAccountDto {
           type: accountType,
           method: methodDb?.toDto,
           index: indexDb,
+          needBackup: needBackupDb,
         );
 }
 

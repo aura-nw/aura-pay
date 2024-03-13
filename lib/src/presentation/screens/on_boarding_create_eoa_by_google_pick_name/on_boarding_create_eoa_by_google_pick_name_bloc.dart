@@ -55,6 +55,7 @@ class OnBoardingCreateEOAByGooglePickNameBloc extends Bloc<
         address: wallet.bech32Address,
         accountName: state.walletName,
         type: AuraAccountType.normal,
+        needBackup: true,
       );
 
       await _controllerKeyUseCase.saveKey(

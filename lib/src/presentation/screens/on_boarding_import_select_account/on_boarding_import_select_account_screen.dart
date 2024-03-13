@@ -27,83 +27,85 @@ class _OnBoardingImportSelectAccountScreenState
     return AppThemeBuilder(
       builder: (appTheme) {
         return Scaffold(
-          appBar: AppBarStepWidget(
+          appBar: NormalAppBarWidget(
             appTheme: appTheme,
             onViewMoreInformationTap: () {},
           ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.spacing07,
-              vertical: Spacing.spacing04,
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: localization.translate(
-                                    LanguageKey
-                                        .onBoardingImportSelectAccountScreenTitleRegionOne,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.spacing05,
+                vertical: Spacing.spacing07,
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        AppLocalizationProvider(
+                          builder: (localization, _) {
+                            return RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: localization.translate(
+                                      LanguageKey
+                                          .onBoardingImportSelectAccountScreenTitleRegionOne,
+                                    ),
+                                    style: AppTypoGraPhy.heading05.copyWith(
+                                      color: appTheme.contentColorBlack,
+                                    ),
                                   ),
-                                  style: AppTypoGraPhy.heading05.copyWith(
-                                    color: appTheme.contentColorBlack,
+                                  TextSpan(
+                                    text: ' ${localization.translate(
+                                      LanguageKey
+                                          .onBoardingImportSelectAccountScreenTitleRegionTwo,
+                                    )}',
+                                    style: AppTypoGraPhy.heading05.copyWith(
+                                      color: appTheme.contentColorBrand,
+                                    ),
                                   ),
-                                ),
-                                TextSpan(
-                                  text: ' ${localization.translate(
-                                    LanguageKey
-                                        .onBoardingImportSelectAccountScreenTitleRegionTwo,
-                                  )}',
-                                  style: AppTypoGraPhy.heading05.copyWith(
-                                    color: appTheme.contentColorBrand,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize05,
-                      ),
-                      AppLocalizationProvider(
-                        builder: (localization, _) {
-                          return Text(
-                            localization.translate(
-                              LanguageKey
-                                  .onBoardingImportSelectAccountScreenContent,
-                            ),
-                            style: AppTypoGraPhy.body03.copyWith(
-                              color: appTheme.contentColor500,
-                            ),
-                          );
-                        },
-                      ),
-                      Expanded(
-                        child: ListView(
-                          children: [],
+                                ],
+                              ),
+                            );
+                          },
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          height: BoxSize.boxSize05,
+                        ),
+                        AppLocalizationProvider(
+                          builder: (localization, _) {
+                            return Text(
+                              localization.translate(
+                                LanguageKey
+                                    .onBoardingImportSelectAccountScreenContent,
+                              ),
+                              style: AppTypoGraPhy.body03.copyWith(
+                                color: appTheme.contentColor500,
+                              ),
+                            );
+                          },
+                        ),
+                        Expanded(
+                          child: ListView(
+                            children: [],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                AppLocalizationProvider(
-                  builder: (localization, _) {
-                    return PrimaryAppButton(
-                      text: localization.translate(
-                        LanguageKey
-                            .onBoardingImportSelectAccountScreenButtonTitle,
-                      ),
-                    );
-                  },
-                ),
-              ],
+                  AppLocalizationProvider(
+                    builder: (localization, _) {
+                      return PrimaryAppButton(
+                        text: localization.translate(
+                          LanguageKey
+                              .onBoardingImportSelectAccountScreenButtonTitle,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );

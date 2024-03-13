@@ -275,7 +275,7 @@ final class DefaultAppTheme implements AppTheme {
   Color warningColorDefault = const Color(0xffFDB271);
 
   @override
-  Color warningColorLight = const Color(0xffFFE5D0);
+  Color warningColorLight = const Color(0xffFFF4EB);
 
   @override
   Color warningColorSDark = const Color(0xffFC7D11);

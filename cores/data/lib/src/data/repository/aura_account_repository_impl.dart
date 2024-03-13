@@ -20,11 +20,12 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
   }
 
   @override
-  Future<AuraAccount> saveAccount(SaveAccountRequestParameter parameter) async{
+  Future<AuraAccount> saveAccount(SaveAccountRequestParameter parameter) async {
     final account = await _accountDatabaseService.saveAccount(
       type: parameter.type,
       address: parameter.address,
       accountName: parameter.accountName,
+      needBackup: parameter.needBackup,
     );
 
     return account.toEntity;
@@ -43,6 +44,7 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
       address: parameter.address,
       useNullAble: parameter.useNullAble,
       subValue: parameter.subValue,
+      needBackup: parameter.needBackup,
     );
   }
 
@@ -63,8 +65,9 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
   }
 
   @override
-  Future<AuraAccount?> getAccountByAddress({required String address}) async{
-    final account = await _accountDatabaseService.getAccountByAddress(address: address);
+  Future<AuraAccount?> getAccountByAddress({required String address}) async {
+    final account =
+        await _accountDatabaseService.getAccountByAddress(address: address);
 
     return account?.toEntity;
   }
