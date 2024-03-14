@@ -15,7 +15,7 @@ sealed class AssetImagePath {
       '${_baseImagePath}img_plash_screen.svg';
 
   /// Onboarding recover phrase
-  static const String onBoardingRecoverPhraseHidePhrase = '${_baseImagePath}img_on_boarding_recover_phrase_hide_phrase.svg';
+  static const String commonHidePhrase = '${_baseImagePath}img_common_hide_phrase.svg';
 }
 
 sealed class AssetIconPath {

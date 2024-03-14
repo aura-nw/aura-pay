@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
+import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 
@@ -15,12 +16,13 @@ class BackupPrivateKeyRemindWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppLocalizationProvider(
           builder: (localization, _) {
             return Text(
               localization.translate(
-                '',
+                LanguageKey.backupPrivateKeyScreenRemindTitle,
               ),
               style: AppTypoGraPhy.bodyMedium04.copyWith(
                 color: appTheme.contentColorBlack,
@@ -29,12 +31,14 @@ class BackupPrivateKeyRemindWidget extends StatelessWidget {
           },
         ),
         const SizedBox(
-          height: BoxSize.boxSize06,
+          height: BoxSize.boxSize05,
         ),
         AppLocalizationProvider(
           builder: (localization, _) {
             return Text(
-              localization.translate(''),
+              localization.translate(
+                LanguageKey.backupPrivateKeyScreenRemindOne,
+              ),
               style: AppTypoGraPhy.body02.copyWith(
                 color: appTheme.contentColor700,
               ),
@@ -44,18 +48,10 @@ class BackupPrivateKeyRemindWidget extends StatelessWidget {
         AppLocalizationProvider(
           builder: (localization, _) {
             return Text(
-              localization.translate(''),
-              style: AppTypoGraPhy.bodyMedium04.copyWith(
-                color: appTheme.contentColor700,
+              localization.translate(
+                LanguageKey.backupPrivateKeyScreenRemindTwo,
               ),
-            );
-          },
-        ),
-        AppLocalizationProvider(
-          builder: (localization, _) {
-            return Text(
-              localization.translate(''),
-              style: AppTypoGraPhy.bodyMedium04.copyWith(
+              style: AppTypoGraPhy.body02.copyWith(
                 color: appTheme.contentColor700,
               ),
             );

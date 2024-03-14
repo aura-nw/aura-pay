@@ -593,4 +593,14 @@ sealed class LanguageKey {
   static const String onBoardingCreateEoaByGooglePickNameScreenNameYourWalletHint = 'on_boarding_create_eoa_by_google_pick_name_screen_name_your_wallet_hint';
   static const String onBoardingCreateEoaByGooglePickNameScreenCreateButtonTitle = 'on_boarding_create_eoa_by_google_pick_name_screen_name_create_button_title';
   static const String onBoardingCreateEoaByGooglePickNameScreenCreating = 'on_boarding_create_eoa_by_google_pick_name_screen_name_creating';
+
+
+  /// region backup private key
+  static const String backupPrivateKeyScreenAppBarTitle = 'back_up_private_key_screen_app_bar_title';
+  static const String backupPrivateKeyScreenRemindTitle = 'back_up_private_key_screen_remind_title';
+  static const String backupPrivateKeyScreenRemindOne = 'back_up_private_key_screen_remind_one';
+  static const String backupPrivateKeyScreenRemindTwo = 'back_up_private_key_screen_remind_two';
+  static const String backupPrivateKeyScreenCopy = 'back_up_private_key_screen_copy';
+  static const String backupPrivateKeyScreenShowPrivateKeyButtonTitle = 'back_up_private_key_screen_show_private_key_button_title';
+  static const String backupPrivateKeyScreenGoHomeButtonTitle = 'back_up_private_key_screen_go_home_button_title';
 }

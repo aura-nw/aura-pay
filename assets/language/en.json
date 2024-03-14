@@ -510,5 +510,13 @@
   "connect_wallet_screen_reason_two" : "Request approval for transactions",
   "connect_wallet_screen_reason_three" : "Move funds without your permission",
   "connect_wallet_screen_button_title" : "Connect",
-  "connect_wallet_screen_choose_account" : "Choose account"
+  "connect_wallet_screen_choose_account" : "Choose account",
+
+  "back_up_private_key_screen_app_bar_title" : "Private key",
+  "back_up_private_key_screen_remind_title" : "Important reminders",
+  "back_up_private_key_screen_remind_one" : "• Please keep your private key safe and do not lose it or forget it",
+  "back_up_private_key_screen_remind_two" : "• Anyone with your private key can have access to your assets",
+  "back_up_private_key_screen_copy" : "Copy",
+  "back_up_private_key_screen_show_private_key_button_title" : "Show Private Key",
+  "back_up_private_key_screen_go_home_button_title" : "I Have Memorized"
 }

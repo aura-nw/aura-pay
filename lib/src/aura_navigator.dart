@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/presentation/screens/accounts/accounts_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/backup_private_key/backup_privatekey_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_tab_management/browser_tab_management_screen.dart';
@@ -125,6 +126,8 @@ sealed class RoutePath {
   static const String browserSearch = '$home/search';
   static const String browserTabManagement = '$home/tab_management';
   static const String accounts = '$home/account';
+
+  static const String backUpPrivateKey = '$home/backup_private_key';
 }
 
 sealed class AppNavigator {
@@ -449,6 +452,11 @@ sealed class AppNavigator {
       case RoutePath.createNewWalletByGooglePickName:
         return _defaultRoute(
           const OnBoardingCreateEOAByGooglePickNameScreen(),
+          settings,
+        );
+      case RoutePath.backUpPrivateKey:
+        return _defaultRoute(
+          const BackupPrivateKeyScreen(),
           settings,
         );
       default:

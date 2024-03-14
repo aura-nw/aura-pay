@@ -27,6 +27,7 @@ import 'package:pyxis_mobile/src/application/service/transaction/transaction_api
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
+import 'package:pyxis_mobile/src/presentation/screens/backup_private_key/backup_private_key_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_bloc.dart';
@@ -829,6 +830,13 @@ Future<void> initDependency(
   getIt.registerFactory<OnBoardingChoiceOptionCubit>(
         () => OnBoardingChoiceOptionCubit(
       getIt.get<Web3AuthUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<BackupPrivateKeyCubit>(
+        () => BackupPrivateKeyCubit(
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
     ),
   );
 }

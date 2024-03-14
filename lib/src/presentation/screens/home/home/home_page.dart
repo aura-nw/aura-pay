@@ -94,6 +94,10 @@ class _HomePageState extends State<HomePage>
     } else if (param.event ==
         HomeScreenObserver.onConnectWalletChooseAccountEvent) {
       _onChooseNewAccount(param);
+    } else if (param.event == HomeScreenObserver.backUpPrivateKeySuccess) {
+      HomeScreenBloc.of(context).add(
+        const HomeScreenEventOnReFetchAccount(),
+      );
     }
   }
 
@@ -261,8 +265,10 @@ class _HomePageState extends State<HomePage>
                             ),
                             AlertBackupPrivateKeyWidget(
                               appTheme: appTheme,
-                              onTap: () {
-
+                              onTap: () async {
+                                await AppNavigator.push(
+                                  RoutePath.backUpPrivateKey,
+                                );
                               },
                             ),
                           ],

@@ -31,6 +31,7 @@ final class HomeScreenObserver
   static String onInAppBrowserRefreshBookMarkEvent = 'ON_IN_APP_BROWSER_REFRESH_BOOKMARK_EVENT';
   static String onInAppBrowserRefreshBrowserEvent = 'ON_IN_APP_BROWSER_REFRESH_BROWSER_EVENT';
   static String onConnectWalletChooseAccountEvent = 'ON_CONNECT_WALLET_CHOOSE_ACCOUNT_EVENT';
+  static String backUpPrivateKeySuccess = 'ON_BACKUP_PRIVATE_KEY_SUCCESSFUL_EVENT';
 
   @override
   void emit({

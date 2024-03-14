@@ -1,42 +1,53 @@
 import 'dart:io';
 
-import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_mobile/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/aura_navigator.dart';
-import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
-import 'on_boarding_recover_phrase_cubit.dart';
-import 'widgets/pass_phrase_form_widget.dart';
-import 'widgets/remind_widget.dart';
+import 'backup_private_key_cubit.dart';
+import 'backup_private_key_selector.dart';
+import 'widgets/backup_private_key_form_widget.dart';
+import 'widgets/backup_private_key_remind_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 
-class OnBoardingRecoverPhraseScreen extends StatefulWidget {
-  final PyxisWallet pyxisWallet;
-
-  const OnBoardingRecoverPhraseScreen({
-    required this.pyxisWallet,
-    super.key,
-  });
+class BackupPrivateKeyScreen extends StatefulWidget {
+  const BackupPrivateKeyScreen({super.key});
 
   @override
-  State<OnBoardingRecoverPhraseScreen> createState() =>
-      _OnBoardingRecoverPhraseScreenState();
+  State<BackupPrivateKeyScreen> createState() => _BackupPrivateKeyScreenState();
 }
 
-class _OnBoardingRecoverPhraseScreenState
-    extends State<OnBoardingRecoverPhraseScreen> with CustomFlutterToast {
-  final OnBoardingRecoverPhraseCubit _cubit =
-      getIt.get<OnBoardingRecoverPhraseCubit>();
+class _BackupPrivateKeyScreenState extends State<BackupPrivateKeyScreen>
+    with CustomFlutterToast {
+  final BackupPrivateKeyCubit _cubit = getIt.get<BackupPrivateKeyCubit>();
+
+  final HomeScreenObserver _homeScreenObserver =
+      getIt.get<HomeScreenObserver>();
+
+  void _emitBackUpPrivateKeySuccess() {
+    _homeScreenObserver.emit(
+      emitParam: HomeScreenEmitParam(
+        event: HomeScreenObserver.backUpPrivateKeySuccess,
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    _cubit.init(
+      onSuccess: _emitBackUpPrivateKeySuccess,
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,65 +59,53 @@ class _OnBoardingRecoverPhraseScreenState
             backgroundColor: appTheme.bodyColorBackground,
             appBar: AppBarWithTitle(
               appTheme: appTheme,
-              titleKey: LanguageKey.onBoardingRecoverPhraseScreenAppBarTitle,
+              titleKey: LanguageKey.backupPrivateKeyScreenAppBarTitle,
             ),
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                  vertical: Spacing.spacing07,
                   horizontal: Spacing.spacing05,
+                  vertical: Spacing.spacing07,
                 ),
                 child: Column(
                   children: [
                     Expanded(
                       child: ListView(
+                        padding: EdgeInsets.zero,
                         children: [
-                          RecoverPhraseRemindWidget(
+                          BackupPrivateKeyRemindWidget(
                             appTheme: appTheme,
                           ),
                           const SizedBox(
                             height: BoxSize.boxSize07,
                           ),
-                          BlocBuilder<OnBoardingRecoverPhraseCubit, bool>(
-                            builder: (context, state) {
-                              if (state) {
-                                return RecoveryPhraseWidget(
-                                  phrase: widget.pyxisWallet.mnemonic ?? '',
-                                  appTheme: appTheme,
-                                  onCopy: _onCopy,
-                                );
-                              }
-                              return SvgPicture.asset(
-                                AssetImagePath
-                                    .commonHidePhrase,
-                              );
-                            },
+                          BackupPrivateKeyFormWidget(
+                            appTheme: appTheme,
+                            onCopy: _onCopy,
                           ),
                         ],
                       ),
                     ),
                     AppLocalizationProvider(
                       builder: (localization, _) {
-                        return BlocBuilder<OnBoardingRecoverPhraseCubit, bool>(
-                          builder: (context, state) {
+                        return BackupPrivateKeyShowPrivateKeySelector(
+                          builder: (showPrivateKey) {
                             return PrimaryAppButton(
-                              text: state
+                              text: !showPrivateKey
                                   ? localization.translate(
                                       LanguageKey
-                                          .onBoardingRecoverPhraseScreenGoNextButtonTitle,
+                                          .backupPrivateKeyScreenShowPrivateKeyButtonTitle,
                                     )
                                   : localization.translate(
                                       LanguageKey
-                                          .onBoardingRecoverPhraseScreenShowPhraseButtonTitle,
+                                          .backupPrivateKeyScreenGoHomeButtonTitle,
                                     ),
-                              onPress: () {
-                                _onClick(state);
-                              },
+                              onPress: () => _onConfirm(showPrivateKey),
                             );
                           },
                         );
                       },
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -117,9 +116,17 @@ class _OnBoardingRecoverPhraseScreenState
     );
   }
 
-  void _onCopy(String phrase) async {
+  void _onConfirm(bool showPrivateKey) {
+    if (showPrivateKey) {
+      AppNavigator.pop();
+    } else {
+      _cubit.showPrivateKey();
+    }
+  }
+
+  void _onCopy(String privateKey) async {
     await Clipboard.setData(
-      ClipboardData(text: phrase),
+      ClipboardData(text: privateKey),
     );
 
     if (Platform.isIOS) {
@@ -128,22 +135,11 @@ class _OnBoardingRecoverPhraseScreenState
           AppLocalizationManager.of(context).translateWithParam(
             LanguageKey.globalPyxisCopyMessage,
             {
-              'value': 'phrase',
+              'value': 'private key',
             },
           ),
         );
       }
-    }
-  }
-
-  void _onClick(bool state) {
-    if (!state) {
-      _cubit.onShowPassPhrase();
-    } else {
-      AppNavigator.push(
-        RoutePath.createNewWalletConfirmPhrase,
-        widget.pyxisWallet,
-      );
     }
   }
 }
