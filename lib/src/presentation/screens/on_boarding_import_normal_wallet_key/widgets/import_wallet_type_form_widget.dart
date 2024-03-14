@@ -35,7 +35,7 @@ class _ImportWalletTypeWidgetState
       builder: (localization, _) {
         return Text(
           localization.translate(
-            LanguageKey.onBoardingImportKeyScreenSelectType,
+            LanguageKey.onBoardingImportNormalWalletKeyScreenSelectType,
           ),
           style: AppTypoGraPhy.heading02.copyWith(
             color: appTheme.contentColorBlack,
@@ -55,14 +55,15 @@ class _ImportWalletTypeWidgetState
     return Column(
       children: [
         const SizedBox(
-          height: BoxSize.boxSize08,
+          height: BoxSize.boxSize05,
         ),
         ListView.builder(
           padding: EdgeInsets.zero,
           itemCount: widget.data.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            final MapEntry<ImportWalletType, List<String>> item = widget.data[index];
+            final MapEntry<ImportWalletType, List<String>> item =
+                widget.data[index];
             return Padding(
               padding: const EdgeInsets.only(
                 bottom: Spacing.spacing06,
@@ -80,25 +81,11 @@ class _ImportWalletTypeWidgetState
                       width: BoxSize.boxSize04,
                     ),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item.value[0],
-                            style: AppTypoGraPhy.utilityLabelDefault.copyWith(
-                              color: appTheme.contentColorBlack,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize02,
-                          ),
-                          Text(
-                            item.value[1],
-                            style: AppTypoGraPhy.body02.copyWith(
-                              color: appTheme.contentColor500,
-                            ),
-                          ),
-                        ],
+                      child: Text(
+                        item.value[1],
+                        style: AppTypoGraPhy.utilityLabelDefault.copyWith(
+                          color: appTheme.contentColorBlack,
+                        ),
                       ),
                     ),
                   ],
@@ -167,6 +154,7 @@ class _ImportWalletTypeSelectWidgetState
   void didUpdateWidget(covariant ImportWalletTypeSelectWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.selectedData != oldWidget.selectedData) {
+      _selectedOption.clear();
       _selectedOption.addAll(widget.selectedData ?? []);
     }
   }
@@ -235,28 +223,30 @@ class _ImportWalletTypeSelectWidgetState
   }
 
   Widget buildLabel(AppTheme theme) {
-    return AppLocalizationProvider(builder: (localization, _) {
-      return RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: localization.translate(
-                LanguageKey.onBoardingImportKeyScreenSelectType,
+    return AppLocalizationProvider(
+      builder: (localization, _) {
+        return RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: localization.translate(
+                  LanguageKey.onBoardingImportNormalWalletKeyScreenSelectType,
+                ),
+                style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                  color: theme.contentColor700,
+                ),
               ),
-              style: AppTypoGraPhy.utilityLabelSm.copyWith(
-                color: theme.contentColor700,
+              TextSpan(
+                text: ' *',
+                style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                  color: theme.contentColorDanger,
+                ),
               ),
-            ),
-            TextSpan(
-              text: ' *',
-              style: AppTypoGraPhy.utilityLabelSm.copyWith(
-                color: theme.contentColorDanger,
-              ),
-            ),
-          ],
-        ),
-      );
-    });
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void _showChoiceOption() async {

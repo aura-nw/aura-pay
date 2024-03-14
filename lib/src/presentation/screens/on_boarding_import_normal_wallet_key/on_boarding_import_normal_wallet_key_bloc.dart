@@ -6,11 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
-import 'on_boarding_import_key_event.dart';
-import 'on_boarding_import_key_state.dart';
 
-class OnBoardingImportKeyBloc
-    extends Bloc<OnBoardingImportKeyEvent, OnBoardingImportKeyState> {
+import 'on_boarding_import_normal_wallet_key_event.dart';
+import 'on_boarding_import_normal_wallet_key_state.dart';
+
+class OnBoardingImportNormalWalletKeyBloc extends Bloc<
+    OnBoardingImportNormalWalletKeyEvent,
+    OnBoardingImportNormalWalletKeyState> {
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
@@ -18,7 +20,7 @@ class OnBoardingImportKeyBloc
   final AuthUseCase _authUseCase;
   final DeviceManagementUseCase _deviceManagementUseCase;
 
-  OnBoardingImportKeyBloc(
+  OnBoardingImportNormalWalletKeyBloc(
     this._walletUseCase,
     this._smartAccountUseCase,
     this._controllerKeyUseCase,
@@ -26,30 +28,17 @@ class OnBoardingImportKeyBloc
     this._authUseCase,
     this._deviceManagementUseCase,
   ) : super(
-          const OnBoardingImportKeyState(),
+          const OnBoardingImportNormalWalletKeyState(),
         ) {
-    on(_onSelectAccountType);
     on(_onSelectImportType);
     on(_onInputKey);
     on(_onImport);
-  }
-
-  void _onSelectAccountType(
-    OnBoardingImportKeyOnSelectAccountTypeEvent event,
-    Emitter<OnBoardingImportKeyState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        pyxisWalletType: event.accountType,
-        key: '',
-        isReadySubmit: false,
-      ),
-    );
+    on(_onChangeShowPrivateKey);
   }
 
   void _onSelectImportType(
-    OnBoardingImportKeyOnSelectImportTypeEvent event,
-    Emitter<OnBoardingImportKeyState> emit,
+    OnBoardingImportNormalWalletKeyOnSelectImportTypeEvent event,
+    Emitter<OnBoardingImportNormalWalletKeyState> emit,
   ) {
     emit(
       state.copyWith(
@@ -61,8 +50,8 @@ class OnBoardingImportKeyBloc
   }
 
   void _onInputKey(
-    OnBoardingImportKeyOnInputKeyEvent event,
-    Emitter<OnBoardingImportKeyState> emit,
+    OnBoardingImportNormalWalletKeyOnInputKeyEvent event,
+    Emitter<OnBoardingImportNormalWalletKeyState> emit,
   ) {
     emit(
       state.copyWith(
@@ -73,59 +62,52 @@ class OnBoardingImportKeyBloc
   }
 
   void _onImport(
-    OnBoardingImportKeyOnSubmitEvent event,
-    Emitter<OnBoardingImportKeyState> emit,
+    OnBoardingImportNormalWalletKeyOnSubmitEvent event,
+    Emitter<OnBoardingImportNormalWalletKeyState> emit,
   ) async {
-    if (state.pyxisWalletType == PyxisWalletType.smartAccount) return;
-
     emit(
       state.copyWith(
-        status: OnBoardingImportKeyStatus.onLoading,
+        status: OnBoardingImportNormalWalletKeyStatus.onLoading,
       ),
     );
     try {
-      switch (state.pyxisWalletType) {
-        case PyxisWalletType.smartAccount:
-          break;
-        case PyxisWalletType.normalWallet:
-          // Import wallet
-          final wallet = await _walletUseCase.importWallet(
-            privateKeyOrPassPhrase: state.key,
-          );
+      // Import wallet
+      final wallet = await _walletUseCase.importWallet(
+        privateKeyOrPassPhrase: state.key,
+      );
 
-          // Register device to create access token
-          unawaited(
-            _createToken(
-              address: wallet.bech32Address,
-            ),
-          );
+      // Register device to create access token
+      unawaited(
+        _createToken(
+          address: wallet.bech32Address,
+        ),
+      );
 
-          // Save account
-          await _accountUseCase.saveAccount(
-            address: wallet.bech32Address,
-            type: AuraAccountType.normal,
-            accountName: PyxisAccountConstant.unName,
-          );
+      // Save account
+      await _accountUseCase.saveAccount(
+        address: wallet.bech32Address,
+        type: AuraAccountType.normal,
+        accountName: PyxisAccountConstant.unName,
+      );
 
-          // Save controller key
-          await _controllerKeyUseCase.saveKey(
-            address: wallet.bech32Address,
-            key: state.key,
-          );
+      // Save controller key
+      await _controllerKeyUseCase.saveKey(
+        address: wallet.bech32Address,
+        key: state.key,
+      );
 
-          emit(
-            state.copyWith(
-              status: OnBoardingImportKeyStatus.onImportAccountSuccess,
-            ),
-          );
-          break;
-      }
+      emit(
+        state.copyWith(
+          status:
+          OnBoardingImportNormalWalletKeyStatus.onImportAccountSuccess,
+        ),
+      );
     } catch (e) {
       // Handle error
       emit(
         state.copyWith(
           errorMessage: e.toString(),
-          status: OnBoardingImportKeyStatus.onImportAccountError,
+          status: OnBoardingImportNormalWalletKeyStatus.onImportAccountError,
         ),
       );
     }
@@ -134,7 +116,7 @@ class OnBoardingImportKeyBloc
   Future<void> _createToken({
     required String address,
   }) async {
-    try{
+    try {
       // final String accessToken = await AuthHelper.registerOrSignIn(
       //   deviceManagementUseCase: _deviceManagementUseCase,
       //   authUseCase: _authUseCase,
@@ -148,8 +130,18 @@ class OnBoardingImportKeyBloc
       //   walletAddress: address,
       //   accessToken: accessToken,
       // );
-    }catch(e){
+    } catch (e) {
       LogProvider.log(e.toString());
     }
+  }
+
+  void _onChangeShowPrivateKey(
+      OnBoardingImportNormalWalletKeyOnChangeShowPrivateKeyEvent event,
+      Emitter<OnBoardingImportNormalWalletKeyState> emit) {
+    emit(
+      state.copyWith(
+        showPrivateKey: !state.showPrivateKey,
+      ),
+    );
   }
 }

@@ -120,6 +120,60 @@ final class NormalAppBarWidget extends _AppBarBase {
 
 
 ///region appbar normal with title widget
+final class NormalAppBarWithTitleWidget extends _AppBarBase {
+  final VoidCallback onViewMoreInformationTap;
+  final String title;
+
+  const NormalAppBarWithTitleWidget({
+    required this.onViewMoreInformationTap,
+    required this.title,
+    required super.appTheme,
+    super.onBack,
+    super.key,
+  });
+
+  @override
+  List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme) {
+    return [
+      GestureDetector(
+        onTap: onViewMoreInformationTap,
+        behavior: HitTestBehavior.opaque,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.spacing04,
+          ),
+          child: SvgPicture.asset(
+            AssetIconPath.commonInformation,
+          ),
+        ),
+      ),
+    ];
+  }
+
+  @override
+  PreferredSizeWidget? bottomBuilder(AppTheme appTheme) {
+    return null;
+  }
+
+  @override
+  Widget titleBuilder(BuildContext context, AppTheme appTheme) {
+    return Text(
+      title,
+      style: AppTypoGraPhy.heading03.copyWith(
+        color: appTheme.contentColorBlack,
+      ),
+    );
+  }
+
+  @override
+  Widget? leadingBuilder(BuildContext context, AppTheme appTheme) {
+    return null;
+  }
+}
+
+///endregion
+
+///region appbar normal with title widget
 final class NormalAppBarWithOnlyTitleWidget extends _AppBarBase {
   final VoidCallback onViewMoreInformationTap;
   final String title;

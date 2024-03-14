@@ -76,20 +76,21 @@ sealed class LanguageKey {
   ///endregion
 
   ///region import account first page
-  static const String onBoardingImportKeyScreenTitleRegionOne = 'on_boarding_import_key_screen_title_region_one';
-  static const String onBoardingImportKeyScreenTitleRegionTwo = 'on_boarding_import_key_screen_title_region_two';
-  static const String onBoardingImportKeyScreenAccountType = 'on_boarding_import_key_screen_account_type';
-  static const String onBoardingImportKeyScreenSmartAccountType = 'on_boarding_import_key_screen_smart_account_type';
-  static const String onBoardingImportKeyScreenNormalAccountType = 'on_boarding_import_key_screen_normal_account_type';
-  static const String onBoardingImportKeyScreenSelectType = 'on_boarding_import_key_screen_select_type';
-  static const String onBoardingImportKeyScreenSelectTypePrivate = 'on_boarding_import_key_screen_select_type_private';
-  static const String onBoardingImportKeyScreenSelectTypePassPhrase = 'on_boarding_import_key_screen_select_type_pass_phrase';
-  static const String onBoardingImportKeyScreenPrivateKey = 'on_boarding_import_key_screen_private_key';
-  static const String onBoardingImportKeyScreenPassPhrase = 'on_boarding_import_key_screen_pass_phrase';
-  static const String onBoardingImportKeyScreenButtonTitle = 'on_boarding_import_key_screen_button_title';
-  static const String onBoardingImportKeyScreenInvalidPrivateKey = 'on_boarding_import_key_screen_invalid_private_key';
-  static const String onBoardingImportKeyScreenInvalidPassPhrase = 'on_boarding_import_key_screen_invalid_passphrase';
-  static const String onBoardingImportKeyScreenDialogLoadingTitle = 'on_boarding_import_key_screen_dialog_loading_title';
+  static const String onBoardingImportNormalWalletKeyScreenAppBarTitle = 'on_boarding_import_normal_wallet_key_screen_app_bar_title';
+  static const String onBoardingImportNormalWalletKeyScreenSelectType = 'on_boarding_import_normal_wallet_key_screen_select_type';
+  static const String onBoardingImportNormalWalletKeyScreenSelectTypePrivateKey = 'on_boarding_import_normal_wallet_key_screen_select_type_private';
+  static const String onBoardingImportNormalWalletKeyScreenSelectTypePassPhrase12Words = 'on_boarding_import_normal_wallet_key_screen_select_type_passphrase_12words';
+  static const String onBoardingImportNormalWalletKeyScreenSelectTypePassPhrase24Words = 'on_boarding_import_normal_wallet_key_screen_select_type_passphrase_24words';
+  static const String onBoardingImportNormalWalletKeyScreenSelectTypeDialogTitle = 'on_boarding_import_normal_wallet_key_screen_select_type_dialog_title';
+  static const String onBoardingImportNormalWalletKeyScreenPrivateKey = 'on_boarding_import_normal_wallet_key_screen_private_key';
+  static const String onBoardingImportNormalWalletKeyScreenPassPhrase = 'on_boarding_import_normal_wallet_key_screen_pass_phrase';
+  static const String onBoardingImportNormalWalletKeyScreenPassPhrase12Words = 'on_boarding_import_normal_wallet_key_screen_pass_phrase_12words';
+  static const String onBoardingImportNormalWalletKeyScreenPassPhrase24Words = 'on_boarding_import_normal_wallet_key_screen_pass_phrase_24words';
+  static const String onBoardingImportNormalWalletKeyScreenButtonTitle = 'on_boarding_import_normal_wallet_key_screen_button_title';
+  static const String onBoardingImportNormalWalletKeyScreenPaste = 'on_boarding_import_normal_wallet_key_screen_paste';
+  static const String onBoardingImportNormalWalletKeyScreenInvalidPrivateKey = 'on_boarding_import_normal_wallet_key_screen_invalid_private_key';
+  static const String onBoardingImportNormalWalletKeyScreenInvalidPassPhrase = 'on_boarding_import_normal_wallet_key_screen_invalid_passphrase';
+  static const String onBoardingImportNormalWalletKeyScreenDialogLoadingTitle = 'on_boarding_import_normal_wallet_key_screen_dialog_loading_title';
   ///endregion
 
   ///region import account second page

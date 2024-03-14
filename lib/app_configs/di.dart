@@ -44,7 +44,7 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_confirm_recove
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa/on_boarding_create_eoa_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa_by_google/on_boarding_create_eoa_by_google_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa_by_google_pick_name/on_boarding_create_eoa_by_google_pick_name_bloc.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_key/on_boarding_import_key_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_normal_wallet_key/on_boarding_import_normal_wallet_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_bloc.dart';
@@ -526,8 +526,8 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactory<OnBoardingImportKeyBloc>(
-    () => OnBoardingImportKeyBloc(
+  getIt.registerFactory<OnBoardingImportNormalWalletKeyBloc>(
+    () => OnBoardingImportNormalWalletKeyBloc(
       getIt.get<WalletUseCase>(),
       getIt.get<SmartAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),

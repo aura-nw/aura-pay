@@ -111,6 +111,7 @@ sealed class AssetIconPath {
   static const String commonViewRaw = '${_baseIconPath}ic_common_view_raw.svg';
   static const String commonViewRawActive = '${_baseIconPath}ic_common_view_raw_active.svg';
   static const String commonShowKey = '${_baseIconPath}ic_common_show_key.svg';
+  static const String commonPaste = '${_baseIconPath}ic_common_paste.svg';
 
   /// Home screen
   static const String homeBottomNavigatorBarHomeActive =

@@ -44,7 +44,7 @@ import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart'
 import 'package:flutter/material.dart';
 import 'presentation/screens/on_boarding_create_eoa_by_google/on_boarding_create_eoa_by_google_screen.dart';
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
-import 'presentation/screens/on_boarding_import_key/on_boarding_import_key_screen.dart';
+import 'presentation/screens/on_boarding_import_normal_wallet_key/on_boarding_import_normal_wallet_key_screen.dart';
 import 'presentation/screens/on_boarding_recover_phrase/on_boarding_recover_phrase_screen.dart';
 import 'presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_screen.dart';
 import 'presentation/screens/signed_in_recover_select_account/singed_in_recover_select_account_screen.dart';
@@ -201,7 +201,7 @@ sealed class AppNavigator {
         );
       case RoutePath.importFirstPage:
         return _defaultRoute(
-          const OnBoardingImportKeyScreen(),
+          const OnBoardingImportNormalWalletKeyScreen(),
           settings,
         );
       case RoutePath.recoverChoice:

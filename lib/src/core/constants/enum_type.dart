@@ -22,7 +22,8 @@ enum PyxisWalletType{
 
 enum ImportWalletType{
   privateKey,
-  passPhrase,
+  passPhrase12,
+  passPhrase24,
 }
 
 enum RecoverOptionType{

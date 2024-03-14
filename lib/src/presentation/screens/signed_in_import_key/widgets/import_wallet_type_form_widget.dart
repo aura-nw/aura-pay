@@ -35,7 +35,7 @@ class _ImportWalletTypeWidgetState
       builder: (localization, _) {
         return Text(
           localization.translate(
-            LanguageKey.onBoardingImportKeyScreenSelectType,
+            LanguageKey.signedInImportKeyScreenSelectType,
           ),
           style: AppTypoGraPhy.heading02.copyWith(
             color: appTheme.contentColorBlack,
@@ -243,7 +243,7 @@ class _ImportWalletTypeSelectWidgetState
             children: [
               TextSpan(
                 text: localization.translate(
-                  LanguageKey.onBoardingImportKeyScreenSelectType,
+                  LanguageKey.signedInImportKeyScreenSelectType,
                 ),
                 style: AppTypoGraPhy.utilityLabelSm.copyWith(
                   color: theme.contentColor700,

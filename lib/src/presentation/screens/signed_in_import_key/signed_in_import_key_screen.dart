@@ -25,7 +25,6 @@ import 'signed_in_import_key_bloc.dart';
 import 'signed_in_import_key_selector.dart';
 import 'signed_in_import_key_state.dart';
 import 'singed_in_import_key_event.dart';
-import 'widgets/account_type_widget.dart';
 
 class SignedInImportKeyScreen extends StatefulWidget {
   const SignedInImportKeyScreen({
@@ -50,7 +49,7 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
       ),
       'E.g: 54c446f7d...31f28d6'
     ],
-    ImportWalletType.passPhrase: [
+    ImportWalletType.passPhrase12: [
       AppLocalizationManager.instance.translate(
         LanguageKey.signedInImportKeyScreenSelectTypePassPhrase,
       ),
@@ -161,49 +160,6 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                               );
                             },
                           ),
-                          // const SizedBox(
-                          //   height: BoxSize.boxSize07,
-                          // ),
-                          // AppLocalizationProvider(
-                          //   builder: (localization, _) {
-                          //     return Row(
-                          //       children: [
-                          //         Text(
-                          //           localization.translate(
-                          //             LanguageKey
-                          //                 .signedInImportKeyScreenAccountType,
-                          //           ),
-                          //         ),
-                          //         const SizedBox(
-                          //           width: BoxSize.boxSize03,
-                          //         ),
-                          //         SvgPicture.asset(
-                          //           AssetIconPath.signedInImportKeyInformation,
-                          //         ),
-                          //       ],
-                          //     );
-                          //   },
-                          // ),
-                          // const SizedBox(
-                          //   height: BoxSize.boxSize05,
-                          // ),
-                          // SignedInImportKeyAccountTypeSelector(
-                          //   builder: (accountType) {
-                          //     return AccountTypeChoiceWidget(
-                          //       onSelected: (selectedAccountType) {
-                          //         if (selectedAccountType != accountType) {
-                          //           _bloc.add(
-                          //             SignedInImportKeyOnSelectAccountTypeEvent(
-                          //               accountType: selectedAccountType,
-                          //             ),
-                          //           );
-                          //         }
-                          //       },
-                          //       defaultType: accountType,
-                          //       appTheme: appTheme,
-                          //     );
-                          //   },
-                          // ),
                           const SizedBox(
                             height: BoxSize.boxSize07,
                           ),
@@ -296,7 +252,8 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                                       );
                                     },
                                   );
-                                case ImportWalletType.passPhrase:
+                                case ImportWalletType.passPhrase12:
+                                case ImportWalletType.passPhrase24:
                                   return AppLocalizationProvider(
                                     builder: (localization, _) {
                                       return TextInputNormalSuffixWidget(
@@ -376,7 +333,8 @@ class _SignedInImportKeyScreenState extends State<SignedInImportKeyScreen>
                                             ?.validate() ??
                                         false;
                                     break;
-                                  case ImportWalletType.passPhrase:
+                                  case ImportWalletType.passPhrase12:
+                                  case ImportWalletType.passPhrase24:
                                     isValid = _inputPassPhraseGlobalKey
                                             .currentState
                                             ?.validate() ??

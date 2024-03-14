@@ -230,6 +230,12 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
 
   String value() => _controller.text;
 
+  void setValue(String value){
+    _controller.text = value;
+
+    widget.onChanged?.call(value, errorMessage.isEmptyOrNull);
+  }
+
   late bool isFocus;
 
   Color _borderColorBuilder(AppTheme theme) {
