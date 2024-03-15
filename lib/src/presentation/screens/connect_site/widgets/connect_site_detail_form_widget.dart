@@ -16,7 +16,6 @@ class ConnectSiteDetailFormWidget extends StatelessWidget {
   final String logo;
   final String siteName;
   final String url;
-  final String date;
   final String accountName;
   final String address;
   final String connectType;
@@ -26,7 +25,6 @@ class ConnectSiteDetailFormWidget extends StatelessWidget {
   const ConnectSiteDetailFormWidget({
     required this.siteName,
     required this.logo,
-    required this.date,
     required this.address,
     required this.url,
     required this.accountName,
@@ -128,10 +126,6 @@ class ConnectSiteDetailFormWidget extends StatelessWidget {
             ),
             child: Column(
               children: [
-                // _buildInformation(
-                //   LanguageKey.connectSiteScreenDate,
-                //   date,
-                // ),
                 _buildInformation(
                   LanguageKey.connectSiteScreenAccountName,
                   accountName,

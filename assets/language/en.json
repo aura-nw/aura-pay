@@ -520,7 +520,7 @@
   "back_up_private_key_screen_remind_two" : "• Anyone with your private key can have access to your assets",
   "back_up_private_key_screen_copy" : "Copy",
   "back_up_private_key_screen_show_private_key_button_title" : "Show Private Key",
-  "back_up_private_key_screen_go_home_button_title" : "I Have Memorized"
+  "back_up_private_key_screen_go_home_button_title" : "I Have Memorized",
 
   "connect_wallet_confirm_transaction_screen_app_bar_title" : "Confirm transaction",
   "connect_wallet_confirm_transaction_screen_messages" : "Messages",

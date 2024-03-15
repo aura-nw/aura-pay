@@ -184,7 +184,6 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
       widget: ConnectSiteDetailFormWidget(
         siteName: sessionData.peer.metadata.name,
         logo: sessionData.peer.metadata.icons.firstOrNull ?? '',
-        date: 'date time',
         address: accountAddress,
         url: sessionData.peer.metadata.url,
         accountName: accountName,
@@ -197,6 +196,7 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
           _showConfirmDialog(
             appTheme: appTheme,
             sessionData: sessionData,
+            address: accountAddress,
           );
         },
       ),
@@ -206,6 +206,7 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
   void _showConfirmDialog({
     required AppTheme appTheme,
     required SessionData sessionData,
+    required String address,
   }) {
     DialogProvider.showRemoveDialog(
       context,
@@ -213,7 +214,7 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
       confirmKey: LanguageKey.connectSiteScreenDisconnectDisconnectButton,
       content: DisconnectConfirmationContentWidget(
         appTheme: appTheme,
-        address: 'address',
+        address: address,
       ),
       onRemove: () {
         _cubit.onDisconnectSession(
