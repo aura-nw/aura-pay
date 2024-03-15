@@ -53,6 +53,14 @@ class _OnBoardingCreateEOAByGoogleScreenState
                   break;
                 case OnBoardingCreateEOAByGoogleStatus.error:
                   showToast(state.error ?? '');
+
+                  Future.delayed(
+                    const Duration(
+                      milliseconds: 600,
+                    ),
+                  ).then((value) {
+                    AppNavigator.pop();
+                  });
                   break;
               }
             },

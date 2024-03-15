@@ -108,37 +108,47 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                 create: (_) => WalletConnectCubit(),
               ),
             ],
-            child: Builder(builder: (builderContext) {
-              return MultiBlocListener(
-                listeners: [
-                  BlocListener<AppGlobalCubit, AppGlobalState>(
-                    listenWhen: (previous, current) =>
-                        current.status != previous.status,
-                    listener: (context, state) {
-                      // Listen to changes in AppGlobalState status
-                      switch (state.status) {
-                        case AppGlobalStatus.authorized:
-                          // If the user is authorized, navigate to the home screen
-                          AppNavigator.replaceAllWith(
-                            RoutePath.home,
-                          );
-                          break;
-                        case AppGlobalStatus.unauthorized:
-                          // If the user is unauthorized, navigate to the get started screen
-                          AppNavigator.replaceAllWith(RoutePath.getStarted);
-                          break;
-                      }
-                    },
+            child: Builder(
+              builder: (builderContext) {
+                return MultiBlocListener(
+                  listeners: [
+                    BlocListener<AppGlobalCubit, AppGlobalState>(
+                      listenWhen: (previous, current) =>
+                          current.status != previous.status,
+                      listener: (context, state) {
+                        // Listen to changes in AppGlobalState status
+                        switch (state.status) {
+                          case AppGlobalStatus.authorized:
+                            // If the user is authorized, navigate to the home screen
+                            AppNavigator.replaceAllWith(
+                              RoutePath.home,
+                            );
+                            break;
+                          case AppGlobalStatus.unauthorized:
+                            // If the user is unauthorized, navigate to the get started screen
+                            AppNavigator.replaceAllWith(RoutePath.getStarted);
+                            break;
+                        }
+                      },
+                    ),
+                    BlocListener<WalletConnectCubit, WalletConnectState>(
+                        // listenWhen: (previous, current) =>
+                        //     current.status != previous.status,
+                        listener: (_, state) =>
+                            walletConnectListener(builderContext, state))
+                  ],
+                  child: Overlay(
+                    initialEntries: [
+                      OverlayEntry(
+                        builder: (context) {
+                          return child ?? const SizedBox();
+                        },
+                      )
+                    ],
                   ),
-                  BlocListener<WalletConnectCubit, WalletConnectState>(
-                      // listenWhen: (previous, current) =>
-                      //     current.status != previous.status,
-                      listener: (_, state) =>
-                          walletConnectListener(builderContext, state))
-                ],
-                child: child ?? const SizedBox(),
-              );
-            }),
+                );
+              },
+            ),
           );
         },
       ),

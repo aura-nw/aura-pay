@@ -14,3 +14,15 @@ class OnBoardingPickAccountIsReadySubmitSelector extends BlocSelector<
           selector: (state) => state.isReadySubmit,
         );
 }
+
+class OnBoardingPickAccountAccountNameSelector extends BlocSelector<
+    OnBoardingPickAccountBloc, OnBoardingPickAccountState, String> {
+  OnBoardingPickAccountAccountNameSelector({
+    Key? key,
+    required Widget Function(String) builder,
+  }) : super(
+          builder: (_, accountName) => builder(accountName),
+          key: key,
+          selector: (state) => state.accountName,
+        );
+}

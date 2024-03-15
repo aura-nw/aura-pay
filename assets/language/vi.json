@@ -83,9 +83,9 @@
   "on_boarding_create_eoa_by_google_pick_name_screen_name_creating" : "Creating...",
 
 
-  "on_boarding_create_new_smart_account_screen_title_region_one" : "Create new",
-  "on_boarding_create_new_smart_account_screen_title_region_two" : "smart account",
-  "on_boarding_create_new_smart_account_screen_text_field_title" : "Pick a name",
+  "on_boarding_create_new_smart_account_screen_app_bar_title" : "Create Smart Account",
+  "on_boarding_create_new_smart_account_screen_name_your_account" : "Name your account",
+  "on_boarding_create_new_smart_account_screen_name_your_account_hint" : "Input your account name",
   "on_boarding_create_new_smart_account_screen_button_title" : "Create",
   "on_boarding_create_new_smart_account_screen_dialog_loading_title" : "Checking device",
   "on_boarding_create_new_smart_account_screen_dialog_loading_create_title" : "Creating smart account",

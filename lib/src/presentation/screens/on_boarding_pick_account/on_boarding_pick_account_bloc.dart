@@ -158,9 +158,6 @@ class OnBoardingPickAccountBloc
         );
       }
     } catch (e, s) {
-
-      dev.log(e.toString(), stackTrace: s);
-      print(e.toString());
       emit(
         state.copyWith(
           status: OnBoardingPickAccountStatus.onCheckAddressError,

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/cubit/theme_cubit.dart';
+import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
@@ -10,9 +11,11 @@ import 'package:pyxis_mobile/src/core/constants/typography.dart';
 mixin CustomFlutterToast<T extends StatefulWidget> on State<T> {
   late FToast _fToast;
 
-  void _init(){
+  void _init() {
     _fToast = FToast();
-    _fToast.init(context);
+    _fToast.init(
+      AppNavigator.navigatorKey.currentContext ?? context,
+    );
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 
 part 'on_boarding_pick_account_state.freezed.dart';
 
@@ -19,7 +20,7 @@ class OnBoardingPickAccountState with _$OnBoardingPickAccountState {
     @Default(OnBoardingPickAccountStatus.init)
     OnBoardingPickAccountStatus status,
     @Default(false) bool isReadySubmit,
-    @Default('') String accountName,
+    @Default(PyxisAccountConstant.defaultName) String accountName,
     String? errorMessage,
     String? smartAccountAddress,
     Uint8List? userPrivateKey,

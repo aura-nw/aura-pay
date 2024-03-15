@@ -53,9 +53,9 @@ sealed class LanguageKey {
   ///endregion
 
   ///region create new account
-  static const String onBoardingCreateNewSmartAccountScreenTitleRegionOne = 'on_boarding_create_new_smart_account_screen_title_region_one';
-  static const String onBoardingCreateNewSmartAccountScreenTitleRegionTwo = 'on_boarding_create_new_smart_account_screen_title_region_two';
-  static const String onBoardingCreateNewSmartAccountScreenTextFieldTitle = 'on_boarding_create_new_smart_account_screen_text_field_title';
+  static const String onBoardingCreateNewSmartAccountScreenAppBarTitle = 'on_boarding_create_new_smart_account_screen_app_bar_title';
+  static const String onBoardingCreateNewSmartAccountScreenNameYourAccount = 'on_boarding_create_new_smart_account_screen_name_your_account';
+  static const String onBoardingCreateNewSmartAccountScreenNameYourAccountHint = 'on_boarding_create_new_smart_account_screen_name_your_account_hint';
   static const String onBoardingCreateNewSmartAccountScreenButtonTitle = 'on_boarding_create_new_smart_account_screen_button_title';
   static const String onBoardingCreateNewSmartAccountScreenDialogLoadingTitle = 'on_boarding_create_new_smart_account_screen_dialog_loading_title';
   static const String onBoardingCreateNewSmartAccountScreenDialogLoadingCreateTitle = 'on_boarding_create_new_smart_account_screen_dialog_loading_create_title';

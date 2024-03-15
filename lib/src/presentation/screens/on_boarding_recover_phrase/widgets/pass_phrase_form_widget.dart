@@ -5,6 +5,7 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/icon_with_text_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/pass_phrase_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/phrase_widget.dart';
 
 class RecoveryPhraseWidget extends StatelessWidget {
@@ -21,37 +22,12 @@ class RecoveryPhraseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> words = phrase.split(' ');
     return Column(
       children: [
-        Column(
-          children: List.generate(
-            4,
-            (cIndex) {
-              return Row(
-                children: List.generate(
-                  3,
-                  (rIndex) {
-                    final index = cIndex * 3 + rIndex;
-                    final String word = words[index];
-                    return Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Spacing.spacing02,
-                          vertical: Spacing.spacing03,
-                        ),
-                        child: PhraseWidget(
-                          position: index + 1,
-                          word: word,
-                          appTheme: appTheme,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
-          ),
+        PassPhraseWidget(
+          phrase: phrase,
+          onCopy: onCopy,
+          appTheme: appTheme,
         ),
         const SizedBox(
           height: BoxSize.boxSize04,
