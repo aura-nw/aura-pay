@@ -107,10 +107,10 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                                 ),
                               ),
                               TextSpan(
-                                text: localization.translate(
+                                text: ' ${localization.translate(
                                   LanguageKey
                                       .onBoardingGetStartedScreenTermOfService,
-                                ),
+                                )} ',
                                 style: AppTypoGraPhy.body01.copyWith(
                                   color: appTheme.contentColorBrand,
                                 ),
@@ -129,10 +129,10 @@ class OnBoardingGetStartedScreen extends StatelessWidget {
                                 ),
                               ),
                               TextSpan(
-                                text: localization.translate(
+                                text: ' ${localization.translate(
                                   LanguageKey
                                       .onBoardingGetStartedScreenPrivacyPolicy,
-                                ),
+                                )}',
                                 style: AppTypoGraPhy.body01.copyWith(
                                   color: appTheme.contentColorBrand,
                                 ),

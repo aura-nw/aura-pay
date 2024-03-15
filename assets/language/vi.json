@@ -14,8 +14,8 @@
   "on_boarding_get_started_screen_button_title" : "Get Started",
   "on_boarding_get_started_screen_term_of_service" : "Term of Services",
   "on_boarding_get_started_screen_privacy_policy" : "Privacy Policy",
-  "on_boarding_get_started_screen_privacy_policy_title_region_one" : "By clicking Get Started, you agree to our and you have read our ${privacy_policy}",
-  "on_boarding_get_started_screen_privacy_policy_title_region_two" : "and you have read our",
+  "on_boarding_get_started_screen_privacy_policy_title_region_one" : "By continue, you agree to our",
+  "on_boarding_get_started_screen_privacy_policy_title_region_two" : "and",
 
   "on_boarding_choice_option_screen_app_bar_title" : "Create Your Account",
   "on_boarding_choice_option_screen_smart_account_option" : "Smart Account",
