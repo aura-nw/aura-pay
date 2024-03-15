@@ -128,10 +128,10 @@ class ConnectSiteDetailFormWidget extends StatelessWidget {
             ),
             child: Column(
               children: [
-                _buildInformation(
-                  LanguageKey.connectSiteScreenDate,
-                  date,
-                ),
+                // _buildInformation(
+                //   LanguageKey.connectSiteScreenDate,
+                //   date,
+                // ),
                 _buildInformation(
                   LanguageKey.connectSiteScreenAccountName,
                   accountName,

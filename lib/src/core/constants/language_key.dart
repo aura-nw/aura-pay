@@ -605,4 +605,18 @@ sealed class LanguageKey {
   static const String backupPrivateKeyScreenCopy = 'back_up_private_key_screen_copy';
   static const String backupPrivateKeyScreenShowPrivateKeyButtonTitle = 'back_up_private_key_screen_show_private_key_button_title';
   static const String backupPrivateKeyScreenGoHomeButtonTitle = 'back_up_private_key_screen_go_home_button_title';
+
+
+  /// region connect wallet confirm transaction screen
+  static const String connectWalletConfirmTransactionScreenAppBarTitle    = 'connect_wallet_confirm_transaction_screen_app_bar_title';
+  static const String connectWalletConfirmTransactionScreenMessages       = 'connect_wallet_confirm_transaction_screen_messages';
+  static const String connectWalletConfirmTransactionScreenViewData       = 'connect_wallet_confirm_transaction_screen_view_data';
+  static const String connectWalletConfirmTransactionScreenMemo           = 'connect_wallet_confirm_transaction_screen_memo';
+  static const String connectWalletConfirmTransactionScreenMemoHint       = 'connect_wallet_confirm_transaction_screen_memo_hint';
+  static const String connectWalletConfirmTransactionScreenTransactionFee = 'connect_wallet_confirm_transaction_screen_transaction_fee';
+  static const String connectWalletConfirmTransactionScreenButtonConfirmTitle = 'connect_wallet_confirm_transaction_screen_button_confirm_title';
+  static const String connectWalletConfirmTransactionScreenLoading        = 'connect_wallet_confirm_transaction_screen_loading';
+  static const String connectWalletConfirmTransactionScreenRequestFrom    = 'connect_wallet_confirm_transaction_screen_request_from';
+
+
 }

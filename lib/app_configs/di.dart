@@ -67,6 +67,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signe
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_select_account/signed_in_recover_select_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_sign/signed_in_recover_sign_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/wallet_connect_screen/wallet_connect_sign_transaction/confirm_transaction_screen_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
@@ -790,6 +791,16 @@ Future<void> initDependency(
   getIt.registerFactory<ConnectSiteCubit>(
     () => ConnectSiteCubit(
       getIt.get<WalletConnectService>(),
+      getIt.get<AuraAccountUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<WalletConnectConfirmTransactionBloc>(
+    () => WalletConnectConfirmTransactionBloc(
+      getIt.get<ControllerKeyUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<WalletConnectService>(),
+      getIt.get<SmartAccountUseCase>(),
     ),
   );
 

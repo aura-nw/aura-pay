@@ -113,6 +113,7 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
                                             appTheme: appTheme,
                                           );
                                         },
+                                        behavior: HitTestBehavior.opaque,
                                         child: SiteWidget(
                                           // Display the logo of the site
                                           logo: sessionData.peer.metadata.icons
@@ -173,6 +174,9 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
     SessionData sessionData, {
     required AppTheme appTheme,
   }) {
+    String accountAddress = _cubit.getAddressBySession(sessionData);
+    String accountName = _cubit.getAccountNameByAddress(accountAddress);
+
     DialogProvider.showCustomDialog(
       context,
       appTheme: appTheme,
@@ -181,9 +185,9 @@ class _ConnectSiteScreenState extends State<ConnectSiteScreen> {
         siteName: sessionData.peer.metadata.name,
         logo: sessionData.peer.metadata.icons.firstOrNull ?? '',
         date: 'date time',
-        address: 'address',
+        address: accountAddress,
         url: sessionData.peer.metadata.url,
-        accountName: 'accountName',
+        accountName: accountName,
         connectType: AppLocalizationManager.of(context).translate(
           LanguageKey.connectSiteScreenConnectionTypeWalletConnect,
         ),

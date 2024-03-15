@@ -43,6 +43,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/s
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'presentation/screens/on_boarding_create_eoa_by_google/on_boarding_create_eoa_by_google_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/wallet_connect_screen/wallet_connect_sign_transaction/confirm_transaction_screen.dart';
 import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
 import 'presentation/screens/on_boarding_import_normal_wallet_key/on_boarding_import_normal_wallet_key_screen.dart';
 import 'presentation/screens/on_boarding_recover_phrase/on_boarding_recover_phrase_screen.dart';
@@ -121,6 +122,8 @@ sealed class RoutePath {
   static const String walletConnect = '$home/wallet_connect';
   static const String walletConnectOnConnect =
       '$home/wallet_connect/on_connect';
+  static const String walletConnectConfirmTransaction =
+      '$home/wallet_connect/on_confirm_transaction';
 
   static const String browser = '$home/browser';
   static const String browserSearch = '$home/search';
@@ -153,6 +156,16 @@ sealed class AppNavigator {
           ),
           settings,
         );
+      case RoutePath.walletConnectConfirmTransaction:
+        final RequestSessionData data =
+            settings.arguments as RequestSessionData;
+        return _defaultRoute(
+          WalletConnectConfirmTransactionScreen(
+            sessionData: data,
+          ),
+          settings,
+        );
+
       case RoutePath.getStarted:
         return _defaultRoute(
           const OnBoardingGetStartedScreen(),
