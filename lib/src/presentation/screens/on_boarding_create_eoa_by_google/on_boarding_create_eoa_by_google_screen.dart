@@ -64,65 +64,68 @@ class _OnBoardingCreateEOAByGoogleScreenState
                   break;
               }
             },
-            child: Scaffold(
-              backgroundColor: appTheme.bodyColorBackground,
-              appBar: AppBarWithOnlyTitle(
-                appTheme: appTheme,
-                titleKey:
-                    LanguageKey.onBoardingCreateEoaByGoogleScreenAppBarTitle,
-              ),
-              body: SafeArea(
-                child: SizedBox(
-                  width: context.w,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Spacing.spacing05,
-                      vertical: Spacing.spacing07,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          height: BoxSize.boxSize14,
-                        ),
-                        SvgPicture.asset(
-                          AssetIconPath.commonLogoSmall,
-                        ),
-                        const SizedBox(
-                          height: BoxSize.boxSize06,
-                        ),
-                        AppLocalizationProvider(
-                          builder: (localization, _) {
-                            return Text(
-                              localization.translate(
-                                LanguageKey
-                                    .onBoardingCreateEoaByGoogleScreenCreatingNewWallet,
-                              ),
-                              style: AppTypoGraPhy.bodyMedium02.copyWith(
-                                color: appTheme.contentColor700,
-                              ),
-                              textAlign: TextAlign.center,
-                            );
-                          },
-                        ),
-                        const SizedBox(
-                          height: BoxSize.boxSize03,
-                        ),
-                        AppLocalizationProvider(
-                          builder: (localization, _) {
-                            return Text(
-                              localization.translate(
-                                LanguageKey
-                                    .onBoardingCreateEoaByGoogleScreenPleaseWait,
-                              ),
-                              style: AppTypoGraPhy.body01.copyWith(
-                                color: appTheme.contentColor500,
-                              ),
-                              textAlign: TextAlign.center,
-                            );
-                          },
-                        ),
-                      ],
+            child: PopScope(
+              canPop: false,
+              child: Scaffold(
+                backgroundColor: appTheme.bodyColorBackground,
+                appBar: AppBarWithOnlyTitle(
+                  appTheme: appTheme,
+                  titleKey:
+                      LanguageKey.onBoardingCreateEoaByGoogleScreenAppBarTitle,
+                ),
+                body: SafeArea(
+                  child: SizedBox(
+                    width: context.w,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Spacing.spacing05,
+                        vertical: Spacing.spacing07,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: BoxSize.boxSize14,
+                          ),
+                          SvgPicture.asset(
+                            AssetIconPath.commonLogoSmall,
+                          ),
+                          const SizedBox(
+                            height: BoxSize.boxSize06,
+                          ),
+                          AppLocalizationProvider(
+                            builder: (localization, _) {
+                              return Text(
+                                localization.translate(
+                                  LanguageKey
+                                      .onBoardingCreateEoaByGoogleScreenCreatingNewWallet,
+                                ),
+                                style: AppTypoGraPhy.bodyMedium02.copyWith(
+                                  color: appTheme.contentColor700,
+                                ),
+                                textAlign: TextAlign.center,
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            height: BoxSize.boxSize03,
+                          ),
+                          AppLocalizationProvider(
+                            builder: (localization, _) {
+                              return Text(
+                                localization.translate(
+                                  LanguageKey
+                                      .onBoardingCreateEoaByGoogleScreenPleaseWait,
+                                ),
+                                style: AppTypoGraPhy.body01.copyWith(
+                                  color: appTheme.contentColor500,
+                                ),
+                                textAlign: TextAlign.center,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -59,55 +59,58 @@ class _OnBoardingCreateEOAScreenState extends State<OnBoardingCreateEOAScreen>
                       break;
                   }
                 },
-                child: Scaffold(
-                  backgroundColor: appTheme.bodyColorBackground,
-                  appBar: AppBarWithOnlyTitle(
-                    appTheme: appTheme,
-                    titleKey: LanguageKey.onBoardingCreateEoaScreenAppBarTitle,
-                  ),
-                  body: SafeArea(
-                    child: SizedBox(
-                      width: context.w,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Spacing.spacing05,
-                          vertical: Spacing.spacing07,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: BoxSize.boxSize14,
-                            ),
-                            SvgPicture.asset(
-                              AssetIconPath.commonLogoSmall,
-                            ),
-                            const SizedBox(
-                              height: BoxSize.boxSize06,
-                            ),
-                            Text(
-                              localization.translate(
-                                LanguageKey
-                                    .onBoardingCreateEoaScreenCreatingNewWallet,
+                child: PopScope(
+                  canPop: false,
+                  child: Scaffold(
+                    backgroundColor: appTheme.bodyColorBackground,
+                    appBar: AppBarWithOnlyTitle(
+                      appTheme: appTheme,
+                      titleKey: LanguageKey.onBoardingCreateEoaScreenAppBarTitle,
+                    ),
+                    body: SafeArea(
+                      child: SizedBox(
+                        width: context.w,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Spacing.spacing05,
+                            vertical: Spacing.spacing07,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                height: BoxSize.boxSize14,
                               ),
-                              style: AppTypoGraPhy.bodyMedium02.copyWith(
-                                color: appTheme.contentColor700,
+                              SvgPicture.asset(
+                                AssetIconPath.commonLogoSmall,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(
-                              height: BoxSize.boxSize02,
-                            ),
-                            Text(
-                              localization.translate(
-                                LanguageKey.onBoardingCreateEoaScreenPleaseWait,
+                              const SizedBox(
+                                height: BoxSize.boxSize06,
                               ),
-                              style: AppTypoGraPhy.body01.copyWith(
-                                color: appTheme.contentColor500,
+                              Text(
+                                localization.translate(
+                                  LanguageKey
+                                      .onBoardingCreateEoaScreenCreatingNewWallet,
+                                ),
+                                style: AppTypoGraPhy.bodyMedium02.copyWith(
+                                  color: appTheme.contentColor700,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                              const SizedBox(
+                                height: BoxSize.boxSize02,
+                              ),
+                              Text(
+                                localization.translate(
+                                  LanguageKey.onBoardingCreateEoaScreenPleaseWait,
+                                ),
+                                style: AppTypoGraPhy.body01.copyWith(
+                                  color: appTheme.contentColor500,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

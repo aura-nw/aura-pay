@@ -102,9 +102,8 @@ class _OnBoardingReLoginScreenState extends State<OnBoardingReLoginScreen> {
                   break;
 
                 case OnBoardingReLoginStatus.nonHasAccounts:
-                  AppNavigator.replaceWith(
+                  AppNavigator.replaceAllWith(
                     RoutePath.choiceOption,
-                    false,
                   );
                   break;
                 case OnBoardingReLoginStatus.wrongPassword:
