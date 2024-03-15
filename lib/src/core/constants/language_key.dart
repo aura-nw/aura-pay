@@ -206,6 +206,7 @@ sealed class LanguageKey {
 
   ///region accounts page
   static const String accountsScreenAppBarTitle = 'accounts_screen_app_bar_title';
+  static const String accountsScreenAppBarAddAction = 'accounts_screen_app_bar_add_action';
   static const String accountsScreenCreateNewSmartAccount = 'accounts_screen_create_new_smart_account';
   static const String accountsScreenImportExistingAccount = 'accounts_screen_import_existing_account';
   static const String accountsScreenRecoverAccount = 'accounts_screen_recover_account';

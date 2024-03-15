@@ -118,7 +118,6 @@ final class NormalAppBarWidget extends _AppBarBase {
 
 ///endregion
 
-
 ///region appbar normal with title widget
 final class NormalAppBarWithTitleWidget extends _AppBarBase {
   final VoidCallback onViewMoreInformationTap;
@@ -397,6 +396,51 @@ class AppBarWithOnlyTitle extends _AppBarBase {
           ),
         );
       },
+    );
+  }
+}
+
+///
+
+/// region app bar with title non leading
+class AppBarDefault extends _AppBarBase {
+  final String title;
+  final Widget? leading;
+  final List<Widget>? actions;
+  final PreferredSizeWidget? bottom;
+
+  const AppBarDefault({
+    required super.appTheme,
+    super.key,
+    super.onBack,
+    required this.title,
+    this.leading,
+    this.actions,
+    this.bottom,
+  });
+
+  @override
+  List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme) {
+    return actions;
+  }
+
+  @override
+  PreferredSizeWidget? bottomBuilder(AppTheme appTheme) {
+    return bottom;
+  }
+
+  @override
+  Widget? leadingBuilder(BuildContext context, AppTheme appTheme) {
+    return leading;
+  }
+
+  @override
+  Widget titleBuilder(BuildContext context, AppTheme appTheme) {
+    return Text(
+      title,
+      style: AppTypoGraPhy.heading03.copyWith(
+        color: appTheme.contentColorBlack,
+      ),
     );
   }
 }

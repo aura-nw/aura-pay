@@ -215,7 +215,8 @@
   "home_page_alert_backup_title" : "Account need to backup",
   "home_page_alert_backup_content" : "Click here to backup now for avoid the risk of lost or stolen",
 
-  "accounts_screen_app_bar_title" : "Accounts management",
+  "accounts_screen_app_bar_title" : "My Account",
+  "accounts_screen_app_bar_add_action" : "Add",
   "accounts_screen_create_new_smart_account" : "Create new smart account",
   "accounts_screen_import_existing_account" : "Import existing account",
   "accounts_screen_recover_account" : "Recover account",

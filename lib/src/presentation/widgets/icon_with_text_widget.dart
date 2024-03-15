@@ -61,7 +61,7 @@ final class IconWithTextWidget extends IconTextWidget {
       children: [
         buildIcon(),
         const SizedBox(
-          width: BoxSize.boxSize04,
+          width: BoxSize.boxSize03,
         ),
         buildText(),
       ],
@@ -86,7 +86,7 @@ final class TextWithIconWidget extends IconTextWidget {
       children: [
         buildText(),
         const SizedBox(
-          width: BoxSize.boxSize04,
+          width: BoxSize.boxSize03,
         ),
         buildIcon(),
       ],
