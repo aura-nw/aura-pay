@@ -111,6 +111,7 @@ final class _FillWordItemWidget extends StatelessWidget {
             onChanged: (value, _) {
               onChanged(value);
             },
+            maxLine: 1,
           ),
         ),
       ],
@@ -124,7 +125,7 @@ class FillWordsWidget extends StatefulWidget {
   final AppTheme appTheme;
   final double? crossSpacing;
   final double? mainSpacing;
-  final void Function(bool)? onWordChanged;
+  final void Function(String, bool)? onWordChanged;
   final EdgeInsets? contentPadding;
   final ConstraintManager? constraintManager;
 
@@ -222,6 +223,7 @@ class FillWordsWidgetState extends State<FillWordsWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Column(
           children: List.generate(
@@ -244,9 +246,15 @@ class FillWordsWidgetState extends State<FillWordsWidget> {
                           textFiledKey: _keys[index],
                           onChanged: (value) {
                             _onChange(value, index);
-                            if (widget.onWordChanged != null) {
-                              final isValid = validate();
-                              widget.onWordChanged?.call(isValid);
+
+                            if (widget.constraintManager?.isValidOnChanged ??
+                                false) {
+                              final bool isValid = validate();
+
+                              widget.onWordChanged?.call(
+                                _words.join(' '),
+                                isValid,
+                              );
                             }
                           },
                           padding: widget.contentPadding,

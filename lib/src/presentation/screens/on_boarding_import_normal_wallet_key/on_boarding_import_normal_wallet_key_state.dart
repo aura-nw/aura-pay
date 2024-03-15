@@ -18,7 +18,6 @@ class OnBoardingImportNormalWalletKeyState with _$OnBoardingImportNormalWalletKe
     @Default(false) bool isReadySubmit,
     @Default(false) bool showPrivateKey,
     @Default('') String key,
-    @Default(false) bool isValidKey,
     String? errorMessage,
   }) = _OnBoardingImportNormalWalletKeyState;
 }

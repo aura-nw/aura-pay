@@ -1,3 +1,4 @@
+import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_normal_wallet_key/widgets/import_wallet_pass_phrase_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_normal_wallet_key/widgets/import_wallet_private_key_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/fill_words_widget.dart';
+import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_manager.dart';
 import 'on_boarding_import_normal_wallet_key_bloc.dart';
 import 'on_boarding_import_normal_wallet_key_event.dart';
 import 'on_boarding_import_normal_wallet_key_selector.dart';
@@ -72,11 +74,9 @@ class _OnBoardingImportNormalWalletKeyScreenState
   final GlobalKey<TextInputNormalSuffixState> _inputPrivateGlobalKey =
       GlobalKey();
 
-  final GlobalKey<FillWordsWidgetState> _passPhrase12FormKey =
-      GlobalKey();
+  final GlobalKey<FillWordsWidgetState> _passPhrase12FormKey = GlobalKey();
 
-  final GlobalKey<FillWordsWidgetState> _passPhrase24FormKey =
-      GlobalKey();
+  final GlobalKey<FillWordsWidgetState> _passPhrase24FormKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -105,8 +105,8 @@ class _OnBoardingImportNormalWalletKeyScreenState
                       AppGlobalCubit.of(context).changeState(
                         const AppGlobalState(
                           status: AppGlobalStatus.authorized,
-                          onBoardingStatus: OnBoardingStatus
-                              .importNormalAccountSuccessFul,
+                          onBoardingStatus:
+                              OnBoardingStatus.importNormalAccountSuccessFul,
                         ),
                       );
                       break;
@@ -174,10 +174,11 @@ class _OnBoardingImportNormalWalletKeyScreenState
                                           appTheme: appTheme,
                                           inPutPrivateKey:
                                               _inputPrivateGlobalKey,
-                                          onChanged: (value) {
+                                          onChanged: (value, isValid) {
                                             _bloc.add(
                                               OnBoardingImportNormalWalletKeyOnInputKeyEvent(
                                                 key: value,
+                                                isValid: isValid,
                                               ),
                                             );
                                           },
@@ -186,9 +187,7 @@ class _OnBoardingImportNormalWalletKeyScreenState
                                               const OnBoardingImportNormalWalletKeyOnChangeShowPrivateKeyEvent(),
                                             );
                                           },
-                                          onPaste: () {
-
-                                          },
+                                          onPaste: () {},
                                         );
                                       case ImportWalletType.passPhrase12:
                                         return ImportWalletPassPhraseFormWidget(
@@ -196,9 +195,25 @@ class _OnBoardingImportNormalWalletKeyScreenState
                                           localization: localization,
                                           wordCount: 12,
                                           onPaste: () {
-                                            _onPastePassPhrase(_passPhrase12FormKey);
+                                            _onPastePassPhrase(
+                                                _passPhrase12FormKey);
                                           },
                                           fillWordKey: _passPhrase12FormKey,
+                                          constraintManager: ConstraintManager()
+                                            ..custom(
+                                              errorMessage:
+                                                  localization.translate(
+                                                LanguageKey
+                                                    .onBoardingImportNormalWalletKeyScreenInvalidPassPhrase,
+                                              ),
+                                              customValid: (value) {
+                                                return AuraWalletHelper
+                                                    .checkMnemonic(
+                                                  mnemonic: value,
+                                                );
+                                              },
+                                            ),
+                                          onWordChanged: _onPassPhraseChange,
                                         );
                                       case ImportWalletType.passPhrase24:
                                         return ImportWalletPassPhraseFormWidget(
@@ -206,9 +221,26 @@ class _OnBoardingImportNormalWalletKeyScreenState
                                           localization: localization,
                                           wordCount: 24,
                                           onPaste: () {
-                                            _onPastePassPhrase(_passPhrase24FormKey);
+                                            _onPastePassPhrase(
+                                              _passPhrase24FormKey,
+                                            );
                                           },
                                           fillWordKey: _passPhrase24FormKey,
+                                          constraintManager: ConstraintManager()
+                                            ..custom(
+                                              errorMessage:
+                                                  localization.translate(
+                                                LanguageKey
+                                                    .onBoardingImportNormalWalletKeyScreenInvalidPassPhrase,
+                                              ),
+                                              customValid: (value) {
+                                                return AuraWalletHelper
+                                                    .checkMnemonic(
+                                                  mnemonic: value,
+                                                );
+                                              },
+                                            ),
+                                          onWordChanged: _onPassPhraseChange,
                                         );
                                     }
                                   },
@@ -233,8 +265,8 @@ class _OnBoardingImportNormalWalletKeyScreenState
                                   switch (_bloc.state.importWalletType) {
                                     case ImportWalletType.privateKey:
                                       isValid = _inputPrivateGlobalKey
-                                          .currentState
-                                          ?.validate() ??
+                                              .currentState
+                                              ?.validate() ??
                                           false;
                                       break;
                                     case ImportWalletType.passPhrase12:
@@ -276,11 +308,20 @@ class _OnBoardingImportNormalWalletKeyScreenState
     );
   }
 
-  void _onPastePassPhrase(GlobalKey<FillWordsWidgetState> key)async{
+  void _onPastePassPhrase(GlobalKey<FillWordsWidgetState> key) async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
 
-    if(data != null){
+    if (data != null) {
       key.currentState?.fillWord(data.text ?? '');
     }
+  }
+
+  void _onPassPhraseChange(String value, bool isValid) {
+    _bloc.add(
+      OnBoardingImportNormalWalletKeyOnInputKeyEvent(
+        key: value,
+        isValid: isValid,
+      ),
+    );
   }
 }

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 
@@ -56,7 +55,7 @@ class OnBoardingImportNormalWalletKeyBloc extends Bloc<
     emit(
       state.copyWith(
         key: event.key,
-        isReadySubmit: event.key.isNotEmpty,
+        isReadySubmit: event.isValid,
       ),
     );
   }

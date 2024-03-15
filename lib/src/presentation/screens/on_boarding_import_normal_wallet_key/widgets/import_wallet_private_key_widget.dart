@@ -16,7 +16,7 @@ class ImportWalletPrivateKeyWidget extends StatelessWidget {
   final AppLocalizationManager localization;
   final AppTheme appTheme;
   final GlobalKey<TextInputNormalSuffixState> inPutPrivateKey;
-  final void Function(String) onChanged;
+  final void Function(String,bool) onChanged;
   final VoidCallback onShowPrivateKey;
   final VoidCallback onPaste;
 
@@ -89,11 +89,7 @@ class ImportWalletPrivateKeyWidget extends StatelessWidget {
                     ),
               key: inPutPrivateKey,
               maxLine: 1,
-              onChanged: (value, isValid) {
-                if (isValid) {
-                  onChanged(value);
-                }
-              },
+              onChanged: onChanged,
               constraintManager: ConstraintManager(
                 isStopWhenFirstFailure: true,
                 isValidOnChanged: true,

@@ -11,6 +11,7 @@ class OnBoardingImportNormalWalletKeyEvent with _$OnBoardingImportNormalWalletKe
 
   const factory OnBoardingImportNormalWalletKeyEvent.onInputKey({
     required String key,
+    required bool isValid,
   }) = OnBoardingImportNormalWalletKeyOnInputKeyEvent;
 
   const factory OnBoardingImportNormalWalletKeyEvent.onChangeShowPrivateKey() = OnBoardingImportNormalWalletKeyOnChangeShowPrivateKeyEvent;

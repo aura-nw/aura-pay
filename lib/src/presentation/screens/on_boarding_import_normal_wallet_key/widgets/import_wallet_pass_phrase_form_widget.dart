@@ -16,6 +16,7 @@ class ImportWalletPassPhraseFormWidget extends StatelessWidget {
   final VoidCallback onPaste;
   final GlobalKey<FillWordsWidgetState> fillWordKey;
   final ConstraintManager ?constraintManager;
+  final void Function(String,bool) ?onWordChanged;
 
   const ImportWalletPassPhraseFormWidget({
     this.wordCount = 12,
@@ -24,6 +25,7 @@ class ImportWalletPassPhraseFormWidget extends StatelessWidget {
     required this.onPaste,
     required this.fillWordKey,
     this.constraintManager,
+    this.onWordChanged,
     super.key,
   });
 
@@ -78,7 +80,7 @@ class ImportWalletPassPhraseFormWidget extends StatelessWidget {
           appTheme: appTheme,
           wordCount: wordCount,
           key: fillWordKey,
-          onWordChanged: (p0) {},
+          onWordChanged: onWordChanged,
           constraintManager: constraintManager,
         ),
       ],
