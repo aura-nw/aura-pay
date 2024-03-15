@@ -233,6 +233,8 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
   void setValue(String value){
     _controller.text = value;
 
+    validate();
+
     widget.onChanged?.call(value, errorMessage.isEmptyOrNull);
   }
 

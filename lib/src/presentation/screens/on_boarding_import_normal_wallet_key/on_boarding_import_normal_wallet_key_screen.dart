@@ -187,7 +187,7 @@ class _OnBoardingImportNormalWalletKeyScreenState
                                               const OnBoardingImportNormalWalletKeyOnChangeShowPrivateKeyEvent(),
                                             );
                                           },
-                                          onPaste: () {},
+                                          onPaste: _onPastePrivateKey,
                                         );
                                       case ImportWalletType.passPhrase12:
                                         return ImportWalletPassPhraseFormWidget(
@@ -270,9 +270,16 @@ class _OnBoardingImportNormalWalletKeyScreenState
                                           false;
                                       break;
                                     case ImportWalletType.passPhrase12:
+                                      isValid = _passPhrase12FormKey
+                                          .currentState
+                                          ?.validate() ??
+                                          false;
                                       break;
 
                                     case ImportWalletType.passPhrase24:
+                                      isValid = _passPhrase24FormKey
+                                          .currentState
+                                          ?.validate() ?? false;
                                       break;
                                   }
 
@@ -313,6 +320,14 @@ class _OnBoardingImportNormalWalletKeyScreenState
 
     if (data != null) {
       key.currentState?.fillWord(data.text ?? '');
+    }
+  }
+
+  void _onPastePrivateKey()async{
+    ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+
+    if (data != null) {
+      _inputPrivateGlobalKey.currentState?.setValue(data.text ?? '');
     }
   }
 
