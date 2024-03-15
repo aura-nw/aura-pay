@@ -495,7 +495,7 @@ sealed class AppNavigator {
   static void popToFirst() => state?.popUntil((route) => route.isFirst);
 
   static void replaceAllWith(String route) =>
-      state?.pushNamedAndRemoveUntil(route, (route) => route.isFirst);
+      state?.pushNamedAndRemoveUntil(route, (route) => false);
 
   static NavigatorState? get state => navigatorKey.currentState;
 
