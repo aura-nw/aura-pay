@@ -46,6 +46,10 @@ final class SendTransactionBloc
       // Get first account
       final AuraAccount? account = await _auraAccountUseCase.getFirstAccount();
 
+      emit(state.copyWith(
+        sender: account,
+      ));
+
       final List<PyxisBalance> balances = await _balanceUseCase.getBalances(
         address: account?.address ?? '',
         environment: config.environment.environmentString,

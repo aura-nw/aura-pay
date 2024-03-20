@@ -8,6 +8,7 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/helpers/local_auth_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/debounce.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/setting_passcode_and_biometric/setting_passcode_and_biometric_cubit.dart';
@@ -100,16 +101,21 @@ class _SettingPasscodeAndBiometricScreenState
                     appTheme: appTheme,
                     onTap: () {},
                     prefix: SettingPassCodeAndBioMetricAlReadyBioSelector(
-                        builder: (isSelected) {
-                      return SwitchWidget(
-                        onChanged: (value) {
-                          _cubit.onSetBio();
+                      builder: (isSelected) {
+                        return SwitchWidget(
+                          onChanged: (value) async{
+                            final bool verified = await _requestBio();
 
-                          _denounce.onDenounce(value);
-                        },
-                        isSelected: isSelected,
-                      );
-                    }),
+                            if(verified){
+                              _cubit.onSetBio();
+                            }
+
+                            _denounce.onDenounce(verified);
+                          },
+                          isSelected: isSelected,
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -118,5 +124,16 @@ class _SettingPasscodeAndBiometricScreenState
         );
       },
     );
+  }
+
+  Future<bool> _requestBio() async {
+    final bool canRequestBio =
+        await LocalAuthHelper.canAuthenticateWithBiometrics();
+
+    if (canRequestBio) {
+      return LocalAuthHelper.requestLocalAuth();
+    }
+
+    return canRequestBio;
   }
 }

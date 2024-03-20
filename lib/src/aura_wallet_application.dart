@@ -141,9 +141,9 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
                     initialEntries: [
                       OverlayEntry(
                         builder: (context) {
-                          return child ?? const SizedBox();
+                          return child ?? const SizedBox.shrink();
                         },
-                      )
+                      ),
                     ],
                   ),
                 );
@@ -177,55 +177,53 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
           );
         }
 
-        break;
-      // Case when the status is none
+          break;
+        // Case when the status is none
       case WalletConnectStatus.onRequestAuth:
         RequestAuthData requestAuthData = state.data as RequestAuthData;
 
         await showDialog(
-            context: AppNavigator.navigatorKey.currentContext!,
-            builder: (context) => AlertDialog(
-                  title: Text('Request Auth'),
-                  content: Text(
-                      'Do you want to connect to ${requestAuthData.domain}?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        context
-                            .read<WalletConnectCubit>()
-                            .approveAuthRequest(requestAuthData);
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Approve'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context
-                            .read<WalletConnectCubit>()
-                            .rejectAuthRequest(requestAuthData);
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Reject'),
-                    ),
-                  ],
-                ));
+          context: AppNavigator.navigatorKey.currentContext!,
+          builder: (context) => AlertDialog(
+            title: Text('Request Auth'),
+            content:
+                Text('Do you want to connect to ${requestAuthData.domain}?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  context
+                      .read<WalletConnectCubit>()
+                      .approveAuthRequest(requestAuthData);
+                  Navigator.pop(context);
+                },
+                child: const Text('Approve'),
+              ),
+              TextButton(
+                onPressed: () {
+                  context
+                      .read<WalletConnectCubit>()
+                      .rejectAuthRequest(requestAuthData);
+                  Navigator.pop(context);
+                },
+                child: const Text('Reject'),
+              ),
+            ],
+          ),
+        );
 
         break;
       // Case when the status is none
       case WalletConnectStatus.none:
         // If the user is authorized, navigate to the home screen
         // Replace all routes with the reLogin route
-        AppNavigator.replaceAllWith(
-          RoutePath.reLogin,
-        );
+        // AppNavigator.replaceAllWith(
+        //   RoutePath.reLogin,
+        // );
         break;
       // Case when the status is onRequest
       case WalletConnectStatus.onRequest:
         RequestSessionData requestSessionData =
             state.data as RequestSessionData;
-
-        String title = requestSessionData.method;
-        String content = '${requestSessionData.params}';
 
         // If the user is authorized, navigate to the home screen
         // Replace all routes with the reLogin route
@@ -233,33 +231,7 @@ class _AuraWalletApplicationState extends State<AuraWalletApplication>
           RoutePath.walletConnectConfirmTransaction,
           requestSessionData,
         );
-
-      // await showDialog(
-      //     context: AppNavigator.navigatorKey.currentContext!,
-      //     builder: (context) => AlertDialog(
-      //             title: Text(title),
-      //             content: Text(content),
-      //             actions: [
-      //               TextButton(
-      //                 onPressed: () {
-      //                   context
-      //                       .read<WalletConnectCubit>()
-      //                       .approveRequest(requestSessionData);
-      //                   Navigator.pop(context);
-      //                 },
-      //                 child: const Text('OK'),
-      //               ),
-      //               TextButton(
-      //                 onPressed: () {
-      //                   context
-      //                       .read<WalletConnectCubit>()
-      //                       .rejectRequest(requestSessionData);
-      //                   Navigator.pop(context);
-      //                 },
-      //                 child: const Text('Reject'),
-      //               ),
-      //             ]));
-      // break;
     }
   }
 }
+
