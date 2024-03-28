@@ -314,7 +314,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Green/200"
+                                "name": "Green/300"
                             }
                         },
                         {
@@ -395,7 +395,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Gray/100"
+                                "name": "Gray/50"
                             }
                         },
                         {
@@ -422,7 +422,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Gray/300"
+                                "name": "Gray/200"
                             }
                         },
                         {
@@ -431,7 +431,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Gray/500"
+                                "name": "Gray/400"
                             }
                         },
                         {
@@ -440,7 +440,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Gray/700"
+                                "name": "Gray/600"
                             }
                         },
                         {
@@ -449,7 +449,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Base",
-                                "name": "Gray/800"
+                                "name": "Gray/700"
                             }
                         },
                         {
@@ -530,7 +530,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
-                                "name": "Success/Light"
+                                "name": "Success/S Light"
                             }
                         },
                         {
@@ -539,7 +539,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
-                                "name": "Success/Dark"
+                                "name": "Success/Default"
                             }
                         },
                         {
@@ -647,7 +647,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
-                                "name": "Primary/700"
+                                "name": "Primary/600"
                             }
                         },
                         {
@@ -746,7 +746,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
-                                "name": "Success/Default"
+                                "name": "Success/Light"
                             }
                         },
                         {
@@ -755,7 +755,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
-                                "name": "Success/S Dark"
+                                "name": "Success/Dark"
                             }
                         },
                         {
@@ -999,7 +999,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
-                                "name": "Primary/700"
+                                "name": "Primary/600"
                             }
                         },
                         {
@@ -1008,7 +1008,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
-                                "name": "Success/Dark"
+                                "name": "Success/Default"
                             }
                         },
                         {
@@ -1017,7 +1017,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
-                                "name": "Success/S Dark"
+                                "name": "Success/Dark"
                             }
                         },
                         {
@@ -3489,6 +3489,22 @@
                                 "lineHeightUnit": "PERCENT",
                                 "letterSpacing": 0,
                                 "letterSpacingUnit": "PERCENT",
+                                "textCase": "ORIGINAL",
+                                "textDecoration": "NONE"
+                            }
+                        },
+                        {
+                            "name": "Body/medium-xsm",
+                            "type": "typography",
+                            "isAlias": false,
+                            "value": {
+                                "fontSize": 9,
+                                "fontFamily": "Inter",
+                                "fontWeight": "Medium",
+                                "lineHeight": 150,
+                                "lineHeightUnit": "PERCENT",
+                                "letterSpacing": 0,
+                                "letterSpacingUnit": "PIXELS",
                                 "textCase": "ORIGINAL",
                                 "textDecoration": "NONE"
                             }
