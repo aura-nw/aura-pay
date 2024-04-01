@@ -1017,7 +1017,7 @@
                             "isAlias": true,
                             "value": {
                                 "collection": "[ Color ] - Context",
-                                "name": "Success/Dark"
+                                "name": "Success/S Dark"
                             }
                         },
                         {
@@ -2815,49 +2815,49 @@
                             "name": "Green/200",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#86EABB"
+                            "value": "#8FECC1"
                         },
                         {
                             "name": "Green/300",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#47E196"
+                            "value": "#7BDFAE"
                         },
                         {
                             "name": "Green/400",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#1DC975"
+                            "value": "#4ACC8D"
                         },
                         {
                             "name": "Green/500",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#159454"
+                            "value": "#30A96C"
                         },
                         {
                             "name": "Green/600",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#117543"
+                            "value": "#1B784A"
                         },
                         {
                             "name": "Green/700",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#085D32"
+                            "value": "#0B5D34"
                         },
                         {
                             "name": "Green/800",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#053E22"
+                            "value": "#093A22"
                         },
                         {
                             "name": "Green/900",
                             "type": "color",
                             "isAlias": false,
-                            "value": "#021F11"
+                            "value": "#041F12"
                         },
                         {
                             "name": "Teal/50",
