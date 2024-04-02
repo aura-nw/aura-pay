@@ -36,9 +36,13 @@ import 'package:pyxis_mobile/src/presentation/screens/send_transaction_result/se
 import 'package:pyxis_mobile/src/presentation/screens/set_recovery_method/set_recovery_method_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/setting_change_passcode/setting_change_passcode_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/setting_passcode_and_biometric/setting_passcode_and_biometric_screen.dart';
-import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_choice_option/signed_in_choice_option_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_confirm_recover_phrase/signed_in_confirm_recover_phrase_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_eoa/signed_in_create_eoa_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_eoa_by_google/signed_in_create_eoa_by_google_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
-import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_normal_wallet_key/signed_in_import_normal_wallet_key_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_pick_account/signed_in_pick_account_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -96,6 +100,10 @@ sealed class RoutePath {
   static const String signedInCreateNewAccountScanFee =
       '$_signedInCreateNewAccount/scan_fee';
 
+  static const String signedInChoiceOption = '$accounts/choice_option';
+  static const String signedInCreateNewWallet =
+      '$accounts/create_new_normal_wallet';
+
   static const String _signedInRecover = '$home/signed_in_recover';
   static const String signedInRecoverChoice = '$_signedInRecover/choice';
   static const String signedInRecoverSelectAccount =
@@ -106,8 +114,12 @@ sealed class RoutePath {
   static const String setRecoverMethod = '$recoverMethod/set_recover_method';
   static const String recoverConfirmation = '$recoverMethod/confirmation';
 
-  static const String _signedInImportAccount = '$home/signed_in_import_account';
-  static const String signedInImportKey = '$_signedInImportAccount/import_key';
+  static const String signedInImportKey = '$accounts/import_normal_wallet';
+  static const String signedInCreateNormalWalletByGoogle =
+      '$accounts/create_normal_wallet_by_google';
+
+  static const String signedInCreateNewWalletBackupPhrase =
+      '$accounts/create_normal_wallet_back_up_phrase';
 
   static const String _setting = '$_base/setting';
 
@@ -300,7 +312,7 @@ sealed class AppNavigator {
         );
       case RoutePath.signedInCreateNewAccountPickName:
         return _defaultRoute(
-          const SignedInCreateNewSmAccountPickAccountScreen(),
+          const SignedInPickAccountScreen(),
           settings,
         );
       case RoutePath.signedInCreateNewAccountScanFee:
@@ -322,7 +334,7 @@ sealed class AppNavigator {
 
       case RoutePath.signedInImportKey:
         return _defaultRoute(
-          const SignedInImportKeyScreen(),
+          const SignedInImportNormalWalletKeyScreen(),
           settings,
         );
       case RoutePath.scanner:
@@ -470,6 +482,29 @@ sealed class AppNavigator {
       case RoutePath.backUpPrivateKey:
         return _defaultRoute(
           const BackupPrivateKeyScreen(),
+          settings,
+        );
+      case RoutePath.signedInChoiceOption:
+        return _defaultRoute(
+          const SignedInChoiceOptionScreen(),
+          settings,
+        );
+      case RoutePath.signedInCreateNewWallet:
+        return _defaultRoute(
+          const SignedInCreateEOAScreen(),
+          settings,
+        );
+      case RoutePath.signedInCreateNormalWalletByGoogle:
+        return _defaultRoute(
+          const SignedInCreateEOAByGoogleScreen(),
+          settings,
+        );
+      case RoutePath.signedInCreateNewWalletBackupPhrase:
+        final PyxisWallet pyxisWallet = settings.arguments as PyxisWallet;
+        return _defaultRoute(
+          SignedInConfirmRecoveryPhraseScreen(
+            pyxisWallet: pyxisWallet,
+          ),
           settings,
         );
       default:

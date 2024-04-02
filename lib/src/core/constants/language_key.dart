@@ -206,12 +206,7 @@ sealed class LanguageKey {
 
   ///region accounts page
   static const String accountsScreenAppBarTitle = 'accounts_screen_app_bar_title';
-  static const String accountsScreenAppBarAddAction = 'accounts_screen_app_bar_add_action';
-  static const String accountsScreenCreateNewSmartAccount = 'accounts_screen_create_new_smart_account';
-  static const String accountsScreenImportExistingAccount = 'accounts_screen_import_existing_account';
-  static const String accountsScreenRecoverAccount = 'accounts_screen_recover_account';
-  static const String accountsScreenUsing = 'accounts_screen_using';
-  static const String accountsScreenAllAccounts = 'accounts_screen_all_accounts';
+  static const String accountsScreenAccountList = 'accounts_screen_account_list';
   static const String accountsScreenSmartAccountLabel = 'accounts_screen_smart_account_label';
   static const String accountsScreenImported = 'accounts_screen_imported';
   static const String accountsScreenSendAddress = 'accounts_screen_send_address';
@@ -325,12 +320,12 @@ sealed class LanguageKey {
 
 
   ///region signed in create new account
-  static const String signedInCreateNewSmartAccountScreenTitleRegionOne = 'signed_in_create_new_smart_account_screen_title_region_one';
-  static const String signedInCreateNewSmartAccountScreenTitleRegionTwo = 'signed_in_create_new_smart_account_screen_title_region_two';
-  static const String signedInCreateNewSmartAccountScreenTextFieldTitle = 'signed_in_create_new_smart_account_screen_text_field_title';
-  static const String signedInCreateNewSmartAccountScreenButtonTitle = 'signed_in_create_new_smart_account_screen_button_title';
-  static const String signedInCreateNewSmartAccountScreenDialogLoadingTitle = 'signed_in_create_new_smart_account_screen_dialog_loading_title';
-  static const String signedInCreateNewSmartAccountScreenDialogLoadingCreateTitle = 'signed_in_create_new_smart_account_screen_dialog_loading_create_title';
+  static const String signedInCreateNewSmartAccountScreenAppBarTitle = 'on_boarding_create_new_smart_account_screen_app_bar_title';
+  static const String signedInCreateNewSmartAccountScreenNameYourAccount = 'on_boarding_create_new_smart_account_screen_name_your_account';
+  static const String signedInCreateNewSmartAccountScreenNameYourAccountHint = 'on_boarding_create_new_smart_account_screen_name_your_account_hint';
+  static const String signedInCreateNewSmartAccountScreenButtonTitle = 'on_boarding_create_new_smart_account_screen_button_title';
+  static const String signedInCreateNewSmartAccountScreenDialogLoadingTitle = 'on_boarding_create_new_smart_account_screen_dialog_loading_title';
+  static const String signedInCreateNewSmartAccountScreenDialogLoadingCreateTitle = 'on_boarding_create_new_smart_account_screen_dialog_loading_create_title';
 
   ///endregion
 
@@ -619,4 +614,74 @@ sealed class LanguageKey {
   static const String connectWalletConfirmTransactionScreenRequestFrom    = 'connect_wallet_confirm_transaction_screen_request_from';
 
 
+  ///region signed in choice option
+  static const String signedInChoiceOptionScreenAppBarTitle = 'signed_in_choice_option_screen_app_bar_title';
+  static const String signedInChoiceOptionScreenSmartAccountOption = 'signed_in_choice_option_screen_smart_account_option';
+  static const String signedInChoiceOptionScreenRecommended = 'signed_in_choice_option_screen_recommended';
+  static const String signedInChoiceOptionScreenSmartAccountOptionContent = 'signed_in_choice_option_screen_smart_account_option_content';
+  static const String signedInChoiceOptionScreenSmartAccountOptionMore = 'signed_in_choice_option_screen_smart_account_option_more';
+  static const String signedInChoiceOptionScreenSmartAccountOptionCreateNewSmartAccount = 'signed_in_choice_option_screen_smart_account_option_create_new_smart_account';
+  static const String signedInChoiceOptionScreenSmartAccountOptionCreateNewSmartAccountContent = 'signed_in_choice_option_screen_smart_account_option_create_new_smart_account_content';
+  static const String signedInChoiceOptionScreenSmartAccountOptionUseGoogle = 'signed_in_choice_option_screen_smart_account_option_use_google';
+  static const String signedInChoiceOptionScreenSmartAccountOptionUseGoogleContent = 'signed_in_choice_option_screen_smart_account_option_use_google_content';
+  static const String signedInChoiceOptionScreenNormalWalletOption = 'signed_in_choice_option_screen_normal_wallet_option';
+  static const String signedInChoiceOptionScreenNormalWalletOptionContent = 'signed_in_choice_option_screen_normal_wallet_option_content';
+  static const String signedInChoiceOptionScreenNormalWalletOptionMore = 'signed_in_choice_option_screen_normal_wallet_option_more';
+  static const String signedInChoiceOptionScreenNormalWalletOptionCreateWallet = 'signed_in_choice_option_screen_normal_wallet_option_create_wallet';
+  static const String signedInChoiceOptionScreenNormalWalletOptionCreateWalletContent = 'signed_in_choice_option_screen_normal_wallet_option_create_wallet_content';
+  static const String signedInChoiceOptionScreenNormalWalletOptionUseGoogle = 'signed_in_choice_option_screen_normal_wallet_option_use_google';
+  static const String signedInChoiceOptionScreenNormalWalletOptionUseGoogleContent = 'signed_in_choice_option_screen_normal_wallet_option_use_google_content';
+  static const String signedInChoiceOptionScreenNormalWalletOptionImportWallet = 'signed_in_choice_option_screen_normal_wallet_option_import_wallet';
+  static const String signedInChoiceOptionScreenNormalWalletOptionImportWalletContent = 'signed_in_choice_option_screen_normal_wallet_option_import_wallet_content';
+
+  /// region signed in create eoa screen
+  static const String signedInCreateEoaScreenAppBarTitle = 'signed_in_create_eoa_screen_app_bar_title';
+  static const String signedInCreateEoaScreenCreatingNewWallet = 'signed_in_create_eoa_screen_creating_new_wallet';
+  static const String signedInCreateEoaScreenPleaseWait = 'signed_in_create_eoa_screen_please_wait';
+
+  /// region signed in confirm recovery phrase screen
+  static const String signedInConfirmRecoveryPhraseScreenAppBarTitle = 'signed_in_confirm_recovery_phrase_screen_app_bar_title';
+  static const String signedInConfirmRecoveryPhraseScreenContentRegionOne = 'signed_in_confirm_recovery_phrase_screen_content_region_one';
+  static const String signedInConfirmRecoveryPhraseScreenContentRegionTwo = 'signed_in_confirm_recovery_phrase_screen_content_region_two';
+  static const String signedInConfirmRecoveryPhraseScreenContentRegionThree = 'signed_in_confirm_recovery_phrase_screen_content_region_three';
+  static const String signedInConfirmRecoveryPhraseScreenContentRegionFour = 'signed_in_confirm_recovery_phrase_screen_content_region_four';
+  static const String signedInConfirmRecoveryPhraseScreenContentRegionFive = 'signed_in_confirm_recovery_phrase_screen_content_region_five';
+  static const String signedInConfirmRecoveryPhraseScreenHint = 'signed_in_confirm_recovery_phrase_screen_hint';
+  static const String signedInConfirmRecoveryPhraseScreenIncorrectAnswer = 'signed_in_confirm_recovery_phrase_screen_incorrect_answer';
+  static const String signedInConfirmRecoveryPhraseScreenEg = 'signed_in_confirm_recovery_phrase_screen_eg';
+  static const String signedInConfirmRecoveryPhraseScreenDtn = 'signed_in_confirm_recovery_phrase_screen_dtn';
+  static const String signedInConfirmRecoveryPhraseScreenNameYourWallet = 'signed_in_confirm_recovery_phrase_screen_name_your_wallet';
+  static const String signedInConfirmRecoveryPhraseScreenNameYourWalletHint = 'signed_in_confirm_recovery_phrase_screen_name_your_wallet_hint';
+  static const String signedInConfirmRecoveryPhraseScreenConfirmButtonTitle = 'signed_in_confirm_recovery_phrase_screen_confirm_button_title';
+  static const String signedInConfirmRecoveryPhraseScreenCreating = 'signed_in_confirm_recovery_phrase_screen_creating';
+
+  /// region on boarding create eoa by google screen
+  static const String signedInCreateEoaByGoogleScreenAppBarTitle = 'signed_in_create_eoa_by_google_screen_app_bar_title';
+  static const String signedInCreateEoaByGoogleScreenCreatingNewWallet = 'signed_in_create_eoa_by_google_screen_creating_new_wallet';
+  static const String signedInCreateEoaByGoogleScreenPleaseWait = 'signed_in_create_eoa_by_google_screen_please_wait';
+
+  /// region signed in create eoa by google pick name screen
+  static const String signedInCreateEoaByGooglePickNameScreenAppBarTitle = 'signed_in_create_eoa_by_google_pick_name_screen_app_bar_title';
+  static const String signedInCreateEoaByGooglePickNameScreenNameYourWallet = 'signed_in_create_eoa_by_google_pick_name_screen_name_your_wallet';
+  static const String signedInCreateEoaByGooglePickNameScreenNameYourWalletHint = 'signed_in_create_eoa_by_google_pick_name_screen_name_your_wallet_hint';
+  static const String signedInCreateEoaByGooglePickNameScreenCreateButtonTitle = 'signed_in_create_eoa_by_google_pick_name_screen_name_create_button_title';
+  static const String signedInCreateEoaByGooglePickNameScreenCreating = 'signed_in_create_eoa_by_google_pick_name_screen_name_creating';
+
+  ///region signed in import account first page
+  static const String signedInImportNormalWalletKeyScreenAppBarTitle = 'signed_in_import_normal_wallet_key_screen_app_bar_title';
+  static const String signedInImportNormalWalletKeyScreenSelectType = 'signed_in_import_normal_wallet_key_screen_select_type';
+  static const String signedInImportNormalWalletKeyScreenSelectTypePrivateKey = 'signed_in_import_normal_wallet_key_screen_select_type_private';
+  static const String signedInImportNormalWalletKeyScreenSelectTypePassPhrase12Words = 'signed_in_import_normal_wallet_key_screen_select_type_passphrase_12words';
+  static const String signedInImportNormalWalletKeyScreenSelectTypePassPhrase24Words = 'signed_in_import_normal_wallet_key_screen_select_type_passphrase_24words';
+  static const String signedInImportNormalWalletKeyScreenSelectTypeDialogTitle = 'signed_in_import_normal_wallet_key_screen_select_type_dialog_title';
+  static const String signedInImportNormalWalletKeyScreenPrivateKey = 'signed_in_import_normal_wallet_key_screen_private_key';
+  static const String signedInImportNormalWalletKeyScreenPassPhrase = 'signed_in_import_normal_wallet_key_screen_pass_phrase';
+  static const String signedInImportNormalWalletKeyScreenPassPhrase12Words = 'signed_in_import_normal_wallet_key_screen_pass_phrase_12words';
+  static const String signedInImportNormalWalletKeyScreenPassPhrase24Words = 'signed_in_import_normal_wallet_key_screen_pass_phrase_24words';
+  static const String signedInImportNormalWalletKeyScreenButtonTitle = 'signed_in_import_normal_wallet_key_screen_button_title';
+  static const String signedInImportNormalWalletKeyScreenPaste = 'signed_in_import_normal_wallet_key_screen_paste';
+  static const String signedInImportNormalWalletKeyScreenInvalidPrivateKey = 'signed_in_import_normal_wallet_key_screen_invalid_private_key';
+  static const String signedInImportNormalWalletKeyScreenInvalidPassPhrase = 'signed_in_import_normal_wallet_key_screen_invalid_passphrase';
+  static const String signedInImportNormalWalletKeyScreenDialogLoadingTitle = 'signed_in_import_normal_wallet_key_screen_dialog_loading_title';
+  ///endregion
 }

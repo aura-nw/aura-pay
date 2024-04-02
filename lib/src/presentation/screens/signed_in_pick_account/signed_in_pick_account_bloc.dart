@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:developer' as dev;
 
 import 'package:aura_smart_account/aura_smart_account.dart';
 import 'package:aura_wallet_core/aura_wallet_core.dart';
@@ -10,12 +11,11 @@ import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 import 'package:pyxis_mobile/src/core/helpers/device.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 
-import 'signed_in_create_new_sm_account_pick_account_event.dart';
-import 'signed_in_create_new_sm_account_pick_account_state.dart';
+import 'signed_in_pick_account_event.dart';
+import 'signed_in_pick_account_state.dart';
 
-class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
-    SignedInCreateNewSmAccountPickAccountEvent,
-    SignedInCreateNewSmAccountPickAccountState> {
+class SignedInPickAccountBloc
+    extends Bloc<SignedInPickAccountEvent, SignedInPickAccountState> {
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
   final FeeGrantUseCase _feeGrantUseCase;
@@ -24,7 +24,7 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
   final DeviceManagementUseCase _deviceManagementUseCase;
   final AuthUseCase _authUseCase;
 
-  SignedInCreateNewSmAccountPickAccountBloc(
+  SignedInPickAccountBloc(
     this._walletUseCase,
     this._smartAccountUseCase,
     this._feeGrantUseCase,
@@ -33,19 +33,19 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
     this._deviceManagementUseCase,
     this._authUseCase,
   ) : super(
-          const SignedInCreateNewSmAccountPickAccountState(),
+          const SignedInPickAccountState(),
         ) {
     on(_onChangeAccountName);
     on(_onCreate);
   }
 
   void _onCreate(
-    SignedInCreateNewPickAccountOnSubmitEvent event,
-    Emitter<SignedInCreateNewSmAccountPickAccountState> emit,
+    SignedInPickAccountOnSubmitEvent event,
+    Emitter<SignedInPickAccountState> emit,
   ) async {
     emit(
       state.copyWith(
-        status: SignedInCreateNewPickAccountStatus.onLoading,
+        status: SignedInPickAccountStatus.onLoading,
       ),
     );
 
@@ -69,6 +69,15 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
         salt: saltBytes,
       );
 
+      /// call api grant fee for smart account
+      final Uint8List smPubKey =
+          AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(
+        wallet.publicKey,
+      );
+
+      /// Get device id
+      final String deviceId = await DeviceHelper.getDeviceId();
+
       /// Register device or sign in by device
       // final String accessToken = await AuthHelper.registerOrSignIn(
       //   deviceManagementUseCase: _deviceManagementUseCase,
@@ -85,14 +94,16 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
       //   accessToken: accessToken,
       // );
 
+      /// Check device fee grant
       final GrantFee? grantFee = await _grantFee(
-        publicKey: wallet.publicKey,
+        smPubKey: smPubKey,
         smartAccount: smartAccount,
+        deviceId: deviceId,
       );
 
       if (grantFee != null) {
         emit(state.copyWith(
-          status: SignedInCreateNewPickAccountStatus.onActiveSmartAccount,
+          status: SignedInPickAccountStatus.onActiveSmartAccount,
         ));
 
         TransactionInformation transactionInformation =
@@ -125,13 +136,12 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
           );
 
           emit(state.copyWith(
-            status:
-                SignedInCreateNewPickAccountStatus.onActiveSmartAccountSuccess,
+            status: SignedInPickAccountStatus.onActiveSmartAccountSuccess,
           ));
         } else {
           emit(
             state.copyWith(
-              status: SignedInCreateNewPickAccountStatus.onCheckAddressError,
+              status: SignedInPickAccountStatus.onCheckAddressError,
               errorMessage: transactionInformation.rawLog,
             ),
           );
@@ -139,7 +149,7 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
       } else {
         emit(
           state.copyWith(
-            status: SignedInCreateNewPickAccountStatus.onGrantFeeError,
+            status: SignedInPickAccountStatus.onGrantFeeError,
             smartAccountAddress: smartAccount,
             userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(
               wallet.privateKey!,
@@ -148,41 +158,22 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
           ),
         );
       }
-    } catch (e) {
+    } catch (e, s) {
       emit(
         state.copyWith(
-          status: SignedInCreateNewPickAccountStatus.onCheckAddressError,
+          status: SignedInPickAccountStatus.onCheckAddressError,
           errorMessage: e.toString(),
         ),
       );
     }
   }
 
-  void _onChangeAccountName(
-    SignedInCreateNewPickAccountChangeEvent event,
-    Emitter<SignedInCreateNewSmAccountPickAccountState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        accountName: event.accountName,
-        isReadySubmit: event.accountName.isNotEmpty,
-      ),
-    );
-  }
-
   Future<GrantFee?> _grantFee({
-    required Uint8List publicKey,
+    required Uint8List smPubKey,
     required String smartAccount,
+    required String deviceId,
   }) async {
     try {
-      /// call api grant fee for smart account
-      final Uint8List smPubKey =
-          AuraSmartAccountHelper.generateSmartAccountPubKeyFromUserPubKey(
-              publicKey);
-
-      //0CE45424-BC2B-4E37-9766-E3B80C06B905
-      final String deviceId = await DeviceHelper.getDeviceId();
-
       return _feeGrantUseCase.grantFee(
         pubKey: AuraSmartAccountHelper.encodeByte(smPubKey),
         deviceId: deviceId,
@@ -194,5 +185,17 @@ class SignedInCreateNewSmAccountPickAccountBloc extends Bloc<
     } catch (e) {
       return null;
     }
+  }
+
+  void _onChangeAccountName(
+    SignedInPickAccountOnPickAccountChangeEvent event,
+    Emitter<SignedInPickAccountState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        accountName: event.accountName,
+        isReadySubmit: event.accountName.isNotEmpty,
+      ),
+    );
   }
 }

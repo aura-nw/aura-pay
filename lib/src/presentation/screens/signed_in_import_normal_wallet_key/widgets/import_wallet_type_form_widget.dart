@@ -35,7 +35,7 @@ class _ImportWalletTypeWidgetState
       builder: (localization, _) {
         return Text(
           localization.translate(
-            LanguageKey.signedInImportKeyScreenSelectType,
+            LanguageKey.signedInImportNormalWalletKeyScreenSelectType,
           ),
           style: AppTypoGraPhy.heading02.copyWith(
             color: appTheme.contentColorBlack,
@@ -55,7 +55,7 @@ class _ImportWalletTypeWidgetState
     return Column(
       children: [
         const SizedBox(
-          height: BoxSize.boxSize08,
+          height: BoxSize.boxSize05,
         ),
         ListView.builder(
           padding: EdgeInsets.zero,
@@ -66,13 +66,13 @@ class _ImportWalletTypeWidgetState
                 widget.data[index];
             return Padding(
               padding: const EdgeInsets.only(
-                bottom: Spacing.spacing04,
+                bottom: Spacing.spacing06,
               ),
               child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   _onItemTap(item);
                 },
-                behavior: HitTestBehavior.opaque,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -81,25 +81,11 @@ class _ImportWalletTypeWidgetState
                       width: BoxSize.boxSize04,
                     ),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item.value[0],
-                            style: AppTypoGraPhy.utilityLabelDefault.copyWith(
-                              color: appTheme.contentColorBlack,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: BoxSize.boxSize03,
-                          ),
-                          Text(
-                            item.value[1],
-                            style: AppTypoGraPhy.body02.copyWith(
-                              color: appTheme.contentColor500,
-                            ),
-                          ),
-                        ],
+                      child: Text(
+                        item.value[1],
+                        style: AppTypoGraPhy.utilityLabelDefault.copyWith(
+                          color: appTheme.contentColorBlack,
+                        ),
                       ),
                     ),
                   ],
@@ -168,6 +154,7 @@ class _ImportWalletTypeSelectWidgetState
   void didUpdateWidget(covariant ImportWalletTypeSelectWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.selectedData != oldWidget.selectedData) {
+      _selectedOption.clear();
       _selectedOption.addAll(widget.selectedData ?? []);
     }
   }
@@ -243,7 +230,7 @@ class _ImportWalletTypeSelectWidgetState
             children: [
               TextSpan(
                 text: localization.translate(
-                  LanguageKey.signedInImportKeyScreenSelectType,
+                  LanguageKey.signedInImportNormalWalletKeyScreenSelectType,
                 ),
                 style: AppTypoGraPhy.utilityLabelSm.copyWith(
                   color: theme.contentColor700,

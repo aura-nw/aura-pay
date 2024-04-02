@@ -61,9 +61,12 @@ import 'package:pyxis_mobile/src/presentation/screens/send_transaction_confirmat
 import 'package:pyxis_mobile/src/presentation/screens/set_recovery_method/set_recovery_method_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/setting_change_passcode/setting_change_passcode_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/setting_passcode_and_biometric/setting_passcode_and_biometric_cubit.dart';
-import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_pick_account/signed_in_create_new_sm_account_pick_account_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_choice_option/signed_in_choice_option_cubit.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_confirm_recover_phrase/signed_in_confirm_recover_phrase_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_eoa/signed_in_create_eoa_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_bloc.dart';
-import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_key/signed_in_import_key_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_normal_wallet_key/signed_in_import_normal_wallet_key_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_pick_account/signed_in_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_select_account/signed_in_recover_select_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_sign/signed_in_recover_sign_bloc.dart';
@@ -567,7 +570,7 @@ Future<void> initDependency(
   );
 
   getIt.registerFactory(
-    () => SignedInCreateNewSmAccountPickAccountBloc(
+    () => SignedInPickAccountBloc(
       getIt.get<WalletUseCase>(),
       getIt.get<SmartAccountUseCase>(),
       getIt.get<FeeGrantUseCase>(),
@@ -592,11 +595,11 @@ Future<void> initDependency(
   );
 
   getIt.registerFactory(
-    () => SignedInImportKeyBloc(
+    () => SignedInImportNormalWalletKeyBloc(
       getIt.get<WalletUseCase>(),
       getIt.get<SmartAccountUseCase>(),
-      getIt.get<AuraAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
       getIt.get<AuthUseCase>(),
       getIt.get<DeviceManagementUseCase>(),
     ),
@@ -824,30 +827,51 @@ Future<void> initDependency(
   );
 
   getIt.registerFactory<OnBoardingCreateEOAByGoogleCubit>(
-        () => OnBoardingCreateEOAByGoogleCubit(
-          getIt.get<Web3AuthUseCase>(),
-        ),
+    () => OnBoardingCreateEOAByGoogleCubit(
+      getIt.get<Web3AuthUseCase>(),
+    ),
   );
 
   getIt.registerFactory<OnBoardingCreateEOAByGooglePickNameBloc>(
-        () => OnBoardingCreateEOAByGooglePickNameBloc(
-          getIt.get<AuraAccountUseCase>(),
-          getIt.get<ControllerKeyUseCase>(),
-          getIt.get<Web3AuthUseCase>(),
-          getIt.get<WalletUseCase>(),
-        ),
+    () => OnBoardingCreateEOAByGooglePickNameBloc(
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
+      getIt.get<Web3AuthUseCase>(),
+      getIt.get<WalletUseCase>(),
+    ),
   );
 
   getIt.registerFactory<OnBoardingChoiceOptionCubit>(
-        () => OnBoardingChoiceOptionCubit(
+    () => OnBoardingChoiceOptionCubit(
       getIt.get<Web3AuthUseCase>(),
     ),
   );
 
   getIt.registerFactory<BackupPrivateKeyCubit>(
-        () => BackupPrivateKeyCubit(
+    () => BackupPrivateKeyCubit(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => SignedInChoiceOptionCubit(
+      getIt.get<Web3AuthUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<SignedInCreateEOACubit>(
+        () => SignedInCreateEOACubit(
+      getIt.get<WalletUseCase>(),
+    ),
+  );
+
+  getIt.registerFactoryParam<SignedInConfirmRecoverPhraseBloc, PyxisWallet,
+      dynamic>(
+        (pyxisWallet, _) => SignedInConfirmRecoverPhraseBloc(
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
+      pyxisWallet: pyxisWallet,
     ),
   );
 }

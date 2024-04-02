@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_cubit.dart';
 import 'package:pyxis_mobile/src/application/global/app_global_state/app_global_state.dart';
@@ -21,7 +22,6 @@ import 'package:pyxis_mobile/src/core/helpers/app_launcher.dart';
 import 'package:pyxis_mobile/src/core/helpers/share_network.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
-import 'package:pyxis_mobile/src/presentation/widgets/icon_with_text_widget.dart';
 import 'widgets/account_manager_action_form.dart';
 import 'widgets/remove_account_form_widget.dart';
 import 'widgets/rename_account_form_widget.dart';
@@ -30,7 +30,6 @@ import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_event.dar
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_selector.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'widgets/account_item_widget.dart';
-import 'widgets/account_manager_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 
 class AccountsScreen extends StatefulWidget {
@@ -70,78 +69,33 @@ class _AccountsScreenState extends State<AccountsScreen>
                 title: localization.translate(
                   LanguageKey.accountsScreenAppBarTitle,
                 ),
-                actions: [
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {},
-                    child: IconWithTextWidget(
-                      titlePath: LanguageKey.accountsScreenAppBarAddAction,
-                      svgIconPath: AssetIconPath.commonAddActive,
-                      appTheme: appTheme,
-                      style: AppTypoGraPhy.bodyMedium02.copyWith(
-                        color: appTheme.contentColorBrand,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: BoxSize.boxSize05,
-                  ),
-                ],
               ),
               body: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: Spacing.spacing07,
                   vertical: Spacing.spacing05,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Account Manager Form Widget
-                    // AccountManagerFormWidget(
-                    //   appTheme: appTheme,
-                    //   onCreateTap: () async {
-                    //     await AppNavigator.push(
-                    //       RoutePath.signedInCreateNewAccountPickName,
-                    //     );
-                    //
-                    //     _homeScreenBloc.add(
-                    //       const HomeScreenEventOnReFetchAccount(),
-                    //     );
-                    //   },
-                    //   onImportTap: () async {
-                    //     await AppNavigator.push(
-                    //       RoutePath.signedInImportKey,
-                    //     );
-                    //
-                    //     _homeScreenBloc.add(
-                    //       const HomeScreenEventOnReFetchAccount(),
-                    //     );
-                    //   },
-                    //   onRecoverTap: () async {
-                    //     await AppNavigator.push(
-                    //       RoutePath.signedInRecoverChoice,
-                    //     );
-                    //     _homeScreenBloc.add(
-                    //       const HomeScreenEventOnReFetchAccount(),
-                    //     );
-                    //   },
-                    // ),
-                    // const SizedBox(
-                    //   height: BoxSize.boxSize06,
-                    // ),
-                    Expanded(
-                      child: HomeScreenAccountsSelector(
-                        bloc: _homeScreenBloc,
-                        builder: (accounts) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                child: HomeScreenAccountsSelector(
+                  bloc: _homeScreenBloc,
+                  builder: (accounts) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // App Localization Provider
+                        GestureDetector(
+                          onTap: () async {
+                            AppNavigator.push(
+                              RoutePath.signedInChoiceOption,
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              // App Localization Provider
                               AppLocalizationProvider(
                                 builder: (localization, _) {
                                   return Text(
                                     localization.translateWithParam(
-                                      LanguageKey.accountsScreenAllAccounts,
+                                      LanguageKey.accountsScreenAccountList,
                                       {
                                         'total': accounts.length,
                                       },
@@ -152,54 +106,56 @@ class _AccountsScreenState extends State<AccountsScreen>
                                   );
                                 },
                               ),
-                              const SizedBox(
-                                height: BoxSize.boxSize04,
-                              ),
-                              Expanded(
-                                child: ListView.builder(
-                                  itemCount: accounts.length,
-                                  itemBuilder: (context, index) {
-                                    final account = accounts[index];
-                                    return Column(
-                                      children: [
-                                        HomeScreenSelectedAccountSelector(
-                                          bloc: _homeScreenBloc,
-                                          builder: (selectedAccount) {
-                                            return AccountItemWidget(
-                                              appTheme: appTheme,
-                                              address: account.address,
-                                              accountName: account.name,
-                                              onMoreTap: () {
-                                                _showMoreOptionsDialog(
-                                                  appTheme,
-                                                  account,
-                                                );
-                                              },
-                                              onChoose: () {
-                                                _onChooseAccount(account);
-                                              },
-                                              isSmartAccount:
-                                                  account.isSmartAccount,
-                                              onUsing: account.id ==
-                                                  selectedAccount?.id,
-                                            );
-                                          },
-                                        ),
-                                        const SizedBox(
-                                          height: BoxSize.boxSize07,
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                  padding: EdgeInsets.zero,
-                                ),
+                              SvgPicture.asset(
+                                AssetIconPath.commonAddCircle,
                               ),
                             ],
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: BoxSize.boxSize04,
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: accounts.length,
+                            itemBuilder: (context, index) {
+                              final account = accounts[index];
+                              return Column(
+                                children: [
+                                  HomeScreenSelectedAccountSelector(
+                                    bloc: _homeScreenBloc,
+                                    builder: (selectedAccount) {
+                                      return AccountItemWidget(
+                                        appTheme: appTheme,
+                                        address: account.address,
+                                        accountName: account.name,
+                                        onMoreTap: () {
+                                          _showMoreOptionsDialog(
+                                            appTheme,
+                                            account,
+                                          );
+                                        },
+                                        onChoose: () {
+                                          _onChooseAccount(account);
+                                        },
+                                        isSmartAccount: account.isSmartAccount,
+                                        onUsing:
+                                            account.id == selectedAccount?.id,
+                                      );
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: BoxSize.boxSize07,
+                                  ),
+                                ],
+                              );
+                            },
+                            padding: EdgeInsets.zero,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             );

@@ -91,6 +91,7 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_common_message.svg';
   static const String commonFeeEdit = '${_baseIconPath}ic_common_fee_edit.svg';
   static const String commonAdd = '${_baseIconPath}ic_common_add.svg';
+  static const String commonAddCircle = '${_baseIconPath}ic_common_add_circle.svg';
   static const String commonRefresh = '${_baseIconPath}ic_common_refresh.svg';
   static const String commonDelete = '${_baseIconPath}ic_common_delete.svg';
   static const String commonRemoveWarning =
@@ -294,4 +295,8 @@ sealed class AssetIconPath {
   /// Home page
   static const String homePageAlert = '${_baseIconPath}ic_home_page_alert.svg';
   static const String homePageAlertNext = '${_baseIconPath}ic_home_page_alert_next.svg';
+
+  /// Signed in choice option
+  static const String signedInChoiceOption =
+      '${_baseIconPath}ic_signed_in_choice_option.svg';
 }
