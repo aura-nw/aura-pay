@@ -250,7 +250,7 @@
   "setting_page_address_book" : "Address book",
   "setting_page_passcode" : "Passcode and Biometrics",
   "setting_page_help_center" : "Help center",
-  "setting_page_connect_site" : "Connected sites",
+  "setting_page_private_key" : "Private key/ Passphrase",
 
   "setting_passcode_screen_app_bar_title" : "Passcode and Biometrics",
   "setting_passcode_screen_change_passcode" : "Change Passcode",
@@ -549,6 +549,14 @@
   "signed_in_import_normal_wallet_key_screen_invalid_private_key" : "Invalid private key",
   "signed_in_import_normal_wallet_key_screen_invalid_passphrase" : "Invalid passphrase",
   "signed_in_import_normal_wallet_key_screen_dialog_loading_title" : "Loading account",
-  "signed_in_import_normal_wallet_key_screen_exists_account" : "Imported wallet must be different than the one you're using"
+  "signed_in_import_normal_wallet_key_screen_exists_account" : "Imported wallet must be different than the one you're using",
+
+  "controller_key_management_screen_app_bar_title" : "Private key/ Passphrase",
+  "controller_key_management_screen_normal_wallet" : "Normal wallet",
+  "controller_key_management_screen_google_connected" : "Google Connected",
+  "controller_key_management_screen_imported" : "Imported",
+
+  "signed_in_verify_passcode_screen_title" : "Enter your passcode",
+  "signed_in_verify_passcode_screen_passcode_not_match" : "Passcode does not match"
 
 }

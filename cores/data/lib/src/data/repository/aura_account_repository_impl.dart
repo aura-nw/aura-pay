@@ -26,6 +26,7 @@ final class AuraAccountRepositoryImpl implements AuraAccountRepository {
       address: parameter.address,
       accountName: parameter.accountName,
       needBackup: parameter.needBackup,
+      createdType: parameter.createdType,
     );
 
     return account.toEntity;

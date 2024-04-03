@@ -87,6 +87,7 @@ class OnBoardingImportNormalWalletKeyBloc extends Bloc<
         address: wallet.bech32Address,
         type: AuraAccountType.normal,
         accountName: PyxisAccountConstant.unName,
+        createdType: AuraAccountCreateType.import,
       );
 
       // Save controller key

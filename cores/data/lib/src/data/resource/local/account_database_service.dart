@@ -10,6 +10,7 @@ abstract interface class AccountDatabaseService {
     required String accountName,
     required AuraAccountType type,
     bool needBackup = false,
+    required AuraAccountCreateType createdType,
   });
 
   Future<List<AuraAccountDto>> getAuraAccounts();

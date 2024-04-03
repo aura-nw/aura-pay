@@ -7,12 +7,13 @@ part 'aura_account_db.g.dart';
 extension AuraAccountDbExtension on AuraAccountDb {
   AuraAccountDb copyWith({
     AuraAccountType? type,
+    AuraAccountCreateType? createdType,
     String? address,
     String? name,
     int? id,
     int? index,
     AuraAccountRecoveryMethodDb? methodDb,
-    bool ?needBackup,
+    bool? needBackup,
   }) {
     return AuraAccountDb(
       accountId: id ?? this.id,
@@ -22,6 +23,7 @@ extension AuraAccountDbExtension on AuraAccountDb {
       methodDb: methodDb ?? this.methodDb,
       indexDb: index ?? this.index,
       needBackupDb: needBackup ?? needBackupDb,
+      createdTypeDb: createdType ?? createdTypeDb,
     );
   }
 
@@ -32,7 +34,8 @@ extension AuraAccountDbExtension on AuraAccountDb {
     int? id,
     int? index,
     AuraAccountRecoveryMethodDb? methodDb,
-    bool ?needBackup,
+    bool? needBackup,
+    AuraAccountCreateType? createdType,
   }) {
     return AuraAccountDb(
       accountId: id ?? this.id,
@@ -42,6 +45,7 @@ extension AuraAccountDbExtension on AuraAccountDb {
       methodDb: methodDb,
       indexDb: index ?? this.index,
       needBackupDb: needBackup ?? needBackupDb,
+      createdTypeDb: createdType ?? createdTypeDb,
     );
   }
 }
@@ -72,6 +76,8 @@ class AuraAccountDb extends AuraAccountDto {
   final Id accountId;
   @enumerated
   final AuraAccountType accountType;
+  @enumerated
+  final AuraAccountCreateType createdTypeDb;
   final String accountAddress;
   final String accountName;
   final AuraAccountRecoveryMethodDb? methodDb;
@@ -84,6 +90,7 @@ class AuraAccountDb extends AuraAccountDto {
     required this.accountAddress,
     required this.accountType,
     this.methodDb,
+    required this.createdTypeDb,
     this.indexDb = 1,
     this.needBackupDb = false,
   }) : super(
@@ -94,6 +101,7 @@ class AuraAccountDb extends AuraAccountDto {
           method: methodDb?.toDto,
           index: indexDb,
           needBackup: needBackupDb,
+          createdType: createdTypeDb,
         );
 }
 

@@ -227,8 +227,8 @@ sealed class AssetIconPath {
       '${_baseIconPath}ic_setting_help_center.svg';
   static const String settingArrowNext =
       '${_baseIconPath}ic_setting_arrow_next.svg';
-  static const String settingConnectSite =
-      '${_baseIconPath}ic_setting_connect_site.svg';
+  static const String settingPrivateKey =
+      '${_baseIconPath}ic_setting_private_key.svg';
 
   /// Setting bio and passcode
   static const String settingBioAndPassCodeLock =

@@ -10,6 +10,7 @@ extension AuraAccountDtoExtension on AuraAccountDto {
       method: method?.toEntity,
       index: index,
       needBackup: needBackup,
+      createdType: createdType,
     );
   }
 }
@@ -28,6 +29,7 @@ class AuraAccountDto {
   final int id;
   final int index;
   final AuraAccountType type;
+  final AuraAccountCreateType createdType;
   final String name;
   final String address;
   final AuraAccountRecoveryMethodDto ?method;
@@ -39,6 +41,7 @@ class AuraAccountDto {
     required this.type,
     required this.address,
     required this.name,
+    this.createdType = AuraAccountCreateType.normal,
     this.method,
     this.needBackup = false,
   });

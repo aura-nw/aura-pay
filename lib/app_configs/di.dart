@@ -33,6 +33,7 @@ import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_sea
 import 'package:pyxis_mobile/src/presentation/screens/browser_tab_management/browser_tab_management_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_wallet/connect_wallet_cubit.dart';
+import 'package:pyxis_mobile/src/presentation/screens/controller_key_management/controller_key_management_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/browser/browser_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/history/history_page_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home/home_page_bloc.dart';
@@ -69,6 +70,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_normal_wa
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_pick_account/signed_in_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_select_account/signed_in_recover_select_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_sign/signed_in_recover_sign_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_verify_pass_code/signed_in_verify_passcode_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/wallet_connect_screen/wallet_connect_sign_transaction/confirm_transaction_screen_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3auth_flutter/enums.dart';
@@ -848,14 +850,14 @@ Future<void> initDependency(
   );
 
   getIt.registerFactory<SignedInCreateEOACubit>(
-        () => SignedInCreateEOACubit(
+    () => SignedInCreateEOACubit(
       getIt.get<WalletUseCase>(),
     ),
   );
 
   getIt.registerFactoryParam<SignedInConfirmRecoverPhraseBloc, PyxisWallet,
       dynamic>(
-        (pyxisWallet, _) => SignedInConfirmRecoverPhraseBloc(
+    (pyxisWallet, _) => SignedInConfirmRecoverPhraseBloc(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
       pyxisWallet: pyxisWallet,
@@ -863,18 +865,30 @@ Future<void> initDependency(
   );
 
   getIt.registerFactory<SignedInCreateEOAByGoogleCubit>(
-        () => SignedInCreateEOAByGoogleCubit(
+    () => SignedInCreateEOAByGoogleCubit(
       getIt.get<Web3AuthUseCase>(),
     ),
   );
 
   getIt.registerFactory<SignedInCreateEOAByGooglePickNameBloc>(
-        () => SignedInCreateEOAByGooglePickNameBloc(
+    () => SignedInCreateEOAByGooglePickNameBloc(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
       getIt.get<Web3AuthUseCase>(),
       getIt.get<WalletUseCase>(),
       getIt.get<AuraAccountUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<ControllerKeyManagementCubit>(
+    () => ControllerKeyManagementCubit(
+      getIt.get<AuraAccountUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<SignedInVerifyPasscodeCubit>(
+    () => SignedInVerifyPasscodeCubit(
+      getIt.get<AppSecureUseCase>(),
     ),
   );
 }

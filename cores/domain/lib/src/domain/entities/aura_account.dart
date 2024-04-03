@@ -7,6 +7,7 @@ final class AuraAccount {
   final String name;
   final String address;
   final AuraAccountRecoveryMethod? method;
+  final AuraAccountCreateType createdType;
   final bool needBackup;
 
   const AuraAccount({
@@ -15,6 +16,7 @@ final class AuraAccount {
     required this.type,
     required this.address,
     required this.name,
+    this.createdType = AuraAccountCreateType.normal,
     this.method,
     this.needBackup = false,
   });

@@ -10,6 +10,7 @@ import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_sea
 import 'package:pyxis_mobile/src/presentation/screens/browser_tab_management/browser_tab_management_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_wallet/connect_wallet_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/controller_key_management/controller_key_management_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/nft/nft_screen.dart';
@@ -42,6 +43,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_eoa_by_go
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_normal_wallet_key/signed_in_import_normal_wallet_key_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_pick_account/signed_in_pick_account_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_verify_pass_code/signed_in_verify_pass_code_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'presentation/screens/on_boarding_create_eoa_by_google/on_boarding_create_eoa_by_google_screen.dart';
@@ -91,36 +93,37 @@ sealed class RoutePath {
       '$home/send_transaction_confirmation';
   static const String sendTransactionSuccessFul =
       '$home/send_transaction_successful';
-  static const String _signedInCreateNewAccount =
-      '$home/signed_in_create_new_account';
+  static const String _signedInOnBoarding = '$accounts/signed_in_onboarding/';
   static const String signedInCreateNewAccountPickName =
-      '$_signedInCreateNewAccount/pick_name';
+      '$_signedInOnBoarding/pick_name';
   static const String signedInCreateNewAccountScanFee =
-      '$_signedInCreateNewAccount/scan_fee';
+      '$_signedInOnBoarding/scan_fee';
 
-  static const String signedInChoiceOption = '$accounts/choice_option';
+  static const String signedInChoiceOption =
+      '$_signedInOnBoarding/choice_option';
   static const String signedInCreateNewWallet =
-      '$accounts/create_new_normal_wallet';
+      '$_signedInOnBoarding/create_new_normal_wallet';
 
-  static const String _signedInRecover = '$home/signed_in_recover';
-  static const String signedInRecoverChoice = '$_signedInRecover/choice';
+  static const String signedInCreateNewWalletBackupPhrase =
+      '$signedInCreateNewWallet/create_normal_wallet_back_up_phrase';
+
   static const String signedInRecoverSelectAccount =
-      '$_signedInRecover/select_account';
-  static const String signedInRecoverSign = '$_signedInRecover/sign';
+      '$_signedInOnBoarding/select_account';
+  static const String signedInRecoverSign =
+      '$signedInRecoverSelectAccount/sign';
+
+  static const String signedInImportKey =
+      '$_signedInOnBoarding/import_normal_wallet';
+
+  static const String signedInCreateNormalWalletByGoogle =
+      '$_signedInOnBoarding/create_normal_wallet_by_google';
+
+  static const String signedInCreateNewWalletByGooglePickName =
+      '$signedInCreateNormalWalletByGoogle/pick_name';
 
   static const String recoverMethod = '$home/recover_method';
   static const String setRecoverMethod = '$recoverMethod/set_recover_method';
   static const String recoverConfirmation = '$recoverMethod/confirmation';
-
-  static const String signedInImportKey = '$accounts/import_normal_wallet';
-  static const String signedInCreateNormalWalletByGoogle =
-      '$accounts/create_normal_wallet_by_google';
-
-  static const String signedInCreateNewWalletBackupPhrase =
-      '$accounts/create_normal_wallet_back_up_phrase';
-
-  static const String signedInCreateNewWalletByGooglePickName =
-      '$accounts/pick_name';
 
   static const String _setting = '$_base/setting';
 
@@ -138,12 +141,18 @@ sealed class RoutePath {
   static const String walletConnectConfirmTransaction =
       '$home/wallet_connect/on_confirm_transaction';
 
+  static const String controllerKeyManagement =
+      '$home/controller_key_management';
+
   static const String browser = '$home/browser';
   static const String browserSearch = '$home/search';
   static const String browserTabManagement = '$home/tab_management';
   static const String accounts = '$home/account';
 
   static const String backUpPrivateKey = '$home/backup_private_key';
+
+  static const String signedInVerifyPasscode =
+      '$home/signed_in_verify_passcode';
 }
 
 sealed class AppNavigator {
@@ -471,8 +480,11 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.backUpPrivateKey:
+        final String address = settings.arguments as String;
         return _defaultRoute(
-          const BackupPrivateKeyScreen(),
+          BackupPrivateKeyScreen(
+            address: address,
+          ),
           settings,
         );
       case RoutePath.signedInChoiceOption:
@@ -502,6 +514,21 @@ sealed class AppNavigator {
       case RoutePath.signedInCreateNewWalletByGooglePickName:
         return _defaultRoute(
           const SignedInCreateEOAByGooglePickNameScreen(),
+          settings,
+        );
+
+      case RoutePath.controllerKeyManagement:
+        return _defaultRoute(
+          const ControllerKeyManagementScreen(),
+          settings,
+        );
+      case RoutePath.signedInVerifyPasscode:
+        final VoidCallback onVerifySuccessful =
+            settings.arguments as VoidCallback;
+        return _defaultRoute(
+          SignedInVerifyPasscodeScreen(
+            onVerifySuccessful: onVerifySuccessful,
+          ),
           settings,
         );
       default:

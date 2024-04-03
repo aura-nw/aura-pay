@@ -118,9 +118,9 @@ class _SignedInConfirmRecoveryPhraseScreenState
                           walletNameController: _walletNameController,
                           appTheme: appTheme,
                           words: [
-                            words[3],
-                            words[4],
-                            words[5],
+                            words[1],
+                            words[8],
+                            words[7],
                           ],
                           wordSplit:
                               '${words[3][words[3].length - 1]}${words[4][words[4].length - 1]}${words[5][words[5].length - 1]}',

@@ -269,6 +269,7 @@ class _HomePageState extends State<HomePage>
                               onTap: () async {
                                 await AppNavigator.push(
                                   RoutePath.backUpPrivateKey,
+                                  selectedAccount?.address,
                                 );
                               },
                             ),

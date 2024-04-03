@@ -244,7 +244,7 @@ sealed class LanguageKey {
   static const String settingPagePasscode = 'setting_page_passcode';
   static const String settingPageAddressBook = 'setting_page_address_book';
   static const String settingPageHelpCenter = 'setting_page_help_center';
-  static const String settingPageConnectSite = 'setting_page_connect_site';
+  static const String settingPagePrivateKey = 'setting_page_private_key';
   ///
 
   /// region setting change passcode and biometric
@@ -639,4 +639,15 @@ sealed class LanguageKey {
   static const String signedInImportNormalWalletKeyScreenDialogLoadingTitle = 'signed_in_import_normal_wallet_key_screen_dialog_loading_title';
   static const String signedInImportNormalWalletKeyScreenExistsAccount = 'signed_in_import_normal_wallet_key_screen_exists_account';
   ///endregion
+
+
+  ///region controller key management
+  static const String controllerKeyManagementScreenAppbarTitle = 'controller_key_management_screen_app_bar_title';
+  static const String controllerKeyManagementScreenNormalWallet = 'controller_key_management_screen_normal_wallet';
+  static const String controllerKeyManagementScreenGoogleConnected = 'controller_key_management_screen_google_connected';
+  static const String controllerKeyManagementScreenImported = 'controller_key_management_screen_imported';
+
+  ///region signed in verify passcode
+  static const String signedInVerifyPasscodeScreenTitle = 'signed_in_verify_passcode_screen_title';
+  static const String signedInVerifyPasscodeScreenPasscodeNotMatch = 'signed_in_verify_passcode_screen_passcode_not_match';
 }

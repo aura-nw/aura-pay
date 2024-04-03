@@ -39,6 +39,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
     required String address,
     required String accountName,
     required AuraAccountType type,
+    required AuraAccountCreateType createdType,
     bool needBackup = false,
   }) async {
     int currentLength = await _isar.auraAccountDbs.count();
@@ -49,6 +50,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
       accountType: type,
       indexDb: currentLength != 0 ? 1 : 0,
       needBackupDb: needBackup,
+      createdTypeDb: createdType,
     );
 
     int id = accountDb.id;
@@ -76,7 +78,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
     String? value,
     String? subValue,
     bool useNullAble = false,
-    bool ?needBackup,
+    bool? needBackup,
   }) async {
     final AuraAccountDb? account = await _isar.auraAccountDbs.get(id);
 
@@ -90,13 +92,15 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
       await _isar.writeTxn(
         () async {
           if (useNullAble) {
-            await _isar.auraAccountDbs.put(account.copyWithNull(
-              name: accountName,
-              address: address,
-              type: type,
-              methodDb: null,
-              needBackup: needBackup,
-            ));
+            await _isar.auraAccountDbs.put(
+              account.copyWithNull(
+                name: accountName,
+                address: address,
+                type: type,
+                methodDb: null,
+                needBackup: needBackup,
+              ),
+            );
           } else {
             await _isar.auraAccountDbs.put(
               account.copyWith(

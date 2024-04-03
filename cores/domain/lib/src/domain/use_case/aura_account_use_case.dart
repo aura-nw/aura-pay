@@ -26,6 +26,7 @@ final class AuraAccountUseCase {
     required String address,
     required String accountName,
     required AuraAccountType type,
+    AuraAccountCreateType createdType = AuraAccountCreateType.normal,
     bool needBackup = false,
   }) {
     final SaveAccountRequestParameter parameter = SaveAccountRequestParameter(
@@ -33,6 +34,7 @@ final class AuraAccountUseCase {
       type: type,
       accountName: accountName,
       needBackup: needBackup,
+      createdType: createdType,
     );
     return _repository.saveAccount(parameter);
   }
@@ -45,6 +47,7 @@ final class AuraAccountUseCase {
     String? accountName,
     String? address,
     AuraAccountType? type,
+    AuraAccountCreateType ?createdType,
     AuraSmartAccountRecoveryMethod? method,
     String? value,
     String? subValue,

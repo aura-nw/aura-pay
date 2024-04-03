@@ -190,6 +190,7 @@ final class SignedInRecoverSignBloc
           address: state.account.smartAccountAddress,
           type: AuraAccountType.smartAccount,
           accountName: state.account.name ?? PyxisAccountConstant.unName,
+          createdType: AuraAccountCreateType.google,
         );
 
         await _accountUseCase.updateAccount(

@@ -89,6 +89,7 @@ class SignedInCreateEOAByGooglePickNameBloc extends Bloc<
           accountName: state.walletName,
           type: AuraAccountType.normal,
           needBackup: true,
+          createdType: AuraAccountCreateType.google,
         );
 
         await _controllerKeyUseCase.saveKey(

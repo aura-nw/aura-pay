@@ -63,6 +63,7 @@ class SignedInConfirmRecoverPhraseBloc extends Bloc<
         address: state.pyxisWallet.bech32Address,
         accountName: state.walletName,
         type: AuraAccountType.normal,
+        createdType: AuraAccountCreateType.normal,
       );
 
       await _controllerKeyUseCase.saveKey(

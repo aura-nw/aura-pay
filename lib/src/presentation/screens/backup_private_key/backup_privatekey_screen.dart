@@ -20,7 +20,12 @@ import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
 
 class BackupPrivateKeyScreen extends StatefulWidget {
-  const BackupPrivateKeyScreen({super.key});
+  final String address;
+
+  const BackupPrivateKeyScreen({
+    required this.address,
+    super.key,
+  });
 
   @override
   State<BackupPrivateKeyScreen> createState() => _BackupPrivateKeyScreenState();
@@ -45,6 +50,7 @@ class _BackupPrivateKeyScreenState extends State<BackupPrivateKeyScreen>
   void initState() {
     _cubit.init(
       onSuccess: _emitBackUpPrivateKeySuccess,
+      address: widget.address,
     );
     super.initState();
   }

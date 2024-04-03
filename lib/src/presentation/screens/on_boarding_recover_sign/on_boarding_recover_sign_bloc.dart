@@ -187,6 +187,7 @@ final class OnBoardingRecoverSignBloc
           address: state.account.smartAccountAddress,
           accountName: state.account.name ?? PyxisAccountConstant.unName,
           type: AuraAccountType.smartAccount,
+          createdType: AuraAccountCreateType.google,
         );
 
         await _accountUseCase.updateAccount(

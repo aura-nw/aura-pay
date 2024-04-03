@@ -48,6 +48,16 @@ class _SettingPageState extends State<SettingPage> {
                       },
                     ),
                     SettingOptionWidget(
+                      iconPath: AssetIconPath.settingPrivateKey,
+                      labelPath: LanguageKey.settingPagePrivateKey,
+                      appTheme: appTheme,
+                      onTap: () {
+                        AppNavigator.push(
+                          RoutePath.controllerKeyManagement,
+                        );
+                      },
+                    ),
+                    SettingOptionWidget(
                       iconPath: AssetIconPath.settingDeviceManagement,
                       labelPath: LanguageKey.settingPageDeviceManagement,
                       appTheme: appTheme,
