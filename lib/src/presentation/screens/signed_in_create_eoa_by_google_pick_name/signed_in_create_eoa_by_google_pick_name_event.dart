@@ -10,4 +10,7 @@ class SignedInCreateEOAByGooglePickNameEvent
 
   const factory SignedInCreateEOAByGooglePickNameEvent.onConfirm(
   ) = SignedInCreateEOAByGooglePickNameOnConfirmEvent;
+
+  const factory SignedInCreateEOAByGooglePickNameEvent.onInit(
+  ) = SignedInCreateEOAByGooglePickNameOnInitEvent;
 }

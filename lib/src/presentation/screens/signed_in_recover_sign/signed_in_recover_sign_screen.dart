@@ -81,11 +81,11 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
                 case SignedInRecoverSignStatus.onRecoverSuccess:
                   _observer.emit(
                     emitParam: HomeScreenEmitParam(
-                      event: HomeScreenObserver.recoverAccountSuccessfulEvent,
+                      event: HomeScreenObserver.onAddNewAccountSuccessfulEvent,
                     ),
                   );
                   AppNavigator.popUntil(
-                    RoutePath.home,
+                    RoutePath.accounts,
                   );
                   break;
               }
@@ -144,7 +144,8 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
                                 return Text(
                                   localization.translate(
                                     localization.translate(
-                                      LanguageKey.signedInRecoverSignScreenContent,
+                                      LanguageKey
+                                          .signedInRecoverSignScreenContent,
                                     ),
                                   ),
                                   style: AppTypoGraPhy.body03.copyWith(
@@ -166,8 +167,7 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
                               builder: (localization, _) {
                                 return Text(
                                   localization.translate(
-                                    LanguageKey
-                                        .signedInRecoverSignScreenMemo,
+                                    LanguageKey.signedInRecoverSignScreenMemo,
                                   ),
                                   style: AppTypoGraPhy.utilityLabelDefault
                                       .copyWith(
@@ -180,7 +180,7 @@ class _SignedInRecoverSignScreenState extends State<SignedInRecoverSignScreen>
                               height: BoxSize.boxSize03,
                             ),
                             ScrollBarWidget(
-                              appTheme : appTheme,
+                              appTheme: appTheme,
                               child: TransactionBoxWidget(
                                 appTheme: appTheme,
                                 padding: const EdgeInsets.symmetric(

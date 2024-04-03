@@ -48,7 +48,7 @@ class _SignedInCreateEOAByGoogleScreenState
                   break;
                 case SignedInCreateEOAByGoogleStatus.logged:
                   AppNavigator.replaceWith(
-                    RoutePath.createNewWalletByGooglePickName,
+                    RoutePath.signedInCreateNewWalletByGooglePickName,
                   );
                   break;
                 case SignedInCreateEOAByGoogleStatus.error:

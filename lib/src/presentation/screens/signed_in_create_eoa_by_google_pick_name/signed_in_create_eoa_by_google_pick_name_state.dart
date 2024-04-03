@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 
@@ -8,6 +9,7 @@ enum SignedInCreateEOAByGooglePickNameStatus {
   creating,
   created,
   error,
+  existsAccount,
 }
 
 @freezed
@@ -19,5 +21,6 @@ class SignedInCreateEOAByGooglePickNameState
     @Default(true) bool isReadyConfirm,
     @Default(PyxisAccountConstant.defaultNormalWalletName) String walletName,
     String ?error,
+    @Default([]) List<AuraAccount> accounts,
   }) = _SignedInCreateEOAByGooglePickNameState;
 }

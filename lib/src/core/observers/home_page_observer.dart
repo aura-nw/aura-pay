@@ -14,24 +14,18 @@ final class HomeScreenEmitParam<T> {
 
 final class HomeScreenObserver
     extends ObserverBase<HomeListener, HomeScreenEmitParam> {
-  static String createSmartAccountSuccessfulEvent =
-      'CREATE_SMART_ACCOUNT_SUCCESSFUL_EVENT';
-  static String importAccountSuccessfulEvent =
-      'IMPORT_ACCOUNT_SUCCESSFUL_EVENT';
-  static String recoverAccountSuccessfulEvent =
-      'RECOVER_ACCOUNT_SUCCESSFUL_EVENT';
   static String onListenAccountChangeEvent = 'ON_LISTEN_ACCOUNT_CHANGE_EVENT';
   static String onSelectedAccountChangeEvent =
       'ON_SELECTED_ACCOUNT_CHANGE_EVENT';
   static String onSendTokenSuccessFulEvent =
       'ON_SEND_TOKEN_SUCCESSFUL_EVENT';
   static String onSetRecoveryMethodSuccessfulEvent = 'ON_SET_RECOVERY_METHOD_SUCCESSFUL_EVENT';
-  static String onRecoverSuccessfulEvent = 'ON_RECOVER_SUCCESSFUL_EVENT';
   static String onInAppBrowserChooseAccountEvent = 'ON_IN_APP_BROWSER_CHOOSE_ACCOUNT_EVENT';
   static String onInAppBrowserRefreshBookMarkEvent = 'ON_IN_APP_BROWSER_REFRESH_BOOKMARK_EVENT';
   static String onInAppBrowserRefreshBrowserEvent = 'ON_IN_APP_BROWSER_REFRESH_BROWSER_EVENT';
   static String onConnectWalletChooseAccountEvent = 'ON_CONNECT_WALLET_CHOOSE_ACCOUNT_EVENT';
   static String backUpPrivateKeySuccess = 'ON_BACKUP_PRIVATE_KEY_SUCCESSFUL_EVENT';
+  static String onAddNewAccountSuccessfulEvent = 'ON_ADD_NEW_ACCOUNT_SUCCESSFUL_EVENT';
 
   @override
   void emit({

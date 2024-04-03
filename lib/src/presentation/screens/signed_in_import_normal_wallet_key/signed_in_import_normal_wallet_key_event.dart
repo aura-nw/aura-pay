@@ -5,6 +5,8 @@ part 'signed_in_import_normal_wallet_key_event.freezed.dart';
 
 @freezed
 class SignedInImportNormalWalletKeyEvent with _$SignedInImportNormalWalletKeyEvent {
+  const factory SignedInImportNormalWalletKeyEvent.onInit() = SignedInImportKeyOnInitEvent;
+
   const factory SignedInImportNormalWalletKeyEvent.onSelectImportType({
     required ImportWalletType importType,
   }) = SignedInImportNormalWalletKeyOnSelectImportTypeEvent;

@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'signed_in_create_eoa_by_google_pick_name_event.dart';
 import 'signed_in_create_eoa_by_google_pick_name_state.dart';
 
@@ -10,17 +11,37 @@ class SignedInCreateEOAByGooglePickNameBloc extends Bloc<
   final Web3AuthUseCase _web3authUseCase;
   final WalletUseCase _walletUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
+  final AuraAccountUseCase _accountUseCase;
 
   SignedInCreateEOAByGooglePickNameBloc(
     this._auraAccountUseCase,
     this._controllerKeyUseCase,
     this._web3authUseCase,
     this._walletUseCase,
+    this._accountUseCase,
   ) : super(
           const SignedInCreateEOAByGooglePickNameState(),
         ) {
     on(_onChangeWalletName);
     on(_onConfirm);
+    on(_onInit);
+
+    add(
+      const SignedInCreateEOAByGooglePickNameOnInitEvent(),
+    );
+  }
+
+  void _onInit(
+    SignedInCreateEOAByGooglePickNameOnInitEvent event,
+    Emitter<SignedInCreateEOAByGooglePickNameState> emit,
+  ) async {
+    final accounts = await _accountUseCase.getAccounts();
+
+    emit(
+      state.copyWith(
+        accounts: accounts,
+      ),
+    );
   }
 
   void _onChangeWalletName(
@@ -51,25 +72,38 @@ class SignedInCreateEOAByGooglePickNameBloc extends Bloc<
         privateKeyOrPassPhrase: privateKey,
       );
 
-      await _auraAccountUseCase.saveAccount(
-        address: wallet.bech32Address,
-        accountName: state.walletName,
-        type: AuraAccountType.normal,
-        needBackup: true,
-      );
+      final bool isExistsAccount = state.accounts.firstWhereOrNull(
+            (ac) => ac.address == wallet.bech32Address,
+      ) !=
+          null;
 
-      await _controllerKeyUseCase.saveKey(
-        address: wallet.bech32Address,
-        key: privateKey,
-      );
+      if(isExistsAccount){
+        emit(
+          state.copyWith(
+            status: SignedInCreateEOAByGooglePickNameStatus.existsAccount,
+          ),
+        );
+      }else{
+        await _auraAccountUseCase.saveAccount(
+          address: wallet.bech32Address,
+          accountName: state.walletName,
+          type: AuraAccountType.normal,
+          needBackup: true,
+        );
 
-      await _web3authUseCase.onLogout();
+        await _controllerKeyUseCase.saveKey(
+          address: wallet.bech32Address,
+          key: privateKey,
+        );
 
-      emit(
-        state.copyWith(
-          status: SignedInCreateEOAByGooglePickNameStatus.created,
-        ),
-      );
+        await _web3authUseCase.onLogout();
+
+        emit(
+          state.copyWith(
+            status: SignedInCreateEOAByGooglePickNameStatus.created,
+          ),
+        );
+      }
     } catch (e) {
       LogProvider.log('Create account error ${e.toString()}');
       emit(

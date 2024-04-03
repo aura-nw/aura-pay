@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 
@@ -8,6 +9,7 @@ enum SignedInImportNormalWalletKeyStatus {
   onLoading,
   onImportAccountError,
   onImportAccountSuccess,
+  existsAccount,
 }
 
 @freezed
@@ -19,5 +21,6 @@ class SignedInImportNormalWalletKeyState with _$SignedInImportNormalWalletKeySta
     @Default(false) bool showPrivateKey,
     @Default('') String key,
     String? errorMessage,
+    @Default([]) List<AuraAccount> accounts,
   }) = _SignedInImportNormalWalletKeyState;
 }

@@ -11,6 +11,7 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'signed_in_create_new_sm_account_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
@@ -44,6 +45,8 @@ class _SignedInCreateNewSmAccountScanFeeScreenState
     extends State<SignedInCreateNewSmAccountScanFeeScreen>
     with CustomFlutterToast {
   late SignedInCreateNewSmAccountScanFeeBloc _bloc;
+
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
   @override
   void initState() {
@@ -94,8 +97,13 @@ class _SignedInCreateNewSmAccountScanFeeScreenState
                   break;
                 case SignedInCreateNewSmAccountScanFeeStatus
                       .onActiveAccountSuccess:
+                  _observer.emit(
+                    emitParam: HomeScreenEmitParam(
+                      event: HomeScreenObserver.onAddNewAccountSuccessfulEvent,
+                    ),
+                  );
                   AppNavigator.popUntil(
-                    RoutePath.home,
+                    RoutePath.accounts,
                   );
                   break;
               }

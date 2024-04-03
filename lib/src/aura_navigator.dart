@@ -22,7 +22,6 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/o
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup/on_boarding_recover_backup_address_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_backup_done/on_boarding_recover_backup_address_done_screen.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_request_reviewing/on_boarding_recover_request_reviewing_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_sign/on_boarding_recover_sign_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_scan_fee/on_boarding_scan_fee_screen.dart';
@@ -43,7 +42,6 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_eoa_by_go
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_normal_wallet_key/signed_in_import_normal_wallet_key_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_pick_account/signed_in_pick_account_screen.dart';
-import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'presentation/screens/on_boarding_create_eoa_by_google/on_boarding_create_eoa_by_google_screen.dart';
@@ -52,6 +50,7 @@ import 'presentation/screens/on_boarding_get_started/get_started_screen.dart';
 import 'presentation/screens/on_boarding_import_normal_wallet_key/on_boarding_import_normal_wallet_key_screen.dart';
 import 'presentation/screens/on_boarding_recover_phrase/on_boarding_recover_phrase_screen.dart';
 import 'presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_screen.dart';
+import 'presentation/screens/signed_in_create_eoa_by_google_pick_name/signed_in_create_eoa_by_google_pick_name_screen.dart';
 import 'presentation/screens/signed_in_recover_select_account/singed_in_recover_select_account_screen.dart';
 import 'presentation/screens/signed_in_recover_sign/signed_in_recover_sign_screen.dart';
 
@@ -67,7 +66,6 @@ sealed class RoutePath {
   static const String pickAccountName = '$_onBoarding/pick_account_name';
   static const String scanQrFee = '$_onBoarding/scan_qr_fee';
   static const String importFirstPage = '$_onBoarding/import_first_page';
-  static const String recoverChoice = '$_onBoarding/recover_choice';
   static const String recoverSelectAccount =
       '$_onBoarding/recover_select_account';
   static const String recoverReviewing = '$_onBoarding/recover_reviewing';
@@ -120,6 +118,9 @@ sealed class RoutePath {
 
   static const String signedInCreateNewWalletBackupPhrase =
       '$accounts/create_normal_wallet_back_up_phrase';
+
+  static const String signedInCreateNewWalletByGooglePickName =
+      '$accounts/pick_name';
 
   static const String _setting = '$_base/setting';
 
@@ -227,11 +228,6 @@ sealed class AppNavigator {
       case RoutePath.importFirstPage:
         return _defaultRoute(
           const OnBoardingImportNormalWalletKeyScreen(),
-          settings,
-        );
-      case RoutePath.recoverChoice:
-        return _defaultRoute(
-          const OnBoardingRecoverChoiceScreen(),
           settings,
         );
       case RoutePath.recoverSelectAccount:
@@ -362,11 +358,6 @@ sealed class AppNavigator {
           RecoveryMethodConfirmationScreen(
             argument: argument,
           ),
-          settings,
-        );
-      case RoutePath.signedInRecoverChoice:
-        return _defaultRoute(
-          const SignedInRecoverChoiceScreen(),
           settings,
         );
       case RoutePath.recoverSign:
@@ -505,6 +496,12 @@ sealed class AppNavigator {
           SignedInConfirmRecoveryPhraseScreen(
             pyxisWallet: pyxisWallet,
           ),
+          settings,
+        );
+
+      case RoutePath.signedInCreateNewWalletByGooglePickName:
+        return _defaultRoute(
+          const SignedInCreateEOAByGooglePickNameScreen(),
           settings,
         );
       default:

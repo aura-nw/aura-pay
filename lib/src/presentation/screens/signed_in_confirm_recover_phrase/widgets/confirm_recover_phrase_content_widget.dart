@@ -6,7 +6,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_confirm_recover_phrase/on_boarding_confirm_recover_phrase_selector.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_confirm_recover_phrase/signed_in_confirm_recover_phrase_selector.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/phrase_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_base.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_manager.dart';
@@ -217,7 +217,7 @@ class ConfirmRecoverPhraseContentWidget extends StatelessWidget {
                 );
               },
             ),
-            OnBoardingConfirmRecoverPhraseWalletNameSelector(
+            SignedInConfirmRecoverPhraseWalletNameSelector(
               builder: (walletName) {
                 return Text(
                   '${walletName.trim().length}/$_maxWalletNameLength',

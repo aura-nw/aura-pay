@@ -12,6 +12,7 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
@@ -33,6 +34,8 @@ class SignedInPickAccountScreen extends StatefulWidget {
 class _SignedInPickAccountScreenState extends State<SignedInPickAccountScreen>
     with CustomFlutterToast {
   final SignedInPickAccountBloc _bloc = getIt.get<SignedInPickAccountBloc>();
+
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
   late final TextEditingController _accountNameController;
   final int _defaultWalletNameLength = 32;
@@ -73,13 +76,19 @@ class _SignedInPickAccountScreenState extends State<SignedInPickAccountScreen>
                     _showActiveSmartAccount(appTheme);
                     break;
                   case SignedInPickAccountStatus.onActiveSmartAccountSuccess:
-                    AppNavigator.pop();
+                    _observer.emit(
+                      emitParam: HomeScreenEmitParam(
+                        event:
+                            HomeScreenObserver.onAddNewAccountSuccessfulEvent,
+                      ),
+                    );
+                    AppNavigator.popUntil(RoutePath.accounts);
                     break;
                   case SignedInPickAccountStatus.onGrantFeeError:
                     AppNavigator.pop();
 
                     AppNavigator.push(
-                      RoutePath.scanQrFee,
+                      RoutePath.signedInCreateNewAccountScanFee,
                       {
                         'smart_account_address': state.smartAccountAddress,
                         'privateKey': state.userPrivateKey!,

@@ -10,6 +10,7 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/dialog_provider_widget.dart';
 import 'signed_in_confirm_recover_phrase_bloc.dart';
@@ -34,8 +35,7 @@ class SignedInConfirmRecoveryPhraseScreen extends StatefulWidget {
 }
 
 class _SignedInConfirmRecoveryPhraseScreenState
-    extends State<SignedInConfirmRecoveryPhraseScreen>
-    with CustomFlutterToast {
+    extends State<SignedInConfirmRecoveryPhraseScreen> with CustomFlutterToast {
   final TextEditingController _confirmRecoverPhraseController =
       TextEditingController();
 
@@ -44,6 +44,8 @@ class _SignedInConfirmRecoveryPhraseScreenState
   final List<String> words = List.empty(growable: true);
 
   late SignedInConfirmRecoverPhraseBloc _bloc;
+
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
   @override
   void initState() {
@@ -80,7 +82,12 @@ class _SignedInConfirmRecoveryPhraseScreenState
                   _showLoading(appTheme);
                   break;
                 case SignedInConfirmRecoverPhraseStatus.created:
-                  AppNavigator.pop();
+                  _observer.emit(
+                    emitParam: HomeScreenEmitParam(
+                      event: HomeScreenObserver.onAddNewAccountSuccessfulEvent,
+                    ),
+                  );
+                  AppNavigator.popUntil(RoutePath.accounts);
                   break;
                 case SignedInConfirmRecoverPhraseStatus.error:
                   AppNavigator.pop();
@@ -93,8 +100,8 @@ class _SignedInConfirmRecoveryPhraseScreenState
             child: Scaffold(
               appBar: AppBarWithTitle(
                 appTheme: appTheme,
-                titleKey: LanguageKey
-                    .signedInConfirmRecoveryPhraseScreenAppBarTitle,
+                titleKey:
+                    LanguageKey.signedInConfirmRecoveryPhraseScreenAppBarTitle,
               ),
               body: SafeArea(
                 child: Padding(

@@ -29,7 +29,6 @@ import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
 import 'package:pyxis_mobile/src/presentation/screens/backup_private_key/backup_private_key_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_bloc.dart';
-import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_tab_management/browser_tab_management_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/connect_site/connect_site_cubit.dart';
@@ -47,7 +46,6 @@ import 'package:pyxis_mobile/src/presentation/screens/on_boarding_create_eoa_by_
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_normal_wallet_key/on_boarding_import_normal_wallet_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_pick_account/on_boarding_pick_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_re_login/on_boarding_re_login_bloc.dart';
-import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_choice/on_boarding_recover_choice_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_phrase/on_boarding_recover_phrase_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_select_account/on_boarding_recover_select_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_recover_sign/on_boarding_recover_sign_bloc.dart';
@@ -64,10 +62,11 @@ import 'package:pyxis_mobile/src/presentation/screens/setting_passcode_and_biome
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_choice_option/signed_in_choice_option_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_confirm_recover_phrase/signed_in_confirm_recover_phrase_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_eoa/signed_in_create_eoa_cubit.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_eoa_by_google/signed_in_create_eoa_by_google_cubit.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_eoa_by_google_pick_name/signed_in_create_eoa_by_google_pick_name_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_normal_wallet_key/signed_in_import_normal_wallet_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_pick_account/signed_in_pick_account_bloc.dart';
-import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_choice/signed_in_recover_choice_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_select_account/signed_in_recover_select_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_sign/signed_in_recover_sign_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/wallet_connect_screen/wallet_connect_sign_transaction/confirm_transaction_screen_bloc.dart';
@@ -554,12 +553,6 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactory<OnBoardingRecoverChoiceBloc>(
-    () => OnBoardingRecoverChoiceBloc(
-      getIt.get<Web3AuthUseCase>(),
-    ),
-  );
-
   getIt.registerFactory(
     () => HomeScreenBloc(
       getIt.get<AuraAccountUseCase>(),
@@ -653,12 +646,6 @@ Future<void> initDependency(
   getIt.registerFactory<RecoveryMethodScreenBloc>(
     () => RecoveryMethodScreenBloc(
       getIt.get<AuraAccountUseCase>(),
-    ),
-  );
-
-  getIt.registerFactory<SignedInRecoverChoiceBloc>(
-    () => SignedInRecoverChoiceBloc(
-      getIt.get<Web3AuthUseCase>(),
     ),
   );
 
@@ -872,6 +859,22 @@ Future<void> initDependency(
       getIt.get<AuraAccountUseCase>(),
       getIt.get<ControllerKeyUseCase>(),
       pyxisWallet: pyxisWallet,
+    ),
+  );
+
+  getIt.registerFactory<SignedInCreateEOAByGoogleCubit>(
+        () => SignedInCreateEOAByGoogleCubit(
+      getIt.get<Web3AuthUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<SignedInCreateEOAByGooglePickNameBloc>(
+        () => SignedInCreateEOAByGooglePickNameBloc(
+      getIt.get<AuraAccountUseCase>(),
+      getIt.get<ControllerKeyUseCase>(),
+      getIt.get<Web3AuthUseCase>(),
+      getIt.get<WalletUseCase>(),
+      getIt.get<AuraAccountUseCase>(),
     ),
   );
 }

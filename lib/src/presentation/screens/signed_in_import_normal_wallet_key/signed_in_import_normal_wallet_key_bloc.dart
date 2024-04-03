@@ -5,6 +5,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 
 import 'signed_in_import_normal_wallet_key_event.dart';
 import 'signed_in_import_normal_wallet_key_state.dart';
@@ -33,7 +34,26 @@ class SignedInImportNormalWalletKeyBloc extends Bloc<
     on(_onInputKey);
     on(_onImport);
     on(_onChangeShowPrivateKey);
+    on(_onInit);
+
+    add(
+      const SignedInImportKeyOnInitEvent(),
+    );
   }
+
+  void _onInit(
+      SignedInImportKeyOnInitEvent event,
+      Emitter<SignedInImportNormalWalletKeyState> emit,
+      ) async {
+    final accounts = await _accountUseCase.getAccounts();
+
+    emit(
+      state.copyWith(
+        accounts: accounts,
+      ),
+    );
+  }
+
 
   void _onSelectImportType(
     SignedInImportNormalWalletKeyOnSelectImportTypeEvent event,
@@ -75,32 +95,45 @@ class SignedInImportNormalWalletKeyBloc extends Bloc<
         privateKeyOrPassPhrase: state.key,
       );
 
-      // Register device to create access token
-      unawaited(
-        _createToken(
+      final bool isExistsAccount = state.accounts.firstWhereOrNull(
+            (ac) => ac.address == wallet.bech32Address,
+      ) !=
+          null;
+
+      if(isExistsAccount){
+        emit(
+          state.copyWith(
+            status: SignedInImportNormalWalletKeyStatus.existsAccount,
+          ),
+        );
+      }else{
+        // Register device to create access token
+        unawaited(
+          _createToken(
+            address: wallet.bech32Address,
+          ),
+        );
+
+        // Save account
+        await _accountUseCase.saveAccount(
           address: wallet.bech32Address,
-        ),
-      );
+          type: AuraAccountType.normal,
+          accountName: PyxisAccountConstant.unName,
+        );
 
-      // Save account
-      await _accountUseCase.saveAccount(
-        address: wallet.bech32Address,
-        type: AuraAccountType.normal,
-        accountName: PyxisAccountConstant.unName,
-      );
+        // Save controller key
+        await _controllerKeyUseCase.saveKey(
+          address: wallet.bech32Address,
+          key: state.key,
+        );
 
-      // Save controller key
-      await _controllerKeyUseCase.saveKey(
-        address: wallet.bech32Address,
-        key: state.key,
-      );
-
-      emit(
-        state.copyWith(
-          status:
-          SignedInImportNormalWalletKeyStatus.onImportAccountSuccess,
-        ),
-      );
+        emit(
+          state.copyWith(
+            status:
+            SignedInImportNormalWalletKeyStatus.onImportAccountSuccess,
+          ),
+        );
+      }
     } catch (e) {
       // Handle error
       emit(

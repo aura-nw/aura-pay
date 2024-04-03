@@ -84,10 +84,6 @@ class _HomePageState extends State<HomePage>
       _bloc.add(
         const HomePageEventOnFetchTokenPrice(),
       );
-    } else if (param.event == HomeScreenObserver.onRecoverSuccessfulEvent) {
-      _bloc.add(
-        const HomePageEventOnFetchTokenPrice(),
-      );
     } else if (param.event ==
         HomeScreenObserver.onInAppBrowserChooseAccountEvent) {
       _onChooseNewAccount(param);
@@ -95,6 +91,11 @@ class _HomePageState extends State<HomePage>
         HomeScreenObserver.onConnectWalletChooseAccountEvent) {
       _onChooseNewAccount(param);
     } else if (param.event == HomeScreenObserver.backUpPrivateKeySuccess) {
+      HomeScreenBloc.of(context).add(
+        const HomeScreenEventOnReFetchAccount(),
+      );
+    } else if (param.event ==
+        HomeScreenObserver.onAddNewAccountSuccessfulEvent) {
       HomeScreenBloc.of(context).add(
         const HomeScreenEventOnReFetchAccount(),
       );

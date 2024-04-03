@@ -12,6 +12,7 @@ import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/app_button.dart';
@@ -38,6 +39,7 @@ class _SignedInCreateEOAByGooglePickNameScreenState
     with CustomFlutterToast {
   final SignedInCreateEOAByGooglePickNameBloc _bloc =
       getIt.get<SignedInCreateEOAByGooglePickNameBloc>();
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
   final TextEditingController _walletNameController = TextEditingController();
 
@@ -67,12 +69,27 @@ class _SignedInCreateEOAByGooglePickNameScreenState
               switch (state.status) {
                 case SignedInCreateEOAByGooglePickNameStatus.none:
                   break;
+
+                case SignedInCreateEOAByGooglePickNameStatus.existsAccount:
+                  AppNavigator.pop();
+                  showToast(
+                    AppLocalizationManager.of(context).translate(
+                      LanguageKey
+                          .signedInCreateEoaByGooglePickNameScreenExistsAccount,
+                    ),
+                  );
+                  break;
                 case SignedInCreateEOAByGooglePickNameStatus.creating:
                   _showLoadingDialog(appTheme);
                   break;
                 case SignedInCreateEOAByGooglePickNameStatus.created:
-                  AppNavigator.pop();
-                  
+                  _observer.emit(
+                    emitParam: HomeScreenEmitParam(
+                      event: HomeScreenObserver.onAddNewAccountSuccessfulEvent,
+                    ),
+                  );
+                  AppNavigator.popUntil(RoutePath.accounts);
+
                   break;
                 case SignedInCreateEOAByGooglePickNameStatus.error:
                   AppNavigator.pop();

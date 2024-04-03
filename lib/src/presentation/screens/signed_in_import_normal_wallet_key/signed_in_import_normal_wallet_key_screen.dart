@@ -11,6 +11,7 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'widgets/import_wallet_pass_phrase_form_widget.dart';
 import 'widgets/import_wallet_private_key_widget.dart';
@@ -35,10 +36,11 @@ class SignedInImportNormalWalletKeyScreen extends StatefulWidget {
 }
 
 class _SignedInImportNormalWalletKeyScreenState
-    extends State<SignedInImportNormalWalletKeyScreen>
-    with CustomFlutterToast {
+    extends State<SignedInImportNormalWalletKeyScreen> with CustomFlutterToast {
   final SignedInImportNormalWalletKeyBloc _bloc =
       getIt.get<SignedInImportNormalWalletKeyBloc>();
+
+  final HomeScreenObserver _observer = getIt.get<HomeScreenObserver>();
 
   final Map<ImportWalletType, List<String>> _options = {
     ImportWalletType.privateKey: [
@@ -90,6 +92,14 @@ class _SignedInImportNormalWalletKeyScreenState
                   switch (state.status) {
                     case SignedInImportNormalWalletKeyStatus.init:
                       break;
+                    case SignedInImportNormalWalletKeyStatus.existsAccount:
+                      AppNavigator.pop();
+                      showToast(
+                        AppLocalizationManager.of(context).translate(
+                          LanguageKey.signedInImportNormalWalletKeyScreenExistsAccount,
+                        ),
+                      );
+                      break;
                     case SignedInImportNormalWalletKeyStatus
                           .onImportAccountError:
                       AppNavigator.pop();
@@ -98,7 +108,13 @@ class _SignedInImportNormalWalletKeyScreenState
                       break;
                     case SignedInImportNormalWalletKeyStatus
                           .onImportAccountSuccess:
-                      AppNavigator.pop();
+                      _observer.emit(
+                        emitParam: HomeScreenEmitParam(
+                          event:
+                              HomeScreenObserver.onAddNewAccountSuccessfulEvent,
+                        ),
+                      );
+                      AppNavigator.popUntil(RoutePath.accounts);
                       break;
                     case SignedInImportNormalWalletKeyStatus.onLoading:
                       _showLoadingDialog(appTheme);
@@ -261,15 +277,16 @@ class _SignedInImportNormalWalletKeyScreenState
                                       break;
                                     case ImportWalletType.passPhrase12:
                                       isValid = _passPhrase12FormKey
-                                          .currentState
-                                          ?.validate() ??
+                                              .currentState
+                                              ?.validate() ??
                                           false;
                                       break;
 
                                     case ImportWalletType.passPhrase24:
                                       isValid = _passPhrase24FormKey
-                                          .currentState
-                                          ?.validate() ?? false;
+                                              .currentState
+                                              ?.validate() ??
+                                          false;
                                       break;
                                   }
 
@@ -313,7 +330,7 @@ class _SignedInImportNormalWalletKeyScreenState
     }
   }
 
-  void _onPastePrivateKey()async{
+  void _onPastePrivateKey() async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
 
     if (data != null) {

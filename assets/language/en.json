@@ -129,18 +129,6 @@
   "on_boarding_import_select_account_screen_unselect_all" : "Unselect all",
   "on_boarding_import_select_account_screen_button_title" : "Import",
 
-  "on_boarding_recover_choice_screen_title_region_one" : "Recover",
-  "on_boarding_recover_choice_screen_title_region_two" : "smart account",
-  "on_boarding_recover_choice_screen_content" : "Select the method to recover account",
-  "on_boarding_recover_choice_screen_google_option_title" : "Using google account",
-  "on_boarding_recover_choice_screen_google_option_content" : "Powered by W Web3auth",
-  "on_boarding_recover_choice_screen_backup_option_title" : "Using backup address",
-  "on_boarding_recover_choice_screen_backup_option_content" : "Get the guideline from Pyxis",
-  "on_boarding_recover_choice_screen_button_title" : "Next",
-  "on_boarding_recover_choice_screen_dialog_select_not_found_title" : "No account found!",
-  "on_boarding_recover_choice_screen_dialog_select_not_found_content" : "The selected google account is not connected to any smart account on Pyxis. Please use other google account or method to recovery.",
-  "on_boarding_recover_choice_screen_dialog_select_not_found_button_title" : "Confirm",
-
   "on_boarding_recover_select_account_screen_title_region_one" : "Recover",
   "on_boarding_recover_select_account_screen_title_region_two" : "smart account",
   "on_boarding_recover_select_account_screen_content" : "Select an account to recover.",
@@ -334,36 +322,6 @@
   "signed_in_scan_fee_screen_dialog_warning_title" : "Insufficient gas fee",
   "signed_in_scan_fee_screen_dialog_warning_content" : "Please send a fee to the address or rechecking balance",
   "signed_in_scan_fee_screen_dialog_warning_button_title" : "Dismiss",
-
-
-  "signed_in_import_key_screen_title_region_one" : "Import",
-  "signed_in_import_key_screen_title_region_two" : "wallet",
-  "signed_in_import_key_screen_account_type" : "Account type",
-  "signed_in_import_key_screen_smart_account_type" : "Pyxis smart account",
-  "signed_in_import_key_screen_normal_account_type" : "Normal wallet",
-  "signed_in_import_key_screen_select_type" : "Select type",
-  "signed_in_import_key_screen_select_type_private" : "Import by private key",
-  "signed_in_import_key_screen_select_type_pass_phrase" : "Import by passphrase",
-  "signed_in_import_key_screen_private_key" : "Private key",
-  "signed_in_import_key_screen_pass_phrase" : "Passphrase",
-  "signed_in_import_key_screen_button_title" : "Next",
-  "signed_in_import_key_screen_invalid_private_key" : "Invalid private key",
-  "signed_in_import_key_screen_invalid_passphrase" : "Invalid passphrase",
-  "signed_in_import_key_screen_dialog_loading_title" : "Loading accounts",
-  "signed_in_import_key_screen_exists_account" : "Imported wallet must be different than the one you're using",
-
-
-  "signed_in_recover_choice_screen_title_region_one" : "Recover",
-  "signed_in_recover_choice_screen_title_region_two" : "smart account",
-  "signed_in_recover_choice_screen_content" : "Select the method to recover account",
-  "signed_in_recover_choice_screen_google_option_title" : "Using google account",
-  "signed_in_recover_choice_screen_google_option_content" : "Powered by W Web3auth",
-  "signed_in_recover_choice_screen_backup_option_title" : "Using backup address",
-  "signed_in_recover_choice_screen_backup_option_content" : "Get the guideline from Pyxis",
-  "signed_in_recover_choice_screen_button_title" : "Next",
-  "signed_in_recover_choice_screen_dialog_select_not_found_title" : "No account found!",
-  "signed_in_recover_choice_screen_dialog_select_not_found_content" : "The selected google account is not connected to any smart account on Pyxis. Please use other google account or method to recovery.",
-  "signed_in_recover_choice_screen_dialog_select_not_found_button_title" : "Confirm",
 
   "scanner_screen_app_bar_title" : "Scan QR code",
   "scanner_screen_upload_photo" : "Upload photo",
@@ -574,6 +532,7 @@
   "signed_in_create_eoa_by_google_pick_name_screen_name_your_wallet_hint" : "Input your wallet name",
   "signed_in_create_eoa_by_google_pick_name_screen_name_create_button_title" : "Create",
   "signed_in_create_eoa_by_google_pick_name_screen_name_creating" : "Creating...",
+  "signed_in_create_eoa_by_google_pick_name_screen_exists_account" : "Imported wallet must be different than the one you're using",
 
   "signed_in_import_normal_wallet_key_screen_app_bar_title" : "Import Normal Wallet",
   "signed_in_import_normal_wallet_key_screen_select_type" : "Select type",
@@ -589,5 +548,6 @@
   "signed_in_import_normal_wallet_key_screen_paste" : "Paste",
   "signed_in_import_normal_wallet_key_screen_invalid_private_key" : "Invalid private key",
   "signed_in_import_normal_wallet_key_screen_invalid_passphrase" : "Invalid passphrase",
-  "signed_in_import_normal_wallet_key_screen_dialog_loading_title" : "Loading account"
+  "signed_in_import_normal_wallet_key_screen_dialog_loading_title" : "Loading account",
+  "signed_in_import_normal_wallet_key_screen_exists_account" : "Imported wallet must be different than the one you're using"
 }

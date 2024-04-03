@@ -103,20 +103,6 @@ sealed class LanguageKey {
   static const String onBoardingImportSelectAccountScreenButtonTitle = 'on_boarding_import_select_account_screen_button_title';
   ///endregion
 
-  ///region recover choice
-  static const String onBoardingRecoverChoiceScreenTitleRegionOne = 'on_boarding_recover_choice_screen_title_region_one';
-  static const String onBoardingRecoverChoiceScreenTitleRegionTwo = 'on_boarding_recover_choice_screen_title_region_two';
-  static const String onBoardingRecoverChoiceScreenContent = 'on_boarding_recover_choice_screen_content';
-  static const String onBoardingRecoverChoiceScreenGoogleOptionTitle = 'on_boarding_recover_choice_screen_google_option_title';
-  static const String onBoardingRecoverChoiceScreenGoogleOptionContent = 'on_boarding_recover_choice_screen_google_option_content';
-  static const String onBoardingRecoverChoiceScreenBackupOptionTitle = 'on_boarding_recover_choice_screen_backup_option_title';
-  static const String onBoardingRecoverChoiceScreenBackupOptionContent = 'on_boarding_recover_choice_screen_backup_option_content';
-  static const String onBoardingRecoverChoiceScreenButtonTitle = 'on_boarding_recover_choice_screen_button_title';
-  static const String onBoardingRecoverChoiceScreenDialogSelectNotFoundTitle = 'on_boarding_recover_choice_screen_dialog_select_not_found_title';
-  static const String onBoardingRecoverChoiceScreenDialogSelectNotFoundContent = 'on_boarding_recover_choice_screen_dialog_select_not_found_content';
-  static const String onBoardingRecoverChoiceScreenDialogSelectNotFoundButtonTitle = 'on_boarding_recover_choice_screen_dialog_select_not_found_button_title';
-  ///endregion
-
   ///region recover select
   static const String onBoardingRecoverSelectAccountScreenTitleRegionOne = 'on_boarding_recover_select_account_screen_title_region_one';
   static const String onBoardingRecoverSelectAccountScreenTitleRegionTwo = 'on_boarding_recover_select_account_screen_title_region_two';
@@ -340,39 +326,6 @@ sealed class LanguageKey {
   static const String signedInScanFeeScreenDialogWarningTitle = 'signed_in_scan_fee_screen_dialog_warning_title';
   static const String signedInScanFeeScreenDialogWarningContent = 'signed_in_scan_fee_screen_dialog_warning_content';
   static const String signedInScanFeeScreenDialogWarningButtonTitle = 'signed_in_scan_fee_screen_dialog_warning_button_title';
-  ///endregion
-
-  ///region signed in import account
-  static const String signedInImportKeyScreenTitleRegionOne = 'signed_in_import_key_screen_title_region_one';
-  static const String signedInImportKeyScreenTitleRegionTwo = 'signed_in_import_key_screen_title_region_two';
-  static const String signedInImportKeyScreenAccountType = 'signed_in_import_key_screen_account_type';
-  static const String signedInImportKeyScreenSmartAccountType = 'signed_in_import_key_screen_smart_account_type';
-  static const String signedInImportKeyScreenNormalAccountType = 'signed_in_import_key_screen_normal_account_type';
-  static const String signedInImportKeyScreenSelectType = 'signed_in_import_key_screen_select_type';
-  static const String signedInImportKeyScreenSelectTypePrivate = 'signed_in_import_key_screen_select_type_private';
-  static const String signedInImportKeyScreenSelectTypePassPhrase = 'signed_in_import_key_screen_select_type_pass_phrase';
-  static const String signedInImportKeyScreenPrivateKey = 'signed_in_import_key_screen_private_key';
-  static const String signedInImportKeyScreenPassPhrase = 'signed_in_import_key_screen_pass_phrase';
-  static const String signedInImportKeyScreenButtonTitle = 'signed_in_import_key_screen_button_title';
-  static const String signedInImportKeyScreenInvalidPrivateKey = 'signed_in_import_key_screen_invalid_private_key';
-  static const String signedInImportKeyScreenInvalidPassPhrase = 'signed_in_import_key_screen_invalid_passphrase';
-  static const String signedInImportKeyScreenDialogLoadingTitle = 'signed_in_import_key_screen_dialog_loading_title';
-  static const String signedInImportKeyScreenExistsAccount = 'signed_in_import_key_screen_exists_account';
-  ///endregion
-
-
-  ///region recover choice
-  static const String signedInRecoverChoiceScreenTitleRegionOne = 'signed_in_recover_choice_screen_title_region_one';
-  static const String signedInRecoverChoiceScreenTitleRegionTwo = 'signed_in_recover_choice_screen_title_region_two';
-  static const String signedInRecoverChoiceScreenContent = 'signed_in_recover_choice_screen_content';
-  static const String signedInRecoverChoiceScreenGoogleOptionTitle = 'signed_in_recover_choice_screen_google_option_title';
-  static const String signedInRecoverChoiceScreenGoogleOptionContent = 'signed_in_recover_choice_screen_google_option_content';
-  static const String signedInRecoverChoiceScreenBackupOptionTitle = 'signed_in_recover_choice_screen_backup_option_title';
-  static const String signedInRecoverChoiceScreenBackupOptionContent = 'signed_in_recover_choice_screen_backup_option_content';
-  static const String signedInRecoverChoiceScreenButtonTitle = 'signed_in_recover_choice_screen_button_title';
-  static const String signedInRecoverChoiceScreenDialogSelectNotFoundTitle = 'signed_in_recover_choice_screen_dialog_select_not_found_title';
-  static const String signedInRecoverChoiceScreenDialogSelectNotFoundContent = 'signed_in_recover_choice_screen_dialog_select_not_found_content';
-  static const String signedInRecoverChoiceScreenDialogSelectNotFoundButtonTitle = 'signed_in_recover_choice_screen_dialog_select_not_found_button_title';
   ///endregion
 
   ///region scanner
@@ -666,6 +619,7 @@ sealed class LanguageKey {
   static const String signedInCreateEoaByGooglePickNameScreenNameYourWalletHint = 'signed_in_create_eoa_by_google_pick_name_screen_name_your_wallet_hint';
   static const String signedInCreateEoaByGooglePickNameScreenCreateButtonTitle = 'signed_in_create_eoa_by_google_pick_name_screen_name_create_button_title';
   static const String signedInCreateEoaByGooglePickNameScreenCreating = 'signed_in_create_eoa_by_google_pick_name_screen_name_creating';
+  static const String signedInCreateEoaByGooglePickNameScreenExistsAccount = 'signed_in_create_eoa_by_google_pick_name_screen_exists_account';
 
   ///region signed in import account first page
   static const String signedInImportNormalWalletKeyScreenAppBarTitle = 'signed_in_import_normal_wallet_key_screen_app_bar_title';
@@ -683,5 +637,6 @@ sealed class LanguageKey {
   static const String signedInImportNormalWalletKeyScreenInvalidPrivateKey = 'signed_in_import_normal_wallet_key_screen_invalid_private_key';
   static const String signedInImportNormalWalletKeyScreenInvalidPassPhrase = 'signed_in_import_normal_wallet_key_screen_invalid_passphrase';
   static const String signedInImportNormalWalletKeyScreenDialogLoadingTitle = 'signed_in_import_normal_wallet_key_screen_dialog_loading_title';
+  static const String signedInImportNormalWalletKeyScreenExistsAccount = 'signed_in_import_normal_wallet_key_screen_exists_account';
   ///endregion
 }
