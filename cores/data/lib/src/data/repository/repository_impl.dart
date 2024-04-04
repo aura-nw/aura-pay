@@ -15,3 +15,4 @@ export 'auth_repository_impl.dart';
 export 'device_management_repository_impl.dart';
 export 'bookmark_repository_impl.dart';
 export 'browser_management_repository_impl.dart';
+export 'add_address_book_repository_impl.dart';

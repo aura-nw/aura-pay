@@ -650,4 +650,23 @@ sealed class LanguageKey {
   ///region signed in verify passcode
   static const String signedInVerifyPasscodeScreenTitle = 'signed_in_verify_passcode_screen_title';
   static const String signedInVerifyPasscodeScreenPasscodeNotMatch = 'signed_in_verify_passcode_screen_passcode_not_match';
+
+  ///region address book
+  static const String addressBookScreenAppBarTitle = 'address_book_screen_app_bar_title';
+  static const String addressBookScreenAddContact = 'address_book_screen_add_contact';
+  static const String addressBookScreenEdit = 'address_book_screen_edit';
+  static const String addressBookScreenRemove = 'address_book_screen_remove_contact';
+  static const String addressBookScreenEditContactTitle = 'address_book_screen_edit_contact_title';
+  static const String addressBookScreenEditContactName = 'address_book_screen_edit_contact_name';
+  static const String addressBookScreenEditContactAddress = 'address_book_screen_edit_contact_address';
+  static const String addressBookScreenInvalidAddress = 'address_book_screen_invalid_address';
+  static const String addressBookScreenInvalidName = 'address_book_screen_invalid_name';
+  static const String addressBookScreenEditContactConfirm = 'address_book_screen_edit_contact_confirm';
+  static const String addressBookScreenEditContactEdited = 'address_book_screen_edit_contact_edited';
+  static const String addressBookScreenAddContactTitle = 'address_book_screen_add_contact_title';
+  static const String addressBookScreenAddContactName = 'address_book_screen_add_contact_name';
+  static const String addressBookScreenAddContactAddress = 'address_book_screen_add_contact_address';
+  static const String addressBookScreenAddContactConfirm = 'address_book_screen_add_contact_confirm';
+  static const String addressBookScreenAddContactAdded = 'address_book_screen_add_contact_added';
+  static const String addressBookScreenEmptyContact = 'address_book_screen_empty_contact';
 }

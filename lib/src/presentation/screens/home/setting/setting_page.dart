@@ -67,7 +67,11 @@ class _SettingPageState extends State<SettingPage> {
                       iconPath: AssetIconPath.settingAddressBook,
                       labelPath: LanguageKey.settingPageAddressBook,
                       appTheme: appTheme,
-                      onTap: () {},
+                      onTap: () {
+                        AppNavigator.push(
+                          RoutePath.addressBook,
+                        );
+                      },
                     ),
                     SettingOptionWidget(
                       iconPath: AssetIconPath.settingBiometric,

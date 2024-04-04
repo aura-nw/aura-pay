@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
 import 'package:pyxis_mobile/src/core/app_routes.dart';
 import 'package:pyxis_mobile/src/presentation/screens/accounts/accounts_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/address_book/address_book_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/backup_private_key/backup_privatekey_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_screen.dart';
@@ -153,6 +154,8 @@ sealed class RoutePath {
 
   static const String signedInVerifyPasscode =
       '$home/signed_in_verify_passcode';
+
+  static const String addressBook = '$home/address_book';
 }
 
 sealed class AppNavigator {
@@ -529,6 +532,12 @@ sealed class AppNavigator {
           SignedInVerifyPasscodeScreen(
             onVerifySuccessful: onVerifySuccessful,
           ),
+          settings,
+        );
+
+      case RoutePath.addressBook:
+        return _defaultRoute(
+          const AddressBookScreen(),
           settings,
         );
       default:

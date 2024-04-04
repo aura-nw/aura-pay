@@ -11,12 +11,16 @@ abstract class IconTextWidget extends StatelessWidget {
   final AppTheme appTheme;
   final TextStyle? style;
   final MainAxisAlignment mainAxisAlignment;
+  final VoidCallback ?onTap;
+  final double spacing;
 
   const IconTextWidget({
     required this.titlePath,
     required this.svgIconPath,
     required this.appTheme,
     this.style,
+    this.onTap,
+    this.spacing = BoxSize.boxSize03,
     this.mainAxisAlignment = MainAxisAlignment.start,
     super.key,
   });
@@ -51,20 +55,26 @@ final class IconWithTextWidget extends IconTextWidget {
     required super.appTheme,
     super.style,
     super.mainAxisAlignment = MainAxisAlignment.start,
+    super.onTap,
     super.key,
+    super.spacing = Spacing.spacing03,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: mainAxisAlignment,
-      children: [
-        buildIcon(),
-        const SizedBox(
-          width: BoxSize.boxSize03,
-        ),
-        buildText(),
-      ],
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Row(
+        mainAxisAlignment: mainAxisAlignment,
+        children: [
+          buildIcon(),
+          SizedBox(
+            width: spacing,
+          ),
+          buildText(),
+        ],
+      ),
     );
   }
 }
@@ -77,19 +87,24 @@ final class TextWithIconWidget extends IconTextWidget {
     super.style,
     super.mainAxisAlignment = MainAxisAlignment.start,
     super.key,
+    super.spacing = Spacing.spacing03,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: mainAxisAlignment,
-      children: [
-        buildText(),
-        const SizedBox(
-          width: BoxSize.boxSize03,
-        ),
-        buildIcon(),
-      ],
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Row(
+        mainAxisAlignment: mainAxisAlignment,
+        children: [
+          buildText(),
+          SizedBox(
+            width: spacing,
+          ),
+          buildIcon(),
+        ],
+      ),
     );
   }
 }

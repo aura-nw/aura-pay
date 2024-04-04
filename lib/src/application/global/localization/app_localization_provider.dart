@@ -2,7 +2,7 @@ import 'localization_manager.dart';
 import 'package:flutter/material.dart';
 
 class AppLocalizationProvider extends StatelessWidget {
-  final Widget Function(AppLocalizationManager, BuildContext) builder;
+  final Widget Function(AppLocalizationManager localization, BuildContext _) builder;
 
   const AppLocalizationProvider({required this.builder, Key? key})
       : super(key: key);

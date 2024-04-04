@@ -10,3 +10,4 @@ export 'grant_fee.dart';
 export 'token_market.dart';
 export 'bookmark.dart';
 export 'browser.dart';
+export 'address_book.dart';

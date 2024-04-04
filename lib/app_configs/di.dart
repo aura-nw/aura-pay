@@ -7,6 +7,7 @@ import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:isar/isar.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/address_book/address_book_database_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/aura_account/account_database_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/bookmark/bookmark_database_service_impl.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/browser/browser_database_service_impl.dart';
@@ -27,6 +28,7 @@ import 'package:pyxis_mobile/src/application/service/transaction/transaction_api
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
+import 'package:pyxis_mobile/src/presentation/screens/address_book/address_book_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/backup_private_key/backup_private_key_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser_search/browser_search_bloc.dart';
@@ -304,6 +306,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<AddressBookDatabaseService>(
+    () => AddressBookDatabaseServiceImpl(
+      isar,
+    ),
+  );
+
   ///Repository
 
   getIt.registerLazySingleton<AppSecureRepository>(
@@ -401,6 +409,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<BrowserManagementRepository>(
     () => BrowserManagementRepositoryImpl(
       getIt.get<BrowserDatabaseService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<AddressBookRepository>(
+    () => AddressBookRepositoryImpl(
+      getIt.get<AddressBookDatabaseService>(),
     ),
   );
 
@@ -505,6 +519,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<BrowserManagementUseCase>(
     () => BrowserManagementUseCase(
       getIt.get<BrowserManagementRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<AddressBookUseCase>(
+    () => AddressBookUseCase(
+      getIt.get<AddressBookRepository>(),
     ),
   );
 
@@ -889,6 +909,12 @@ Future<void> initDependency(
   getIt.registerFactory<SignedInVerifyPasscodeCubit>(
     () => SignedInVerifyPasscodeCubit(
       getIt.get<AppSecureUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<AddressBookBloc>(
+    () => AddressBookBloc(
+      getIt.get<AddressBookUseCase>(),
     ),
   );
 }

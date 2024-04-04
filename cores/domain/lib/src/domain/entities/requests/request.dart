@@ -12,3 +12,5 @@ export 'query_token_market_parameter.dart';
 export 'save_bookmark_parameter.dart';
 export 'save_browser_parameter.dart';
 export 'update_browser_parameter.dart';
+export 'add_address_book_request.dart';
+export 'update_address_book_request.dart';

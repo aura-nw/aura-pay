@@ -7,3 +7,4 @@ export 'pyxis_balance_dto.dart';
 export 'pyxis_recovery_account_dto.dart';
 export 'bookmark_dto.dart';
 export 'browser_dto.dart';
+export 'address_book_dto.dart';

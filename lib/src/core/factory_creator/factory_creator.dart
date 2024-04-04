@@ -3,6 +3,7 @@ import 'package:data/data.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
 import 'package:isar/isar.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/address_book/address_book_db.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/aura_account/aura_account_db.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/bookmark/bookmark_db.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/browser/browser_db.dart';
@@ -68,6 +69,7 @@ Future<Isar> getIsar() async {
         AuraAccountDbSchema,
         BrowserDbSchema,
         BookMarkDbSchema,
+        AddressBookDbSchema,
       ],
       directory: '',
       name: AppLocalConstant.accountDbName,

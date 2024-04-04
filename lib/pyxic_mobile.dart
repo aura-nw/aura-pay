@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pyxis_mobile/src/application/provider/local_database/address_book/address_book_db.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/bookmark/bookmark_db.dart';
 import 'package:pyxis_mobile/src/application/provider/local_database/browser/browser_db.dart';
 import 'package:pyxis_mobile/src/core/constants/aura_scan.dart';
@@ -36,6 +37,7 @@ void start(PyxisMobileConfig config) async {
         AuraAccountDbSchema,
         BrowserDbSchema,
         BookMarkDbSchema,
+        AddressBookDbSchema,
       ],
       directory: path,
       name: AppLocalConstant.accountDbName,

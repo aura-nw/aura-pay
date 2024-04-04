@@ -557,5 +557,23 @@
   "controller_key_management_screen_imported" : "Imported",
 
   "signed_in_verify_passcode_screen_title" : "Enter your passcode",
-  "signed_in_verify_passcode_screen_passcode_not_match" : "Passcode does not match"
+  "signed_in_verify_passcode_screen_passcode_not_match" : "Passcode does not match",
+
+  "address_book_screen_app_bar_title" : "Address book",
+  "address_book_screen_add_contact" : "Add new contact",
+  "address_book_screen_edit" : "Edit",
+  "address_book_screen_remove_contact" : "Remove Contact",
+  "address_book_screen_edit_contact_title" : "Edit Contact",
+  "address_book_screen_edit_contact_name" : "Name",
+  "address_book_screen_edit_contact_address" : "Address",
+  "address_book_screen_invalid_address" : "Invalid Address",
+  "address_book_screen_invalid_name" : "Name can't be empty",
+  "address_book_screen_edit_contact_confirm" : "Confirm",
+  "address_book_screen_edit_contact_edited" : "Contact edited",
+  "address_book_screen_add_contact_title" : "Add Contact",
+  "address_book_screen_add_contact_name" : "Name",
+  "address_book_screen_add_contact_address" : "Address",
+  "address_book_screen_add_contact_confirm" : "Confirm",
+  "address_book_screen_add_contact_added" : "New contact added",
+  "address_book_screen_empty_contact" : "No address book found"
 }
