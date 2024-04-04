@@ -78,6 +78,21 @@ class _AddressBookScreenState extends State<AddressBookScreen>
     }
   }
 
+  void _onExists() async {
+    await Future.delayed(
+      const Duration(
+        seconds: 1,
+      ),
+    );
+    if (context.mounted) {
+      showToast(
+        AppLocalizationManager.of(context).translate(
+          LanguageKey.addressBookScreenExist,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -90,6 +105,9 @@ class _AddressBookScreenState extends State<AddressBookScreen>
             case AddressBookStatus.loaded:
               break;
             case AddressBookStatus.error:
+              break;
+              case AddressBookStatus.exists:
+                _onExists();
               break;
             case AddressBookStatus.added:
               _onAdded();
@@ -128,6 +146,7 @@ class _AddressBookScreenState extends State<AddressBookScreen>
                         case AddressBookStatus.edited:
                         case AddressBookStatus.removed:
                         case AddressBookStatus.added:
+                        case AddressBookStatus.exists:
                           return Column(
                             children: [
                               Expanded(

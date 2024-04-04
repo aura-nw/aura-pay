@@ -82,7 +82,7 @@ class _AddAddressBookWidgetState
       builder: (localization, _) {
         return Column(
           children: [
-            TextInputNormalWidget(
+            RoundBorderTextInputWidget(
               label: localization.translate(
                 LanguageKey.addressBookScreenAddContactName,
               ),
@@ -104,7 +104,7 @@ class _AddAddressBookWidgetState
             const SizedBox(
               height: BoxSize.boxSize05,
             ),
-            TextInputNormalWidget(
+            RoundBorderTextInputWidget(
               label: localization.translate(
                 LanguageKey.addressBookScreenAddContactAddress,
               ),

@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'address_book_event.dart';
 
 import 'address_book_state.dart';
@@ -86,21 +87,32 @@ class AddressBookBloc extends Bloc<AddressBookEvent, AddressBookState> {
     final List<AddressBook> addressBooks = List.empty(growable: true)
       ..addAll(state.addressBooks);
 
-    final addressBook = await _addressBookUseCase.addAddressBook(
-      address: event.address,
-      name: event.name,
-    );
+    bool isExists = state.addressBooks.firstWhereOrNull((e) => e.address == event.address) != null;
 
-    addressBooks.add(
-      addressBook,
-    );
+    if(isExists){
+      emit(
+        state.copyWith(
+          addressBooks: addressBooks,
+          status: AddressBookStatus.exists,
+        ),
+      );
+    }else{
+      final addressBook = await _addressBookUseCase.addAddressBook(
+        address: event.address,
+        name: event.name,
+      );
 
-    emit(
-      state.copyWith(
-        addressBooks: addressBooks,
-        status: AddressBookStatus.added,
-      ),
-    );
+      addressBooks.add(
+        addressBook,
+      );
+
+      emit(
+        state.copyWith(
+          addressBooks: addressBooks,
+          status: AddressBookStatus.added,
+        ),
+      );
+    }
   }
 
   void _onDelete(

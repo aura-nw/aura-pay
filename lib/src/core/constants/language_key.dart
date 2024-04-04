@@ -669,4 +669,5 @@ sealed class LanguageKey {
   static const String addressBookScreenAddContactConfirm = 'address_book_screen_add_contact_confirm';
   static const String addressBookScreenAddContactAdded = 'address_book_screen_add_contact_added';
   static const String addressBookScreenEmptyContact = 'address_book_screen_empty_contact';
+  static const String addressBookScreenExist = 'address_book_screen_exists';
 }

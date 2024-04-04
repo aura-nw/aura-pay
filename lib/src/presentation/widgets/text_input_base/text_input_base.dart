@@ -230,7 +230,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
 
   String value() => _controller.text;
 
-  void setValue(String value){
+  void setValue(String value) {
     _controller.text = value;
 
     validate();
@@ -558,6 +558,135 @@ final class TextInputOnlyTextFieldWidgetState
       builder: (theme) {
         return buildTextInput(theme);
       },
+    );
+  }
+}
+
+///endregion
+
+///region round border text input
+final class RoundBorderTextInputWidget extends TextInputWidgetBase {
+  final String? label;
+  final bool isRequired;
+  final double borderRadius;
+
+  const RoundBorderTextInputWidget({
+    this.isRequired = false,
+    this.label,
+    this.borderRadius = BorderRadiusSize.borderRadiusRound,
+    super.obscureText,
+    super.autoFocus,
+    super.constraintManager,
+    super.scrollController,
+    super.enable,
+    super.inputFormatter,
+    super.focusNode,
+    super.controller,
+    super.hintText,
+    super.scrollPadding,
+    super.keyBoardType,
+    super.maxLength,
+    super.onSubmit,
+    super.maxLine,
+    super.minLine,
+    super.onChanged,
+    super.physics,
+    super.key,
+    super.enableClear,
+    super.onClear,
+    super.boxConstraints,
+  });
+
+  @override
+  State<StatefulWidget> createState() => RoundBorderTextInputWidgetState();
+}
+
+final class RoundBorderTextInputWidgetState
+    extends TextInputWidgetBaseState<RoundBorderTextInputWidget> {
+  @override
+  Widget? buildLabel(AppTheme theme) {
+    if (widget.label.isEmptyOrNull) {
+      return null;
+    }
+
+    if (widget.isRequired) {
+      return RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: widget.label,
+              style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                color: theme.contentColor700,
+              ),
+            ),
+            TextSpan(
+              text: ' *',
+              style: AppTypoGraPhy.utilityLabelSm.copyWith(
+                color: theme.contentColorDanger,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Text(
+      widget.label!,
+      style: AppTypoGraPhy.utilityLabelSm.copyWith(
+        color: theme.contentColor700,
+      ),
+    );
+  }
+
+  @override
+  Widget inputFormBuilder(BuildContext context, Widget child, AppTheme theme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildLabel(theme) != null
+            ? Column(
+                children: [
+                  buildLabel(theme)!,
+                  const SizedBox(
+                    height: BoxSize.boxSize03,
+                  ),
+                ],
+              )
+            : const SizedBox(),
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.spacing04,
+            vertical: Spacing.spacing02,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: _borderColorBuilder(theme),
+              width: BorderSize.border01,
+            ),
+            borderRadius: BorderRadius.circular(
+              widget.borderRadius,
+            ),
+          ),
+          alignment: Alignment.center,
+          child: child,
+        ),
+        errorMessage.isNotNullOrEmpty
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: BoxSize.boxSize03,
+                  ),
+                  Text(
+                    errorMessage!,
+                    style: AppTypoGraPhy.body02.copyWith(
+                      color: theme.contentColorDanger,
+                    ),
+                  ),
+                ],
+              )
+            : const SizedBox(),
+      ],
     );
   }
 }

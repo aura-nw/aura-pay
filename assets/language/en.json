@@ -575,5 +575,6 @@
   "address_book_screen_add_contact_address" : "Address",
   "address_book_screen_add_contact_confirm" : "Confirm",
   "address_book_screen_add_contact_added" : "New contact added",
-  "address_book_screen_empty_contact" : "No address book found"
+  "address_book_screen_empty_contact" : "No address book found",
+  "address_book_screen_exists" : "This address book was exists"
 }

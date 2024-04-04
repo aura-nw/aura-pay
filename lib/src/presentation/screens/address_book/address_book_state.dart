@@ -10,6 +10,7 @@ enum AddressBookStatus {
   edited,
   added,
   removed,
+  exists,
 }
 
 @freezed
