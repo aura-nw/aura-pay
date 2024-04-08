@@ -70,6 +70,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_eoa_by_go
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_normal_wallet_key/signed_in_import_normal_wallet_key_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_pick_account/signed_in_pick_account_bloc.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_phrase/signed_in_recover_phrase_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_select_account/signed_in_recover_select_account_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_sign/signed_in_recover_sign_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_verify_pass_code/signed_in_verify_passcode_cubit.dart';
@@ -916,5 +917,9 @@ Future<void> initDependency(
     () => AddressBookBloc(
       getIt.get<AddressBookUseCase>(),
     ),
+  );
+
+  getIt.registerFactory<SignedInRecoverPhraseCubit>(
+    () => SignedInRecoverPhraseCubit(),
   );
 }

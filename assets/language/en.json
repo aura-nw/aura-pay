@@ -576,5 +576,14 @@
   "address_book_screen_add_contact_confirm" : "Confirm",
   "address_book_screen_add_contact_added" : "New contact added",
   "address_book_screen_empty_contact" : "No address book found",
-  "address_book_screen_exists" : "This address book was exists"
+  "address_book_screen_exists" : "This address book was exists",
+
+  "signed_in_recover_phrase_screen_app_bar_title" : "Recovery phrase",
+  "signed_in_recover_phrase_screen_copy" : "Copy",
+  "signed_in_recover_phrase_screen_remind_title" : "Important reminders",
+  "signed_in_recover_phrase_screen_remind_one" : "• If you lose your seed phrase, your assets will be lost forever.",
+  "signed_in_recover_phrase_screen_remind_two" : "• Anyone with your private key can have access to your assets.",
+  "signed_in_recover_phrase_screen_remind_three" : "• If you uninstall Pyxis without backing up the seed phrase, Pyxis cannot retrieve it for you.",
+  "signed_in_recover_phrase_screen_show_phrase_button_title" : "Show Passphrase",
+  "signed_in_recover_phrase_screen_go_next_button_title" : "I Have Memorized"
 }

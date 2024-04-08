@@ -670,4 +670,14 @@ sealed class LanguageKey {
   static const String addressBookScreenAddContactAdded = 'address_book_screen_add_contact_added';
   static const String addressBookScreenEmptyContact = 'address_book_screen_empty_contact';
   static const String addressBookScreenExist = 'address_book_screen_exists';
+
+  /// region signed in recover phrase screen
+  static const String signedInRecoverPhraseScreenAppBarTitle = 'signed_in_recover_phrase_screen_app_bar_title';
+  static const String signedInRecoverPhraseScreenCopy = 'signed_in_recover_phrase_screen_copy';
+  static const String signedInRecoverPhraseScreenRemindTitle = 'signed_in_recover_phrase_screen_remind_title';
+  static const String signedInRecoverPhraseScreenRemindOne = 'signed_in_recover_phrase_screen_remind_one';
+  static const String signedInRecoverPhraseScreenRemindTwo = 'signed_in_recover_phrase_screen_remind_two';
+  static const String signedInRecoverPhraseScreenRemindThree = 'signed_in_recover_phrase_screen_remind_three';
+  static const String signedInRecoverPhraseScreenShowPhraseButtonTitle = 'signed_in_recover_phrase_screen_show_phrase_button_title';
+  static const String signedInRecoverPhraseScreenGoNextButtonTitle = 'signed_in_recover_phrase_screen_go_next_button_title';
 }

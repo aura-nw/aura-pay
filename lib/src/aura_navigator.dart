@@ -44,6 +44,7 @@ import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_eoa_by_go
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_create_new_sm_account_scan_fee/signed_in_create_new_sm_account_scan_fee_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_normal_wallet_key/signed_in_import_normal_wallet_key_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_pick_account/signed_in_pick_account_screen.dart';
+import 'package:pyxis_mobile/src/presentation/screens/signed_in_recover_phrase/signed_in_recover_phrase_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_verify_pass_code/signed_in_verify_pass_code_screen.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -105,6 +106,9 @@ sealed class RoutePath {
   static const String signedInCreateNewWallet =
       '$_signedInOnBoarding/create_new_normal_wallet';
 
+  static const String signedInCreateNewWalletBackupPhraseConfirm =
+      '$signedInCreateNewWallet/create_normal_wallet_back_up_phrase_confirm';
+
   static const String signedInCreateNewWalletBackupPhrase =
       '$signedInCreateNewWallet/create_normal_wallet_back_up_phrase';
 
@@ -112,6 +116,7 @@ sealed class RoutePath {
       '$_signedInOnBoarding/select_account';
   static const String signedInRecoverSign =
       '$signedInRecoverSelectAccount/sign';
+
 
   static const String signedInImportKey =
       '$_signedInOnBoarding/import_normal_wallet';
@@ -505,10 +510,19 @@ sealed class AppNavigator {
           const SignedInCreateEOAByGoogleScreen(),
           settings,
         );
-      case RoutePath.signedInCreateNewWalletBackupPhrase:
+      case RoutePath.signedInCreateNewWalletBackupPhraseConfirm:
         final PyxisWallet pyxisWallet = settings.arguments as PyxisWallet;
         return _defaultRoute(
           SignedInConfirmRecoveryPhraseScreen(
+            pyxisWallet: pyxisWallet,
+          ),
+          settings,
+        );
+
+        case RoutePath.signedInCreateNewWalletBackupPhrase:
+        final PyxisWallet pyxisWallet = settings.arguments as PyxisWallet;
+        return _defaultRoute(
+          SignedInRecoverPhraseScreen(
             pyxisWallet: pyxisWallet,
           ),
           settings,
