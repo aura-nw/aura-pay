@@ -1,10 +1,10 @@
 import 'package:aura_smart_account/aura_smart_account.dart';
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/wallet_address_validator.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
 
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
@@ -137,7 +137,7 @@ final class SendTransactionBloc
         );
 
       final int gasLimit = await _smartAccountUseCase.simulateFee(
-        userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(
+        userPrivateKey: PyxisWalletHelper.getPrivateKeyFromString(
           privateKeyString,
         ),
         smartAccountAddress: sender.address,

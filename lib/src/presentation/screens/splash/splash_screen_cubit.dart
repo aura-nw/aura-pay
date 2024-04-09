@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 import 'package:pyxis_mobile/src/core/helpers/local_auth_helper.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'package:pyxis_mobile/src/presentation/screens/splash/splash_screen_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -74,7 +74,7 @@ class SplashScreenCubit extends Cubit<SplashScreenState> {
                 unawaited(
                   _refreshToken(
                     privateKey:
-                        AuraWalletHelper.getPrivateKeyFromString(privateKey),
+                        PyxisWalletHelper.getPrivateKeyFromString(privateKey),
                     address: account.address,
                   ),
                 );

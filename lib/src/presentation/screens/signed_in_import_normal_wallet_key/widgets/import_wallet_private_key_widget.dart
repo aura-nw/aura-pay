@@ -1,4 +1,3 @@
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_mobile/src/application/global/app_theme/app_theme.dart';
@@ -7,6 +6,7 @@ import 'package:pyxis_mobile/src/core/constants/asset_path.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/constants/typography.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'package:pyxis_mobile/src/presentation/screens/signed_in_import_normal_wallet_key/signed_in_import_normal_wallet_key_selector.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/icon_with_text_widget.dart';
 import 'package:pyxis_mobile/src/presentation/widgets/text_input_base/text_input_base.dart';
@@ -16,7 +16,7 @@ class ImportWalletPrivateKeyWidget extends StatelessWidget {
   final AppLocalizationManager localization;
   final AppTheme appTheme;
   final GlobalKey<TextInputNormalSuffixState> inPutPrivateKey;
-  final void Function(String,bool) onChanged;
+  final void Function(String, bool) onChanged;
   final VoidCallback onShowPrivateKey;
   final VoidCallback onPaste;
 
@@ -42,8 +42,7 @@ class ImportWalletPrivateKeyWidget extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: localization.translate(
-                      LanguageKey
-                          .signedInImportNormalWalletKeyScreenPrivateKey,
+                      LanguageKey.signedInImportNormalWalletKeyScreenPrivateKey,
                     ),
                     style: AppTypoGraPhy.utilityLabelSm.copyWith(
                       color: appTheme.contentColor700,
@@ -98,7 +97,7 @@ class ImportWalletPrivateKeyWidget extends StatelessWidget {
                       .signedInImportNormalWalletKeyScreenInvalidPrivateKey),
                   customValid: (value) {
                     try {
-                      return AuraWalletHelper.checkPrivateKey(
+                      return PyxisWalletHelper.checkPrivateKey(
                         value.trim(),
                       );
                     } catch (e) {

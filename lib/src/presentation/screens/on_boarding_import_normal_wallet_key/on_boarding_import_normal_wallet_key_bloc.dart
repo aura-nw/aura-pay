@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
@@ -98,8 +97,7 @@ class OnBoardingImportNormalWalletKeyBloc extends Bloc<
 
       emit(
         state.copyWith(
-          status:
-          OnBoardingImportNormalWalletKeyStatus.onImportAccountSuccess,
+          status: OnBoardingImportNormalWalletKeyStatus.onImportAccountSuccess,
         ),
       );
     } catch (e) {

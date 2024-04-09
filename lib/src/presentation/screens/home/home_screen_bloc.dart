@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_mobile/src/core/utils/debounce.dart';
 import 'home_screen_event.dart';

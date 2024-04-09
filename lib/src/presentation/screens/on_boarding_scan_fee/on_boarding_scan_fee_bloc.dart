@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'on_boarding_scan_fee_event.dart';
 import 'on_boarding_scan_fee_state.dart';
 
@@ -101,7 +101,7 @@ class OnBoardingScanFeeBloc
 
         await _controllerKeyUseCase.saveKey(
           address: state.smartAccountAddress,
-          key: AuraWalletHelper.getPrivateKeyFromBytes(
+          key: PyxisWalletHelper.getPrivateKeyFromBytes(
             state.privateKey,
           ),
         );

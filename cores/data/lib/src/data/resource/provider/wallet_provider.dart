@@ -1,13 +1,13 @@
-import 'package:data/src/data/dto/dto.dart';
+import 'package:domain/domain.dart';
 
-abstract interface class WalletProvider{
-  Future<PyxisWalletDto> createWallet();
+abstract interface class WalletProvider {
+  Future<PyxisWallet> createWallet();
 
-  Future<PyxisWalletDto> importWallet({
+  Future<PyxisWallet> importWallet({
     required String privateKeyOrPassPhrase,
   });
 
   Future<void> removeWallet();
 
-  Future<PyxisWalletDto?> getCurrentWallet();
+  Future<PyxisWallet?> getCurrentWallet();
 }

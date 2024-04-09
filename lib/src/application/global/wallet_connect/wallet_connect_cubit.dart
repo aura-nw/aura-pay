@@ -1,11 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_connect_service.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/debug.dart';
 import 'package:pyxis_mobile/src/presentation/screens/home/home_screen_bloc.dart';
 import 'wallet_connect_state.dart';
@@ -17,8 +18,8 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
 
   bool _isInit = false;
 
-  final WalletConnectService _walletConnectService =
-      getIt.get<WalletConnectService>();
+  final PyxisWalletConnectService _walletConnectService =
+      getIt.get<PyxisWalletConnectService>();
 
   String? targetAccount;
 
@@ -231,7 +232,7 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
   void approveRequest(RequestSessionData requestSessionData) async {
     if (requestSessionData.method == 'cosmos_signAmino') {
       try {
-        Map<String, dynamic> msg = AuraCoreHelper.signAmino(
+        Map<String, dynamic> msg = PyxisWalletHelper.signAmino(
           signDoc: requestSessionData.params['signDoc'],
           privateKeyHex: await _getPriKey(),
           pubKeyHex: await _getPublicKey(),
@@ -279,12 +280,12 @@ class WalletConnectCubit extends Cubit<WalletConnectState> {
   Future<String> _getPriKey() async {
     // return 'af36a6f38c6775569c9d8ffa73169072d169ae099c069fa3360799863b7bf893';
     final privateKey = await _getPrivateKeyBytes();
-    return AuraWalletHelper.getPrivateKeyFromBytes(privateKey);
+    return PyxisWalletHelper.getPrivateKeyFromBytes(privateKey);
   }
 
   Future<Uint8List> _getPrivateKeyBytes() async {
     final String? controllerKey =
         await _controllerKeyUseCase.getKey(address: targetAccount ?? '');
-    return AuraWalletHelper.getPrivateKeyFromString(controllerKey ?? '');
+    return PyxisWalletHelper.getPrivateKeyFromString(controllerKey ?? '');
   }
 }

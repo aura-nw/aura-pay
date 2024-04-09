@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'backup_private_key_state.dart';
 
 class BackupPrivateKeyCubit extends Cubit<BackupPrivateKeyState> {
@@ -34,8 +34,8 @@ class BackupPrivateKeyCubit extends Cubit<BackupPrivateKeyState> {
         address: account.address,
       );
 
-      final String privateKey = AuraWalletHelper.getPrivateKeyFromBytes(
-        AuraWalletHelper.getPrivateKeyFromString(privateKeyOrPhrase ?? ''),
+      final String privateKey = PyxisWalletHelper.getPrivateKeyFromBytes(
+        PyxisWalletHelper.getPrivateKeyFromString(privateKeyOrPhrase ?? ''),
       );
 
       onSuccess.call();

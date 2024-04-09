@@ -1,55 +1,34 @@
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:data/data.dart';
-import 'package:pyxis_mobile/src/application/provider/wallet/pyxis_wallet_impl.dart';
+import 'package:domain/domain.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_core.dart';
 
 final class WalletProviderImpl implements WalletProvider {
-  final AuraWalletCore _auraWalletCore;
+  final PyxisWalletCore _auraWalletCore;
 
   const WalletProviderImpl(
     this._auraWalletCore,
   );
 
   @override
-  Future<PyxisWalletDto> createWallet() async {
-    final auraWallet = await _auraWalletCore.createRandomHDWallet();
-
-    return PyxisWalletImpl(
-      auraWallet,
-      bech32Address: auraWallet.bech32Address,
-      publicKey: auraWallet.publicKey,
-      privateKey: auraWallet.privateKey,
-      mnemonic: auraWallet.mnemonic,
-    );
+  Future<PyxisWallet> createWallet() async {
+    final PyxisWallet auraWallet = await _auraWalletCore.createRandomHDWallet();
+    return auraWallet;
   }
 
   @override
-  Future<PyxisWalletDto?> getCurrentWallet() async {
-    final auraWallet = await _auraWalletCore.loadStoredWallet();
-
-    if (auraWallet == null) return null;
-
-    return PyxisWalletImpl(
-      auraWallet,
-      bech32Address: auraWallet.bech32Address,
-      publicKey: auraWallet.publicKey,
-      privateKey: auraWallet.privateKey,
-      mnemonic: auraWallet.mnemonic,
-    );
+  Future<PyxisWallet?> getCurrentWallet() async {
+    return _auraWalletCore.loadStoredWallet();
   }
 
   @override
-  Future<PyxisWalletDto> importWallet({
+  Future<PyxisWallet> importWallet({
     required String privateKeyOrPassPhrase,
   }) async {
-    final auraWallet = await _auraWalletCore.restoreHDWallet(
+    final PyxisWallet auraWallet = await _auraWalletCore.restoreHDWallet(
       passPhraseOrPrivateKey: privateKeyOrPassPhrase,
     );
 
-    return PyxisWalletImpl(
-      auraWallet,
-      bech32Address: auraWallet.bech32Address,
-      publicKey: auraWallet.publicKey,
-    );
+    return auraWallet;
   }
 
   @override

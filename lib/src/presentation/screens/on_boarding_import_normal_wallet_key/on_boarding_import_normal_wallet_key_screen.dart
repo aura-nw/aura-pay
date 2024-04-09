@@ -1,4 +1,3 @@
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +12,7 @@ import 'package:pyxis_mobile/src/aura_navigator.dart';
 import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_normal_wallet_key/widgets/import_wallet_pass_phrase_form_widget.dart';
 import 'package:pyxis_mobile/src/presentation/screens/on_boarding_import_normal_wallet_key/widgets/import_wallet_private_key_widget.dart';
@@ -207,7 +207,7 @@ class _OnBoardingImportNormalWalletKeyScreenState
                                                     .onBoardingImportNormalWalletKeyScreenInvalidPassPhrase,
                                               ),
                                               customValid: (value) {
-                                                return AuraWalletHelper
+                                                return PyxisWalletHelper
                                                     .checkMnemonic(
                                                   mnemonic: value,
                                                 );
@@ -234,7 +234,7 @@ class _OnBoardingImportNormalWalletKeyScreenState
                                                     .onBoardingImportNormalWalletKeyScreenInvalidPassPhrase,
                                               ),
                                               customValid: (value) {
-                                                return AuraWalletHelper
+                                                return PyxisWalletHelper
                                                     .checkMnemonic(
                                                   mnemonic: value,
                                                 );
@@ -271,15 +271,16 @@ class _OnBoardingImportNormalWalletKeyScreenState
                                       break;
                                     case ImportWalletType.passPhrase12:
                                       isValid = _passPhrase12FormKey
-                                          .currentState
-                                          ?.validate() ??
+                                              .currentState
+                                              ?.validate() ??
                                           false;
                                       break;
 
                                     case ImportWalletType.passPhrase24:
                                       isValid = _passPhrase24FormKey
-                                          .currentState
-                                          ?.validate() ?? false;
+                                              .currentState
+                                              ?.validate() ??
+                                          false;
                                       break;
                                   }
 
@@ -323,7 +324,7 @@ class _OnBoardingImportNormalWalletKeyScreenState
     }
   }
 
-  void _onPastePrivateKey()async{
+  void _onPastePrivateKey() async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
 
     if (data != null) {

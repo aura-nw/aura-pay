@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:data/src/data/dto/nft_information_dto.dart';
 import 'package:data/src/data/resource/remote/api_service.dart';
 import 'package:domain/domain.dart';
@@ -18,12 +16,12 @@ final class NFTRepositoryImpl implements NFTRepository {
       body: body,
     );
 
-
     final data = response.handleResponse();
 
-    final Map<String,dynamic> dataFromEnvironment = data[environment] ?? {};
+    final Map<String, dynamic> dataFromEnvironment = data[environment] ?? {};
 
-    final NFTsInformationDto nfTsInformationDto = NFTsInformationDto.fromJson(dataFromEnvironment);
+    final NFTsInformationDto nfTsInformationDto =
+        NFTsInformationDto.fromJson(dataFromEnvironment);
 
     return nfTsInformationDto.toEntity();
   }

@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 import 'package:pyxis_mobile/src/core/helpers/crypto_helper.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'on_boarding_re_login_event.dart';
 import 'on_boarding_re_login_state.dart';
 
@@ -58,7 +58,7 @@ final class OnBoardingReLoginBloc
             unawaited(
               _refreshToken(
                 address: account.address,
-                privateKey: AuraWalletHelper.getPrivateKeyFromString(
+                privateKey: PyxisWalletHelper.getPrivateKeyFromString(
                   privateKey,
                 ),
               ),

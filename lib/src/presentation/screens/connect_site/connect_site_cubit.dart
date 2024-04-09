@@ -1,13 +1,13 @@
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_connect_service.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 
 import 'connect_site_state.dart';
 
 class ConnectSiteCubit extends Cubit<ConnectSiteState> {
-  final WalletConnectService _walletConnectService;
+  final PyxisWalletConnectService _walletConnectService;
   final AuraAccountUseCase _accountUseCase;
 
   ConnectSiteCubit(this._walletConnectService, this._accountUseCase)

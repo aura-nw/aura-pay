@@ -1,10 +1,10 @@
 import 'package:aura_smart_account/aura_smart_account.dart';
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
 import 'recovery_method_confirmation_screen.dart';
 import 'recovery_method_confirmation_screen_event.dart';
@@ -252,7 +252,8 @@ final class RecoveryMethodConfirmationBloc extends Bloc<
 
       TransactionInformation information =
           await _smartAccountUseCase.setRecoveryMethod(
-        userPrivateKey: AuraWalletHelper.getPrivateKeyFromString(smPrivateKey!),
+        userPrivateKey:
+            PyxisWalletHelper.getPrivateKeyFromString(smPrivateKey!),
         smartAccountAddress: account.address,
         recoverAddress: recoveryAddress,
         gasLimit: state.argument.account.isVerified

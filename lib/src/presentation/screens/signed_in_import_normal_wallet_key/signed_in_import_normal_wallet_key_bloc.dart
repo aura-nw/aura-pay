@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
@@ -11,8 +10,7 @@ import 'signed_in_import_normal_wallet_key_event.dart';
 import 'signed_in_import_normal_wallet_key_state.dart';
 
 class SignedInImportNormalWalletKeyBloc extends Bloc<
-    SignedInImportNormalWalletKeyEvent,
-    SignedInImportNormalWalletKeyState> {
+    SignedInImportNormalWalletKeyEvent, SignedInImportNormalWalletKeyState> {
   final WalletUseCase _walletUseCase;
   final SmartAccountUseCase _smartAccountUseCase;
   final ControllerKeyUseCase _controllerKeyUseCase;
@@ -42,9 +40,9 @@ class SignedInImportNormalWalletKeyBloc extends Bloc<
   }
 
   void _onInit(
-      SignedInImportKeyOnInitEvent event,
-      Emitter<SignedInImportNormalWalletKeyState> emit,
-      ) async {
+    SignedInImportKeyOnInitEvent event,
+    Emitter<SignedInImportNormalWalletKeyState> emit,
+  ) async {
     final accounts = await _accountUseCase.getAccounts();
 
     emit(
@@ -53,7 +51,6 @@ class SignedInImportNormalWalletKeyBloc extends Bloc<
       ),
     );
   }
-
 
   void _onSelectImportType(
     SignedInImportNormalWalletKeyOnSelectImportTypeEvent event,
@@ -97,16 +94,16 @@ class SignedInImportNormalWalletKeyBloc extends Bloc<
 
       final bool isExistsAccount = state.accounts.firstWhereOrNull(
             (ac) => ac.address == wallet.bech32Address,
-      ) !=
+          ) !=
           null;
 
-      if(isExistsAccount){
+      if (isExistsAccount) {
         emit(
           state.copyWith(
             status: SignedInImportNormalWalletKeyStatus.existsAccount,
           ),
         );
-      }else{
+      } else {
         // Register device to create access token
         unawaited(
           _createToken(
@@ -130,8 +127,7 @@ class SignedInImportNormalWalletKeyBloc extends Bloc<
 
         emit(
           state.copyWith(
-            status:
-            SignedInImportNormalWalletKeyStatus.onImportAccountSuccess,
+            status: SignedInImportNormalWalletKeyStatus.onImportAccountSuccess,
           ),
         );
       }

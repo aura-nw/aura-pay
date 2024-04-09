@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
-import 'package:aura_wallet_core/config_options/environment_options.dart';
 
 extension PyxisEnvironmentMapper on PyxisEnvironment {
   String get environmentString {
@@ -23,11 +22,7 @@ extension PyxisEnvironmentMapper on PyxisEnvironment {
     return AuraSmartAccountEnvironment.values[index];
   }
 
-  AuraEnvironment get toWalletCoreE {
-    int index = this.index;
-
-    return AuraEnvironment.values[index];
-  }
+  
 }
 
 enum PyxisEnvironment {

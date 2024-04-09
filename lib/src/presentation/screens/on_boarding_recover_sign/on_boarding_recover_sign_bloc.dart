@@ -1,5 +1,4 @@
 import 'package:aura_smart_account/aura_smart_account.dart';
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
@@ -7,6 +6,7 @@ import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/constants/pyxis_account_constant.dart';
 import 'package:pyxis_mobile/src/core/helpers/authentication_helper.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'on_boarding_recover_sign_event.dart';
 import 'on_boarding_recover_sign_state.dart';
 
@@ -85,7 +85,7 @@ final class OnBoardingRecoverSignBloc
     );
 
     final msg = AuraSmartAccountHelper.createRecoveryMsg(
-      privateKey: AuraWalletHelper.getPrivateKeyFromString(
+      privateKey: PyxisWalletHelper.getPrivateKeyFromString(
         backupPrivateKey,
       ),
       recoveryAddress: wallet.bech32Address,
@@ -151,7 +151,7 @@ final class OnBoardingRecoverSignBloc
 
       TransactionInformation information =
           await _smartAccountUseCase.recoverSmartAccount(
-        privateKey: AuraWalletHelper.getPrivateKeyFromString(
+        privateKey: PyxisWalletHelper.getPrivateKeyFromString(
           backupPrivateKey,
         ),
         recoverAddress: wallet.bech32Address,

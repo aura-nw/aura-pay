@@ -1,4 +1,3 @@
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +11,7 @@ import 'package:pyxis_mobile/src/core/constants/enum_type.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 import 'package:pyxis_mobile/src/core/constants/size_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/toast.dart';
 import 'widgets/import_wallet_pass_phrase_form_widget.dart';
 import 'widgets/import_wallet_private_key_widget.dart';
@@ -96,7 +96,8 @@ class _SignedInImportNormalWalletKeyScreenState
                       AppNavigator.pop();
                       showToast(
                         AppLocalizationManager.of(context).translate(
-                          LanguageKey.signedInImportNormalWalletKeyScreenExistsAccount,
+                          LanguageKey
+                              .signedInImportNormalWalletKeyScreenExistsAccount,
                         ),
                       );
                       break;
@@ -213,7 +214,7 @@ class _SignedInImportNormalWalletKeyScreenState
                                                     .signedInImportNormalWalletKeyScreenInvalidPassPhrase,
                                               ),
                                               customValid: (value) {
-                                                return AuraWalletHelper
+                                                return PyxisWalletHelper
                                                     .checkMnemonic(
                                                   mnemonic: value,
                                                 );
@@ -240,7 +241,7 @@ class _SignedInImportNormalWalletKeyScreenState
                                                     .signedInImportNormalWalletKeyScreenInvalidPassPhrase,
                                               ),
                                               customValid: (value) {
-                                                return AuraWalletHelper
+                                                return PyxisWalletHelper
                                                     .checkMnemonic(
                                                   mnemonic: value,
                                                 );

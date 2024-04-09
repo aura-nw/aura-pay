@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
-import 'package:aura_wallet_core/aura_wallet_core.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -28,6 +27,8 @@ import 'package:pyxis_mobile/src/application/service/transaction/transaction_api
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_connect_service.dart';
+import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_core.dart';
 import 'package:pyxis_mobile/src/presentation/screens/address_book/address_book_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/backup_private_key/backup_private_key_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_bloc.dart';
@@ -133,8 +134,8 @@ Future<void> initDependency(
     ),
   );
 
-  final AuraWalletCore coreWallet = AuraWalletCore.create(
-    environment: config.environment.toWalletCoreE,
+  final PyxisWalletCore coreWallet = PyxisWalletCore(
+    environment: config.environment,
   );
 
   final AuraSmartAccount auraSmartAccount = AuraSmartAccount.create(
@@ -145,8 +146,8 @@ Future<void> initDependency(
     () => dio,
   );
 
-  getIt.registerLazySingleton<WalletConnectService>(
-    () => WalletConnectService(),
+  getIt.registerLazySingleton<PyxisWalletConnectService>(
+    () => PyxisWalletConnectService(),
   );
 
   getIt.registerLazySingleton<PyxisMobileConfig>(
@@ -803,7 +804,7 @@ Future<void> initDependency(
 
   getIt.registerFactory<ConnectSiteCubit>(
     () => ConnectSiteCubit(
-      getIt.get<WalletConnectService>(),
+      getIt.get<PyxisWalletConnectService>(),
       getIt.get<AuraAccountUseCase>(),
     ),
   );
@@ -812,7 +813,7 @@ Future<void> initDependency(
     () => WalletConnectConfirmTransactionBloc(
       getIt.get<ControllerKeyUseCase>(),
       getIt.get<AuraAccountUseCase>(),
-      getIt.get<WalletConnectService>(),
+      getIt.get<PyxisWalletConnectService>(),
       getIt.get<SmartAccountUseCase>(),
     ),
   );
