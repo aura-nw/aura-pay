@@ -23,7 +23,7 @@ dependencies:
   #helper:
   permission_handler: ^10.2.0
   get_it: ^7.6.0
-  intl: ^0.18.0
+  intl: ^0.18.1
   path_provider: ^2.1.1
   url_launcher: ^6.2.1
   mobile_scanner: ^3.5.6
@@ -43,7 +43,7 @@ dependencies:
     git:
       path: flutter_secure_storage
       url: https://github.com/aura-nw/flutter_secure_storage.git
-      ref: feature/biometric_mobile
+      ref: 7cd523aeaa35263ce2dbde265ec0f74975c1690b
 
   #state management:
   flutter_bloc: ^8.1.3

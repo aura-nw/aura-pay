@@ -1,6 +1,6 @@
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
-import 'package:local_auth_ios/local_auth_ios.dart';
+// import 'package:local_auth_ios/local_auth_ios.dart';
 import 'package:pyxis_mobile/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_mobile/src/core/constants/language_key.dart';
 
@@ -8,14 +8,14 @@ sealed class LocalAuthHelper {
   static final LocalAuthentication _localAuthentication = LocalAuthentication();
 
   static Future<bool> canAuthenticateWithBiometrics() async {
-    try{
+    try {
       final bool canAuthenticateWithBiometrics =
-      await _localAuthentication.canCheckBiometrics;
+          await _localAuthentication.canCheckBiometrics;
       final bool canAuthenticate = canAuthenticateWithBiometrics ||
           await _localAuthentication.isDeviceSupported();
 
       return canAuthenticate;
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return false;
     }
@@ -43,12 +43,11 @@ sealed class LocalAuthHelper {
             cancelButton: cancelButton,
             signInTitle: androidSignTitle,
           ),
-          IOSAuthMessages(
-            cancelButton: cancelButton,
-          ),
+          // IOSAuthMessages(
+          //   cancelButton: cancelButton,
+          // ),
         ],
-        options: const AuthenticationOptions(
-        ),
+        options: const AuthenticationOptions(),
       );
     } catch (e) {
       return false;
