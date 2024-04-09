@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_mobile/app_configs/di.dart';
 import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/application/global/wallet_connect/wallet_connect_state.dart';
-import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
-import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_connect_service.dart';
 import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_mobile/src/core/wallet_core/pyxis_wallet_connect_service.dart';
 import 'confirm_transaction_screen_event.dart';
 
 import 'confirm_transaction_screen_state.dart';

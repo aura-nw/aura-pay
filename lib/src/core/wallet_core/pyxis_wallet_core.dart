@@ -6,18 +6,18 @@ import 'package:pyxis_mobile/src/application/provider/wallet/pyxis_wallet_impl.d
 
 class PyxisWalletCore {
   final PyxisEnvironment environment;
+  late AuraWalletCore _auraWalletCore;
 
   PyxisWalletCore({required this.environment}) {
     final AuraEnvironment auraEnvironment = toWalletCoreE(environment);
     _auraWalletCore = AuraWalletCore.create(environment: auraEnvironment);
   }
 
-  AuraEnvironment toWalletCoreE(PyxisEnvironment environment) {
+  static AuraEnvironment toWalletCoreE(PyxisEnvironment environment) {
     int index = environment.index;
     return AuraEnvironment.values[index];
   }
 
-  late AuraWalletCore _auraWalletCore;
   Future<PyxisWallet> createRandomHDWallet({
     String walletName = 'AuraWallet',
   }) async {

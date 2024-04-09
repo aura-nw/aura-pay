@@ -27,8 +27,8 @@ import 'package:pyxis_mobile/src/application/service/transaction/transaction_api
 import 'package:pyxis_mobile/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_mobile/src/core/observers/home_page_observer.dart';
 import 'package:pyxis_mobile/src/core/observers/recovery_observer.dart';
-import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_connect_service.dart';
-import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_core.dart';
+import 'package:pyxis_mobile/src/core/wallet_core/pyxis_wallet_connect_service.dart';
+import 'package:pyxis_mobile/src/core/wallet_core/pyxis_wallet_core.dart';
 import 'package:pyxis_mobile/src/presentation/screens/address_book/address_book_bloc.dart';
 import 'package:pyxis_mobile/src/presentation/screens/backup_private_key/backup_private_key_cubit.dart';
 import 'package:pyxis_mobile/src/presentation/screens/browser/browser_bloc.dart';

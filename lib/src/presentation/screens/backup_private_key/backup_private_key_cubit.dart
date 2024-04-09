@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
+import 'package:pyxis_mobile/src/core/wallet_core/pyxis_wallet_helper.dart';
 import 'backup_private_key_state.dart';
 
 class BackupPrivateKeyCubit extends Cubit<BackupPrivateKeyState> {

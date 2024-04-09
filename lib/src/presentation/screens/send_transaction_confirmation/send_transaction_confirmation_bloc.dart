@@ -6,6 +6,7 @@ import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_mobile/src/core/helpers/transaction_helper.dart';
 import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_helper.dart';
 import 'package:pyxis_mobile/src/core/utils/aura_util.dart';
+import 'package:pyxis_mobile/src/core/wallet_core/pyxis_wallet_service.dart';
 import 'send_transaction_confirmation_event.dart';
 import 'send_transaction_confirmation_state.dart';
 
@@ -112,9 +113,10 @@ class SendTransactionConfirmationBloc extends Bloc<
       //switch type
       final sender = state.sender;
 
-      final String privateKeyString = (await _controllerKeyUseCase.getKey(
+      final String privateKeyOrPasspharse = (await _controllerKeyUseCase.getKey(
         address: sender.address,
       ))!;
+      print('Private key: $privateKeyOrPasspharse');
 
       late TransactionInformation information;
 
@@ -122,7 +124,7 @@ class SendTransactionConfirmationBloc extends Bloc<
         // send token by smart account
         information = await _smartAccountUseCase.sendToken(
           userPrivateKey:
-              PyxisWalletHelper.getPrivateKeyFromString(privateKeyString),
+              PyxisWalletHelper.getPrivateKeyFromString(privateKeyOrPasspharse),
           smartAccountAddress: sender.address,
           receiverAddress: state.recipient,
           amount: state.amount.toDenom,
@@ -132,22 +134,19 @@ class SendTransactionConfirmationBloc extends Bloc<
         );
       } else {
         // send token by normal wallet
+        PyxisMobileConfig config = getIt.get<PyxisMobileConfig>();
 
-        final wallet = await _walletUseCase.importWallet(
-          privateKeyOrPassPhrase: privateKeyString,
-        );
+        final tx = await PyxisWalletService.makeTransaction(
+            privateKeyOrPasspharse: privateKeyOrPasspharse,
+            toAddress: state.recipient,
+            amount: state.amount.toDenom,
+            fee: state.transactionFee,
+            gasLimit: state.estimationGas,
+            memo: state.memo,
+            environment: config.environment);
 
-        final tx = await wallet.sendTransaction(
-          toAddress: state.recipient,
-          amount: state.amount.toDenom,
-          fee: state.transactionFee,
-          gasLimit: state.estimationGas,
-          memo: state.memo,
-        );
-
-        information = await wallet.submitTransaction(
-          signedTransaction: tx,
-        );
+        information = await PyxisWalletService.submitTransaction(
+            signedTransaction: tx, environment: config.environment);
       }
 
       information = await TransactionHelper.checkTransactionInfo(

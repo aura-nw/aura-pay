@@ -32,7 +32,7 @@ sealed class AuraNetWorkInformationConstant {
     port: 9090,
     grpcTransportSecure: false,
     chainId: 'euphoria-2',
-    bech32Hrp: '',
+    bech32Hrp: 'aura',
     denom: 'ueaura',
     codeId: 1643,
     recoverContractAddress:
@@ -49,7 +49,8 @@ sealed class AuraNetWorkInformationConstant {
     denom: 'uaura',
     codeId: 736,
     recoverContractAddress:
-    'aura1lmq568d3m3n04fq2ca27mjsx2522gljhqcgf3ptcyq2pm3es7y7sxnnqrz',
-    pluginManagerAddress: 'aura1y6ww7g6c5yc36363guep6zu004fc3wmdll0ass8ule4syzfceqvsamk8tp',
+        'aura1lmq568d3m3n04fq2ca27mjsx2522gljhqcgf3ptcyq2pm3es7y7sxnnqrz',
+    pluginManagerAddress:
+        'aura1y6ww7g6c5yc36363guep6zu004fc3wmdll0ass8ule4syzfceqvsamk8tp',
   );
 }

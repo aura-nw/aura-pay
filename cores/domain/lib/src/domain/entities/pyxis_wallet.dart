@@ -14,17 +14,17 @@ abstract class PyxisWallet {
     this.mnemonic,
   });
 
-  Future sendTransaction({
-    required String toAddress,
-    required String amount,
-    required String fee,
-    required int gasLimit,
-    String? memo,
-  });
+  // Future sendTransaction({
+  //   required String toAddress,
+  //   required String amount,
+  //   required String fee,
+  //   required int gasLimit,
+  //   String? memo,
+  // });
 
-  Future<TransactionInformation> submitTransaction<P>({
-    required P signedTransaction,
-  });
+  // Future<TransactionInformation> submitTransaction<P>({
+  //   required P signedTransaction,
+  // });
 
-  Future<String> checkWalletBalance();
+  // Future<String> checkWalletBalance();
 }

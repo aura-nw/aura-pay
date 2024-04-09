@@ -1,6 +1,6 @@
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
-import 'package:pyxis_mobile/src/core/pyxis_wallet_core/pyxis_wallet_core.dart';
+import 'package:pyxis_mobile/src/core/wallet_core/pyxis_wallet_core.dart';
 
 final class WalletProviderImpl implements WalletProvider {
   final PyxisWalletCore _auraWalletCore;
