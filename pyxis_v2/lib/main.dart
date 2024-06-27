@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:wallet_core/wallet_core.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,14 +60,20 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    WalletCore.init();
+    var hdWallet = WalletCore.createWallet();
+    print(hdWallet.getAddressForCoin(TWCoinType.TWCoinTypeEthereum));
+    var  key = hdWallet.getKey(TWCoinType.TWCoinTypeEthereum,  "m/44\'/60\'/1\'/0/0");   // m/44'/60'/1'/0/0
+    
+
+    print('key is ${key.toString()}');
+    var coin = TWCoinType.TWCoinTypeEthereum;
+    var bytes = Uint8List.fromList([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
+    var signData = AnySigner.sign(bytes, coin);
+
+    print('signData is $signData');
+
+
   }
 
   @override

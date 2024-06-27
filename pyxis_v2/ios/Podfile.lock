@@ -1,0 +1,37 @@
+PODS:
+  - Flutter (1.0.0)
+  - SwiftProtobuf (1.26.0)
+  - trust_wallet_core (0.0.1):
+    - Flutter
+    - TrustWalletCore (= 3.1.18)
+  - TrustWalletCore (3.1.18):
+    - TrustWalletCore/Core (= 3.1.18)
+  - TrustWalletCore/Core (3.1.18):
+    - TrustWalletCore/Types
+  - TrustWalletCore/Types (3.1.18):
+    - SwiftProtobuf
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - trust_wallet_core (from `.symlinks/plugins/trust_wallet_core/ios`)
+
+SPEC REPOS:
+  trunk:
+    - SwiftProtobuf
+    - TrustWalletCore
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  trust_wallet_core:
+    :path: ".symlinks/plugins/trust_wallet_core/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  SwiftProtobuf: 5e8349171e7c2f88f5b9e683cb3cb79d1dc780b3
+  trust_wallet_core: 6f7eb18bc6b00cece026a8c82c7651a7520ca55a
+  TrustWalletCore: fabbb38652ab559ee25c864af8836e6481a7e22b
+
+PODFILE CHECKSUM: 1959d098c91d8a792531a723c4a9d7e9f6a01e38
+
+COCOAPODS: 1.15.2
