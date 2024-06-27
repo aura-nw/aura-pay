@@ -8,6 +8,12 @@ interface CreateWalletScreenProps {
 const CreateWalletScreen: React.FC<CreateWalletScreenProps> = ({ onGetOnboard }) => {
     const [walletAddress, setWalletAddress] = useState('aura15...g8vr'); // Ví dụ địa chỉ ví
 
+    const handleGetOnboard = () => {
+        // Thực hiện các hành động khi nút "Get me onboard" được nhấn
+        onGetOnboard(); // Gọi hàm được truyền từ component cha
+        // Các xử lý logic khác (nếu cần)
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.content}>
@@ -29,7 +35,7 @@ const CreateWalletScreen: React.FC<CreateWalletScreenProps> = ({ onGetOnboard })
             </View>
 
             {/* Nút "Get me onboard" */}
-            <TouchableOpacity style={styles.button} onPress={onGetOnboard}>
+            <TouchableOpacity style={styles.button} onPress={handleGetOnboard}>
                 <Text style={styles.buttonText}>Get me onboard</Text>
             </TouchableOpacity>
         </View>
