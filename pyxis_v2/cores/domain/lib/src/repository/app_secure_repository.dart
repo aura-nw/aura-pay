@@ -1,14 +1,14 @@
 abstract interface class AppSecureRepository {
-  Future<void> savePassword({
+  Future<void> storePasscode({
     required String key,
-    required String passWord,
+    required String passcode,
   });
 
-  Future<String?> getCurrentPassword({
+  Future<String?> getCurrentPasscode({
     required String key,
   });
 
-  Future<bool> hadPassCode({
+  Future<bool> hasPasscode({
     required String key,
   });
 
@@ -20,7 +20,7 @@ abstract interface class AppSecureRepository {
     String? cancelButton,
   });
 
-  Future<void> setEnableBiometric({
+  Future<void> enableBiometrics({
     required String key,
     required String value,
   });

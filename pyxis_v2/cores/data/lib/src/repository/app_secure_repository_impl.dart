@@ -9,7 +9,7 @@ final class AppSecureRepositoryImpl implements AppSecureRepository {
   const AppSecureRepositoryImpl(this._storageService, this._biometricService);
 
   @override
-  Future<String?> getCurrentPassword({required String key}) async {
+  Future<String?> getCurrentPasscode({required String key}) async {
     return _storageService.get(key);
   }
 
@@ -24,7 +24,7 @@ final class AppSecureRepositoryImpl implements AppSecureRepository {
   }
 
   @override
-  Future<bool> hadPassCode({required String key}) {
+  Future<bool> hasPasscode({required String key}) {
     return _storageService.hadKey(key);
   }
 
@@ -41,13 +41,12 @@ final class AppSecureRepositoryImpl implements AppSecureRepository {
   }
 
   @override
-  Future<void> setEnableBiometric(
-      {required String key, required String value}) {
+  Future<void> enableBiometrics({required String key, required String value}) {
     return _storageService.save(key, value);
   }
 
   @override
-  Future<void> savePassword({required String key, required String passWord}) {
-    return _storageService.save(key, passWord);
+  Future<void> storePasscode({required String key, required String passcode}) {
+    return _storageService.save(key, passcode);
   }
 }
