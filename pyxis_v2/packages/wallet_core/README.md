@@ -19,7 +19,7 @@ min ios platform support >=13.0
 # dart part
 before use wallet_core, call below function once.
 ```
- FlutterTrustWalletCore.init();
+ WalletCore.init();
 ```
 
 Then you are ready to run.
