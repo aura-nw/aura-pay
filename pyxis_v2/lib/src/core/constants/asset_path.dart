@@ -1,0 +1,315 @@
+const String _baseAsset = 'packages/pyxis_mobile/assets/';
+
+sealed class AssetLanguagePath{
+  static const String _languagePath = '${_baseAsset}language/';
+
+  static String localizationFullPath(String locale){
+    return '$_languagePath$locale.json';
+  }
+
+  static String defaultLocalizationFullPath = localizationFullPath('vi');
+}
+
+sealed class AssetLogoPath {
+  static const String _baseLogoPath = '${_baseAsset}logo/';
+  static const String logo = '${_baseLogoPath}logo_pyxis.svg';
+  static const String logoDark = '${_baseLogoPath}logo_pyxis_dark.svg';
+  static const String logoOpacity = '${_baseLogoPath}logo_pyxis_opacity.svg';
+}
+
+sealed class AssetImagePath {
+  static const String _baseImagePath = '${_baseAsset}image/';
+  static const String onBoardingRecoverBackupAddress =
+      '${_baseImagePath}img_on_boarding_recover_backup_address.svg';
+  static const String splashScreen =
+      '${_baseImagePath}img_plash_screen.svg';
+
+  /// Onboarding recover phrase
+  static const String commonHidePhrase = '${_baseImagePath}img_common_hide_phrase.svg';
+}
+
+sealed class AssetIconPath {
+  static const String _baseIconPath = '${_baseAsset}icon/';
+
+  ///onboarding
+  static const String onBoardingCreateAccountSelected =
+      '${_baseIconPath}ic_onboarding_create_account_selected.svg';
+  static const String onBoardingImportKey =
+      '${_baseIconPath}ic_onboarding_import_account.svg';
+  static const String onBoardingRecoverAccount =
+      '${_baseIconPath}ic_onboarding_recover_account.svg';
+  static const String onBoardingActiveStep =
+      '${_baseIconPath}ic_onboarding_active_step.svg';
+  static const String onBoardingDisableStep =
+      '${_baseIconPath}ic_onboarding_disable_step.svg';
+  static const String onBoardingSuccessDisableStep =
+      '${_baseIconPath}ic_onboarding_success_disable_step.svg';
+  static const String onBoardingSuccessStep =
+      '${_baseIconPath}ic_onboarding_success_step.svg';
+  static const String onBoardingImportKeyCheck =
+      '${_baseIconPath}ic_onboarding_import_account_check.svg';
+  static const String onBoardingImportKeyInformation =
+      '${_baseIconPath}ic_onboarding_import_account_information.svg';
+  static const String onBoardingRecoverChoiceBackupAddress =
+      '${_baseIconPath}ic_onboarding_recover_choice_backup_address.svg';
+  static const String onBoardingSetupPasscodeLock =
+      '${_baseIconPath}ic_on_boarding_setup_passcode_lock.svg';
+  static const String onBoardingChoiceOption =
+      '${_baseIconPath}ic_on_boarding_choice_option.svg';
+
+  ///common
+  static const String commonCopy = '${_baseIconPath}ic_common_copy.svg';
+  static const String commonCopyActive =
+      '${_baseIconPath}ic_common_copy_active.svg';
+  static const String commonArrowBack =
+      '${_baseIconPath}ic_common_arrow_back.svg';
+  static const String commonClear = '${_baseIconPath}ic_common_clear.svg';
+  static const String commonInformation =
+      '${_baseIconPath}ic_common_information.svg';
+  static const String commonLogoSmall =
+      '${_baseIconPath}ic_common_logo_small.svg';
+  static const String commonLogo = '${_baseIconPath}ic_common_logo.svg';
+  static const String commonWarning =
+      '${_baseIconPath}ic_common_dialog_warning.svg';
+  static const String commonArrowDown =
+      '${_baseIconPath}ic_common_arrow_down.svg';
+  static const String commonEyeActive =
+      '${_baseIconPath}ic_common_eye_active.svg';
+  static const String commonEyeHide = '${_baseIconPath}ic_common_eye_hide.svg';
+  static const String commonRadioUnCheck =
+      '${_baseIconPath}ic_common_radio_uncheck.svg';
+  static const String commonRadioActive =
+      '${_baseIconPath}ic_common_radio_active.svg';
+  static const String commonRadioCheck =
+      '${_baseIconPath}ic_common_radio_check.svg';
+  static const String commonClose = '${_baseIconPath}ic_common_close.svg';
+  static const String commonInputError =
+      '${_baseIconPath}ic_common_input_error.svg';
+  static const String commonCheckSuccess =
+      '${_baseIconPath}ic_common_check_success.svg';
+  static const String commonSmartAccountAvatarDefault =
+      '${_baseIconPath}ic_common_smart_account_avatar_default.svg';
+  static const String commonCloseBottomSheet =
+      '${_baseIconPath}ic_common_close_bottom_sheet.svg';
+  static const String commonPermissionCamera =
+      '${_baseIconPath}ic_common_permission_camera.svg';
+  static const String commonPermissionGallery =
+      '${_baseIconPath}ic_common_permission_gallery.svg';
+  static const String commonTransactionDivider =
+      '${_baseIconPath}ic_common_transaction_divider.svg';
+  static const String commonSignMessage =
+      '${_baseIconPath}ic_common_message.svg';
+  static const String commonFeeEdit = '${_baseIconPath}ic_common_fee_edit.svg';
+  static const String commonAdd = '${_baseIconPath}ic_common_add.svg';
+  static const String commonAddCircle = '${_baseIconPath}ic_common_add_circle.svg';
+  static const String commonRefresh = '${_baseIconPath}ic_common_refresh.svg';
+  static const String commonDelete = '${_baseIconPath}ic_common_delete.svg';
+  static const String commonRemoveWarning =
+      '${_baseIconPath}ic_common_remove_warning.svg';
+
+  static const String commonAura =
+      '${_baseIconPath}ic_common_aura.svg';
+  static const String commonAuraToken =
+      '${_baseIconPath}ic_common_aura_token.svg';
+  static const String commonArrowNext =
+      '${_baseIconPath}ic_common_arrow_next.svg';
+  static const String commonSearch = '${_baseIconPath}ic_common_search.svg';
+  static const String commonGoogle = '${_baseIconPath}ic_common_google.svg';
+  static const String commonMore = '${_baseIconPath}ic_common_more.svg';
+  static const String commonMoreActive = '${_baseIconPath}ic_common_more_active.svg';
+  static const String commonAccountCheck = '${_baseIconPath}ic_common_account_check.svg';
+  static const String commonShare = '${_baseIconPath}ic_common_share.svg';
+  static const String commonViewRaw = '${_baseIconPath}ic_common_view_raw.svg';
+  static const String commonViewRawActive = '${_baseIconPath}ic_common_view_raw_active.svg';
+  static const String commonShowKey = '${_baseIconPath}ic_common_show_key.svg';
+  static const String commonPaste = '${_baseIconPath}ic_common_paste.svg';
+  static const String commonAddActive = '${_baseIconPath}ic_common_add_active.svg';
+
+  static const String commonCloseCircle = '${_baseIconPath}ic_common_close_circle.svg';
+  static const String commonEdit = '${_baseIconPath}ic_common_edit.svg';
+
+  /// Home screen
+  static const String homeBottomNavigatorBarHomeActive =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_home_active.svg';
+  static const String homeBottomNavigatorBarHome =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_home.svg';
+  static const String homeBottomNavigatorBarHistory =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_history.svg';
+  static const String homeBottomNavigatorBarHistoryActive =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_history_active.svg';
+  static const String homeBottomNavigatorBarScan =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_scan.svg';
+  static const String homeBottomNavigatorBarSetting =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_setting.svg';
+  static const String homeBottomNavigatorBarSettingActive =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_setting_active.svg';
+  static const String homeBottomNavigatorBarBrowser =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_browser.svg';
+  static const String homeBottomNavigatorBarBrowserActive =
+      '${_baseIconPath}ic_home_bottom_navigator_bar_browser_active.svg';
+
+  /// Home page
+  static const String homeNoTokenFound =
+      '${_baseIconPath}ic_home_no_token_found.svg';
+  static const String homeSendToken = '${_baseIconPath}ic_home_send_token.svg';
+  static const String homeReceiveToken =
+      '${_baseIconPath}ic_home_receive_token.svg';
+  static const String homeSite = '${_baseIconPath}ic_home_site.svg';
+  static const String homeStake = '${_baseIconPath}ic_home_stake.svg';
+  static const String homeTxLimit = '${_baseIconPath}ic_home_tx_limit.svg';
+  static const String homeNFTs = '${_baseIconPath}ic_home_nfts.svg';
+  static const String homeAppBar = '${_baseIconPath}ic_home_nfts.svg';
+  static const String homeAppBarLogo =
+      '${_baseIconPath}ic_home_app_bar_logo.svg';
+  static const String homeAppBarNotification =
+      '${_baseIconPath}ic_home_app_bar_notification.svg';
+  static const String homeCopy = '${_baseIconPath}ic_home_copy.svg';
+  static const String homeArrowDown = '${_baseIconPath}ic_home_arrow_down.svg';
+  static const String homeReceiveShareAddress =
+      '${_baseIconPath}ic_home_receive_share_address.svg';
+  static const String homeReceiveCopyAddress =
+      '${_baseIconPath}ic_home_receive_copy_address.svg';
+
+  ///Accounts page
+  static const String accountsRemove = '${_baseIconPath}ic_accounts_remove.svg';
+  static const String accountsRename = '${_baseIconPath}ic_accounts_rename.svg';
+  static const String accountsRecoverSmartAccount =
+      '${_baseIconPath}ic_accounts_recover_smart_account.svg';
+  static const String accountsImportExistingAccount =
+      '${_baseIconPath}ic_accounts_import_existing_account.svg';
+  static const String accountsCreateNewSmartAccount =
+      '${_baseIconPath}ic_accounts_create_new_smart_account.svg';
+  static const String accountsViewOnAuraScan =
+      '${_baseIconPath}ic_account_view_on_aura_scan.svg';
+
+  /// History page
+  static const String historyArrowDown =
+      '${_baseIconPath}ic_history_arrow_down.svg';
+  static const String historyReceiveLogoCircle =
+      '${_baseIconPath}ic_history_receive_logo_circle.svg';
+  static const String historyReceiveLogo =
+      '${_baseIconPath}ic_history_receive_logo.svg';
+  static const String historySendLogoCircle =
+      '${_baseIconPath}ic_history_send_logo_circle.svg';
+  static const String historySendLogo =
+      '${_baseIconPath}ic_history_send_logo.svg';
+  static const String historyStakeLogo =
+      '${_baseIconPath}ic_history_stake_logo.svg';
+  static const String historyRecoveryLogo =
+      '${_baseIconPath}ic_history_recovery_logo.svg';
+  static const String historyRecoveryLogoCircle =
+      '${_baseIconPath}ic_history_recovery_logo_circle.svg';
+  static const String historySetRecoveryLogo =
+      '${_baseIconPath}ic_history_set_recovery_logo.svg';
+  static const String historySetRecoveryLogoCircle =
+      '${_baseIconPath}ic_history_set_recovery_logo_circle.svg';
+
+  ///signed in import account
+  static const String signedInImportKeyInformation =
+      '${_baseIconPath}ic_signed_in_import_account_information.svg';
+
+  ///Send transaction
+  static const String sendQr = '${_baseIconPath}ic_send_qr.svg';
+
+  /// Send transaction confirmation
+  static const String sendConfirmation =
+      '${_baseIconPath}ic_send_confirmation.svg';
+
+  /// Send transaction successful
+  static const String sendSuccessfulLogo =
+      '${_baseIconPath}ic_transaction_successful_logo.svg';
+  static const String sendSuccessfulCopy =
+      '${_baseIconPath}ic_transaction_successful_copy.svg';
+  static const String sendSuccessfulView =
+      '${_baseIconPath}ic_transaction_successful_view.svg';
+
+  /// Scanner
+  static const String scannerBack = '${_baseIconPath}ic_scanner_back.svg';
+  static const String scannerPhoto = '${_baseIconPath}ic_scanner_photo.svg';
+
+  /// Setting
+  static const String settingRecovery =
+      '${_baseIconPath}ic_setting_recovery.svg';
+  static const String settingAddressBook =
+      '${_baseIconPath}ic_setting_address_book.svg';
+  static const String settingBiometric =
+      '${_baseIconPath}ic_setting_biometric.svg';
+  static const String settingDeviceManagement =
+      '${_baseIconPath}ic_setting_device_management.svg';
+  static const String settingHelpCenter =
+      '${_baseIconPath}ic_setting_help_center.svg';
+  static const String settingArrowNext =
+      '${_baseIconPath}ic_setting_arrow_next.svg';
+  static const String settingPrivateKey =
+      '${_baseIconPath}ic_setting_private_key.svg';
+
+  /// Setting bio and passcode
+  static const String settingBioAndPassCodeLock =
+      '${_baseIconPath}ic_setting_passcode_and_bio_lock.svg';
+  static const String settingBioAndPassCodeBio =
+      '${_baseIconPath}ic_setting_passcode_and_bio_bio.svg';
+
+  /// Recovery method
+  static const String recoveryMethodCheck =
+      '${_baseIconPath}ic_recovery_method_check.svg';
+  static const String recoveryMethodWarning =
+      '${_baseIconPath}ic_recovery_method_warning.svg';
+  static const String recoveryMethodChange =
+      '${_baseIconPath}ic_recovery_method_change.svg';
+  static const String recoveryMethodCopy =
+      '${_baseIconPath}ic_recovery_method_copy.svg';
+
+  /// Set recovery method
+  static const String setRecoveryMethodWeb3Auth =
+      '${_baseIconPath}ic_set_recovery_method_web3_auth.svg';
+  static const String setRecoveryMethodBackupAddress =
+      '${_baseIconPath}ic_set_recovery_method_backup_address.svg';
+
+  /// Recovery confirmation
+  static const String recoveryConfirmation =
+      '${_baseIconPath}ic_recovery_confirmation.svg';
+
+  /// NFTs
+  static const String nftList = '${_baseIconPath}ic_nft_list.svg';
+  static const String nftGrid = '${_baseIconPath}ic_nft_grid.svg';
+
+  /// Connect site
+  static const String connectSiteQr = '${_baseIconPath}ic_connect_site_qr.svg';
+
+  /// Browser page
+  static const String browserEcosystem =
+      '${_baseIconPath}ic_browser_ecosystem.svg';
+  static const String browserEcosystemWhite =
+      '${_baseIconPath}ic_browser_ecosystem_white.svg';
+
+  /// Browser screen
+  static const String inAppBrowserBookMark =
+      '${_baseIconPath}ic_in_app_browser_bookmark.svg';
+  static const String inAppBrowserBookMarkActive =
+      '${_baseIconPath}ic_in_app_browser_bookmark_active.svg';
+  static const String inAppBrowserLogo =
+      '${_baseIconPath}ic_in_app_browser_logo.svg';
+  static const String inAppBrowserAccount =
+      '${_baseIconPath}ic_in_app_browser_account.svg';
+  static const String inAppBrowserLock =
+      '${_baseIconPath}ic_in_app_browser_lock.svg';
+  static const String inAppBrowserNext =
+      '${_baseIconPath}ic_in_app_browser_next.svg';
+  static const String inAppBrowserNextBold =
+      '${_baseIconPath}ic_in_app_browser_next_bold.svg';
+  static const String inAppBrowserBack =
+      '${_baseIconPath}ic_in_app_browser_back.svg';
+
+  /// Connect wallet screen
+  static const String connectWalletLock = '${_baseIconPath}ic_connect_wallet_lock.svg';
+  static const String connectWalletClose = '${_baseIconPath}ic_connect_wallet_close.svg';
+
+
+  /// Home page
+  static const String homePageAlert = '${_baseIconPath}ic_home_page_alert.svg';
+  static const String homePageAlertNext = '${_baseIconPath}ic_home_page_alert_next.svg';
+
+  /// Signed in choice option
+  static const String signedInChoiceOption =
+      '${_baseIconPath}ic_signed_in_choice_option.svg';
+}
