@@ -20,4 +20,10 @@ class _SplashScreenState extends State<SplashScreen> with StateFulBaseScreen{
     // TODO: implement child
     throw UnimplementedError();
   }
+
+  @override
+  Widget wrapBuild(BuildContext context, Widget child) {
+    // TODO: implement wrapBuild
+    throw UnimplementedError();
+  }
 }
