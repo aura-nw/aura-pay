@@ -1,9 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
-import 'package:trust_wallet_core/flutter_trust_wallet_core.dart';
 import 'package:wallet_core/src/constants/constants.dart';
-import 'package:wallet_core/src/objects/a_wallet.dart';
 import 'package:wallet_core/src/objects/wallet_exception.dart';
 import 'package:wallet_core/wallet_core.dart';
 
@@ -40,17 +38,12 @@ class StoredManagement {
   AWallet? fromSavedJson(String storedKey, String password) {
     StoredKey? storedWallet = StoredKey.importJson(storedKey);
 
-    print('StoredWallet: $storedWallet');
-
     if (storedWallet == null) {
       return null;
     }
 
-    print('StoredWallet: ${storedWallet.isMnemonic()}');
-
     if (storedWallet.isMnemonic()) {
       HDWallet? hdWallet = storedWallet.wallet(password);
-      print('HDWallet: $hdWallet');
       if (hdWallet == null) {
         return null;
       }
@@ -63,7 +56,6 @@ class StoredManagement {
       return null;
     }
     String privateKeyHex = hex.encode(privateKey.data());
-    print('PrivateKey: $privateKey');
     return WalletCore.walletManagement
         .importWalletWithPrivateKey(privateKeyHex);
   }
