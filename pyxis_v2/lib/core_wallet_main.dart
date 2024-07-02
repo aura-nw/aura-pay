@@ -10,8 +10,12 @@ const _privateKey =
     'd445ee5ff874d09c68523c37a4e0738ed272401ecc1fb804bedb081af0de5ab5';
 const _address = '0x1C4677497bC59Dd3E188320D2048DD4947De349F';
 
-const jsonTest = """
-{"activeAccounts":[{"address":"0x1C4677497bC59Dd3E188320D2048DD4947De349F","coin":60,"derivationPath":"m/44'/60'/0'/0/0","publicKey":"040667a702f3359d54449e6e34e66611b12871f90de4ba166d9789e0e9f327efb8b11766e62cd481c2e5baf855eaa07132a5e7b9e5b619d3591b77ac51eb3aa587"}],"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"6468fb1d63a6d09156ec1a3a57cdb2fe"},"ciphertext":"6a2de3fdc9b4f3d1d9265dfdd9c0130f33c6ff80adaaf63265000f52eca8f7eb","kdf":"scrypt","kdfparams":{"dklen":32,"n":16384,"p":4,"r":8,"salt":""},"mac":"811998542a34618b4e80c273d91730419486fb54417339638a5afbe13bb45230"},"id":"beb55ff0-25a5-4d4e-953c-b6ef40f6fe86","name":"name","type":"private-key","version":3}
+String storedKeyMnemonic = """
+{"activeAccounts":[{"address":"0x1C4677497bC59Dd3E188320D2048DD4947De349F","coin":60,"derivationPath":"m/44'/60'/0'/0/0","publicKey":"040667a702f3359d54449e6e34e66611b12871f90de4ba166d9789e0e9f327efb8b11766e62cd481c2e5baf855eaa07132a5e7b9e5b619d3591b77ac51eb3aa587"}],"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"5a97f1757ae02692b67dac1b1ed9b072"},"ciphertext":"ed93aa782441c10409d953661658089472dc5d5177b0a0fb789805836a70856347257dccd4c9cccbf9eac118263b9bb85de9abca6dff97f55eea9f597beab71604c52a38a0e6bc","kdf":"scrypt","kdfparams":{"dklen":32,"n":16384,"p":4,"r":8,"salt":""},"mac":"2a394e99116667c8be8a0468861ba394394365c4be36046949a42be3948c0605"},"id":"bd2ebf51-553f-438b-9eec-3a448b172a7d","name":"name","type":"mnemonic","version":3}
+""";
+
+String storedKeyPrivateKey = """
+{"activeAccounts":[{"address":"0x1C4677497bC59Dd3E188320D2048DD4947De349F","coin":60,"derivationPath":"m/44'/60'/0'/0/0","publicKey":"040667a702f3359d54449e6e34e66611b12871f90de4ba166d9789e0e9f327efb8b11766e62cd481c2e5baf855eaa07132a5e7b9e5b619d3591b77ac51eb3aa587"}],"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"0b86a9dd401b52117cfa02c09950e81b"},"ciphertext":"8b054cc68697f19cb42c199e956483e26db6088bbe3bfc35a9c00654288e6649","kdf":"scrypt","kdfparams":{"dklen":32,"n":16384,"p":4,"r":8,"salt":""},"mac":"cd6b36d8ee8a1c892e8c048641cf0ce227c86694e7751aed4dbe235d88b1ca29"},"id":"05eb526a-3789-4801-adc3-63916b99afc3","name":"name2","type":"private-key","version":3}
 """;
 
 // Hàm main để khởi tạo WalletCore và chạy ứng dụng Flutter
@@ -57,8 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
       'Import Mnemonic': testImportWallet(), // Kiểm tra nhập mnemonic
       'Import Private Key':
           testImportWalletWithPrivateKey(), // Kiểm tra nhập private key
-      'Stored Key': testStoredKey(), // Kiểm tra lưu trữ private key
-      'Load Stored Key': testLoadStoredKey(), // Kiểm tra tải private key
+      'Save Wallet with mnemonic': testSaveWalletWithMnemonic(),
+      'Save Wallet with private key': testSaveWalletWithPrivateKey(),
+      'Load Stored Key': testLoadStoredKeyWithMnemonic(), // Kiểm tra tải mnemonic
+      'Load Stored Key with Private Key': testLoadStoredKeyWithPrivateKey(),
+
     };
   }
 
@@ -133,29 +140,48 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // Hàm kiểm tra nhập private key
   bool testImportWalletWithPrivateKey() {
-    AWallet aWallet =
+    AWallet wallet =
         WalletCore.walletManagement.importWalletWithPrivateKey(_privateKey);
-    print('TestCase #3 address: ${aWallet.address}');
-    return aWallet.address ==
+    print('TestCase #3 address: ${wallet.address}');
+    return wallet.address ==
         _address; // So sánh địa chỉ nhập vào với địa chỉ ban đầu
   }
 
-  bool testStoredKey() {
+  // Hàm kiểm tra lưu trữ wallet bằng mnemonic
+  bool testSaveWalletWithMnemonic() {
     AWallet wallet = WalletCore.walletManagement.importWallet(_mnemonic);
-    var privateKey = WalletCore.walletManagement.getPrivateKey(wallet.wallet!);
-
-    String? jsonExported = WalletCore.storedManagement
-        .storePrivateKey('name', 'password', privateKey);
+    String? jsonExported =
+        WalletCore.storedManagement.saveWallet('name', 'password', wallet);
 
     print('TestCase #4 jsonExported: $jsonExported');
-    return jsonExported != null;
+    return jsonExported != null; // Kiểm tra nếu jsonExported không null
   }
 
-  bool testLoadStoredKey() {
-    StoredKey? storedKey = WalletCore.storedManagement.fromJson(jsonTest);
-    PrivateKey? loadedPk =
-        storedKey?.privateKey(60, Uint8List.fromList('password'.codeUnits));
-    print('TestCase #5 loadedPk: $loadedPk');
-    return loadedPk != null;
+  // Hàm kiểm tra lưu trữ wallet bằng private key
+  bool testSaveWalletWithPrivateKey() {
+    AWallet wallet =
+        WalletCore.walletManagement.importWalletWithPrivateKey(_privateKey);
+    String? jsonExported =
+        WalletCore.storedManagement.saveWallet('name2', 'password', wallet);
+
+    print('TestCase #5 jsonExported: $jsonExported');
+    return jsonExported != null; // Kiểm tra nếu jsonExported không null
+  }
+
+  // Hàm kiểm tra tải private key từ dữ liệu JSON
+  bool testLoadStoredKeyWithMnemonic() {
+    AWallet? wallet = WalletCore.storedManagement
+        .fromSavedJson(storedKeyMnemonic, 'password');
+
+    print('TestCase #6 address: ${wallet?.address}');
+    return wallet?.address ==
+        _address; // So sánh địa chỉ tải lên với địa chỉ ban đầu
+  }
+
+  bool testLoadStoredKeyWithPrivateKey() {
+    AWallet? wallet = WalletCore.storedManagement
+        .fromSavedJson(storedKeyPrivateKey, 'password');
+    print('TestCase #7 address: ${wallet?.address}');
+    return wallet?.address == _address;
   }
 }

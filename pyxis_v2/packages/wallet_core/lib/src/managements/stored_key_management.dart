@@ -3,45 +3,68 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:trust_wallet_core/flutter_trust_wallet_core.dart';
 import 'package:wallet_core/src/constants/constants.dart';
+import 'package:wallet_core/src/objects/a_wallet.dart';
 import 'package:wallet_core/src/objects/wallet_exception.dart';
+import 'package:wallet_core/wallet_core.dart';
 
 class StoredManagement {
-  /// Stores a private key.
-  ///
-  /// [name] is the name of the stored key.
-  /// [password] is the password for the stored key.
-  /// [privateKey] is the private key in hex format.
-  /// [coinType] specifies the type of the coin.
-  /// Returns the JSON representation of the stored key.
-  String? storePrivateKey(String name, String password, String privateKeyHex,
+  String? saveWallet(String name, String password, AWallet aWallet,
       {int coinType = Constants.defaultCoinType}) {
     try {
-      final privateKeyBytes = Uint8List.fromList(hex.decode(privateKeyHex));
-      final storedKey =
-          StoredKey.importPrivateKey(privateKeyBytes, name, password, coinType);
-      String? json = storedKey?.exportJson();
-      if (json == null) {
-        throw WalletException('Failed to store private key');
+      StoredKey? storedKey;
+      if (aWallet.wallet != null) {
+        storedKey = StoredKey.importHDWallet(
+            aWallet.wallet!.mnemonic(), name, password, coinType);
+      } else {
+        storedKey = StoredKey.importPrivateKey(
+            Uint8List.fromList(hex.decode(aWallet.privateKey)),
+            name,
+            password,
+            coinType);
       }
-      return json;
-    } catch (e) {
-      throw WalletException('Failed to store private key: $e');
-    }
-  }
 
-  /// Loads a stored key from a file.
-  ///
-  /// [path] is the file path of the stored key.
-  /// Returns the loaded StoredKey.
-  StoredKey? loadStoredKey(String path) {
-    return StoredKey.load(path);
+      String? storedKeyOutput = storedKey?.exportJson();
+      if (storedKey == null) {
+        throw WalletException('Failed to save wallet');
+      }
+      return storedKeyOutput;
+    } catch (e) {
+      throw WalletException('Failed to save wallet: $e');
+    }
   }
 
   /// Imports a stored key from JSON.
   ///
   /// [json] is the JSON representation of the stored key.
   /// Returns the imported StoredKey.
-  StoredKey? fromJson(String json) {
-    return StoredKey.importJson(json);
+  AWallet? fromSavedJson(String storedKey, String password) {
+    StoredKey? storedWallet = StoredKey.importJson(storedKey);
+
+    print('StoredWallet: $storedWallet');
+
+    if (storedWallet == null) {
+      return null;
+    }
+
+    print('StoredWallet: ${storedWallet.isMnemonic()}');
+
+    if (storedWallet.isMnemonic()) {
+      HDWallet? hdWallet = storedWallet.wallet(password);
+      print('HDWallet: $hdWallet');
+      if (hdWallet == null) {
+        return null;
+      }
+      return WalletCore.walletManagement.importWallet(hdWallet.mnemonic());
+    }
+
+    PrivateKey? privateKey = storedWallet.privateKey(
+        Constants.defaultCoinType, Uint8List.fromList(password.codeUnits));
+    if (privateKey == null) {
+      return null;
+    }
+    String privateKeyHex = hex.encode(privateKey.data());
+    print('PrivateKey: $privateKey');
+    return WalletCore.walletManagement
+        .importWalletWithPrivateKey(privateKeyHex);
   }
 }
