@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:wallet_core/wallet_core.dart';
 
@@ -63,9 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
           testImportWalletWithPrivateKey(), // Kiểm tra nhập private key
       'Save Wallet with mnemonic': testSaveWalletWithMnemonic(),
       'Save Wallet with private key': testSaveWalletWithPrivateKey(),
-      'Load Stored Key': testLoadStoredKeyWithMnemonic(), // Kiểm tra tải mnemonic
+      'Load Stored Key':
+          testLoadStoredKeyWithMnemonic(), // Kiểm tra tải mnemonic
       'Load Stored Key with Private Key': testLoadStoredKeyWithPrivateKey(),
-
     };
   }
 
