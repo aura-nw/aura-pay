@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
-
-abstract class BaseWidget{
+mixin StatelessBaseScreen on StatelessWidget {
   Widget buildSpace(BuildContext context) {
     return SafeArea(
       child: Padding(
@@ -15,9 +14,7 @@ abstract class BaseWidget{
   }
 
   Widget child(BuildContext context);
-}
 
-mixin StatelessBaseScreen on StatelessWidget , BaseWidget {
   Widget wrapBuild(BuildContext context, Widget child);
 
   @override
@@ -29,7 +26,21 @@ mixin StatelessBaseScreen on StatelessWidget , BaseWidget {
   }
 }
 
-mixin StateFulBaseScreen<T extends StatefulWidget> on State<T> ,  BaseWidget{
+mixin StateFulBaseScreen<T extends StatefulWidget> on State<T>{
+
+  Widget buildSpace(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: Spacing.spacing05,
+          horizontal: Spacing.spacing07,
+        ),
+        child: child(context),
+      ),
+    );
+  }
+
+  Widget child(BuildContext context);
 
   Widget wrapBuild(BuildContext context, Widget child);
 
