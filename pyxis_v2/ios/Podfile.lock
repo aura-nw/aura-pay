@@ -1,6 +1,20 @@
 PODS:
+  - BigInt (5.2.0)
+  - curvelib.swift (1.0.1)
   - Flutter (1.0.0)
+  - flutter_secure_storage (6.0.0):
+    - Flutter
+  - KeychainSwift (20.0.0)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - SwiftProtobuf (1.26.0)
+  - TorusSessionManager (4.0.2):
+    - curvelib.swift (~> 1.0.1)
+    - KeychainSwift (~> 20.0.0)
   - trust_wallet_core (0.0.1):
     - Flutter
     - TrustWalletCore (= 3.1.18)
@@ -10,27 +24,61 @@ PODS:
     - TrustWalletCore/Types
   - TrustWalletCore/Types (3.1.18):
     - SwiftProtobuf
+  - Web3Auth (9.0.0):
+    - BigInt (~> 5.2.0)
+    - curvelib.swift (~> 1.0.1)
+    - KeychainSwift (~> 20.0.0)
+    - TorusSessionManager (~> 4.0.2)
+  - web3auth_flutter (2.0.1):
+    - Flutter
+    - Web3Auth (~> 9.0.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - trust_wallet_core (from `.symlinks/plugins/trust_wallet_core/ios`)
+  - web3auth_flutter (from `.symlinks/plugins/web3auth_flutter/ios`)
 
 SPEC REPOS:
   trunk:
+    - BigInt
+    - curvelib.swift
+    - KeychainSwift
     - SwiftProtobuf
+    - TorusSessionManager
     - TrustWalletCore
+    - Web3Auth
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   trust_wallet_core:
     :path: ".symlinks/plugins/trust_wallet_core/ios"
+  web3auth_flutter:
+    :path: ".symlinks/plugins/web3auth_flutter/ios"
 
 SPEC CHECKSUMS:
+  BigInt: f668a80089607f521586bbe29513d708491ef2f7
+  curvelib.swift: d0746ae82bee34016c06da3567a97e493b3c979f
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
+  KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   SwiftProtobuf: 5e8349171e7c2f88f5b9e683cb3cb79d1dc780b3
+  TorusSessionManager: 05a1a8f3265d0949a1a342c4ba2c52882445b614
   trust_wallet_core: 6f7eb18bc6b00cece026a8c82c7651a7520ca55a
   TrustWalletCore: fabbb38652ab559ee25c864af8836e6481a7e22b
+  Web3Auth: 086b5152a43df347ceff196c0ce67f6330838884
+  web3auth_flutter: bc5ffefe573c72f7fb1814573269952b045b7b22
 
 PODFILE CHECKSUM: 1959d098c91d8a792531a723c4a9d7e9f6a01e38
 

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:wallet_core/wallet_core.dart';
 
@@ -51,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'Import Mnemonic': testImportWallet(), // Kiểm tra nhập mnemonic
       'Import Private Key':
           testImportWalletWithPrivateKey(), // Kiểm tra nhập private key
+      'Stored Key': testStoredKey(), // Kiểm tra lưu trữ private key
     };
   }
 
@@ -124,5 +127,26 @@ class _MyHomePageState extends State<MyHomePage> {
   bool testImportWalletWithPrivateKey() {
     String address = WalletCore.importWalletWithPrivateKey(_privateKey);
     return address == _address; // So sánh địa chỉ nhập vào với địa chỉ ban đầu
+  }
+
+  bool testStoredKey() {
+    HDWallet wallet = WalletCore.importWallet(_mnemonic);
+    var privateKey = WalletCore.getPrivateKey(wallet);
+
+    print('privateKey: $privateKey');
+
+    var jsonExported = WalletCore.storedKey('name', 'password', privateKey);
+
+    print('jsonExported: $jsonExported');
+
+    StoredKey? storedKey = WalletCore.importStoredKey(jsonExported);
+    PrivateKey? loadedPk =
+        storedKey?.privateKey(60, Uint8List.fromList('password'.codeUnits));
+
+    print('loadedPk: $loadedPk');
+    print('loadedPk?.data(): ${loadedPk?.data()}');
+    print('pkString = ${loadedPk?.data()}');
+
+    return loadedPk != null;
   }
 }

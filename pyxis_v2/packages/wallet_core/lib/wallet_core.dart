@@ -77,9 +77,28 @@ class WalletCore {
   /// [wallet] is the HDWallet object.
   /// [coinType] specifies the type of the coin.
   /// Returns the private key in hex format.
-  static String getPrivateKey(HDWallet wallet, int coinType) {
+  static String getPrivateKey(HDWallet wallet,
+      {int coinType = Constants.defaultCoinType}) {
     return hex.encode(wallet
         .getKeyForCoin(coinType)
         .data()); // Encode the private key to hex format
+  }
+
+  static String storedKey(String name, String password, String privateKey,
+      {int coinType = Constants.defaultCoinType}) {
+    var byte = Uint8List.fromList(hex.decode(privateKey));
+    StoredKey? storedKey =
+        StoredKey.importPrivateKey(byte, name, password, coinType);
+
+    print('storedKey: $storedKey');
+    return storedKey?.exportJson() ?? '';
+  }
+
+  static StoredKey? loadStoredKey(String path) {
+    return StoredKey.load(path);
+  }
+
+  static StoredKey? importStoredKey(String json) {
+    return StoredKey.importJson(json);
   }
 }
