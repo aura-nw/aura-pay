@@ -4,7 +4,11 @@ import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pyxis_v2/src/application/provider/local/localization_service_impl.dart';
+import 'package:pyxis_v2/src/application/provider/local/normal_storage_service_impl.dart';
+import 'package:pyxis_v2/src/application/provider/local/secure_storage_service_impl.dart';
+import 'package:pyxis_v2/src/application/provider/provider/biometric_provider.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
@@ -30,17 +34,17 @@ Future<void> initDependency(
   //   ),
   // );
 
-  // const FlutterSecureStorage secureStorage = FlutterSecureStorage(
-  //   aOptions: AndroidOptions(
-  //     encryptedSharedPreferences: true,
-  //     sharedPreferencesName: AppLocalConstant.keyDbName,
-  //     preferencesKeyPrefix: AppLocalConstant.keyDbPrefix,
-  //   ),
-  //   iOptions: IOSOptions(),
-  // );
-  //
-  // final SharedPreferences sharedPreferences =
-  //     await SharedPreferences.getInstance();
+  const FlutterSecureStorage secureStorage = FlutterSecureStorage(
+    aOptions: AndroidOptions(
+      encryptedSharedPreferences: true,
+      sharedPreferencesName: AppLocalConstant.keyDbName,
+      preferencesKeyPrefix: AppLocalConstant.keyDbPrefix,
+    ),
+    iOptions: IOSOptions(),
+  );
+
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
 
   // Set web3 auth redirect uri
   // Must replace late
@@ -64,6 +68,18 @@ Future<void> initDependency(
     () => LocalizationServiceImpl(),
   );
 
+  getIt.registerLazySingleton<BiometricProvider>(
+    () => BiometricProviderImpl(),
+  );
+
+  getIt.registerLazySingleton<NormalStorageService>(
+    () => NormalStorageServiceImpl(sharedPreferences),
+  );
+
+  getIt.registerLazySingleton<SecureStorageService>(
+    () => const SecureStorageServiceImpl(secureStorage),
+  );
+
   // Register repository
   getIt.registerLazySingleton<LocalizationRepository>(
     () => LocalizationRepositoryImpl(
@@ -71,10 +87,30 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton(
+    () => AppSecureRepositoryImpl(
+      getIt.get<NormalStorageService>(),
+      getIt.get<BiometricProvider>(),
+    ),
+  );
+
   // Register use case
   getIt.registerLazySingleton<LocalizationUseCase>(
     () => LocalizationUseCase(
       getIt.get<LocalizationRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<AppSecureUseCase>(
+    () => AppSecureUseCase(
+      getIt.get<AppSecureRepository>(),
+    ),
+  );
+
+  // Register bloc
+  getIt.registerFactory<CreatePasscodeCubit>(
+    () => CreatePasscodeCubit(
+      getIt.get<AppSecureUseCase>(),
     ),
   );
 }
