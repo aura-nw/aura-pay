@@ -10,6 +10,7 @@ import 'package:pyxis_v2/src/application/provider/provider/biometric_provider.da
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wallet_core/wallet_core.dart';
 import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
 import 'package:web3auth_flutter/web3auth_flutter.dart';
@@ -33,6 +34,8 @@ Future<void> initDependency(
   //     contentType: 'application/json; charset=utf-8',
   //   ),
   // );
+
+  WalletCore.init();
 
   const FlutterSecureStorage secureStorage = FlutterSecureStorage(
     aOptions: AndroidOptions(

@@ -3,3 +3,14 @@ enum AppNetwork{
   auraCosmos,
   custom,
 }
+
+enum AccountCreateType{
+  normal,
+  google,
+  import,
+}
+
+enum AccountType{
+  normal,
+  abstraction,
+}
