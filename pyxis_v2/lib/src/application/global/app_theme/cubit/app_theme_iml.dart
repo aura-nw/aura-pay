@@ -1,339 +1,385 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_v2/src/core/constants/app_color.dart';
 
-final class DefaultAppTheme implements AppTheme {
-  DefaultAppTheme();
+final class AppLightTheme implements AppTheme {
+  AppLightTheme();
 
   @override
-  Color borderColorBrand = const Color(0xff8480F7);
+  Color alphaBlack10 = AppColor.grayBlack.withOpacity(0.1);
 
   @override
-  Color borderColorBlack = const Color(0xff131316);
+  Color alphaBlack20 = AppColor.grayBlack.withOpacity(0.2);
 
   @override
-  Color borderColorBrandDark = const Color(0xff6F6CCF);
+  Color alphaBlack30 = AppColor.grayBlack.withOpacity(0.3);
 
   @override
-  Color borderColorBrandLight = const Color(0xffBFBDFB);
+  Color alphaBlack4 = AppColor.grayBlack.withOpacity(0.04);
 
   @override
-  Color borderColorBrandSLight = const Color(0xffEDECFE);
+  Color alphaBlack40 = AppColor.grayBlack.withOpacity(0.4);
 
   @override
-  Color borderColorDanger = const Color(0xffE8858F);
+  Color alphaBlack50 = AppColor.grayBlack.withOpacity(0.5);
 
   @override
-  Color borderColorDangerDark = const Color(0xffAF2837);
+  Color alphaBlack60 = AppColor.grayBlack.withOpacity(0.6);
 
   @override
-  Color borderColorDangerLight = const Color(0xffFCEEEF);
+  Color alphaBlack70 = AppColor.grayBlack.withOpacity(0.7);
 
   @override
-  Color borderColorDisable = const Color(0xffDEDEE3);
+  Color alphaBlack8 = AppColor.grayBlack.withOpacity(0.08);
 
   @override
-  Color borderColorGrayDark = const Color(0xffC0C0C8);
+  Color alphaBlack80 = AppColor.grayBlack.withOpacity(0.8);
 
   @override
-  Color borderColorGrayDefault = const Color(0xffDEDEE3);
+  Color alphaBlack90 = AppColor.grayBlack.withOpacity(0.9);
 
   @override
-  Color borderColorGrayLight = const Color(0xffECECEE);
+  Color alphaWhite10 = AppColor.grayWhite.withOpacity(0.1);
 
   @override
-  Color borderColorSuccess = const Color(0xff86EABB);
+  Color alphaWhite20 = AppColor.grayWhite.withOpacity(0.2);
 
   @override
-  Color borderColorSuccessDark = const Color(0xff159454);
+  Color alphaWhite30 = AppColor.grayWhite.withOpacity(0.3);
 
   @override
-  Color borderColorSuccessLight = const Color(0xffD8F8E8);
+  Color alphaWhite4 = AppColor.grayWhite.withOpacity(0.04);
 
   @override
-  Color borderColorUnKnow = const Color(0xff828292);
+  Color alphaWhite40 = AppColor.grayWhite.withOpacity(0.4);
 
   @override
-  Color borderColorWarning = const Color(0xffFDB271);
+  Color alphaWhite50 = AppColor.grayWhite.withOpacity(0.5);
 
   @override
-  Color borderColorWarningDark = const Color(0xffFC7D11);
+  Color alphaWhite60 = AppColor.grayWhite.withOpacity(0.6);
 
   @override
-  Color borderColorWarningLight = const Color(0xffFFF4EB);
+  Color alphaWhite70 = AppColor.grayWhite.withOpacity(0.7);
 
   @override
-  Color borderColorWhite = const Color(0xffFFFFFF);
+  Color alphaWhite8 = AppColor.grayWhite.withOpacity(0.08);
 
   @override
-  Color dangerColorDark = const Color(0xffDA3345);
+  Color alphaWhite80 = AppColor.grayWhite.withOpacity(0.8);
 
   @override
-  Color dangerColorDefault = const Color(0xffE8858F);
+  Color alphaWhite90 = AppColor.grayWhite.withOpacity(0.9);
 
   @override
-  Color dangerColorLight = const Color(0xffF7D7DA);
+  Color bgActive = AppColor.gray50;
 
   @override
-  Color dangerColorSDark = const Color(0xffAF2837);
+  Color bgBrandPrimary = AppColor.cyan100;
 
   @override
-  Color dangerColorSLight = const Color(0xffFCEEEF);
+  Color bgBrandPrimaryAlt = AppColor.cyan100;
 
   @override
-  Color infoDark = const Color(0xff00CBED);
+  Color bgBrandSecondary = AppColor.cyan50;
 
   @override
-  Color infoDefault = const Color(0xff0FD6F1);
+  Color bgBrandSection = AppColor.cyan500;
 
   @override
-  Color infoLight = const Color(0xffCCF4FB);
+  Color bgBrandSectionSubtle = AppColor.cyan500;
 
   @override
-  Color primaryColor10 = const Color(0xffF6F5FE);
+  Color bgBrandSolid = AppColor.cyan300;
 
   @override
-  Color primaryColor100 = const Color(0xffD3D1FC);
+  Color bgBrandSolidHover = AppColor.cyan400;
 
   @override
-  Color primaryColor200 = const Color(0xffBFBDFB);
+  Color bgDisabled = AppColor.gray100;
 
   @override
-  Color primaryColor25 = const Color(0xffEDECFE);
+  Color bgDisabledSubtle = AppColor.gray50;
 
   @override
-  Color primaryColor300 = const Color(0xffABA9FA);
+  Color bgErrorPrimary = AppColor.red100;
 
   @override
-  Color primaryColor400 = const Color(0xff9894F8);
+  Color bgErrorSecondary = AppColor.red200;
 
   @override
-  Color primaryColor50 = const Color(0xffDDDBFD);
+  Color bgErrorSolid = AppColor.red500;
 
   @override
-  Color primaryColor500 = const Color(0xff8480F7);
+  Color bgInfoPrimary = AppColor.blue100;
 
   @override
-  Color primaryColor600 = const Color(0xff6F6CCF);
+  Color bgInfoSecondary = AppColor.blue200;
 
   @override
-  Color primaryColor700 = const Color(0xff5A57A8);
+  Color bgInfoSolid = AppColor.blue500;
 
   @override
-  Color primaryColor800 = const Color(0xff454381);
+  Color bgOverlay = AppColor.grayBlack.withOpacity(0.7);
 
   @override
-  Color primaryColor900 = const Color(0xff302E59);
+  Color bgPrimary = AppColor.grayWhite;
 
   @override
-  Color primaryDefault = const Color(0xff8480F7);
+  Color bgPrimaryAlt = AppColor.grayWhite;
 
   @override
-  Color secondaryDefault = const Color(0xfffc7d11);
+  Color bgPrimaryHover = AppColor.gray100;
 
   @override
-  Color secondary100 = const Color(0xffffe5d0);
+  Color bgPrimarySolid = AppColor.gray950;
 
   @override
-  Color secondary200 = const Color(0xfffdcba1);
+  Color bgQuaternary = AppColor.gray200;
 
   @override
-  Color secondary300 = const Color(0xfffdb271);
+  Color bgSecondary = AppColor.gray50;
 
   @override
-  Color secondary400 = const Color(0xfffc9842);
+  Color bgSecondaryAlt = AppColor.grayWhite;
 
   @override
-  Color secondary50 = const Color(0xfffff4eb);
+  Color bgSecondaryHover = AppColor.gray100;
 
   @override
-  Color secondary500 = const Color(0xfffc7d11);
+  Color bgSecondarySolid = AppColor.gray600;
 
   @override
-  Color secondary600 = const Color(0xffc9640e);
+  Color bgSecondarySubtle = AppColor.grayWhite;
 
   @override
-  Color secondary700 = const Color(0xff974c0a);
+  Color bgSuccessPrimary = AppColor.green100;
 
   @override
-  Color secondary800 = const Color(0xff643207);
+  Color bgSuccessSecondary = AppColor.green200;
 
   @override
-  Color secondary900 = const Color(0xff331904);
+  Color bgSuccessSolid = AppColor.green500;
 
   @override
-  Color successColorDark = const Color(0xff1DC975);
+  Color bgTertiary = AppColor.gray100;
 
   @override
-  Color successColorDefault = const Color(0xff86EABB);
+  Color bgUnknownPrimary = AppColor.gray100;
 
   @override
-  Color successColorLight = const Color(0xffBAF3D8);
+  Color bgUnknownSecondary = AppColor.gray200;
 
   @override
-  Color successColorSDark = const Color(0xff159454);
+  Color bgUnknownSolid = AppColor.gray500;
 
   @override
-  Color successColorSLight = const Color(0xffD8F8E8);
+  Color bgWarningPrimary = AppColor.yellow100;
 
   @override
-  Color surfaceColorBlack = const Color(0xff242429);
+  Color bgWarningSecondary = AppColor.yellow200;
 
   @override
-  Color surfaceColorBrand = const Color(0xff8480F7);
+  Color bgWarningSolid = AppColor.yellow500;
 
   @override
-  Color surfaceColorBrandDark = const Color(0xff5A57A8);
+  Color borderBrand = AppColor.cyan300;
 
   @override
-  Color surfaceColorBrandLight = const Color(0xffEDECFE);
+  Color borderBrandSolid = AppColor.cyan600;
 
   @override
-  Color surfaceColorBrandSemiLight = const Color(0xffDDDBFD);
+  Color borderBrandSolidAlt = AppColor.cyan600;
 
   @override
-  Color surfaceColorDanger = const Color(0xffF7D7DA);
+  Color borderDisabled = AppColor.gray300;
 
   @override
-  Color surfaceColorDangerDark = const Color(0xffDA3345);
+  Color borderDisabledSubtle = AppColor.gray200;
 
   @override
-  Color surfaceColorDisable = const Color(0xffF7F7F8);
+  Color borderError = AppColor.red200;
 
   @override
-  Color surfaceColorGrayDark = const Color(0xffDEDEE3);
+  Color borderErrorSolid = AppColor.red500;
 
   @override
-  Color surfaceColorGrayDefault = const Color(0xffECECEE);
+  Color borderErrorUnknown = AppColor.gray300;
 
   @override
-  Color surfaceColorGrayLight = const Color(0xffF4F4F6);
+  Color borderErrorUnknownSolid = AppColor.gray600;
 
   @override
-  Color surfaceColorSuccess = const Color(0xffBAF3D8);
+  Color borderInfo = AppColor.blue200;
 
   @override
-  Color surfaceColorSuccessDark = const Color(0xff1DC975);
+  Color borderInfoSolid = AppColor.blue500;
 
   @override
-  Color surfaceColorUnKnow = const Color(0xffAEAEB7);
+  Color borderPrimary = AppColor.gray300;
 
   @override
-  Color surfaceColorWarning = const Color(0xffFFE5D0);
+  Color borderSecondary = AppColor.gray200;
 
   @override
-  Color surfaceColorWarningDark = const Color(0xffFC9842);
+  Color borderSuccess = AppColor.green200;
 
   @override
-  Color surfaceColorWhite = const Color(0xffFFFFFF);
+  Color borderSuccessSolid = AppColor.green500;
 
   @override
-  Color tertiary100 = const Color(0xffe8eaff);
+  Color borderTertiary = AppColor.teal50;
 
   @override
-  Color tertiary200 = const Color(0xffdee1ff);
+  Color borderWarning = AppColor.yellow200;
 
   @override
-  Color tertiary300 = const Color(0xffd3d8ff);
+  Color borderWarningSolid = AppColor.yellow500;
 
   @override
-  Color tertiary400 = const Color(0xffc9cfff);
+  Color fgBrandPrimary = AppColor.gray500;
 
   @override
-  Color tertiary50 = const Color(0xffedefff);
+  Color fgBrandPrimaryAlt = AppColor.gray500;
 
   @override
-  Color tertiary500 = const Color(0xffbfc6ff);
+  Color fgBrandSecondary = AppColor.gray500;
 
   @override
-  Color tertiary600 = const Color(0xffa0a6d6);
+  Color fgDisabled = AppColor.gray500;
 
   @override
-  Color tertiary700 = const Color(0xff8287ad);
+  Color fgDisabledSubtle = AppColor.gray500;
 
   @override
-  Color tertiary800 = const Color(0xff636785);
+  Color fgErrorPrimary = AppColor.gray500;
 
   @override
-  Color tertiary900 = const Color(0xff45475c);
+  Color fgErrorSecondary = AppColor.gray500;
 
   @override
-  Color tertiaryDefault = const Color(0xffbfc6ff);
+  Color fgInfoPrimary = AppColor.gray500;
 
   @override
-  Color unknownColorDark = const Color(0xff5B5B67);
+  Color fgInfoSecondary = AppColor.gray500;
 
   @override
-  Color unknownColorDefault = const Color(0xff828292);
+  Color fgPrimary = AppColor.gray500;
 
   @override
-  Color unknownColorLight = const Color(0xffAEAEB7);
+  Color fgQuaternary = AppColor.gray500;
 
   @override
-  Color warningColorDark = const Color(0xffFC9842);
+  Color fgQuaternaryHover = AppColor.gray500;
 
   @override
-  Color warningColorDefault = const Color(0xffFDB271);
+  Color fgQuinary = AppColor.gray500;
 
   @override
-  Color warningColorLight = const Color(0xffFFF4EB);
+  Color fgQuinaryHover = AppColor.gray500;
 
   @override
-  Color warningColorSDark = const Color(0xffFC7D11);
+  Color fgSecondary = AppColor.gray500;
 
   @override
-  Color warningColorSLight = const Color(0xffFFF4EB);
+  Color fgSecondaryHover = AppColor.gray500;
 
   @override
-  Color bodyColorBrand = const Color(0xff8480F7);
+  Color fgSenary = AppColor.gray500;
 
   @override
-  Color bodyColorOverlay = const Color.fromRGBO(0, 0, 0, 0.5);
+  Color fgSuccessPrimary = AppColor.gray500;
 
   @override
-  Color bodyColorBackground = const Color(0xffFFFFFF);
+  Color fgSuccessSecondary = AppColor.gray500;
 
   @override
-  Color contentColor200 = const Color(0xffC0C0C8);
+  Color fgTertiary = AppColor.gray500;
 
   @override
-  Color contentColor300 = const Color(0xffAEAEB7);
+  Color fgTertiaryHover = AppColor.gray500;
 
   @override
-  Color contentColor500 = const Color(0xff828292);
+  Color fgUnknownPrimary = AppColor.gray500;
 
   @override
-  Color contentColor700 = const Color(0xff5B5B67);
+  Color fgUnknownSecondary = AppColor.gray500;
 
   @override
-  Color contentColorBlack = const Color(0xff474752);
+  Color fgWarningPrimary = AppColor.gray500;
 
   @override
-  Color contentColorBrand = const Color(0xff8480F7);
+  Color fgWarningSecondary = AppColor.gray500;
 
   @override
-  Color contentColorBrandDark = const Color(0xff5A57A8);
+  Color fgWhite = AppColor.gray500;
 
   @override
-  Color contentColorBrandLight = const Color(0xffBFBDFB);
+  Color textBrandPrimary = AppColor.cyan500;
 
   @override
-  Color contentColorDanger = const Color(0xffDA3345);
+  Color textBrandSecondary = AppColor.cyan400;
 
   @override
-  Color contentColorOpacity1 = const Color.fromRGBO(0, 0, 0, 0.7);
+  Color textBrandTertiary = AppColor.cyan300;
 
   @override
-  Color contentColorOpacity2 = const Color.fromRGBO(255, 255, 255, 0.7);
+  Color textBrandTertiaryAlt = AppColor.cyan300;
 
   @override
-  Color contentColorSuccess = const Color(0xff1DC975);
+  Color textDisabled = AppColor.gray500;
 
   @override
-  Color contentColorUnKnow = const Color(0xff5B5B67);
+  Color textErrorPrimary = AppColor.red500;
 
   @override
-  Color contentColorWarning = const Color(0xffFC9842);
+  Color textInfoPrimary = AppColor.blue500;
 
   @override
-  Color contentColorWhite = const Color(0xffFFFFFF);
+  Color textPlaceholder = AppColor.gray500;
+
+  @override
+  Color textPlaceholderAlt = AppColor.gray300;
+
+  @override
+  Color textPrimary = AppColor.gray950;
+
+  @override
+  Color textPrimaryOnBrand = AppColor.cyan950;
+
+  @override
+  Color textQuaternary = AppColor.gray600;
+
+  @override
+  Color textQuaternaryOnBrand = AppColor.cyan600;
+
+  @override
+  Color textSecondary = AppColor.gray800;
+
+  @override
+  Color textSecondaryHover = AppColor.gray900;
+
+  @override
+  Color textSecondaryOnBrand = AppColor.cyan800;
+
+  @override
+  Color textSuccessPrimary = AppColor.green500;
+
+  @override
+  Color textTertiary = AppColor.gray700;
+
+  @override
+  Color textTertiaryHover = AppColor.gray800;
+
+  @override
+  Color textTertiaryOnBrand = AppColor.cyan800;
+
+  @override
+  Color textUnknownPrimary = AppColor.gray600;
+
+  @override
+  Color textWarningPrimary = AppColor.yellow500;
+
+  @override
+  Color textWhite = AppColor.grayWhite;
 }
