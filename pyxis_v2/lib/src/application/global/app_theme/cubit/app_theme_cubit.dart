@@ -5,15 +5,15 @@ import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'app_theme_iml.dart';
 
 class AppThemeCubit extends Cubit<AppTheme> {
-  AppThemeCubit({AppTheme? theme}) : super(theme ?? DefaultAppTheme());
+  AppThemeCubit({AppTheme? theme})
+      : super(
+          theme ?? AppLightTheme(),
+        );
 
-  void initTheme()async{
+  void initTheme() async {}
 
-  }
+  void changeTheme(AppTheme theme) {}
 
-  void changeTheme(AppTheme theme){
-
-  }
-
-  static AppThemeCubit of(BuildContext context) => BlocProvider.of<AppThemeCubit>(context);
+  static AppThemeCubit of(BuildContext context) =>
+      BlocProvider.of<AppThemeCubit>(context);
 }

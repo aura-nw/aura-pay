@@ -1,3 +1,5 @@
 export 'app_secure_repository.dart';
 export 'web3_auth_repository.dart';
 export 'localization_repository.dart';
+export 'account_repository.dart';
+export 'key_store_repository.dart';
