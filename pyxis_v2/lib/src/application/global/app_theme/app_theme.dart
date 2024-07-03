@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pyxis_v2/src/core/constants/app_color.dart';
 
 /// [AppTheme] defines pyxis mobile application's design system.
 interface class AppTheme {
@@ -137,4 +138,261 @@ interface class AppTheme {
   late Color alphaBlack70;
   late Color alphaBlack80;
   late Color alphaBlack90;
+
+  // Utility color
+  late Color utilityGray50;
+
+  late Color utilityGray100;
+
+  late Color utilityGray200;
+
+  late Color utilityGray300;
+
+  late Color utilityGray400;
+
+  late Color utilityGray500;
+
+  late Color utilityGray600;
+
+  late Color utilityGray700;
+
+  late Color utilityBrand50;
+
+  late Color utilityBrand50Alt;
+
+  late Color utilityBrand100;
+
+  late Color utilityBrandAlt100;
+
+  late Color utilityBrand200;
+
+  late Color utilityBrandAlt200;
+
+  late Color utilityBrand300;
+
+  late Color utilityBrandAlt300;
+
+  late Color utilityBrand400;
+
+  late Color utilityBrandAlt400;
+
+  late Color utilityBrand500;
+
+  late Color utilityBrandAlt500;
+
+  late Color utilityBrand600;
+
+  late Color utilityBrandAlt600;
+
+  late Color utilityBrand700;
+
+  late Color utilityBrandAlt700;
+
+  late Color utilitySuccess50;
+
+  late Color utilitySuccess100;
+
+  late Color utilitySuccess200;
+
+  late Color utilitySuccess300;
+
+  late Color utilitySuccess400;
+
+  late Color utilitySuccess500;
+
+  late Color utilitySuccess600;
+
+  late Color utilitySuccess700;
+
+  late Color utilityWarning50;
+
+  late Color utilityWarning100;
+
+  late Color utilityWarning200;
+
+  late Color utilityWarning300;
+
+  late Color utilityWarning400;
+
+  late Color utilityWarning500;
+
+  late Color utilityWarning600;
+
+  late Color utilityWarning700;
+
+  late Color utilityError50;
+
+  late Color utilityError100;
+
+  late Color utilityError200;
+
+  late Color utilityError300;
+
+  late Color utilityError400;
+
+  late Color utilityError500;
+
+  late Color utilityError600;
+
+  late Color utilityError700;
+
+  late Color utilityBlue50;
+
+  late Color utilityBlue100;
+
+  late Color utilityBlue200;
+
+  late Color utilityBlue300;
+
+  late Color utilityBlue400;
+
+  late Color utilityBlue500;
+
+  late Color utilityBlue600;
+
+  late Color utilityBlue700;
+
+  late Color utilityIndigo50;
+
+  late Color utilityIndigo100;
+
+  late Color utilityIndigo200;
+
+  late Color utilityIndigo300;
+
+  late Color utilityIndigo400;
+
+  late Color utilityIndigo500;
+
+  late Color utilityIndigo600;
+
+  late Color utilityIndigo700;
+
+  late Color utilityPurple50;
+
+  late Color utilityPurple100;
+
+  late Color utilityPurple200;
+
+  late Color utilityPurple300;
+
+  late Color utilityPurple400;
+
+  late Color utilityPurple500;
+
+  late Color utilityPurple600;
+
+  late Color utilityPurple700;
+
+  late Color utilityPink50;
+
+  late Color utilityPink100;
+
+  late Color utilityPink200;
+
+  late Color utilityPink300;
+
+  late Color utilityPink400;
+
+  late Color utilityPink500;
+
+  late Color utilityPink600;
+
+  late Color utilityPink700;
+
+  late Color utilityRed50;
+
+  late Color utilityRed100;
+
+  late Color utilityRed200;
+
+  late Color utilityRed300;
+
+  late Color utilityRed400;
+
+  late Color utilityRed500;
+
+  late Color utilityRed600;
+
+  late Color utilityRed700;
+
+  late Color utilityOrange50;
+
+  late Color utilityOrange100;
+
+  late Color utilityOrange200;
+
+  late Color utilityOrange300;
+
+  late Color utilityOrange400;
+
+  late Color utilityOrange500;
+
+  late Color utilityOrange600;
+
+  late Color utilityOrange700;
+
+  late Color utilityYellow50;
+
+  late Color utilityYellow100;
+
+  late Color utilityYellow200;
+
+  late Color utilityYellow300;
+
+  late Color utilityYellow400;
+
+  late Color utilityYellow500;
+
+  late Color utilityYellow600;
+
+  late Color utilityYellow700;
+
+  late Color utilityGreen50;
+
+  late Color utilityGreen100;
+
+  late Color utilityGreen200;
+
+  late Color utilityGreen300;
+
+  late Color utilityGreen400;
+
+  late Color utilityGreen500;
+
+  late Color utilityGreen600;
+
+  late Color utilityGreen700;
+
+  late Color utilityTeal50;
+
+  late Color utilityTeal100;
+
+  late Color utilityTeal200;
+
+  late Color utilityTeal300;
+
+  late Color utilityTeal400;
+
+  late Color utilityTeal500;
+
+  late Color utilityTeal600;
+
+  late Color utilityTeal700;
+
+  late Color utilityCyan50;
+
+  late Color utilityCyan100;
+
+  late Color utilityCyan200;
+
+  late Color utilityCyan300;
+
+  late Color utilityCyan400;
+
+  late Color utilityCyan500;
+
+  late Color utilityCyan600;
+
+  late Color utilityCyan700;
 }
