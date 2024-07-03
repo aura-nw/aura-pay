@@ -1,3 +1,13 @@
 {
+  "get_started_screen_create_new_wallet" : "Create New Wallet",
+  "get_started_screen_add_wallet" : "Add Existing Wallet",
+  "get_started_screen_or_continue_with" : "Or continue with",
+  "get_started_screen_term_region_one" : "By continue, you agree to our",
+  "get_started_screen_term_region_two" : "Terms of Service",
 
+  "create_passcode_screen_create_passcode" : "Create passcode",
+  "create_passcode_screen_create_passcode_content" : "A passcode is required to protect your wallet",
+  "create_passcode_screen_confirm_passcode" : "Confirm Passcode",
+  "create_passcode_screen_confirm_passcode_content" : "Re-enter your passcode to confirm",
+  "create_passcode_screen_confirm_passcode_not_match" : "Passcode does not match"
 }
