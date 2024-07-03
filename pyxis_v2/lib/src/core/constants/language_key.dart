@@ -1,6 +1,15 @@
 sealed class LanguageKey {
-  static const String globalPyxisTitle = 'global_pyxis_title';
-  static const String globalPyxisCopyMessage = 'global_pyxis_copy_message';
-  static const String globalPyxisAura= 'global_pyxis_aura';
-  static const String globalPyxisAuraId= 'global_pyxis_aura_id';
+  // Get started screen
+  static const String getStartedScreenCreateNewWallet = 'get_started_screen_create_new_wallet';
+  static const String getStartedScreenAddWallet = 'get_started_screen_add_wallet';
+  static const String getStartedScreenOrContinueWith = 'get_started_screen_or_continue_with';
+  static const String getStartedScreenTermRegionOne = 'get_started_screen_term_region_one';
+  static const String getStartedScreenTermRegionTwo = 'get_started_screen_term_region_two';
+
+  // Create pass code screen
+  static const String createPasscodeScreenCreatePasscode = 'create_passcode_screen_create_passcode';
+  static const String createPasscodeScreenCreatePasscodeContent = 'create_passcode_screen_create_passcode_content';
+  static const String createPasscodeScreenConfirmPasscode = 'create_passcode_screen_confirm_passcode';
+  static const String createPasscodeScreenConfirmPasscodeContent = 'create_passcode_screen_confirm_passcode_content';
+  static const String createPasscodeScreenConfirmPasscodeNotMatch = 'create_passcode_screen_confirm_passcode_not_match';
 }
