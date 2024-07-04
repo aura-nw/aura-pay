@@ -8,4 +8,6 @@ abstract interface class AccountRepository
   Future<List<Account>> queryByAddress({
     required String address,
   });
+
+  Future<Account?> getFirstAccount();
 }

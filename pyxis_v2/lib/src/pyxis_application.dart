@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pyxis_v2/app_configs/di.dart';
+import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_global_state/app_global_cubit.dart';
 import 'package:pyxis_v2/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/cubit/app_theme_cubit.dart';
 import 'package:pyxis_v2/src/application/global/localization/app_translations_delegate.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/navigator.dart';
 
 // Define the AuraWalletApplication widget
@@ -18,6 +21,9 @@ final class PyxisApplication extends StatefulWidget {
 
 class _PyxisApplicationState extends State<PyxisApplication>
     with WidgetsBindingObserver {
+
+  final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
+
   @override
   void initState() {
     super.initState();
@@ -68,12 +74,12 @@ class _PyxisApplicationState extends State<PyxisApplication>
         navigatorKey: AppNavigator.navigatorKey,
         theme: ThemeData(
           useMaterial3: true,
-          // fontFamily: AppTypoGraPhy.interFontFamily,
+          fontFamily: AppTypoGraPhy.mulish,
         ),
         onGenerateRoute: AppNavigator.onGenerateRoute,
         initialRoute: RoutePath.splash,
         debugShowCheckedModeBanner: false,
-        title: 'config.appName',
+        title: _config.appName,
         locale: AppLocalizationManager.instance.getAppLocale(),
         localizationsDelegates: const [
           AppTranslationsDelegate(),

@@ -1,7 +1,7 @@
 import 'package:domain/domain.dart';
 
 extension AccountDtoMapper on AccountDto {
-  AccountDto get toEntity => AccountDto(
+  Account get toEntity => Account(
         id: id,
         name: name,
         evmAddress: evmAddress,

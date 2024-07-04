@@ -3,12 +3,18 @@ import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
+import 'package:pyxis_v2/src/application/provider/local/account/account_database_service_impl.dart';
+import 'package:pyxis_v2/src/application/provider/local/key_store/key_store_database_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/localization_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/normal_storage_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/secure_storage_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/provider/biometric_provider.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
+import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_cubit.dart';
+import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_cubit.dart';
+import 'package:pyxis_v2/src/presentation/screens/splash/splash_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'package:web3auth_flutter/enums.dart';
@@ -21,6 +27,7 @@ final getIt = GetIt.instance;
 
 Future<void> initDependency(
   PyxisMobileConfig config,
+  Isar isar,
 ) async {
   // final Dio dio = Dio(
   //   BaseOptions(
@@ -35,13 +42,17 @@ Future<void> initDependency(
   //   ),
   // );
 
+  getIt.registerLazySingleton<PyxisMobileConfig>(
+    () => config,
+  );
+
   WalletCore.init();
 
   const FlutterSecureStorage secureStorage = FlutterSecureStorage(
     aOptions: AndroidOptions(
       encryptedSharedPreferences: true,
-      sharedPreferencesName: AppLocalConstant.keyDbName,
-      preferencesKeyPrefix: AppLocalConstant.keyDbPrefix,
+      sharedPreferencesName: AppLocalConstant.secureStorageName,
+      preferencesKeyPrefix: AppLocalConstant.secureStoragePrefix,
     ),
     iOptions: IOSOptions(),
   );
@@ -83,6 +94,18 @@ Future<void> initDependency(
     () => const SecureStorageServiceImpl(secureStorage),
   );
 
+  getIt.registerLazySingleton<AccountDatabaseService>(
+    () => AccountDatabaseServiceImpl(
+      isar,
+    ),
+  );
+
+  getIt.registerLazySingleton<KeyStoreDatabaseService>(
+    () => KeyStoreDatabaseServiceImpl(
+      isar,
+    ),
+  );
+
   // Register repository
   getIt.registerLazySingleton<LocalizationRepository>(
     () => LocalizationRepositoryImpl(
@@ -90,10 +113,22 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerLazySingleton(
+  getIt.registerLazySingleton<AppSecureRepository>(
     () => AppSecureRepositoryImpl(
       getIt.get<NormalStorageService>(),
       getIt.get<BiometricProvider>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<KeyStoreRepository>(
+    () => KeyStoreRepositoryImpl(
+      getIt.get<KeyStoreDatabaseService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<AccountRepository>(
+    () => AccountRepositoryImpl(
+      getIt.get<AccountDatabaseService>(),
     ),
   );
 
@@ -110,10 +145,43 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<KeyStoreUseCase>(
+    () => KeyStoreUseCase(
+      getIt.get<KeyStoreRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<AccountUseCase>(
+    () => AccountUseCase(
+      getIt.get<AccountRepository>(),
+    ),
+  );
+
   // Register bloc
   getIt.registerFactory<CreatePasscodeCubit>(
     () => CreatePasscodeCubit(
       getIt.get<AppSecureUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<SplashCubit>(
+    () => SplashCubit(
+      getIt.get(),
+      getIt.get(),
+    ),
+  );
+
+  getIt.registerFactory<GenerateWalletCubit>(
+    () => GenerateWalletCubit(
+      getIt.get<AccountUseCase>(),
+      getIt.get<KeyStoreUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<ReLoginCubit>(
+    () => ReLoginCubit(
+      getIt.get<AppSecureUseCase>(),
+      getIt.get<AccountUseCase>(),
     ),
   );
 }

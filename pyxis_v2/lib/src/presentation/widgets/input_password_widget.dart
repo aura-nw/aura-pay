@@ -31,11 +31,11 @@ class InputPasswordWidget extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isFill ? appTheme.primaryColor500 : null,
+                color: isFill ? appTheme.utilityBrand300 : appTheme.bgSecondary,
                 border: isFill
                     ? null
                     : Border.all(
-                  color: appTheme.borderColorGrayDark,
+                  color: appTheme.borderSecondary,
                   width: BorderSize.border01,
                 ),
               ),

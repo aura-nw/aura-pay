@@ -9,5 +9,15 @@
   "create_passcode_screen_create_passcode_content" : "A passcode is required to protect your wallet",
   "create_passcode_screen_confirm_passcode" : "Confirm Passcode",
   "create_passcode_screen_confirm_passcode_content" : "Re-enter your passcode to confirm",
-  "create_passcode_screen_confirm_passcode_not_match" : "Passcode does not match"
+  "create_passcode_screen_confirm_passcode_not_match" : "Passcode does not match",
+
+  "generate_wallet_screen_yeti_bot" : "Yeti bot",
+  "generate_wallet_screen_generating" : "Generating",
+  "generate_wallet_screen_on_board" : "Get me onboard",
+  "generate_wallet_screen_bot_content_one" : "Welcome to Pyxis",
+  "generate_wallet_screen_bot_content_two" : "Pyxis is generating your wallet",
+  "generate_wallet_screen_bot_content_three" : "Please keep your passphrase/ private key safe and do not lose it or forget it",
+  "generate_wallet_screen_bot_content_four" : "Anyone with your private key can have access to your assets",
+  "generate_wallet_screen_bot_content_five" : "All done, your Pyxis wallet is ready \uD83E\uDD73\uD83C\uDF89\uD83C\uDF89",
+  "generate_wallet_screen_bot_content_six" : "Your wallet address"
 }

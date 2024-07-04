@@ -54,7 +54,7 @@ class _AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: theme.surfaceColorWhite,
+      color: theme.bgPrimary,
       borderRadius: borderRadius,
       clipBehavior: Clip.antiAlias,
       child: Ink(
@@ -69,8 +69,8 @@ class _AppButton extends StatelessWidget {
               : null,
         ),
         child: InkWell(
-          splashColor: theme.primaryColor50,
-          highlightColor: theme.primaryColor50,
+          splashColor: theme.bgBrandPrimary,
+          highlightColor: theme.bgBrandSolidHover,
           onTap: disabled ? null : onPress,
           child: Container(
             constraints:
@@ -88,7 +88,7 @@ class _AppButton extends StatelessWidget {
                       leading ?? const SizedBox.shrink(),
                       if (leading != null)
                         const SizedBox(
-                          width: 7,
+                          width: BoxSize.boxSize03,
                         ),
                       Text(
                         text,
@@ -96,7 +96,7 @@ class _AppButton extends StatelessWidget {
                       ),
                       if (suffix != null)
                         const SizedBox(
-                          width: 7,
+                          width: BoxSize.boxSize03,
                         ),
                       suffix ?? const SizedBox.shrink(),
                     ],
@@ -117,6 +117,7 @@ final class PrimaryAppButton extends StatelessWidget {
   final double? minWidth;
   final Color? backGroundColor;
   final TextStyle? textStyle;
+  final bool loading;
 
   const PrimaryAppButton({
     super.key,
@@ -128,6 +129,7 @@ final class PrimaryAppButton extends StatelessWidget {
     this.minWidth,
     this.backGroundColor,
     this.textStyle,
+    this.loading = false,
   });
 
   @override
@@ -138,15 +140,21 @@ final class PrimaryAppButton extends StatelessWidget {
           text: text,
           disabled: isDisable,
           onPress: onPress,
-          color: backGroundColor ?? theme.primaryDefault,
-          disableColor: theme.primaryColor50,
+          color: backGroundColor ?? theme.bgBrandSolid,
+          disableColor: theme.bgDisabled,
           minWidth: minWidth,
-          textStyle: textStyle ?? AppTypoGraPhy.bodyMedium03.copyWith(
-            color: theme.contentColorWhite,
-          ),
+          textStyle: textStyle ??
+              (isDisable == true
+                  ? AppTypoGraPhy.textMdSemiBold.copyWith(
+                      color: theme.textDisabled,
+                    )
+                  : AppTypoGraPhy.textMdSemiBold.copyWith(
+                      color: theme.textPrimaryOnBrand,
+                    )),
           theme: theme,
           leading: leading,
           suffix: suffix,
+          loading: loading,
         );
       },
     );
@@ -184,11 +192,11 @@ final class BorderAppButton extends StatelessWidget {
           disabled: isDisable,
           onPress: onPress,
           minWidth: minWidth,
-          textStyle: AppTypoGraPhy.bodyMedium03.copyWith(
-            color: textColor ?? theme.contentColorBrand,
+          textStyle: AppTypoGraPhy.textSmSemiBold.copyWith(
+            color: textColor ?? theme.textSecondary,
           ),
           theme: theme,
-          borderColor: borderColor ?? theme.borderColorBrand,
+          borderColor: borderColor ?? theme.borderPrimary,
           suffix: suffix,
           leading: leading,
         );
@@ -197,44 +205,44 @@ final class BorderAppButton extends StatelessWidget {
   }
 }
 
-final class TextAppButton extends StatelessWidget {
-  final String text;
-  final bool? isDisable;
-  final VoidCallback? onPress;
-  final double? minWidth;
-  final Widget? leading;
-  final Widget? suffix;
-  final TextStyle ?style;
-
-  const TextAppButton({
-    super.key,
-    required this.text,
-    this.style,
-    this.isDisable,
-    this.onPress,
-    this.minWidth,
-    this.leading,
-    this.suffix,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AppThemeBuilder(
-      builder: (theme) {
-        return _AppButton(
-          text: text,
-          disabled: isDisable,
-          onPress: onPress,
-          color: theme.bodyColorBackground,
-          minWidth: minWidth,
-          textStyle: style ?? AppTypoGraPhy.bodyMedium03.copyWith(
-            color: theme.contentColor700,
-          ),
-          theme: theme,
-          suffix: suffix,
-          leading: leading,
-        );
-      },
-    );
-  }
-}
+// final class TextAppButton extends StatelessWidget {
+//   final String text;
+//   final bool? isDisable;
+//   final VoidCallback? onPress;
+//   final double? minWidth;
+//   final Widget? leading;
+//   final Widget? suffix;
+//   final TextStyle ?style;
+//
+//   const TextAppButton({
+//     super.key,
+//     required this.text,
+//     this.style,
+//     this.isDisable,
+//     this.onPress,
+//     this.minWidth,
+//     this.leading,
+//     this.suffix,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return AppThemeBuilder(
+//       builder: (theme) {
+//         return _AppButton(
+//           text: text,
+//           disabled: isDisable,
+//           onPress: onPress,
+//           color: theme.bodyColorBackground,
+//           minWidth: minWidth,
+//           textStyle: style ?? AppTypoGraPhy.bodyMedium03.copyWith(
+//             color: theme.contentColor700,
+//           ),
+//           theme: theme,
+//           suffix: suffix,
+//           leading: leading,
+//         );
+//       },
+//     );
+//   }
+// }

@@ -12,4 +12,15 @@ sealed class LanguageKey {
   static const String createPasscodeScreenConfirmPasscode = 'create_passcode_screen_confirm_passcode';
   static const String createPasscodeScreenConfirmPasscodeContent = 'create_passcode_screen_confirm_passcode_content';
   static const String createPasscodeScreenConfirmPasscodeNotMatch = 'create_passcode_screen_confirm_passcode_not_match';
+
+  // Generate wallet screen
+  static const String generateWalletScreenYetiBot = 'generate_wallet_screen_yeti_bot';
+  static const String generateWalletScreenGenerating = 'generate_wallet_screen_generating';
+  static const String generateWalletScreenOnBoard = 'generate_wallet_screen_on_board';
+  static const String generateWalletScreenBotContentOne = 'generate_wallet_screen_bot_content_one';
+  static const String generateWalletScreenBotContentTwo = 'generate_wallet_screen_bot_content_two';
+  static const String generateWalletScreenBotContentThree = 'generate_wallet_screen_bot_content_three';
+  static const String generateWalletScreenBotContentFour = 'generate_wallet_screen_bot_content_four';
+  static const String generateWalletScreenBotContentFive = 'generate_wallet_screen_bot_content_five';
+  static const String generateWalletScreenBotContentSix = 'generate_wallet_screen_bot_content_six';
 }

@@ -1,14 +1,13 @@
 sealed class AppLocalConstant{
   // account db name
-  static const String accountDbName = 'auth.isar';
+  static const String localDbName = 'px_wallet_database_v2.isar';
 
-  // this db name save private key or passPhrase
-  static const String keyDbName = 'pyxis_controller_key_db_name';
-  static const String keyDbPrefix = 'pyxis_controller_key_db_prefix';
-  static const String keyStoreAlias = 'pyxis_controller_key_store_alias';
+  // Secure storage prefix
+  static const String secureStorageName = 'px_wallet_secure_storage';
+  static const String secureStoragePrefix = 'px_wallet_secure_storage_prefix';
 
 
   // Passcode and biometric key
-  static const String passCodeKey = 'pyxis_app_pass_code';
-  static const String bioMetricKey = 'pyxis_app_bio_metric';
+  static const String passCodeKey = 'px_app_pass_code';
+  static const String bioMetricKey = 'px_app_bio_metric';
 }

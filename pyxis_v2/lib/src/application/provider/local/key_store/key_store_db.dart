@@ -3,6 +3,18 @@ import 'package:isar/isar.dart';
 
 part 'key_store_db.g.dart';
 
+extension KeyStoreDbExtension on KeyStoreDb {
+  KeyStoreDb copyWith({
+    String? keyName,
+    int ?id,
+  }) {
+    return KeyStoreDb(
+      keyName: keyName ?? this.keyName,
+      keyId: id ?? keyId,
+    );
+  }
+}
+
 @Collection(
   inheritance: false,
 )
