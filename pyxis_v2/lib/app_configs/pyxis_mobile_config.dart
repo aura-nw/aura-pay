@@ -17,8 +17,6 @@ class PyxisMobileConfig {
 
   Map<String, dynamic> get appConfigs => jsonDecode(configs['APP_CONFIG']);
 
-  String get auraId => configs['AURA_ID'];
-
   String get chainName => appConfigs['chainName'];
 
   String get coinId => appConfigs['coinId'];
