@@ -1,0 +1,308 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_v2/app_configs/di.dart';
+import 'package:pyxis_v2/src/application/global/app_global_state/app_global_cubit.dart';
+import 'package:pyxis_v2/src/application/global/app_global_state/app_global_state.dart';
+import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_v2/src/core/constants/language_key.dart';
+import 'package:pyxis_v2/src/core/constants/size_constant.dart';
+import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_state.dart';
+import 'generate_wallet_cubit.dart';
+import 'generate_wallet_selector.dart';
+import 'widgets/message.dart';
+import 'package:pyxis_v2/src/presentation/widgets/app_button.dart';
+import 'widgets/app_bar_title.dart';
+import 'package:pyxis_v2/src/presentation/widgets/app_bar_widget.dart';
+import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
+
+final class GenerateMessageObject<T> {
+  final int groupId;
+  final String data;
+  final T? object;
+
+  // 0 == text , and add others case if need.
+  final int type;
+
+  const GenerateMessageObject({
+    required this.data,
+    required this.groupId,
+    this.object,
+    required this.type,
+  });
+
+  bool get isTextMessage => type == 0;
+}
+
+class GenerateWalletScreen extends StatefulWidget {
+  const GenerateWalletScreen({super.key});
+
+  @override
+  State<GenerateWalletScreen> createState() => _GenerateWalletScreenState();
+}
+
+class _GenerateWalletScreenState extends State<GenerateWalletScreen>
+    with StateFulBaseScreen {
+  final List<GenerateMessageObject> _messages = [];
+
+  final GenerateWalletCubit _cubit = getIt.get<GenerateWalletCubit>();
+
+  final GlobalKey<AnimatedListState> _messageKey =
+      GlobalKey<AnimatedListState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit.generateWallet();
+  }
+
+  void _addContent() async {
+    final localization = AppLocalizationManager.of(context);
+
+    await Future.delayed(
+      const Duration(
+        milliseconds: 1200,
+      ),
+    );
+
+    _messages.insert(
+      0,
+      GenerateMessageObject(
+        data: localization.translate(
+          LanguageKey.generateWalletScreenBotContentOne,
+        ),
+        groupId: 0,
+        type: 0,
+      ),
+    );
+
+    _messageKey.currentState?.insertItem(
+      0,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    await Future.delayed(
+      const Duration(
+        milliseconds: 1200,
+      ),
+    );
+    _messages.insert(
+      0,
+      GenerateMessageObject(
+        data: localization.translate(
+          LanguageKey.generateWalletScreenBotContentTwo,
+        ),
+        groupId: 0,
+        type: 0,
+      ),
+    );
+
+    _messageKey.currentState?.insertItem(
+      0,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    await Future.delayed(
+      const Duration(
+        milliseconds: 1200,
+      ),
+    );
+
+    _messages.insert(
+      0,
+      GenerateMessageObject(
+        data: localization.translate(
+          LanguageKey.generateWalletScreenBotContentThree,
+        ),
+        groupId: 0,
+        type: 0,
+      ),
+    );
+
+    _messageKey.currentState?.insertItem(
+      0,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    await Future.delayed(
+      const Duration(
+        milliseconds: 1200,
+      ),
+    );
+
+    _messages.insert(
+      0,
+      GenerateMessageObject(
+        data: localization.translate(
+          LanguageKey.generateWalletScreenBotContentFour,
+        ),
+        groupId: 1,
+        type: 0,
+      ),
+    );
+    _messageKey.currentState?.insertItem(
+      0,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    await Future.delayed(
+      const Duration(
+        milliseconds: 1200,
+      ),
+    );
+
+    _messages.insert(
+      0,
+      GenerateMessageObject(
+        data: localization.translate(
+          LanguageKey.generateWalletScreenBotContentFive,
+        ),
+        groupId: 1,
+        type: 0,
+      ),
+    );
+
+    _messageKey.currentState?.insertItem(
+      0,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    await Future.delayed(
+      const Duration(
+        milliseconds: 1200,
+      ),
+    );
+
+    _messages.insert(
+      0,
+      GenerateMessageObject(
+        data: localization.translate(
+          LanguageKey.generateWalletScreenBotContentSix,
+        ),
+        groupId: 2,
+        type: 1,
+        object: _cubit.state.wallet?.address,
+      ),
+    );
+    _messageKey.currentState?.insertItem(
+      0,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    _cubit.updateStatus(true);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _addContent();
+  }
+
+  @override
+  void dispose() {
+    _messages.clear();
+    super.dispose();
+  }
+
+  @override
+  Widget child(BuildContext context, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return Column(
+      children: [
+        Expanded(
+          child: AnimatedList(
+            key: _messageKey,
+            padding: const EdgeInsets.symmetric(
+              vertical: Spacing.spacing06,
+            ),
+            reverse: true,
+            initialItemCount: _messages.length,
+            primary: true,
+            itemBuilder: (context, index, animation) {
+              return SizeTransition(
+                sizeFactor: animation,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: Spacing.spacing03,
+                  ),
+                  child: GenerateWalletYetiBotMessageWidget(
+                    appTheme: appTheme,
+                    messageObject: _messages[index],
+                    nextGroup: _messages.getIndex(index + 1)?.groupId,
+                    onTap: () {},
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        GenerateWalletIsReadySelector(
+          builder: (isReady) {
+            return PrimaryAppButton(
+              onPress: _onNavigateToHome,
+              text: !isReady
+                  ? localization.translate(
+                      LanguageKey.generateWalletScreenGenerating,
+                    )
+                  : localization.translate(
+                      LanguageKey.generateWalletScreenOnBoard,
+                    ),
+              isDisable: !isReady,
+              leading: !isReady
+                  ? SizedBox.square(
+                      dimension: 19.2,
+                      child: CircularProgressIndicator(
+                        color: appTheme.textDisabled,
+                      ),
+                    )
+                  : null,
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return BlocProvider.value(
+      value: _cubit,
+      child: BlocListener<GenerateWalletCubit, GenerateWalletState>(
+        listener: (context, state) {
+          switch (state.status) {
+            case GenerateWalletStatus.generating:
+              break;
+            case GenerateWalletStatus.generated:
+              break;
+            case GenerateWalletStatus.storing:
+              // Show loading
+              break;
+            case GenerateWalletStatus.stored:
+              AppGlobalCubit.of(context).changeStatus(
+                AppGlobalStatus.authorized,
+              );
+              break;
+          }
+        },
+        child: Scaffold(
+          backgroundColor: appTheme.bgSecondary,
+          appBar: AppBarDefault(
+            appTheme: appTheme,
+            title: GenerateWalletAppBarTitleWidget(
+              appTheme: appTheme,
+              localization: localization,
+            ),
+            localization: localization,
+          ),
+          body: child,
+        ),
+      ),
+    );
+  }
+
+  void _onNavigateToHome() {
+    _cubit.storeKey();
+  }
+}
