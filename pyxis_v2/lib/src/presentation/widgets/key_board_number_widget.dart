@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 
@@ -7,7 +9,7 @@ typedef KeyboardTapCallback = void Function(String text);
 
 class KeyboardNumberWidget extends StatefulWidget {
   final Widget? rightIcon;
-  final VoidCallback ?rightButtonFn;
+  final VoidCallback? rightButtonFn;
   final KeyboardTapCallback onKeyboardTap;
   final MainAxisAlignment mainAxisAlignment;
 
@@ -78,7 +80,10 @@ class _KeyboardNumberWidgetState extends State<KeyboardNumberWidget> {
                   alignment: Alignment.center,
                   width: BoxSize.boxSize10,
                   height: BoxSize.boxSize10,
-                  child: widget.rightIcon,
+                  child: widget.rightIcon ??
+                      SvgPicture.asset(
+                        AssetIconPath.icCommonClear,
+                      ),
                 ),
               )
             ],
@@ -105,7 +110,7 @@ class _KeyboardNumberWidgetState extends State<KeyboardNumberWidget> {
             return Text(
               value,
               style: AppTypoGraPhy.keyboardStyle.copyWith(
-                color: theme.contentColor700,
+                color: theme.textPrimary,
               ),
             );
           },

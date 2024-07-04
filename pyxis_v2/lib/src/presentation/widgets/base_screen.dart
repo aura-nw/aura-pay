@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme_builder.dart';
@@ -6,13 +7,22 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 
 mixin StatelessBaseScreen on StatelessWidget {
+
+  EdgeInsets defaultPadding(){
+    return const EdgeInsets.symmetric(
+      vertical: Spacing.spacing05,
+      horizontal: Spacing.spacing07,
+    );
+  }
+
+  EdgeInsets ? padding(){
+    return null;
+  }
+
   Widget buildSpace(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: Spacing.spacing05,
-          horizontal: Spacing.spacing07,
-        ),
+        padding: padding() ?? defaultPadding(),
         child: child(context),
       ),
     );
@@ -32,6 +42,18 @@ mixin StatelessBaseScreen on StatelessWidget {
 }
 
 mixin StateFulBaseScreen<T extends StatefulWidget> on State<T> {
+
+  EdgeInsets defaultPadding(){
+    return const EdgeInsets.symmetric(
+      vertical: Spacing.spacing05,
+      horizontal: Spacing.spacing07,
+    );
+  }
+
+  EdgeInsets ? padding(){
+    return null;
+  }
+
   Widget buildSpace(
     BuildContext context,
     AppTheme appTheme,
@@ -39,10 +61,7 @@ mixin StateFulBaseScreen<T extends StatefulWidget> on State<T> {
   ) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: Spacing.spacing05,
-          horizontal: Spacing.spacing07,
-        ),
+        padding: padding() ?? defaultPadding(),
         child: child(
           context,
           appTheme,
