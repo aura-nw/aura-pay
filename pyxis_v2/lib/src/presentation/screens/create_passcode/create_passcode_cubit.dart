@@ -2,6 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/helpers/crypto_helper.dart';
+import 'package:wallet_core/wallet_core.dart';
 
 import 'create_passcode_state.dart';
 

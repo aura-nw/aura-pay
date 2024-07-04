@@ -3,13 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_v2/app_configs/di.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
-import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
+import 'package:pyxis_v2/src/presentation/widgets/app_bar_widget.dart';
+import 'create_passcode_state.dart';
+import 'create_passcode_cubit.dart';
+import 'widgets/fill_passcode.dart';
 import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
-import 'package:pyxis_v2/src/presentation/widgets/input_password_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/key_board_number_widget.dart';
 
 class CreatePasscodeScreen extends StatefulWidget {
-  const CreatePasscodeScreen({super.key});
+  final VoidCallback onCreatePasscodeDone;
+
+  const CreatePasscodeScreen({
+    required this.onCreatePasscodeDone,
+    super.key,
+  });
 
   @override
   State<CreatePasscodeScreen> createState() => _CreatePasscodeScreenState();
@@ -17,9 +24,7 @@ class CreatePasscodeScreen extends StatefulWidget {
 
 class _CreatePasscodeScreenState extends State<CreatePasscodeScreen>
     with StateFulBaseScreen, SingleTickerProviderStateMixin {
-
-  final CreatePasscodeCubit _cubit =
-  getIt.get<CreatePasscodeCubit>();
+  final CreatePasscodeCubit _cubit = getIt.get<CreatePasscodeCubit>();
 
   late PageController _pageController;
 
@@ -42,22 +47,26 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen>
     return Column(
       children: [
         Expanded(
-          child: PageView(
-            controller: _pageController,
-            scrollDirection: Axis.horizontal,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              InputPasswordWidget(
-                length: 6,
-                appTheme: appTheme,
-                fillIndex: _fillIndex,
-              ),
-              InputPasswordWidget(
-                length: 6,
-                appTheme: appTheme,
-                fillIndex: _fillIndex,
-              ),
-            ],
+          child: Padding(
+            padding: defaultPadding(),
+            child: PageView(
+              controller: _pageController,
+              scrollDirection: Axis.horizontal,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                CreatePasscodeCreateFormWidget(
+                  appTheme: appTheme,
+                  localization: localization,
+                  fillIndex: _fillIndex,
+                ),
+                CreatePasscodeConfirmFormWidget(
+                  appTheme: appTheme,
+                  localization: localization,
+                  fillIndex: _fillIndex,
+                  isWrongPasscode: _wrongConfirmPassword,
+                ),
+              ],
+            ),
           ),
         ),
         KeyboardNumberWidget(
@@ -69,12 +78,35 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen>
   }
 
   @override
+  EdgeInsets padding() {
+    return EdgeInsets.zero;
+  }
+
+  @override
   Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
       AppLocalizationManager localization) {
     return BlocProvider.value(
       value: _cubit,
-      child: Scaffold(
-        body: child,
+      child: BlocListener<CreatePasscodeCubit, CreatePasscodeState>(
+        listener: (context, state) {
+          switch (state.status) {
+            case CreatePasscodeStatus.init:
+              break;
+            case CreatePasscodeStatus.onSavePasscode:
+              break;
+            case CreatePasscodeStatus.savePasscodeDone:
+              _onSavePassWordDone();
+              break;
+          }
+        },
+        child: Scaffold(
+          backgroundColor: appTheme.bgPrimary,
+          appBar: AppBarWithoutTitle(
+            appTheme: appTheme,
+            localization: localization,
+          ),
+          body: child,
+        ),
       ),
     );
   }
@@ -140,6 +172,6 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen>
   }
 
   void _onSavePassWordDone() {
-
+    widget.onCreatePasscodeDone();
   }
 }
