@@ -1,19 +1,6 @@
 import 'package:domain/domain.dart';
 
-extension AccountDtoMapper on AccountDto {
-  Account get toEntity => Account(
-        id: id,
-        name: name,
-        evmAddress: evmAddress,
-        keyStoreId: keyStoreId,
-        cosmosAddress: cosmosAddress,
-        createType: createType,
-        type: type,
-      );
-}
-
-class AccountDto {
-  final int id;
+final class AddAccountRequest {
   final String name;
   final String evmAddress;
   final String? cosmosAddress;
@@ -21,8 +8,7 @@ class AccountDto {
   final AccountType type;
   final AccountCreateType createType;
 
-  const AccountDto({
-    required this.id,
+  const AddAccountRequest({
     required this.name,
     required this.evmAddress,
     this.cosmosAddress,
