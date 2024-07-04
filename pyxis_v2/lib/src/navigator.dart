@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/core/app_routes.dart';
+import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_screen.dart';
+import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_creen.dart';
+import 'package:pyxis_v2/src/presentation/screens/get_started/get_started_screen.dart';
+import 'package:pyxis_v2/src/presentation/screens/home/home_screen.dart';
+import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/splash/spash_screen.dart';
 
 sealed class RoutePath {
@@ -9,6 +14,8 @@ sealed class RoutePath {
   static const String _onBoarding = '${_base}onboarding';
   static const String reLogin = '$_onBoarding/re_login';
   static const String getStarted = '$_onBoarding/get_started';
+  static const String setPasscode = '$_onBoarding/set_passcode';
+  static const String createWallet = '$_onBoarding/create_wallet';
 
   static const String home = '${_base}home';
 }
@@ -21,6 +28,35 @@ sealed class AppNavigator {
       case RoutePath.splash:
         return _defaultRoute(
           const SplashScreen(),
+          settings,
+        );
+      case RoutePath.getStarted:
+        return _defaultRoute(
+          const GetStartedScreen(),
+          settings,
+        );
+      case RoutePath.setPasscode:
+        final VoidCallback onCreatePasscodeDone =
+            settings.arguments as VoidCallback;
+        return _defaultRoute(
+          CreatePasscodeScreen(
+            onCreatePasscodeDone: onCreatePasscodeDone,
+          ),
+          settings,
+        );
+      case RoutePath.reLogin:
+        return _defaultRoute(
+          const ReLoginScreen(),
+          settings,
+        );
+      case RoutePath.createWallet:
+        return _defaultRoute(
+          const GenerateWalletScreen(),
+          settings,
+        );
+      case RoutePath.home:
+        return _defaultRoute(
+          const HomeScreen(),
           settings,
         );
       default:

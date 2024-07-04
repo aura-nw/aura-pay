@@ -9,10 +9,10 @@ class AppGlobalCubit extends Cubit<AppGlobalState> {
           const AppGlobalState(),
         );
 
-  void changeState(AppGlobalState newState) {
-    if (newState.status != state.status) {
-      emit(newState);
-    }
+  void changeStatus(AppGlobalStatus status) {
+    emit(state.copyWith(
+      status: status,
+    ));
   }
 
   static AppGlobalCubit of(BuildContext context) =>
