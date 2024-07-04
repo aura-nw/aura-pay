@@ -64,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'Load Stored Key':
           testLoadStoredKeyWithMnemonic(), // Kiểm tra tải mnemonic
       'Load Stored Key with Private Key': testLoadStoredKeyWithPrivateKey(),
+      'Wallet Balance': await testWalletBalance(), // Kiểm tra balance
     };
   }
 
@@ -181,5 +182,21 @@ class _MyHomePageState extends State<MyHomePage> {
         .fromSavedJson(storedKeyPrivateKey, 'password');
     print('TestCase #7 address: ${wallet?.address}');
     return wallet?.address == _address;
+  }
+
+  // Hàm kiểm tra số dư của ví
+  Future<bool> testWalletBalance() async {
+    try {
+      ChainInfo chainInfo = ChainList.ethereum;
+      var balance = await chainInfo
+          .getWalletBalance('0xAfFd04f995D558aC1b6114A960Ea9fCf28adc602');
+      print('Balance: $balance');
+      print('Balance in Ether: ${balance / BigInt.from(10).pow(18)}');
+
+      return true; // Kiểm tra nếu số dư lớn hơn 0
+    } catch (e) {
+      print('Error: $e');
+      return false;
+    }
   }
 }

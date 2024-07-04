@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:flutter/foundation.dart';
+import 'package:wallet_core/src/objects/chain_info.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as Ethereum;
 
@@ -11,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:trust_wallet_core/flutter_trust_wallet_core.dart';
 import 'package:trust_wallet_core/protobuf/Tron.pb.dart' as Tron;
 import 'package:trust_wallet_core/trust_wallet_core_ffi.dart';
+import 'package:web3dart/crypto.dart';
+import 'package:web3dart/web3dart.dart';
 
 /// Class to hold wallet information.
 class AWallet {
@@ -35,10 +38,36 @@ class AWallet {
     return _privateKey.data();
   }
 
-  // Get Wallet Balance
-  String getBalance() {
-    return '0.0';
+  Future<String> signMessage(String message) async {
+    try {
+      // Prefix the message with the Ethereum signing prefix
+      final prefix = '\u0019Ethereum Signed Message:\n${message.length}';
+      final prefixedMessage = utf8.encode(prefix + message);
+
+      // Hash the message
+      final messageHash = keccak256(Uint8List.fromList(prefixedMessage));
+
+      // Create the Ethereum SigningInput protobuf message
+      final signingInput = Ethereum.SigningInput(
+        privateKey: _privateKey.data().toList(),
+        messageHash: messageHash.toList(),
+      );
+
+      // Use AnySigner to sign the message
+      final output = Ethereum.SigningOutput.fromBuffer(
+        AnySigner.sign(signingInput.writeToBuffer(), coinType).toList(),
+      );
+
+      // Return the signed message
+      return hex.encode(output.encoded.toList());
+    } catch (e) {
+      logger.d('Error signing message: $e');
+      return '';
+    }
   }
+
+  Future<void> sendTransaction(String toAddress, BigInt amount, BigInt gasPrice,
+      BigInt gasLimit) async {}
 
   Uint8List? addressList() {
     print('getAddressForCoin = ${wallet!.getAddressForCoin(coinType)}');

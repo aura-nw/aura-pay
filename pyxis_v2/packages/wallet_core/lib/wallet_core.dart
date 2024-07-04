@@ -11,6 +11,8 @@ export 'package:trust_wallet_core/trust_wallet_core.dart';
 export 'package:wallet_core/src/managements/stored_key_management.dart';
 export 'package:wallet_core/src/managements/wallet_management.dart';
 export 'package:wallet_core/src/objects/a_wallet.dart';
+export 'package:wallet_core/src/objects/chain_info.dart';
+export 'package:wallet_core/src/constants/chain_list.dart';
 
 /// WalletCore class provides various functionalities to manage wallets.
 class WalletCore {
