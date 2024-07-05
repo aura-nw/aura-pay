@@ -1,4 +1,7 @@
 sealed class LanguageKey {
+  // Common app
+  static const String commonYetiBot = 'common_yeti_bot';
+
   // Get started screen
   static const String getStartedScreenCreateNewWallet = 'get_started_screen_create_new_wallet';
   static const String getStartedScreenAddWallet = 'get_started_screen_add_wallet';
@@ -23,4 +26,26 @@ sealed class LanguageKey {
   static const String generateWalletScreenBotContentFour = 'generate_wallet_screen_bot_content_four';
   static const String generateWalletScreenBotContentFive = 'generate_wallet_screen_bot_content_five';
   static const String generateWalletScreenBotContentSix = 'generate_wallet_screen_bot_content_six';
+
+  // Import wallet screen
+  static const String importWalletScreenAppBarTitle = "import_wallet_screen_app_bar_title";
+  static const String importWalletScreenSeedPhrase = "import_wallet_screen_seed_phrase";
+  static const String importWalletScreenPrivateKey = "import_wallet_screen_private_key";
+  static const String importWalletScreenSeedPhraseTitle = "import_wallet_screen_seed_phrase_title";
+  static const String importWalletScreenSeedPhraseWords = "import_wallet_screen_seed_phrase_words";
+  static const String importWalletScreenPrivateKeyHint = "import_wallet_screen_private_key_hint";
+  static const String importWalletScreenInValidPrivateKey = "import_wallet_screen_in_valid_private_key";
+  static const String importWalletScreenInvalidPassPhrase = "import_wallet_screen_in_valid_pass_phrase";
+  static const String importWalletScreenNext = "import_wallet_screen_next";
+  static const String importWalletScreenPaste = "import_wallet_screen_paste";
+  static const String importWalletScreenSelectWordNumberTitle = "import_wallet_screen_select_word_number_title";
+
+  static const String importWalletYetiBotScreenYetiBot = 'import_wallet_yeti_bot_screen_yeti_bot';
+  static const String importWalletYetiBotScreenBotContentOne = 'import_wallet_yeti_bot_screen_bot_content_one';
+  static const String importWalletYetiBotScreenBotContentTwo = 'import_wallet_yeti_bot_screen_bot_content_two';
+  static const String importWalletYetiBotScreenBotContentThree = 'import_wallet_yeti_bot_screen_bot_content_three';
+  static const String importWalletYetiBotScreenBotContentFour = 'import_wallet_yeti_bot_screen_bot_content_four';
+  static const String importWalletYetiBotScreenBotContentFive = 'import_wallet_yeti_bot_screen_bot_content_five';
+  static const String importWalletYetiBotScreenGenerating = 'import_wallet_yeti_bot_screen_generating';
+  static const String importWalletYetiBotScreenOnBoard = 'import_wallet_yeti_bot_screen_on_board';
 }
