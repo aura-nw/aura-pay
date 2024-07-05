@@ -5,6 +5,7 @@ import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
 import 'package:pyxis_v2/src/navigator.dart';
 import 'package:pyxis_v2/src/presentation/screens/get_started/widgets/button_form.dart';
@@ -28,19 +29,22 @@ class _GetStartedScreenState extends State<GetStartedScreen>
     return Column(
       children: [
         Expanded(
-          child: GetStartedLogoFormWidget(
+          child:  GetStartedLogoFormWidget(
             walletName: _config.appName,
             appTheme: appTheme,
           ),
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize05,
         ),
         GetStartedButtonFormWidget(
           localization: localization,
           appTheme: appTheme,
           onCreateNewWallet: () {
-            _onCheckHasPasscode(_onCreateNew);
+            _onCheckHasPasscode(_onPushToCreateNew,_onReplacePasscodeToCreateNew);
           },
           onImportExistingWallet: () {
-            _onCheckHasPasscode(_onAddExistingWallet);
+            _onCheckHasPasscode(_onPushToAddExistingWallet,_onReplacePasscodeToAddExistingWallet);
           },
           onTermClick: () {},
         ),
@@ -58,7 +62,8 @@ class _GetStartedScreenState extends State<GetStartedScreen>
   }
 
   void _onCheckHasPasscode(
-    VoidCallback callBack,
+    VoidCallback hasPasscodeCallBack,
+    VoidCallback nonPasscodeCallBack,
   ) async {
     final appSecureUseCase = getIt.get<AppSecureUseCase>();
 
@@ -67,20 +72,36 @@ class _GetStartedScreenState extends State<GetStartedScreen>
     );
 
     if (hasPassCode) {
-      callBack.call();
+      hasPasscodeCallBack.call();
     } else {
       AppNavigator.push(
         RoutePath.setPasscode,
-        _onCreateNew,
+        nonPasscodeCallBack,
       );
     }
   }
 
-  void _onCreateNew() {
+  void _onPushToCreateNew(){
+    AppNavigator.push(
+      RoutePath.createWallet,
+    );
+  }
+
+  void _onReplacePasscodeToCreateNew() {
     AppNavigator.replaceWith(
       RoutePath.createWallet,
     );
   }
 
-  void _onAddExistingWallet() {}
+  void _onReplacePasscodeToAddExistingWallet() {
+    AppNavigator.replaceWith(
+      RoutePath.importWallet,
+    );
+  }
+
+  void _onPushToAddExistingWallet(){
+    AppNavigator.push(
+      RoutePath.importWallet,
+    );
+  }
 }

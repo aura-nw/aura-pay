@@ -9,31 +9,13 @@ import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_state.dart';
+import 'package:pyxis_v2/src/presentation/widgets/yeti_bot_message_widget.dart';
 import 'generate_wallet_cubit.dart';
 import 'generate_wallet_selector.dart';
-import 'widgets/message.dart';
 import 'package:pyxis_v2/src/presentation/widgets/app_button.dart';
 import 'widgets/app_bar_title.dart';
 import 'package:pyxis_v2/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
-
-final class GenerateMessageObject<T> {
-  final int groupId;
-  final String data;
-  final T? object;
-
-  // 0 == text , and add others case if need.
-  final int type;
-
-  const GenerateMessageObject({
-    required this.data,
-    required this.groupId,
-    this.object,
-    required this.type,
-  });
-
-  bool get isTextMessage => type == 0;
-}
 
 class GenerateWalletScreen extends StatefulWidget {
   const GenerateWalletScreen({super.key});
@@ -44,7 +26,7 @@ class GenerateWalletScreen extends StatefulWidget {
 
 class _GenerateWalletScreenState extends State<GenerateWalletScreen>
     with StateFulBaseScreen {
-  final List<GenerateMessageObject> _messages = [];
+  final List<YetiBotMessageObject> _messages = [];
 
   final GenerateWalletCubit _cubit = getIt.get<GenerateWalletCubit>();
 
@@ -68,7 +50,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
 
     _messages.insert(
       0,
-      GenerateMessageObject(
+      YetiBotMessageObject(
         data: localization.translate(
           LanguageKey.generateWalletScreenBotContentOne,
         ),
@@ -89,7 +71,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
     );
     _messages.insert(
       0,
-      GenerateMessageObject(
+      YetiBotMessageObject(
         data: localization.translate(
           LanguageKey.generateWalletScreenBotContentTwo,
         ),
@@ -111,7 +93,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
 
     _messages.insert(
       0,
-      GenerateMessageObject(
+      YetiBotMessageObject(
         data: localization.translate(
           LanguageKey.generateWalletScreenBotContentThree,
         ),
@@ -133,7 +115,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
 
     _messages.insert(
       0,
-      GenerateMessageObject(
+      YetiBotMessageObject(
         data: localization.translate(
           LanguageKey.generateWalletScreenBotContentFour,
         ),
@@ -154,7 +136,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
 
     _messages.insert(
       0,
-      GenerateMessageObject(
+      YetiBotMessageObject(
         data: localization.translate(
           LanguageKey.generateWalletScreenBotContentFive,
         ),
@@ -176,7 +158,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
 
     _messages.insert(
       0,
-      GenerateMessageObject(
+      YetiBotMessageObject(
         data: localization.translate(
           LanguageKey.generateWalletScreenBotContentSix,
         ),
@@ -202,6 +184,8 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
   @override
   void dispose() {
     _messages.clear();
+
+    _messageKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -226,11 +210,13 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
                   padding: const EdgeInsets.symmetric(
                     vertical: Spacing.spacing03,
                   ),
-                  child: GenerateWalletYetiBotMessageWidget(
+                  child: YetiBotMessageBuilder(
                     appTheme: appTheme,
                     messageObject: _messages[index],
                     nextGroup: _messages.getIndex(index + 1)?.groupId,
                     onTap: () {},
+                    localization: localization,
+                    lastGroup: _messages.getIndex(index - 1)?.groupId,
                   ),
                 ),
               );

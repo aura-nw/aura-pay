@@ -47,13 +47,12 @@ final class GenerateWalletCubit extends Cubit<GenerateWalletState> {
       ),
     );
 
-    print('key store ${keyStore}');
-
     await _accountUseCase.add(
       AddAccountRequest(
         name: PyxisAccountConstant.defaultNormalWalletName,
         evmAddress: state.wallet!.address,
         keyStoreId: keyStore.id,
+        controllerKeyType: ControllerKeyType.passPhrase,
       ),
     );
 

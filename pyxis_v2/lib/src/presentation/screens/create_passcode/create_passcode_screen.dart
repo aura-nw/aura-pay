@@ -101,7 +101,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen>
         },
         child: Scaffold(
           backgroundColor: appTheme.bgPrimary,
-          appBar: AppBarWithoutTitle(
+          appBar: AppBarDefault(
             appTheme: appTheme,
             localization: localization,
           ),
