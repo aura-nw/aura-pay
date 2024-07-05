@@ -8,6 +8,7 @@ final class Account {
   final int keyStoreId;
   final AccountType type;
   final AccountCreateType createType;
+  final ControllerKeyType controllerKeyType;
 
   const Account({
     required this.id,
@@ -17,6 +18,7 @@ final class Account {
     required this.keyStoreId,
     this.type = AccountType.normal,
     this.createType = AccountCreateType.normal,
+    this.controllerKeyType = ControllerKeyType.passPhrase,
   });
 
   bool get isAbstractAccount => type == AccountType.abstraction;

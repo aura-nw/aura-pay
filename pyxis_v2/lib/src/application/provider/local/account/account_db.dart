@@ -13,6 +13,7 @@ extension AccountDbExtension on AccountDb {
     int? id,
     AccountCreateType? createType,
     AccountType? type,
+    ControllerKeyType ?controllerKeyType,
   }) {
     return AccountDb(
       aName: name ?? aName,
@@ -22,6 +23,7 @@ extension AccountDbExtension on AccountDb {
       aCreateType: createType ?? aCreateType,
       aCosmosAddress: cosmosAddress ?? aCosmosAddress,
       aId: id ?? aId,
+      aControllerKeyType: controllerKeyType ?? aControllerKeyType,
     );
   }
 }
@@ -37,6 +39,8 @@ final class AccountDb extends AccountDto {
   final AccountType aType;
   @enumerated
   final AccountCreateType aCreateType;
+  @enumerated
+  final ControllerKeyType aControllerKeyType;
 
   AccountDb({
     this.aId = Isar.autoIncrement,
@@ -46,6 +50,7 @@ final class AccountDb extends AccountDto {
     this.aCosmosAddress,
     this.aType = AccountType.normal,
     this.aCreateType = AccountCreateType.normal,
+    this.aControllerKeyType = ControllerKeyType.passPhrase,
   }) : super(
           id: aId,
           name: aName,
@@ -54,5 +59,6 @@ final class AccountDb extends AccountDto {
           cosmosAddress: aCosmosAddress,
           type: aType,
           createType: aCreateType,
+          controllerKeyType: aControllerKeyType,
         );
 }

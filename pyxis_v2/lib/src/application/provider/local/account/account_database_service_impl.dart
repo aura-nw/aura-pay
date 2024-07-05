@@ -17,6 +17,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
       aCosmosAddress: param.cosmosAddress,
       aCreateType: param.createType,
       aType: param.type,
+      aControllerKeyType: param.controllerKeyType,
     );
 
     await _database.writeTxn(
@@ -71,8 +72,6 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
         evmAddress: param.evmAddress,
         cosmosAddress: param.cosmosAddress,
         keyStoreId: param.keyStoreId,
-        createType: param.createType,
-        type: param.type,
       );
 
       await _database.writeTxn(
