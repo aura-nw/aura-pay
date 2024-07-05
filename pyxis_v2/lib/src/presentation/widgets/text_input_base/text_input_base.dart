@@ -109,7 +109,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: _borderColorBuilder(theme),
+                color: borderColorBuilder(theme),
                 width: BorderSize.border01,
               ),
             ),
@@ -240,7 +240,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
 
   late bool isFocus;
 
-  Color _borderColorBuilder(AppTheme theme) {
+  Color borderColorBuilder(AppTheme theme) {
     Color color = theme.borderPrimary;
     if (isFocus) {
       color = theme.borderBrand;
@@ -606,7 +606,7 @@ final class RoundBorderTextInputWidget extends TextInputWidgetBase {
   const RoundBorderTextInputWidget({
     this.isRequired = false,
     this.label,
-    this.borderRadius = BorderRadiusSize.borderRadiusRound,
+    this.borderRadius = BorderRadiusSize.borderRadius03M,
     super.obscureText,
     super.autoFocus,
     super.constraintManager,
@@ -694,9 +694,10 @@ final class RoundBorderTextInputWidgetState
           ),
           decoration: BoxDecoration(
             border: Border.all(
-              color: _borderColorBuilder(theme),
+              color: borderColorBuilder(theme),
               width: BorderSize.border01,
             ),
+            color: theme.bgPrimary,
             borderRadius: BorderRadius.circular(
               widget.borderRadius,
             ),

@@ -58,13 +58,13 @@ final class _FillWordInputWidgetState
       decoration: BoxDecoration(
         color: widget.appTheme.bgPrimary,
         borderRadius: BorderRadius.circular(
-          BorderRadiusSize.borderRadius03,
+          BorderRadiusSize.borderRadius03M,
         ),
-        border: isFocus
-            ? Border.all(
-                color: widget.appTheme.borderBrand,
-              )
-            : null,
+        border: Border.all(
+          color: borderColorBuilder(
+            widget.appTheme,
+          ),
+        ),
         boxShadow: buildShadows(
           widget.appTheme,
         ),
@@ -96,10 +96,16 @@ final class _FillWordItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          '${position.toString()}.',
-          style: AppTypoGraPhy.textSmSemiBold.copyWith(
-            color: appTheme.textTertiary,
+        ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: BoxSize.boxSize07,
+            minWidth: BoxSize.boxSize07,
+          ),
+          child: Text(
+            '${position.toString()}.',
+            style: AppTypoGraPhy.textSmSemiBold.copyWith(
+              color: appTheme.textTertiary,
+            ),
           ),
         ),
         const SizedBox(
@@ -219,6 +225,14 @@ class FillWordsWidgetState extends State<FillWordsWidget> {
     }
     setState(() {});
     return true;
+  }
+
+  @override
+  void dispose() {
+    _words.clear();
+    errorMessage = null;
+    _keys.clear();
+    super.dispose();
   }
 
   @override
