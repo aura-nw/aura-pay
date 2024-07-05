@@ -9,6 +9,7 @@ extension AccountDtoMapper on AccountDto {
         cosmosAddress: cosmosAddress,
         createType: createType,
         type: type,
+        controllerKeyType: controllerKeyType,
       );
 }
 
@@ -20,6 +21,7 @@ class AccountDto {
   final int keyStoreId;
   final AccountType type;
   final AccountCreateType createType;
+  final ControllerKeyType controllerKeyType;
 
   const AccountDto({
     required this.id,
@@ -29,5 +31,6 @@ class AccountDto {
     required this.keyStoreId,
     this.type = AccountType.normal,
     this.createType = AccountCreateType.normal,
+    this.controllerKeyType = ControllerKeyType.passPhrase,
   });
 }

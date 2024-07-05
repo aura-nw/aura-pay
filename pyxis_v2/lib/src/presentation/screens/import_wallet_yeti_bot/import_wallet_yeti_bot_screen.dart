@@ -8,35 +8,44 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
-import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_state.dart';
-import 'package:pyxis_v2/src/presentation/widgets/yeti_bot_message_widget.dart';
-import 'generate_wallet_cubit.dart';
-import 'generate_wallet_selector.dart';
+import 'import_wallet_yeti_bot_state.dart';
 import 'package:pyxis_v2/src/presentation/widgets/app_button.dart';
+import 'package:pyxis_v2/src/presentation/widgets/yeti_bot_message_widget.dart';
+import 'import_wallet_yeti_bot_cubit.dart';
+import 'import_yeti_bot_selector.dart';
 import 'widgets/app_bar_title.dart';
 import 'package:pyxis_v2/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
+import 'package:wallet_core/wallet_core.dart';
 
-class GenerateWalletScreen extends StatefulWidget {
-  const GenerateWalletScreen({super.key});
+class ImportWalletYetiBotScreen extends StatefulWidget {
+  final AWallet aWallet;
+
+  const ImportWalletYetiBotScreen({
+    required this.aWallet,
+    super.key,
+  });
 
   @override
-  State<GenerateWalletScreen> createState() => _GenerateWalletScreenState();
+  State<ImportWalletYetiBotScreen> createState() =>
+      _ImportWalletYetiBotScreenState();
 }
 
-class _GenerateWalletScreenState extends State<GenerateWalletScreen>
+class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
     with StateFulBaseScreen {
   final List<YetiBotMessageObject> _messages = [];
 
-  final GenerateWalletCubit _cubit = getIt.get<GenerateWalletCubit>();
+  late ImportWalletYetiBotCubit _cubit;
 
   final GlobalKey<AnimatedListState> _messageKey =
       GlobalKey<AnimatedListState>();
 
   @override
   void initState() {
+    _cubit = getIt.get<ImportWalletYetiBotCubit>(
+      param1: widget.aWallet,
+    );
     super.initState();
-    _cubit.generateWallet();
   }
 
   void _addContent() async {
@@ -52,7 +61,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
       0,
       YetiBotMessageObject(
         data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentOne,
+          LanguageKey.importWalletYetiBotScreenBotContentOne,
         ),
         groupId: 0,
         type: 0,
@@ -73,29 +82,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
       0,
       YetiBotMessageObject(
         data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentTwo,
-        ),
-        groupId: 0,
-        type: 0,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentThree,
+          LanguageKey.importWalletYetiBotScreenBotContentTwo,
         ),
         groupId: 0,
         type: 0,
@@ -117,7 +104,29 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
       0,
       YetiBotMessageObject(
         data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentFour,
+          LanguageKey.importWalletYetiBotScreenBotContentThree,
+        ),
+        groupId: 0,
+        type: 0,
+      ),
+    );
+
+    _messageKey.currentState?.insertItem(
+      0,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    await Future.delayed(
+      const Duration(
+        milliseconds: 1200,
+      ),
+    );
+
+    _messages.insert(
+      0,
+      YetiBotMessageObject(
+        data: localization.translate(
+          LanguageKey.importWalletYetiBotScreenBotContentFour,
         ),
         groupId: 1,
         type: 0,
@@ -138,35 +147,14 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
       0,
       YetiBotMessageObject(
         data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentFive,
-        ),
-        groupId: 1,
-        type: 0,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentSix,
+          LanguageKey.importWalletYetiBotScreenBotContentFive,
         ),
         groupId: 2,
         type: 1,
-        object: _cubit.state.wallet?.address,
+        object: _cubit.state.wallet.address,
       ),
     );
+
     _messageKey.currentState?.insertItem(
       0,
       duration: const Duration(milliseconds: 300),
@@ -223,16 +211,16 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
             },
           ),
         ),
-        GenerateWalletIsReadySelector(
+        ImportWalletYetiBotIsReadySelector(
           builder: (isReady) {
             return PrimaryAppButton(
               onPress: _onNavigateToHome,
               text: !isReady
                   ? localization.translate(
-                      LanguageKey.generateWalletScreenGenerating,
+                      LanguageKey.importWalletYetiBotScreenGenerating,
                     )
                   : localization.translate(
-                      LanguageKey.generateWalletScreenOnBoard,
+                      LanguageKey.importWalletYetiBotScreenOnBoard,
                     ),
               isDisable: !isReady,
               leading: !isReady
@@ -255,17 +243,15 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
       AppLocalizationManager localization) {
     return BlocProvider.value(
       value: _cubit,
-      child: BlocListener<GenerateWalletCubit, GenerateWalletState>(
+      child: BlocListener<ImportWalletYetiBotCubit, ImportWalletYetiBotState>(
         listener: (context, state) {
           switch (state.status) {
-            case GenerateWalletStatus.generating:
+            case ImportWalletYetiBotStatus.none:
               break;
-            case GenerateWalletStatus.generated:
-              break;
-            case GenerateWalletStatus.storing:
+            case ImportWalletYetiBotStatus.storing:
               // Show loading
               break;
-            case GenerateWalletStatus.stored:
+            case ImportWalletYetiBotStatus.stored:
               AppGlobalCubit.of(context).changeStatus(
                 AppGlobalStatus.authorized,
               );
@@ -276,11 +262,11 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
           backgroundColor: appTheme.bgSecondary,
           appBar: AppBarDefault(
             appTheme: appTheme,
-            title: GenerateWalletAppBarTitleWidget(
+            localization: localization,
+            title: ImportWalletYetiBotAppBarTitleWidget(
               appTheme: appTheme,
               localization: localization,
             ),
-            localization: localization,
           ),
           body: child,
         ),

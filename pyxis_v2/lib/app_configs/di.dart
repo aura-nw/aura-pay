@@ -13,6 +13,8 @@ import 'package:pyxis_v2/src/application/provider/provider/biometric_provider.da
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_cubit.dart';
+import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_bloc.dart';
+import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/splash/splash_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -182,6 +184,18 @@ Future<void> initDependency(
     () => ReLoginCubit(
       getIt.get<AppSecureUseCase>(),
       getIt.get<AccountUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => ImportWalletBloc(),
+  );
+
+  getIt.registerFactoryParam<ImportWalletYetiBotCubit, AWallet, dynamic>(
+    (wallet, _) => ImportWalletYetiBotCubit(
+      getIt.get<AccountUseCase>(),
+      getIt.get<KeyStoreUseCase>(),
+      wallet: wallet,
     ),
   );
 }

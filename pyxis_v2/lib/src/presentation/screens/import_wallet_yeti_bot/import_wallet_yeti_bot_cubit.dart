@@ -2,43 +2,33 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_v2/src/core/constants/pyxis_account_constant.dart';
 import 'package:wallet_core/wallet_core.dart';
-import 'generate_wallet_state.dart';
+import 'import_wallet_yeti_bot_state.dart';
 
-final class GenerateWalletCubit extends Cubit<GenerateWalletState> {
+final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
   final AccountUseCase _accountUseCase;
   final KeyStoreUseCase _keyStoreUseCase;
 
-  GenerateWalletCubit(this._accountUseCase, this._keyStoreUseCase)
-      : super(
-          const GenerateWalletState(),
+  ImportWalletYetiBotCubit(
+    this._accountUseCase,
+    this._keyStoreUseCase, {
+    required AWallet wallet,
+  }) : super(
+          ImportWalletYetiBotState(
+            wallet: wallet,
+          ),
         );
-
-  void generateWallet() async {
-    emit(state.copyWith(
-      status: GenerateWalletStatus.generating,
-    ));
-
-    final String mnemonic = WalletCore.walletManagement.randomMnemonic();
-
-    final AWallet aWallet = WalletCore.walletManagement.importWallet(mnemonic);
-
-    emit(state.copyWith(
-      wallet: aWallet,
-      status: GenerateWalletStatus.generated,
-    ));
-  }
 
   void storeKey() async {
     emit(
       state.copyWith(
-        status: GenerateWalletStatus.storing,
+        status: ImportWalletYetiBotStatus.storing,
       ),
     );
 
     final String? key = WalletCore.storedManagement.saveWallet(
       PyxisAccountConstant.defaultNormalWalletName,
       '',
-      state.wallet!,
+      state.wallet,
     );
 
     final keyStore = await _keyStoreUseCase.add(
@@ -47,18 +37,24 @@ final class GenerateWalletCubit extends Cubit<GenerateWalletState> {
       ),
     );
 
+    ControllerKeyType controllerKeyType = ControllerKeyType.passPhrase;
+
+    if(state.wallet.wallet == null){
+      controllerKeyType = ControllerKeyType.privateKey;
+    }
+
     await _accountUseCase.add(
       AddAccountRequest(
         name: PyxisAccountConstant.defaultNormalWalletName,
-        evmAddress: state.wallet!.address,
+        evmAddress: state.wallet.address,
         keyStoreId: keyStore.id,
-        controllerKeyType: ControllerKeyType.passPhrase,
+        controllerKeyType: controllerKeyType,
       ),
     );
 
     emit(
       state.copyWith(
-        status: GenerateWalletStatus.stored,
+        status: ImportWalletYetiBotStatus.stored,
       ),
     );
   }

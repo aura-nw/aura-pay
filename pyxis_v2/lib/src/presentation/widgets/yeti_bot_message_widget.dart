@@ -1,17 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/asset_path.dart';
+import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_creen.dart';
+import 'package:web3auth_flutter/enums.dart';
 
-abstract class GenerateWalletMessageWidget extends StatelessWidget {
+final class YetiBotMessageObject<T> {
+  final int groupId;
+  final String data;
+  final T? object;
+
+  // 0 == text , and add others case if need.
+  final int type;
+
+  const YetiBotMessageObject({
+    required this.data,
+    required this.groupId,
+    this.object,
+    required this.type,
+  });
+
+  bool get isTextMessage => type == 0;
+}
+
+abstract class YetiBotMessageWidget extends StatelessWidget {
   final AppTheme appTheme;
 
-  const GenerateWalletMessageWidget({
+  const YetiBotMessageWidget({
     required this.appTheme,
     super.key,
   });
@@ -47,11 +68,10 @@ abstract class GenerateWalletMessageWidget extends StatelessWidget {
   Widget child(BuildContext context);
 }
 
-final class GenerateWalletTextMessageWidget
-    extends GenerateWalletMessageWidget {
+final class YetiBotTextMessageWidget extends YetiBotMessageWidget {
   final String text;
 
-  const GenerateWalletTextMessageWidget({
+  const YetiBotTextMessageWidget({
     required super.appTheme,
     required this.text,
     super.key,
@@ -69,13 +89,12 @@ final class GenerateWalletTextMessageWidget
   }
 }
 
-final class GenerateWalletAddressMessageWidget
-    extends GenerateWalletMessageWidget {
+final class YetiBotAddressMessageWidget extends YetiBotMessageWidget {
   final String text;
   final String address;
   final VoidCallback? opCopy;
 
-  const GenerateWalletAddressMessageWidget({
+  const YetiBotAddressMessageWidget({
     required super.appTheme,
     required this.text,
     required this.address,
@@ -135,16 +154,20 @@ final class GenerateWalletAddressMessageWidget
   }
 }
 
-final class GenerateWalletYetiBotMessageWidget extends StatelessWidget {
+final class YetiBotMessageBuilder extends StatelessWidget {
   final AppTheme appTheme;
-  final GenerateMessageObject messageObject;
+  final AppLocalizationManager localization;
+  final YetiBotMessageObject messageObject;
   final int? nextGroup;
+  final int? lastGroup;
   final VoidCallback? onTap;
 
-  const GenerateWalletYetiBotMessageWidget({
+  const YetiBotMessageBuilder({
     required this.appTheme,
+    required this.localization,
     required this.messageObject,
     this.nextGroup,
+    this.lastGroup,
     this.onTap,
     super.key,
   });
@@ -162,14 +185,35 @@ final class GenerateWalletYetiBotMessageWidget extends StatelessWidget {
           constraints: BoxConstraints(
             maxWidth: context.w * 0.65,
           ),
-          child: buildMessage(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (messageObject.groupId != nextGroup)
+                ... [
+                  const SizedBox(
+                    height: BoxSize.boxSize02,
+                  ),
+                  Text(
+                    localization.translate(
+                      LanguageKey.commonYetiBot,
+                    ),
+                    style: AppTypoGraPhy.textXsRegular.copyWith(
+                      color: appTheme.textTertiary,
+                    ),
+                  ),
+                ]
+              else
+                const SizedBox.shrink(),
+              buildMessage(),
+            ],
+          ),
         ),
       ],
     );
   }
 
   Widget buildAvtGroup() {
-    if (messageObject.groupId != nextGroup) {
+    if (messageObject.groupId != lastGroup) {
       return SvgPicture.asset(
         AssetImagePath.yetiBot,
       );
@@ -184,13 +228,13 @@ final class GenerateWalletYetiBotMessageWidget extends StatelessWidget {
   Widget buildMessage() {
     // If need many cases. Use type for detection.
     if (messageObject.isTextMessage) {
-      return GenerateWalletTextMessageWidget(
+      return YetiBotTextMessageWidget(
         appTheme: appTheme,
         text: messageObject.data,
       );
     }
 
-    return GenerateWalletAddressMessageWidget(
+    return YetiBotAddressMessageWidget(
       appTheme: appTheme,
       text: messageObject.data,
       address: messageObject.object.toString(),

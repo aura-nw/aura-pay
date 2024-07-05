@@ -14,3 +14,8 @@ enum AccountType{
   normal,
   abstraction,
 }
+
+enum ControllerKeyType{
+  passPhrase,
+  privateKey,
+}

@@ -7,6 +7,7 @@ final class AddAccountRequest {
   final int keyStoreId;
   final AccountType type;
   final AccountCreateType createType;
+  final ControllerKeyType controllerKeyType;
 
   const AddAccountRequest({
     required this.name,
@@ -15,5 +16,6 @@ final class AddAccountRequest {
     required this.keyStoreId,
     this.type = AccountType.normal,
     this.createType = AccountCreateType.normal,
+    this.controllerKeyType = ControllerKeyType.passPhrase,
   });
 }
