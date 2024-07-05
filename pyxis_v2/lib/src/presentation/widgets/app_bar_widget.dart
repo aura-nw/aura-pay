@@ -4,6 +4,8 @@ import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
+import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/navigator.dart';
 
 abstract interface class _AppBarBase extends StatelessWidget
@@ -12,12 +14,16 @@ abstract interface class _AppBarBase extends StatelessWidget
   final AppTheme appTheme;
   final AppLocalizationManager localization;
   final double? leadingWidth;
+  final Widget? title;
+  final String? titleKey;
 
   const _AppBarBase({
     this.leadingWidth,
     this.onBack,
     required this.appTheme,
     required this.localization,
+    this.titleKey,
+    this.title,
     super.key,
   });
 
@@ -67,19 +73,32 @@ abstract interface class _AppBarBase extends StatelessWidget
   }
 
   PreferredSizeWidget? bottomBuilder(
-      AppTheme appTheme, AppLocalizationManager localization){
+      AppTheme appTheme, AppLocalizationManager localization) {
     return null;
   }
 
   Widget? titleBuilder(BuildContext context, AppTheme appTheme,
-      AppLocalizationManager localization){
+      AppLocalizationManager localization) {
+    if (title != null) {
+      return title;
+    }
+
+    if (titleKey.isNotNullOrEmpty) {
+      return Text(
+        localization.translate(titleKey!),
+        style: AppTypoGraPhy.textMdBold.copyWith(
+          color: appTheme.textPrimary,
+        ),
+      );
+    }
+
     return null;
   }
 
   @override
   Size get preferredSize => Size.fromHeight(
         (kToolbarHeight) +
-            (bottomBuilder(appTheme,localization)?.preferredSize.height ??
+            (bottomBuilder(appTheme, localization)?.preferredSize.height ??
                 BoxSize.boxSizeNone),
       );
 }
@@ -170,66 +189,47 @@ abstract interface class _AppBarBase extends StatelessWidget
 
 ///
 
-/// region app bar with title
-class AppBarWithoutTitle extends _AppBarBase {
-  const AppBarWithoutTitle({
+/// region app bar with title non leading
+class AppBarWithOnlyTitle extends _AppBarBase {
+  final Widget? leading;
+  final List<Widget>? actions;
+  final PreferredSizeWidget? bottom;
+
+  const AppBarWithOnlyTitle({
     required super.appTheme,
     super.key,
     super.onBack,
+    super.title,
+    this.leading,
+    super.titleKey,
+    this.actions,
+    this.bottom,
     required super.localization,
   });
+
+  @override
+  List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return actions;
+  }
+
+  @override
+  PreferredSizeWidget? bottomBuilder(
+      AppTheme appTheme, AppLocalizationManager localization) {
+    return bottom;
+  }
+
+  @override
+  Widget? leadingBuilder(BuildContext context, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return const SizedBox();
+  }
 }
 
 ///
 
 /// region app bar with title non leading
-// class AppBarWithOnlyTitle extends _AppBarBase {
-//   final String titleKey;
-//
-//   const AppBarWithOnlyTitle({
-//     required super.appTheme,
-//     super.key,
-//     super.onBack,
-//     required this.titleKey,
-//   });
-//
-//   @override
-//   List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme) {
-//     return null;
-//   }
-//
-//   @override
-//   PreferredSizeWidget? bottomBuilder(AppTheme appTheme) {
-//     return null;
-//   }
-//
-//   @override
-//   Widget? leadingBuilder(BuildContext context, AppTheme appTheme) {
-//     return const SizedBox();
-//   }
-//
-//   @override
-//   Widget titleBuilder(BuildContext context, AppTheme appTheme) {
-//     return AppLocalizationProvider(
-//       builder: (localization, _) {
-//         return Text(
-//           localization.translate(
-//             titleKey,
-//           ),
-//           style: AppTypoGraPhy.heading03.copyWith(
-//             color: appTheme.contentColorBlack,
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-
-///
-
-/// region app bar with title non leading
 class AppBarDefault extends _AppBarBase {
-  final Widget title;
   final Widget? leading;
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
@@ -238,31 +238,31 @@ class AppBarDefault extends _AppBarBase {
     required super.appTheme,
     super.key,
     super.onBack,
-    required this.title,
+    super.title,
     this.leading,
+    super.titleKey,
     this.actions,
     this.bottom,
     required super.localization,
+    super.leadingWidth,
   });
 
   @override
-  List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme, AppLocalizationManager localization) {
+  List<Widget>? actionBuilders(BuildContext context, AppTheme appTheme,
+      AppLocalizationManager localization) {
     return actions;
   }
 
   @override
-  PreferredSizeWidget? bottomBuilder(AppTheme appTheme,  AppLocalizationManager localization) {
+  PreferredSizeWidget? bottomBuilder(
+      AppTheme appTheme, AppLocalizationManager localization) {
     return bottom;
   }
 
   @override
-  Widget? leadingBuilder(BuildContext context, AppTheme appTheme, AppLocalizationManager localization) {
+  Widget? leadingBuilder(BuildContext context, AppTheme appTheme,
+      AppLocalizationManager localization) {
     return leading;
-  }
-
-  @override
-  Widget titleBuilder(BuildContext context, AppTheme appTheme, AppLocalizationManager localization) {
-    return title;
   }
 }
 
