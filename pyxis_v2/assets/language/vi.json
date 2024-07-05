@@ -1,4 +1,6 @@
 {
+  "common_yeti_bot" : "Yeti bot",
+
   "get_started_screen_create_new_wallet" : "Create New Wallet",
   "get_started_screen_add_wallet" : "Add Existing Wallet",
   "get_started_screen_or_continue_with" : "Or continue with",
@@ -20,5 +22,26 @@
   "generate_wallet_screen_bot_content_three" : "Please keep your passphrase/ private key safe and do not lose it or forget it",
   "generate_wallet_screen_bot_content_four" : "Anyone with your private key can have access to your assets",
   "generate_wallet_screen_bot_content_five" : "All done, your Pyxis wallet is ready \uD83E\uDD73\uD83C\uDF89\uD83C\uDF89",
-  "generate_wallet_screen_bot_content_six" : "Your wallet address"
+  "generate_wallet_screen_bot_content_six" : "Your wallet address",
+
+  "import_wallet_screen_app_bar_title" : "Add Existing Wallet",
+  "import_wallet_screen_seed_phrase" : "Seed Phrase",
+  "import_wallet_screen_private_key" : "Private Key",
+  "import_wallet_screen_seed_phrase_title" : "My seed phrase has",
+  "import_wallet_screen_seed_phrase_words" : "${words} Words",
+  "import_wallet_screen_private_key_hint" : "Enter your private key...",
+  "import_wallet_screen_in_valid_private_key" : "Invalid private key",
+  "import_wallet_screen_in_valid_pass_phrase" : "Invalid passphrase",
+  "import_wallet_screen_next" : "Next",
+  "import_wallet_screen_paste" : "Paste",
+  "import_wallet_screen_select_word_number_title" : "Select Words Number",
+
+  "import_wallet_yeti_bot_screen_yeti_bot": "Yeti bot",
+  "import_wallet_yeti_bot_screen_bot_content_one" : "Welcome to Pyxis",
+  "import_wallet_yeti_bot_screen_bot_content_two" : "We are importing your wallet",
+  "import_wallet_yeti_bot_screen_bot_content_three" : "Your recovery phrase is stored locally on your device. Pyxis can’t access this data",
+  "import_wallet_yeti_bot_screen_bot_content_four" : "All done, your wallet has been imported \uD83E\uDD73\uD83C\uDF89\uD83C\uDF89",
+  "import_wallet_yeti_bot_screen_bot_content_five" : "Your wallet address",
+  "import_wallet_yeti_bot_screen_generating" : "Generating",
+  "import_wallet_yeti_bot_screen_on_board" : "Get me onboard"
 }
