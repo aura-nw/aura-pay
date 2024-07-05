@@ -96,6 +96,7 @@ sealed class BorderRadiusSize {
   static const double borderRadius01 = _SizeBase.unit2;
   static const double borderRadius02 = _SizeBase.unit4;
   static const double borderRadius03 = _SizeBase.unit8;
+  static const double borderRadius03M = _SizeBase.unit12;
   static const double borderRadius04 = _SizeBase.unit16;
   static const double borderRadius05 = _SizeBase.unit24;
   static const double borderRadius06 = _SizeBase.unit32;

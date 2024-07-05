@@ -4,8 +4,11 @@ import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcod
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_creen.dart';
 import 'package:pyxis_v2/src/presentation/screens/get_started/get_started_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home_screen.dart';
+import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_screen.dart';
+import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/splash/spash_screen.dart';
+import 'package:wallet_core/wallet_core.dart';
 
 sealed class RoutePath {
   static const String _base = '/';
@@ -16,6 +19,9 @@ sealed class RoutePath {
   static const String getStarted = '$_onBoarding/get_started';
   static const String setPasscode = '$_onBoarding/set_passcode';
   static const String createWallet = '$_onBoarding/create_wallet';
+  static const String importWallet = '$_onBoarding/import_wallet';
+  static const String importWalletYetiBot =
+      '$_onBoarding/import_wallet_yeti_bot';
 
   static const String home = '${_base}home';
 }
@@ -57,6 +63,19 @@ sealed class AppNavigator {
       case RoutePath.home:
         return _defaultRoute(
           const HomeScreen(),
+          settings,
+        );
+      case RoutePath.importWallet:
+        return _defaultRoute(
+          const ImportWalletScreen(),
+          settings,
+        );
+      case RoutePath.importWalletYetiBot:
+        final AWallet aWallet = settings.arguments as AWallet;
+        return _defaultRoute(
+          ImportWalletYetiBotScreen(
+            aWallet: aWallet,
+          ),
           settings,
         );
       default:
