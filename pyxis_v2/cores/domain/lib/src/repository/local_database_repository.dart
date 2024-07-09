@@ -8,4 +8,6 @@ abstract class LocalDatabaseRepository<R>{
   Future<R?> get(int id);
 
   Future<List<R>> getAll();
+
+  Future<void> deleteAll();
 }

@@ -28,4 +28,8 @@ final class KeyStoreUseCase {
   Future<KeyStore> update(UpdateKeyStoreRequest param) async {
     return _keyStoreRepository.update<UpdateKeyStoreRequest>(param);
   }
+
+  Future<void> deleteAll(){
+    return _accountRepository.deleteAll();
+  }
 }

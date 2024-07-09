@@ -18,4 +18,6 @@ abstract interface class AccountDatabaseService{
   });
 
   Future<AccountDto?> getFirstAccount();
+
+  Future<void> deleteAll();
 }
