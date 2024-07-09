@@ -1,5 +1,6 @@
 {
   "common_yeti_bot" : "Yeti bot",
+  "common_copy_value" : "Copy ${value} success",
 
   "get_started_screen_create_new_wallet" : "Create New Wallet",
   "get_started_screen_add_wallet" : "Add Existing Wallet",

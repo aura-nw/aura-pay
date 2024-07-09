@@ -1,6 +1,7 @@
 sealed class LanguageKey {
   // Common app
   static const String commonYetiBot = 'common_yeti_bot';
+  static const String commonCopyValue = 'common_copy_value';
 
   // Get started screen
   static const String getStartedScreenCreateNewWallet = 'get_started_screen_create_new_wallet';

@@ -7,7 +7,9 @@ import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
+import 'package:pyxis_v2/src/core/utils/copy.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_v2/src/core/utils/toast.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_state.dart';
 import 'package:pyxis_v2/src/presentation/widgets/yeti_bot_message_widget.dart';
 import 'generate_wallet_cubit.dart';
@@ -25,7 +27,7 @@ class GenerateWalletScreen extends StatefulWidget {
 }
 
 class _GenerateWalletScreenState extends State<GenerateWalletScreen>
-    with StateFulBaseScreen {
+    with StateFulBaseScreen, CustomFlutterToast, Copy {
   final List<YetiBotMessageObject> _messages = [];
 
   final GenerateWalletCubit _cubit = getIt.get<GenerateWalletCubit>();
@@ -214,7 +216,11 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
                     appTheme: appTheme,
                     messageObject: _messages[index],
                     nextGroup: _messages.getIndex(index + 1)?.groupId,
-                    onTap: () {},
+                    onCopy: () {
+                      copy(
+                        _messages[index].object,
+                      );
+                    },
                     localization: localization,
                     lastGroup: _messages.getIndex(index - 1)?.groupId,
                   ),

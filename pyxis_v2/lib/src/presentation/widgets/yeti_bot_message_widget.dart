@@ -160,7 +160,7 @@ final class YetiBotMessageBuilder extends StatelessWidget {
   final YetiBotMessageObject messageObject;
   final int? nextGroup;
   final int? lastGroup;
-  final VoidCallback? onTap;
+  final VoidCallback? onCopy;
 
   const YetiBotMessageBuilder({
     required this.appTheme,
@@ -168,7 +168,7 @@ final class YetiBotMessageBuilder extends StatelessWidget {
     required this.messageObject,
     this.nextGroup,
     this.lastGroup,
-    this.onTap,
+    this.onCopy,
     super.key,
   });
 
@@ -238,7 +238,7 @@ final class YetiBotMessageBuilder extends StatelessWidget {
       appTheme: appTheme,
       text: messageObject.data,
       address: messageObject.object.toString(),
-      opCopy: onTap,
+      opCopy: onCopy,
     );
   }
 }
