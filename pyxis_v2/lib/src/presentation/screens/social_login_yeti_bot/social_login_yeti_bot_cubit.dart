@@ -2,18 +2,18 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_v2/src/core/constants/pyxis_account_constant.dart';
 import 'package:wallet_core/wallet_core.dart';
-import 'import_wallet_yeti_bot_state.dart';
+import 'social_login_yeti_bot_state.dart';
 
-final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
+final class SocialLoginYetiBotCubit extends Cubit<SocialLoginYetiBotState> {
   final AccountUseCase _accountUseCase;
   final KeyStoreUseCase _keyStoreUseCase;
 
-  ImportWalletYetiBotCubit(
+  SocialLoginYetiBotCubit(
     this._accountUseCase,
     this._keyStoreUseCase, {
     required AWallet wallet,
   }) : super(
-          ImportWalletYetiBotState(
+          SocialLoginYetiBotState(
             wallet: wallet,
           ),
         );
@@ -21,7 +21,7 @@ final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
   void storeKey() async {
     emit(
       state.copyWith(
-        status: ImportWalletYetiBotStatus.storing,
+        status: SocialLoginYetiBotStatus.storing,
       ),
     );
 
@@ -49,13 +49,13 @@ final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
         evmAddress: state.wallet.address,
         keyStoreId: keyStore.id,
         controllerKeyType: controllerKeyType,
-        createType: AccountCreateType.import,
+        createType: AccountCreateType.social,
       ),
     );
 
     emit(
       state.copyWith(
-        status: ImportWalletYetiBotStatus.stored,
+        status: SocialLoginYetiBotStatus.stored,
       ),
     );
   }

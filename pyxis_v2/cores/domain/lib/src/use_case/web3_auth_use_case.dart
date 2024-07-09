@@ -1,3 +1,4 @@
+import 'package:domain/core/enum.dart';
 import 'package:domain/src/entities/google_account.dart';
 import 'package:domain/src/repository/web3_auth_repository.dart';
 
@@ -6,8 +7,10 @@ final class Web3AuthUseCase {
 
   const Web3AuthUseCase(this._repository);
 
-  Future<GoogleAccount?> onLogin()async{
-    return await _repository.login();
+  Future<GoogleAccount?> onLogin({
+    Web3AuthLoginProvider provider = Web3AuthLoginProvider.google,
+  })async{
+    return await _repository.login(provider: provider);
   }
 
   Future<void> logout()async{

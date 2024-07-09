@@ -40,6 +40,7 @@ sealed class LanguageKey {
   static const String importWalletScreenPaste = "import_wallet_screen_paste";
   static const String importWalletScreenSelectWordNumberTitle = "import_wallet_screen_select_word_number_title";
 
+  // Import wallet yeti bot
   static const String importWalletYetiBotScreenYetiBot = 'import_wallet_yeti_bot_screen_yeti_bot';
   static const String importWalletYetiBotScreenBotContentOne = 'import_wallet_yeti_bot_screen_bot_content_one';
   static const String importWalletYetiBotScreenBotContentTwo = 'import_wallet_yeti_bot_screen_bot_content_two';
@@ -48,4 +49,14 @@ sealed class LanguageKey {
   static const String importWalletYetiBotScreenBotContentFive = 'import_wallet_yeti_bot_screen_bot_content_five';
   static const String importWalletYetiBotScreenGenerating = 'import_wallet_yeti_bot_screen_generating';
   static const String importWalletYetiBotScreenOnBoard = 'import_wallet_yeti_bot_screen_on_board';
+
+  // Social login yeti bot
+  static const String socialLoginYetiBotScreenYetiBot = 'social_login_yeti_bot_screen_yeti_bot';
+  static const String socialLoginYetiBotScreenBotContentOne = 'social_login_yeti_bot_screen_bot_content_one';
+  static const String socialLoginYetiBotScreenBotContentTwo = 'social_login_yeti_bot_screen_bot_content_two';
+  static const String socialLoginYetiBotScreenBotContentThree = 'social_login_yeti_bot_screen_bot_content_three';
+  static const String socialLoginYetiBotScreenBotContentFour = 'social_login_yeti_bot_screen_bot_content_four';
+  static const String socialLoginYetiBotScreenBotContentFive = 'social_login_yeti_bot_screen_bot_content_five';
+  static const String socialLoginYetiBotScreenGenerating = 'social_login_yeti_bot_screen_generating';
+  static const String socialLoginYetiBotScreenOnBoard = 'social_login_yeti_bot_screen_on_board';
 }

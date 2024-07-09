@@ -10,9 +10,11 @@ import 'package:pyxis_v2/src/application/provider/local/localization_service_imp
 import 'package:pyxis_v2/src/application/provider/local/normal_storage_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/secure_storage_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/provider/biometric_provider.dart';
+import 'package:pyxis_v2/src/application/provider/provider/web3_auth_provider.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_cubit.dart';
+import 'package:pyxis_v2/src/presentation/screens/get_started/get_started_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_cubit.dart';
@@ -108,6 +110,10 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<Web3AuthProvider>(
+    () => const Web3AuthProviderImpl(),
+  );
+
   // Register repository
   getIt.registerLazySingleton<LocalizationRepository>(
     () => LocalizationRepositoryImpl(
@@ -134,6 +140,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<Web3AuthRepository>(
+    () => Web3AuthRepositoryImpl(
+      getIt.get<Web3AuthProvider>(),
+    ),
+  );
+
   // Register use case
   getIt.registerLazySingleton<LocalizationUseCase>(
     () => LocalizationUseCase(
@@ -156,6 +168,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<AccountUseCase>(
     () => AccountUseCase(
       getIt.get<AccountRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<Web3AuthUseCase>(
+    () => Web3AuthUseCase(
+      getIt.get<Web3AuthRepository>(),
     ),
   );
 
@@ -196,6 +214,12 @@ Future<void> initDependency(
       getIt.get<AccountUseCase>(),
       getIt.get<KeyStoreUseCase>(),
       wallet: wallet,
+    ),
+  );
+
+  getIt.registerFactory<GetStartedCubit>(
+    () => GetStartedCubit(
+      getIt.get<Web3AuthUseCase>(),
     ),
   );
 }

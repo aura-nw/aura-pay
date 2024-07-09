@@ -35,6 +35,7 @@ sealed class AssetIconPath {
   static const String icCommonClose = '${_baseIconPath}ic_common_close.svg';
   static const String icCommonPaste = '${_baseIconPath}ic_common_paste.svg';
   static const String icCommonCopy = '${_baseIconPath}ic_common_copy.svg';
+  static const String icCommonCheckSuccess = '${_baseIconPath}ic_common_check_success.svg';
   static const String icCommonGoogle = '${_baseIconPath}ic_common_google.svg';
   static const String icCommonTwitter = '${_baseIconPath}ic_common_twitter.svg';
 }

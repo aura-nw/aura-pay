@@ -42,5 +42,14 @@
   "import_wallet_yeti_bot_screen_bot_content_four" : "All done, your wallet has been imported \uD83E\uDD73\uD83C\uDF89\uD83C\uDF89",
   "import_wallet_yeti_bot_screen_bot_content_five" : "Your wallet address",
   "import_wallet_yeti_bot_screen_generating" : "Generating",
-  "import_wallet_yeti_bot_screen_on_board" : "Get me onboard"
+  "import_wallet_yeti_bot_screen_on_board" : "Get me onboard",
+
+  "social_login_yeti_bot_screen_yeti_bot": "Yeti bot",
+  "social_login_yeti_bot_screen_bot_content_one" : "Welcome to Pyxis",
+  "social_login_yeti_bot_screen_bot_content_two" : "Pyxis is generating your wallet (Empowered by Web3Auth)",
+  "social_login_yeti_bot_screen_bot_content_three" : "The wallet will links to your [social network] account so you can use [social network] account to import the wallet in other devices",
+  "social_login_yeti_bot_screen_bot_content_four" : "All done, your wallet has been imported \uD83E\uDD73\uD83C\uDF89\uD83C\uDF89",
+  "social_login_yeti_bot_screen_bot_content_five" : "Your wallet address",
+  "social_login_yeti_bot_screen_generating" : "Generating",
+  "social_login_yeti_bot_screen_on_board" : "Get me onboard"
 }

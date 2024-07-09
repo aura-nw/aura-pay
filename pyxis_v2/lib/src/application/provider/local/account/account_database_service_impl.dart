@@ -90,4 +90,9 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
   Future<AccountDto?> getFirstAccount() {
     return _database.accountDbs.where().findFirst();
   }
+
+  @override
+  Future<void> deleteAll() {
+    return _database.accountDbs.where().deleteAll();
+  }
 }
