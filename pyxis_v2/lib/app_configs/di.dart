@@ -18,6 +18,7 @@ import 'package:pyxis_v2/src/presentation/screens/get_started/get_started_cubit.
 import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_cubit.dart';
+import 'package:pyxis_v2/src/presentation/screens/social_login_yeti_bot/social_login_yeti_bot_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/splash/splash_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wallet_core/wallet_core.dart';
@@ -220,6 +221,14 @@ Future<void> initDependency(
   getIt.registerFactory<GetStartedCubit>(
     () => GetStartedCubit(
       getIt.get<Web3AuthUseCase>(),
+    ),
+  );
+
+  getIt.registerFactoryParam<SocialLoginYetiBotCubit,AWallet,dynamic>(
+    (wallet, _) => SocialLoginYetiBotCubit(
+      getIt.get<AccountUseCase>(),
+      getIt.get<KeyStoreUseCase>(),
+      wallet: wallet,
     ),
   );
 }

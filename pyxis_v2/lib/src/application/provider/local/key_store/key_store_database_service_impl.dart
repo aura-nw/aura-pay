@@ -69,6 +69,8 @@ final class KeyStoreDatabaseServiceImpl implements KeyStoreDatabaseService {
 
   @override
   Future<void> deleteAll() {
-    return _database.keyStoreDbs.where().deleteAll();
+    return _database.writeTxn(() async{
+      await _database.keyStoreDbs.where().deleteAll();
+    },);
   }
 }

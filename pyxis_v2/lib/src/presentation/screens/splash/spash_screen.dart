@@ -74,10 +74,11 @@ class _SplashScreenState extends State<SplashScreen> with StateFulBaseScreen {
           switch (state.status) {
             case SplashStatus.starting:
               break;
-            case SplashStatus.verifyByBioSuccessful:
-              AppGlobalCubit.of(context).changeStatus(
-                AppGlobalStatus.authorized,
-              );
+            case SplashStatus.notHasPassCodeAndHasAccount:
+              _onNotHasPasscodeAndHasAccount();
+              break;
+            case SplashStatus.hasAccountAndVerifyByBioSuccessful:
+              _onChangeApplicationStatus(context);
               break;
             case SplashStatus.hasPassCode:
               AppNavigator.replaceWith(
@@ -107,6 +108,22 @@ class _SplashScreenState extends State<SplashScreen> with StateFulBaseScreen {
           ),
         ),
       ),
+    );
+  }
+
+  void _onNotHasPasscodeAndHasAccount() {
+    AppNavigator.replaceWith(
+      RoutePath.setPasscode,
+      {
+        'callback' : _onChangeApplicationStatus,
+        'canBack' : false,
+      },
+    );
+  }
+
+  void _onChangeApplicationStatus(BuildContext context) {
+    AppGlobalCubit.of(context).changeStatus(
+      AppGlobalStatus.authorized,
     );
   }
 }

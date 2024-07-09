@@ -44,11 +44,15 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.setPasscode:
-        final VoidCallback onCreatePasscodeDone =
-            settings.arguments as VoidCallback;
+        final Map<String,dynamic> argument = settings.arguments as Map<String,dynamic>;
+        final void Function(BuildContext context) onCreatePasscodeDone =
+        argument['callback'] as void Function(BuildContext);
+
+        final bool canBack = argument['canBack'] as bool? ?? true;
         return _defaultRoute(
           CreatePasscodeScreen(
             onCreatePasscodeDone: onCreatePasscodeDone,
+            canBack: canBack,
           ),
           settings,
         );

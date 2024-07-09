@@ -108,7 +108,7 @@ class _GetStartedScreenState extends State<GetStartedScreen>
 
   void _onCheckHasPasscode(
     VoidCallback hasPasscodeCallBack,
-    VoidCallback nonPasscodeCallBack,
+    void Function(BuildContext) nonPasscodeCallBack,
   ) async {
     final appSecureUseCase = getIt.get<AppSecureUseCase>();
 
@@ -121,7 +121,10 @@ class _GetStartedScreenState extends State<GetStartedScreen>
     } else {
       AppNavigator.push(
         RoutePath.setPasscode,
-        nonPasscodeCallBack,
+        {
+          'callback' : nonPasscodeCallBack,
+          'canBack' : true,
+        },
       );
     }
   }
@@ -132,13 +135,13 @@ class _GetStartedScreenState extends State<GetStartedScreen>
     );
   }
 
-  void _onReplacePasscodeToCreateNew() {
+  void _onReplacePasscodeToCreateNew(BuildContext context) {
     AppNavigator.replaceWith(
       RoutePath.createWallet,
     );
   }
 
-  void _onReplacePasscodeToAddExistingWallet() {
+  void _onReplacePasscodeToAddExistingWallet(BuildContext context) {
     AppNavigator.replaceWith(
       RoutePath.importWallet,
     );

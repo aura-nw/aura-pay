@@ -20,20 +20,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: PrimaryAppButton(
-          text: 'Back to get started',
-          onPress: () async{
-            await _accountUseCase.deleteAll();
-            await _keyStoreUseCase.deleteAll();
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          PrimaryAppButton(
+            text: 'Back to get started',
+            onPress: () async{
+              await _accountUseCase.deleteAll();
+              await _keyStoreUseCase.deleteAll();
 
-            if(context.mounted){
-              AppGlobalCubit.of(context).changeStatus(
-                AppGlobalStatus.unauthorized,
-              );
-            }
-          },
-        ),
+              if(context.mounted){
+                AppGlobalCubit.of(context).changeStatus(
+                  AppGlobalStatus.unauthorized,
+                );
+              }
+            },
+          ),
+        ],
       ),
     );
   }
