@@ -7,6 +7,7 @@ import 'package:pyxis_v2/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_screen.dart';
+import 'package:pyxis_v2/src/presentation/screens/social_login_yeti_bot/social_login_yeti_bot_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/splash/spash_screen.dart';
 import 'package:wallet_core/wallet_core.dart';
 
@@ -22,6 +23,7 @@ sealed class RoutePath {
   static const String importWallet = '$_onBoarding/import_wallet';
   static const String importWalletYetiBot =
       '$_onBoarding/import_wallet_yeti_bot';
+  static const String socialLoginYetiBot = '$_onBoarding/social_login_yeti_bot';
 
   static const String home = '${_base}home';
 }
@@ -74,6 +76,14 @@ sealed class AppNavigator {
         final AWallet aWallet = settings.arguments as AWallet;
         return _defaultRoute(
           ImportWalletYetiBotScreen(
+            aWallet: aWallet,
+          ),
+          settings,
+        );
+      case RoutePath.socialLoginYetiBot:
+        final AWallet aWallet = settings.arguments as AWallet;
+        return _defaultRoute(
+          SocialLoginYetiBotScreen(
             aWallet: aWallet,
           ),
           settings,

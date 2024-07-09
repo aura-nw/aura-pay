@@ -1,15 +1,18 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_v2/app_configs/di.dart';
 import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
-import 'package:pyxis_v2/src/core/utils/context_extension.dart';
+import 'package:pyxis_v2/src/core/utils/toast.dart';
 import 'package:pyxis_v2/src/navigator.dart';
-import 'package:pyxis_v2/src/presentation/screens/get_started/widgets/button_form.dart';
-import 'package:pyxis_v2/src/presentation/screens/get_started/widgets/logo_form.dart';
+import 'get_started_state.dart';
+import 'get_started_cubit.dart';
+import 'widgets/button_form.dart';
+import 'widgets/logo_form.dart';
 import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
 
 class GetStartedScreen extends StatefulWidget {
@@ -20,8 +23,10 @@ class GetStartedScreen extends StatefulWidget {
 }
 
 class _GetStartedScreenState extends State<GetStartedScreen>
-    with StateFulBaseScreen {
+    with StateFulBaseScreen, CustomFlutterToast {
   final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
+
+  final GetStartedCubit _cubit = getIt.get<GetStartedCubit>();
 
   @override
   Widget child(BuildContext context, AppTheme appTheme,
@@ -29,7 +34,7 @@ class _GetStartedScreenState extends State<GetStartedScreen>
     return Column(
       children: [
         Expanded(
-          child:  GetStartedLogoFormWidget(
+          child: GetStartedLogoFormWidget(
             walletName: _config.appName,
             appTheme: appTheme,
           ),
@@ -41,23 +46,63 @@ class _GetStartedScreenState extends State<GetStartedScreen>
           localization: localization,
           appTheme: appTheme,
           onCreateNewWallet: () {
-            _onCheckHasPasscode(_onPushToCreateNew,_onReplacePasscodeToCreateNew);
+            _onCheckHasPasscode(
+                _onPushToCreateNew, _onReplacePasscodeToCreateNew);
           },
           onImportExistingWallet: () {
-            _onCheckHasPasscode(_onPushToAddExistingWallet,_onReplacePasscodeToAddExistingWallet);
+            _onCheckHasPasscode(_onPushToAddExistingWallet,
+                _onReplacePasscodeToAddExistingWallet);
           },
           onTermClick: () {},
+          onGoogleTap: () {
+            _onSocialClick(
+              Web3AuthLoginProvider.google,
+            );
+          },
+          onTwitterTap: () {
+            _onSocialClick(
+              Web3AuthLoginProvider.twitter,
+            );
+          },
         ),
       ],
     );
   }
 
   @override
-  Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
-      AppLocalizationManager localization) {
-    return Scaffold(
-      backgroundColor: appTheme.bgPrimary,
-      body: child,
+  Widget wrapBuild(
+    BuildContext context,
+    Widget child,
+    AppTheme appTheme,
+    AppLocalizationManager localization,
+  ) {
+    return BlocProvider.value(
+      value: _cubit,
+      child: BlocListener<GetStartedCubit, GetStartedState>(
+        listener: (context, state) {
+          switch (state.status) {
+            case GetStartedStatus.none:
+              break;
+            case GetStartedStatus.onSocialLogin:
+              break;
+            case GetStartedStatus.loginSuccess:
+              AppNavigator.push(
+                RoutePath.socialLoginYetiBot,
+                state.wallet,
+              );
+              break;
+            case GetStartedStatus.loginFailure:
+              showToast(
+                state.error.toString(),
+              );
+              break;
+          }
+        },
+        child: Scaffold(
+          backgroundColor: appTheme.bgPrimary,
+          body: child,
+        ),
+      ),
     );
   }
 
@@ -81,7 +126,7 @@ class _GetStartedScreenState extends State<GetStartedScreen>
     }
   }
 
-  void _onPushToCreateNew(){
+  void _onPushToCreateNew() {
     AppNavigator.push(
       RoutePath.createWallet,
     );
@@ -99,9 +144,13 @@ class _GetStartedScreenState extends State<GetStartedScreen>
     );
   }
 
-  void _onPushToAddExistingWallet(){
+  void _onPushToAddExistingWallet() {
     AppNavigator.push(
       RoutePath.importWallet,
     );
+  }
+
+  void _onSocialClick(Web3AuthLoginProvider provider) {
+    _cubit.onLogin(provider);
   }
 }

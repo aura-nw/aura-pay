@@ -12,4 +12,6 @@ abstract interface class KeyStoreDatabaseService {
   Future<KeyStoreDto?> get(int id);
 
   Future<List<KeyStoreDto>> getAll();
+
+  Future<void> deleteAll();
 }

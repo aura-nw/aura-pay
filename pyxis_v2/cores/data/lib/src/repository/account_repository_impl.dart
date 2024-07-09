@@ -58,4 +58,9 @@ final class AccountRepositoryImpl implements AccountRepository {
 
     return accountDto?.toEntity;
   }
+
+  @override
+  Future<void> deleteAll() {
+    return _accountDatabaseService.deleteAll();
+  }
 }

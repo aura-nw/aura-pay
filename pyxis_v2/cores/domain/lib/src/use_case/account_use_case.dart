@@ -37,4 +37,8 @@ final class AccountUseCase {
   Future<Account?> getFirstAccount(){
     return _accountRepository.getFirstAccount();
   }
+
+  Future<void> deleteAll(){
+    return _accountRepository.deleteAll();
+  }
 }

@@ -45,4 +45,9 @@ final class KeyStoreRepositoryImpl implements KeyStoreRepository {
 
     return keyStoreDto.toEntity;
   }
+
+  @override
+  Future<void> deleteAll() {
+    return _keyStoreDatabaseService.deleteAll();
+  }
 }

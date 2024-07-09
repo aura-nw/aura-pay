@@ -66,4 +66,9 @@ final class KeyStoreDatabaseServiceImpl implements KeyStoreDatabaseService {
 
     throw Exception('Key store is not found');
   }
+
+  @override
+  Future<void> deleteAll() {
+    return _database.keyStoreDbs.where().deleteAll();
+  }
 }

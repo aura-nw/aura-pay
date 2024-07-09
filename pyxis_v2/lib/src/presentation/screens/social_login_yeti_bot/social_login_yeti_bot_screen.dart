@@ -10,41 +10,41 @@ import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/utils/copy.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/core/utils/toast.dart';
-import 'import_wallet_yeti_bot_state.dart';
+import 'social_login_yeti_bot_state.dart';
 import 'package:pyxis_v2/src/presentation/widgets/app_button.dart';
 import 'package:pyxis_v2/src/presentation/widgets/yeti_bot_message_widget.dart';
-import 'import_wallet_yeti_bot_cubit.dart';
-import 'import_yeti_bot_selector.dart';
+import 'social_login_yeti_bot_cubit.dart';
+import 'social_login_yeti_bot_selector.dart';
 import 'widgets/app_bar_title.dart';
 import 'package:pyxis_v2/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
 import 'package:wallet_core/wallet_core.dart';
 
-class ImportWalletYetiBotScreen extends StatefulWidget {
+class SocialLoginYetiBotScreen extends StatefulWidget {
   final AWallet aWallet;
 
-  const ImportWalletYetiBotScreen({
+  const SocialLoginYetiBotScreen({
     required this.aWallet,
     super.key,
   });
 
   @override
-  State<ImportWalletYetiBotScreen> createState() =>
-      _ImportWalletYetiBotScreenState();
+  State<SocialLoginYetiBotScreen> createState() =>
+      _SocialLoginYetiBotScreenState();
 }
 
-class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
+class _SocialLoginYetiBotScreenState extends State<SocialLoginYetiBotScreen>
     with StateFulBaseScreen , CustomFlutterToast, Copy{
   final List<YetiBotMessageObject> _messages = [];
 
-  late ImportWalletYetiBotCubit _cubit;
+  late SocialLoginYetiBotCubit _cubit;
 
   final GlobalKey<AnimatedListState> _messageKey =
       GlobalKey<AnimatedListState>();
 
   @override
   void initState() {
-    _cubit = getIt.get<ImportWalletYetiBotCubit>(
+    _cubit = getIt.get<SocialLoginYetiBotCubit>(
       param1: widget.aWallet,
     );
     super.initState();
@@ -63,7 +63,7 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
       0,
       YetiBotMessageObject(
         data: localization.translate(
-          LanguageKey.importWalletYetiBotScreenBotContentOne,
+          LanguageKey.socialLoginYetiBotScreenBotContentOne,
         ),
         groupId: 0,
         type: 0,
@@ -84,29 +84,7 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
       0,
       YetiBotMessageObject(
         data: localization.translate(
-          LanguageKey.importWalletYetiBotScreenBotContentTwo,
-        ),
-        groupId: 0,
-        type: 0,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.importWalletYetiBotScreenBotContentThree,
+          LanguageKey.socialLoginYetiBotScreenBotContentTwo,
         ),
         groupId: 0,
         type: 0,
@@ -128,7 +106,29 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
       0,
       YetiBotMessageObject(
         data: localization.translate(
-          LanguageKey.importWalletYetiBotScreenBotContentFour,
+          LanguageKey.socialLoginYetiBotScreenBotContentThree,
+        ),
+        groupId: 0,
+        type: 0,
+      ),
+    );
+
+    _messageKey.currentState?.insertItem(
+      0,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    await Future.delayed(
+      const Duration(
+        milliseconds: 1200,
+      ),
+    );
+
+    _messages.insert(
+      0,
+      YetiBotMessageObject(
+        data: localization.translate(
+          LanguageKey.socialLoginYetiBotScreenBotContentFour,
         ),
         groupId: 1,
         type: 0,
@@ -149,7 +149,7 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
       0,
       YetiBotMessageObject(
         data: localization.translate(
-          LanguageKey.importWalletYetiBotScreenBotContentFive,
+          LanguageKey.socialLoginYetiBotScreenBotContentFive,
         ),
         groupId: 2,
         type: 1,
@@ -217,16 +217,16 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
             },
           ),
         ),
-        ImportWalletYetiBotIsReadySelector(
+        SocialLoginYetiBotIsReadySelector(
           builder: (isReady) {
             return PrimaryAppButton(
               onPress: _onNavigateToHome,
               text: !isReady
                   ? localization.translate(
-                      LanguageKey.importWalletYetiBotScreenGenerating,
+                      LanguageKey.socialLoginYetiBotScreenGenerating,
                     )
                   : localization.translate(
-                      LanguageKey.importWalletYetiBotScreenOnBoard,
+                      LanguageKey.socialLoginYetiBotScreenOnBoard,
                     ),
               isDisable: !isReady,
               leading: !isReady
@@ -249,15 +249,15 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
       AppLocalizationManager localization) {
     return BlocProvider.value(
       value: _cubit,
-      child: BlocListener<ImportWalletYetiBotCubit, ImportWalletYetiBotState>(
+      child: BlocListener<SocialLoginYetiBotCubit, SocialLoginYetiBotState>(
         listener: (context, state) {
           switch (state.status) {
-            case ImportWalletYetiBotStatus.none:
+            case SocialLoginYetiBotStatus.none:
               break;
-            case ImportWalletYetiBotStatus.storing:
+            case SocialLoginYetiBotStatus.storing:
               // Show loading
               break;
-            case ImportWalletYetiBotStatus.stored:
+            case SocialLoginYetiBotStatus.stored:
               AppGlobalCubit.of(context).changeStatus(
                 AppGlobalStatus.authorized,
               );
@@ -269,7 +269,7 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
           appBar: AppBarDefault(
             appTheme: appTheme,
             localization: localization,
-            title: ImportWalletYetiBotAppBarTitleWidget(
+            title: SocialLoginYetiBotAppBarTitleWidget(
               appTheme: appTheme,
               localization: localization,
             ),
