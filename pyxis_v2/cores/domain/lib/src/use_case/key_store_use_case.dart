@@ -30,6 +30,6 @@ final class KeyStoreUseCase {
   }
 
   Future<void> deleteAll(){
-    return _accountRepository.deleteAll();
+    return _keyStoreRepository.deleteAll();
   }
 }
