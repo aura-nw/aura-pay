@@ -17,6 +17,7 @@ class GetStartedButtonFormWidget extends StatelessWidget {
   final VoidCallback onTermClick;
   final VoidCallback onGoogleTap;
   final VoidCallback onTwitterTap;
+  final VoidCallback onAppleTap;
 
   const GetStartedButtonFormWidget({
     required this.localization,
@@ -26,6 +27,7 @@ class GetStartedButtonFormWidget extends StatelessWidget {
     required this.onTermClick,
     required this.onGoogleTap,
     required this.onTwitterTap,
+    required this.onAppleTap,
     super.key,
   });
 
@@ -76,6 +78,14 @@ class GetStartedButtonFormWidget extends StatelessWidget {
             GetStartedBoxIconWidget(
               onTap: onTwitterTap,
               icPath: AssetIconPath.icCommonTwitter,
+              appTheme: appTheme,
+            ),
+            const SizedBox(
+              width: BoxSize.boxSize04,
+            ),
+            GetStartedBoxIconWidget(
+              onTap: onAppleTap,
+              icPath: AssetIconPath.icCommonApple,
               appTheme: appTheme,
             ),
           ],

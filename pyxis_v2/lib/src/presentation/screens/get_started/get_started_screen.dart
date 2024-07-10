@@ -64,6 +64,11 @@ class _GetStartedScreenState extends State<GetStartedScreen>
               Web3AuthLoginProvider.twitter,
             );
           },
+          onAppleTap: () {
+            _onSocialClick(
+              Web3AuthLoginProvider.apple,
+            );
+          },
         ),
       ],
     );
