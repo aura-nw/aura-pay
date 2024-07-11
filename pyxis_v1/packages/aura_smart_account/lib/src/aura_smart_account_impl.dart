@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:aura_smart_account/aura_smart_account.dart';
-import 'package:aura_smart_account/src/core/definitions/account.dart';
+import 'package:aura_smart_account/src/core/definitions/wallet.dart';
 import 'package:aura_smart_account/src/core/definitions/cosmos_signer_data.dart';
 import 'package:aura_smart_account/src/core/definitions/grpc_network_info.dart';
 import 'package:aura_smart_account/src/proto/aura/smartaccount/v1beta1/export.dart'
