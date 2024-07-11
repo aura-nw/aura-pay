@@ -1,3 +1,5 @@
+import 'package:pyxis_v2/src/core/constants/asset_path.dart';
+
 sealed class AppLocalConstant{
   // account db name
   static const String localDbName = 'px_wallet_database_v2.isar';
@@ -10,4 +12,10 @@ sealed class AppLocalConstant{
   // Passcode and biometric key
   static const String passCodeKey = 'px_app_pass_code';
   static const String bioMetricKey = 'px_app_bio_metric';
+
+  static const List<String> avatars = [
+    AssetImagePath.defaultAvatar1,
+    AssetImagePath.defaultAvatar2,
+    AssetImagePath.defaultAvatar3,
+  ];
 }

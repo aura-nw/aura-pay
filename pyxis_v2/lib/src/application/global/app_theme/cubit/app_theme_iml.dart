@@ -243,7 +243,7 @@ final class AppLightTheme implements AppTheme {
   Color fgBrandPrimaryAlt = AppColor.gray500;
 
   @override
-  Color fgBrandSecondary = AppColor.gray500;
+  Color fgBrandSecondary = AppColor.cyan400;
 
   @override
   Color fgDisabled = AppColor.gray500;

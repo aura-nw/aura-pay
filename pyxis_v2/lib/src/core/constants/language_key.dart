@@ -2,6 +2,7 @@ sealed class LanguageKey {
   // Common app
   static const String commonYetiBot = 'common_yeti_bot';
   static const String commonCopyValue = 'common_copy_value';
+  static const String commonBalancePrefix = 'common_balance_prefix';
 
   // Get started screen
   static const String getStartedScreenCreateNewWallet = 'get_started_screen_create_new_wallet';
@@ -60,4 +61,24 @@ sealed class LanguageKey {
   static const String socialLoginYetiBotScreenBotContentFive = 'social_login_yeti_bot_screen_bot_content_five';
   static const String socialLoginYetiBotScreenGenerating = 'social_login_yeti_bot_screen_generating';
   static const String socialLoginYetiBotScreenOnBoard = 'social_login_yeti_bot_screen_on_board';
+
+  // Home screen
+  static const String homeScreenBottomNavigationBarHome = 'home_screen_bottom_navigation_bar_home';
+  static const String homeScreenBottomNavigationBarWallet = 'home_screen_bottom_navigation_bar_wallets';
+  static const String homeScreenBottomNavigationBarBrowser = 'home_screen_bottom_navigation_bar_browser';
+  static const String homeScreenBottomNavigationBarScan = 'home_screen_bottom_navigation_bar_scan';
+  static const String homeScreenBottomNavigationBarHistory = 'home_screen_bottom_navigation_bar_history';
+  static const String homeScreenBottomNavigationBarSetting = 'home_screen_bottom_navigation_bar_setting';
+
+  // Home page
+  static const String homePageSend = 'home_page_send';
+  static const String homePageReceive = 'home_page_receive';
+  static const String homePageSwap = 'home_page_swap';
+  static const String homePageStake = 'home_page_stake';
+  static const String homePageTotalValue = 'home_page_total_value';
+  static const String homePageTokensTab = 'home_page_tokens_tab';
+  static const String homePageNFTsTab = 'home_page_nft_tab';
+  static const String homePageTokenValue = 'home_page_token_value';
+  static const String homePageManage = 'home_page_manage';
+  static const String homePage24hPNL = 'home_page_24h_pnl';
 }
