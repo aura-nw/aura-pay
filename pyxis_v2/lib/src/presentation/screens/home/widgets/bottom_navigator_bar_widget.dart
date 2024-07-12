@@ -120,10 +120,10 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
               // Localization key for history tab label
               () {
                 widget.onTabSelect(
-                    2); // Callback function when history tab is selected
+                    3); // Callback function when history tab is selected
               },
               widget.currentIndex ==
-                  2, // Whether the history tab is currently selected
+                  3, // Whether the history tab is currently selected
             ),
           ),
           Expanded(
@@ -137,10 +137,10 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
               // Localization key for setting tab label
               () {
                 widget.onTabSelect(
-                    3); // Callback function when setting tab is selected
+                    4); // Callback function when setting tab is selected
               },
               widget.currentIndex ==
-                  3, // Whether the setting tab is currently selected
+                  4, // Whether the setting tab is currently selected
             ),
           ),
         ],

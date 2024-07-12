@@ -8,8 +8,6 @@ import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
-import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_creen.dart';
-import 'package:web3auth_flutter/enums.dart';
 
 final class YetiBotMessageObject<T> {
   final int groupId;

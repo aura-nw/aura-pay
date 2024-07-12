@@ -8,14 +8,14 @@ import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/navigator.dart';
 
-abstract interface class _AppBarBase extends StatelessWidget
-    implements PreferredSizeWidget {
+abstract class _AppBarBase extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onBack;
   final AppTheme appTheme;
   final AppLocalizationManager localization;
   final double? leadingWidth;
   final Widget? title;
   final String? titleKey;
+  final bool isLeftActionActive;
 
   const _AppBarBase({
     this.leadingWidth,
@@ -24,6 +24,7 @@ abstract interface class _AppBarBase extends StatelessWidget
     required this.localization,
     this.titleKey,
     this.title,
+    required this.isLeftActionActive,
     super.key,
   });
 
@@ -31,26 +32,28 @@ abstract interface class _AppBarBase extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       leading: leadingBuilder(context, appTheme, localization) ??
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              if (onBack == null) {
-                AppNavigator.pop();
-              } else {
-                onBack!.call();
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Spacing.spacing04,
-              ),
-              child: SvgPicture.asset(
-                AssetIconPath.icCommonArrowBack,
-                height: BoxSize.boxSize07,
-                width: BoxSize.boxSize07,
-              ),
-            ),
-          ),
+          (isLeftActionActive
+              ? GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    if (onBack == null) {
+                      AppNavigator.pop();
+                    } else {
+                      onBack!.call();
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Spacing.spacing04,
+                    ),
+                    child: SvgPicture.asset(
+                      AssetIconPath.icCommonArrowBack,
+                      height: BoxSize.boxSize07,
+                      width: BoxSize.boxSize07,
+                    ),
+                  ),
+                )
+              : null),
       leadingWidth: leadingWidth,
       title: titleBuilder(context, appTheme, localization),
       centerTitle: true,
@@ -97,7 +100,7 @@ abstract interface class _AppBarBase extends StatelessWidget
 
   @override
   Size get preferredSize => Size.fromHeight(
-        (kToolbarHeight) +
+        kToolbarHeight +
             (bottomBuilder(appTheme, localization)?.preferredSize.height ??
                 BoxSize.boxSizeNone),
       );
@@ -120,6 +123,7 @@ class AppBarDefault extends _AppBarBase {
     this.bottom,
     required super.localization,
     super.leadingWidth,
+    super.isLeftActionActive = true,
   });
 
   @override
@@ -140,5 +144,3 @@ class AppBarDefault extends _AppBarBase {
     return leading;
   }
 }
-
-///

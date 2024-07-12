@@ -72,5 +72,16 @@
   "home_page_nft_tab" : "NFTs",
   "home_page_token_value" : "Tokens value",
   "home_page_manage" : "Manage",
-  "home_page_24h_pnl" : "24h PNL"
+  "home_page_24h_pnl" : "24h PNL",
+
+  "settings_page_title": "Settings",
+  "settings_page_profile_section": "Profile",
+  "settings_page_edit_profile": "Edit Profile",
+  "settings_page_change_password": "Change Password",
+  "settings_page_preferences_section": "Preferences",
+  "settings_page_language": "Language",
+  "settings_page_notifications": "Notifications",
+  "settings_page_system_section": "System",
+  "settings_page_reset_onboarding": "Reset Onboarding",
+  "settings_page_logout": "Logout"
 }
