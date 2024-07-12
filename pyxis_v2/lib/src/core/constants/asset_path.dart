@@ -23,6 +23,11 @@ sealed class AssetImagePath {
   static const String _baseImgPath = '${_baseAsset}image/';
 
   static const String yetiBot = '${_baseImgPath}img_yeti_bot.svg';
+
+
+  static const String defaultAvatar1 = '${_baseImgPath}img_default_avatar1.jpeg';
+  static const String defaultAvatar2 = '${_baseImgPath}img_default_avatar2.jpeg';
+  static const String defaultAvatar3 = '${_baseImgPath}img_default_avatar3.jpeg';
 }
 
 sealed class AssetIconPath {
@@ -38,4 +43,19 @@ sealed class AssetIconPath {
   static const String icCommonCheckSuccess = '${_baseIconPath}ic_common_check_success.svg';
   static const String icCommonGoogle = '${_baseIconPath}ic_common_google.svg';
   static const String icCommonTwitter = '${_baseIconPath}ic_common_twitter.svg';
+  static const String icCommonApple = '${_baseIconPath}ic_common_apple.svg';
+  static const String icCommonArrowDown = '${_baseIconPath}ic_common_arrow_down.svg';
+  static const String icCommonEye = '${_baseIconPath}ic_common_eye.svg';
+  static const String icCommonScan = '${_baseIconPath}ic_common_scan.svg';
+  static const String icCommonReceive = '${_baseIconPath}ic_common_receive.svg';
+  static const String icCommonSend = '${_baseIconPath}ic_common_send.svg';
+  static const String icCommonSwap = '${_baseIconPath}ic_common_swap.svg';
+  static const String icCommonStake = '${_baseIconPath}ic_common_stake.svg';
+  static const String icCommonAura = '${_baseIconPath}ic_common_aura.svg';
+
+  static const String icHomeScreenBottomNavigationBarBrowser = '${_baseIconPath}ic_home_screen_bottom_navigation_bar_browser.svg';
+  static const String icHomeScreenBottomNavigationBarWallet = '${_baseIconPath}ic_home_screen_bottom_navigator_bar_wallet.svg';
+  static const String icHomeScreenBottomNavigationBarHistory = '${_baseIconPath}ic_home_screen_bottom_navigation_bar_history.svg';
+  static const String icHomeScreenBottomNavigationBarSetting= '${_baseIconPath}ic_home_screen_bottom_navigation_bar_setting.svg';
+  static const String icHomeScreenBottomNavigationBarHome= '${_baseIconPath}ic_home_screen_bottom_navigation_bar_home.svg';
 }

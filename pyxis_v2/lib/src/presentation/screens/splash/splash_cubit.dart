@@ -54,9 +54,15 @@ class SplashCubit extends Cubit<SplashState> {
 
             // users verify successful
             if (isVerify && account != null) {
-              status = SplashStatus.verifyByBioSuccessful;
+              status = SplashStatus.hasAccountAndVerifyByBioSuccessful;
             }
           }
+        }
+      }else{
+        final account = await _accountUseCase.getFirstAccount();
+
+        if(account != null){
+          status = SplashStatus.notHasPassCodeAndHasAccount;
         }
       }
 

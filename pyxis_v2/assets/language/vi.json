@@ -1,6 +1,7 @@
 {
   "common_yeti_bot" : "Yeti bot",
   "common_copy_value" : "Copy ${value} success",
+  "common_balance_prefix" : "$",
 
   "get_started_screen_create_new_wallet" : "Create New Wallet",
   "get_started_screen_add_wallet" : "Add Existing Wallet",
@@ -53,5 +54,23 @@
   "social_login_yeti_bot_screen_bot_content_four" : "All done, your wallet has been imported \uD83E\uDD73\uD83C\uDF89\uD83C\uDF89",
   "social_login_yeti_bot_screen_bot_content_five" : "Your wallet address",
   "social_login_yeti_bot_screen_generating" : "Generating",
-  "social_login_yeti_bot_screen_on_board" : "Get me onboard"
+  "social_login_yeti_bot_screen_on_board" : "Get me onboard",
+
+  "home_screen_bottom_navigation_bar_home" : "Home",
+  "home_screen_bottom_navigation_bar_wallets" : "Wallets",
+  "home_screen_bottom_navigation_bar_browser" : "Browser",
+  "home_screen_bottom_navigation_bar_scan" : "Scan",
+  "home_screen_bottom_navigation_bar_history" : "History",
+  "home_screen_bottom_navigation_bar_setting" : "Setting",
+
+  "home_page_send" : "Send",
+  "home_page_receive" : "Receive",
+  "home_page_swap" : "Swap",
+  "home_page_stake" : "Stake",
+  "home_page_total_value" : "Total value",
+  "home_page_tokens_tab" : "Tokens",
+  "home_page_nft_tab" : "NFTs",
+  "home_page_token_value" : "Tokens value",
+  "home_page_manage" : "Manage",
+  "home_page_24h_pnl" : "24h PNL"
 }

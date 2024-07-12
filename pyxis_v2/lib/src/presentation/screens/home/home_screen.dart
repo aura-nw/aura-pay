@@ -1,9 +1,17 @@
-import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:pyxis_v2/app_configs/di.dart';
-import 'package:pyxis_v2/src/application/global/app_global_state/app_global_cubit.dart';
-import 'package:pyxis_v2/src/application/global/app_global_state/app_global_state.dart';
-import 'package:pyxis_v2/src/presentation/widgets/app_button.dart';
+import 'package:pyxis_v2/src/application/global/app_theme/app_theme_builder.dart';
+import 'package:pyxis_v2/src/application/global/localization/app_localization_provider.dart';
+
+import 'widgets/bottom_navigator_bar_widget.dart';
+import 'widgets/tab_builder.dart';
+
+enum HomeScreenSection {
+  wallet,
+  browser,
+  home,
+  history,
+  setting,
+}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,26 +22,50 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  final AccountUseCase _accountUseCase = getIt.get<AccountUseCase>();
-  final KeyStoreUseCase _keyStoreUseCase = getIt.get<KeyStoreUseCase>();
+  late HomeScreenSection currentSection;
+
+  @override
+  void initState() {
+    currentSection = HomeScreenSection.home;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: PrimaryAppButton(
-          text: 'Back to get started',
-          onPress: () async{
-            await _accountUseCase.deleteAll();
-            await _keyStoreUseCase.deleteAll();
+    return PopScope(
+      canPop: false,
+      child: AppThemeBuilder(
+        builder: (appTheme) {
+          return AppLocalizationProvider(
+            builder: (localization) {
+              return Scaffold(
+                body: SafeArea(
+                  child: HomeScreenTabBuilder(
+                    currentSection: currentSection,
+                  ),
+                ),
+                bottomNavigationBar: BottomNavigatorBarWidget(
+                  currentIndex: HomeScreenSection.values.indexOf(
+                    currentSection,
+                  ),
+                  appTheme: appTheme,
+                  onTabSelect: (index) {
+                    // Handle tab selection and update the current section
+                    final HomeScreenSection newSection =
+                    HomeScreenSection.values[index];
 
-            if(context.mounted){
-              AppGlobalCubit.of(context).changeStatus(
-                AppGlobalStatus.unauthorized,
+                    if (currentSection == newSection) {
+                      return;
+                    }
+                    setState(() {
+                      currentSection = newSection;
+                    });
+                  }, localization: localization,
+                ),
               );
             }
-          },
-        ),
+          );
+        }
       ),
     );
   }

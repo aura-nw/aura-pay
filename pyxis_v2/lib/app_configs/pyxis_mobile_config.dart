@@ -15,7 +15,7 @@ class PyxisMobileConfig {
     this.environment = PyxisEnvironment.serenity,
   });
 
-  Map<String, dynamic> get appConfigs => jsonDecode(configs['APP_CONFIG']);
+  Map<String, dynamic> get appConfigs => configs['APP_CONFIG'];
 
   String get chainName => appConfigs['chainName'];
 

@@ -89,7 +89,7 @@ mixin StateFulBaseScreen<T extends StatefulWidget> on State<T> {
     return AppThemeBuilder(
       builder: (appTheme) {
         return AppLocalizationProvider(
-          builder: (localization, _) {
+          builder: (localization) {
             return wrapBuild(
               context,
               buildSpace(

@@ -93,6 +93,8 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
 
   @override
   Future<void> deleteAll() {
-    return _database.accountDbs.where().deleteAll();
+    return _database.writeTxn(() async{
+      await _database.accountDbs.where().deleteAll();
+    },);
   }
 }

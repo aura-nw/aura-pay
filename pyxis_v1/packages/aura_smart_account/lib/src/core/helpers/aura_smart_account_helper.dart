@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:aura_smart_account/src/core/constants/aura_network_information.dart';
 import 'package:aura_smart_account/src/core/constants/smart_account_constant.dart';
-import 'package:aura_smart_account/src/core/definitions/account.dart';
+import 'package:aura_smart_account/src/core/definitions/wallet.dart';
 import 'package:aura_smart_account/src/core/definitions/aura_smart_account_environment.dart';
 import 'package:aura_smart_account/src/core/definitions/cosmos_signer_data.dart';
 import 'package:aura_smart_account/src/core/definitions/grpc_network_info.dart';

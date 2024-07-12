@@ -4,7 +4,8 @@ part 'splash_state.freezed.dart';
 enum SplashStatus {
   starting,
   hasPassCode,
-  verifyByBioSuccessful,
+  hasAccountAndVerifyByBioSuccessful,
+  notHasPassCodeAndHasAccount,
   notHasPassCodeOrError,
 }
 

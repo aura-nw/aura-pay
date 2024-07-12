@@ -11,10 +11,12 @@ import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
 import 'package:pyxis_v2/src/presentation/widgets/key_board_number_widget.dart';
 
 class CreatePasscodeScreen extends StatefulWidget {
-  final VoidCallback onCreatePasscodeDone;
+  final void Function(BuildContext) onCreatePasscodeDone;
+  final bool canBack;
 
   const CreatePasscodeScreen({
     required this.onCreatePasscodeDone,
+    this.canBack = true,
     super.key,
   });
 
@@ -99,13 +101,17 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen>
               break;
           }
         },
-        child: Scaffold(
-          backgroundColor: appTheme.bgPrimary,
-          appBar: AppBarDefault(
-            appTheme: appTheme,
-            localization: localization,
+        child: PopScope(
+          canPop: widget.canBack,
+          child: Scaffold(
+            backgroundColor: appTheme.bgPrimary,
+            appBar: AppBarDefault(
+              appTheme: appTheme,
+              localization: localization,
+              leading: widget.canBack ? null : const SizedBox.shrink(),
+            ),
+            body: child,
           ),
-          body: child,
         ),
       ),
     );
@@ -172,6 +178,6 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen>
   }
 
   void _onSavePassWordDone() {
-    widget.onCreatePasscodeDone();
+    widget.onCreatePasscodeDone(context);
   }
 }
