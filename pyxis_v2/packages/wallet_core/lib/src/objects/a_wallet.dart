@@ -38,33 +38,33 @@ class AWallet {
     return _privateKey.data();
   }
 
-  Future<String> signMessage(String message) async {
-    try {
-      // Prefix the message with the Ethereum signing prefix
-      final prefix = '\u0019Ethereum Signed Message:\n${message.length}';
-      final prefixedMessage = utf8.encode(prefix + message);
+  // Future<String> signMessage(String message) async {
+  //   try {
+  //     // Prefix the message with the Ethereum signing prefix
+  //     final prefix = '\u0019Ethereum Signed Message:\n${message.length}';
+  //     final prefixedMessage = utf8.encode(prefix + message);
 
-      // Hash the message
-      final messageHash = keccak256(Uint8List.fromList(prefixedMessage));
+  //     // Hash the message
+  //     final messageHash = keccak256(Uint8List.fromList(prefixedMessage));
 
-      // Create the Ethereum SigningInput protobuf message
-      final signingInput = Ethereum.SigningInput(
-        privateKey: _privateKey.data().toList(),
-        messageHash: messageHash.toList(),
-      );
+  //     // Create the Ethereum SigningInput protobuf message
+  //     final signingInput = Ethereum.SigningInput(
+  //       privateKey: _privateKey.data().toList(),
+  //       messageHash: messageHash.toList(),
+  //     );
 
-      // Use AnySigner to sign the message
-      final output = Ethereum.SigningOutput.fromBuffer(
-        AnySigner.sign(signingInput.writeToBuffer(), coinType).toList(),
-      );
+  //     // Use AnySigner to sign the message
+  //     final output = Ethereum.SigningOutput.fromBuffer(
+  //       AnySigner.sign(signingInput.writeToBuffer(), coinType).toList(),
+  //     );
 
-      // Return the signed message
-      return hex.encode(output.encoded.toList());
-    } catch (e) {
-      logger.d('Error signing message: $e');
-      return '';
-    }
-  }
+  //     // Return the signed message
+  //     return hex.encode(output.encoded.toList());
+  //   } catch (e) {
+  //     logger.d('Error signing message: $e');
+  //     return '';
+  //   }
+  // }
 
   Future<void> sendTransaction(String toAddress, BigInt amount, BigInt gasPrice,
       BigInt gasLimit) async {}

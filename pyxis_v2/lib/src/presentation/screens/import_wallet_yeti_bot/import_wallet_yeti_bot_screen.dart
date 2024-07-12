@@ -34,135 +34,15 @@ class ImportWalletYetiBotScreen extends StatefulWidget {
 }
 
 class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
-    with StateFulBaseScreen , CustomFlutterToast, Copy{
+    with StateFulBaseScreen, CustomFlutterToast, Copy {
   final List<YetiBotMessageObject> _messages = [];
-
+  final GlobalKey<AnimatedListState> _messageKey = GlobalKey<AnimatedListState>();
   late ImportWalletYetiBotCubit _cubit;
-
-  final GlobalKey<AnimatedListState> _messageKey =
-      GlobalKey<AnimatedListState>();
 
   @override
   void initState() {
-    _cubit = getIt.get<ImportWalletYetiBotCubit>(
-      param1: widget.aWallet,
-    );
+    _cubit = getIt.get<ImportWalletYetiBotCubit>(param1: widget.aWallet);
     super.initState();
-  }
-
-  void _addContent() async {
-    final localization = AppLocalizationManager.of(context);
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.importWalletYetiBotScreenBotContentOne,
-        ),
-        groupId: 0,
-        type: 0,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.importWalletYetiBotScreenBotContentTwo,
-        ),
-        groupId: 0,
-        type: 0,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.importWalletYetiBotScreenBotContentThree,
-        ),
-        groupId: 0,
-        type: 0,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.importWalletYetiBotScreenBotContentFour,
-        ),
-        groupId: 1,
-        type: 0,
-      ),
-    );
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.importWalletYetiBotScreenBotContentFive,
-        ),
-        groupId: 2,
-        type: 1,
-        object: _cubit.state.wallet.address,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    _cubit.updateStatus(true);
   }
 
   @override
@@ -171,44 +51,62 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
     _addContent();
   }
 
+  Future<void> _addContent() async {
+    final localization = AppLocalizationManager.of(context);
+    const messageDelays = [
+      LanguageKey.importWalletYetiBotScreenBotContentOne,
+      LanguageKey.importWalletYetiBotScreenBotContentTwo,
+      LanguageKey.importWalletYetiBotScreenBotContentThree,
+      LanguageKey.importWalletYetiBotScreenBotContentFour,
+      LanguageKey.importWalletYetiBotScreenBotContentFive,
+    ];
+           const List<int> messageTime = [200, 700, 2000, 3000, 1200, 300];
+
+
+    for (var i = 0; i < messageDelays.length; i++) {
+      print('Time Delay = ${messageTime[i]}');
+      await Future.delayed(Duration(milliseconds: messageTime[i]));
+      _messages.insert(
+        0,
+        YetiBotMessageObject(
+          data: localization.translate(messageDelays[i]),
+          groupId: i == messageDelays.length - 1 ? 2 : i,
+          type: i == messageDelays.length - 1 ? 1 : 0,
+          object: i == messageDelays.length - 1 ? _cubit.state.wallet.address : null,
+        ),
+      );
+      _messageKey.currentState?.insertItem(0, duration: const Duration(milliseconds: 300));
+    }
+
+    _cubit.updateStatus(true);
+  }
+
   @override
   void dispose() {
     _messages.clear();
-
-    _messageKey.currentState?.dispose();
     super.dispose();
   }
 
   @override
-  Widget child(BuildContext context, AppTheme appTheme,
-      AppLocalizationManager localization) {
+  Widget child(BuildContext context, AppTheme appTheme, AppLocalizationManager localization) {
     return Column(
       children: [
         Expanded(
           child: AnimatedList(
             key: _messageKey,
-            padding: const EdgeInsets.symmetric(
-              vertical: Spacing.spacing06,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: Spacing.spacing06),
             reverse: true,
             initialItemCount: _messages.length,
-            primary: true,
             itemBuilder: (context, index, animation) {
               return SizeTransition(
                 sizeFactor: animation,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Spacing.spacing03,
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: Spacing.spacing03),
                   child: YetiBotMessageBuilder(
                     appTheme: appTheme,
                     messageObject: _messages[index],
                     nextGroup: _messages.getIndex(index + 1)?.groupId,
-                    onCopy: () {
-                      copy(
-                        _messages[index].object,
-                      );
-                    },
+                    onCopy: () => copy(_messages[index].object),
                     localization: localization,
                     lastGroup: _messages.getIndex(index - 1)?.groupId,
                   ),
@@ -221,20 +119,14 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
           builder: (isReady) {
             return PrimaryAppButton(
               onPress: _onNavigateToHome,
-              text: !isReady
-                  ? localization.translate(
-                      LanguageKey.importWalletYetiBotScreenGenerating,
-                    )
-                  : localization.translate(
-                      LanguageKey.importWalletYetiBotScreenOnBoard,
-                    ),
+              text: localization.translate(isReady
+                  ? LanguageKey.importWalletYetiBotScreenOnBoard
+                  : LanguageKey.importWalletYetiBotScreenGenerating),
               isDisable: !isReady,
               leading: !isReady
                   ? SizedBox.square(
                       dimension: 19.2,
-                      child: CircularProgressIndicator(
-                        color: appTheme.textDisabled,
-                      ),
+                      child: CircularProgressIndicator(color: appTheme.textDisabled),
                     )
                   : null,
             );
@@ -245,23 +137,13 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
   }
 
   @override
-  Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
-      AppLocalizationManager localization) {
+  Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme, AppLocalizationManager localization) {
     return BlocProvider.value(
       value: _cubit,
       child: BlocListener<ImportWalletYetiBotCubit, ImportWalletYetiBotState>(
         listener: (context, state) {
-          switch (state.status) {
-            case ImportWalletYetiBotStatus.none:
-              break;
-            case ImportWalletYetiBotStatus.storing:
-              // Show loading
-              break;
-            case ImportWalletYetiBotStatus.stored:
-              AppGlobalCubit.of(context).changeStatus(
-                AppGlobalStatus.authorized,
-              );
-              break;
+          if (state.status == ImportWalletYetiBotStatus.stored) {
+            AppGlobalCubit.of(context).changeStatus(AppGlobalStatus.authorized);
           }
         },
         child: Scaffold(
@@ -269,10 +151,7 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
           appBar: AppBarDefault(
             appTheme: appTheme,
             localization: localization,
-            title: ImportWalletYetiBotAppBarTitleWidget(
-              appTheme: appTheme,
-              localization: localization,
-            ),
+            title: ImportWalletYetiBotAppBarTitleWidget(appTheme: appTheme, localization: localization),
           ),
           body: child,
         ),
