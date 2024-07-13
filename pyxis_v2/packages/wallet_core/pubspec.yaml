@@ -10,7 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  trust_wallet_core: ^0.0.6
+  trust_wallet_core:
+    git:
+      url: https://github.com/ToanBarcelona1998/flutter_trust_wallet_core
   convert: ^3.0.1
 
 
