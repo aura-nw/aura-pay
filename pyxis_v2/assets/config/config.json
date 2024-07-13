@@ -3,5 +3,5 @@
   "APP_NAME" : "Pyxis Wallet",
   "WEB3_AUTH_CLIENT_ID" : "BCz90RUtKV5gkiwCJYQY6oeGeyEnsMjPhzShWFs_j82F5iwlt0fhUiQsBMHeV_96VACY00YtCwfwCWL9zv-jV7c",
   "WEB3_AUTH_IOS_REDIRECT_URL" : "app://aura.pyxis.mobile",
-  "WEB3_AUTH_ANDROID_REDIRECT_URL" : "app://com.aura.network.pyxis_mobile/auth"
+  "WEB3_AUTH_ANDROID_REDIRECT_URL" : "app://com.aura.network.pyxis_mobile"
 }
