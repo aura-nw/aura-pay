@@ -38,38 +38,59 @@ class _HomePageState extends State<HomePage>
   double _scrollPosition = 0;
   double _walletCardScale = 1.0;
   double _walletCardOpacity = 1.0;
+  double _walletActionScale = 1.0;
+  double _walletActionOpacity = 1.0;
 
   bool _showWalletCard = true;
+  bool _showActions = true;
 
-  void _createScrollController(){
+  void _createScrollController() {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
   }
 
-  void _disposeController(){
+  void _disposeController() {
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
   }
 
   void _scrollListener() {
     _scrollPosition = _scrollController.position.pixels;
+
     setState(
       () {
         if (_scrollPosition < 200) {
           _walletCardScale = 1 - (_scrollPosition / 200);
+
+          _walletCardOpacity = 1 - (_scrollPosition / 200);
         }
-
-        _walletCardScale = _walletCardScale.clamp(0.0, 1.0);
-
-        _walletCardOpacity =
-            (_scrollPosition < 200) ? 1 - (_scrollPosition / 200) : 0;
-
-        _walletCardOpacity = _walletCardOpacity.clamp(0.0, 1.0);
 
         if (_walletCardScale < 0.38) {
           _showWalletCard = false;
         } else {
           _showWalletCard = true;
+        }
+
+        _walletCardScale = _walletCardScale.clamp(0.0, 1.0);
+
+        _walletCardOpacity = _walletCardOpacity.clamp(0.0, 1.0);
+
+        if (_scrollPosition > 230) {
+          _walletActionScale = 1 - (_scrollPosition / 400);
+
+          _walletCardOpacity = 1 - (_scrollPosition / 400);
+        }
+
+        _walletActionScale = _walletCardScale.clamp(0.0, 1.0);
+
+        _walletActionScale = _walletCardOpacity.clamp(0.0, 1.0);
+
+        print(_walletActionScale);
+
+        if (_walletActionScale < 0.3) {
+          _showActions = false;
+        } else {
+          _showActions = true;
         }
       },
     );
@@ -94,80 +115,87 @@ class _HomePageState extends State<HomePage>
       AppLocalizationManager localization) {
     return SingleChildScrollView(
       controller: _scrollController,
-      child: SizedBox(
-        height: context.bodyHeight,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+            minHeight: context.bodyHeight, maxHeight: context.bodyHeight * 1.5),
+        // height: context.bodyHeight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (_showWalletCard)
-              AnimatedOpacity(
-                opacity: _walletCardOpacity,
-                duration: _animatedDuration,
-                child: Transform.scale(
-                  scale: _walletCardScale,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          HomePageStoryWidget(
-                            thumbnail:
-                                'https://s3-alpha-sig.figma.com/img/92cd/b81b/8238a519c91c475eb512ebb07d5e6bdb?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=T7rGW5KpFMTYl0m8ml8YvK2wYvBxqwZGmDuzEgdA-B0vwvvAF-mK8oHNEzSCvBj8UvL2ky4Knh9tR~yTWA3TLBKf~AhK8LehQ8sIsWUQak5dSlLQTV7NM-bnvpXmxX0CAwpIxQ3M8k8yZFsTf1k9SmQ8iUbypy~LbyfRmue0l4Rre8cUCd5cLQx07fK9siQJsEojYKnvZn57OIApGnDaMiq7UDr-RgW-labJ39r6GMUolonURyO8cfpsxxw~xuoM0NLnsyp~r5o0uUBwmzd9V5NbSJRhm6IJXTTHjIHQwaSUB1aBygzYnWauecHSbDkGyUfUTyuc-ESdBKf0vMcd9Q__',
-                            title: 'Create passcode',
-                            appTheme: appTheme,
-                          ),
-                          const SizedBox(
-                            width: BoxSize.boxSize05,
-                          ),
-                          HomePageStoryWidget(
-                            thumbnail:
-                                'https://s3-alpha-sig.figma.com/img/c181/d11c/d352d2d1efbc59d8499e1b3c16352240?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=O2ApS0-GuiWDOsjHmUpVUFHoWPIJ3Is74oK9H1ME4ztzcvrtCvdrFs-hgtM3YEB7hA9vIsoJff3FRmj9SQz03BWjzIfr~RoH8kQo7R6Vdt0Kp8oeaIliiz1jJBJnonnhIaPY4VvAxbOzO8y2uB9KW3iryivqP4nsecwovOuxCUXkGS-UfQMCfSLlxhTk82gD~hFPCbpVYppF1igAmJGQWaIDx9vziGB4IrRy2scOk1wtd4clr~77hE1g5Ts80QbD95m4591peGMRSjlGdUgC5aDlxvykXXKWcQS0VPWG7uE9HwPtTBm6IcTum9HPG~k429rVHZbDT25~8isRrPpGBQ__',
-                            title: 'Punka event',
-                            appTheme: appTheme,
-                          ),
-                          const SizedBox(
-                            width: BoxSize.boxSize05,
-                          ),
-                          HomePageStoryWidget(
-                            thumbnail:
-                                'https://s3-alpha-sig.figma.com/img/92cd/b81b/8238a519c91c475eb512ebb07d5e6bdb?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=T7rGW5KpFMTYl0m8ml8YvK2wYvBxqwZGmDuzEgdA-B0vwvvAF-mK8oHNEzSCvBj8UvL2ky4Knh9tR~yTWA3TLBKf~AhK8LehQ8sIsWUQak5dSlLQTV7NM-bnvpXmxX0CAwpIxQ3M8k8yZFsTf1k9SmQ8iUbypy~LbyfRmue0l4Rre8cUCd5cLQx07fK9siQJsEojYKnvZn57OIApGnDaMiq7UDr-RgW-labJ39r6GMUolonURyO8cfpsxxw~xuoM0NLnsyp~r5o0uUBwmzd9V5NbSJRhm6IJXTTHjIHQwaSUB1aBygzYnWauecHSbDkGyUfUTyuc-ESdBKf0vMcd9Q__',
-                            title: 'Create passcode',
-                            appTheme: appTheme,
-                          ),
-                          const SizedBox(
-                            width: BoxSize.boxSize05,
-                          ),
-                          HomePageStoryWidget(
-                            thumbnail:
-                                'https://s3-alpha-sig.figma.com/img/92cd/b81b/8238a519c91c475eb512ebb07d5e6bdb?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=T7rGW5KpFMTYl0m8ml8YvK2wYvBxqwZGmDuzEgdA-B0vwvvAF-mK8oHNEzSCvBj8UvL2ky4Knh9tR~yTWA3TLBKf~AhK8LehQ8sIsWUQak5dSlLQTV7NM-bnvpXmxX0CAwpIxQ3M8k8yZFsTf1k9SmQ8iUbypy~LbyfRmue0l4Rre8cUCd5cLQx07fK9siQJsEojYKnvZn57OIApGnDaMiq7UDr-RgW-labJ39r6GMUolonURyO8cfpsxxw~xuoM0NLnsyp~r5o0uUBwmzd9V5NbSJRhm6IJXTTHjIHQwaSUB1aBygzYnWauecHSbDkGyUfUTyuc-ESdBKf0vMcd9Q__',
-                            title: 'Punka event',
-                            appTheme: appTheme,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: BoxSize.boxSize07,
-                      ),
-                      HomePageWalletCardWidget(
-                        walletAddress: 'aura14...95ccflsuenf',
-                        walletName: 'Wallet 1',
-                        appTheme: appTheme,
-                        localization: localization,
-                        percent24hChange: 5.54,
-                        totalValue: 1000.56.toString().formatAura,
-                        value24hChange: 20.05,
-                      ),
-                    ],
-                  ),
+            AnimatedOpacity(
+              opacity: _walletCardOpacity,
+              duration: _animatedDuration,
+              child: Transform.scale(
+                scale: _walletCardScale,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        HomePageStoryWidget(
+                          thumbnail:
+                              'https://s3-alpha-sig.figma.com/img/92cd/b81b/8238a519c91c475eb512ebb07d5e6bdb?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=T7rGW5KpFMTYl0m8ml8YvK2wYvBxqwZGmDuzEgdA-B0vwvvAF-mK8oHNEzSCvBj8UvL2ky4Knh9tR~yTWA3TLBKf~AhK8LehQ8sIsWUQak5dSlLQTV7NM-bnvpXmxX0CAwpIxQ3M8k8yZFsTf1k9SmQ8iUbypy~LbyfRmue0l4Rre8cUCd5cLQx07fK9siQJsEojYKnvZn57OIApGnDaMiq7UDr-RgW-labJ39r6GMUolonURyO8cfpsxxw~xuoM0NLnsyp~r5o0uUBwmzd9V5NbSJRhm6IJXTTHjIHQwaSUB1aBygzYnWauecHSbDkGyUfUTyuc-ESdBKf0vMcd9Q__',
+                          title: 'Create passcode',
+                          appTheme: appTheme,
+                        ),
+                        const SizedBox(
+                          width: BoxSize.boxSize05,
+                        ),
+                        HomePageStoryWidget(
+                          thumbnail:
+                              'https://s3-alpha-sig.figma.com/img/c181/d11c/d352d2d1efbc59d8499e1b3c16352240?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=O2ApS0-GuiWDOsjHmUpVUFHoWPIJ3Is74oK9H1ME4ztzcvrtCvdrFs-hgtM3YEB7hA9vIsoJff3FRmj9SQz03BWjzIfr~RoH8kQo7R6Vdt0Kp8oeaIliiz1jJBJnonnhIaPY4VvAxbOzO8y2uB9KW3iryivqP4nsecwovOuxCUXkGS-UfQMCfSLlxhTk82gD~hFPCbpVYppF1igAmJGQWaIDx9vziGB4IrRy2scOk1wtd4clr~77hE1g5Ts80QbD95m4591peGMRSjlGdUgC5aDlxvykXXKWcQS0VPWG7uE9HwPtTBm6IcTum9HPG~k429rVHZbDT25~8isRrPpGBQ__',
+                          title: 'Punka event',
+                          appTheme: appTheme,
+                        ),
+                        const SizedBox(
+                          width: BoxSize.boxSize05,
+                        ),
+                        HomePageStoryWidget(
+                          thumbnail:
+                              'https://s3-alpha-sig.figma.com/img/92cd/b81b/8238a519c91c475eb512ebb07d5e6bdb?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=T7rGW5KpFMTYl0m8ml8YvK2wYvBxqwZGmDuzEgdA-B0vwvvAF-mK8oHNEzSCvBj8UvL2ky4Knh9tR~yTWA3TLBKf~AhK8LehQ8sIsWUQak5dSlLQTV7NM-bnvpXmxX0CAwpIxQ3M8k8yZFsTf1k9SmQ8iUbypy~LbyfRmue0l4Rre8cUCd5cLQx07fK9siQJsEojYKnvZn57OIApGnDaMiq7UDr-RgW-labJ39r6GMUolonURyO8cfpsxxw~xuoM0NLnsyp~r5o0uUBwmzd9V5NbSJRhm6IJXTTHjIHQwaSUB1aBygzYnWauecHSbDkGyUfUTyuc-ESdBKf0vMcd9Q__',
+                          title: 'Create passcode',
+                          appTheme: appTheme,
+                        ),
+                        const SizedBox(
+                          width: BoxSize.boxSize05,
+                        ),
+                        HomePageStoryWidget(
+                          thumbnail:
+                              'https://s3-alpha-sig.figma.com/img/92cd/b81b/8238a519c91c475eb512ebb07d5e6bdb?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=T7rGW5KpFMTYl0m8ml8YvK2wYvBxqwZGmDuzEgdA-B0vwvvAF-mK8oHNEzSCvBj8UvL2ky4Knh9tR~yTWA3TLBKf~AhK8LehQ8sIsWUQak5dSlLQTV7NM-bnvpXmxX0CAwpIxQ3M8k8yZFsTf1k9SmQ8iUbypy~LbyfRmue0l4Rre8cUCd5cLQx07fK9siQJsEojYKnvZn57OIApGnDaMiq7UDr-RgW-labJ39r6GMUolonURyO8cfpsxxw~xuoM0NLnsyp~r5o0uUBwmzd9V5NbSJRhm6IJXTTHjIHQwaSUB1aBygzYnWauecHSbDkGyUfUTyuc-ESdBKf0vMcd9Q__',
+                          title: 'Punka event',
+                          appTheme: appTheme,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: BoxSize.boxSize07,
+                    ),
+                    HomePageWalletCardWidget(
+                      walletAddress: 'aura14...95ccflsuenf',
+                      walletName: 'Wallet 1',
+                      appTheme: appTheme,
+                      localization: localization,
+                      percent24hChange: 5.54,
+                      totalValue: 1000.56.toString().formatAura,
+                      value24hChange: 20.05,
+                    ),
+                  ],
                 ),
-              )
-            else
-              const SizedBox(),
-            const SizedBox(
-              height: BoxSize.boxSize07,
+              ),
             ),
-            HomePageActionsWidget(
-              appTheme: appTheme,
-              localization: localization,
+            AnimatedOpacity(
+              opacity: _walletActionOpacity,
+              duration: _animatedDuration,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: BoxSize.boxSize07,
+                  ),
+                  HomePageActionsWidget(
+                    appTheme: appTheme,
+                    localization: localization,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: BoxSize.boxSize07,
@@ -213,7 +241,7 @@ class _HomePageState extends State<HomePage>
               width: BoxSize.boxSize04,
             ),
             Text(
-              _config.chainName,
+              _config.config.appName,
               style: AppTypoGraPhy.textSmSemiBold.copyWith(
                 color: appTheme.textPrimary,
               ),
@@ -226,17 +254,17 @@ class _HomePageState extends State<HomePage>
             ),
           ],
         ),
-        actions: [
-          _action(),
-        ],
+        actions: _actions(),
       ),
       body: child,
     );
   }
 
-  Widget _action() {
+  List<Widget> _actions() {
+    List<Widget> actions = List.empty(growable: true);
+
     if (!_showWalletCard) {
-      return GestureDetector(
+      actions.add(GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
           _scrollController.animateTo(
@@ -258,9 +286,35 @@ class _HomePageState extends State<HomePage>
             ),
           ],
         ),
-      );
+      ));
     }
 
-    return const SizedBox.shrink();
+    if (!_showActions) {
+      actions.add(GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          _scrollController.animateTo(
+            0,
+            duration: _animatedDuration,
+            curve: Curves.easeOut,
+          );
+        },
+        child: const Row(
+          children: [
+            CircleAvatarWidget(
+              image: AssetImage(
+                AssetImagePath.defaultAvatar1,
+              ),
+              radius: BorderRadiusSize.borderRadius04,
+            ),
+            SizedBox(
+              width: BoxSize.boxSize04,
+            ),
+          ],
+        ),
+      ));
+    }
+
+    return actions;
   }
 }

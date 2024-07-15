@@ -69,14 +69,14 @@ Future<void> initDependency(
   // Must replace late
   Uri redirectUrl;
   if (Platform.isAndroid) {
-    redirectUrl = Uri.parse(config.web3AuthAndroidRedirectUrl);
+    redirectUrl = Uri.parse(config.config.web3Auth.androidRedirectUrl);
   } else {
-    redirectUrl = Uri.parse(config.web3AuthIOSRedirectUrl);
+    redirectUrl = Uri.parse(config.config.web3Auth.iosRedirectUrl);
   }
 
   await Web3AuthFlutter.init(
     Web3AuthOptions(
-      clientId: config.web3AuthClientId,
+      clientId: config.config.web3Auth.clientId,
       network: Network.sapphire_devnet,
       redirectUrl: redirectUrl,
     ),

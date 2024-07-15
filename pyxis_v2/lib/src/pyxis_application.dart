@@ -79,7 +79,7 @@ class _PyxisApplicationState extends State<PyxisApplication>
         onGenerateRoute: AppNavigator.onGenerateRoute,
         initialRoute: RoutePath.splash,
         debugShowCheckedModeBanner: false,
-        title: _config.appName,
+        title: _config.config.appName,
         locale: AppLocalizationManager.instance.getAppLocale(),
         localizationsDelegates: const [
           AppTranslationsDelegate(),

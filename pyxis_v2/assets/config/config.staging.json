@@ -3,25 +3,25 @@
   "COSMOS_INFO": {
     "symbol": "AURA",
     "denom": "aura",
-    "chainId": "aura_6322-2",
+    "chainId": "aura_6321-3",
     "decimals" : 18,
-    "chainName": "Aura COSMOS",
-    "rpc" : "https://grpc.aura.network"
+    "chainName": "Aura COSMOS Euphoria",
+    "rpc" : "http://grpc.euphoria.aura.network:9090"
   },
   "EVM_INFO" : {
     "symbol" : "AURA",
     "denom" : "aura",
     "chainId" : 6322,
     "decimals" : 18,
-    "chainName": "Aura EVM",
-    "rpc" : "https://jsonrpc.aura.network"
+    "chainName": "Aura EVM Euphoria",
+    "rpc" : "https://jsonrpc.euphoria.aura.network"
   },
   "API" : {
     "v1" : {
-      "url" : "https://api.aurascan.io/api/v1"
+      "url" : "https://euphoria-api.aurascan.io/api/v1"
     },
     "v2" : {
-      "url" : "https://horoscope.aura.network/api",
+      "url" : "https://indexer-v2.staging.aurascan.io",
       "graphql": "/v2/graphql",
       "rest": "/v2",
       "chain": "x-"

@@ -3,25 +3,25 @@
   "COSMOS_INFO": {
     "symbol": "AURA",
     "denom": "aura",
-    "chainId": "aura_6322-2",
+    "chainId": "auradev_1236-2",
     "decimals" : 18,
-    "chainName": "Aura COSMOS",
-    "rpc" : "https://grpc.aura.network"
+    "chainName": "Aura COSMOS Serenity",
+    "rpc" : "http://grpc.serenity.aura.network:9092"
   },
   "EVM_INFO" : {
     "symbol" : "AURA",
     "denom" : "aura",
     "chainId" : 6322,
     "decimals" : 18,
-    "chainName": "Aura EVM",
-    "rpc" : "https://jsonrpc.aura.network"
+    "chainName": "Aura EVM Serenity",
+    "rpc" : "https://jsonrpc.serenity.aura.network"
   },
   "API" : {
     "v1" : {
-      "url" : "https://api.aurascan.io/api/v1"
+      "url" : "https://serenity-api.aurascan.io/api/v1"
     },
     "v2" : {
-      "url" : "https://horoscope.aura.network/api",
+      "url" : "https://indexer-v2.dev.aurascan.io/api",
       "graphql": "/v2/graphql",
       "rest": "/v2",
       "chain": "x-"

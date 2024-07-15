@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> with StateFulBaseScreen {
           height: BoxSize.boxSize07,
         ),
         Text(
-          _config.appName,
+          _config.config.appName,
           style: AppTypoGraPhy.displayXsRegular.copyWith(
             color: appTheme.textPrimary,
           ),
