@@ -35,7 +35,7 @@ class _GetStartedScreenState extends State<GetStartedScreen>
       children: [
         Expanded(
           child: GetStartedLogoFormWidget(
-            walletName: _config.appName,
+            walletName: _config.config.appName,
             appTheme: appTheme,
           ),
         ),

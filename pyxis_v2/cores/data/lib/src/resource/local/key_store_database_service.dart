@@ -1,17 +1,6 @@
 import 'package:data/src/dto/key_store_dto.dart';
-import 'package:data/src/dto/request/add_key_store_request_dto.dart';
-import 'package:data/src/dto/request/update_key_store_request_dto.dart';
+import 'local_database_service.dart';
 
-abstract interface class KeyStoreDatabaseService {
-  Future<KeyStoreDto> add(AddKeyStoreRequestDto param);
+abstract interface class KeyStoreDatabaseService extends LocalDatabaseService<KeyStoreDto> {
 
-  Future<void> delete(int id);
-
-  Future<KeyStoreDto> update(UpdateKeyStoreRequestDto param);
-
-  Future<KeyStoreDto?> get(int id);
-
-  Future<List<KeyStoreDto>> getAll();
-
-  Future<void> deleteAll();
 }

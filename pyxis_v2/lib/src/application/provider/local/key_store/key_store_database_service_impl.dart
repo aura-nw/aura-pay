@@ -8,9 +8,10 @@ final class KeyStoreDatabaseServiceImpl implements KeyStoreDatabaseService {
   const KeyStoreDatabaseServiceImpl(this._database);
 
   @override
-  Future<KeyStoreDto> add(AddKeyStoreRequestDto param) async {
+  Future<KeyStoreDto> add<P>(P param) async {
+    final AddKeyStoreRequestDto p = param as AddKeyStoreRequestDto;
     KeyStoreDb keyStoreDb = KeyStoreDb(
-      keyName: param.keyName,
+      keyName: p.keyName,
     );
     await _database.writeTxn(
       () async {
@@ -45,12 +46,13 @@ final class KeyStoreDatabaseServiceImpl implements KeyStoreDatabaseService {
   }
 
   @override
-  Future<KeyStoreDto> update(UpdateKeyStoreRequestDto param) async {
-    KeyStoreDb? keyStoreDb = await _database.keyStoreDbs.get(param.id);
+  Future<KeyStoreDto> update<P>(P param) async {
+    final UpdateKeyStoreRequestDto p = param as UpdateKeyStoreRequestDto;
+    KeyStoreDb? keyStoreDb = await _database.keyStoreDbs.get(p.id);
 
     if (keyStoreDb != null) {
       keyStoreDb = keyStoreDb.copyWith(
-        keyName: param.keyName,
+        keyName: p.keyName,
       );
 
       await _database.writeTxn(

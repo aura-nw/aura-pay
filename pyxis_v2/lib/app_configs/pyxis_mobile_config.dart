@@ -1,9 +1,172 @@
-import 'dart:convert';
-
 enum PyxisEnvironment {
   serenity,
   staging,
   production,
+}
+
+/// Represents the entire configuration for the Pyxis Wallet app.
+final class AppConfig {
+  final String appName;
+  final CosmosInfoConfig cosmosInfo;
+  final EvmInfoConfig evmInfo;
+  final ApiConfig api;
+  final Web3AuthConfig web3Auth;
+
+  /// Constructor for creating a [PyxisWalletConfig] instance.
+  const AppConfig({
+    required this.appName,
+    required this.cosmosInfo,
+    required this.evmInfo,
+    required this.api,
+    required this.web3Auth,
+  });
+
+  /// Factory method for creating a [PyxisWalletConfig] instance from a JSON object.
+  factory AppConfig.fromJson(Map<String, dynamic> json) {
+    return AppConfig(
+      appName: json['APP_NAME'],
+      cosmosInfo: CosmosInfoConfig.fromJson(json['COSMOS_INFO']),
+      evmInfo: EvmInfoConfig.fromJson(json['EVM_INFO']),
+      api: ApiConfig.fromJson(json['API']),
+      web3Auth: Web3AuthConfig.fromJson(json['WEB_3_AUTH']),
+    );
+  }
+}
+
+/// Represents the configuration for the Cosmos chain.
+final class CosmosInfoConfig {
+  final String symbol;
+  final String denom;
+  final String chainId;
+  final int decimals;
+  final String chainName;
+  final String rpc;
+
+  /// Constructor for creating a [CosmosInfoConfig] instance.
+  CosmosInfoConfig({
+    required this.symbol,
+    required this.denom,
+    required this.chainId,
+    required this.decimals,
+    required this.chainName,
+    required this.rpc,
+  });
+
+  /// Factory method for creating a [CosmosInfoConfig] instance from a JSON object.
+  factory CosmosInfoConfig.fromJson(Map<String, dynamic> json) {
+    return CosmosInfoConfig(
+      symbol: json['symbol'],
+      denom: json['denom'],
+      chainId: json['chainId'],
+      decimals: json['decimals'],
+      chainName: json['chainName'],
+      rpc: json['rpc'],
+    );
+  }
+}
+
+/// Represents the configuration for the EVM chain.
+final class EvmInfoConfig {
+  final String symbol;
+  final String denom;
+  final int chainId;
+  final int decimals;
+  final String chainName;
+  final String rpc;
+
+  /// Constructor for creating an [EvmInfoConfig] instance.
+  EvmInfoConfig({
+    required this.symbol,
+    required this.denom,
+    required this.chainId,
+    required this.decimals,
+    required this.chainName,
+    required this.rpc,
+  });
+
+  /// Factory method for creating an [EvmInfoConfig] instance from a JSON object.
+  factory EvmInfoConfig.fromJson(Map<String, dynamic> json) {
+    return EvmInfoConfig(
+      symbol: json['symbol'],
+      denom: json['denom'],
+      chainId: json['chainId'],
+      decimals: json['decimals'],
+      chainName: json['chainName'],
+      rpc: json['rpc'],
+    );
+  }
+}
+
+/// Represents the API configuration for the Pyxis Wallet app.
+final class ApiConfig {
+  final ApiConfigVersion v1;
+  final ApiConfigVersion v2;
+  final Map<String, dynamic> seekHype;
+
+  /// Constructor for creating an [ApiConfig] instance.
+  ApiConfig({
+    required this.v1,
+    required this.v2,
+    required this.seekHype,
+  });
+
+  /// Factory method for creating an [ApiConfig] instance from a JSON object.
+  factory ApiConfig.fromJson(Map<String, dynamic> json) {
+    return ApiConfig(
+      v1: ApiConfigVersion.fromJson(json['v1']),
+      v2: ApiConfigVersion.fromJson(json['v2']),
+      seekHype: json['seek_hype'],
+    );
+  }
+}
+
+/// Represents a version of the ApiConfig configuration.
+final class ApiConfigVersion {
+  final String url;
+  final String? graphql;
+  final String? rest;
+  final String? chain;
+
+  /// Constructor for creating an [ApiConfigVersion] instance.
+  ApiConfigVersion({
+    required this.url,
+    this.graphql,
+    this.rest,
+    this.chain,
+  });
+
+  /// Factory method for creating an [ApiConfigVersion] instance from a JSON object.
+  factory ApiConfigVersion.fromJson(Map<String, dynamic> json) {
+    return ApiConfigVersion(
+      url: json['url'],
+      graphql: json['graphql'],
+      rest: json['rest'],
+      chain: json['chain'],
+    );
+  }
+}
+
+/// Represents the Web3 authentication configuration for the Pyxis Wallet app.
+final class Web3AuthConfig {
+  final String clientId;
+  final String iosRedirectUrl;
+  final String androidRedirectUrl;
+
+  /// Constructor for creating a [Web3AuthConfig] instance.
+  Web3AuthConfig({
+    required this.clientId,
+    required this.iosRedirectUrl,
+    required this.androidRedirectUrl,
+  });
+
+  /// Factory method for creating a [Web3AuthConfig] instance from a JSON object.
+  factory Web3AuthConfig.fromJson(Map<String, dynamic> json) {
+    return Web3AuthConfig(
+      clientId: json['client_id'],
+      iosRedirectUrl: json['ios_redirect_url'],
+      androidRedirectUrl: json['android_redirect_url'],
+    );
+  }
 }
 
 class PyxisMobileConfig {
@@ -15,21 +178,7 @@ class PyxisMobileConfig {
     this.environment = PyxisEnvironment.serenity,
   });
 
-  Map<String, dynamic> get appConfigs => configs['APP_CONFIG'];
-
-  String get chainName => appConfigs['chainName'];
-
-  String get coinId => appConfigs['coinId'];
-
-  String get chainId => appConfigs['chainId'];
-
-  String get deNom => appConfigs['denom'];
-
-  String get symbol => appConfigs['coin'];
-
-  String get appName => configs['APP_NAME'];
-
-  String get web3AuthClientId => configs['WEB3_AUTH_CLIENT_ID'];
-  String get web3AuthAndroidRedirectUrl => configs['WEB3_AUTH_ANDROID_REDIRECT_URL'];
-  String get web3AuthIOSRedirectUrl => configs['WEB3_AUTH_IOS_REDIRECT_URL'];
+  AppConfig get config => AppConfig.fromJson(
+        configs,
+      );
 }

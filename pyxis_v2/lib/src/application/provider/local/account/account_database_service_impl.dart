@@ -9,15 +9,16 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
   const AccountDatabaseServiceImpl(this._database);
 
   @override
-  Future<AccountDto> add(AddAccountRequestDto param) async {
+  Future<AccountDto> add<P>(P param) async {
+    final AddAccountRequestDto p = param as AddAccountRequestDto;
     AccountDb accountDb = AccountDb(
-      aName: param.name,
-      aEvmAddress: param.evmAddress,
-      aKeyStoreId: param.keyStoreId,
-      aCosmosAddress: param.cosmosAddress,
-      aCreateType: param.createType,
-      aType: param.type,
-      aControllerKeyType: param.controllerKeyType,
+      aName: p.name,
+      aEvmAddress: p.evmAddress,
+      aKeyStoreId: p.keyStoreId,
+      aCosmosAddress: p.cosmosAddress,
+      aCreateType: p.createType,
+      aType: p.type,
+      aControllerKeyType: p.controllerKeyType,
     );
 
     await _database.writeTxn(
@@ -61,17 +62,18 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
   }
 
   @override
-  Future<AccountDto> update(UpdateAccountRequestDto param) async {
+  Future<AccountDto> update<P>(P param) async {
+    final UpdateAccountRequestDto p = param as UpdateAccountRequestDto;
     AccountDb? accountDb = await _database.accountDbs.get(
-      param.id,
+      p.id,
     );
 
     if (accountDb != null) {
       accountDb = accountDb.copyWith(
-        name: param.name,
-        evmAddress: param.evmAddress,
-        cosmosAddress: param.cosmosAddress,
-        keyStoreId: param.keyStoreId,
+        name: p.name,
+        evmAddress: p.evmAddress,
+        cosmosAddress: p.cosmosAddress,
+        keyStoreId: p.keyStoreId,
       );
 
       await _database.writeTxn(
