@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:wallet_core/src/constants/constants.dart';
-import 'package:wallet_core/src/objects/a_wallet.dart';
 import 'package:wallet_core/wallet_core.dart';
 
 class WalletManagement {
@@ -31,8 +30,11 @@ class WalletManagement {
       {int coinType = Constants.defaultCoinType}) {
     final wallet = HDWallet.createWithMnemonic(mnemonic);
     final address = wallet.getAddressForCoin(coinType);
-    final privateKey = hex.encode(wallet.getKeyForCoin(coinType).data());
-    return AWallet(wallet: wallet, address: address, privateKey: privateKey);
+    return AWallet(
+        wallet: wallet,
+        address: address,
+        privateKey: wallet.getKey(coinType, Constants.derivationPathEthereum),
+        coinType: coinType);
   }
 
   /// Imports a wallet using a private key.
@@ -50,7 +52,9 @@ class WalletManagement {
       final anyAddress = AnyAddress.createWithPublicKey(
           publicKey, coinType); // Create an AnyAddress object
       final address = anyAddress.description(); // Get the address description
-      return AWallet(wallet: null, address: address, privateKey: privateKey);
+
+      return AWallet(
+          wallet: null, address: address, privateKey: pk, coinType: coinType);
     } catch (e) {
       // Handle potential errors
       throw Exception('Invalid private key or unsupported coin type');
@@ -64,9 +68,14 @@ class WalletManagement {
   AWallet createWalletWithMnemonic(String mnemonic,
       {int coinType = Constants.defaultCoinType}) {
     final wallet = HDWallet.createWithMnemonic(mnemonic);
+    
     final address = wallet.getAddressForCoin(coinType);
-    final privateKey = hex.encode(wallet.getKeyForCoin(coinType).data());
-    return AWallet(wallet: wallet, address: address, privateKey: privateKey);
+
+    return AWallet(
+        wallet: wallet,
+        address: address,
+        privateKey: wallet.getKeyForCoin(coinType),
+        coinType: coinType);
   }
 
   /// Retrieves the private key for a specific coin type.

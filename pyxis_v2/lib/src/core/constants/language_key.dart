@@ -81,4 +81,17 @@ sealed class LanguageKey {
   static const String homePageTokenValue = 'home_page_token_value';
   static const String homePageManage = 'home_page_manage';
   static const String homePage24hPNL = 'home_page_24h_pnl';
+
+// Settings page
+  static const String settingsPageTitle = 'settings_page_title';
+  static const String settingsPageProfileSection = 'settings_page_profile_section';
+  static const String settingsPageEditProfile = 'settings_page_edit_profile';
+  static const String settingsPageChangePassword = 'settings_page_change_password';
+  static const String settingsPagePreferencesSection = 'settings_page_preferences_section';
+  static const String settingsPageLanguage = 'settings_page_language';
+  static const String settingsPageNotifications = 'settings_page_notifications';
+  static const String settingsPageSystemSection = 'settings_page_system_section';
+  static const String settingsPageResetOnboarding = 'settings_page_reset_onboarding';
+  static const String settingsPageLogout = 'settings_page_logout';
+  
 }

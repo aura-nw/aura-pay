@@ -29,9 +29,7 @@ class GenerateWalletScreen extends StatefulWidget {
 class _GenerateWalletScreenState extends State<GenerateWalletScreen>
     with StateFulBaseScreen, CustomFlutterToast, Copy {
   final List<YetiBotMessageObject> _messages = [];
-
   final GenerateWalletCubit _cubit = getIt.get<GenerateWalletCubit>();
-
   final GlobalKey<AnimatedListState> _messageKey =
       GlobalKey<AnimatedListState>();
 
@@ -41,138 +39,54 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
     _cubit.generateWallet();
   }
 
+  void _insertMessage(int delayMs, String messageKey,
+      {int groupId = 0, int type = 0, String? object}) async {
+    final localization = AppLocalizationManager.of(context);
+    await Future.delayed(Duration(milliseconds: delayMs));
+
+    final message = YetiBotMessageObject(
+      data: localization.translate(messageKey),
+      groupId: groupId,
+      type: type,
+      object: object,
+    );
+
+    setState(() {
+      _messages.insert(0, message);
+    });
+
+    _messageKey.currentState
+        ?.insertItem(0, duration: const Duration(milliseconds: 300));
+  }
+
   void _addContent() async {
     final localization = AppLocalizationManager.of(context);
+    const messageDelays = [
+      LanguageKey.generateWalletScreenBotContentOne,
+      LanguageKey.generateWalletScreenBotContentTwo,
+      LanguageKey.generateWalletScreenBotContentThree,
+      LanguageKey.generateWalletScreenBotContentFour,
+      LanguageKey.generateWalletScreenBotContentFive,
+      LanguageKey.generateWalletScreenBotContentSix
+    ];
+    const List<int> messageTime = [200, 700, 2000, 3000, 1200, 300];
 
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentOne,
+    for (var i = 0; i < messageDelays.length; i++) {
+      await Future.delayed(Duration(milliseconds: messageTime[i]));
+      _messages.insert(
+        0,
+        YetiBotMessageObject(
+          data: localization.translate(messageDelays[i]),
+          groupId: i == messageDelays.length - 1 ? 2 : i,
+          type: i == messageDelays.length - 1 ? 1 : 0,
+          object: i == messageDelays.length - 1
+              ? _cubit.state.wallet?.address
+              : null,
         ),
-        groupId: 0,
-        type: 0,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentTwo,
-        ),
-        groupId: 0,
-        type: 0,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentThree,
-        ),
-        groupId: 0,
-        type: 0,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentFour,
-        ),
-        groupId: 1,
-        type: 0,
-      ),
-    );
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentFive,
-        ),
-        groupId: 1,
-        type: 0,
-      ),
-    );
-
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    await Future.delayed(
-      const Duration(
-        milliseconds: 1200,
-      ),
-    );
-
-    _messages.insert(
-      0,
-      YetiBotMessageObject(
-        data: localization.translate(
-          LanguageKey.generateWalletScreenBotContentSix,
-        ),
-        groupId: 2,
-        type: 1,
-        object: _cubit.state.wallet?.address,
-      ),
-    );
-    _messageKey.currentState?.insertItem(
-      0,
-      duration: const Duration(milliseconds: 300),
-    );
+      );
+      _messageKey.currentState
+          ?.insertItem(0, duration: const Duration(milliseconds: 300));
+    }
 
     _cubit.updateStatus(true);
   }
@@ -186,8 +100,6 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
   @override
   void dispose() {
     _messages.clear();
-
-    _messageKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -199,9 +111,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
         Expanded(
           child: AnimatedList(
             key: _messageKey,
-            padding: const EdgeInsets.symmetric(
-              vertical: Spacing.spacing06,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: Spacing.spacing06),
             reverse: true,
             initialItemCount: _messages.length,
             primary: true,
@@ -209,18 +119,13 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
               return SizeTransition(
                 sizeFactor: animation,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Spacing.spacing03,
-                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: Spacing.spacing03),
                   child: YetiBotMessageBuilder(
                     appTheme: appTheme,
                     messageObject: _messages[index],
                     nextGroup: _messages.getIndex(index + 1)?.groupId,
-                    onCopy: () {
-                      copy(
-                        _messages[index].object,
-                      );
-                    },
+                    onCopy: () => copy(_messages[index].object),
                     localization: localization,
                     lastGroup: _messages.getIndex(index - 1)?.groupId,
                   ),
@@ -233,22 +138,17 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
           builder: (isReady) {
             return PrimaryAppButton(
               onPress: _onNavigateToHome,
-              text: !isReady
-                  ? localization.translate(
-                      LanguageKey.generateWalletScreenGenerating,
-                    )
-                  : localization.translate(
-                      LanguageKey.generateWalletScreenOnBoard,
-                    ),
+              text: localization.translate(isReady
+                  ? LanguageKey.generateWalletScreenOnBoard
+                  : LanguageKey.generateWalletScreenGenerating),
               isDisable: !isReady,
-              leading: !isReady
-                  ? SizedBox.square(
+              leading: isReady
+                  ? null
+                  : SizedBox.square(
                       dimension: 19.2,
                       child: CircularProgressIndicator(
-                        color: appTheme.textDisabled,
-                      ),
-                    )
-                  : null,
+                          color: appTheme.textDisabled),
+                    ),
             );
           },
         ),
@@ -272,9 +172,8 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
               // Show loading
               break;
             case GenerateWalletStatus.stored:
-              AppGlobalCubit.of(context).changeStatus(
-                AppGlobalStatus.authorized,
-              );
+              AppGlobalCubit.of(context)
+                  .changeStatus(AppGlobalStatus.authorized);
               break;
           }
         },
@@ -283,9 +182,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
           appBar: AppBarDefault(
             appTheme: appTheme,
             title: GenerateWalletAppBarTitleWidget(
-              appTheme: appTheme,
-              localization: localization,
-            ),
+                appTheme: appTheme, localization: localization),
             localization: localization,
           ),
           body: child,
