@@ -4,14 +4,14 @@
     "symbol": "AURA",
     "denom": "aura",
     "chainId": "aura_6321-3",
-    "decimals" : 18,
+    "decimals" : 6,
     "chainName": "Aura COSMOS Euphoria",
     "rpc" : "http://grpc.euphoria.aura.network:9090"
   },
   "EVM_INFO" : {
     "symbol" : "AURA",
     "denom" : "aura",
-    "chainId" : 6322,
+    "chainId" : 6321,
     "decimals" : 18,
     "chainName": "Aura EVM Euphoria",
     "rpc" : "https://jsonrpc.euphoria.aura.network"

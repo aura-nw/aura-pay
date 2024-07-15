@@ -4,7 +4,7 @@
     "symbol": "AURA",
     "denom": "aura",
     "chainId": "aura_6322-2",
-    "decimals" : 18,
+    "decimals" : 6,
     "chainName": "Aura COSMOS",
     "rpc" : "https://grpc.aura.network"
   },

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:data/data.dart';
+import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -9,8 +10,10 @@ import 'package:pyxis_v2/src/application/provider/local/key_store/key_store_data
 import 'package:pyxis_v2/src/application/provider/local/localization_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/normal_storage_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/secure_storage_service_impl.dart';
+import 'package:pyxis_v2/src/application/provider/local/token_market/token_market_database_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/provider/biometric_provider.dart';
 import 'package:pyxis_v2/src/application/provider/provider/web3_auth_provider.dart';
+import 'package:pyxis_v2/src/application/provider/service/token_market/remote_token_market_service_impl.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_cubit.dart';
@@ -34,21 +37,25 @@ Future<void> initDependency(
   PyxisMobileConfig config,
   Isar isar,
 ) async {
-  // final Dio dio = Dio(
-  //   BaseOptions(
-  //     baseUrl: config.horoScopeUrl + config.horoScopeVersion,
-  //     connectTimeout: const Duration(
-  //       milliseconds: 60000,
-  //     ),
-  //     receiveTimeout: const Duration(
-  //       milliseconds: 60000,
-  //     ),
-  //     contentType: 'application/json; charset=utf-8',
-  //   ),
-  // );
+  final Dio dio = Dio(
+    BaseOptions(
+      baseUrl: config.config.api.v2.url,
+      connectTimeout: const Duration(
+        milliseconds: 60000,
+      ),
+      receiveTimeout: const Duration(
+        milliseconds: 60000,
+      ),
+      contentType: 'application/json; charset=utf-8',
+    ),
+  );
 
   getIt.registerLazySingleton<PyxisMobileConfig>(
     () => config,
+  );
+
+  getIt.registerFactory<Dio>(
+    () => dio,
   );
 
   WalletCore.init();
@@ -82,6 +89,13 @@ Future<void> initDependency(
     ),
   );
 
+  // Register generator
+  getIt.registerLazySingleton<RemoteTokenMarketServiceGenerator>(
+    () => RemoteTokenMarketServiceGenerator(
+      getIt.get<Dio>(),
+    ),
+  );
+
   // Register service
   getIt.registerLazySingleton<LocalizationService>(
     () => LocalizationServiceImpl(),
@@ -108,6 +122,18 @@ Future<void> initDependency(
   getIt.registerLazySingleton<KeyStoreDatabaseService>(
     () => KeyStoreDatabaseServiceImpl(
       isar,
+    ),
+  );
+
+  getIt.registerLazySingleton<TokenMarketDatabaseService>(
+    () => TokenMarketDatabaseServiceImpl(
+      isar,
+    ),
+  );
+
+  getIt.registerLazySingleton<RemoteTokenMarketService>(
+    () => RemoteTokenMarketServiceImpl(
+      getIt.get<RemoteTokenMarketServiceGenerator>(),
     ),
   );
 
@@ -147,6 +173,13 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<TokenMarketRepository>(
+    () => TokenMarketRepositoryImpl(
+      getIt.get<RemoteTokenMarketServiceImpl>(),
+      getIt.get<TokenMarketDatabaseService>(),
+    ),
+  );
+
   // Register use case
   getIt.registerLazySingleton<LocalizationUseCase>(
     () => LocalizationUseCase(
@@ -175,6 +208,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<Web3AuthUseCase>(
     () => Web3AuthUseCase(
       getIt.get<Web3AuthRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<TokenMarketUseCase>(
+    () => TokenMarketUseCase(
+      getIt.get<TokenMarketRepository>(),
     ),
   );
 
@@ -224,7 +263,7 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<SocialLoginYetiBotCubit,AWallet,dynamic>(
+  getIt.registerFactoryParam<SocialLoginYetiBotCubit, AWallet, dynamic>(
     (wallet, _) => SocialLoginYetiBotCubit(
       getIt.get<AccountUseCase>(),
       getIt.get<KeyStoreUseCase>(),

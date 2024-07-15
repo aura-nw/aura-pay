@@ -4,7 +4,7 @@
     "symbol": "AURA",
     "denom": "aura",
     "chainId": "auradev_1236-2",
-    "decimals" : 18,
+    "decimals" : 6,
     "chainName": "Aura COSMOS Serenity",
     "rpc" : "http://grpc.serenity.aura.network:9092"
   },
