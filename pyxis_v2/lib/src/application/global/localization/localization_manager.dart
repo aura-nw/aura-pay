@@ -22,7 +22,8 @@ class AppLocalizationManager {
 
   static AppLocalizationManager get instance => AppLocalizationManager();
 
-  static AppLocalizationManager of(BuildContext context) => Localizations.of(context, AppLocalizationManager);
+  static AppLocalizationManager of(BuildContext context) =>
+      Localizations.of(context, AppLocalizationManager);
 
   ///endregion
 
@@ -55,7 +56,7 @@ class AppLocalizationManager {
 
   Future<void> load() async {
     ///Get instance locale from storage - just fake
-    String storageLocale = 'vi';
+    String storageLocale = 'en';
 
     ///Get support locale
     try {
