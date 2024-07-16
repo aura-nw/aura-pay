@@ -50,6 +50,7 @@ final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
         keyStoreId: keyStore.id,
         controllerKeyType: controllerKeyType,
         createType: AccountCreateType.import,
+        index: 0,
       ),
     );
 

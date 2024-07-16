@@ -53,6 +53,7 @@ final class GenerateWalletCubit extends Cubit<GenerateWalletState> {
         evmAddress: state.wallet!.address,
         keyStoreId: keyStore.id,
         controllerKeyType: ControllerKeyType.passPhrase,
+        index: 0,
       ),
     );
 

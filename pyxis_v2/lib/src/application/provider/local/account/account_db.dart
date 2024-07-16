@@ -11,6 +11,7 @@ extension AccountDbExtension on AccountDb {
     String? cosmosAddress,
     int? keyStoreId,
     int? id,
+    int? index,
     AccountCreateType? createType,
     AccountType? type,
     ControllerKeyType ?controllerKeyType,
@@ -24,6 +25,7 @@ extension AccountDbExtension on AccountDb {
       aCosmosAddress: cosmosAddress ?? aCosmosAddress,
       aId: id ?? aId,
       aControllerKeyType: controllerKeyType ?? aControllerKeyType,
+      aIndex: index ?? aIndex,
     );
   }
 }
@@ -31,6 +33,7 @@ extension AccountDbExtension on AccountDb {
 @Collection(inheritance: false)
 final class AccountDb extends AccountDto {
   final Id aId;
+  final int aIndex;
   final String aName;
   final String aEvmAddress;
   final String? aCosmosAddress;
@@ -44,6 +47,7 @@ final class AccountDb extends AccountDto {
 
   AccountDb({
     this.aId = Isar.autoIncrement,
+    required this.aIndex,
     required this.aName,
     required this.aEvmAddress,
     required this.aKeyStoreId,
@@ -53,6 +57,7 @@ final class AccountDb extends AccountDto {
     this.aControllerKeyType = ControllerKeyType.passPhrase,
   }) : super(
           id: aId,
+          index: aIndex,
           name: aName,
           evmAddress: aEvmAddress,
           keyStoreId: aKeyStoreId,

@@ -4,8 +4,10 @@ final class UpdateAccountRequest {
   final String? cosmosAddress;
   final int? keyStoreId;
   final int id;
+  final int? index;
 
   const UpdateAccountRequest({
+    this.index,
     this.name,
     this.keyStoreId,
     this.evmAddress,

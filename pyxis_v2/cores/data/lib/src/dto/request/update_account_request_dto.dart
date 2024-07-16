@@ -15,9 +15,11 @@ final class UpdateAccountRequestDto {
   final String? evmAddress;
   final String? cosmosAddress;
   final int? keyStoreId;
+  final int ?index;
   final int id;
 
   const UpdateAccountRequestDto({
+    this.index,
     this.name,
     this.keyStoreId,
     this.evmAddress,

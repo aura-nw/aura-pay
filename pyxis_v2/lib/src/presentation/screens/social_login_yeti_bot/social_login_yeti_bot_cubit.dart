@@ -50,6 +50,7 @@ final class SocialLoginYetiBotCubit extends Cubit<SocialLoginYetiBotState> {
         keyStoreId: keyStore.id,
         controllerKeyType: controllerKeyType,
         createType: AccountCreateType.social,
+        index: 0,
       ),
     );
 

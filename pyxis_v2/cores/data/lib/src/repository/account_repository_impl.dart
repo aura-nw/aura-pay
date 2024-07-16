@@ -63,4 +63,9 @@ final class AccountRepositoryImpl implements AccountRepository {
   Future<void> deleteAll() {
     return _accountDatabaseService.deleteAll();
   }
+
+  @override
+  Future<void> updateChangeIndex({required int id}) {
+    return _accountDatabaseService.updateChangeIndex(id: id);
+  }
 }

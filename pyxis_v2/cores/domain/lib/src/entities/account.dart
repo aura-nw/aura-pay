@@ -2,6 +2,7 @@ import 'package:domain/core/enum.dart';
 
 final class Account {
   final int id;
+  final int index;
   final String name;
   final String evmAddress;
   final String? cosmosAddress;
@@ -12,6 +13,7 @@ final class Account {
 
   const Account({
     required this.id,
+    required this.index,
     required this.name,
     required this.evmAddress,
     this.cosmosAddress,

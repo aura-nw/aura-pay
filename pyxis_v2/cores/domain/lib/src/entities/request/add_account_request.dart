@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 
 final class AddAccountRequest {
+  final int index;
   final String name;
   final String evmAddress;
   final String? cosmosAddress;
@@ -10,6 +11,7 @@ final class AddAccountRequest {
   final ControllerKeyType controllerKeyType;
 
   const AddAccountRequest({
+    required this.index,
     required this.name,
     required this.evmAddress,
     this.cosmosAddress,

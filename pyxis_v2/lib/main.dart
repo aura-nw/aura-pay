@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
@@ -13,9 +14,17 @@ import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/pyxis_application.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'package:path_provider/path_provider.dart';
+import 'dart:developer' as developer;
 
 // Change this one if you want to change environment
 const PyxisEnvironment environment = PyxisEnvironment.serenity;
+
+class LogProviderImpl implements LogProvider {
+  @override
+  void printLog(String message) {
+    developer.log(message, name: 'pyxis_mobile');
+  }
+}
 
 Future<Map<String, dynamic>> _loadConfig() async {
   String loader;
@@ -25,7 +34,7 @@ Future<Map<String, dynamic>> _loadConfig() async {
     );
   } catch (e) {
     loader = '';
-    print('can\'t load config ${e}');
+    LogProvider.log('can\'t load config ${e.toString()}');
   }
 
   return jsonDecode(loader);
