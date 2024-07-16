@@ -4,7 +4,7 @@ import 'package:domain/domain.dart';
 final class LocalizationRepositoryImpl implements LocalizationRepository {
   final LocalizationService _localizationService;
 
-  const LocalizationRepositoryImpl(this._localizationService);
+  LocalizationRepositoryImpl(this._localizationService);
 
   @override
   Future<Map<String, String>> getLocalLanguage({required String locale}) {
@@ -21,5 +21,15 @@ final class LocalizationRepositoryImpl implements LocalizationRepository {
   @override
   Future<List<String>> getSupportLocale() async {
     return _localizationService.getSupportLocale();
+  }
+
+  @override
+  Future<String?> getSelectedLocale() async {
+    return _localizationService.getSelectedLocale();
+  }
+
+  @override
+  void saveSelectedLocale({required String locale}) async {
+    _localizationService.saveSelectedLocale(locale: locale);
   }
 }

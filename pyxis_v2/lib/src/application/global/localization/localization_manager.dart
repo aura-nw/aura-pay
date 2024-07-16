@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:pyxis_v2/app_configs/di.dart';
 
 class AppLocalizationManager {
@@ -16,7 +15,6 @@ class AppLocalizationManager {
 
   factory AppLocalizationManager() {
     _appLocalizationManager ??= AppLocalizationManager._init();
-
     return _appLocalizationManager!;
   }
 
@@ -28,12 +26,15 @@ class AppLocalizationManager {
   ///endregion
 
   ///region localization map
-  final Map<String, Map<String, String>> _localize = {};
+  final Map<String, Map<String, String>> _supportedLocale = {};
 
-  Locale _locale = const Locale('vi');
+  Locale _locale = const Locale('en');
+
+  /// Biến kiểm tra xem người dùng đã chọn ngôn ngữ chưa
+  bool isUserSettingLocale = false;
 
   Map<String, String> get _currentLocalize =>
-      _localize[_locale.languageCode] ?? <String, String>{};
+      _supportedLocale[_locale.languageCode] ?? <String, String>{};
 
   ///endregion
 
@@ -42,70 +43,65 @@ class AppLocalizationManager {
   }
 
   bool isSupportLocale(Locale locale) {
-    return _localize.containsKey(locale.languageCode);
+    return _supportedLocale.containsKey(locale.languageCode);
   }
 
-  void setCurrentLocale(Locale locale) {
-    if (isSupportLocale(locale)) {
-      _locale = locale;
+  bool setCurrentLocale(String localeCode) {
+    print('Set current locale: $localeCode');
+    if (_supportedLocale.containsKey(localeCode)) {
+      print('Set current locale: $localeCode');
+      _locale = Locale(localeCode);
+      print('Current locale #1: $_locale');
+      return true;
     }
+    _locale = const Locale('en');
+    print('Current locale #2: $_locale');
+    return false;
   }
 
   List<String> get supportedLang =>
-      _localize.entries.map((e) => e.key).toList();
+      _supportedLocale.entries.map((e) => e.key).toList();
 
+  ///
+  /// Load all support locale and get user selected locale
+  ///
   Future<void> load() async {
-    ///Get instance locale from storage - just fake
-    String storageLocale = 'en';
-
-    ///Get support locale
-    try {
-      final List<String> supportLocales =
-          await _localizationUseCase.getSupportLocale();
-
-      if (supportLocales.contains(storageLocale)) {
-        setCurrentLocale(Locale(storageLocale));
-      } else {
-        _initLocale();
-      }
-    } catch (e) {
-      _initLocale();
+    /// Load all support locale
+    List<String> supportLocales = await _localizationUseCase.getSupportLocale();
+    for (String locale in supportLocales) {
+      _supportedLocale[locale] = await _localizationUseCase.getLocalLanguage(
+        locale: locale,
+      );
     }
 
-    ///Get language from locale
-    _localize[_locale.languageCode] =
-        await _localizationUseCase.getLocalLanguage(
-      locale: _locale.languageCode,
-    );
+    print('Supported locale: $supportLocales');
+
+    /// Get user setting selected locale
+    String? userSelectedLocale = await _localizationUseCase.getSelectedLocale();
+
+    print('User selected locale: $userSelectedLocale');
+
+    /// Check if user selected locale is not null
+    if (userSelectedLocale != null) {
+      isUserSettingLocale = setCurrentLocale(userSelectedLocale);
+
+      print('Set current locale: $userSelectedLocale');
+      return;
+    }
+    isUserSettingLocale = false;
   }
 
-  ///set lang from server
-  // void loadFromJson(Map<String, Map<String, String>> json) {
-  //   json.forEach((key, value) {
-  //     if (_localize[key.toLowerCase()] != null) {
-  //       _localize[key.toLowerCase()]!.addAll(value);
-  //     } else {
-  //       _localize[key.toLowerCase()] = value;
-  //     }
-  //   });
-  // }
-
-  void _initLocale() {
-    String localeName = Platform.localeName;
-
-    Locale deviceLocale;
-
-    if (localeName.toLowerCase() == 'vi' ||
-        localeName.toLowerCase() == 'vi_vn') {
-      deviceLocale = const Locale('vi');
-    } else {
-      deviceLocale = const Locale('en');
-    }
-
-    if (isSupportLocale(deviceLocale)) {
-      _locale = deviceLocale;
-    } else {
-      _locale = const Locale('en');
+  ///
+  /// Load selected locale from device setting
+  ///
+  Future<void> updateDeviceLocale(String deviceLocale) async {
+    print('Device locale: $deviceLocale');
+    print('Is user setting locale: $isUserSettingLocale');
+    if (isUserSettingLocale) return;
+    if (setCurrentLocale(deviceLocale)) {
+      await _localizationUseCase.saveSelectedLocale(
+        locale: deviceLocale,
+      );
     }
   }
 

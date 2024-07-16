@@ -8,4 +8,8 @@ abstract interface class LocalizationRepository {
   Future<Map<String, String>> getLocalLanguage({
     required String locale,
   });
+
+  Future<String?> getSelectedLocale();
+
+  saveSelectedLocale({required String locale});
 }

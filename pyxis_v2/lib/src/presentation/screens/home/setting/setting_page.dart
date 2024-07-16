@@ -52,7 +52,8 @@ class _SettingPageState extends State<SettingPage> with StateFulBaseScreen {
           Icons.language,
           appTheme,
           onTap: () {
-            // Handle language change
+            // Mở popup để chọn ngôn ngữ
+            _showLanguageSelectionDialog(context, localization);
           },
         ),
         _buildListTile(
@@ -103,6 +104,43 @@ class _SettingPageState extends State<SettingPage> with StateFulBaseScreen {
             }),
       ],
     );
+  }
+
+  Future<void> _showLanguageSelectionDialog(
+      BuildContext context, AppLocalizationManager localization) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(localization.translate(LanguageKey.settingsPageLanguage)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text('English'),
+                onTap: () {
+                  _changeLanguage(context, 'en');
+                },
+              ),
+              ListTile(
+                title: Text('Tiếng Việt'),
+                onTap: () {
+                  _changeLanguage(context, 'vi');
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _changeLanguage(BuildContext context, String languageCode) {
+    // Thay đổi ngôn ngữ ứng dụng
+    AppLocalizationManager.instance.setCurrentLocale(languageCode);
+    Navigator.of(context).pop(); // Đóng dialog sau khi chọn ngôn ngữ
+    // Cập nhật trạng thái của ứng dụng nếu cần
+    setState(() {});
   }
 
   Future<bool> _showLogoutConfirmationDialog(

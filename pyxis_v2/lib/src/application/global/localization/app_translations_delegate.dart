@@ -14,7 +14,9 @@ class AppTranslationsDelegate
   @override
   Future<AppLocalizationManager> load(Locale locale) {
     AppLocalizationManager localization = AppLocalizationManager.instance;
-    localization.setCurrentLocale(locale);
+
+    // print('Load locale: ${locale}');
+    // localization.updateDeviceLocale(locale.languageCode);
     return SynchronousFuture<AppLocalizationManager>(localization);
   }
 

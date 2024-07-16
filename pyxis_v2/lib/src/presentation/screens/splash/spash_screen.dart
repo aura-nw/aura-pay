@@ -115,8 +115,8 @@ class _SplashScreenState extends State<SplashScreen> with StateFulBaseScreen {
     AppNavigator.replaceWith(
       RoutePath.setPasscode,
       {
-        'callback' : _onChangeApplicationStatus,
-        'canBack' : false,
+        'callback': _onChangeApplicationStatus,
+        'canBack': false,
       },
     );
   }
