@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:pyxis_v2/src/application/provider/local/account/account_database_service_impl.dart';
+import 'package:pyxis_v2/src/application/provider/local/balance/balance_database_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/key_store/key_store_database_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/localization_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/normal_storage_service_impl.dart';
@@ -13,11 +14,13 @@ import 'package:pyxis_v2/src/application/provider/local/secure_storage_service_i
 import 'package:pyxis_v2/src/application/provider/local/token_market/token_market_database_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/provider/biometric_provider.dart';
 import 'package:pyxis_v2/src/application/provider/provider/web3_auth_provider.dart';
+import 'package:pyxis_v2/src/application/provider/service/balance/balance_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/service/token_market/remote_token_market_service_impl.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/get_started/get_started_cubit.dart';
+import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_cubit.dart';
@@ -140,6 +143,16 @@ Future<void> initDependency(
   getIt.registerLazySingleton<Web3AuthProvider>(
     () => const Web3AuthProviderImpl(),
   );
+  
+  
+  getIt.registerLazySingleton<BalanceDatabaseService>(
+    () =>  BalanceDatabaseServiceImpl(isar),
+  );
+  
+  
+  getIt.registerLazySingleton<BalanceService>(
+    () => BalanceServiceImpl(),
+  );
 
   // Register repository
   getIt.registerLazySingleton<LocalizationRepository>(
@@ -175,8 +188,15 @@ Future<void> initDependency(
 
   getIt.registerLazySingleton<TokenMarketRepository>(
     () => TokenMarketRepositoryImpl(
-      getIt.get<RemoteTokenMarketServiceImpl>(),
+      getIt.get<RemoteTokenMarketService>(),
       getIt.get<TokenMarketDatabaseService>(),
+    ),
+  );
+  
+  getIt.registerLazySingleton<BalanceRepository>(
+    () => BalanceRepositoryImpl(
+      getIt.get<BalanceService>(),
+      getIt.get<BalanceDatabaseService>(),
     ),
   );
 
@@ -214,6 +234,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<TokenMarketUseCase>(
     () => TokenMarketUseCase(
       getIt.get<TokenMarketRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<BalanceUseCase>(
+    () => BalanceUseCase(
+      getIt.get<BalanceRepository>(),
     ),
   );
 
@@ -268,6 +294,15 @@ Future<void> initDependency(
       getIt.get<AccountUseCase>(),
       getIt.get<KeyStoreUseCase>(),
       wallet: wallet,
+    ),
+  );
+
+  getIt.registerFactoryParam<HomePageBloc,PyxisMobileConfig,dynamic>(
+    (config,_) => HomePageBloc(
+      getIt.get<AccountUseCase>(),
+      getIt.get<TokenMarketUseCase>(),
+      getIt.get<BalanceUseCase>(),
+      config: config,
     ),
   );
 }

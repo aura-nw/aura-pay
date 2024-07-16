@@ -54,7 +54,7 @@ final class TokenMarketRepositoryImpl implements TokenMarketRepository {
 
     final List<TokenMarketDto> tokenMarketsDto = [];
 
-    for (final map in response.data) {
+    for (final map in response) {
       final TokenMarketDto tokenMarketDto = TokenMarketDto.fromJson(map);
 
       tokenMarketsDto.add(tokenMarketDto);

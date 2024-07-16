@@ -4,6 +4,8 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/box_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/combine_list_view.dart';
 import 'package:pyxis_v2/src/presentation/widgets/divider_widget.dart';
@@ -194,40 +196,64 @@ final class HomePageTokensWidget extends StatelessWidget {
           height: BoxSize.boxSize07,
         ),
         Expanded(
-          child: CombinedListView(
-            onRefresh: () {
-              //
-            },
-            onLoadMore: () {
-              //
-            },
-            data: const [
-              0,
-              1,
-              2,
-              3,
-            ],
-            builder: (data, index) {
-              bool isValid = index % 2 == 0;
-              return Padding(
-                padding: const EdgeInsets.only(
-                  bottom: Spacing.spacing05,
-                ),
-                child: _HomePageTokenInfoWidget(
-                  avatar:
-                      'https://aurascan.io/assets/images/logo/title-logo.png',
-                  symbol: 'AURA',
-                  tokenName: isValid ? 'Aura cosmos' : 'Aura Evm',
-                  percentChange24h: isValid ? 5.52 : -1.64,
-                  amount: 15.6,
-                  value: 40.3,
-                  appTheme: appTheme,
-                  localization: localization,
-                ),
-              );
-            },
-            canLoadMore: false,
-          ),
+          child: HomePageNetworksSelector(builder: (networks) {
+            return CombinedListView(
+              onRefresh: () {
+                //
+              },
+              onLoadMore: () {
+                //
+              },
+              data: networks,
+              builder: (network, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: Spacing.spacing05,
+                  ),
+                  child: HomePageAuraMarketSelector(
+                    builder: (auraMarket) {
+                      return HomePageAccountBalanceSelector(
+                        builder: (accountBalance) {
+                          final balance =
+                              accountBalance?.balances.firstWhereOrNull(
+                            (b) => b.type == network.type.type,
+                          );
+
+                          final amount =
+                              double.tryParse(balance?.balance ?? '0') ?? 0;
+
+                          double currentPrice = double.tryParse(
+                                  auraMarket?.currentPrice ?? '0') ??
+                              0;
+
+                          double value = 0;
+                          if(amount == 0 && currentPrice == 0){
+                            value = 0;
+                          }
+                          else{
+                            value = amount * currentPrice;
+                          }
+                          return _HomePageTokenInfoWidget(
+                            avatar:
+                                'https://aurascan.io/assets/images/logo/title-logo.png',
+                            symbol: network.symbol,
+                            tokenName: network.name,
+                            percentChange24h:
+                                auraMarket?.priceChangePercentage24h ?? 0,
+                            amount: amount,
+                            value: value,
+                            appTheme: appTheme,
+                            localization: localization,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                );
+              },
+              canLoadMore: false,
+            );
+          }),
         ),
       ],
     );

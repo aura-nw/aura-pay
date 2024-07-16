@@ -4,7 +4,7 @@ extension TokenMarketDtoMapper on TokenMarketDto {
   TokenMarket get toEntity => TokenMarket(
         id: id,
         coinId: coinId,
-        symbol: symbol,
+        symbol: symbol ?? '',
         name: name,
         image: image,
         currentPrice: currentPrice,
@@ -16,25 +16,25 @@ extension TokenMarketDtoMapper on TokenMarketDto {
 
 class TokenMarketDto {
   final int id;
-  final String coinId;
-  final String symbol;
-  final String name;
-  final String image;
+  final String ?coinId;
+  final String ?symbol;
+  final String ?name;
+  final String? image;
   final String currentPrice;
   final double priceChangePercentage24h;
-  final String denom;
-  final int decimal;
+  final String? denom;
+  final int? decimal;
 
   const TokenMarketDto({
     required this.id,
-    required this.coinId,
-    required this.symbol,
-    required this.name,
-    required this.image,
+    this.coinId,
+    this.symbol,
+    this.name,
+    this.image,
     required this.currentPrice,
     required this.priceChangePercentage24h,
-    required this.denom,
-    required this.decimal,
+    this.denom,
+    this.decimal,
   });
 
   factory TokenMarketDto.fromJson(Map<String, dynamic> json) {

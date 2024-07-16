@@ -20,25 +20,25 @@ extension TokenMarketDtoRequestMapper on PutAllTokenMarketRequestDto {
 @Collection(inheritance: false)
 final class TokenMarketDb extends TokenMarketDto {
   final Id tId;
-  final String tCoinId;
+  final String ?tCoinId;
   final String tSymbol;
-  final String tName;
-  final String tImage;
+  final String ?tName;
+  final String ?tImage;
   final String tCurrentPrice;
   final double tPriceChangePercentage24h;
-  final String tDenom;
-  final int tDecimal;
+  final String ?tDenom;
+  final int ?tDecimal;
 
   const TokenMarketDb({
     required this.tId,
-    required this.tCoinId,
+    this.tCoinId,
     required this.tSymbol,
-    required this.tName,
-    required this.tImage,
+    this.tName,
+    this.tImage,
     required this.tCurrentPrice,
     required this.tPriceChangePercentage24h,
-    required this.tDenom,
-    required this.tDecimal,
+    this.tDenom,
+    this.tDecimal,
   }) : super(
           id: tId,
           name: tName,

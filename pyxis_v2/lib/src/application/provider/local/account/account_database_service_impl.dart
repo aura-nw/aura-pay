@@ -109,7 +109,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
     AccountDb? account = await _database.accountDbs.get(id);
 
     final AccountDb? currentAccount =
-    await _database.accountDbs.filter().indexDbEqualTo(0).findFirst();
+    await _database.accountDbs.filter().aIndexEqualTo(0).findFirst();
 
     if (account == null || currentAccount == null) return;
 

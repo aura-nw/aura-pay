@@ -1,21 +1,21 @@
 final class UpdateAccountBalanceRequest {
   final int id;
-  final UpdateBalanceRequest cosmosBalance;
-  final UpdateBalanceRequest evmBalance;
+  final List<UpdateBalanceRequest>? balances;
 
   const UpdateAccountBalanceRequest({
     required this.id,
-    required this.cosmosBalance,
-    required this.evmBalance,
+    this.balances,
   });
 }
 
 final class UpdateBalanceRequest {
-  final String ? balance;
-  final int ?tokenId;
+  final String balance;
+  final int tokenId;
+  final String type;
 
   const UpdateBalanceRequest({
-    this.balance,
-    this.tokenId,
+    required this.balance,
+    required this.tokenId,
+    required this.type,
   });
 }

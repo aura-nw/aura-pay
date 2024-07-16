@@ -31,8 +31,12 @@ final class BalanceUseCase {
     return _balanceRepository.getAll();
   }
 
-  Future<String> getBalanceByAddress({required String address}) {
-    return _balanceRepository.getBalanceByAddress(address: address);
+  Future<String> getEvmBalanceByAddress({required String address}) {
+    return _balanceRepository.getEvmBalanceByAddress(address: address);
+  }
+
+  Future<String> getCosmosBalanceByAddress({required String address}) {
+    return _balanceRepository.getCosmosBalanceByAddress(address: address);
   }
 
   Future<AccountBalance?> getByAccountID({
@@ -41,7 +45,7 @@ final class BalanceUseCase {
     return _balanceRepository.getByAccountID(accountId: accountId);
   }
 
-  Future<AccountBalance> update(UpdateAccountBalanceRequest param){
+  Future<AccountBalance> update(UpdateAccountBalanceRequest param) {
     return _balanceRepository.update(param);
   }
 }

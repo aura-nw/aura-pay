@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
@@ -6,30 +7,21 @@ import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/wallet_info_widget.dart';
 
 class HomePageWalletCardWidget extends StatelessWidget {
-  final String walletName;
-  final String walletAddress;
   final AppTheme appTheme;
   final AppLocalizationManager localization;
-  final String totalValue;
-  final double value24hChange;
-  final double percent24hChange;
 
   const HomePageWalletCardWidget({
-    required this.walletAddress,
-    required this.walletName,
     required this.appTheme,
     required this.localization,
-    this.totalValue = '0.0',
-    this.percent24hChange = 0,
-    this.value24hChange = 0,
     super.key,
   });
 
-  Color valueChangeColor() {
-    if (percent24hChange > 0) {
+  Color valueChangeColor(double percent24hChange) {
+    if (isIncrease(percent24hChange)) {
       return appTheme.utilityGreen500;
     } else if (percent24hChange == 0) {
       return appTheme.textSecondary;
@@ -38,10 +30,10 @@ class HomePageWalletCardWidget extends StatelessWidget {
     return appTheme.utilityRed500;
   }
 
-  bool get isIncrease => percent24hChange > 0;
+  bool  isIncrease(double percent24hChange) => percent24hChange > 0;
 
-  String prefixValueChange(){
-    if(isIncrease){
+  String prefixValueChange(double percent24hChange){
+    if(isIncrease(percent24hChange)){
       return '+';
     }
 
@@ -62,11 +54,15 @@ class HomePageWalletCardWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          DefaultWalletInfoWidget(
-            onCopy: (walletAddress) {},
-            appTheme: appTheme,
-            walletName: walletName,
-            walletAddress: walletAddress,
+          HomePageActiveAccountSelector(
+            builder: (account) {
+              return DefaultWalletInfoWidget(
+                onCopy: (walletAddress) {},
+                appTheme: appTheme,
+                walletName: account?.name ?? '',
+                walletAddress: account?.evmAddress ?? '',
+              );
+            }
           ),
           const SizedBox(
             height: BoxSize.boxSize05,
@@ -82,68 +78,90 @@ class HomePageWalletCardWidget extends StatelessWidget {
                 BorderRadiusSize.borderRadius04,
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      localization.translate(
-                        LanguageKey.homePageTotalValue,
-                      ),
-                      style: AppTypoGraPhy.textSmMedium.copyWith(
-                        color: appTheme.textTertiary,
-                      ),
-                    ),
-                    Row(
+            child: HomePageAuraMarketSelector(
+              builder: (auraMarket) {
+                return HomePageAccountBalanceSelector(
+                  builder: (accountBalance) {
+                    double totalValue = 0;
+                    for(final balance in accountBalance?.balances ?? <Balance>[]){
+                      final amount =
+                          double.tryParse(balance.balance) ?? 0;
+
+                      double currentPrice = double.tryParse(
+                          auraMarket?.currentPrice ?? '0') ??
+                          0;
+
+
+                      if(amount != 0 || currentPrice != 0){
+                        totalValue += amount * currentPrice;
+                      }
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SvgPicture.asset(
-                          AssetIconPath.icCommonEye,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              localization.translate(
+                                LanguageKey.homePageTotalValue,
+                              ),
+                              style: AppTypoGraPhy.textSmMedium.copyWith(
+                                color: appTheme.textTertiary,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AssetIconPath.icCommonEye,
+                                ),
+                                const SizedBox(
+                                  width: BoxSize.boxSize04,
+                                ),
+                                SvgPicture.asset(
+                                  AssetIconPath.icCommonScan,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                         const SizedBox(
-                          width: BoxSize.boxSize04,
+                          height: BoxSize.boxSize03,
                         ),
-                        SvgPicture.asset(
-                          AssetIconPath.icCommonScan,
+                        Text(
+                          '${localization.translate(LanguageKey.commonBalancePrefix)}$totalValue',
+                          style: AppTypoGraPhy.displayXsSemiBold.copyWith(
+                            color: appTheme.textPrimary,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: BoxSize.boxSize03,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                style: AppTypoGraPhy.textXsMedium.copyWith(
+                                  color: appTheme.textSecondary,
+                                ),
+                                text: '${localization.translate(
+                                  LanguageKey.homePage24hPNL,
+                                )}  ',
+                              ),
+                              TextSpan(
+                                style: AppTypoGraPhy.textXsMedium.copyWith(
+                                  color: valueChangeColor(auraMarket?.priceChangePercentage24h ?? 0.0),
+                                ),
+                                text: '${prefixValueChange(auraMarket?.priceChangePercentage24h ?? 0.0)}${totalValue * (auraMarket?.priceChangePercentage24h ?? 0.0) }(${prefixValueChange(auraMarket?.priceChangePercentage24h ?? 0.0)}${auraMarket?.priceChangePercentage24h ?? 0.0})%',
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize03,
-                ),
-                Text(
-                  '${localization.translate(LanguageKey.commonBalancePrefix)}$totalValue',
-                  style: AppTypoGraPhy.displayXsSemiBold.copyWith(
-                    color: appTheme.textPrimary,
-                  ),
-                ),
-                const SizedBox(
-                  height: BoxSize.boxSize03,
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        style: AppTypoGraPhy.textXsMedium.copyWith(
-                          color: appTheme.textSecondary,
-                        ),
-                        text: '${localization.translate(
-                          LanguageKey.homePage24hPNL,
-                        )}  ',
-                      ),
-                      TextSpan(
-                        style: AppTypoGraPhy.textXsMedium.copyWith(
-                          color: valueChangeColor(),
-                        ),
-                        text: '${prefixValueChange()}$value24hChange(${prefixValueChange()}$percent24hChange)%',
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                    );
+                  }
+                );
+              }
             ),
           ),
         ],

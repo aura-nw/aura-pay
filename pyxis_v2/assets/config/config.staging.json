@@ -1,16 +1,16 @@
 {
   "APP_NAME": "Pyxis Wallet",
   "COSMOS_INFO": {
-    "symbol": "AURA",
-    "denom": "aura",
+    "symbol": "EAURA",
+    "denom": "ueaura",
     "chainId": "aura_6321-3",
     "decimals" : 6,
     "chainName": "Aura COSMOS Euphoria",
     "rpc" : "http://grpc.euphoria.aura.network:9090"
   },
   "EVM_INFO" : {
-    "symbol" : "AURA",
-    "denom" : "aura",
+    "symbol" : "EAURA",
+    "denom" : "ueaura",
     "chainId" : 6321,
     "decimals" : 18,
     "chainName": "Aura EVM Euphoria",

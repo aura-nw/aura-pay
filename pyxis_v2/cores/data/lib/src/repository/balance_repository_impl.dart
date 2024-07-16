@@ -50,12 +50,17 @@ final class BalanceRepositoryImpl implements BalanceRepository {
   }
 
   @override
-  Future<String> getBalanceByAddress({required String address}) {
-    return _balanceService.getBalanceByAddress(address: address);
+  Future<String> getEvmBalanceByAddress({required String address}) {
+    return _balanceService.getEvmBalanceByAddress(address: address);
   }
 
   @override
-  Future<AccountBalance> update<P>(P param) async{
+  Future<String> getCosmosBalanceByAddress({required String address}) {
+    return _balanceService.getCosmosBalanceByAddress(address: address);
+  }
+
+  @override
+  Future<AccountBalance> update<P>(P param) async {
     final balanceDto = await _balanceDatabaseService.update(
       (param as UpdateAccountBalanceRequest).mapRequest,
     );
@@ -64,9 +69,10 @@ final class BalanceRepositoryImpl implements BalanceRepository {
   }
 
   @override
-  Future<AccountBalance?> getByAccountID({required int accountId}) async{
-    final accountBalance = await _balanceDatabaseService.getByAccountID(accountId: accountId);
-    
+  Future<AccountBalance?> getByAccountID({required int accountId}) async {
+    final accountBalance =
+        await _balanceDatabaseService.getByAccountID(accountId: accountId);
+
     return accountBalance?.toEntity;
   }
 }

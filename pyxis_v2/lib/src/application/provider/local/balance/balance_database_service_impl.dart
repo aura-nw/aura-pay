@@ -63,10 +63,11 @@ final class BalanceDatabaseServiceImpl implements BalanceDatabaseService {
 
     if (accountBalanceDb != null) {
       accountBalanceDb = accountBalanceDb.copyWith(
-        cBalance: param.cosmosBalance.balance,
-        cTokenId: param.cosmosBalance.tokenId,
-        eBalance: param.evmBalance.balance,
-        eTokenId: param.evmBalance.tokenId,
+        balances: param.balances
+            ?.map(
+              (e) => e.mapRequestToDb,
+            )
+            .toList(),
       );
 
       await _database.writeTxn(

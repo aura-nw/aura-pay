@@ -4,36 +4,40 @@ extension UpdateBalanceRequestMapper on UpdateBalanceRequest {
   UpdateBalanceRequestDto get mapRequest => UpdateBalanceRequestDto(
         tokenId: tokenId,
         balance: balance,
+        type: type,
       );
 }
 
 extension UpdateAccountBalanceRequestMapper on UpdateAccountBalanceRequest {
   UpdateAccountBalanceRequestDto get mapRequest =>
       UpdateAccountBalanceRequestDto(
-        evmBalance: evmBalance.mapRequest,
-        cosmosBalance: cosmosBalance.mapRequest,
+        balances: balances
+            ?.map(
+              (e) => e.mapRequest,
+            )
+            .toList(),
         id: id,
       );
 }
 
 final class UpdateAccountBalanceRequestDto {
   final int id;
-  final UpdateBalanceRequestDto cosmosBalance;
-  final UpdateBalanceRequestDto evmBalance;
+  final List<UpdateBalanceRequestDto>? balances;
 
   const UpdateAccountBalanceRequestDto({
     required this.id,
-    required this.cosmosBalance,
-    required this.evmBalance,
+    this.balances,
   });
 }
 
 final class UpdateBalanceRequestDto {
-  final String? balance;
-  final int? tokenId;
+  final String balance;
+  final int tokenId;
+  final String type;
 
   const UpdateBalanceRequestDto({
-    this.balance,
-    this.tokenId,
+    required this.balance,
+    required this.tokenId,
+    required this.type,
   });
 }

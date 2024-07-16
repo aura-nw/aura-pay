@@ -2,7 +2,11 @@ import 'package:domain/src/entities/balance.dart';
 import 'package:domain/src/repository/local_database_repository.dart';
 
 abstract class RemoteBalanceRepository {
-  Future<String> getBalanceByAddress({
+  Future<String> getEvmBalanceByAddress({
+    required String address,
+  });
+
+  Future<String> getCosmosBalanceByAddress({
     required String address,
   });
 }
@@ -15,6 +19,4 @@ abstract class LocalBalanceRepository
 }
 
 abstract interface class BalanceRepository
-    implements RemoteBalanceRepository, LocalBalanceRepository {
-  
-}
+    implements RemoteBalanceRepository, LocalBalanceRepository {}

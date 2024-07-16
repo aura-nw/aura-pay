@@ -2,6 +2,7 @@ import 'package:domain/core/enum.dart';
 
 final class Account {
   final int id;
+  // 0 -> active 1. normal
   final int index;
   final String name;
   final String evmAddress;
