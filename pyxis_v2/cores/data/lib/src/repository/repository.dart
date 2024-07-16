@@ -4,3 +4,4 @@ export 'localization_repository_impl.dart';
 export 'account_repository_impl.dart';
 export 'key_store_repository_impl.dart';
 export 'token_market_repository_impl.dart';
+export 'balance_repository_impl.dart';

@@ -1,22 +1,20 @@
-final class AccountBalance {
-  final int id;
+final class AddAccountBalanceRequest {
   final int accountId;
-  final Balance cosmosBalance;
-  final Balance evmBalance;
+  final AddBalanceRequest cosmosBalance;
+  final AddBalanceRequest evmBalance;
 
-  const AccountBalance({
-    required this.id,
+  const AddAccountBalanceRequest({
     required this.accountId,
     required this.cosmosBalance,
     required this.evmBalance,
   });
 }
 
-final class Balance {
+final class AddBalanceRequest {
   final String balance;
   final int tokenId;
 
-  const Balance({
+  const AddBalanceRequest({
     required this.balance,
     required this.tokenId,
   });

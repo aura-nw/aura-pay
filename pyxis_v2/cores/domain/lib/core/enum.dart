@@ -1,7 +1,7 @@
-enum AppNetwork{
-  auraEvm,
-  auraCosmos,
-  custom,
+enum AppNetworkType{
+  evm,
+  cosmos,
+  other,
 }
 
 enum AccountCreateType{
