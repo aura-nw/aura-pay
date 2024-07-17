@@ -35,6 +35,8 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on(_onUpdateAccountBalance);
   }
 
+  final List<AppNetwork> _allNetworks = List.empty(growable: true);
+
   late Isolate _balanceIsolate;
   SendPort? _balanceSendPort;
 
@@ -148,7 +150,11 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         try {
           final Isar isar = await getIsar();
 
-          final BalanceUseCase balanceUseCase = balanceFactory(isar);
+          final Dio dio = dioFactory(
+            message['base_url_v2'],
+          );
+
+          final BalanceUseCase balanceUseCase = balanceFactory(isar, dio);
 
           await _fetchBalance(
             balanceUseCase,
@@ -203,29 +209,35 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     Map<String, dynamic> message,
   ) async {
     try {
-      final List<AppNetwork> networks = message['networks'];
-
       final Account account = message['account'];
 
-      Map<AppNetworkType, String> result = {};
+      final String environment = message['environment'];
 
-      for (final network in networks) {
-        final type = network.type;
+      Map<TokenType, dynamic> result = {};
 
-        if (type == AppNetworkType.evm) {
-          String amount = await balanceUseCase.getEvmBalanceByAddress(
-            address: account.evmAddress,
-          );
+      String amount = await balanceUseCase.getNativeBalance(
+        address: account.evmAddress,
+      );
 
-          result[type] = amount;
-        } else if (type == AppNetworkType.cosmos) {
-          String amount = await balanceUseCase.getCosmosBalanceByAddress(
-            address: account.cosmosAddress ?? '',
-          );
+      result[TokenType.native] = amount;
 
-          result[type] = amount;
-        }
-      }
+      final erc20TokenBalances = await balanceUseCase.getErc20TokenBalance(
+        request: QueryERC20BalanceRequest(
+          address: account.evmAddress,
+          environment: environment,
+        ),
+      );
+
+      result[TokenType.erc20] = erc20TokenBalances;
+
+      final cw20TokenBalances = await balanceUseCase.getCw20TokenBalance(
+        request: QueryCW20BalanceRequest(
+          address: account.evmAddress,
+          environment: environment,
+        ),
+      );
+
+      result[TokenType.cw20] = cw20TokenBalances;
 
       sendPort.send({
         'balanceMap': result,
@@ -243,9 +255,11 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     try {
       final List<AppNetwork> networks = createNetwork(config);
 
+      _allNetworks.addAll(networks);
+
       emit(
         state.copyWith(
-          networks: networks,
+          activeNetworks: networks,
         ),
       );
 
@@ -262,9 +276,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         ),
       );
 
-      _sendMessageFetchAccountBalance(
-        networks: networks,
-      );
+      _sendMessageFetchAccountBalance();
 
       final tokenMarkets = await _tokenMarketUseCase.getAll();
 
@@ -276,9 +288,6 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         state.copyWith(
           tokenMarkets: tokenMarkets,
           accountBalance: accountBalance,
-          auraMarket: tokenMarkets.firstWhereOrNull(
-            (token) => token.symbol == config.config.evmInfo.symbol,
-          ),
         ),
       );
     } catch (e) {
@@ -293,9 +302,6 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     emit(
       state.copyWith(
         tokenMarkets: event.tokenMarkets,
-        auraMarket: event.tokenMarkets.firstWhereOrNull(
-          (token) => token.symbol == config.config.evmInfo.symbol,
-        ),
       ),
     );
   }
@@ -305,16 +311,61 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     Emitter<HomePageState> emit,
   ) async {
     try {
-      List<AddBalanceRequest> requests = event.balanceMap.keys
-          .toList()
-          .map(
-            (key) => AddBalanceRequest(
-              balance: event.balanceMap[key]!,
-              tokenId: state.auraMarket!.id,
-              type: key.type,
+      List<AddBalanceRequest> requests = [];
+
+      final nativeAmount = event.balanceMap[TokenType.native];
+      if (nativeAmount != null) {
+        final nativeToken = state.tokenMarkets.firstWhereOrNull(
+          (token) => token.symbol == config.config.evmInfo.symbol,
+        );
+
+        if (nativeToken != null) {
+          requests.add(
+            AddBalanceRequest(
+              balance: nativeAmount,
+              tokenId: nativeToken.id,
+              type: TokenType.native.name,
             ),
-          )
-          .toList();
+          );
+        }
+      }
+
+      final List<ErcTokenBalance> ercTokenBalances =
+          event.balanceMap[TokenType.erc20] ?? <ErcTokenBalance>[];
+
+      // Add erc token
+      for (final erc in ercTokenBalances) {
+        final ercToken = state.tokenMarkets.firstWhereOrNull(
+          (token) => token.symbol == erc.denom,
+        );
+
+        if (ercToken != null) {
+          requests.add(AddBalanceRequest(
+            balance: erc.amount,
+            tokenId: ercToken.id,
+            type: TokenType.erc20.name,
+          ));
+        }
+      }
+
+      // Add cw 20 token
+      final List<Cw20TokenBalance> cwTokenBalances =
+          event.balanceMap[TokenType.cw20] ?? <Cw20TokenBalance>[];
+
+      for (final cw in cwTokenBalances) {
+        final cwToken = state.tokenMarkets.firstWhereOrNull(
+              (token) => token.symbol == cw.contract.symbol,
+        );
+
+        if (cwToken != null) {
+          requests.add(AddBalanceRequest(
+            balance: cw.amount,
+            tokenId: cwToken.id,
+            type: TokenType.cw20.name,
+          ));
+        }
+      }
+
 
       final accountBalance = await _balanceUseCase.add(
         AddAccountBalanceRequest(
@@ -337,12 +388,11 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     });
   }
 
-  void _sendMessageFetchAccountBalance({
-    required List<AppNetwork> networks,
-  }) {
+  void _sendMessageFetchAccountBalance() {
     _balanceSendPort?.send({
       'account': state.activeAccount!,
-      'networks': networks,
+      'base_url_v2': config.config.api.v2.url,
+      'environment': config.environment.environmentString,
     });
   }
 

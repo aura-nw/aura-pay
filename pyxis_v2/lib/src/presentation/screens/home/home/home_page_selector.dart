@@ -44,18 +44,18 @@ final class HomePageNetworksSelector
     super.key,
     required Widget Function(List<AppNetwork>) builder,
   }) : super(
-          selector: (state) => state.networks,
+          selector: (state) => state.activeNetworks,
           builder: (context, networks) => builder(networks),
         );
 }
 
-final class HomePageAuraMarketSelector
-    extends BlocSelector<HomePageBloc, HomePageState, TokenMarket?> {
-  HomePageAuraMarketSelector({
+final class HomePageTokenMarketsSelector
+    extends BlocSelector<HomePageBloc, HomePageState, List<TokenMarket>> {
+  HomePageTokenMarketsSelector({
     super.key,
-    required Widget Function(TokenMarket?) builder,
+    required Widget Function(List<TokenMarket>) builder,
   }) : super(
-          selector: (state) => state.auraMarket,
-          builder: (context, auraMarket) => builder(auraMarket),
+          selector: (state) => state.tokenMarkets,
+          builder: (context, tokenMarkets) => builder(tokenMarkets),
         );
 }

@@ -1,3 +1,9 @@
+enum TokenType{
+  native,
+  cw20,
+  erc20,
+}
+
 enum AppNetworkType implements Comparable<AppNetworkType> {
   evm(type: 'evm'),
   cosmos(type: 'cosmos'),

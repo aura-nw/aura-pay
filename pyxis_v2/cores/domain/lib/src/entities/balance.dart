@@ -15,22 +15,55 @@ final class AccountBalance {
 final class Balance {
   final String balance;
   final int tokenId;
-  final String type;
+  final String tokenType;
 
   const Balance({
     required this.balance,
     required this.tokenId,
-    required this.type,
+    required this.tokenType,
   });
 
-  AppNetworkType get networkType {
-    switch (type) {
-      case 'evm':
-        return AppNetworkType.evm;
-      case 'cosmos':
-        return AppNetworkType.cosmos;
+  TokenType get type {
+    switch(tokenType){
+      case 'native':
+        return TokenType.native;
+      case 'cw20':
+      return TokenType.cw20;
+      case 'erc20':
+        return TokenType.erc20;
       default:
-        return AppNetworkType.other;
+        return TokenType.native;
     }
   }
+}
+
+// Remote fetch balance
+final class ErcTokenBalance {
+  final String denom;
+  final String amount;
+
+  const ErcTokenBalance({
+    required this.amount,
+    required this.denom,
+  });
+}
+
+final class Cw20TokenBalance {
+  final String amount;
+  final Cw20TokenContract contract;
+
+  const Cw20TokenBalance({
+    required this.amount,
+    required this.contract,
+  });
+}
+
+final class Cw20TokenContract {
+  final String name;
+  final String symbol;
+
+  const Cw20TokenContract({
+    required this.name,
+    required this.symbol,
+  });
 }

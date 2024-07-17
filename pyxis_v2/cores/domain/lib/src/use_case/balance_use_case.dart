@@ -1,4 +1,5 @@
 import 'package:domain/src/entities/balance.dart';
+import 'package:domain/src/entities/request/query_balance_request.dart';
 import 'package:domain/src/entities/request/update_balance_request.dart';
 import 'package:domain/src/repository/balance_repository.dart';
 
@@ -31,12 +32,20 @@ final class BalanceUseCase {
     return _balanceRepository.getAll();
   }
 
-  Future<String> getEvmBalanceByAddress({required String address}) {
-    return _balanceRepository.getEvmBalanceByAddress(address: address);
+  Future<String> getNativeBalance({required String address}) {
+    return _balanceRepository.getNativeBalance(address: address);
   }
 
-  Future<String> getCosmosBalanceByAddress({required String address}) {
-    return _balanceRepository.getCosmosBalanceByAddress(address: address);
+  Future<List<ErcTokenBalance>> getErc20TokenBalance({
+    required QueryBalanceRequest request,
+  }) {
+    return _balanceRepository.getErc20Balance(request);
+  }
+
+  Future<List<Cw20TokenBalance>> getCw20TokenBalance({
+    required QueryBalanceRequest request,
+  }) {
+    return _balanceRepository.getCw20Balance(request);
   }
 
   Future<AccountBalance?> getByAccountID({

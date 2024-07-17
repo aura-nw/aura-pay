@@ -99,6 +99,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<BalanceServiceGenerator>(
+    () => BalanceServiceGenerator(
+      getIt.get<Dio>(),
+    ),
+  );
+
   // Register service
   getIt.registerLazySingleton<LocalizationService>(
     () => LocalizationServiceImpl(),
@@ -151,7 +157,9 @@ Future<void> initDependency(
   
   
   getIt.registerLazySingleton<BalanceService>(
-    () => BalanceServiceImpl(),
+    () => BalanceServiceImpl(
+      getIt.get<BalanceServiceGenerator>(),
+    ),
   );
 
   // Register repository

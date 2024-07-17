@@ -45,7 +45,6 @@ class _HomePageState extends State<HomePage>
   double _scrollPosition = 0;
   double _walletCardScale = 1.0;
   double _walletCardOpacity = 1.0;
-  double _walletActionScale = 1.0;
   double _walletActionOpacity = 1.0;
 
   bool _showWalletCard = true;
@@ -82,20 +81,16 @@ class _HomePageState extends State<HomePage>
 
         _walletCardOpacity = _walletCardOpacity.clamp(0.0, 1.0);
 
-        if (_scrollPosition > 230) {
-          _walletActionScale = 1 - (_scrollPosition / 400);
-
-          _walletCardOpacity = 1 - (_scrollPosition / 400);
+        if (_scrollPosition > 230 && _scrollPosition < 350) {
+          _walletActionOpacity = 1 - (_scrollPosition / 350);
         }
 
-        _walletActionScale = _walletCardScale.clamp(0.0, 1.0);
+        _walletActionOpacity = _walletCardScale.clamp(0.0, 1.0);
 
-        _walletActionScale = _walletCardOpacity.clamp(0.0, 1.0);
-
-        if (_walletActionScale < 0.3) {
-          _showActions = false;
-        } else {
+        if (_walletActionOpacity  == 0) {
           _showActions = true;
+        } else {
+          _showActions = false;
         }
       },
     );

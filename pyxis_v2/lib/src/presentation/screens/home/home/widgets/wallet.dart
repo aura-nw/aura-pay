@@ -8,6 +8,7 @@ import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
+import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/wallet_info_widget.dart';
 
@@ -45,16 +46,14 @@ class HomePageWalletCardWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          HomePageActiveAccountSelector(
-            builder: (account) {
-              return DefaultWalletInfoWidget(
-                onCopy: (walletAddress) {},
-                appTheme: appTheme,
-                walletName: account?.name ?? '',
-                walletAddress: account?.evmAddress ?? '',
-              );
-            }
-          ),
+          HomePageActiveAccountSelector(builder: (account) {
+            return DefaultWalletInfoWidget(
+              onCopy: (walletAddress) {},
+              appTheme: appTheme,
+              walletName: account?.name ?? '',
+              walletAddress: account?.evmAddress ?? '',
+            );
+          }),
           const SizedBox(
             height: BoxSize.boxSize05,
           ),
@@ -69,31 +68,43 @@ class HomePageWalletCardWidget extends StatelessWidget {
                 BorderRadiusSize.borderRadius04,
               ),
             ),
-            child: HomePageAuraMarketSelector(
-              builder: (auraMarket) {
+            child: HomePageTokenMarketsSelector(
+              builder: (tokenMarkets) {
                 return HomePageAccountBalanceSelector(
                   builder: (accountBalance) {
-
-                    String prefixChangeValue = (auraMarket?.priceChangePercentage24h ?? 0.0).prefixValueChange;
-
-                    double currentPrice = double.tryParse(
-                        auraMarket?.currentPrice ?? '0') ??
-                        0;
+                    // String prefixChangeValue =
+                    //     (auraMarket?.priceChangePercentage24h ?? 0.0)
+                    //         .prefixValueChange;
 
                     double totalValue = 0;
                     double totalBalance = 0;
-                    for(final balance in accountBalance?.balances ?? <Balance>[]){
-                      final amount =
-                          double.tryParse(balance.networkType.formatBalance(balance.balance)) ?? 0;
+                    for (final balance
+                        in accountBalance?.balances ?? <Balance>[]) {
+                      final token = tokenMarkets.firstWhereOrNull(
+                        (t) => t.id == balance.tokenId,
+                      );
+
+                      double currentPrice =
+                          double.tryParse(token?.currentPrice ?? '0') ?? 0;
+
+                      final amount = double.tryParse(
+                            balance.type.formatBalance(
+                              balance.balance,
+                              customDecimal: token?.decimal,
+                            ),
+                          ) ??
+                          0;
 
                       totalBalance += amount;
-                      if(amount != 0 || currentPrice != 0){
+                      if (amount != 0 || currentPrice != 0) {
                         totalValue += amount * currentPrice;
                       }
                     }
 
-                    double pnl = totalBalance * currentPrice * ( auraMarket?.priceChangePercentage24h ?? 0.0) / 100;
-
+                    // double pnl = totalBalance *
+                    //     currentPrice *
+                    //     (auraMarket?.priceChangePercentage24h ?? 0.0) /
+                    //     100;
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,20 +158,23 @@ class HomePageWalletCardWidget extends StatelessWidget {
                                   LanguageKey.homePage24hPNL,
                                 )}  ',
                               ),
-                              TextSpan(
-                                style: AppTypoGraPhy.textXsMedium.copyWith(
-                                  color: valueChangeColor(auraMarket?.priceChangePercentage24h ?? 0.0),
-                                ),
-                                text: '$prefixChangeValue${localization.translate(LanguageKey.commonBalancePrefix)}${pnl.formatPnl24}($prefixChangeValue${(auraMarket?.priceChangePercentage24h ?? 0.0).formatPercent}%)',
-                              ),
+                              // TextSpan(
+                              //   style: AppTypoGraPhy.textXsMedium.copyWith(
+                              //     color: valueChangeColor(
+                              //         auraMarket?.priceChangePercentage24h ??
+                              //             0.0),
+                              //   ),
+                              //   text:
+                              //       '$prefixChangeValue${localization.translate(LanguageKey.commonBalancePrefix)}${pnl.formatPnl24}($prefixChangeValue${(auraMarket?.priceChangePercentage24h ?? 0.0).formatPercent}%)',
+                              // ),
                             ],
                           ),
                         ),
                       ],
                     );
-                  }
+                  },
                 );
-              }
+              },
             ),
           ),
         ],

@@ -173,7 +173,7 @@ final class HomePageTokensWidget extends StatelessWidget {
                   height: BoxSize.boxSize02,
                 ),
                 Text(
-                  '${localization.translate(LanguageKey.commonBalancePrefix)}352',
+                  '${localization.translate(LanguageKey.commonBalancePrefix)}',
                   style: AppTypoGraPhy.textXlBold
                       .copyWith(color: appTheme.textPrimary),
                 ),
@@ -196,61 +196,64 @@ final class HomePageTokensWidget extends StatelessWidget {
           height: BoxSize.boxSize07,
         ),
         Expanded(
-          child: HomePageNetworksSelector(builder: (networks) {
-            return CombinedListView(
-              onRefresh: () {
-                //
-              },
-              onLoadMore: () {
-                //
-              },
-              data: networks,
-              builder: (network, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: Spacing.spacing05,
-                  ),
-                  child: HomePageAuraMarketSelector(
-                    builder: (auraMarket) {
-                      return HomePageAccountBalanceSelector(
-                        builder: (accountBalance) {
-                          final balance =
-                              accountBalance?.balances.firstWhereOrNull(
-                            (b) => b.type == network.type.type,
-                          );
+          child: HomePageTokenMarketsSelector(builder: (tokenMarkets) {
+            return HomePageAccountBalanceSelector(
+              builder: (accountBalance) {
+                if (accountBalance == null) {
+                  return const SizedBox.shrink();
+                }
 
-                          final amount =
-                              double.tryParse(network.type.formatBalance((balance?.balance ?? '0'))) ?? 0;
+                final balances = accountBalance.balances;
+                return CombinedListView(
+                  onRefresh: () {
+                    //
+                  },
+                  onLoadMore: () {
+                    //
+                  },
+                  data: balances,
+                  builder: (balance, index) {
+                    final token = tokenMarkets.firstWhereOrNull(
+                      (t) => t.id == balance.tokenId,
+                    );
 
-                          double currentPrice = double.tryParse(
-                                  auraMarket?.currentPrice ?? '0') ??
-                              0;
+                    final amount = double.tryParse(
+                          balance.type.formatBalance(
+                            balance.balance,
+                            customDecimal: token?.decimal,
+                          ),
+                        ) ??
+                        0;
 
-                          double value = 0;
-                          if (amount == 0 && currentPrice == 0) {
-                            value = 0;
-                          } else {
-                            value = amount * currentPrice;
-                          }
-                          return _HomePageTokenInfoWidget(
-                            avatar:
-                                'https://aurascan.io/assets/images/logo/title-logo.png',
-                            symbol: network.symbol,
-                            tokenName: network.name,
-                            percentChange24h:
-                                auraMarket?.priceChangePercentage24h ?? 0,
-                            amount: amount,
-                            value: value,
-                            appTheme: appTheme,
-                            localization: localization,
-                          );
-                        },
-                      );
-                    },
-                  ),
+                    double currentPrice =
+                        double.tryParse(token?.currentPrice ?? '0') ?? 0;
+
+                    double value = 0;
+                    if (amount == 0 && currentPrice == 0) {
+                      value = 0;
+                    } else {
+                      value = amount * currentPrice;
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: Spacing.spacing05,
+                      ),
+                      child: _HomePageTokenInfoWidget(
+                        avatar: token?.image ??
+                            'https://aurascan.io/assets/images/logo/title-logo.png',
+                        symbol: token?.symbol ?? '',
+                        tokenName: token?.name ?? '',
+                        percentChange24h: token?.priceChangePercentage24h ?? 0,
+                        amount: amount,
+                        value: value,
+                        appTheme: appTheme,
+                        localization: localization,
+                      ),
+                    );
+                  },
+                  canLoadMore: false,
                 );
               },
-              canLoadMore: false,
             );
           }),
         ),

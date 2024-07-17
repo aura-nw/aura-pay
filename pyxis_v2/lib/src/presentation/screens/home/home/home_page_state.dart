@@ -9,8 +9,7 @@ class HomePageState with _$HomePageState {
     @Default([]) List<Account> accounts,
     Account? activeAccount,
     @Default([]) List<TokenMarket> tokenMarkets,
-    TokenMarket ?auraMarket,
     AccountBalance ? accountBalance,
-    @Default([]) List<AppNetwork> networks,
+    @Default([]) List<AppNetwork> activeNetworks,
   }) = _HomePageState;
 }

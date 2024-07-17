@@ -14,6 +14,6 @@ class HomePageEvent with _$HomePageEvent {
   }) = HomePageOnUpdateTokenMarketEvent;
 
   const factory HomePageEvent.updateAccountBalance({
-    required Map<AppNetworkType,String> balanceMap,
+    required Map<TokenType,dynamic> balanceMap,
   }) = HomePageOnUpdateAccountBalanceEvent;
 }

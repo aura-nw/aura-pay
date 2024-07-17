@@ -8,7 +8,7 @@ extension UpdateBalanceRequestDtoMapper on UpdateBalanceRequestDto {
   BalanceDb get mapRequestToDb => BalanceDb(
         bBalance: balance,
         bTokenId: tokenId,
-        bType: type,
+        bTokenType: type,
       );
 }
 
@@ -26,7 +26,7 @@ extension AddBalanceRequestDtoMapper on AddBalanceRequestDto {
   BalanceDb get mapRequestToDb => BalanceDb(
         bBalance: balance,
         bTokenId: tokenId,
-        bType: type,
+        bTokenType: type,
       );
 }
 
@@ -52,7 +52,7 @@ extension BalanceDbExtension on BalanceDb {
     return BalanceDb(
       bTokenId: tokenId ?? bTokenId,
       bBalance: balance ?? bBalance,
-      bType: type ?? bType,
+      bTokenType: type ?? bTokenType,
     );
   }
 }
@@ -78,15 +78,15 @@ class AccountBalanceDb extends AccountBalanceDto {
 class BalanceDb extends BalanceDto {
   final String bBalance;
   final int bTokenId;
-  final String bType;
+  final String bTokenType;
 
   const BalanceDb({
     this.bBalance = '0',
     this.bTokenId = -1,
-    this.bType = 'evm',
+    this.bTokenType = 'Native',
   }) : super(
           balance: bBalance,
           tokenId: bTokenId,
-          type: bType,
+          tokenType: bTokenType,
         );
 }

@@ -10,17 +10,17 @@ String _replaceDot(String value){
   return value;
 }
 
-extension FormatAuraByType on AppNetworkType{
-  String formatBalance(String balance){
-    int decimal = 1;
+extension FormatAuraByType on TokenType{
+  String formatBalance(String balance,{int ?customDecimal}){
+    int decimal = 1000000000000000000;
     switch(this){
-      case AppNetworkType.evm:
-        decimal = 1000000000000000000;
+      case TokenType.native:
         break;
-      case AppNetworkType.cosmos:
-        decimal = 1000000;
+      case TokenType.erc20:
+        decimal = customDecimal ?? decimal;
         break;
-      case AppNetworkType.other:
+      case TokenType.cw20:
+        decimal = customDecimal ?? decimal;
         break;
     }
 

@@ -21,13 +21,17 @@
       "url" : "https://euphoria-api.aurascan.io/api/v1"
     },
     "v2" : {
-      "url" : "https://indexer-v2.staging.aurascan.io",
+      "url" : "https://indexer-v2.staging.aurascan.io/api",
       "graphql": "/v2/graphql",
       "rest": "/v2",
       "chain": "x-"
     },
-    "seek_hype" : {
-
+    "seek_hype_evm" : {
+      "url" : "https://indexer.euphoria.seekhype.io"
+    },
+    "seek_hype_cosmos" : {
+      "url" : "https://staging.seekhype.io",
+      "graphql" : "v1/graphql"
     }
   },
   "WEB_3_AUTH" : {
