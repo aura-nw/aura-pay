@@ -1,70 +1,68 @@
-extension AuraBalaceFormatter on String {
-  String get formatAura {
-    double auraD = double.tryParse(this) ?? 0;
+import 'package:domain/domain.dart';
 
-    String auraString = (auraD / 1000000).toStringAsFixed(6);
+String _replaceDot(String value){
+  value = value.replaceAll(RegExp(r'0*$'), '');
 
-    auraString = auraString.replaceAll(RegExp(r'0*$'), '');
-
-    if (auraString.endsWith('.')) {
-      auraString = auraString.substring(0, auraString.length - 1);
-    }
-
-    return auraString;
+  if (value.endsWith('.')) {
+    value = value.substring(0, value.length - 1);
   }
 
-  String formatTotalPrice(double price) {
-    double auraD = double.tryParse(this) ?? 0;
+  return value;
+}
 
-    auraD = (auraD / 1000000);
-
-    if (price == 0) return '0';
-
-    auraD = auraD * price;
-
-    String auraString = auraD.toStringAsFixed(2);
-
-    auraString = auraString.replaceAll(RegExp(r'0*$'), '');
-
-    if (auraString.endsWith('.')) {
-      auraString = auraString.substring(0, auraString.length - 1);
+extension FormatAuraByType on AppNetworkType{
+  String formatBalance(String balance){
+    int decimal = 1;
+    switch(this){
+      case AppNetworkType.evm:
+        decimal = 1000000000000000000;
+        break;
+      case AppNetworkType.cosmos:
+        decimal = 1000000;
+        break;
+      case AppNetworkType.other:
+        break;
     }
 
-    return auraString;
-  }
+    double auraD = double.tryParse(balance) ?? 0;
 
-  String get toDenom {
-    double aura = double.tryParse(this) ?? 0;
+    String auraString = (auraD / decimal).toStringAsFixed(6);
 
-    return (aura * 1000000).round().toString();
+    return _replaceDot(auraString);
   }
 }
 
 extension AuraNumberFormatter on num {
-  String get formatAuraNumber {
-    String auraString = toStringAsFixed(6);
 
-    auraString = auraString.replaceAll(RegExp(r'0*$'), '');
+  bool get  isIncrease => this > 0;
 
-    if (auraString.endsWith('.')) {
-      auraString = auraString.substring(0, auraString.length - 1);
+  String get prefixValueChange{
+    if(isIncrease){
+      return '+';
     }
+    return '';
+  }
 
-    return auraString;
+
+  String get formatPercent{
+    String percent = toStringAsFixed(2);
+
+    return _replaceDot(percent);
   }
 
   String get formatPrice {
-
     if (this == 0) return '0';
 
-    String auraString = toStringAsFixed(2);
+    String price = toStringAsFixed(2);
 
-    auraString = auraString.replaceAll(RegExp(r'0*$'), '');
+    return _replaceDot(price);
+  }
 
-    if (auraString.endsWith('.')) {
-      auraString = auraString.substring(0, auraString.length - 1);
-    }
+  String get formatPnl24 {
+    if (this == 0) return '0';
 
-    return auraString;
+    String price = toStringAsFixed(4);
+
+    return _replaceDot(price);
   }
 }

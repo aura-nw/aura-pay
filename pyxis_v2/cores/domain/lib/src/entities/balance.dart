@@ -1,3 +1,5 @@
+import 'package:domain/core/enum.dart';
+
 final class AccountBalance {
   final int id;
   final int accountId;
@@ -20,4 +22,15 @@ final class Balance {
     required this.tokenId,
     required this.type,
   });
+
+  AppNetworkType get networkType {
+    switch (type) {
+      case 'evm':
+        return AppNetworkType.evm;
+      case 'cosmos':
+        return AppNetworkType.cosmos;
+      default:
+        return AppNetworkType.other;
+    }
+  }
 }

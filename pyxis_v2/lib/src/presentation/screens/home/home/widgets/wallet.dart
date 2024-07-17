@@ -7,6 +7,7 @@ import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/wallet_info_widget.dart';
 
@@ -21,23 +22,13 @@ class HomePageWalletCardWidget extends StatelessWidget {
   });
 
   Color valueChangeColor(double percent24hChange) {
-    if (isIncrease(percent24hChange)) {
+    if (percent24hChange.isIncrease) {
       return appTheme.utilityGreen500;
     } else if (percent24hChange == 0) {
       return appTheme.textSecondary;
     }
 
     return appTheme.utilityRed500;
-  }
-
-  bool  isIncrease(double percent24hChange) => percent24hChange > 0;
-
-  String prefixValueChange(double percent24hChange){
-    if(isIncrease(percent24hChange)){
-      return '+';
-    }
-
-    return '-';
   }
 
   @override
@@ -82,20 +73,28 @@ class HomePageWalletCardWidget extends StatelessWidget {
               builder: (auraMarket) {
                 return HomePageAccountBalanceSelector(
                   builder: (accountBalance) {
+
+                    String prefixChangeValue = (auraMarket?.priceChangePercentage24h ?? 0.0).prefixValueChange;
+
+                    double currentPrice = double.tryParse(
+                        auraMarket?.currentPrice ?? '0') ??
+                        0;
+
                     double totalValue = 0;
+                    double totalBalance = 0;
                     for(final balance in accountBalance?.balances ?? <Balance>[]){
                       final amount =
-                          double.tryParse(balance.balance) ?? 0;
+                          double.tryParse(balance.networkType.formatBalance(balance.balance)) ?? 0;
 
-                      double currentPrice = double.tryParse(
-                          auraMarket?.currentPrice ?? '0') ??
-                          0;
-
-
+                      totalBalance += amount;
                       if(amount != 0 || currentPrice != 0){
                         totalValue += amount * currentPrice;
                       }
                     }
+
+                    double pnl = totalBalance * currentPrice * ( auraMarket?.priceChangePercentage24h ?? 0.0) / 100;
+
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -129,7 +128,7 @@ class HomePageWalletCardWidget extends StatelessWidget {
                           height: BoxSize.boxSize03,
                         ),
                         Text(
-                          '${localization.translate(LanguageKey.commonBalancePrefix)}$totalValue',
+                          '${localization.translate(LanguageKey.commonBalancePrefix)}${totalValue.formatPrice}',
                           style: AppTypoGraPhy.displayXsSemiBold.copyWith(
                             color: appTheme.textPrimary,
                           ),
@@ -152,7 +151,7 @@ class HomePageWalletCardWidget extends StatelessWidget {
                                 style: AppTypoGraPhy.textXsMedium.copyWith(
                                   color: valueChangeColor(auraMarket?.priceChangePercentage24h ?? 0.0),
                                 ),
-                                text: '${prefixValueChange(auraMarket?.priceChangePercentage24h ?? 0.0)}${totalValue * (auraMarket?.priceChangePercentage24h ?? 0.0) }(${prefixValueChange(auraMarket?.priceChangePercentage24h ?? 0.0)}${auraMarket?.priceChangePercentage24h ?? 0.0})%',
+                                text: '$prefixChangeValue${localization.translate(LanguageKey.commonBalancePrefix)}${pnl.formatPnl24}($prefixChangeValue${(auraMarket?.priceChangePercentage24h ?? 0.0).formatPercent}%)',
                               ),
                             ],
                           ),

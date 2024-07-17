@@ -4,6 +4,7 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/box_widget.dart';
@@ -49,8 +50,7 @@ final class _HomePageTokenInfoWidget extends StatelessWidget {
     if (isIncrease) {
       return '+';
     }
-
-    return '-';
+    return '';
   }
 
   @override
@@ -85,7 +85,7 @@ final class _HomePageTokenInfoWidget extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              '${prefixValueChange()}${percentChange24h.toString()}%',
+                              '${prefixValueChange()}${percentChange24h.formatPercent}%',
                           style: AppTypoGraPhy.textXsMedium.copyWith(
                             color: valueChangeColor(),
                           ),
@@ -121,7 +121,7 @@ final class _HomePageTokenInfoWidget extends StatelessWidget {
                   height: BoxSize.boxSize02,
                 ),
                 Text(
-                  '${localization.translate(LanguageKey.commonBalancePrefix)}${value.toString()}',
+                  '${localization.translate(LanguageKey.commonBalancePrefix)}${value.formatPrice}',
                   style: AppTypoGraPhy.textXsMedium.copyWith(
                     color: appTheme.textTertiary,
                   ),
@@ -220,17 +220,16 @@ final class HomePageTokensWidget extends StatelessWidget {
                           );
 
                           final amount =
-                              double.tryParse(balance?.balance ?? '0') ?? 0;
+                              double.tryParse(network.type.formatBalance((balance?.balance ?? '0'))) ?? 0;
 
                           double currentPrice = double.tryParse(
                                   auraMarket?.currentPrice ?? '0') ??
                               0;
 
                           double value = 0;
-                          if(amount == 0 && currentPrice == 0){
+                          if (amount == 0 && currentPrice == 0) {
                             value = 0;
-                          }
-                          else{
+                          } else {
                             value = amount * currentPrice;
                           }
                           return _HomePageTokenInfoWidget(
