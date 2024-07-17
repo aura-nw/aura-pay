@@ -21,6 +21,6 @@ class ChainInfo {
   Future<BigInt> getWalletBalance(String address) async {
     final ethAddress = EthereumAddress.fromHex(address);
     final balance = await _web3client.getBalance(ethAddress);
-    return balance.getInEther;
+    return balance.getInWei;
   }
 }
