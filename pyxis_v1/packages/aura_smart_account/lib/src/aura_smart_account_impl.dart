@@ -374,14 +374,14 @@ class AuraSmartAccountImpl implements AuraSmartAccount {
   }) async {
     try {
       // Create query balance request
-      bank.QueryBalanceRequest balanceRequest =
-          bank.QueryBalanceRequest.create()
+      bank.QueryAddBalanceRequest AddBalanceRequest =
+          bank.QueryAddBalanceRequest.create()
             ..address = address
             ..denom = auraNetworkInfo.denom;
 
       // query balance
       final bank.QueryBalanceResponse balanceResponse =
-          await bankClient.balance(balanceRequest);
+          await bankClient.balance(AddBalanceRequest);
 
       return balanceResponse.balance.amount;
     } catch (e) {

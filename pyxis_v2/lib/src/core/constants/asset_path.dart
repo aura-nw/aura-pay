@@ -12,6 +12,8 @@ sealed class AssetLanguagePath{
 
 sealed class AssetConfigPath{
   static const String config = '${_baseAsset}config/config.json';
+  static const String configDev = '${_baseAsset}config/config.dev.json';
+  static const String configStaging = '${_baseAsset}config/config.staging.json';
 }
 
 sealed class AssetLogoPath {

@@ -4,6 +4,9 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/core/utils/aura_util.dart';
+import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/box_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/combine_list_view.dart';
 import 'package:pyxis_v2/src/presentation/widgets/divider_widget.dart';
@@ -47,8 +50,7 @@ final class _HomePageTokenInfoWidget extends StatelessWidget {
     if (isIncrease) {
       return '+';
     }
-
-    return '-';
+    return '';
   }
 
   @override
@@ -83,7 +85,7 @@ final class _HomePageTokenInfoWidget extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              '${prefixValueChange()}${percentChange24h.toString()}%',
+                              '${prefixValueChange()}${percentChange24h.formatPercent}%',
                           style: AppTypoGraPhy.textXsMedium.copyWith(
                             color: valueChangeColor(),
                           ),
@@ -119,7 +121,7 @@ final class _HomePageTokenInfoWidget extends StatelessWidget {
                   height: BoxSize.boxSize02,
                 ),
                 Text(
-                  '${localization.translate(LanguageKey.commonBalancePrefix)}${value.toString()}',
+                  '${localization.translate(LanguageKey.commonBalancePrefix)}${value.formatPrice}',
                   style: AppTypoGraPhy.textXsMedium.copyWith(
                     color: appTheme.textTertiary,
                   ),
@@ -171,7 +173,7 @@ final class HomePageTokensWidget extends StatelessWidget {
                   height: BoxSize.boxSize02,
                 ),
                 Text(
-                  '${localization.translate(LanguageKey.commonBalancePrefix)}352',
+                  '${localization.translate(LanguageKey.commonBalancePrefix)}',
                   style: AppTypoGraPhy.textXlBold
                       .copyWith(color: appTheme.textPrimary),
                 ),
@@ -194,40 +196,66 @@ final class HomePageTokensWidget extends StatelessWidget {
           height: BoxSize.boxSize07,
         ),
         Expanded(
-          child: CombinedListView(
-            onRefresh: () {
-              //
-            },
-            onLoadMore: () {
-              //
-            },
-            data: const [
-              0,
-              1,
-              2,
-              3,
-            ],
-            builder: (data, index) {
-              bool isValid = index % 2 == 0;
-              return Padding(
-                padding: const EdgeInsets.only(
-                  bottom: Spacing.spacing05,
-                ),
-                child: _HomePageTokenInfoWidget(
-                  avatar:
-                      'https://aurascan.io/assets/images/logo/title-logo.png',
-                  symbol: 'AURA',
-                  tokenName: isValid ? 'Aura cosmos' : 'Aura Evm',
-                  percentChange24h: isValid ? 5.52 : -1.64,
-                  amount: 15.6,
-                  value: 40.3,
-                  appTheme: appTheme,
-                  localization: localization,
-                ),
-              );
-            },
-            canLoadMore: false,
-          ),
+          child: HomePageTokenMarketsSelector(builder: (tokenMarkets) {
+            return HomePageAccountBalanceSelector(
+              builder: (accountBalance) {
+                if (accountBalance == null) {
+                  return const SizedBox.shrink();
+                }
+
+                final balances = accountBalance.balances;
+                return CombinedListView(
+                  onRefresh: () {
+                    //
+                  },
+                  onLoadMore: () {
+                    //
+                  },
+                  data: balances,
+                  builder: (balance, index) {
+                    final token = tokenMarkets.firstWhereOrNull(
+                      (t) => t.id == balance.tokenId,
+                    );
+
+                    final amount = double.tryParse(
+                          balance.type.formatBalance(
+                            balance.balance,
+                            customDecimal: token?.decimal,
+                          ),
+                        ) ??
+                        0;
+
+                    double currentPrice =
+                        double.tryParse(token?.currentPrice ?? '0') ?? 0;
+
+                    double value = 0;
+                    if (amount == 0 && currentPrice == 0) {
+                      value = 0;
+                    } else {
+                      value = amount * currentPrice;
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: Spacing.spacing05,
+                      ),
+                      child: _HomePageTokenInfoWidget(
+                        avatar: token?.image ??
+                            'https://aurascan.io/assets/images/logo/title-logo.png',
+                        symbol: token?.symbol ?? '',
+                        tokenName: token?.name ?? '',
+                        percentChange24h: token?.priceChangePercentage24h ?? 0,
+                        amount: amount,
+                        value: value,
+                        appTheme: appTheme,
+                        localization: localization,
+                      ),
+                    );
+                  },
+                  canLoadMore: false,
+                );
+              },
+            );
+          }),
         ),
       ],
     );

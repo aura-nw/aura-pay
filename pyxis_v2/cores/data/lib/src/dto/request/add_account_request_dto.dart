@@ -9,11 +9,13 @@ extension AddAccountRequestMapper on AddAccountRequest {
         type: type,
         cosmosAddress: cosmosAddress,
         controllerKeyType: controllerKeyType,
+        index: index,
       );
 }
 
 final class AddAccountRequestDto {
   final String name;
+  final int index;
   final String evmAddress;
   final String? cosmosAddress;
   final int keyStoreId;
@@ -23,6 +25,7 @@ final class AddAccountRequestDto {
 
   const AddAccountRequestDto({
     required this.name,
+    required this.index,
     required this.evmAddress,
     this.cosmosAddress,
     required this.keyStoreId,

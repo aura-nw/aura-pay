@@ -13,7 +13,7 @@ final class RemoteTokenMarketServiceImpl implements RemoteTokenMarketService {
   const RemoteTokenMarketServiceImpl(this._generator);
 
   @override
-  Future<AuraBaseResponseV1> getRemoteTokenMarket() {
+  Future<dynamic> getRemoteTokenMarket() {
     return _generator.getRemoteTokenMarket();
   }
 }
@@ -26,5 +26,5 @@ abstract class RemoteTokenMarketServiceGenerator {
   }) = _RemoteTokenMarketServiceGenerator;
 
   @GET(ApiServicePath.tokenMarket)
-  Future<AuraBaseResponseV1> getRemoteTokenMarket();
+  Future<dynamic> getRemoteTokenMarket();
 }

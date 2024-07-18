@@ -1,16 +1,16 @@
 {
   "APP_NAME": "Pyxis Wallet",
   "COSMOS_INFO": {
-    "symbol": "AURA",
-    "denom": "aura",
+    "symbol": "EAURA",
+    "denom": "ueaura",
     "chainId": "aura_6321-3",
     "decimals" : 6,
     "chainName": "Aura COSMOS Euphoria",
     "rpc" : "http://grpc.euphoria.aura.network:9090"
   },
   "EVM_INFO" : {
-    "symbol" : "AURA",
-    "denom" : "aura",
+    "symbol" : "EAURA",
+    "denom" : "ueaura",
     "chainId" : 6321,
     "decimals" : 18,
     "chainName": "Aura EVM Euphoria",
@@ -21,13 +21,17 @@
       "url" : "https://euphoria-api.aurascan.io/api/v1"
     },
     "v2" : {
-      "url" : "https://indexer-v2.staging.aurascan.io",
+      "url" : "https://indexer-v2.staging.aurascan.io/api",
       "graphql": "/v2/graphql",
       "rest": "/v2",
       "chain": "x-"
     },
-    "seek_hype" : {
-
+    "seek_hype_evm" : {
+      "url" : "https://indexer.euphoria.seekhype.io"
+    },
+    "seek_hype_cosmos" : {
+      "url" : "https://staging.seekhype.io",
+      "graphql" : "v1/graphql"
     }
   },
   "WEB_3_AUTH" : {

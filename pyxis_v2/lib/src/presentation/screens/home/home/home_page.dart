@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_v2/app_configs/di.dart';
 import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
@@ -9,14 +10,18 @@ import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
-import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/action.dart';
-import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/story.dart';
-import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/tab.dart';
-import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/token.dart';
-import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/wallet.dart';
+import 'home_page_selector.dart';
+import 'home_page_event.dart';
+import 'widgets/action.dart';
+import 'widgets/story.dart';
+import 'widgets/tab.dart';
+import 'widgets/token.dart';
+import 'widgets/wallet.dart';
 import 'package:pyxis_v2/src/presentation/widgets/app_bar_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
 import 'package:pyxis_v2/src/presentation/widgets/circle_avatar_widget.dart';
+
+import 'home_page_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,6 +32,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with StateFulBaseScreen, SingleTickerProviderStateMixin {
+  late HomePageBloc _bloc;
+
   final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
   late TabController _controller;
 
@@ -38,7 +45,6 @@ class _HomePageState extends State<HomePage>
   double _scrollPosition = 0;
   double _walletCardScale = 1.0;
   double _walletCardOpacity = 1.0;
-  double _walletActionScale = 1.0;
   double _walletActionOpacity = 1.0;
 
   bool _showWalletCard = true;
@@ -75,22 +81,16 @@ class _HomePageState extends State<HomePage>
 
         _walletCardOpacity = _walletCardOpacity.clamp(0.0, 1.0);
 
-        if (_scrollPosition > 230) {
-          _walletActionScale = 1 - (_scrollPosition / 400);
-
-          _walletCardOpacity = 1 - (_scrollPosition / 400);
+        if (_scrollPosition > 230 && _scrollPosition < 350) {
+          _walletActionOpacity = 1 - (_scrollPosition / 350);
         }
 
-        _walletActionScale = _walletCardScale.clamp(0.0, 1.0);
+        _walletActionOpacity = _walletCardScale.clamp(0.0, 1.0);
 
-        _walletActionScale = _walletCardOpacity.clamp(0.0, 1.0);
-
-        print(_walletActionScale);
-
-        if (_walletActionScale < 0.3) {
-          _showActions = false;
-        } else {
+        if (_walletActionOpacity  == 0) {
           _showActions = true;
+        } else {
+          _showActions = false;
         }
       },
     );
@@ -98,6 +98,9 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
+    _bloc = getIt.get<HomePageBloc>(
+      param1: _config,
+    );
     _controller = TabController(length: 2, vsync: this);
     _createScrollController();
     super.initState();
@@ -170,14 +173,9 @@ class _HomePageState extends State<HomePage>
                       height: BoxSize.boxSize07,
                     ),
                     HomePageWalletCardWidget(
-                      walletAddress: 'aura14...95ccflsuenf',
-                      walletName: 'Wallet 1',
                       appTheme: appTheme,
                       localization: localization,
-                      percent24hChange: 5.54,
-                      totalValue: 1000.56.toString().formatAura,
-                      value24hChange: 20.05,
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -224,39 +222,42 @@ class _HomePageState extends State<HomePage>
   @override
   Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
       AppLocalizationManager localization) {
-    return Scaffold(
-      backgroundColor: appTheme.bgPrimary,
-      appBar: AppBarDefault(
-        appTheme: appTheme,
-        localization: localization,
-        leading: const SizedBox.shrink(),
-        leadingWidth: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              AssetIconPath.icCommonAura,
-            ),
-            const SizedBox(
-              width: BoxSize.boxSize04,
-            ),
-            Text(
-              _config.config.appName,
-              style: AppTypoGraPhy.textSmSemiBold.copyWith(
-                color: appTheme.textPrimary,
+    return BlocProvider.value(
+      value: _bloc,
+      child: Scaffold(
+        backgroundColor: appTheme.bgPrimary,
+        appBar: AppBarDefault(
+          appTheme: appTheme,
+          localization: localization,
+          leading: const SizedBox.shrink(),
+          leadingWidth: 0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                AssetIconPath.icCommonAura,
               ),
-            ),
-            const SizedBox(
-              width: BoxSize.boxSize04,
-            ),
-            SvgPicture.asset(
-              AssetIconPath.icCommonArrowDown,
-            ),
-          ],
+              const SizedBox(
+                width: BoxSize.boxSize04,
+              ),
+              Text(
+                _config.config.appName,
+                style: AppTypoGraPhy.textSmSemiBold.copyWith(
+                  color: appTheme.textPrimary,
+                ),
+              ),
+              const SizedBox(
+                width: BoxSize.boxSize04,
+              ),
+              SvgPicture.asset(
+                AssetIconPath.icCommonArrowDown,
+              ),
+            ],
+          ),
+          actions: _actions(),
         ),
-        actions: _actions(),
+        body: child,
       ),
-      body: child,
     );
   }
 

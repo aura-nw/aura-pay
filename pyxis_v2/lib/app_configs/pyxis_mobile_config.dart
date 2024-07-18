@@ -4,6 +4,20 @@ enum PyxisEnvironment {
   production,
 }
 
+extension PyxisEnvironmentMapper on PyxisEnvironment {
+  String get environmentString {
+    switch (this) {
+      case PyxisEnvironment.serenity:
+        return 'serenity';
+      case PyxisEnvironment.staging:
+        return 'euphoria';
+      case PyxisEnvironment.production:
+        return 'xstaxy';
+    }
+  }
+
+}
+
 /// Represents the entire configuration for the Pyxis Wallet app.
 final class AppConfig {
   final String appName;
@@ -101,13 +115,15 @@ final class EvmInfoConfig {
 final class ApiConfig {
   final ApiConfigVersion v1;
   final ApiConfigVersion v2;
-  final Map<String, dynamic> seekHype;
+  final ApiConfigVersion seekHypeEvm;
+  final ApiConfigVersion seekHypeCosmos;
 
   /// Constructor for creating an [ApiConfig] instance.
   ApiConfig({
     required this.v1,
     required this.v2,
-    required this.seekHype,
+    required this.seekHypeEvm,
+    required this.seekHypeCosmos,
   });
 
   /// Factory method for creating an [ApiConfig] instance from a JSON object.
@@ -115,7 +131,8 @@ final class ApiConfig {
     return ApiConfig(
       v1: ApiConfigVersion.fromJson(json['v1']),
       v2: ApiConfigVersion.fromJson(json['v2']),
-      seekHype: json['seek_hype'],
+      seekHypeEvm: ApiConfigVersion.fromJson(json['seek_hype_evm']),
+      seekHypeCosmos: ApiConfigVersion.fromJson(json['seek_hype_cosmos']),
     );
   }
 }

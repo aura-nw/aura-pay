@@ -1,26 +1,41 @@
-enum AppNetwork{
-  auraEvm,
-  auraCosmos,
-  custom,
+enum TokenType{
+  native,
+  cw20,
+  erc20,
 }
 
-enum AccountCreateType{
+enum AppNetworkType implements Comparable<AppNetworkType> {
+  evm(type: 'evm'),
+  cosmos(type: 'cosmos'),
+  other(type: 'other');
+
+  const AppNetworkType({
+    required this.type,
+  });
+
+  final String type;
+
+  @override
+  int compareTo(AppNetworkType other) => type.length - other.type.length;
+}
+
+enum AccountCreateType {
   normal,
   social,
   import,
 }
 
-enum AccountType{
+enum AccountType {
   normal,
   abstraction,
 }
 
-enum ControllerKeyType{
+enum ControllerKeyType {
   passPhrase,
   privateKey,
 }
 
-enum Web3AuthLoginProvider{
+enum Web3AuthLoginProvider {
   google,
   facebook,
   reddit,

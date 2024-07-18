@@ -41,4 +41,10 @@ final class AccountUseCase {
   Future<void> deleteAll(){
     return _accountRepository.deleteAll();
   }
+
+  Future<void> updateChangeIndex({
+    required int id,
+  }){
+    return _accountRepository.updateChangeIndex(id: id);
+  }
 }

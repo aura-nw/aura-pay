@@ -10,4 +10,8 @@ abstract interface class AccountRepository
   });
 
   Future<Account?> getFirstAccount();
+
+  Future<void> updateChangeIndex({
+    required int id,
+  });
 }

@@ -19,6 +19,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
       aCreateType: p.createType,
       aType: p.type,
       aControllerKeyType: p.controllerKeyType,
+      aIndex: p.index,
     );
 
     await _database.writeTxn(
@@ -74,6 +75,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
         evmAddress: p.evmAddress,
         cosmosAddress: p.cosmosAddress,
         keyStoreId: p.keyStoreId,
+        index: p.index,
       );
 
       await _database.writeTxn(
@@ -98,5 +100,30 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
     return _database.writeTxn(() async{
       await _database.accountDbs.where().deleteAll();
     },);
+  }
+
+  @override
+  Future<void> updateChangeIndex({
+    required int id,
+  }) async {
+    AccountDb? account = await _database.accountDbs.get(id);
+
+    final AccountDb? currentAccount =
+    await _database.accountDbs.filter().aIndexEqualTo(0).findFirst();
+
+    if (account == null || currentAccount == null) return;
+
+    await _database.writeTxn(() async {
+      await _database.accountDbs.put(
+        currentAccount.copyWith(
+          index: 1,
+        ),
+      );
+      await _database.accountDbs.put(
+        account.copyWith(
+          index: 0,
+        ),
+      );
+    });
   }
 }

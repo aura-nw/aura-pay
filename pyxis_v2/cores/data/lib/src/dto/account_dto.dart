@@ -10,11 +10,13 @@ extension AccountDtoMapper on AccountDto {
         createType: createType,
         type: type,
         controllerKeyType: controllerKeyType,
+        index: index,
       );
 }
 
 class AccountDto {
   final int id;
+  final int index;
   final String name;
   final String evmAddress;
   final String? cosmosAddress;
@@ -25,6 +27,7 @@ class AccountDto {
 
   const AccountDto({
     required this.id,
+    required this.index,
     required this.name,
     required this.evmAddress,
     this.cosmosAddress,

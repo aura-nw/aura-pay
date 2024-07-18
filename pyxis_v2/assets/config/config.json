@@ -2,7 +2,7 @@
   "APP_NAME": "Pyxis Wallet",
   "COSMOS_INFO": {
     "symbol": "AURA",
-    "denom": "aura",
+    "denom": "uaura",
     "chainId": "aura_6322-2",
     "decimals" : 6,
     "chainName": "Aura COSMOS",
@@ -10,7 +10,7 @@
   },
   "EVM_INFO" : {
     "symbol" : "AURA",
-    "denom" : "aura",
+    "denom" : "uaura",
     "chainId" : 6322,
     "decimals" : 18,
     "chainName": "Aura EVM",
