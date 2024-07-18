@@ -15,6 +15,7 @@ import 'package:pyxis_v2/src/application/provider/local/token_market/token_marke
 import 'package:pyxis_v2/src/application/provider/provider/biometric_provider.dart';
 import 'package:pyxis_v2/src/application/provider/provider/web3_auth_provider.dart';
 import 'package:pyxis_v2/src/application/provider/service/balance/balance_service_impl.dart';
+import 'package:pyxis_v2/src/application/provider/service/nft/nft_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/service/token_market/remote_token_market_service_impl.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
@@ -96,11 +97,18 @@ Future<void> initDependency(
   getIt.registerLazySingleton<RemoteTokenMarketServiceGenerator>(
     () => RemoteTokenMarketServiceGenerator(
       getIt.get<Dio>(),
+      baseUrl: config.config.api.v1.url,
     ),
   );
 
   getIt.registerLazySingleton<BalanceServiceGenerator>(
     () => BalanceServiceGenerator(
+      getIt.get<Dio>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<NFTServiceGenerator>(
+    () => NFTServiceGenerator(
       getIt.get<Dio>(),
     ),
   );
@@ -149,16 +157,20 @@ Future<void> initDependency(
   getIt.registerLazySingleton<Web3AuthProvider>(
     () => const Web3AuthProviderImpl(),
   );
-  
-  
+
   getIt.registerLazySingleton<BalanceDatabaseService>(
-    () =>  BalanceDatabaseServiceImpl(isar),
+    () => BalanceDatabaseServiceImpl(isar),
   );
-  
-  
+
   getIt.registerLazySingleton<BalanceService>(
     () => BalanceServiceImpl(
       getIt.get<BalanceServiceGenerator>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<NftService>(
+    () => NftServiceImpl(
+      getIt.get<NFTServiceGenerator>(),
     ),
   );
 
@@ -200,11 +212,17 @@ Future<void> initDependency(
       getIt.get<TokenMarketDatabaseService>(),
     ),
   );
-  
+
   getIt.registerLazySingleton<BalanceRepository>(
     () => BalanceRepositoryImpl(
       getIt.get<BalanceService>(),
       getIt.get<BalanceDatabaseService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<NftRepository>(
+    () => NftRepositoryImpl(
+      getIt.get<NftService>(),
     ),
   );
 
@@ -248,6 +266,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<BalanceUseCase>(
     () => BalanceUseCase(
       getIt.get<BalanceRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<NftUseCase>(
+    () => NftUseCase(
+      getIt.get<NftRepository>(),
     ),
   );
 
@@ -305,8 +329,8 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<HomePageBloc,PyxisMobileConfig,dynamic>(
-    (config,_) => HomePageBloc(
+  getIt.registerFactoryParam<HomePageBloc, PyxisMobileConfig, dynamic>(
+    (config, _) => HomePageBloc(
       getIt.get<AccountUseCase>(),
       getIt.get<TokenMarketUseCase>(),
       getIt.get<BalanceUseCase>(),
