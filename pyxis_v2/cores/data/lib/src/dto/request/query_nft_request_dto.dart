@@ -130,43 +130,30 @@ final class QueryERC721RequestDto extends QueryNftRequestDto {
   @override
   String query() {
     const query = r'''
-    query queryAssetERC721(
-      $contract_address: String
-      $limit: Int = 10
-      $tokenId: String = null
-      $owner: String = null
-      $offset: Int = 0
+    query queryAssetERC721($contract_address: String, $limit: Int = 10, $tokenId: String = null, $owner: String = null, $offset: Int = 0) {
+  ${environment} {
+    cw721_token: erc721_token(
+      limit: $limit
+      offset: $offset
+      where: {erc721_contract: {evm_smart_contract: {address: {_eq: $contract_address}}}, token_id: {_eq: $tokenId}, owner: {_eq: $owner}}
+      order_by: [{last_updated_height: desc}, {id: desc}]
     ) {
-      ${environment} {
-        cw721_token: erc721_token(
-          limit: $limit
-          offset: $offset
-          where: {
-            erc721_contract: {
-              evm_smart_contract: { address: { _eq: $contract_address } }
-            }
-            token_id: { _eq: $tokenId }
-            owner: { _eq: $owner }
-          }
-          order_by: [{ last_updated_height: desc }, { id: desc }]
-        ) {
-          id
-          token_id
-          owner
-          media_info
-          last_updated_height
-          created_at
-          cw721_contract: erc721_contract {
-            name
-            symbol
-            smart_contract: evm_smart_contract {
-              address
-            }
-          }
+      id
+      token_id
+      owner
+      media_info
+      last_updated_height
+      created_at
+      cw721_contract: erc721_contract {
+        name
+        symbol
+        smart_contract: evm_smart_contract {
+          address
         }
       }
     }
-    
+  }
+}
     ''';
 
     return query.replaceAll('\${environment}', environment);

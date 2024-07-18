@@ -59,3 +59,14 @@ final class HomePageTokenMarketsSelector
           builder: (context, tokenMarkets) => builder(tokenMarkets),
         );
 }
+
+final class HomePageNFTsSelector
+    extends BlocSelector<HomePageBloc, HomePageState, List<NFTInformation>> {
+  HomePageNFTsSelector({
+    super.key,
+    required Widget Function(List<NFTInformation>) builder,
+  }) : super(
+          selector: (state) => state.nftS,
+          builder: (context, nftS) => builder(nftS),
+        );
+}

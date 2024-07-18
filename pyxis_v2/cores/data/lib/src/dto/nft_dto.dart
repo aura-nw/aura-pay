@@ -26,8 +26,17 @@ extension NFTOnChainMediaInfoDtoMapper on NFTOnChainMediaInfoDto {
   NFTOnChainMediaInfo get toEntity {
     return NFTOnChainMediaInfo(
       tokenUri: tokenUri,
+      metadata: metadataDto?.toEntity,
     );
   }
+}
+
+extension NFTOnChainMediaInfoMetadataDtoMapper
+    on NFTOnChainMediaInfoMetadataDto {
+  NFTOnChainMediaInfoMetadata get toEntity => NFTOnChainMediaInfoMetadata(
+        name: name,
+        description: description,
+      );
 }
 
 extension NFTOffChainMediaInfoDtoMapper on NFTOffChainMediaInfoDto {
@@ -47,7 +56,6 @@ extension NFTImageInfoDtoMapper on NFTImageInfoDto {
     );
   }
 }
-
 
 extension NFTAnimationInfoDtoMapper on NFTAnimationInfoDto {
   NFTAnimationInfo get toEntity {
@@ -71,12 +79,10 @@ extension CW721ContractDtoMapper on NFTCW721ContractDto {
 extension NFTSmartContractDtoMapper on NFTSmartContractDto {
   NFTSmartContract get toEntity {
     return NFTSmartContract(
-      name: name,
       address: address,
     );
   }
 }
-
 
 final class NFTInformationDto {
   final int id;
@@ -94,7 +100,6 @@ final class NFTInformationDto {
     required this.createdAt,
     required this.cw721Contract,
   });
-
 
   factory NFTInformationDto.fromJson(Map<String, dynamic> json) {
     return NFTInformationDto(
@@ -125,29 +130,57 @@ final class NFTMediaInfoDto {
 
   factory NFTMediaInfoDto.fromJson(Map<String, dynamic> json) {
     return NFTMediaInfoDto(
-      onChain: NFTOnChainMediaInfoDto.fromJson(json['onchain']),
-      offChain: NFTOffChainMediaInfoDto.fromJson(json['offchain']),
+      onChain: NFTOnChainMediaInfoDto.fromJson(
+        json['onchain'],
+      ),
+      offChain: NFTOffChainMediaInfoDto.fromJson(
+        json['offchain'],
+      ),
     );
   }
 }
 
 final class NFTOnChainMediaInfoDto {
   final String? tokenUri;
+  final NFTOnChainMediaInfoMetadataDto? metadataDto;
 
   const NFTOnChainMediaInfoDto({
     required this.tokenUri,
+    this.metadataDto,
   });
 
   factory NFTOnChainMediaInfoDto.fromJson(Map<String, dynamic> json) {
     return NFTOnChainMediaInfoDto(
       tokenUri: json['token_uri'],
+      metadataDto: json['metadata'] != null
+          ? NFTOnChainMediaInfoMetadataDto.fromJson(
+              json['metadata'],
+            )
+          : null,
+    );
+  }
+}
+
+final class NFTOnChainMediaInfoMetadataDto {
+  final String name;
+  final String description;
+
+  const NFTOnChainMediaInfoMetadataDto({
+    required this.name,
+    required this.description,
+  });
+
+  factory NFTOnChainMediaInfoMetadataDto.fromJson(Map<String, dynamic> json) {
+    return NFTOnChainMediaInfoMetadataDto(
+      name: json['name'],
+      description: json['description'],
     );
   }
 }
 
 final class NFTOffChainMediaInfoDto {
   final NFTImageInfoDto image;
-  final NFTAnimationInfoDto ?animation;
+  final NFTAnimationInfoDto? animation;
 
   const NFTOffChainMediaInfoDto({
     required this.image,
@@ -161,8 +194,8 @@ final class NFTOffChainMediaInfoDto {
       ),
       animation: json['animation'] != null
           ? NFTAnimationInfoDto.fromJson(
-        json['animation'],
-      )
+              json['animation'],
+            )
           : null,
     );
   }
@@ -185,11 +218,11 @@ final class NFTImageInfoDto {
   }
 }
 
-final class NFTAnimationInfoDto{
+final class NFTAnimationInfoDto {
   final String? url;
   final String? contentType;
 
-  const NFTAnimationInfoDto({this.url,this.contentType});
+  const NFTAnimationInfoDto({this.url, this.contentType});
 
   factory NFTAnimationInfoDto.fromJson(Map<String, dynamic> json) {
     return NFTAnimationInfoDto(
@@ -220,17 +253,14 @@ final class NFTCW721ContractDto {
 }
 
 final class NFTSmartContractDto {
-  final String name;
   final String address;
 
   const NFTSmartContractDto({
-    required this.name,
     required this.address,
   });
 
   factory NFTSmartContractDto.fromJson(Map<String, dynamic> json) {
     return NFTSmartContractDto(
-      name: json['name'],
       address: json['address'],
     );
   }

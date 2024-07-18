@@ -1,29 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_v2/src/core/constants/enum.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/core/utils/app_date_format.dart';
+import 'package:pyxis_v2/src/core/utils/context_extension.dart';
+import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
+import 'package:pyxis_v2/src/presentation/widgets/combined_gridview.dart';
+import 'package:pyxis_v2/src/presentation/widgets/network_image_widget.dart';
 
-class HomePageNFTCardWidget extends StatelessWidget {
+class _HomePageNFTCardWidget extends StatelessWidget {
   final String thumbnail;
   final String name;
   final String createTime;
   final String price;
   final String id;
   final AppTheme appTheme;
+  final MediaType mediaType;
 
-  const HomePageNFTCardWidget(
-      {required this.id,
-      required this.name,
-      required this.createTime,
-      required this.price,
-      required this.thumbnail,
-      required this.appTheme,
-      super.key});
+  const _HomePageNFTCardWidget({
+    required this.id,
+    required this.name,
+    required this.createTime,
+    required this.price,
+    required this.thumbnail,
+    required this.appTheme,
+    this.mediaType = MediaType.image,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(
+              BorderRadiusSize.borderRadius04,
+            ),
+            child: Stack(
+              children: [
+                NetworkImageWidget(
+                  appTheme: appTheme,
+                  cacheTarget: context.cacheImageTarget,
+                  url: thumbnail,
+                  width: double.maxFinite,
+                  height: double.maxFinite,
+                ),
+                // Positioned(
+                //   top: Spacing.spacing03,
+                //   right: Spacing.spacing03,
+                //   child: Container(
+                //     padding: const EdgeInsets.symmetric(
+                //       vertical: Spacing.spacing01,
+                //       horizontal: Spacing.spacing03,
+                //     ),
+                //     decoration: BoxDecoration(
+                //       color: appTheme.surfaceColorBlack.withOpacity(
+                //         0.5,
+                //       ),
+                //       borderRadius: BorderRadius.circular(
+                //         BorderRadiusSize.borderRadiusRound,
+                //       ),
+                //     ),
+                //     alignment: Alignment.center,
+                //     child: Text(
+                //       idToken,
+                //       style: AppTypoGraPhy.body01.copyWith(
+                //         color: appTheme.contentColorWhite,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize02,
+        ),
         Row(
           children: [
             Expanded(
@@ -40,14 +96,78 @@ class HomePageNFTCardWidget extends StatelessWidget {
               width: BoxSize.boxSize04,
             ),
             Text(
-              id,
+              '#$id',
               style: AppTypoGraPhy.textSmRegular.copyWith(
                 color: appTheme.textTertiary,
               ),
             ),
           ],
         ),
+        const SizedBox(
+          height: BoxSize.boxSize01,
+        ),
+        Text(
+          AppDateTime.formatDateHHMMDMMMYYY(
+            createTime,
+          ),
+          style: AppTypoGraPhy.textXsRegular.copyWith(
+            color: appTheme.textTertiary,
+          ),
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize01,
+        ),
+        Text(
+          price,
+          style: AppTypoGraPhy.textSmBold.copyWith(
+            color: appTheme.textSecondary,
+          ),
+        ),
       ],
+    );
+  }
+}
+
+final class HomePageNFTsWidget extends StatelessWidget {
+  final AppTheme appTheme;
+
+  const HomePageNFTsWidget({
+    required this.appTheme,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return HomePageNFTsSelector(
+      builder: (nftS) {
+        return SizedBox(
+          height: context.bodyHeight * 0.5,
+          child: CombinedGridView(
+            childCount: 2,
+            onRefresh: () {},
+            onLoadMore: () {},
+            data: [
+              ...nftS,
+              ...nftS,
+            ],
+            physics: const NeverScrollableScrollPhysics(),
+            builder: (nft, _) {
+              return _HomePageNFTCardWidget(
+                id: nft.tokenId,
+                name: nft.mediaInfo.onChain.metadata?.name ?? '',
+                createTime: nft.createdAt.toString(),
+                price: "5 Aura",
+                thumbnail: nft.mediaInfo.offChain.image.url ?? '',
+                appTheme: appTheme,
+              );
+            },
+            canLoadMore: false,
+            childAspectRatio: 0.72,
+            crossAxisSpacing: Spacing.spacing04,
+            mainAxisSpacing: Spacing.spacing05,
+          ),
+        );
+      },
     );
   }
 }

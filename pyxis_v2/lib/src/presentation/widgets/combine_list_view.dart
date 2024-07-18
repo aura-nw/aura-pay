@@ -13,6 +13,7 @@ class CombinedListView<T> extends StatefulWidget {
   final double loadMoreThreshHold;
   final bool canLoadMore;
   final Widget Function()? buildEmpty;
+  final ScrollPhysics ?physics;
 
   const CombinedListView({
     super.key,
@@ -23,6 +24,7 @@ class CombinedListView<T> extends StatefulWidget {
     required this.canLoadMore,
     this.loadMoreThreshHold = _defaultEndReachedThreshold,
     this.buildEmpty,
+    this.physics,
   });
 
   @override
@@ -67,7 +69,7 @@ class _CombinedListViewState<T> extends State<CombinedListView<T>> {
 
     return CustomScrollView(
       controller: _scrollController,
-      physics: const AlwaysScrollableScrollPhysics(
+      physics: widget.physics ?? const AlwaysScrollableScrollPhysics(
         parent: BouncingScrollPhysics(),
       ),
       slivers: [

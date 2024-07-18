@@ -5,6 +5,7 @@ import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
+import 'package:pyxis_v2/src/core/utils/context_extension.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/box_widget.dart';
@@ -173,7 +174,7 @@ final class HomePageTokensWidget extends StatelessWidget {
                   height: BoxSize.boxSize02,
                 ),
                 Text(
-                  '${localization.translate(LanguageKey.commonBalancePrefix)}',
+                  '${localization.translate(LanguageKey.commonBalancePrefix)}152',
                   style: AppTypoGraPhy.textXlBold
                       .copyWith(color: appTheme.textPrimary),
                 ),
@@ -195,8 +196,8 @@ final class HomePageTokensWidget extends StatelessWidget {
         const SizedBox(
           height: BoxSize.boxSize07,
         ),
-        Expanded(
-          child: HomePageTokenMarketsSelector(builder: (tokenMarkets) {
+        HomePageTokenMarketsSelector(
+          builder: (tokenMarkets) {
             return HomePageAccountBalanceSelector(
               builder: (accountBalance) {
                 if (accountBalance == null) {
@@ -204,58 +205,63 @@ final class HomePageTokensWidget extends StatelessWidget {
                 }
 
                 final balances = accountBalance.balances;
-                return CombinedListView(
-                  onRefresh: () {
-                    //
-                  },
-                  onLoadMore: () {
-                    //
-                  },
-                  data: balances,
-                  builder: (balance, index) {
-                    final token = tokenMarkets.firstWhereOrNull(
-                      (t) => t.id == balance.tokenId,
-                    );
+                return SizedBox(
+                  height:  context.bodyHeight * 0.5,
+                  child: CombinedListView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    onRefresh: () {
+                      //
+                    },
+                    onLoadMore: () {
+                      //
+                    },
+                    data: balances,
+                    builder: (balance, index) {
+                      final token = tokenMarkets.firstWhereOrNull(
+                        (t) => t.id == balance.tokenId,
+                      );
 
-                    final amount = double.tryParse(
-                          balance.type.formatBalance(
-                            balance.balance,
-                            customDecimal: token?.decimal,
-                          ),
-                        ) ??
-                        0;
+                      final amount = double.tryParse(
+                            balance.type.formatBalance(
+                              balance.balance,
+                              customDecimal: token?.decimal,
+                            ),
+                          ) ??
+                          0;
 
-                    double currentPrice =
-                        double.tryParse(token?.currentPrice ?? '0') ?? 0;
+                      double currentPrice =
+                          double.tryParse(token?.currentPrice ?? '0') ?? 0;
 
-                    double value = 0;
-                    if (amount == 0 && currentPrice == 0) {
-                      value = 0;
-                    } else {
-                      value = amount * currentPrice;
-                    }
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        bottom: Spacing.spacing05,
-                      ),
-                      child: _HomePageTokenInfoWidget(
-                        avatar: token?.image ??
-                            'https://aurascan.io/assets/images/logo/title-logo.png',
-                        symbol: token?.symbol ?? '',
-                        tokenName: token?.name ?? '',
-                        percentChange24h: token?.priceChangePercentage24h ?? 0,
-                        amount: amount,
-                        value: value,
-                        appTheme: appTheme,
-                        localization: localization,
-                      ),
-                    );
-                  },
-                  canLoadMore: false,
+                      double value = 0;
+                      if (amount == 0 && currentPrice == 0) {
+                        value = 0;
+                      } else {
+                        value = amount * currentPrice;
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: Spacing.spacing05,
+                        ),
+                        child: _HomePageTokenInfoWidget(
+                          avatar: token?.image ??
+                              'https://aurascan.io/assets/images/logo/title-logo.png',
+                          symbol: token?.symbol ?? '',
+                          tokenName: token?.name ?? '',
+                          percentChange24h:
+                              token?.priceChangePercentage24h ?? 0,
+                          amount: amount,
+                          value: value,
+                          appTheme: appTheme,
+                          localization: localization,
+                        ),
+                      );
+                    },
+                    canLoadMore: false,
+                  ),
                 );
               },
             );
-          }),
+          },
         ),
       ],
     );

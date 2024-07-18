@@ -31,5 +31,5 @@ abstract class NFTServiceGenerator {
   }) = _NFTServiceGenerator;
   
   @POST(ApiServicePath.graphiql)
-  Future<AuraBaseResponseV2> queryNFTs(Map<String, dynamic> body);
+  Future<AuraBaseResponseV2> queryNFTs(@Body() Map<String, dynamic> body);
 }

@@ -28,15 +28,27 @@ final class NFTMediaInfo {
 
 final class NFTOnChainMediaInfo {
   final String? tokenUri;
+  final NFTOnChainMediaInfoMetadata? metadata;
 
   const NFTOnChainMediaInfo({
     required this.tokenUri,
+    this.metadata,
+  });
+}
+
+final class NFTOnChainMediaInfoMetadata {
+  final String name;
+  final String description;
+
+  const NFTOnChainMediaInfoMetadata({
+    required this.name,
+    required this.description,
   });
 }
 
 final class NFTOffChainMediaInfo {
   final NFTImageInfo image;
-  final NFTAnimationInfo ?animation;
+  final NFTAnimationInfo? animation;
 
   const NFTOffChainMediaInfo({
     required this.image,
@@ -54,11 +66,11 @@ final class NFTImageInfo {
   });
 }
 
-final class NFTAnimationInfo{
+final class NFTAnimationInfo {
   final String? url;
   final String? contentType;
 
-  const NFTAnimationInfo({this.url,this.contentType});
+  const NFTAnimationInfo({this.url, this.contentType});
 }
 
 final class NFTCW721Contract {
@@ -74,11 +86,9 @@ final class NFTCW721Contract {
 }
 
 final class NFTSmartContract {
-  final String name;
   final String address;
 
   const NFTSmartContract({
-    required this.name,
     required this.address,
   });
 }

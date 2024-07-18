@@ -11,5 +11,6 @@ class HomePageState with _$HomePageState {
     @Default([]) List<TokenMarket> tokenMarkets,
     AccountBalance ? accountBalance,
     @Default([]) List<AppNetwork> activeNetworks,
+    @Default([]) List<NFTInformation> nftS,
   }) = _HomePageState;
 }

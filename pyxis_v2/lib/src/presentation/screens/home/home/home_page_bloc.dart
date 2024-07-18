@@ -9,6 +9,7 @@ import 'package:pyxis_v2/src/core/constants/network.dart';
 import 'package:pyxis_v2/src/core/factory_creator/account_balance.dart';
 import 'package:pyxis_v2/src/core/factory_creator/dio.dart';
 import 'package:pyxis_v2/src/core/factory_creator/isar.dart';
+import 'package:pyxis_v2/src/core/factory_creator/nft.dart';
 import 'package:pyxis_v2/src/core/factory_creator/token_market.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 
@@ -33,6 +34,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on(_loadStorageData);
     on(_onUpdateTokenMarket);
     on(_onUpdateAccountBalance);
+    on(_onUpdateNFTs);
   }
 
   final List<AppNetwork> _allNetworks = List.empty(growable: true);
@@ -43,21 +45,27 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   late Isolate _tokenIsolate;
   SendPort? _tokenSendPort;
 
-  // late Isolate _nftIsolate;
+  late Isolate _nftIsolate;
   SendPort? _nftSendPort;
 
   late ReceivePort _mainTokenReceivePort;
   late ReceivePort _mainBalanceReceivePort;
+  late ReceivePort _mainNFTReceivePort;
 
+  /// init multi thread
   void _initMultiThread() async {
     _mainTokenReceivePort = ReceivePort();
     _mainBalanceReceivePort = ReceivePort();
+    _mainNFTReceivePort = ReceivePort();
 
     _tokenIsolate = await Isolate.spawn(
         _backgroundFetchTokenMarket, _mainTokenReceivePort.sendPort);
 
     _balanceIsolate = await Isolate.spawn(
         _backgroundFetchBalance, _mainBalanceReceivePort.sendPort);
+
+    _nftIsolate =
+        await Isolate.spawn(_backgroundFetchNFT, _mainNFTReceivePort.sendPort);
 
     // Listen to the stream only once
     _mainTokenReceivePort.listen(
@@ -88,10 +96,6 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         if (message is Map<String, dynamic>) {
           if (message.containsKey('balance_port')) {
             _balanceSendPort = message['balance_port'] as SendPort;
-
-            add(
-              const HomePageOnGetStorageDataEvent(),
-            );
           } else if (message.containsKey('balanceMap')) {
             add(
               HomePageOnUpdateAccountBalanceEvent(
@@ -100,6 +104,29 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
             );
           } else {
             LogProvider.log('fetch balance error ${message['error']}');
+          }
+        }
+      },
+    );
+
+    // Listen to the stream only one
+    _mainNFTReceivePort.listen(
+      (message) {
+        if (message is Map<String, dynamic>) {
+          if (message.containsKey('nft_port')) {
+            _nftSendPort = message['nft_port'] as SendPort;
+
+            add(
+              const HomePageOnGetStorageDataEvent(),
+            );
+          } else if (message.containsKey('nftS')) {
+            add(
+              HomePageOnUpdateNFTsEvent(
+                nftS: message['nftS'],
+              ),
+            );
+          } else {
+            LogProvider.log('fetch nft error ${message['error']}');
           }
         }
       },
@@ -158,6 +185,35 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
           await _fetchBalance(
             balanceUseCase,
+            sendPort,
+            message,
+          );
+        } catch (error) {
+          // Send the error back to the main isolate
+          sendPort.send({'error': error.toString()});
+        }
+      }
+    }
+  }
+
+  static void _backgroundFetchNFT(SendPort sendPort) async {
+    ReceivePort receivePort = ReceivePort();
+
+    sendPort.send({
+      'nft_port': receivePort.sendPort,
+    });
+
+    await for (final message in receivePort) {
+      if (message is Map<String, dynamic>) {
+        try {
+          final Dio dio = dioFactory(
+            message['base_url_v2'],
+          );
+
+          final NftUseCase nftUseCase = nftUseCaseFactory(dio);
+
+          await _fetchNFT(
+            nftUseCase,
             sendPort,
             message,
           );
@@ -248,6 +304,44 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
+  static Future<void> _fetchNFT(
+    NftUseCase nftUseCase,
+    SendPort sendPort,
+    Map<String, dynamic> message,
+  ) async {
+    try {
+      final Account account = message['account'];
+
+      final String environment = message['environment'];
+
+      final List<NFTInformation> erc721s = await nftUseCase.queryNFTs(
+        QueryERC721Request(
+          owner: account.evmAddress.toLowerCase(),
+          environment: environment,
+          limit: 4,
+        ),
+      );
+
+      final List<NFTInformation> cw721s = await nftUseCase.queryNFTs(
+        QueryCW721Request(
+          owner: account.evmAddress.toLowerCase(),
+          environment: environment,
+          limit: 4,
+        ),
+      );
+
+      sendPort.send({
+        'nftS': [
+          ...erc721s,
+          ...cw721s,
+        ],
+      });
+    } catch (e) {
+      // Send the error back to the main isolate
+      sendPort.send({'error': e.toString()});
+    }
+  }
+
   void _loadStorageData(
     HomePageOnGetStorageDataEvent event,
     Emitter<HomePageState> emit,
@@ -277,6 +371,8 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       );
 
       _sendMessageFetchAccountBalance();
+
+      _sendMessageFetchNFTs();
 
       final tokenMarkets = await _tokenMarketUseCase.getAll();
 
@@ -354,7 +450,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       for (final cw in cwTokenBalances) {
         final cwToken = state.tokenMarkets.firstWhereOrNull(
-              (token) => token.symbol == cw.contract.symbol,
+          (token) => token.symbol == cw.contract.symbol,
         );
 
         if (cwToken != null) {
@@ -365,7 +461,6 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           ));
         }
       }
-
 
       final accountBalance = await _balanceUseCase.add(
         AddAccountBalanceRequest(
@@ -382,6 +477,17 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
+  void _onUpdateNFTs(
+    HomePageOnUpdateNFTsEvent event,
+    Emitter<HomePageState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        nftS: event.nftS,
+      ),
+    );
+  }
+
   void _sendMessageFetchTokenMarket() {
     _tokenSendPort?.send({
       'base_url_v1': config.config.api.v1.url,
@@ -396,13 +502,22 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     });
   }
 
+  void _sendMessageFetchNFTs() {
+    _nftSendPort?.send({
+      'account': state.activeAccount!,
+      'base_url_v2': config.config.api.v2.url,
+      'environment': config.environment.environmentString,
+    });
+  }
+
   @override
   Future<void> close() {
     _mainTokenReceivePort.close();
     _mainBalanceReceivePort.close();
+    _mainNFTReceivePort.close();
     _tokenIsolate.kill();
     _balanceIsolate.kill();
-    // _nftIsolate.kill();
+    _nftIsolate.kill();
     return super.close();
   }
 }
