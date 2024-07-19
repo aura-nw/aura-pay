@@ -70,3 +70,58 @@ final class HomePageNFTsSelector
           builder: (context, nftS) => builder(nftS),
         );
 }
+
+final class HomePageEnableTokenSelector
+    extends BlocSelector<HomePageBloc, HomePageState, bool> {
+  HomePageEnableTokenSelector({
+    super.key,
+    required Widget Function(bool) builder,
+  }) : super(
+          selector: (state) => state.enableToken,
+          builder: (context, enableToken) => builder(enableToken),
+        );
+}
+
+final class HomePageTotalTokenValueSelector
+    extends BlocSelector<HomePageBloc, HomePageState, double> {
+  HomePageTotalTokenValueSelector({
+    super.key,
+    required Widget Function(double) builder,
+  }) : super(
+          selector: (state) => state.totalTokenValue,
+          builder: (context, totalTokenValue) => builder(totalTokenValue),
+        );
+}
+
+final class HomePageTotalValueSelector
+    extends BlocSelector<HomePageBloc, HomePageState, double> {
+  HomePageTotalValueSelector({
+    super.key,
+    required Widget Function(double) builder,
+  }) : super(
+          selector: (state) => state.totalValue,
+          builder: (context, totalValue) => builder(totalValue),
+        );
+}
+
+final class HomePageTotalValueYesterdaySelector
+    extends BlocSelector<HomePageBloc, HomePageState, double> {
+  HomePageTotalValueYesterdaySelector({
+    super.key,
+    required Widget Function(double) builder,
+  }) : super(
+          selector: (state) => state.totalValueYesterday,
+          builder: (context, totalValueYesterday) => builder(totalValueYesterday),
+        );
+}
+
+final class HomePageIsAllNetworkSelector
+    extends BlocSelector<HomePageBloc, HomePageState, bool> {
+  HomePageIsAllNetworkSelector({
+    super.key,
+    required Widget Function(bool) builder,
+  }) : super(
+          selector: (state) => state.isAllNetwork,
+          builder: (context, isAllNetwork) => builder(isAllNetwork),
+        );
+}

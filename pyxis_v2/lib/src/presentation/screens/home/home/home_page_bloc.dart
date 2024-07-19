@@ -11,6 +11,7 @@ import 'package:pyxis_v2/src/core/factory_creator/dio.dart';
 import 'package:pyxis_v2/src/core/factory_creator/isar.dart';
 import 'package:pyxis_v2/src/core/factory_creator/nft.dart';
 import 'package:pyxis_v2/src/core/factory_creator/token_market.dart';
+import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 
 import 'home_page_event.dart';
@@ -35,6 +36,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on(_onUpdateTokenMarket);
     on(_onUpdateAccountBalance);
     on(_onUpdateNFTs);
+    on(_onChangeEnableToken);
   }
 
   final List<AppNetwork> _allNetworks = List.empty(growable: true);
@@ -280,6 +282,8 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       final erc20TokenBalances = await balanceUseCase.getErc20TokenBalance(
         request: QueryERC20BalanceRequest(
           address: account.evmAddress,
+          //For test
+          // address: 'aura1lcshaqg0l0hmmr95zvknazkle0szxsnz8mnuqx',
           environment: environment,
         ),
       );
@@ -289,6 +293,8 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       final cw20TokenBalances = await balanceUseCase.getCw20TokenBalance(
         request: QueryCW20BalanceRequest(
           address: account.evmAddress,
+          // For test
+          // address: 'aura1lcshaqg0l0hmmr95zvknazkle0szxsnz8mnuqx',
           environment: environment,
         ),
       );
@@ -376,14 +382,22 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       final tokenMarkets = await _tokenMarketUseCase.getAll();
 
+      emit(
+        state.copyWith(
+          tokenMarkets: tokenMarkets,
+        ),
+      );
+
       final accountBalance = await _balanceUseCase.getByAccountID(
         accountId: activeAccount!.id,
       );
 
       emit(
         state.copyWith(
-          tokenMarkets: tokenMarkets,
           accountBalance: accountBalance,
+          totalTokenValue: _calculateBalance(accountBalance)[0],
+          totalValue: _calculateBalance(accountBalance)[0],
+          totalValueYesterday: _calculateBalance(accountBalance)[1],
         ),
       );
     } catch (e) {
@@ -462,6 +476,12 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         }
       }
 
+      if (state.accountBalance != null) {
+        await _balanceUseCase.delete(
+          state.accountBalance!.id,
+        );
+      }
+
       final accountBalance = await _balanceUseCase.add(
         AddAccountBalanceRequest(
           accountId: state.activeAccount!.id,
@@ -469,9 +489,14 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         ),
       );
 
-      emit(state.copyWith(
-        accountBalance: accountBalance,
-      ));
+      emit(
+        state.copyWith(
+          accountBalance: accountBalance,
+          totalTokenValue: _calculateBalance(accountBalance)[0],
+          totalValue: _calculateBalance(accountBalance)[0],
+          totalValueYesterday: _calculateBalance(accountBalance)[1],
+        ),
+      );
     } catch (e) {
       LogProvider.log(e.toString());
     }
@@ -481,11 +506,36 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     HomePageOnUpdateNFTsEvent event,
     Emitter<HomePageState> emit,
   ) {
-    emit(
-      state.copyWith(
-        nftS: event.nftS,
-      ),
+    final List<NFTInformation> nftS = List.empty(growable: true);
+
+    nftS.addAll(event.nftS);
+
+    nftS.sort(
+      (a, b) {
+        return a.lastUpdatedHeight - b.lastUpdatedHeight;
+      },
     );
+
+    if (nftS.length >= 4) {
+      emit(
+        state.copyWith(
+          nftS: nftS.getRange(0, 3).toList(),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          nftS: nftS,
+        ),
+      );
+    }
+  }
+
+  void _onChangeEnableToken(HomePageOnUpdateEnableTotalTokenEvent event,
+      Emitter<HomePageState> emit) {
+    emit(state.copyWith(
+      enableToken: !state.enableToken,
+    ));
   }
 
   void _sendMessageFetchTokenMarket() {
@@ -519,5 +569,53 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     _balanceIsolate.kill();
     _nftIsolate.kill();
     return super.close();
+  }
+
+  List<double> _calculateBalance(AccountBalance? accountBalance) {
+    // If accountBalance is null, return [0, 0] indicating no balance or previous value.
+    if (accountBalance == null) return [0, 0];
+
+    double totalBalance = 0; // Initialize total balance for today.
+    double totalValueYesterday = 0.0; // Initialize total balance for yesterday.
+
+    // Iterate over each balance in the accountBalance.
+    for (final balance in accountBalance.balances) {
+      // Find the corresponding token information using tokenId.
+      final token = state.tokenMarkets.firstWhereOrNull(
+            (e) => e.id == balance.tokenId,
+      );
+
+      // Parse the amount of the token balance using a custom decimal format if provided.
+      final amount = double.tryParse(
+        balance.type.formatBalance(
+          balance.balance,
+          customDecimal: token?.decimal,
+        ),
+      ) ??
+          0;
+
+      // Parse the current price of the token, default to 0 if the price is null or not parsable.
+      double currentPrice = double.tryParse(token?.currentPrice ?? '0') ?? 0;
+
+      // Calculate the price of the token yesterday.
+      double priceYesterday =
+          currentPrice / (1 + (token?.priceChangePercentage24h ?? 0) / 100);
+
+      // If the amount or priceYesterday is not zero, add to the total value of yesterday.
+      if (amount != 0 || priceYesterday != 0) {
+        totalValueYesterday += priceYesterday * amount;
+      }
+
+      // If the amount and current price are not zero, add to the total balance for today.
+      if (amount != 0 && currentPrice != 0) {
+        totalBalance += amount * currentPrice;
+      }
+    }
+
+    // Return a list with total balance for today and total value for yesterday.
+    return [
+      totalBalance,
+      totalValueYesterday,
+    ];
   }
 }

@@ -1,13 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
-import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
-import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/presentation/widgets/circle_avatar_widget.dart';
 
 abstract class WalletInfoWidget extends StatelessWidget {
@@ -54,22 +51,17 @@ abstract class WalletInfoWidget extends StatelessWidget {
 
 final class DefaultWalletInfoWidget extends WalletInfoWidget {
   final void Function(String) onCopy;
+  final String avatarAsset;
 
   const DefaultWalletInfoWidget({
     super.key,
     required this.onCopy,
+    required this.avatarAsset,
     required super.appTheme,
     required super.walletName,
     required super.walletAddress,
   });
 
-  String randomAvatar() {
-    Random random = Random(128);
-
-    int index = random.nextInt(2);
-
-    return AppLocalConstant.avatars[index];
-  }
 
   @override
   Widget actions(BuildContext context) {
@@ -82,9 +74,9 @@ final class DefaultWalletInfoWidget extends WalletInfoWidget {
   Widget avatar(BuildContext context) {
     return CircleAvatarWidget(
       image: AssetImage(
-        randomAvatar(),
+        avatarAsset,
       ),
-      radius: BorderRadiusSize.borderRadius04,
+      radius: BorderRadiusSize.borderRadius04M,
     );
   }
 

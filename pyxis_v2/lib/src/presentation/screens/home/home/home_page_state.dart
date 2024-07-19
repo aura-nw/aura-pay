@@ -12,5 +12,11 @@ class HomePageState with _$HomePageState {
     AccountBalance ? accountBalance,
     @Default([]) List<AppNetwork> activeNetworks,
     @Default([]) List<NFTInformation> nftS,
+    @Default(true) bool enableToken,
+    @Default(true) bool isAllNetwork,
+    @Default(0) double totalValue,
+    @Default(0) double totalValueYesterday,
+    @Default(0) double totalTokenValue,
+    @Default(0) double estimateNFTValue,
   }) = _HomePageState;
 }

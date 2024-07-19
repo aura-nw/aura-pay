@@ -89,7 +89,7 @@ class AppBottomSheetBaseState<R extends AppBottomSheetBase> extends State<R> {
                         Spacing.spacing03,
                       ),
                       child: SvgPicture.asset(
-                        AssetIconPath.commonCloseBottomSheet,
+                        _walletActionKeyPath.commonCloseBottomSheet,
                       ),
                     ),
                   ),

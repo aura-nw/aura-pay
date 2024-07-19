@@ -100,6 +100,8 @@ final class BoxIconWidget extends StatelessWidget {
   final double radius;
   final double? height;
   final double? width;
+  final double? icHeight;
+  final double? icWidth;
   final AppTheme appTheme;
 
   const BoxIconWidget({
@@ -108,7 +110,9 @@ final class BoxIconWidget extends StatelessWidget {
     this.svgColor,
     this.padding,
     this.height,
+    this.icHeight,
     this.width,
+    this.icWidth,
     required this.appTheme,
     this.radius = BorderRadiusSize.borderRadius03M,
     super.key,
@@ -131,6 +135,8 @@ final class BoxIconWidget extends StatelessWidget {
                 BlendMode.srcIn,
               )
             : null,
+        width: icWidth,
+        height: icHeight,
       ),
     );
   }

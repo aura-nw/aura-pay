@@ -107,3 +107,57 @@ final class HomePageActionsWidget extends StatelessWidget {
     );
   }
 }
+
+final class HomePageActionsSmallWidget extends StatelessWidget {
+  final AppTheme appTheme;
+
+  const HomePageActionsSmallWidget({
+    required this.appTheme,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        BoxIconWidget(
+          appTheme: appTheme,
+          svg: AssetIconPath.icCommonSend,
+          color: appTheme.utilityBlue100,
+          padding: const EdgeInsets.all(
+            Spacing.spacing04,
+          ),
+          icWidth: BoxSize.boxSize05,
+        ),
+        BoxIconWidget(
+          appTheme: appTheme,
+          svg: AssetIconPath.icCommonReceive,
+          color: appTheme.utilityGreen100,
+          padding: const EdgeInsets.all(
+            Spacing.spacing04,
+          ),
+          icWidth: BoxSize.boxSize05,
+        ),
+        BoxIconWidget(
+          appTheme: appTheme,
+          svg: AssetIconPath.icCommonSwap,
+          color: appTheme.utilityPink100,
+          padding: const EdgeInsets.all(
+            Spacing.spacing04,
+          ),
+          icWidth: BoxSize.boxSize05,
+        ),
+        BoxIconWidget(
+          appTheme: appTheme,
+          svg: AssetIconPath.icCommonStake,
+          color: appTheme.utilityOrange100,
+          padding: const EdgeInsets.all(
+            Spacing.spacing04,
+          ),
+          icWidth: BoxSize.boxSize05,
+        ),
+      ],
+    );
+  }
+}

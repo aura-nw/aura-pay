@@ -20,13 +20,6 @@ extension StringExtensions on String? {
 
     return this!.substring(start, end);
   }
-
-  String get addressView {
-    if (isEmptyOrNull) return '';
-    if (this!.length < 32) return this!;
-
-    return '${this!.substring(0, 6)}....${this!.substring(this!.length - 4, this!.length)}';
-  }
 }
 
 extension ListExtensions<T> on List<T>? {

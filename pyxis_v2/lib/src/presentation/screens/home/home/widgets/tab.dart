@@ -25,6 +25,7 @@ final class HomePageTabWidget extends StatelessWidget {
       labelStyle: AppTypoGraPhy.textMdBold.copyWith(
         color: appTheme.textPrimary
       ),
+      indicatorPadding: EdgeInsets.zero,
       padding: EdgeInsets.zero,
       tabAlignment: TabAlignment.start,
       dividerHeight: 0,

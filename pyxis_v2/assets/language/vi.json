@@ -72,6 +72,10 @@
   "home_page_token_value": "Giá trị token",
   "home_page_manage": "Quản lý",
   "home_page_24h_pnl": "PNL 24h",
+  "home_page_no_nft_found": "Không có NFT",
+  "home_page_view_all_nft": "Xem tất cả",
+  "home_page_estimate_nft_value": "Ước lượng giá trị",
+  "home_page_all_network": "Tất cả mạng",
 
   "settings_page_title": "Cài đặt",
   "settings_page_profile_section": "Hồ sơ",
