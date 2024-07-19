@@ -6,3 +6,4 @@ export 'put_all_token_market_request.dart';
 export 'add_balance_request.dart';
 export 'update_balance_request.dart';
 export 'query_balance_request.dart';
+export 'query_nft_request.dart';

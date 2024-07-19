@@ -18,6 +18,7 @@ class CombinedGridView<T> extends StatefulWidget {
   final double childAspectRatio;
   final double crossAxisSpacing;
   final double mainAxisSpacing;
+  final ScrollPhysics ?physics;
 
   const CombinedGridView({
     super.key,
@@ -32,6 +33,7 @@ class CombinedGridView<T> extends StatefulWidget {
     required this.mainAxisSpacing,
     this.loadMoreThreshHold = _defaultEndReachedThreshold,
     this.buildEmpty,
+    this.physics,
   });
 
   @override
@@ -76,7 +78,7 @@ class _CombinedGridViewState<T> extends State<CombinedGridView<T>> {
 
     return CustomScrollView(
       controller: _scrollController,
-      physics: const AlwaysScrollableScrollPhysics(
+      physics: widget.physics ?? const AlwaysScrollableScrollPhysics(
         parent: BouncingScrollPhysics(),
       ),
       slivers: [

@@ -16,4 +16,8 @@ class HomePageEvent with _$HomePageEvent {
   const factory HomePageEvent.updateAccountBalance({
     required Map<TokenType,dynamic> balanceMap,
   }) = HomePageOnUpdateAccountBalanceEvent;
+
+  const factory HomePageEvent.updateNFTs({
+    required List<NFTInformation> nftS,
+  }) = HomePageOnUpdateNFTsEvent;
 }

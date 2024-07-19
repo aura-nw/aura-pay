@@ -8,8 +8,8 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
-import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
+import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/nft.dart';
 import 'home_page_selector.dart';
 import 'home_page_event.dart';
 import 'widgets/action.dart';
@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage>
 
   final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
   late TabController _controller;
+  late PageController _pageController;
 
   late ScrollController _scrollController;
 
@@ -47,8 +48,8 @@ class _HomePageState extends State<HomePage>
   double _walletCardOpacity = 1.0;
   double _walletActionOpacity = 1.0;
 
-  bool _showWalletCard = true;
-  bool _showActions = true;
+  bool _showWalletCard = false;
+  bool _showActions = false;
 
   void _createScrollController() {
     _scrollController = ScrollController();
@@ -71,26 +72,28 @@ class _HomePageState extends State<HomePage>
           _walletCardOpacity = 1 - (_scrollPosition / 200);
         }
 
-        if (_walletCardScale < 0.38) {
-          _showWalletCard = false;
-        } else {
+        if (_walletCardScale < 0.15) {
           _showWalletCard = true;
+        } else {
+          _showWalletCard = false;
         }
 
         _walletCardScale = _walletCardScale.clamp(0.0, 1.0);
 
         _walletCardOpacity = _walletCardOpacity.clamp(0.0, 1.0);
 
-        if (_scrollPosition > 230 && _scrollPosition < 350) {
-          _walletActionOpacity = 1 - (_scrollPosition / 350);
-        }
+        if (_walletCardScale < 0.02 || _walletCardScale >= 0.95) {
+          if (_scrollPosition > 270 && _scrollPosition < 450) {
+            _walletActionOpacity = 1 - (_scrollPosition / 450);
+          }
 
-        _walletActionOpacity = _walletCardScale.clamp(0.0, 1.0);
+          _walletActionOpacity = _walletCardScale.clamp(0.0, 1.0);
 
-        if (_walletActionOpacity  == 0) {
-          _showActions = true;
-        } else {
-          _showActions = false;
+          if (_walletActionOpacity < 0.15) {
+            _showActions = false;
+          } else {
+            _showActions = true;
+          }
         }
       },
     );
@@ -102,6 +105,8 @@ class _HomePageState extends State<HomePage>
       param1: _config,
     );
     _controller = TabController(length: 2, vsync: this);
+
+    _pageController = PageController();
     _createScrollController();
     super.initState();
   }
@@ -202,15 +207,25 @@ class _HomePageState extends State<HomePage>
               appTheme: appTheme,
               localization: localization,
               controller: _controller,
-              onSelected: (index) {},
+              onSelected: _onChangeTab,
             ),
             const SizedBox(
               height: BoxSize.boxSize05,
             ),
             Expanded(
-              child: HomePageTokensWidget(
-                appTheme: appTheme,
-                localization: localization,
+              child: PageView(
+                scrollDirection: Axis.horizontal,
+                onPageChanged: _onChangePage,
+                controller: _pageController,
+                children: [
+                  HomePageTokensWidget(
+                    appTheme: appTheme,
+                    localization: localization,
+                  ),
+                  HomePageNFTsWidget(
+                    appTheme: appTheme,
+                  ),
+                ],
               ),
             ),
           ],
@@ -264,7 +279,7 @@ class _HomePageState extends State<HomePage>
   List<Widget> _actions() {
     List<Widget> actions = List.empty(growable: true);
 
-    if (!_showWalletCard) {
+    if (_showWalletCard) {
       actions.add(GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -290,7 +305,7 @@ class _HomePageState extends State<HomePage>
       ));
     }
 
-    if (!_showActions) {
+    if (_showActions) {
       actions.add(GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -317,5 +332,21 @@ class _HomePageState extends State<HomePage>
     }
 
     return actions;
+  }
+
+  void _onChangePage(int page) {
+    _controller.animateTo(
+      page,
+      duration: _animatedDuration,
+      curve: Curves.ease,
+    );
+  }
+
+  void _onChangeTab(int page) {
+    _pageController.animateTo(
+      page.toDouble(),
+      duration: _animatedDuration,
+      curve: Curves.ease,
+    );
   }
 }
