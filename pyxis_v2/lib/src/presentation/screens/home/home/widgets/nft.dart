@@ -162,15 +162,13 @@ final class HomePageNFTsWidget extends StatelessWidget {
                 const SizedBox(
                   height: BoxSize.boxSize02,
                 ),
-                HomePageTotalTokenValueSelector(
-                    builder: (totalTokenBalance) {
-                      return Text(
-                        '0.0',
-                        style: AppTypoGraPhy.textXlBold
-                            .copyWith(color: appTheme.textPrimary),
-                      );
-                    }
-                ),
+                HomePageTotalTokenValueSelector(builder: (totalTokenBalance) {
+                  return Text(
+                    '0.0',
+                    style: AppTypoGraPhy.textXlBold
+                        .copyWith(color: appTheme.textPrimary),
+                  );
+                }),
               ],
             ),
             BoxBorderTextWidget(
@@ -191,6 +189,17 @@ final class HomePageNFTsWidget extends StatelessWidget {
         ),
         HomePageNFTsSelector(
           builder: (nftS) {
+            if (nftS.isEmpty) {
+              return Text(
+                localization.translate(
+                  LanguageKey.homePageNoNFTFound,
+                ),
+                style: AppTypoGraPhy.textXsRegular.copyWith(
+                  color: appTheme.textTertiary,
+                ),
+                textAlign: TextAlign.center,
+              );
+            }
             return SizedBox(
               height: context.bodyHeight * 0.7,
               child: CombinedGridView(

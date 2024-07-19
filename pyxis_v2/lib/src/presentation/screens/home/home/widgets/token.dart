@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
@@ -145,10 +146,12 @@ final class _HomePageTokenInfoWidget extends StatelessWidget {
 final class HomePageTokensWidget extends StatelessWidget {
   final AppTheme appTheme;
   final AppLocalizationManager localization;
+  final PyxisMobileConfig config;
 
   const HomePageTokensWidget({
     required this.appTheme,
     required this.localization,
+    required this.config,
     super.key,
   });
 
@@ -205,10 +208,20 @@ final class HomePageTokensWidget extends StatelessWidget {
             return HomePageAccountBalanceSelector(
               builder: (accountBalance) {
                 if (accountBalance == null) {
-                  return const SizedBox.shrink();
+                  return _HomePageTokenInfoWidget(
+                    avatar: 'https://aurascan.io/assets/images/logo/title-logo.png',
+                    symbol: config.config.evmInfo.symbol,
+                    tokenName: config.config.cosmosInfo.chainName,
+                    percentChange24h: 0,
+                    amount: 0,
+                    value: 0,
+                    appTheme: appTheme,
+                    localization: localization,
+                  );
                 }
 
                 final balances = accountBalance.balances;
+
                 return SizedBox(
                   height:  context.bodyHeight * 0.5,
                   child: CombinedListView(

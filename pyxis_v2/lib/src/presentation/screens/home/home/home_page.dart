@@ -251,6 +251,7 @@ class _HomePageState extends State<HomePage>
                   HomePageTokensWidget(
                     appTheme: appTheme,
                     localization: localization,
+                    config: _config,
                   ),
                   HomePageNFTsWidget(
                     appTheme: appTheme,
