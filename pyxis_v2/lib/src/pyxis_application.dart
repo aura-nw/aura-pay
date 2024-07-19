@@ -8,6 +8,7 @@ import 'package:pyxis_v2/src/application/global/app_global_state/app_global_stat
 import 'package:pyxis_v2/src/application/global/app_theme/cubit/app_theme_cubit.dart';
 import 'package:pyxis_v2/src/application/global/localization/app_translations_delegate.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/navigator.dart';
 
@@ -75,6 +76,12 @@ class _PyxisApplicationState extends State<PyxisApplication>
         theme: ThemeData(
           useMaterial3: true,
           fontFamily: AppTypoGraPhy.mulish,
+          tabBarTheme: const TabBarTheme(
+            labelPadding: EdgeInsets.only(
+              right: Spacing.spacing05,
+            ),
+
+          )
         ),
         onGenerateRoute: AppNavigator.onGenerateRoute,
         initialRoute: RoutePath.splash,

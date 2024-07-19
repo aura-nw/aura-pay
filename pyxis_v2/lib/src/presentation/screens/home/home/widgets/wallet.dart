@@ -14,11 +14,13 @@ class HomePageWalletCardWidget extends StatelessWidget {
   final AppTheme appTheme;
   final AppLocalizationManager localization;
   final VoidCallback onEnableTokenTap;
+  final String avatarAsset;
 
   const HomePageWalletCardWidget({
     required this.appTheme,
     required this.localization,
     required this.onEnableTokenTap,
+    required this.avatarAsset,
     super.key,
   });
 
@@ -46,14 +48,17 @@ class HomePageWalletCardWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          HomePageActiveAccountSelector(builder: (account) {
-            return DefaultWalletInfoWidget(
-              onCopy: (walletAddress) {},
-              appTheme: appTheme,
-              walletName: account?.name ?? '',
-              walletAddress: account?.evmAddress ?? '',
-            );
-          }),
+          HomePageActiveAccountSelector(
+            builder: (account) {
+              return DefaultWalletInfoWidget(
+                onCopy: (walletAddress) {},
+                appTheme: appTheme,
+                walletName: account?.name ?? '',
+                walletAddress: account?.evmAddress ?? '',
+                avatarAsset: avatarAsset,
+              );
+            },
+          ),
           const SizedBox(
             height: BoxSize.boxSize05,
           ),

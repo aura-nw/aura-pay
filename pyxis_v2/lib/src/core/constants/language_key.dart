@@ -84,6 +84,7 @@ sealed class LanguageKey {
   static const String homePageNoNFTFound = 'home_page_no_nft_found';
   static const String homePageViewAllNFT = 'home_page_view_all_nft';
   static const String homePageEstimateNFTValue = 'home_page_estimate_nft_value';
+  static const String homePageAllNetwork = 'home_page_all_network';
 
 // Settings page
   static const String settingsPageTitle = 'settings_page_title';

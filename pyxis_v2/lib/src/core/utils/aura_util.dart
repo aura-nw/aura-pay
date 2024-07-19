@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:domain/domain.dart';
+import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
+import 'dart_core_extension.dart';
 
 String _replaceDot(String value){
   value = value.replaceAll(RegExp(r'0*$'), '');
@@ -8,6 +12,15 @@ String _replaceDot(String value){
   }
 
   return value;
+}
+
+extension AddressExtension on String? {
+  String get addressView {
+    if (isEmptyOrNull) return '';
+    if (this!.length < 32) return this!;
+
+    return '${this!.substring(0, 4)}....${this!.substring(this!.length - 4, this!.length)}';
+  }
 }
 
 extension FormatAuraByType on TokenType{
@@ -65,4 +78,12 @@ extension AuraNumberFormatter on num {
 
     return _replaceDot(price);
   }
+}
+
+String randomAvatar() {
+  Random random = Random(128);
+
+  int index = random.nextInt(2);
+
+  return AppLocalConstant.avatars[index];
 }

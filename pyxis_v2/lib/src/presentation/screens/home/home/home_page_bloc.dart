@@ -282,6 +282,8 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       final erc20TokenBalances = await balanceUseCase.getErc20TokenBalance(
         request: QueryERC20BalanceRequest(
           address: account.evmAddress,
+          //For test
+          // address: 'aura1lcshaqg0l0hmmr95zvknazkle0szxsnz8mnuqx',
           environment: environment,
         ),
       );
@@ -291,6 +293,8 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       final cw20TokenBalances = await balanceUseCase.getCw20TokenBalance(
         request: QueryCW20BalanceRequest(
           address: account.evmAddress,
+          // For test
+          // address: 'aura1lcshaqg0l0hmmr95zvknazkle0szxsnz8mnuqx',
           environment: environment,
         ),
       );

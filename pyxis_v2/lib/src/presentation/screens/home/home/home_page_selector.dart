@@ -114,3 +114,14 @@ final class HomePageTotalValueYesterdaySelector
           builder: (context, totalValueYesterday) => builder(totalValueYesterday),
         );
 }
+
+final class HomePageIsAllNetworkSelector
+    extends BlocSelector<HomePageBloc, HomePageState, bool> {
+  HomePageIsAllNetworkSelector({
+    super.key,
+    required Widget Function(bool) builder,
+  }) : super(
+          selector: (state) => state.isAllNetwork,
+          builder: (context, isAllNetwork) => builder(isAllNetwork),
+        );
+}
