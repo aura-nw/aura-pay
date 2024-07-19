@@ -22,6 +22,8 @@ class _SettingPageState extends State<SettingPage> with StateFulBaseScreen {
   final AccountUseCase _accountUseCase = getIt.get<AccountUseCase>();
   final KeyStoreUseCase _keyStoreUseCase = getIt.get<KeyStoreUseCase>();
 
+  String _selectedLanguage = 'device'; // Default selection
+
   @override
   Widget child(BuildContext context, AppTheme appTheme,
       AppLocalizationManager localization) {
@@ -116,16 +118,37 @@ class _SettingPageState extends State<SettingPage> with StateFulBaseScreen {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              ListTile(
-                title: Text('English'),
-                onTap: () {
-                  _changeLanguage(context, 'en');
+              RadioListTile<String>(
+                title: const Text('Follow System'),
+                value: 'device',
+                groupValue: _selectedLanguage,
+                onChanged: (String? value) {
+                  setState(() {
+                    _selectedLanguage = value!;
+                    _changeLanguage(context, _selectedLanguage);
+                  });
                 },
               ),
-              ListTile(
-                title: Text('Tiếng Việt'),
-                onTap: () {
-                  _changeLanguage(context, 'vi');
+              RadioListTile<String>(
+                title: const Text('English'),
+                value: 'en',
+                groupValue: _selectedLanguage,
+                onChanged: (String? value) {
+                  setState(() {
+                    _selectedLanguage = value!;
+                    _changeLanguage(context, _selectedLanguage);
+                  });
+                },
+              ),
+              RadioListTile<String>(
+                title: const Text('Tiếng Việt'),
+                value: 'vi',
+                groupValue: _selectedLanguage,
+                onChanged: (String? value) {
+                  setState(() {
+                    _selectedLanguage = value!;
+                    _changeLanguage(context, _selectedLanguage);
+                  });
                 },
               ),
             ],
@@ -137,7 +160,14 @@ class _SettingPageState extends State<SettingPage> with StateFulBaseScreen {
 
   void _changeLanguage(BuildContext context, String languageCode) {
     // Thay đổi ngôn ngữ ứng dụng
-    AppLocalizationManager.instance.setCurrentLocale(languageCode);
+    if (languageCode == 'device') {
+      Locale deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
+      AppLocalizationManager.instance
+          .setCurrentLocale(deviceLocale.languageCode);
+    } else {
+      AppLocalizationManager.instance.setCurrentLocale(languageCode);
+    }
+
     Navigator.of(context).pop(); // Đóng dialog sau khi chọn ngôn ngữ
     // Cập nhật trạng thái của ứng dụng nếu cần
     setState(() {});
