@@ -72,6 +72,10 @@
   "home_page_token_value": "Tokens value",
   "home_page_manage": "Manage",
   "home_page_24h_pnl": "24h PNL",
+  "home_page_no_nft_found": "No NFT found",
+  "home_page_view_all_nft": "View all",
+  "home_page_estimate_nft_value": "Estimate value",
+
 
   "settings_page_title": "Settings",
   "settings_page_profile_section": "Profile",

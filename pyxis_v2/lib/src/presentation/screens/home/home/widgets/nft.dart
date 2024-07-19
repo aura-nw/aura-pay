@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/enum.dart';
+import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/app_date_format.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
+import 'package:pyxis_v2/src/presentation/widgets/box_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/combined_gridview.dart';
 import 'package:pyxis_v2/src/presentation/widgets/network_image_widget.dart';
 
@@ -130,44 +133,94 @@ class _HomePageNFTCardWidget extends StatelessWidget {
 
 final class HomePageNFTsWidget extends StatelessWidget {
   final AppTheme appTheme;
+  final AppLocalizationManager localization;
 
   const HomePageNFTsWidget({
     required this.appTheme,
+    required this.localization,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return HomePageNFTsSelector(
-      builder: (nftS) {
-        return SizedBox(
-          height: context.bodyHeight * 0.5,
-          child: CombinedGridView(
-            childCount: 2,
-            onRefresh: () {},
-            onLoadMore: () {},
-            data: [
-              ...nftS,
-              ...nftS,
-            ],
-            physics: const NeverScrollableScrollPhysics(),
-            builder: (nft, _) {
-              return _HomePageNFTCardWidget(
-                id: nft.tokenId,
-                name: nft.mediaInfo.onChain.metadata?.name ?? '',
-                createTime: nft.createdAt.toString(),
-                price: "5 Aura",
-                thumbnail: nft.mediaInfo.offChain.image.url ?? '',
-                appTheme: appTheme,
-              );
-            },
-            canLoadMore: false,
-            childAspectRatio: 0.72,
-            crossAxisSpacing: Spacing.spacing04,
-            mainAxisSpacing: Spacing.spacing05,
-          ),
-        );
-      },
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  localization.translate(
+                    LanguageKey.homePageEstimateNFTValue,
+                  ),
+                  style: AppTypoGraPhy.textSmMedium
+                      .copyWith(color: appTheme.textSecondary),
+                ),
+                const SizedBox(
+                  height: BoxSize.boxSize02,
+                ),
+                HomePageTotalTokenValueSelector(
+                    builder: (totalTokenBalance) {
+                      return Text(
+                        '0.0',
+                        style: AppTypoGraPhy.textXlBold
+                            .copyWith(color: appTheme.textPrimary),
+                      );
+                    }
+                ),
+              ],
+            ),
+            BoxBorderTextWidget(
+              text: localization.translate(
+                LanguageKey.homePageViewAllNFT,
+              ),
+              borderColor: appTheme.borderSecondary,
+              padding: const EdgeInsets.all(
+                Spacing.spacing03,
+              ),
+              appTheme: appTheme,
+              radius: BorderRadiusSize.borderRadius04,
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize07,
+        ),
+        HomePageNFTsSelector(
+          builder: (nftS) {
+            return SizedBox(
+              height: context.bodyHeight * 0.7,
+              child: CombinedGridView(
+                childCount: 2,
+                onRefresh: () {},
+                onLoadMore: () {},
+                data: [
+                  ...nftS,
+                  ...nftS,
+                ],
+                physics: const NeverScrollableScrollPhysics(),
+                builder: (nft, _) {
+                  return _HomePageNFTCardWidget(
+                    id: nft.tokenId,
+                    name: nft.mediaInfo.onChain.metadata?.name ?? '',
+                    createTime: nft.createdAt.toString(),
+                    price: "--",
+                    thumbnail: nft.mediaInfo.offChain.image.url ?? '',
+                    appTheme: appTheme,
+                  );
+                },
+                canLoadMore: false,
+                childAspectRatio: 0.72,
+                crossAxisSpacing: Spacing.spacing04,
+                mainAxisSpacing: Spacing.spacing05,
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

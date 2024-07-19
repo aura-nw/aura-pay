@@ -20,4 +20,6 @@ class HomePageEvent with _$HomePageEvent {
   const factory HomePageEvent.updateNFTs({
     required List<NFTInformation> nftS,
   }) = HomePageOnUpdateNFTsEvent;
+
+  const factory HomePageEvent.changeEnable() = HomePageOnUpdateEnableTotalTokenEvent;
 }

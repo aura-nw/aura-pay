@@ -1,4 +1,3 @@
-import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
@@ -8,17 +7,18 @@ import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
-import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/wallet_info_widget.dart';
 
 class HomePageWalletCardWidget extends StatelessWidget {
   final AppTheme appTheme;
   final AppLocalizationManager localization;
+  final VoidCallback onEnableTokenTap;
 
   const HomePageWalletCardWidget({
     required this.appTheme,
     required this.localization,
+    required this.onEnableTokenTap,
     super.key,
   });
 
@@ -68,113 +68,105 @@ class HomePageWalletCardWidget extends StatelessWidget {
                 BorderRadiusSize.borderRadius04,
               ),
             ),
-            child: HomePageTokenMarketsSelector(
-              builder: (tokenMarkets) {
-                return HomePageAccountBalanceSelector(
-                  builder: (accountBalance) {
-                    // String prefixChangeValue =
-                    //     (auraMarket?.priceChangePercentage24h ?? 0.0)
-                    //         .prefixValueChange;
-
-                    double totalValue = 0;
-                    double totalBalance = 0;
-                    for (final balance
-                        in accountBalance?.balances ?? <Balance>[]) {
-                      final token = tokenMarkets.firstWhereOrNull(
-                        (t) => t.id == balance.tokenId,
-                      );
-
-                      double currentPrice =
-                          double.tryParse(token?.currentPrice ?? '0') ?? 0;
-
-                      final amount = double.tryParse(
-                            balance.type.formatBalance(
-                              balance.balance,
-                              customDecimal: token?.decimal,
-                            ),
-                          ) ??
-                          0;
-
-                      totalBalance += amount;
-                      if (amount != 0 || currentPrice != 0) {
-                        totalValue += amount * currentPrice;
-                      }
-                    }
-
-                    // double pnl = totalBalance *
-                    //     currentPrice *
-                    //     (auraMarket?.priceChangePercentage24h ?? 0.0) /
-                    //     100;
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              localization.translate(
-                                LanguageKey.homePageTotalValue,
-                              ),
-                              style: AppTypoGraPhy.textSmMedium.copyWith(
-                                color: appTheme.textTertiary,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                  AssetIconPath.icCommonEye,
-                                ),
-                                const SizedBox(
-                                  width: BoxSize.boxSize04,
-                                ),
-                                SvgPicture.asset(
-                                  AssetIconPath.icCommonScan,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: BoxSize.boxSize03,
-                        ),
-                        Text(
-                          '${localization.translate(LanguageKey.commonBalancePrefix)}${totalValue.formatPrice}',
-                          style: AppTypoGraPhy.displayXsSemiBold.copyWith(
-                            color: appTheme.textPrimary,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: BoxSize.boxSize03,
-                        ),
-                        RichText(
-                          text: TextSpan(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: HomePageEnableTokenSelector(
+                          builder: (enableTokenValue) {
+                        return GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: onEnableTokenTap,
+                          child: Row(
                             children: [
-                              TextSpan(
-                                style: AppTypoGraPhy.textXsMedium.copyWith(
-                                  color: appTheme.textSecondary,
+                              Text(
+                                localization.translate(
+                                  LanguageKey.homePageTotalValue,
                                 ),
-                                text: '${localization.translate(
-                                  LanguageKey.homePage24hPNL,
-                                )}  ',
+                                style: AppTypoGraPhy.textSmMedium.copyWith(
+                                  color: appTheme.textTertiary,
+                                ),
                               ),
-                              // TextSpan(
-                              //   style: AppTypoGraPhy.textXsMedium.copyWith(
-                              //     color: valueChangeColor(
-                              //         auraMarket?.priceChangePercentage24h ??
-                              //             0.0),
-                              //   ),
-                              //   text:
-                              //       '$prefixChangeValue${localization.translate(LanguageKey.commonBalancePrefix)}${pnl.formatPnl24}($prefixChangeValue${(auraMarket?.priceChangePercentage24h ?? 0.0).formatPercent}%)',
-                              // ),
+                              const SizedBox(
+                                width: BoxSize.boxSize04,
+                              ),
+                              SvgPicture.asset(
+                                enableTokenValue
+                                    ? AssetIconPath.icCommonEye
+                                    : AssetIconPath.icCommonEyeClose,
+                              ),
                             ],
                           ),
+                        );
+                      }),
+                    ),
+                    const SizedBox(
+                      width: BoxSize.boxSize04,
+                    ),
+                    SvgPicture.asset(
+                      AssetIconPath.icCommonScan,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: BoxSize.boxSize03,
+                ),
+                HomePageTotalValueSelector(builder: (totalValue) {
+                  return HomePageEnableTokenSelector(
+                      builder: (enableTotalValue) {
+                    if (!enableTotalValue) {
+                      return Text(
+                        '********',
+                        style: AppTypoGraPhy.displayXsSemiBold.copyWith(
+                          color: appTheme.textPrimary,
                         ),
-                      ],
+                      );
+                    }
+                    return Text(
+                      '${localization.translate(LanguageKey.commonBalancePrefix)}${totalValue.formatPrice}',
+                      style: AppTypoGraPhy.displayXsSemiBold.copyWith(
+                        color: appTheme.textPrimary,
+                      ),
                     );
-                  },
-                );
-              },
+                  });
+                }),
+                const SizedBox(
+                  height: BoxSize.boxSize03,
+                ),
+                HomePageTotalValueSelector(builder: (totalValue) {
+                  return HomePageTotalValueYesterdaySelector(
+                      builder: (totalValueYesterday) {
+                    double changed = totalValue - totalValueYesterday;
+
+                    double percentChanged = (changed / totalValue) * 100;
+
+                    return RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            style: AppTypoGraPhy.textXsMedium.copyWith(
+                              color: appTheme.textSecondary,
+                            ),
+                            text: '${localization.translate(
+                              LanguageKey.homePage24hPNL,
+                            )}  ',
+                          ),
+                          TextSpan(
+                            style: AppTypoGraPhy.textXsMedium.copyWith(
+                              color: valueChangeColor(changed),
+                            ),
+                            text:
+                                '${changed.prefixValueChange}${localization.translate(LanguageKey.commonBalancePrefix)}${changed.formatPnl24}(${changed.prefixValueChange}${(percentChanged).formatPercent}%)',
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+                }),
+              ],
             ),
           ),
         ],

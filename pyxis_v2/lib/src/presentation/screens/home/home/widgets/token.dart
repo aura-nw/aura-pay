@@ -173,10 +173,14 @@ final class HomePageTokensWidget extends StatelessWidget {
                 const SizedBox(
                   height: BoxSize.boxSize02,
                 ),
-                Text(
-                  '${localization.translate(LanguageKey.commonBalancePrefix)}152',
-                  style: AppTypoGraPhy.textXlBold
-                      .copyWith(color: appTheme.textPrimary),
+                HomePageTotalTokenValueSelector(
+                  builder: (totalTokenBalance) {
+                    return Text(
+                      '${localization.translate(LanguageKey.commonBalancePrefix)}${totalTokenBalance.formatPrice}',
+                      style: AppTypoGraPhy.textXlBold
+                          .copyWith(color: appTheme.textPrimary),
+                    );
+                  }
                 ),
               ],
             ),

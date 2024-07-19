@@ -16,7 +16,6 @@ class HomeScreenTabBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(currentSection);
     return Stack(
       children: [
         _buildTab(

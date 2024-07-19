@@ -48,6 +48,7 @@ sealed class AssetIconPath {
   static const String icCommonApple = '${_baseIconPath}ic_common_apple.svg';
   static const String icCommonArrowDown = '${_baseIconPath}ic_common_arrow_down.svg';
   static const String icCommonEye = '${_baseIconPath}ic_common_eye.svg';
+  static const String icCommonEyeClose = '${_baseIconPath}ic_common_eye_close.svg';
   static const String icCommonScan = '${_baseIconPath}ic_common_scan.svg';
   static const String icCommonReceive = '${_baseIconPath}ic_common_receive.svg';
   static const String icCommonSend = '${_baseIconPath}ic_common_send.svg';

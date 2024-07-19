@@ -34,6 +34,12 @@ class _HomePageState extends State<HomePage>
     with StateFulBaseScreen, SingleTickerProviderStateMixin {
   late HomePageBloc _bloc;
 
+  final GlobalKey _walletActionKey = GlobalKey();
+  double _walletActionOffset = 0;
+
+  final GlobalKey _walletCardKey = GlobalKey();
+  double _walletCardOffset = 0;
+
   final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
   late TabController _controller;
   late PageController _pageController;
@@ -46,7 +52,8 @@ class _HomePageState extends State<HomePage>
   double _scrollPosition = 0;
   double _walletCardScale = 1.0;
   double _walletCardOpacity = 1.0;
-  double _walletActionOpacity = 1.0;
+
+  double paddingTop = 0;
 
   bool _showWalletCard = false;
   bool _showActions = false;
@@ -62,41 +69,60 @@ class _HomePageState extends State<HomePage>
   }
 
   void _scrollListener() {
-    _scrollPosition = _scrollController.position.pixels;
+    _scrollPosition = _scrollController.offset;
 
     setState(
       () {
-        if (_scrollPosition < 200) {
-          _walletCardScale = 1 - (_scrollPosition / 200);
-
-          _walletCardOpacity = 1 - (_scrollPosition / 200);
-        }
-
-        if (_walletCardScale < 0.15) {
-          _showWalletCard = true;
-        } else {
-          _showWalletCard = false;
-        }
-
-        _walletCardScale = _walletCardScale.clamp(0.0, 1.0);
-
-        _walletCardOpacity = _walletCardOpacity.clamp(0.0, 1.0);
-
-        if (_walletCardScale < 0.02 || _walletCardScale >= 0.95) {
-          if (_scrollPosition > 270 && _scrollPosition < 450) {
-            _walletActionOpacity = 1 - (_scrollPosition / 450);
-          }
-
-          _walletActionOpacity = _walletCardScale.clamp(0.0, 1.0);
-
-          if (_walletActionOpacity < 0.15) {
-            _showActions = false;
-          } else {
-            _showActions = true;
-          }
-        }
+        _detectScrollOverWalletCard();
+        _detectScrollOverAction();
       },
     );
+  }
+
+  void _detectScrollOverAction() {
+    if (_walletActionOffset == 0) {
+      final RenderBox? renderBox =
+          _walletActionKey.currentContext?.findRenderObject() as RenderBox?;
+      if (renderBox != null) {
+        Offset position = renderBox.localToGlobal(Offset.zero);
+        _walletActionOffset =
+            position.dy + renderBox.size.height - kToolbarHeight;
+      }
+    }
+
+    if (_scrollPosition + kToolbarHeight + paddingTop >= _walletActionOffset) {
+      _showActions = true;
+    } else {
+      _showActions = false;
+    }
+  }
+
+  void _detectScrollOverWalletCard() {
+    if (_walletCardOffset == 0) {
+      final RenderBox? renderBox =
+          _walletCardKey.currentContext?.findRenderObject() as RenderBox?;
+      if (renderBox != null) {
+        Offset position = renderBox.localToGlobal(Offset.zero);
+        _walletCardOffset =
+            position.dy + renderBox.size.height - kToolbarHeight;
+      }
+    }
+
+    if (_scrollPosition < _walletCardOffset) {
+      _walletCardScale = 1 - (_scrollPosition / _walletCardOffset);
+
+      _walletCardOpacity = 1 - (_scrollPosition / _walletCardOffset);
+    }
+
+    _walletCardScale = _walletCardScale.clamp(0.0, 1.0);
+
+    _walletCardOpacity = _walletCardOpacity.clamp(0.0, 1.0);
+
+    if (_scrollPosition + kToolbarHeight + paddingTop >= _walletCardOffset) {
+      _showWalletCard = true;
+    } else {
+      _showWalletCard = false;
+    }
   }
 
   @override
@@ -119,6 +145,12 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
+  void didChangeDependencies() {
+    paddingTop = context.statusBar;
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget child(BuildContext context, AppTheme appTheme,
       AppLocalizationManager localization) {
     return SingleChildScrollView(
@@ -126,13 +158,13 @@ class _HomePageState extends State<HomePage>
       child: ConstrainedBox(
         constraints: BoxConstraints(
             minHeight: context.bodyHeight, maxHeight: context.bodyHeight * 1.5),
-        // height: context.bodyHeight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AnimatedOpacity(
               opacity: _walletCardOpacity,
               duration: _animatedDuration,
+              key: _walletCardKey,
               child: Transform.scale(
                 scale: _walletCardScale,
                 child: Column(
@@ -180,28 +212,26 @@ class _HomePageState extends State<HomePage>
                     HomePageWalletCardWidget(
                       appTheme: appTheme,
                       localization: localization,
+                      onEnableTokenTap: _onEnableTokenTap,
                     )
                   ],
                 ),
               ),
             ),
-            AnimatedOpacity(
-              opacity: _walletActionOpacity,
-              duration: _animatedDuration,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: BoxSize.boxSize07,
-                  ),
-                  HomePageActionsWidget(
-                    appTheme: appTheme,
-                    localization: localization,
-                  ),
-                ],
-              ),
+            Column(
+              key: _walletActionKey,
+              children: [
+                const SizedBox(
+                  height: BoxSize.boxSize07,
+                ),
+                HomePageActionsWidget(
+                  appTheme: appTheme,
+                  localization: localization,
+                ),
+              ],
             ),
             const SizedBox(
-              height: BoxSize.boxSize07,
+              height: BoxSize.boxSize05,
             ),
             HomePageTabWidget(
               appTheme: appTheme,
@@ -224,6 +254,7 @@ class _HomePageState extends State<HomePage>
                   ),
                   HomePageNFTsWidget(
                     appTheme: appTheme,
+                    localization: localization,
                   ),
                 ],
               ),
@@ -306,29 +337,31 @@ class _HomePageState extends State<HomePage>
     }
 
     if (_showActions) {
-      actions.add(GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          _scrollController.animateTo(
-            0,
-            duration: _animatedDuration,
-            curve: Curves.easeOut,
-          );
-        },
-        child: const Row(
-          children: [
-            CircleAvatarWidget(
-              image: AssetImage(
-                AssetImagePath.defaultAvatar1,
+      actions.add(
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            _scrollController.animateTo(
+              0,
+              duration: _animatedDuration,
+              curve: Curves.easeOut,
+            );
+          },
+          child: const Row(
+            children: [
+              CircleAvatarWidget(
+                image: AssetImage(
+                  AssetImagePath.defaultAvatar1,
+                ),
+                radius: BorderRadiusSize.borderRadius04,
               ),
-              radius: BorderRadiusSize.borderRadius04,
-            ),
-            SizedBox(
-              width: BoxSize.boxSize04,
-            ),
-          ],
+              SizedBox(
+                width: BoxSize.boxSize04,
+              ),
+            ],
+          ),
         ),
-      ));
+      );
     }
 
     return actions;
@@ -343,10 +376,16 @@ class _HomePageState extends State<HomePage>
   }
 
   void _onChangeTab(int page) {
-    _pageController.animateTo(
-      page.toDouble(),
+    _pageController.animateToPage(
+      page,
       duration: _animatedDuration,
       curve: Curves.ease,
+    );
+  }
+
+  void _onEnableTokenTap() {
+    _bloc.add(
+      const HomePageOnUpdateEnableTotalTokenEvent(),
     );
   }
 }
