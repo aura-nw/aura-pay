@@ -206,10 +206,7 @@ final class HomePageNFTsWidget extends StatelessWidget {
                 childCount: 2,
                 onRefresh: () {},
                 onLoadMore: () {},
-                data: [
-                  ...nftS,
-                  ...nftS,
-                ],
+                data: nftS,
                 physics: const NeverScrollableScrollPhysics(),
                 builder: (nft, _) {
                   return _HomePageNFTCardWidget(
