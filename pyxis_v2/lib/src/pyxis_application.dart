@@ -11,6 +11,7 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/navigator.dart';
+import 'dart:ui' as ui;
 
 // Define the AuraWalletApplication widget
 final class PyxisApplication extends StatefulWidget {
@@ -22,7 +23,6 @@ final class PyxisApplication extends StatefulWidget {
 
 class _PyxisApplicationState extends State<PyxisApplication>
     with WidgetsBindingObserver {
-
   final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
 
   @override
@@ -63,6 +63,11 @@ class _PyxisApplicationState extends State<PyxisApplication>
 
   @override
   Widget build(BuildContext context) {
+    // Lấy ngôn ngữ hiện tại của thiết bị (ngôn ngữ hệ thống)
+    Locale systemLocale = ui.PlatformDispatcher.instance.locale;
+    AppLocalizationManager.instance
+        .updateDeviceLocale(systemLocale.languageCode);
+    print('PyxisApplication systemLocale: $systemLocale');
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {

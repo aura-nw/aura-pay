@@ -98,6 +98,7 @@ sealed class LanguageKey {
   static const String settingsPageSystemSection = 'settings_page_system_section';
   static const String settingsPageResetOnboarding = 'settings_page_reset_onboarding';
   static const String settingsPageLogout = 'settings_page_logout';
+
   
   
   // Send screen

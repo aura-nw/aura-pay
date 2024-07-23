@@ -4,9 +4,10 @@ import 'package:data/data.dart';
 import 'package:flutter/services.dart';
 import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 
-final class LocalizationServiceImpl implements LocalizationService{
+final class LocalizationServiceImpl implements LocalizationService {
+  String? _selectedLocale;
   @override
-  Future<Map<String, String>> getLocalLanguage({required String locale}) async{
+  Future<Map<String, String>> getLocalLanguage({required String locale}) async {
     String loader;
     try {
       loader = await rootBundle.loadString(
@@ -21,11 +22,20 @@ final class LocalizationServiceImpl implements LocalizationService{
   }
 
   @override
-  Future<List<String>> getSupportLocale() async{
+  Future<List<String>> getSupportLocale() async {
     return [
       'vi',
       'en',
     ];
   }
 
+  @override
+  Future<String?> getSelectedLocale() {
+    return Future.value(_selectedLocale);
+  }
+
+  @override
+  void saveSelectedLocale({required String locale}) {
+    _selectedLocale = locale;
+  }
 }

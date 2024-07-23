@@ -22,6 +22,8 @@ class _SettingPageState extends State<SettingPage> with StateFulBaseScreen {
   final AccountUseCase _accountUseCase = getIt.get<AccountUseCase>();
   final KeyStoreUseCase _keyStoreUseCase = getIt.get<KeyStoreUseCase>();
 
+  String _selectedLanguage = 'device'; // Default selection
+
   @override
   Widget child(BuildContext context, AppTheme appTheme,
       AppLocalizationManager localization) {
@@ -52,7 +54,8 @@ class _SettingPageState extends State<SettingPage> with StateFulBaseScreen {
           Icons.language,
           appTheme,
           onTap: () {
-            // Handle language change
+            // Mở popup để chọn ngôn ngữ
+            _showLanguageSelectionDialog(context, localization);
           },
         ),
         _buildListTile(
@@ -103,6 +106,71 @@ class _SettingPageState extends State<SettingPage> with StateFulBaseScreen {
             }),
       ],
     );
+  }
+
+  Future<void> _showLanguageSelectionDialog(
+      BuildContext context, AppLocalizationManager localization) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(localization.translate(LanguageKey.settingsPageLanguage)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              RadioListTile<String>(
+                title: const Text('Follow System'),
+                value: 'device',
+                groupValue: _selectedLanguage,
+                onChanged: (String? value) {
+                  setState(() {
+                    _selectedLanguage = value!;
+                    _changeLanguage(context, _selectedLanguage);
+                  });
+                },
+              ),
+              RadioListTile<String>(
+                title: const Text('English'),
+                value: 'en',
+                groupValue: _selectedLanguage,
+                onChanged: (String? value) {
+                  setState(() {
+                    _selectedLanguage = value!;
+                    _changeLanguage(context, _selectedLanguage);
+                  });
+                },
+              ),
+              RadioListTile<String>(
+                title: const Text('Tiếng Việt'),
+                value: 'vi',
+                groupValue: _selectedLanguage,
+                onChanged: (String? value) {
+                  setState(() {
+                    _selectedLanguage = value!;
+                    _changeLanguage(context, _selectedLanguage);
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _changeLanguage(BuildContext context, String languageCode) {
+    // Thay đổi ngôn ngữ ứng dụng
+    if (languageCode == 'device') {
+      Locale deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
+      AppLocalizationManager.instance
+          .setCurrentLocale(deviceLocale.languageCode);
+    } else {
+      AppLocalizationManager.instance.setCurrentLocale(languageCode);
+    }
+
+    Navigator.of(context).pop(); // Đóng dialog sau khi chọn ngôn ngữ
+    // Cập nhật trạng thái của ứng dụng nếu cần
+    setState(() {});
   }
 
   Future<bool> _showLogoutConfirmationDialog(
