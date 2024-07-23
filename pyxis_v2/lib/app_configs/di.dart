@@ -22,6 +22,7 @@ import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcod
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/get_started/get_started_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_bloc.dart';
+import 'package:pyxis_v2/src/presentation/screens/home/home_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_cubit.dart';
@@ -327,6 +328,12 @@ Future<void> initDependency(
       getIt.get<AccountUseCase>(),
       getIt.get<KeyStoreUseCase>(),
       wallet: wallet,
+    ),
+  );
+
+  getIt.registerFactory<HomeBloc>(
+        () => HomeBloc(
+      getIt.get<AccountUseCase>(),
     ),
   );
 

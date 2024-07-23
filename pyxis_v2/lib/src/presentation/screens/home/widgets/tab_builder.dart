@@ -1,4 +1,7 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/browser/browser_page.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/history/history_page.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/home_page.dart';
@@ -8,9 +11,11 @@ import 'package:pyxis_v2/src/presentation/screens/home/wallet/wallet_page.dart';
 
 class HomeScreenTabBuilder extends StatelessWidget {
   final HomeScreenSection currentSection;
+  final void Function(Account, List<AppNetwork>,AppTheme,AppLocalizationManager) onReceivedTap;
 
   const HomeScreenTabBuilder({
     required this.currentSection,
+    required this.onReceivedTap,
     super.key,
   });
 
@@ -28,7 +33,9 @@ class HomeScreenTabBuilder extends StatelessWidget {
         ),
         _buildTab(
           HomeScreenSection.home,
-          const HomePage(),
+          HomePage(
+            onReceivedTap: onReceivedTap,
+          ),
         ),
         _buildTab(
           HomeScreenSection.history,

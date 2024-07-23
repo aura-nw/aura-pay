@@ -70,6 +70,8 @@ sealed class LanguageKey {
   static const String homeScreenBottomNavigationBarScan = 'home_screen_bottom_navigation_bar_scan';
   static const String homeScreenBottomNavigationBarHistory = 'home_screen_bottom_navigation_bar_history';
   static const String homeScreenBottomNavigationBarSetting = 'home_screen_bottom_navigation_bar_setting';
+  static const String homeScreenReceiveAddress = 'home_screen_receive_address';
+  static const String homeScreenSaveImageToDevice = 'home_screen_save_image_to_device';
 
   // Home page
   static const String homePageSend = 'home_page_send';

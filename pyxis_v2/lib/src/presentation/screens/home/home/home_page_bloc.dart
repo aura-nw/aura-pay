@@ -361,16 +361,11 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         ),
       );
 
-      final accounts = await _accountUseCase.getAll();
-
-      final activeAccount = accounts.firstWhereOrNull(
-        (a) => a.index == 0,
-      );
+      final activeAccount = await _accountUseCase.getFirstAccount();
 
       emit(
         state.copyWith(
           activeAccount: activeAccount,
-          accounts: accounts,
         ),
       );
 

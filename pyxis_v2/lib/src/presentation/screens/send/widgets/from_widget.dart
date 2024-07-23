@@ -44,11 +44,11 @@ final class SendScreenFromWidget extends StatelessWidget {
               ),
               SendFromSelector(
                   builder: (account) {
-                    return WalletInfoNonActionWidget(
+                    return DefaultWalletInfoWidget(
                       avatarAsset: randomAvatar(),
                       appTheme: appTheme,
-                      walletName: account?.name ?? '',
-                      walletAddress: account?.evmAddress ?? '',
+                      title: account?.name ?? '',
+                      address: account?.evmAddress ?? '',
                     );
                   }
               ),

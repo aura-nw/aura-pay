@@ -9,13 +9,13 @@ import 'circle_avatar_widget.dart';
 
 abstract class WalletInfoWidget extends StatelessWidget {
   final AppTheme appTheme;
-  final String walletName;
-  final String walletAddress;
+  final String title;
+  final String address;
 
   const WalletInfoWidget({
     required this.appTheme,
-    required this.walletName,
-    required this.walletAddress,
+    required this.title,
+    required this.address,
     super.key,
   });
 
@@ -49,19 +49,18 @@ abstract class WalletInfoWidget extends StatelessWidget {
   Widget content(BuildContext context);
 }
 
-final class DefaultWalletInfoWidget extends WalletInfoWidget {
-  final void Function(String) onCopy;
+final class WalletMultiAddressInfoWidget extends WalletInfoWidget {
   final String avatarAsset;
+  final String cosmosAddress;
 
-  const DefaultWalletInfoWidget({
+  const WalletMultiAddressInfoWidget({
     super.key,
-    required this.onCopy,
     required this.avatarAsset,
     required super.appTheme,
-    required super.walletName,
-    required super.walletAddress,
+    required super.title,
+    required super.address,
+    required this.cosmosAddress,
   });
-
 
   @override
   Widget actions(BuildContext context) {
@@ -82,62 +81,69 @@ final class DefaultWalletInfoWidget extends WalletInfoWidget {
 
   @override
   Widget content(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        onCopy(walletAddress);
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            walletName,
-            style:
-                AppTypoGraPhy.textMdBold.copyWith(color: appTheme.textPrimary),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(
-            height: BoxSize.boxSize02,
-          ),
-          Row (
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style:
+              AppTypoGraPhy.textMdBold.copyWith(color: appTheme.textPrimary),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize02,
+        ),
+        IntrinsicHeight(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                walletAddress.addressView,
+                address.addressView,
                 style: AppTypoGraPhy.textSmMedium.copyWith(
                   color: appTheme.textSecondary,
                 ),
               ),
               const SizedBox(
-                width: BoxSize.boxSize04,
+                width: BoxSize.boxSize02,
               ),
-              SvgPicture.asset(
-                AssetIconPath.icCommonCopy,
+              VerticalDivider(
+                color: appTheme.borderSecondary,
+                thickness: DividerSize.divider01,
+              ),
+              const SizedBox(
+                width: BoxSize.boxSize02,
+              ),
+              Text(
+                cosmosAddress.addressView,
+                style: AppTypoGraPhy.textSmMedium.copyWith(
+                  color: appTheme.textSecondary,
+                ),
               ),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
-final class WalletInfoNonActionWidget extends WalletInfoWidget {
+final class DefaultWalletInfoWidget extends WalletInfoWidget {
   final String avatarAsset;
 
-  const WalletInfoNonActionWidget({
+  const DefaultWalletInfoWidget({
     super.key,
     required this.avatarAsset,
     required super.appTheme,
-    required super.walletName,
-    required super.walletAddress,
+    required super.title,
+    required super.address,
   });
-
 
   @override
   Widget actions(BuildContext context) {
-    return const SizedBox.shrink();
+    return SvgPicture.asset(
+      AssetIconPath.icCommonArrowDown,
+    );
   }
 
   @override
@@ -156,7 +162,7 @@ final class WalletInfoNonActionWidget extends WalletInfoWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          walletName,
+          title,
           style:
               AppTypoGraPhy.textMdBold.copyWith(color: appTheme.textPrimary),
           maxLines: 1,
@@ -166,7 +172,62 @@ final class WalletInfoNonActionWidget extends WalletInfoWidget {
           height: BoxSize.boxSize02,
         ),
         Text(
-          walletAddress.addressView,
+          address.addressView,
+          style: AppTypoGraPhy.textSmMedium.copyWith(
+            color: appTheme.textSecondary,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+final class WalletInfoWithCustomActionsWidget extends WalletInfoWidget {
+  final String avatarAsset;
+  final Widget action;
+
+  const WalletInfoWithCustomActionsWidget({
+    super.key,
+    required this.avatarAsset,
+    required super.appTheme,
+    required super.title,
+    required super.address,
+    required this.action,
+  });
+
+  @override
+  Widget actions(BuildContext context) {
+    return action;
+  }
+
+  @override
+  Widget avatar(BuildContext context) {
+    return CircleAvatarWidget(
+      image: AssetImage(
+        avatarAsset,
+      ),
+      radius: BorderRadiusSize.borderRadius04M,
+    );
+  }
+
+  @override
+  Widget content(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: AppTypoGraPhy.textMdBold.copyWith(
+            color: appTheme.textPrimary,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize02,
+        ),
+        Text(
+          address.addressView,
           style: AppTypoGraPhy.textSmMedium.copyWith(
             color: appTheme.textSecondary,
           ),
