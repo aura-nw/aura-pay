@@ -55,12 +55,12 @@ class AccountBalanceDto {
 
 class BalanceDto {
   final String balance;
-  final int tokenId;
+  final int ?tokenId;
   final String tokenType;
 
   const BalanceDto({
     required this.balance,
-    required this.tokenId,
+    this.tokenId,
     required this.tokenType,
   });
 }

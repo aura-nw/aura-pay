@@ -32,12 +32,12 @@ final class UpdateAccountBalanceRequestDto {
 
 final class UpdateBalanceRequestDto {
   final String balance;
-  final int tokenId;
+  final int ?tokenId;
   final String type;
 
   const UpdateBalanceRequestDto({
     required this.balance,
-    required this.tokenId,
+    this.tokenId,
     required this.type,
   });
 }

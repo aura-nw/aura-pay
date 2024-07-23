@@ -14,12 +14,12 @@ final class AccountBalance {
 
 final class Balance {
   final String balance;
-  final int tokenId;
+  final int ?tokenId;
   final String tokenType;
 
   const Balance({
     required this.balance,
-    required this.tokenId,
+    this.tokenId,
     required this.tokenType,
   });
 

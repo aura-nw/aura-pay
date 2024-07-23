@@ -1,5 +1,4 @@
 import 'package:data/data.dart';
-import 'package:domain/domain.dart';
 import 'package:isar/isar.dart';
 
 part 'balance_db.g.dart';
@@ -77,12 +76,12 @@ class AccountBalanceDb extends AccountBalanceDto {
 @embedded
 class BalanceDb extends BalanceDto {
   final String bBalance;
-  final int bTokenId;
+  final int ?bTokenId;
   final String bTokenType;
 
   const BalanceDb({
     this.bBalance = '0',
-    this.bTokenId = -1,
+    this.bTokenId,
     this.bTokenType = 'Native',
   }) : super(
           balance: bBalance,

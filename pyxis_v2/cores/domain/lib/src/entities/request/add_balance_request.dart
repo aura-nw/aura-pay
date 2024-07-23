@@ -11,12 +11,12 @@ final class AddAccountBalanceRequest {
 
 final class AddBalanceRequest {
   final String balance;
-  final int tokenId;
+  final int ?tokenId;
   final String type;
 
   const AddBalanceRequest({
     required this.balance,
-    required this.tokenId,
+    this.tokenId,
     required this.type,
   });
 }
