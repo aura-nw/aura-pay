@@ -16,6 +16,9 @@ extension AddBalanceRequestMapper on AddBalanceRequest {
         balance: balance,
         tokenId: tokenId,
         type: type,
+        decimal: decimal,
+        name: name,
+        symbol: symbol,
       );
 }
 
@@ -31,12 +34,18 @@ final class AddAccountBalanceRequestDto {
 
 final class AddBalanceRequestDto {
   final String balance;
-  final int ?tokenId;
+  final int? tokenId;
   final String type;
+  final String? name;
+  final int? decimal;
+  final String? symbol;
 
   const AddBalanceRequestDto({
     required this.balance,
     this.tokenId,
     required this.type,
+    this.name,
+    this.decimal,
+    this.symbol,
   });
 }

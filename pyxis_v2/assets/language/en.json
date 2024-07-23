@@ -105,5 +105,5 @@
   "send_screen_select_address_not_found" : "No results found.",
   "send_screen_invalid_address" : "Invalid address.",
   "send_screen_search_token" : "Search token",
-  "send_screen_amount_invalid" : "Insufficient balance",
+  "send_screen_amount_invalid" : "Insufficient balance"
 }

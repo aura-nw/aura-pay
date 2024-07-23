@@ -8,17 +8,21 @@ extension UpdateBalanceRequestDtoMapper on UpdateBalanceRequestDto {
         bBalance: balance,
         bTokenId: tokenId,
         bTokenType: type,
+        bSymbol: symbol,
+        bName: name,
+        bDecimal: decimal,
       );
 }
 
 extension AddAccountBalanceRequestDtoMapper on AddAccountBalanceRequestDto {
   AccountBalanceDb get mapRequestToDb => AccountBalanceDb(
-      aAccountId: accountId,
-      aBalances: balances
-          .map(
-            (e) => e.mapRequestToDb,
-          )
-          .toList());
+        aAccountId: accountId,
+        aBalances: balances
+            .map(
+              (e) => e.mapRequestToDb,
+            )
+            .toList(),
+      );
 }
 
 extension AddBalanceRequestDtoMapper on AddBalanceRequestDto {
@@ -26,6 +30,9 @@ extension AddBalanceRequestDtoMapper on AddBalanceRequestDto {
         bBalance: balance,
         bTokenId: tokenId,
         bTokenType: type,
+        bSymbol: symbol,
+        bName: name,
+        bDecimal: decimal,
       );
 }
 
@@ -47,11 +54,17 @@ extension BalanceDbExtension on BalanceDb {
     int? tokenId,
     String? balance,
     String? type,
+    String? name,
+    int? decimal,
+    String? symbol,
   }) {
     return BalanceDb(
       bTokenId: tokenId ?? bTokenId,
       bBalance: balance ?? bBalance,
       bTokenType: type ?? bTokenType,
+      bDecimal: decimal ?? bDecimal,
+      bName: name ?? bName,
+      bSymbol: symbol ?? bSymbol,
     );
   }
 }
@@ -76,16 +89,25 @@ class AccountBalanceDb extends AccountBalanceDto {
 @embedded
 class BalanceDb extends BalanceDto {
   final String bBalance;
-  final int ?bTokenId;
+  final int? bTokenId;
   final String bTokenType;
+  final String? bName;
+  final int? bDecimal;
+  final String? bSymbol;
 
   const BalanceDb({
     this.bBalance = '0',
     this.bTokenId,
     this.bTokenType = 'Native',
+    this.bDecimal,
+    this.bName,
+    this.bSymbol,
   }) : super(
           balance: bBalance,
           tokenId: bTokenId,
           tokenType: bTokenType,
+          decimal: bDecimal,
+          symbol: bSymbol,
+          name: bName,
         );
 }

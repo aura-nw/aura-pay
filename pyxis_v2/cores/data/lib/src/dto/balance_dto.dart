@@ -5,6 +5,9 @@ extension BalanceDtoMapper on BalanceDto {
         balance: balance,
         tokenId: tokenId,
         tokenType: tokenType,
+        decimal: decimal,
+        name: name,
+        symbol: symbol,
       );
 }
 
@@ -38,6 +41,14 @@ extension Cw20TokenContractDtoMapper on Cw20TokenContractDto {
   Cw20TokenContract get toEntity => Cw20TokenContract(
         name: name,
         symbol: symbol,
+        decimal: decimal,
+        smartContract: smartContract.toEntity,
+      );
+}
+
+extension Cw20TokenSmartContractDtoMapper on Cw20TokenSmartContractDto {
+  Cw20TokenSmartContract get toEntity => Cw20TokenSmartContract(
+        address: address,
       );
 }
 
@@ -55,13 +66,19 @@ class AccountBalanceDto {
 
 class BalanceDto {
   final String balance;
-  final int ?tokenId;
+  final int? tokenId;
   final String tokenType;
+  final String? name;
+  final int? decimal;
+  final String? symbol;
 
   const BalanceDto({
     required this.balance,
     this.tokenId,
     required this.tokenType,
+    this.name,
+    this.decimal,
+    this.symbol,
   });
 }
 
@@ -105,16 +122,38 @@ final class Cw20TokenBalanceDto {
 final class Cw20TokenContractDto {
   final String name;
   final String symbol;
+  final String? decimal;
+  final Cw20TokenSmartContractDto smartContract;
 
   const Cw20TokenContractDto({
     required this.name,
     required this.symbol,
+    this.decimal,
+    required this.smartContract,
   });
 
   factory Cw20TokenContractDto.fromJson(Map<String, dynamic> json) {
     return Cw20TokenContractDto(
       name: json['name'] ?? '',
       symbol: json['symbol'] ?? '',
+      decimal: json['decimal'],
+      smartContract: Cw20TokenSmartContractDto.fromJson(
+        json['smart_contract'],
+      ),
+    );
+  }
+}
+
+final class Cw20TokenSmartContractDto {
+  final String address;
+
+  const Cw20TokenSmartContractDto({
+    required this.address,
+  });
+
+  factory Cw20TokenSmartContractDto.fromJson(Map<String, dynamic> json) {
+    return Cw20TokenSmartContractDto(
+      address: json['address'] ?? '',
     );
   }
 }

@@ -5,6 +5,9 @@ extension UpdateBalanceRequestMapper on UpdateBalanceRequest {
         tokenId: tokenId,
         balance: balance,
         type: type,
+        symbol: symbol,
+        name: name,
+        decimal: decimal,
       );
 }
 
@@ -32,12 +35,18 @@ final class UpdateAccountBalanceRequestDto {
 
 final class UpdateBalanceRequestDto {
   final String balance;
-  final int ?tokenId;
+  final int? tokenId;
   final String type;
+  final String? name;
+  final int? decimal;
+  final String? symbol;
 
   const UpdateBalanceRequestDto({
     required this.balance,
     this.tokenId,
     required this.type,
+    this.name,
+    this.decimal,
+    this.symbol,
   });
 }

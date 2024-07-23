@@ -290,7 +290,9 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       final cw20TokenBalances = await balanceUseCase.getCw20TokenBalance(
         request: QueryCW20BalanceRequest(
-          address: account.cosmosAddress ?? '',
+          //address: account.cosmosAddress ?? '',
+          //For test
+          address: 'aura1lcshaqg0l0hmmr95zvknazkle0szxsnz8mnuqx',
           environment: environment,
         ),
       );
@@ -447,6 +449,9 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
             balance: erc.amount,
             tokenId: ercToken?.id,
             type: TokenType.erc20.name,
+            symbol: ercToken?.symbol,
+            name: ercToken?.name,
+            decimal: ercToken?.decimal
           ));
       }
 
@@ -459,13 +464,14 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           (token) => token.symbol == cw.contract.symbol,
         );
 
-        if (cwToken != null) {
-          requests.add(AddBalanceRequest(
-            balance: cw.amount,
-            tokenId: cwToken.id,
-            type: TokenType.cw20.name,
-          ));
-        }
+        requests.add(AddBalanceRequest(
+          balance: cw.amount,
+          tokenId: cwToken?.id,
+          type: TokenType.cw20.name,
+          name: cwToken?.name ?? cw.contract.name,
+          symbol: cwToken?.symbol ?? cw.contract.symbol,
+          decimal: cwToken?.decimal ?? int.tryParse(cw.contract.decimal ?? ''),
+        ));
       }
 
       if (state.accountBalance != null) {

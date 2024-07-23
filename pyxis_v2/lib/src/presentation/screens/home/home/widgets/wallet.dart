@@ -141,36 +141,41 @@ class HomePageWalletCardWidget extends StatelessWidget {
                 const SizedBox(
                   height: BoxSize.boxSize03,
                 ),
-                HomePageTotalValueSelector(builder: (totalValue) {
-                  return HomePageTotalValueYesterdaySelector(
+                HomePageTotalValueSelector(
+                  builder: (totalValue) {
+                    return HomePageTotalValueYesterdaySelector(
                       builder: (totalValueYesterday) {
-                    double changed = totalValue - totalValueYesterday;
+                        double changed = totalValue - totalValueYesterday;
+                        double percentChanged = 0;
 
-                    double percentChanged = (changed / totalValue) * 100;
-
-                    return RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            style: AppTypoGraPhy.textXsMedium.copyWith(
-                              color: appTheme.textSecondary,
-                            ),
-                            text: '${localization.translate(
-                              LanguageKey.homePage24hPNL,
-                            )}  ',
+                        if(totalValue != 0){
+                          percentChanged = (changed / totalValue) * 100;
+                        }
+                        return RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                style: AppTypoGraPhy.textXsMedium.copyWith(
+                                  color: appTheme.textSecondary,
+                                ),
+                                text: '${localization.translate(
+                                  LanguageKey.homePage24hPNL,
+                                )}  ',
+                              ),
+                              TextSpan(
+                                style: AppTypoGraPhy.textXsMedium.copyWith(
+                                  color: valueChangeColor(changed),
+                                ),
+                                text:
+                                    '${changed.prefixValueChange}${localization.translate(LanguageKey.commonBalancePrefix)}${changed.formatPnl24}(${changed.prefixValueChange}${(percentChanged).formatPercent}%)',
+                              ),
+                            ],
                           ),
-                          TextSpan(
-                            style: AppTypoGraPhy.textXsMedium.copyWith(
-                              color: valueChangeColor(changed),
-                            ),
-                            text:
-                                '${changed.prefixValueChange}${localization.translate(LanguageKey.commonBalancePrefix)}${changed.formatPnl24}(${changed.prefixValueChange}${(percentChanged).formatPercent}%)',
-                          ),
-                        ],
-                      ),
+                        );
+                      },
                     );
-                  });
-                }),
+                  },
+                ),
               ],
             ),
           ),
