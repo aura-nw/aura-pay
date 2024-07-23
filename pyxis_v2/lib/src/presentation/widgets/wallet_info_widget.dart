@@ -5,7 +5,7 @@ import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
-import 'package:pyxis_v2/src/presentation/widgets/circle_avatar_widget.dart';
+import 'circle_avatar_widget.dart';
 
 abstract class WalletInfoWidget extends StatelessWidget {
   final AppTheme appTheme;
@@ -100,7 +100,7 @@ final class DefaultWalletInfoWidget extends WalletInfoWidget {
           const SizedBox(
             height: BoxSize.boxSize02,
           ),
-          Row(
+          Row (
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
@@ -119,6 +119,59 @@ final class DefaultWalletInfoWidget extends WalletInfoWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+final class WalletInfoNonActionWidget extends WalletInfoWidget {
+  final String avatarAsset;
+
+  const WalletInfoNonActionWidget({
+    super.key,
+    required this.avatarAsset,
+    required super.appTheme,
+    required super.walletName,
+    required super.walletAddress,
+  });
+
+
+  @override
+  Widget actions(BuildContext context) {
+    return const SizedBox.shrink();
+  }
+
+  @override
+  Widget avatar(BuildContext context) {
+    return CircleAvatarWidget(
+      image: AssetImage(
+        avatarAsset,
+      ),
+      radius: BorderRadiusSize.borderRadius04M,
+    );
+  }
+
+  @override
+  Widget content(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          walletName,
+          style:
+              AppTypoGraPhy.textMdBold.copyWith(color: appTheme.textPrimary),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize02,
+        ),
+        Text(
+          walletAddress.addressView,
+          style: AppTypoGraPhy.textSmMedium.copyWith(
+            color: appTheme.textSecondary,
+          ),
+        ),
+      ],
     );
   }
 }

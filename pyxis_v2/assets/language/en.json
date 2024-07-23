@@ -2,6 +2,7 @@
   "common_yeti_bot": "Yeti bot",
   "common_copy_value": "Copy ${value} success",
   "common_balance_prefix": "$",
+  "common_select_network" : "Select network",
 
   "get_started_screen_create_new_wallet": "Create New Wallet",
   "get_started_screen_add_wallet": "Add Existing Wallet",
@@ -87,5 +88,22 @@
   "settings_page_notifications": "Notifications",
   "settings_page_system_section": "System",
   "settings_page_reset_onboarding": "Reset Onboarding",
-  "settings_page_logout": "Logout"
+  "settings_page_logout": "Logout",
+
+  "send_screen_app_bar_title" : "Send",
+  "send_screen_from" : "From",
+  "send_screen_to" : "To address",
+  "send_screen_to_hint" : "Enter Address",
+  "send_screen_save_address" : "Save Address",
+  "send_screen_save_address_name_hint" : "Address name",
+  "send_screen_save_address_name_invalid" : "Invalid address name",
+  "send_screen_amount" : "Amount to send",
+  "send_screen_max" : "MAX",
+  "send_screen_balance" : "Balance",
+  "send_screen_next": "Next",
+  "send_screen_select_address" : "Select address",
+  "send_screen_select_address_not_found" : "No results found.",
+  "send_screen_invalid_address" : "Invalid address.",
+  "send_screen_search_token" : "Search token",
+  "send_screen_amount_invalid" : "Insufficient balance",
 }

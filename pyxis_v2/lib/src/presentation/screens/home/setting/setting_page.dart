@@ -133,6 +133,7 @@ class _SettingPageState extends State<SettingPage> with StateFulBaseScreen {
   Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
       AppLocalizationManager localization) {
     return Scaffold(
+      backgroundColor: appTheme.bgPrimary,
       appBar: AppBarDefault(
         appTheme: appTheme,
         localization: localization,

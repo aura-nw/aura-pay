@@ -11,17 +11,27 @@ class BrowserPage extends StatefulWidget {
   State<BrowserPage> createState() => _BrowserPageState();
 }
 
-class _BrowserPageState extends State<BrowserPage> with StateFulBaseScreen{
-   @override
-  Widget child(BuildContext context, AppTheme appTheme, AppLocalizationManager localization) {
-    return const Center(child:  Text("In Development"),);
+class _BrowserPageState extends State<BrowserPage> with StateFulBaseScreen {
+  @override
+  Widget child(BuildContext context, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return const Center(
+      child: Text("In Development"),
+    );
   }
 
   @override
-  Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme, AppLocalizationManager localization) {
-    return Scaffold( appBar: AppBarDefault(appTheme: appTheme, localization: localization, isLeftActionActive: false,title: const Text("Browser Page"),), body: child,);
+  Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return Scaffold(
+      backgroundColor: appTheme.bgPrimary,
+      appBar: AppBarDefault(
+        appTheme: appTheme,
+        localization: localization,
+        isLeftActionActive: false,
+        title: const Text("Browser Page"),
+      ),
+      body: child,
+    );
   }
-
-
- 
 }

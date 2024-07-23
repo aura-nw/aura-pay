@@ -7,6 +7,7 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
+import 'package:pyxis_v2/src/navigator.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/app_bar.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/nft.dart';
 import 'home_page_event.dart';
@@ -231,6 +232,10 @@ class _HomePageState extends State<HomePage>
                 HomePageActionsWidget(
                   appTheme: appTheme,
                   localization: localization,
+                  onSendTap: _onSendTap,
+                  onReceiveTap: _onReceiveTap,
+                  onStakingTap: _onStakingTap,
+                  onSwapTap: _onSwapTap,
                 ),
               ],
             ),
@@ -289,6 +294,10 @@ class _HomePageState extends State<HomePage>
             showActions: _showActions,
             showWallet: _showWalletCard,
             avatarAsset: avatarAsset,
+            onSendTap: _onSendTap,
+            onReceiveTap: _onReceiveTap,
+            onStakingTap: _onStakingTap,
+            onSwapTap: _onSwapTap,
           ),
         ),
         body: child,
@@ -324,5 +333,21 @@ class _HomePageState extends State<HomePage>
     _bloc.add(
       const HomePageOnUpdateEnableTotalTokenEvent(),
     );
+  }
+
+  void _onSendTap(){
+    AppNavigator.push(RoutePath.send);
+  }
+
+  void _onReceiveTap(){
+
+  }
+
+  void _onSwapTap(){
+
+  }
+
+  void _onStakingTap(){
+
   }
 }

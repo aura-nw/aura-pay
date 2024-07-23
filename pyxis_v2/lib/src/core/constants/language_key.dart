@@ -3,6 +3,7 @@ sealed class LanguageKey {
   static const String commonYetiBot = 'common_yeti_bot';
   static const String commonCopyValue = 'common_copy_value';
   static const String commonBalancePrefix = 'common_balance_prefix';
+  static const String commonSelectNetwork = 'common_select_network';
 
   // Get started screen
   static const String getStartedScreenCreateNewWallet = 'get_started_screen_create_new_wallet';
@@ -97,5 +98,24 @@ sealed class LanguageKey {
   static const String settingsPageSystemSection = 'settings_page_system_section';
   static const String settingsPageResetOnboarding = 'settings_page_reset_onboarding';
   static const String settingsPageLogout = 'settings_page_logout';
+  
+  
+  // Send screen
+  static const String sendScreenAppBarTitle = 'send_screen_app_bar_title';
+  static const String sendScreenFrom= 'send_screen_from';
+  static const String sendScreenTo= 'send_screen_to';
+  static const String sendScreenToHint= 'send_screen_to_hint';
+  static const String sendScreenSaveAddress= 'send_screen_save_address';
+  static const String sendScreenSaveAddressNameHint= 'send_screen_save_address_name_hint';
+  static const String sendScreenSaveAddressNameInvalid= 'send_screen_save_address_name_invalid';
+  static const String sendScreenAmount= 'send_screen_amount';
+  static const String sendScreenMax= 'send_screen_max';
+  static const String sendScreenBalance= 'send_screen_balance';
+  static const String sendScreenNext= 'send_screen_next';
+  static const String sendScreenSelectAddress= 'send_screen_select_address';
+  static const String sendScreenSelectAddressNotFound= 'send_screen_select_address_not_found';
+  static const String sendScreenInvalidAddress= 'send_screen_invalid_address';
+  static const String sendScreenSearchToken= 'send_screen_search_token';
+  static const String sendScreenAmountInvalid= 'send_screen_amount_invalid';
   
 }

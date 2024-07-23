@@ -12,41 +12,47 @@ final class HomePageActionWidget extends StatelessWidget {
   final String title;
   final String svg;
   final Color? bgColor;
+  final VoidCallback onTap;
 
   const HomePageActionWidget({
     required this.appTheme,
     required this.title,
     required this.svg,
+    required this.onTap,
     this.bgColor,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        BoxIconWidget(
-          svg: svg,
-          height: BoxSize.boxSize10,
-          width: BoxSize.boxSize10,
-          color: bgColor,
-          padding: const EdgeInsets.all(
-            Spacing.spacing04,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          BoxIconWidget(
+            svg: svg,
+            height: BoxSize.boxSize10,
+            width: BoxSize.boxSize10,
+            color: bgColor,
+            padding: const EdgeInsets.all(
+              Spacing.spacing04,
+            ),
+            appTheme: appTheme,
           ),
-          appTheme: appTheme,
-        ),
-        const SizedBox(
-          height: BoxSize.boxSize03,
-        ),
-        Text(
-          title,
-          style: AppTypoGraPhy.textXsSemiBold.copyWith(
-            color: appTheme.textPrimary,
+          const SizedBox(
+            height: BoxSize.boxSize03,
           ),
-          textAlign: TextAlign.center,
-        ),
-      ],
+          Text(
+            title,
+            style: AppTypoGraPhy.textXsSemiBold.copyWith(
+              color: appTheme.textPrimary,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -54,10 +60,18 @@ final class HomePageActionWidget extends StatelessWidget {
 final class HomePageActionsWidget extends StatelessWidget {
   final AppTheme appTheme;
   final AppLocalizationManager localization;
+  final VoidCallback onSendTap;
+  final VoidCallback onReceiveTap;
+  final VoidCallback onSwapTap;
+  final VoidCallback onStakingTap;
 
   const HomePageActionsWidget({
     required this.appTheme,
     required this.localization,
+    required this.onSendTap,
+    required this.onReceiveTap,
+    required this.onSwapTap,
+    required this.onStakingTap,
     super.key,
   });
 
@@ -77,6 +91,7 @@ final class HomePageActionsWidget extends StatelessWidget {
             ),
             svg: AssetIconPath.icCommonSend,
             bgColor: appTheme.utilityBlue100,
+            onTap: onSendTap,
           ),
           HomePageActionWidget(
             appTheme: appTheme,
@@ -85,6 +100,7 @@ final class HomePageActionsWidget extends StatelessWidget {
             ),
             svg: AssetIconPath.icCommonReceive,
             bgColor: appTheme.utilityGreen100,
+            onTap: onReceiveTap,
           ),
           HomePageActionWidget(
             appTheme: appTheme,
@@ -93,6 +109,7 @@ final class HomePageActionsWidget extends StatelessWidget {
             ),
             svg: AssetIconPath.icCommonSwap,
             bgColor: appTheme.utilityPink100,
+            onTap: onSwapTap,
           ),
           HomePageActionWidget(
             appTheme: appTheme,
@@ -101,6 +118,7 @@ final class HomePageActionsWidget extends StatelessWidget {
             ),
             svg: AssetIconPath.icCommonStake,
             bgColor: appTheme.utilityOrange100,
+            onTap: onStakingTap,
           ),
         ],
       ),
@@ -110,9 +128,17 @@ final class HomePageActionsWidget extends StatelessWidget {
 
 final class HomePageActionsSmallWidget extends StatelessWidget {
   final AppTheme appTheme;
+  final VoidCallback onSendTap;
+  final VoidCallback onReceiveTap;
+  final VoidCallback onSwapTap;
+  final VoidCallback onStakingTap;
 
   const HomePageActionsSmallWidget({
     required this.appTheme,
+    required this.onSendTap,
+    required this.onReceiveTap,
+    required this.onSwapTap,
+    required this.onStakingTap,
     super.key,
   });
 
@@ -129,6 +155,7 @@ final class HomePageActionsSmallWidget extends StatelessWidget {
             Spacing.spacing04,
           ),
           icWidth: BoxSize.boxSize05,
+          onTap: onSendTap,
         ),
         BoxIconWidget(
           appTheme: appTheme,
@@ -138,6 +165,7 @@ final class HomePageActionsSmallWidget extends StatelessWidget {
             Spacing.spacing04,
           ),
           icWidth: BoxSize.boxSize05,
+          onTap: onReceiveTap,
         ),
         BoxIconWidget(
           appTheme: appTheme,
@@ -147,6 +175,7 @@ final class HomePageActionsSmallWidget extends StatelessWidget {
             Spacing.spacing04,
           ),
           icWidth: BoxSize.boxSize05,
+          onTap: onSwapTap,
         ),
         BoxIconWidget(
           appTheme: appTheme,
@@ -156,6 +185,7 @@ final class HomePageActionsSmallWidget extends StatelessWidget {
             Spacing.spacing04,
           ),
           icWidth: BoxSize.boxSize05,
+          onTap: onStakingTap,
         ),
       ],
     );

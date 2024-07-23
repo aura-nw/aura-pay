@@ -25,6 +25,7 @@ import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_bloc.dart'
 import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_cubit.dart';
+import 'package:pyxis_v2/src/presentation/screens/send/send_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/social_login_yeti_bot/social_login_yeti_bot_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/splash/splash_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -335,6 +336,15 @@ Future<void> initDependency(
       getIt.get<TokenMarketUseCase>(),
       getIt.get<BalanceUseCase>(),
       config: config,
+    ),
+  );
+
+  getIt.registerFactoryParam<SendBloc, List<AppNetwork>, dynamic>(
+    (networks, _) => SendBloc(
+      getIt.get<AccountUseCase>(),
+      getIt.get<BalanceUseCase>(),
+      getIt.get<TokenMarketUseCase>(),
+      appNetworks: networks,
     ),
   );
 }
