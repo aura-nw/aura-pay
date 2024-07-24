@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_v2/app_configs/di.dart';
@@ -7,8 +8,10 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
-import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/app_bar.dart';
-import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/nft.dart';
+import 'package:pyxis_v2/src/navigator.dart';
+import 'home_page_selector.dart';
+import 'widgets/app_bar.dart';
+import 'widgets/nft.dart';
 import 'home_page_event.dart';
 import 'widgets/action.dart';
 import 'widgets/story.dart';
@@ -21,7 +24,14 @@ import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
 import 'home_page_bloc.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final void Function(
+          Account, List<AppNetwork>, AppTheme, AppLocalizationManager)
+      onReceivedTap;
+
+  const HomePage({
+    required this.onReceivedTap,
+    super.key,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -179,7 +189,8 @@ class _HomePageState extends State<HomePage>
                     Row(
                       children: [
                         HomePageStoryWidget(
-                          thumbnail: 'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
+                          thumbnail:
+                              'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
                           title: 'Create passcode',
                           appTheme: appTheme,
                         ),
@@ -187,7 +198,8 @@ class _HomePageState extends State<HomePage>
                           width: BoxSize.boxSize05,
                         ),
                         HomePageStoryWidget(
-                          thumbnail: 'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
+                          thumbnail:
+                              'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
                           title: 'Punka event',
                           appTheme: appTheme,
                         ),
@@ -195,7 +207,8 @@ class _HomePageState extends State<HomePage>
                           width: BoxSize.boxSize05,
                         ),
                         HomePageStoryWidget(
-                          thumbnail: 'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
+                          thumbnail:
+                              'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
                           title: 'Create passcode',
                           appTheme: appTheme,
                         ),
@@ -203,7 +216,8 @@ class _HomePageState extends State<HomePage>
                           width: BoxSize.boxSize05,
                         ),
                         HomePageStoryWidget(
-                          thumbnail: 'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
+                          thumbnail:
+                              'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
                           title: 'Punka event',
                           appTheme: appTheme,
                         ),
@@ -228,9 +242,28 @@ class _HomePageState extends State<HomePage>
                 const SizedBox(
                   height: BoxSize.boxSize07,
                 ),
-                HomePageActionsWidget(
-                  appTheme: appTheme,
-                  localization: localization,
+                HomePageNetworksSelector(
+                  builder: (networks) {
+                    return HomePageActiveAccountSelector(
+                      builder: (account) {
+                        return HomePageActionsWidget(
+                          appTheme: appTheme,
+                          localization: localization,
+                          onSendTap: _onSendTap,
+                          onReceiveTap: () {
+                            _onReceiveTap(
+                              account!,
+                              networks,
+                              appTheme,
+                              localization,
+                            );
+                          },
+                          onStakingTap: _onStakingTap,
+                          onSwapTap: _onSwapTap,
+                        );
+                      },
+                    );
+                  },
                 ),
               ],
             ),
@@ -282,13 +315,32 @@ class _HomePageState extends State<HomePage>
           localization: localization,
           leading: const SizedBox.shrink(),
           leadingWidth: 0,
-          title: HomeAppBar(
-            appTheme: appTheme,
-            localization: localization,
-            onActionClick: _onActionClick,
-            showActions: _showActions,
-            showWallet: _showWalletCard,
-            avatarAsset: avatarAsset,
+          title: HomePageNetworksSelector(
+            builder: (networks) {
+              return HomePageActiveAccountSelector(
+                builder: (account) {
+                  return HomeAppBar(
+                    appTheme: appTheme,
+                    localization: localization,
+                    onActionClick: _onActionClick,
+                    showActions: _showActions,
+                    showWallet: _showWalletCard,
+                    avatarAsset: avatarAsset,
+                    onSendTap: _onSendTap,
+                    onReceiveTap: () {
+                      _onReceiveTap(
+                        account!,
+                        networks,
+                        appTheme,
+                        localization,
+                      );
+                    },
+                    onStakingTap: _onStakingTap,
+                    onSwapTap: _onSwapTap,
+                  );
+                },
+              );
+            },
           ),
         ),
         body: child,
@@ -325,4 +377,26 @@ class _HomePageState extends State<HomePage>
       const HomePageOnUpdateEnableTotalTokenEvent(),
     );
   }
+
+  void _onSendTap() {
+    AppNavigator.push(RoutePath.send);
+  }
+
+  void _onReceiveTap(
+    Account account,
+    List<AppNetwork> networks,
+    AppTheme appTheme,
+    AppLocalizationManager localization,
+  ) {
+    widget.onReceivedTap(
+      account,
+      networks,
+      appTheme,
+      localization,
+    );
+  }
+
+  void _onSwapTap() {}
+
+  void _onStakingTap() {}
 }

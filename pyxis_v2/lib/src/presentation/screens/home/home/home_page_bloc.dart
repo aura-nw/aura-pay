@@ -282,8 +282,6 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       final erc20TokenBalances = await balanceUseCase.getErc20TokenBalance(
         request: QueryERC20BalanceRequest(
           address: account.evmAddress,
-          //For test
-          // address: 'aura1lcshaqg0l0hmmr95zvknazkle0szxsnz8mnuqx',
           environment: environment,
         ),
       );
@@ -292,9 +290,9 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       final cw20TokenBalances = await balanceUseCase.getCw20TokenBalance(
         request: QueryCW20BalanceRequest(
-          address: account.evmAddress,
-          // For test
-          // address: 'aura1lcshaqg0l0hmmr95zvknazkle0szxsnz8mnuqx',
+          //address: account.cosmosAddress ?? '',
+          //For test
+          address: 'aura1lcshaqg0l0hmmr95zvknazkle0szxsnz8mnuqx',
           environment: environment,
         ),
       );
@@ -363,16 +361,11 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         ),
       );
 
-      final accounts = await _accountUseCase.getAll();
-
-      final activeAccount = accounts.firstWhereOrNull(
-        (a) => a.index == 0,
-      );
+      final activeAccount = await _accountUseCase.getFirstAccount();
 
       emit(
         state.copyWith(
           activeAccount: activeAccount,
-          accounts: accounts,
         ),
       );
 
@@ -429,15 +422,13 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           (token) => token.symbol == config.config.evmInfo.symbol,
         );
 
-        if (nativeToken != null) {
-          requests.add(
-            AddBalanceRequest(
-              balance: nativeAmount,
-              tokenId: nativeToken.id,
-              type: TokenType.native.name,
-            ),
-          );
-        }
+        requests.add(
+          AddBalanceRequest(
+            balance: nativeAmount,
+            tokenId: nativeToken?.id,
+            type: TokenType.native.name,
+          ),
+        );
       }
 
       final List<ErcTokenBalance> ercTokenBalances =
@@ -449,13 +440,14 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           (token) => token.symbol == erc.denom,
         );
 
-        if (ercToken != null) {
           requests.add(AddBalanceRequest(
             balance: erc.amount,
-            tokenId: ercToken.id,
+            tokenId: ercToken?.id,
             type: TokenType.erc20.name,
+            symbol: ercToken?.symbol,
+            name: ercToken?.name,
+            decimal: ercToken?.decimal
           ));
-        }
       }
 
       // Add cw 20 token
@@ -467,13 +459,14 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           (token) => token.symbol == cw.contract.symbol,
         );
 
-        if (cwToken != null) {
-          requests.add(AddBalanceRequest(
-            balance: cw.amount,
-            tokenId: cwToken.id,
-            type: TokenType.cw20.name,
-          ));
-        }
+        requests.add(AddBalanceRequest(
+          balance: cw.amount,
+          tokenId: cwToken?.id,
+          type: TokenType.cw20.name,
+          name: cwToken?.name ?? cw.contract.name,
+          symbol: cwToken?.symbol ?? cw.contract.symbol,
+          decimal: cwToken?.decimal ?? int.tryParse(cw.contract.decimal ?? ''),
+        ));
       }
 
       if (state.accountBalance != null) {
@@ -582,16 +575,16 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     for (final balance in accountBalance.balances) {
       // Find the corresponding token information using tokenId.
       final token = state.tokenMarkets.firstWhereOrNull(
-            (e) => e.id == balance.tokenId,
+        (e) => e.id == balance.tokenId,
       );
 
       // Parse the amount of the token balance using a custom decimal format if provided.
       final amount = double.tryParse(
-        balance.type.formatBalance(
-          balance.balance,
-          customDecimal: token?.decimal,
-        ),
-      ) ??
+            balance.type.formatBalance(
+              balance.balance,
+              customDecimal: token?.decimal,
+            ),
+          ) ??
           0;
 
       // Parse the current price of the token, default to 0 if the price is null or not parsable.

@@ -55,7 +55,7 @@ class AppBottomSheetBaseState<R extends AppBottomSheetBase> extends State<R> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: Spacing.spacing07,
+        horizontal: Spacing.spacing06,
         vertical: Spacing.spacing05,
       ),
       decoration: BoxDecoration(

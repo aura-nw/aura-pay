@@ -29,20 +29,14 @@ class AppBottomSheetProvider extends StatelessWidget {
           body: Stack(
             children: [
               Positioned(
-                bottom: BoxSize.boxSize10,
+                bottom: BoxSize.boxSize0,
                 child: GestureDetector(
                   onTap: (){
                     // Don't close this dialog when users click to child widget
                   },
                   child: SizedBox(
                     width: context.w,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Spacing.spacing07,
-                        vertical: Spacing.spacing08,
-                      ),
-                      child: child,
-                    ),
+                    child: child,
                   ),
                 ),
               ),

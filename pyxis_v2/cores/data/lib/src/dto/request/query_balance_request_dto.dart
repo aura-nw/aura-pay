@@ -84,6 +84,10 @@ final class QueryCW20BalanceRequestDto extends QueryBalanceRequestDto {
           id
           name
           symbol
+          decimal
+          smart_contract { 
+            address 
+          }
         }
       }
     }

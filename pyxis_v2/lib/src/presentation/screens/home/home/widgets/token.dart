@@ -75,6 +75,7 @@ final class _HomePageTokenInfoWidget extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   RichText(
                     text: TextSpan(
@@ -262,8 +263,8 @@ final class HomePageTokensWidget extends StatelessWidget {
                         child: _HomePageTokenInfoWidget(
                           avatar: token?.image ??
                               'https://aurascan.io/assets/images/logo/title-logo.png',
-                          symbol: token?.symbol ?? '',
-                          tokenName: token?.name ?? '',
+                          symbol: token?.symbol ?? balance.symbol ?? '',
+                          tokenName: token?.name ?? balance.name ?? '',
                           percentChange24h:
                               token?.priceChangePercentage24h ?? 0,
                           amount: amount,

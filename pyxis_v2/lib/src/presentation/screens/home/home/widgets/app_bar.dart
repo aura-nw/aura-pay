@@ -17,6 +17,10 @@ final class HomeAppBar extends StatelessWidget {
   final bool showWallet;
   final VoidCallback onActionClick;
   final String avatarAsset;
+  final VoidCallback onSendTap;
+  final VoidCallback onReceiveTap;
+  final VoidCallback onSwapTap;
+  final VoidCallback onStakingTap;
 
   const HomeAppBar({
     required this.appTheme,
@@ -25,6 +29,10 @@ final class HomeAppBar extends StatelessWidget {
     this.showWallet = false,
     required this.onActionClick,
     required this.avatarAsset,
+    required this.onSendTap,
+    required this.onReceiveTap,
+    required this.onSwapTap,
+    required this.onStakingTap,
     super.key,
   });
 
@@ -150,12 +158,12 @@ final class HomeAppBar extends StatelessWidget {
           ),
           Expanded(
             flex: 3,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: onActionClick,
-              child: HomePageActionsSmallWidget(
-                appTheme: appTheme,
-              ),
+            child: HomePageActionsSmallWidget(
+              appTheme: appTheme,
+              onSwapTap: onSwapTap,
+              onStakingTap: onStakingTap,
+              onSendTap: onSendTap,
+              onReceiveTap: onReceiveTap,
             ),
           ),
         ],

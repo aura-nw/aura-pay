@@ -92,7 +92,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
 
   @override
   Future<AccountDto?> getFirstAccount() {
-    return _database.accountDbs.where().findFirst();
+    return _database.accountDbs.filter().aIndexEqualTo(0).findFirst();
   }
 
   @override

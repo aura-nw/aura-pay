@@ -11,15 +11,27 @@ class WalletPage extends StatefulWidget {
   State<WalletPage> createState() => _WalletPageState();
 }
 
-class _WalletPageState extends State<WalletPage> with StateFulBaseScreen{
-
-   @override
-  Widget child(BuildContext context, AppTheme appTheme, AppLocalizationManager localization) {
-    return const Center(child: const Text("In Development"),);
+class _WalletPageState extends State<WalletPage> with StateFulBaseScreen {
+  @override
+  Widget child(BuildContext context, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return const Center(
+      child: const Text("In Development"),
+    );
   }
 
   @override
-  Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme, AppLocalizationManager localization) {
-    return Scaffold( appBar: AppBarDefault(appTheme: appTheme, localization: localization, isLeftActionActive: false,title: const Text("Wallet Page"),), body: child,);
+  Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return Scaffold(
+      backgroundColor: appTheme.bgPrimary,
+      appBar: AppBarDefault(
+        appTheme: appTheme,
+        localization: localization,
+        isLeftActionActive: false,
+        title: const Text("Wallet Page"),
+      ),
+      body: child,
+    );
   }
 }

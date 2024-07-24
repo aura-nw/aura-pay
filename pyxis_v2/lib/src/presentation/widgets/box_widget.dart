@@ -12,6 +12,7 @@ class BoxWidget extends StatelessWidget {
   final double? width;
   final double radius;
   final AppTheme appTheme;
+  final VoidCallback ?onTap;
 
   const BoxWidget({
     this.child,
@@ -21,25 +22,30 @@ class BoxWidget extends StatelessWidget {
     this.padding,
     required this.appTheme,
     this.radius = BorderRadiusSize.borderRadius03M,
+    this.onTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      padding: padding ??
-          const EdgeInsets.all(
-            Spacing.spacing02,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Container(
+        height: height,
+        width: width,
+        padding: padding ??
+            const EdgeInsets.all(
+              Spacing.spacing02,
+            ),
+        decoration: BoxDecoration(
+          color: color ?? appTheme.bgPrimary,
+          borderRadius: BorderRadius.circular(
+            radius,
           ),
-      decoration: BoxDecoration(
-        color: color ?? appTheme.bgPrimary,
-        borderRadius: BorderRadius.circular(
-          radius,
         ),
+        child: child,
       ),
-      child: child,
     );
   }
 }
@@ -54,6 +60,7 @@ class BoxBorderWidget extends StatelessWidget {
   final double radius;
   final double borderWidth;
   final AppTheme appTheme;
+  final VoidCallback ?onTap;
 
   const BoxBorderWidget({
     this.child,
@@ -65,29 +72,34 @@ class BoxBorderWidget extends StatelessWidget {
     this.borderWidth = BorderSize.border01,
     this.borderColor,
     required this.appTheme,
+    this.onTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      padding: padding ??
-          const EdgeInsets.all(
-            Spacing.spacing02,
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: height,
+        width: width,
+        padding: padding ??
+            const EdgeInsets.all(
+              Spacing.spacing02,
+            ),
+        decoration: BoxDecoration(
+          color: color ?? appTheme.bgPrimary,
+          borderRadius: BorderRadius.circular(
+            radius,
           ),
-      decoration: BoxDecoration(
-        color: color ?? appTheme.bgPrimary,
-        borderRadius: BorderRadius.circular(
-          radius,
+          border: Border.all(
+            color: borderColor ?? appTheme.borderPrimary,
+            width: borderWidth,
+          ),
         ),
-        border: Border.all(
-          color: borderColor ?? appTheme.borderPrimary,
-          width: borderWidth,
-        ),
+        child: child,
       ),
-      child: child,
     );
   }
 }
@@ -103,6 +115,7 @@ final class BoxIconWidget extends StatelessWidget {
   final double? icHeight;
   final double? icWidth;
   final AppTheme appTheme;
+  final VoidCallback ?onTap;
 
   const BoxIconWidget({
     required this.svg,
@@ -115,6 +128,7 @@ final class BoxIconWidget extends StatelessWidget {
     this.icWidth,
     required this.appTheme,
     this.radius = BorderRadiusSize.borderRadius03M,
+    this.onTap,
     super.key,
   });
 
@@ -127,6 +141,7 @@ final class BoxIconWidget extends StatelessWidget {
       color: color,
       radius: radius,
       appTheme: appTheme,
+      onTap: onTap,
       child: SvgPicture.asset(
         svg,
         colorFilter: svgColor != null
@@ -153,6 +168,7 @@ final class BoxBorderTextWidget extends StatelessWidget {
   final AppTheme appTheme;
   final double borderWidth;
   final Color? borderColor;
+  final VoidCallback ?onTap;
 
   const BoxBorderTextWidget({
     required this.text,
@@ -165,6 +181,7 @@ final class BoxBorderTextWidget extends StatelessWidget {
     this.radius = BorderRadiusSize.borderRadius03M,
     this.borderWidth = BorderSize.border01,
     this.borderColor,
+    this.onTap,
     super.key,
   });
 
@@ -179,6 +196,7 @@ final class BoxBorderTextWidget extends StatelessWidget {
       appTheme: appTheme,
       borderWidth: borderWidth,
       borderColor: borderColor,
+      onTap: onTap,
       child: Text(
         text,
         style: style ??

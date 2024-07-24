@@ -5,17 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home_page_bloc.dart';
 import 'home_page_state.dart';
 
-final class HomePageAccountsSelector
-    extends BlocSelector<HomePageBloc, HomePageState, List<Account>> {
-  HomePageAccountsSelector({
-    super.key,
-    required Widget Function(List<Account>) builder,
-  }) : super(
-          selector: (state) => state.accounts,
-          builder: (context, accounts) => builder(accounts),
-        );
-}
-
 final class HomePageActiveAccountSelector
     extends BlocSelector<HomePageBloc, HomePageState, Account?> {
   HomePageActiveAccountSelector({

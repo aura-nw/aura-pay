@@ -57,6 +57,11 @@ sealed class AssetIconPath {
   static const String icCommonAuraEvm = '${_baseIconPath}ic_common_aura_evm.svg';
   static const String icCommonAuraCosmos = '${_baseIconPath}ic_common_aura_cosmos.svg';
   static const String icCommonAllNetwork = '${_baseIconPath}ic_common_all_network.svg';
+  static const String icCommonContact = '${_baseIconPath}ic_common_contact.svg';
+  static const String icCommonArrowNext = '${_baseIconPath}ic_common_arrow_next.svg';
+  static const String icCommonDownloadImage = '${_baseIconPath}ic_common_download_image.svg';
+  static const String icCommonQr = '${_baseIconPath}ic_common_qr.svg';
+  static const String icCommonShare = '${_baseIconPath}ic_common_share.svg';
 
   static const String icHomeScreenBottomNavigationBarBrowser = '${_baseIconPath}ic_home_screen_bottom_navigation_bar_browser.svg';
   static const String icHomeScreenBottomNavigationBarWallet = '${_baseIconPath}ic_home_screen_bottom_navigator_bar_wallet.svg';

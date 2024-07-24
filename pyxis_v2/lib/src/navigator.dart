@@ -7,6 +7,7 @@ import 'package:pyxis_v2/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_screen.dart';
+import 'package:pyxis_v2/src/presentation/screens/send/send_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/social_login_yeti_bot/social_login_yeti_bot_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/splash/spash_screen.dart';
 import 'package:wallet_core/wallet_core.dart';
@@ -26,6 +27,8 @@ sealed class RoutePath {
   static const String socialLoginYetiBot = '$_onBoarding/social_login_yeti_bot';
 
   static const String home = '${_base}home';
+
+  static const String send = '$home/send';
 }
 
 sealed class AppNavigator {
@@ -44,9 +47,10 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.setPasscode:
-        final Map<String,dynamic> argument = settings.arguments as Map<String,dynamic>;
+        final Map<String, dynamic> argument =
+            settings.arguments as Map<String, dynamic>;
         final void Function(BuildContext context) onCreatePasscodeDone =
-        argument['callback'] as void Function(BuildContext);
+            argument['callback'] as void Function(BuildContext);
 
         final bool canBack = argument['canBack'] as bool? ?? true;
         return _defaultRoute(
@@ -90,6 +94,11 @@ sealed class AppNavigator {
           SocialLoginYetiBotScreen(
             aWallet: aWallet,
           ),
+          settings,
+        );
+      case RoutePath.send:
+        return _defaultRoute(
+          const SendScreen(),
           settings,
         );
       default:
