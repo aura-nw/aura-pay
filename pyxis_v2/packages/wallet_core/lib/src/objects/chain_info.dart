@@ -19,8 +19,6 @@ abstract class ChainInfo {
       required this.icon});
 
   Future<BigInt> getWalletBalance(String address);
-
-  Future<String> submitTransaction(Uint8List data);
 }
 
 class EvmChainInfo extends ChainInfo {
@@ -41,11 +39,6 @@ class EvmChainInfo extends ChainInfo {
     final balance = await _web3client.getBalance(ethAddress);
     return balance.getInWei;
   }
-
-  @override
-  Future<String> submitTransaction(Uint8List data) {
-    return _web3client.sendRawTransaction(data);
-  }
 }
 
 class CosmonsChainInfo extends ChainInfo {
@@ -58,11 +51,6 @@ class CosmonsChainInfo extends ChainInfo {
 
   @override
   Future<BigInt> getWalletBalance(String address) async {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<String> submitTransaction(Uint8List data) {
     throw UnimplementedError();
   }
 }

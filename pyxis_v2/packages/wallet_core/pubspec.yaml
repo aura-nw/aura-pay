@@ -4,7 +4,7 @@ version: 0.0.1
 homepage:
 
 environment:
-  sdk: '>=3.4.3 <4.0.0'
+  sdk: ">=3.4.3 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
@@ -17,6 +17,7 @@ dependencies:
   web3dart: ^2.7.3
   http: ^1.2.1
 
+  bech32: ^0.2.2
 
 dev_dependencies:
   flutter_test:

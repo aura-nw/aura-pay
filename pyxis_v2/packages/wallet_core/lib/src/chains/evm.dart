@@ -1,77 +1,74 @@
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
+import 'package:http/http.dart';
 import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as Ethereum;
 import 'package:wallet_core/src/constants/constants.dart';
+import 'package:wallet_core/src/extensions/bigint_extension.dart';
 import 'package:wallet_core/wallet_core.dart';
+import 'package:web3dart/crypto.dart';
+import 'package:web3dart/web3dart.dart';
 
-class EvmChains {
-  static Future<String> sendTransaction(
-      AWallet wallet,
-      String toAddress,
-      BigInt amount,
-      BigInt gasPrice,
-      BigInt gasLimit,
-      BigInt nonce,
-      ChainInfo chainInfo,
-      {int coinType = Constants.defaultCoinType}) {
-    final output = makeSendTransaction(
-      wallet,
-      toAddress,
-      amount,
-      gasPrice,
-      gasLimit,
-      nonce,
-      coinType,
-    );
-    return chainInfo.submitTransaction(Uint8List.fromList(output.encoded));
+class EvmChainClient {
+  final ChainInfo chainInfo;
+  final Web3Client _web3client;
+
+  EvmChainClient(this.chainInfo)
+      : _web3client = Web3Client(chainInfo.rpcUrl, Client());
+
+  Future<BigInt> getWalletBalance(String address) async {
+    final ethAddress = EthereumAddress.fromHex(address);
+    final balance = await _web3client.getBalance(ethAddress);
+    return balance.getInWei;
   }
 
-  static Ethereum.SigningOutput makeSendTransaction(
-      AWallet wallet,
-      String toAddress,
-      BigInt amount,
-      BigInt gasPrice,
-      BigInt gasLimit,
-      BigInt nonce,
-      int coinType) {
-    int coin = TWCoinType.TWCoinTypeEthereum;
-    final privateKey = wallet.privateKeyData;
+  Future<String?> sendTransaction(
+      {required AWallet wallet,
+      required String toAddress,
+      required BigInt amount,
+      required BigInt gasPrice,
+      required BigInt gasLimit,
+      int coinType = Constants.defaultCoinType}) async {
+    try {
+      BigInt chainId = await _web3client.getChainId();
 
-    final signingInput = Ethereum.SigningInput(
-      chainId: _bigIntToBytes(BigInt.from(1)), // Mainnet
-      nonce: _bigIntToBytes(nonce),
-      gasPrice: _bigIntToBytes(gasPrice),
-      gasLimit: _bigIntToBytes(gasLimit),
-      toAddress: toAddress,
-      privateKey: privateKey,
-      transaction: Ethereum.Transaction(
-        transfer: Ethereum.Transaction_Transfer(
-          amount: _bigIntToBytes(amount),
+      // Input your recipient address
+      const String recipientAddress = '';
+
+      Ethereum.SigningInput signingInput = Ethereum.SigningInput(
+        toAddress: recipientAddress,
+        privateKey: wallet.privateKeyData,
+        chainId: chainId.toUin8List(),
+        gasPrice: gasPrice.toUin8List(),
+        gasLimit: gasLimit.toUin8List(),
+        transaction: Ethereum.Transaction(
+          transfer: Ethereum.Transaction_Transfer(
+            amount: amount.toUin8List(),
+          ),
         ),
-      ),
-    );
+      );
 
-    final Ethereum.SigningOutput output = Ethereum.SigningOutput.fromBuffer(
-      AnySigner.sign(signingInput.writeToBuffer(), coin).toList(),
-    );
+      final Uint8List signBytes = AnySigner.sign(
+        signingInput.writeToBuffer(),
+        coinType,
+      );
 
-    print('address: ${wallet.address}');
-    print('toAddress: $toAddress');
-    print('Transaction JSON: ${output.encoded}');
-    print('Transaction Hash: ${output.errorMessage}');
-    return output;
+      final outPut = Ethereum.SigningOutput.fromBuffer(signBytes);
+
+      final String hash = await _web3client.sendRawTransaction(
+        Uint8List.fromList(outPut.encoded),
+      );
+
+      print('receive transaction hash ${hash}');
+
+      final TransactionInformation? tx =
+          await _web3client.getTransactionByHash(hash);
+
+      print('tx != null ${tx != null}');
+      return hash;
+    } catch (e) {
+      print('receive error ${e.toString()}');
+      return null;
+    }
   }
-
-  static List<int> _bigIntToBytes(BigInt number) {
-    final byteData = ByteData(32);
-    final bigIntBytes =
-        number.toUnsigned(256).toRadixString(16).padLeft(64, '0');
-    final bytes = hex.decode(bigIntBytes);
-    byteData.buffer.asUint8List().setRange(32 - bytes.length, 32, bytes);
-    return byteData.buffer.asUint8List();
-  }
-
-  static _submitTransaction(
-      ChainInfo chainInfo, Ethereum.SigningOutput transaction) {}
 }

@@ -27,13 +27,14 @@ class WalletManagement {
   /// [mnemonic] is the mnemonic phrase of the wallet.
   /// Returns the AWallet containing the HDWallet and address.
   AWallet importWallet(String mnemonic,
-      {int coinType = Constants.defaultCoinType}) {
+      {int coinType = Constants.cosmosCoinType}) {
     final wallet = HDWallet.createWithMnemonic(mnemonic);
     final address = wallet.getAddressForCoin(coinType);
+    
     return AWallet(
         wallet: wallet,
         address: address,
-        privateKey: wallet.getKey(coinType, Constants.derivationPathEthereum),
+        privateKey: wallet.getKey(coinType, Constants.derivationPathCosmos),
         coinType: coinType);
   }
 

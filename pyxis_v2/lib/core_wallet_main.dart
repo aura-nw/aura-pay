@@ -205,15 +205,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<bool> testSendTransaction() async {
     try {
-      AWallet? wallet = WalletCore.storedManagement
-          .fromSavedJson(storedKeyPrivateKey, 'password');
+      AWallet wallet =
+          WalletCore.walletManagement.importWalletWithPrivateKey("");
 
-      if (wallet == null) {
-        return false;
-      }
-      // Cách 2
-      var txHash = EvmChains.sendTransaction(wallet, '', BigInt.from(10),
-          BigInt.from(10), BigInt.from(10), BigInt.from(10), ChainList.auraEuphoria);
+      EvmChainClient evmChains = EvmChainClient(ChainList.auraEuphoria);
+      var txHash = evmChains.sendTransaction(
+        wallet: wallet,
+        toAddress: '',
+        amount: BigInt.parse('0348bca5a16000', radix: 16),
+        gasPrice: BigInt.parse('d693a400', radix: 16),
+        gasLimit: BigInt.parse('5208', radix: 16),
+      );
 
       print('Transaction hash: $txHash');
 
