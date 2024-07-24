@@ -16,6 +16,7 @@ dependencies:
   convert: ^3.0.1
   web3dart: ^2.7.3
   http: ^1.2.1
+  bech32: ^0.2.2
 
 
 dev_dependencies:
