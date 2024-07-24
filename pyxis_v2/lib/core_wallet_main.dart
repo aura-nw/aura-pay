@@ -65,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
           testLoadStoredKeyWithMnemonic(), // Kiểm tra tải mnemonic
       'Load Stored Key with Private Key': testLoadStoredKeyWithPrivateKey(),
       'Wallet Balance': await testWalletBalance(), // Kiểm tra balance
+      'Send Transaction': await testSendTransaction(), // Kiểm tra gửi giao dịch
     };
   }
 
@@ -187,13 +188,36 @@ class _MyHomePageState extends State<MyHomePage> {
   // Hàm kiểm tra số dư của ví
   Future<bool> testWalletBalance() async {
     try {
-      ChainInfo chainInfo = ChainList.ethereum;
+      ChainInfo chainInfo = ChainList.auraEuphoria;
       var balance = await chainInfo
-          .getWalletBalance('0xAfFd04f995D558aC1b6114A960Ea9fCf28adc602');
+          .getWalletBalance('0xfE217e810FfbeFBD8cB4132d3e8aDFCBE0234262');
       print('Balance: $balance');
       print('Balance in Ether: ${balance / BigInt.from(10).pow(18)}');
-
+      if (balance <= BigInt.from(0)) {
+        return false; // Kiểm tra nếu số dư nhỏ hơn 0
+      }
       return true; // Kiểm tra nếu số dư lớn hơn 0
+    } catch (e) {
+      print('Error: $e');
+      return false;
+    }
+  }
+
+  Future<bool> testSendTransaction() async {
+    try {
+      AWallet? wallet = WalletCore.storedManagement
+          .fromSavedJson(storedKeyPrivateKey, 'password');
+
+      if (wallet == null) {
+        return false;
+      }
+      // Cách 2
+      var txHash = EvmChains.sendTransaction(wallet, '', BigInt.from(10),
+          BigInt.from(10), BigInt.from(10), BigInt.from(10), ChainList.auraEuphoria);
+
+      print('Transaction hash: $txHash');
+
+      return true;
     } catch (e) {
       print('Error: $e');
       return false;

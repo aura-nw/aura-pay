@@ -1,7 +1,7 @@
 import 'package:wallet_core/src/objects/chain_info.dart';
 
 class ChainList {
-  static ChainInfo auraSerenity = ChainInfo(
+  static ChainInfo auraSerenity = EvmChainInfo(
     rpcUrl: 'https://jsonrpc.serenity.aura.network',
     chainId: '1236',
     symbol: 'AURA',
@@ -10,7 +10,7 @@ class ChainList {
         'https://raw.githubusercontent.com/aurora-is-near/aurora-web/main/public/favicon.ico',
   );
 
-  static ChainInfo auraEuphoria = ChainInfo(
+  static ChainInfo auraEuphoria = EvmChainInfo(
     rpcUrl: 'https://jsonrpc.euphoria.aura.network',
     chainId: '6321',
     symbol: 'AURA',
@@ -19,7 +19,7 @@ class ChainList {
         'https://raw.githubusercontent.com/aurora-is-near/aurora-web/main/public/favicon.ico',
   );
 
-  static ChainInfo auraEVM = ChainInfo(
+  static ChainInfo auraEVM = EvmChainInfo(
     rpcUrl: 'https://jsonrpc.aura.network',
     chainId: '6322',
     symbol: 'AURA',
@@ -28,7 +28,7 @@ class ChainList {
         'https://raw.githubusercontent.com/aurora-is-near/aurora-web/main/public/favicon.ico',
   );
 
-  static ChainInfo ethereum = ChainInfo(
+  static ChainInfo ethereum = EvmChainInfo(
     rpcUrl: 'https://eth.llamarpc.com',
     chainId: '1',
     symbol: 'ETH',
@@ -37,7 +37,7 @@ class ChainList {
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png',
   );
 
-  static ChainInfo bsc = ChainInfo(
+  static ChainInfo bsc = EvmChainInfo(
     rpcUrl: 'https://bsc-dataseed.binance.org/',
     chainId: '56',
     symbol: 'BNB',
@@ -46,7 +46,7 @@ class ChainList {
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/smartchain/info/logo.png',
   );
 
-  static ChainInfo tron = ChainInfo(
+  static ChainInfo tron = EvmChainInfo(
     rpcUrl: 'https://api.trongrid.io',
     chainId: '1',
     symbol: 'TRX',
@@ -55,7 +55,7 @@ class ChainList {
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/tron/info/logo.png',
   );
 
-  static ChainInfo solana = ChainInfo(
+  static ChainInfo solana = EvmChainInfo(
     rpcUrl: 'https://api.mainnet-beta.solana.com',
     chainId: '101',
     symbol: 'SOL',
@@ -64,7 +64,7 @@ class ChainList {
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/solana/info/logo.png',
   );
 
-  static ChainInfo polygon = ChainInfo(
+  static ChainInfo polygon = EvmChainInfo(
     rpcUrl: 'https://rpc-mainnet.maticvigil.com',
     chainId: '137',
     symbol: 'MATIC',
@@ -73,7 +73,7 @@ class ChainList {
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/polygon/info/logo.png',
   );
 
-  static ChainInfo avalanche = ChainInfo(
+  static ChainInfo avalanche = EvmChainInfo(
     rpcUrl: 'https://api.avax.network/ext/bc/C/rpc',
     chainId: '43114',
     symbol: 'AVAX',
@@ -82,7 +82,7 @@ class ChainList {
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/avalanche/info/logo.png',
   );
 
-  static ChainInfo fantom = ChainInfo(
+  static ChainInfo fantom = EvmChainInfo(
     rpcUrl: 'https://rpcapi.fantom.network',
     chainId: '250',
     symbol: 'FTM',
@@ -91,7 +91,7 @@ class ChainList {
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/fantom/info/logo.png',
   );
 
-  static ChainInfo celo = ChainInfo(
+  static ChainInfo celo = EvmChainInfo(
     rpcUrl: 'https://forno.celo.org',
     chainId: '42220',
     symbol: 'CELO',

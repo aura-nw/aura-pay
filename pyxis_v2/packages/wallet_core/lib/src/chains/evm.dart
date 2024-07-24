@@ -6,9 +6,35 @@ import 'package:wallet_core/src/constants/constants.dart';
 import 'package:wallet_core/wallet_core.dart';
 
 class EvmChains {
-  static sendTransaction(AWallet wallet, String toAddress, BigInt amount,
-      BigInt gasPrice, BigInt gasLimit, BigInt nonce,
+  static Future<String> sendTransaction(
+      AWallet wallet,
+      String toAddress,
+      BigInt amount,
+      BigInt gasPrice,
+      BigInt gasLimit,
+      BigInt nonce,
+      ChainInfo chainInfo,
       {int coinType = Constants.defaultCoinType}) {
+    final output = makeSendTransaction(
+      wallet,
+      toAddress,
+      amount,
+      gasPrice,
+      gasLimit,
+      nonce,
+      coinType,
+    );
+    return chainInfo.submitTransaction(Uint8List.fromList(output.encoded));
+  }
+
+  static Ethereum.SigningOutput makeSendTransaction(
+      AWallet wallet,
+      String toAddress,
+      BigInt amount,
+      BigInt gasPrice,
+      BigInt gasLimit,
+      BigInt nonce,
+      int coinType) {
     int coin = TWCoinType.TWCoinTypeEthereum;
     final privateKey = wallet.privateKeyData;
 
@@ -26,11 +52,15 @@ class EvmChains {
       ),
     );
 
-    final output = Ethereum.SigningOutput.fromBuffer(
+    final Ethereum.SigningOutput output = Ethereum.SigningOutput.fromBuffer(
       AnySigner.sign(signingInput.writeToBuffer(), coin).toList(),
     );
 
+    print('address: ${wallet.address}');
+    print('toAddress: $toAddress');
     print('Transaction JSON: ${output.encoded}');
+    print('Transaction Hash: ${output.errorMessage}');
+    return output;
   }
 
   static List<int> _bigIntToBytes(BigInt number) {
@@ -41,4 +71,7 @@ class EvmChains {
     byteData.buffer.asUint8List().setRange(32 - bytes.length, 32, bytes);
     return byteData.buffer.asUint8List();
   }
+
+  static _submitTransaction(
+      ChainInfo chainInfo, Ethereum.SigningOutput transaction) {}
 }
