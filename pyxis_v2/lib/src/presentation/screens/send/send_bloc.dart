@@ -1,5 +1,8 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_v2/src/core/helpers/address_validator.dart';
+import 'package:pyxis_v2/src/core/utils/aura_util.dart';
+import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 
 import 'send_event.dart';
 import 'send_state.dart';
@@ -23,6 +26,8 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
     on(_onInit);
     on(_onChangeSaved);
     on(_onChangeNetwork);
+    on(_onChangeAddress);
+    on(_onChangeAmount);
   }
 
   void _onInit(SendOnInitEvent event, Emitter<SendState> emit) async {
@@ -50,6 +55,9 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
         state.copyWith(
           status: SendStatus.loaded,
           accountBalance: accountBalance,
+          selectedToken: accountBalance?.balances.firstWhereOrNull(
+            (b) => b.type == TokenType.native,
+          ),
         ),
       );
 
@@ -82,11 +90,64 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
     );
   }
 
-  void _onChangeNetwork(SendOnChangeNetworkEvent event, Emitter<SendState> emit) {
+  void _onChangeNetwork(
+      SendOnChangeNetworkEvent event, Emitter<SendState> emit) {
     emit(
       state.copyWith(
         selectedNetwork: event.network,
       ),
     );
+  }
+
+  void _onChangeAddress(
+    SendOnChangeToEvent event,
+    Emitter<SendState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        toAddress: event.address,
+        already: _isReady(
+          event.address,
+          state.amountToSend,
+        ),
+      ),
+    );
+  }
+
+  void _onChangeAmount(
+    SendOnChangeAmountEvent event,
+    Emitter<SendState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        amountToSend: event.amount,
+        already: _isReady(
+          state.toAddress,
+          event.amount,
+        ),
+      ),
+    );
+  }
+
+  bool _isReady(String address, String amount,) {
+    try {
+      double total = double.tryParse(state.selectedToken?.type.formatBalance(
+                  state.selectedToken?.balance ?? '',
+                  customDecimal: state.selectedToken?.decimal) ??
+              '') ??
+          0.0;
+      // Parse the amount as a double
+      double am = double.parse(amount);
+
+      // Return true if amount is greater than 0 and less than or equal to the total balance
+      return am > 0 &&
+          am <= total &&
+          addressInValid(
+            address: address,
+          );
+    } catch (e) {
+      // Return false if there's an exception (e.g., amount cannot be parsed as a double)
+      return false;
+    }
   }
 }

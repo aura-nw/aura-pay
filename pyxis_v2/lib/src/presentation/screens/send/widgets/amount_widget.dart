@@ -1,40 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_v2/src/presentation/screens/send/send_selector.dart';
+import 'package:pyxis_v2/src/presentation/widgets/network_image_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/text_input_base/text_input_base.dart';
 import 'package:pyxis_v2/src/presentation/widgets/text_input_base/text_input_manager.dart';
 
 class SendScreenAmountToSendWidget extends StatelessWidget {
   final AppLocalizationManager localization;
   final AppTheme appTheme;
+  final void Function(String,bool) onChanged;
 
   const SendScreenAmountToSendWidget({
     required this.appTheme,
     required this.localization,
+    required this.onChanged,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return _TextInputAmountWidget(
-      appTheme: appTheme,
-      localization: localization,
-      hintText: '0.00',
-      keyBoardType: TextInputType.number,
-      constraintManager: ConstraintManager()
-        ..custom(
-          errorMessage: localization.translate(
-            LanguageKey.sendScreenAmountInvalid,
-          ),
-          customValid: (value) {
-            return false;
-          },
-        ),
+    return SendSelectedBalanceSelector(
+      builder: (token) {
+        double total = double.tryParse(token?.type.formatBalance(token.balance,
+                    customDecimal: token.decimal) ??
+                '') ??
+            0.0;
+        return _TextInputAmountWidget(
+          appTheme: appTheme,
+          localization: localization,
+          hintText: '0.00',
+          keyBoardType: TextInputType.number,
+          onChanged: onChanged,
+          constraintManager: ConstraintManager()
+            ..custom(
+              errorMessage: localization.translate(
+                LanguageKey.sendScreenAmountInvalid,
+              ),
+              customValid: (amount) {
+                return _checkValidAmount(amount, total);
+              },
+            ),
+        );
+      },
     );
+  }
+
+  // Check if the provided amount is valid
+  bool _checkValidAmount(String amount, double total) {
+    try {
+      // Parse the amount as a double
+      double am = double.parse(amount);
+
+      // Return true if amount is greater than 0 and less than or equal to the total balance
+      return am > 0 && am <= total;
+    } catch (e) {
+      // Return false if there's an exception (e.g., amount cannot be parsed as a double)
+      return false;
+    }
   }
 }
 
@@ -134,12 +163,46 @@ class _TextInputAmountWidgetState
                         ),
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
-                          child: const Row(
-                            children: [
-                               SizedBox(
-                                width: BoxSize.boxSize04,
-                              ),
-                            ],
+                          child: SendTokenMarketsSelector(
+                            builder: (tokenMarkets) {
+                              return SendAccountBalanceSelector(
+                                builder: (balance) {
+                                  return SendSelectedBalanceSelector(
+                                    builder: (token) {
+                                      final tokenMarket =
+                                          tokenMarkets.firstWhereOrNull(
+                                        (m) => m.id == token?.tokenId,
+                                      );
+                                      return Row(
+                                        children: [
+                                          const SizedBox(
+                                            width: BoxSize.boxSize03,
+                                          ),
+                                          NetworkImageWidget(
+                                            url: AppLocalConstant.auraLogo,
+                                            appTheme: theme,
+                                            width: BoxSize.boxSize05,
+                                            height: BoxSize.boxSize05,
+                                          ),
+                                          const SizedBox(
+                                            width: BoxSize.boxSize04,
+                                          ),
+                                          Text(
+                                            tokenMarket?.symbol ??
+                                                token?.symbol ??
+                                                '',
+                                            style: AppTypoGraPhy.textSmSemiBold
+                                                .copyWith(
+                                              color: theme.textPrimary,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
                           ),
                         ),
                       ],
@@ -190,23 +253,30 @@ class _TextInputAmountWidgetState
                         ),
                       ),
                     ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                              text: localization.translate(
-                                LanguageKey.sendScreenBalance,
+                    SendSelectedBalanceSelector(
+                      builder: (token) {
+                        return RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '${localization.translate(
+                                  LanguageKey.sendScreenBalance,
+                                )}: ',
+                                style: AppTypoGraPhy.textXsRegular.copyWith(
+                                  color: theme.textSecondary,
+                                ),
                               ),
-                              style: AppTypoGraPhy.textXsRegular.copyWith(
-                                color: theme.textSecondary,
-                              )),
-                          TextSpan(
-                              text: ' 120',
-                              style: AppTypoGraPhy.textXsSemiBold.copyWith(
-                                color: theme.textPrimary,
-                              )),
-                        ],
-                      ),
+                              TextSpan(
+                                text: token?.type.formatBalance(token.balance,
+                                    customDecimal: token.decimal),
+                                style: AppTypoGraPhy.textXsSemiBold.copyWith(
+                                  color: theme.textPrimary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

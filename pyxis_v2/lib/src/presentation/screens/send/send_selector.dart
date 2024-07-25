@@ -81,3 +81,25 @@ final class SendSelectedNetworkSelector
           builder: (context, selectedNetwork) => builder(selectedNetwork),
         );
 }
+
+final class SendSelectedBalanceSelector
+    extends BlocSelector<SendBloc, SendState, Balance?> {
+  SendSelectedBalanceSelector({
+    super.key,
+    required Widget Function(Balance?) builder,
+  }) : super(
+          selector: (state) => state.selectedToken,
+          builder: (context, selectedToken) => builder(selectedToken),
+        );
+}
+
+final class SendTokenMarketsSelector
+    extends BlocSelector<SendBloc, SendState, List<TokenMarket>> {
+  SendTokenMarketsSelector({
+    super.key,
+    required Widget Function(List<TokenMarket>) builder,
+  }) : super(
+          selector: (state) => state.tokenMarkets,
+          builder: (context, tokenMarkets) => builder(tokenMarkets),
+        );
+}

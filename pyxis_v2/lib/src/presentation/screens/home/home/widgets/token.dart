@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
@@ -210,7 +211,7 @@ final class HomePageTokensWidget extends StatelessWidget {
               builder: (accountBalance) {
                 if (accountBalance == null) {
                   return _HomePageTokenInfoWidget(
-                    avatar: 'https://aurascan.io/assets/images/logo/title-logo.png',
+                    avatar: AppLocalConstant.auraLogo,
                     symbol: config.config.evmInfo.symbol,
                     tokenName: config.config.cosmosInfo.chainName,
                     percentChange24h: 0,
@@ -262,7 +263,7 @@ final class HomePageTokensWidget extends StatelessWidget {
                         ),
                         child: _HomePageTokenInfoWidget(
                           avatar: token?.image ??
-                              'https://aurascan.io/assets/images/logo/title-logo.png',
+                              AppLocalConstant.auraLogo,
                           symbol: token?.symbol ?? balance.symbol ?? '',
                           tokenName: token?.name ?? balance.name ?? '',
                           percentChange24h:

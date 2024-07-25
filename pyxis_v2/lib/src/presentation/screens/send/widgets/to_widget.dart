@@ -6,6 +6,7 @@ import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/core/helpers/address_validator.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/switch_widget.dart';
@@ -18,6 +19,7 @@ final class SendScreenToWidget extends StatelessWidget {
   final VoidCallback onScanTap;
   final AppTheme appTheme;
   final void Function(bool) onChangeSaved;
+  final void Function(String,bool) onAddressChanged;
 
   const SendScreenToWidget({
     required this.appTheme,
@@ -25,6 +27,7 @@ final class SendScreenToWidget extends StatelessWidget {
     required this.onContactTap,
     required this.onChangeSaved,
     required this.onScanTap,
+    required this.onAddressChanged,
     super.key,
   });
 
@@ -40,13 +43,17 @@ final class SendScreenToWidget extends StatelessWidget {
           ),
           onContactTap: onContactTap,
           onScanTap: onScanTap,
+          onChanged: onAddressChanged,
           constraintManager: ConstraintManager()
             ..custom(
               errorMessage: localization.translate(
                 LanguageKey.sendScreenInvalidAddress,
               ),
               customValid: (address) {
-                return true;
+                // Change later
+                return addressInValid(
+                  address: address,
+                );
               },
             ),
         ),
@@ -55,13 +62,15 @@ final class SendScreenToWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            SendIsSavedSelector(builder: (isSaved) {
-              return SwitchWidget(
-                onChanged: onChangeSaved,
-                isSelected: isSaved,
-                appTheme: appTheme,
-              );
-            }),
+            SendIsSavedSelector(
+              builder: (isSaved) {
+                return SwitchWidget(
+                  onChanged: onChangeSaved,
+                  isSelected: isSaved,
+                  appTheme: appTheme,
+                );
+              },
+            ),
             const SizedBox(
               width: BoxSize.boxSize04,
             ),

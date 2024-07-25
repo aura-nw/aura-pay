@@ -4,6 +4,7 @@ sealed class LanguageKey {
   static const String commonCopyValue = 'common_copy_value';
   static const String commonBalancePrefix = 'common_balance_prefix';
   static const String commonSelectNetwork = 'common_select_network';
+  static const String commonAura = 'common_aura';
 
   // Get started screen
   static const String getStartedScreenCreateNewWallet = 'get_started_screen_create_new_wallet';
@@ -120,5 +121,25 @@ sealed class LanguageKey {
   static const String sendScreenInvalidAddress= 'send_screen_invalid_address';
   static const String sendScreenSearchToken= 'send_screen_search_token';
   static const String sendScreenAmountInvalid= 'send_screen_amount_invalid';
+
+
+  // Confirm send screen
+  static const String confirmSendScreenAppBarTitle = 'confirm_send_screen_app_bar_title';
+  static const String confirmSendScreenMessages = 'confirm_send_screen_messages';
+  static const String confirmSendScreenViewData = 'confirm_send_screen_view_data';
+  static const String confirmSendScreenSend = 'confirm_send_screen_send';
+  static const String confirmSendScreenTo = 'confirm_send_screen_to';
+  static const String confirmSendScreenTotal = 'confirm_send_screen_total';
+  static const String confirmSendScreenFrom = 'confirm_send_screen_from';
+  static const String confirmSendScreenRecipient = 'confirm_send_screen_recipient';
+  static const String confirmSendScreenSendAmount = 'confirm_send_screen_send_amount';
+  static const String confirmSendScreenSendFee = 'confirm_send_screen_send_fee';
+  static const String confirmSendScreenSendEdit = 'confirm_send_screen_send_edit';
+  static const String confirmSendScreenSendEditFeeTitle = 'confirm_send_screen_edit_fee_title';
+  static const String confirmSendScreenSendEditFeeContent = 'confirm_send_screen_edit_fee_content';
+  static const String confirmSendScreenSendEditFeeSlower = 'confirm_send_screen_edit_fee_slower';
+  static const String confirmSendScreenSendEditFeeFaster = 'confirm_send_screen_edit_fee_slower';
+  static const String confirmSendScreenSendEditFeeConfirm = 'confirm_send_screen_edit_fee_confirm';
+  static const String confirmSendScreenConfirmSend = 'confirm_send_screen_confirm_send';
   
 }

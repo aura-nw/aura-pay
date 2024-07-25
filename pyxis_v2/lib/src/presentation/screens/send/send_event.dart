@@ -9,7 +9,7 @@ class SendEvent with _$SendEvent {
 
   const factory SendEvent.onChangeTo({
     required String address,
-    String ?addressName,
+    required String ?addressName,
   }) = SendOnChangeToEvent;
 
   const factory SendEvent.onChangeAmount({

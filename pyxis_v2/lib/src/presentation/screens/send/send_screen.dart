@@ -86,6 +86,7 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
                                 onContactTap: () {},
                                 onScanTap: () {},
                                 onChangeSaved: _onChangeSaved,
+                                onAddressChanged: _onAddressChanged,
                               ),
                               const SizedBox(
                                 height: BoxSize.boxSize07,
@@ -93,6 +94,7 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
                               SendScreenAmountToSendWidget(
                                 appTheme: appTheme,
                                 localization: localization,
+                                onChanged: _onChangeAmount,
                               ),
                             ],
                           ),
@@ -106,14 +108,16 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
         ),
         Padding(
           padding: defaultPadding(),
-          child: SendAlreadySelector(builder: (already) {
-            return PrimaryAppButton(
-              text: localization.translate(
-                LanguageKey.sendScreenNext,
-              ),
-              isDisable: !already,
-            );
-          }),
+          child: SendAlreadySelector(
+            builder: (already) {
+              return PrimaryAppButton(
+                text: localization.translate(
+                  LanguageKey.sendScreenNext,
+                ),
+                isDisable: !already,
+              );
+            },
+          ),
         ),
       ],
     );
@@ -156,9 +160,8 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
     AppLocalizationManager localization,
     List<AppNetwork> networks,
     Account? account,
-  ) async{
-
-    if(account == null) return;
+  ) async {
+    if (account == null) return;
 
     final network = await AppBottomSheetProvider.showFullScreenDialog(
       context,
@@ -175,5 +178,21 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
     //     network,
     //   ),
     // );
+  }
+
+  void _onAddressChanged(String address, bool isValid) {
+    _bloc.add(
+      SendOnChangeToEvent(
+        address: address,
+      ),
+    );
+  }
+
+  void _onChangeAmount(String amount, bool isValid) {
+    _bloc.add(
+      SendOnChangeAmountEvent(
+        amount: amount,
+      ),
+    );
   }
 }
