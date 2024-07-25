@@ -71,7 +71,10 @@ class _SocialLoginYetiBotScreenState extends State<SocialLoginYetiBotScreen>
           data: localization.translate(messageDelays[i]),
           groupId: i == messageDelays.length - 1 ? 2 : i,
           type: i == messageDelays.length - 1 ? 1 : 0,
-          object: i == messageDelays.length - 1 ? _cubit.state.wallet.address : null,
+          object: i == messageDelays.length - 1 ? [
+            _cubit.state.wallet.address,
+          ]
+              : [],
         ),
       );
       _messageKey.currentState?.insertItem(0, duration: const Duration(milliseconds: 300));
@@ -105,7 +108,7 @@ class _SocialLoginYetiBotScreenState extends State<SocialLoginYetiBotScreen>
                     appTheme: appTheme,
                     messageObject: _messages[index],
                     nextGroup: _messages.getIndex(index + 1)?.groupId,
-                    onCopy: () => copy(_messages[index].object),
+                    onCopy: (value) => copy(value),
                     localization: localization,
                     lastGroup: _messages.getIndex(index - 1)?.groupId,
                   ),

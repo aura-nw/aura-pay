@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/pyxis_account_constant.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'generate_wallet_state.dart';
@@ -47,10 +48,26 @@ final class GenerateWalletCubit extends Cubit<GenerateWalletState> {
       ),
     );
 
+    final String evmAddress = state.wallet!.address;
+
+    final String cosmosAddress = bech32.convertEthAddressToBech32Address(
+      AppLocalConstant.auraPrefix,
+      evmAddress,
+    );
+
     await _accountUseCase.add(
       AddAccountRequest(
         name: PyxisAccountConstant.defaultNormalWalletName,
-        evmAddress: state.wallet!.address,
+        addACosmosInfoRequest: AddACosmosInfoRequest(
+          address: cosmosAddress,
+          isActive: true,
+        ),
+        addAEvmInfoRequest: AddAEvmInfoRequest(
+          address: evmAddress,
+          isActive: true,
+        ),
+        createType: AccountCreateType.normal,
+        type: AccountType.normal,
         keyStoreId: keyStore.id,
         controllerKeyType: ControllerKeyType.passPhrase,
         index: 0,

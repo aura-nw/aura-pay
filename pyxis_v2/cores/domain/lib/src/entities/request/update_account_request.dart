@@ -1,7 +1,7 @@
 final class UpdateAccountRequest {
   final String? name;
-  final String? evmAddress;
-  final String? cosmosAddress;
+  final UpdateAEvmInfoRequest? updateAEvmInfoRequest;
+  final UpdateACosmosInfoRequest? updateACosmosInfoRequest;
   final int? keyStoreId;
   final int id;
   final int? index;
@@ -10,8 +10,29 @@ final class UpdateAccountRequest {
     this.index,
     this.name,
     this.keyStoreId,
-    this.evmAddress,
-    this.cosmosAddress,
+    this.updateAEvmInfoRequest,
+    this.updateACosmosInfoRequest,
     required this.id,
   });
 }
+
+final class UpdateAEvmInfoRequest {
+  final String address;
+  final bool isActive;
+
+  const UpdateAEvmInfoRequest({
+    required this.address,
+    required this.isActive,
+  });
+}
+
+final class UpdateACosmosInfoRequest {
+  final String address;
+  final bool isActive;
+
+  const UpdateACosmosInfoRequest({
+    required this.address,
+    required this.isActive,
+  });
+}
+

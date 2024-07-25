@@ -12,6 +12,9 @@ sealed class AppLocalConstant {
   static const String passCodeKey = 'px_app_pass_code';
   static const String bioMetricKey = 'px_app_bio_metric';
 
+
+  static const String auraPrefix = 'aura';
+
   static const List<String> avatars = [
     AssetImagePath.defaultAvatar1,
     AssetImagePath.defaultAvatar2,

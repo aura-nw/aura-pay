@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/pyxis_account_constant.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'import_wallet_yeti_bot_state.dart';
@@ -43,10 +44,25 @@ final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
       controllerKeyType = ControllerKeyType.privateKey;
     }
 
+    final String evmAddress = state.wallet.address;
+
+    final String cosmosAddress = bech32.convertEthAddressToBech32Address(
+      AppLocalConstant.auraPrefix,
+      evmAddress,
+    );
+
+
     await _accountUseCase.add(
       AddAccountRequest(
         name: PyxisAccountConstant.defaultNormalWalletName,
-        evmAddress: state.wallet.address,
+        addACosmosInfoRequest: AddACosmosInfoRequest(
+          address: cosmosAddress,
+          isActive: false,
+        ),
+        addAEvmInfoRequest: AddAEvmInfoRequest(
+          address: evmAddress,
+          isActive: true,
+        ),
         keyStoreId: keyStore.id,
         controllerKeyType: controllerKeyType,
         createType: AccountCreateType.import,
