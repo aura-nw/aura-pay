@@ -1,16 +1,6 @@
 import 'package:bech32/bech32.dart';
 import 'package:web3dart/crypto.dart' as evmCrypto;
 
-// Utility function to convert bytes to hex
-String bytesToHex(List<int> bytes, {bool include0x = false}) {
-  final buffer = StringBuffer();
-  if (include0x) buffer.write('0x');
-  for (var part in bytes) {
-    buffer.write(part.toRadixString(16).padLeft(2, '0'));
-  }
-  return buffer.toString();
-}
-
 extension Bech32Extension on List<int> {
   List<int> toBech32Words() {
     final words = <int>[];
@@ -51,6 +41,15 @@ extension Bech32Extension on List<int> {
 
     return data;
   }
+
+  String bytesToHex({bool include0x = false}) {
+    final buffer = StringBuffer();
+    if (include0x) buffer.write('0x');
+    for (var part in this) {
+      buffer.write(part.toRadixString(16).padLeft(2, '0'));
+    }
+    return buffer.toString();
+  }
 }
 
 extension Bech32CodeSpecExtension on Bech32Codec {
@@ -78,7 +77,7 @@ extension Bech32CodeSpecExtension on Bech32Codec {
     final data = makeBech32Decoder(prefix, bech32Address);
 
     final ethAddress = data.sublist(data.length - 20);
-    return bytesToHex(ethAddress, include0x: true);
+    return ethAddress.bytesToHex(include0x: true);
   }
 
 // Convert Ethereum address to Bech32 address
