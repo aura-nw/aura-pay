@@ -274,14 +274,14 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       Map<TokenType, dynamic> result = {};
 
       String amount = await balanceUseCase.getNativeBalance(
-        address: account.evmAddress,
+        address: account.aEvmInfo.address,
       );
 
       result[TokenType.native] = amount;
 
       final erc20TokenBalances = await balanceUseCase.getErc20TokenBalance(
         request: QueryERC20BalanceRequest(
-          address: account.evmAddress,
+          address: account.aEvmInfo.address,
           environment: environment,
         ),
       );
@@ -290,9 +290,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       final cw20TokenBalances = await balanceUseCase.getCw20TokenBalance(
         request: QueryCW20BalanceRequest(
-          //address: account.cosmosAddress ?? '',
-          //For test
-          address: 'aura1lcshaqg0l0hmmr95zvknazkle0szxsnz8mnuqx',
+          address: account.aCosmosInfo.address,
           environment: environment,
         ),
       );
@@ -320,7 +318,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       final List<NFTInformation> erc721s = await nftUseCase.queryNFTs(
         QueryERC721Request(
-          owner: account.evmAddress.toLowerCase(),
+          owner: account.aEvmInfo.address.toLowerCase(),
           environment: environment,
           limit: 4,
         ),
@@ -328,7 +326,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       final List<NFTInformation> cw721s = await nftUseCase.queryNFTs(
         QueryCW721Request(
-          owner: account.evmAddress.toLowerCase(),
+          owner: account.aCosmosInfo.address.toLowerCase(),
           environment: environment,
           limit: 4,
         ),

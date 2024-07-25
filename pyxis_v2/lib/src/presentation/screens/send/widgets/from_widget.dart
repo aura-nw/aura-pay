@@ -48,7 +48,7 @@ final class SendScreenFromWidget extends StatelessWidget {
                       avatarAsset: randomAvatar(),
                       appTheme: appTheme,
                       title: account?.name ?? '',
-                      address: account?.evmAddress ?? '',
+                      address: account?.aEvmInfo.address ?? '',
                     );
                   }
               ),

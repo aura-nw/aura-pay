@@ -130,13 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // Hàm kiểm tra nhập mnemonic
   bool testImportWallet() {
-
-    try{
-      AddressValidator.validate(expectedAddress: 'aura1vtrvc5ryvhjnuekc55m6hjd8pmfwfn42vwg652', privateKey: '0e63dd62f94699348a88dde6c075dd970b83d4091a03ad7c5b51adc95129c229');
-    }catch(e){
-      print('run error ${e}');
-    }
-
     AWallet wallet = WalletCore.walletManagement.importWallet(_mnemonic);
     print('TestCase #2 privateKey: ${wallet.privateKey}');
     if (wallet.wallet == null) return false; // Kiểm tra nếu wallet không null

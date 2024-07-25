@@ -5,6 +5,7 @@ import 'package:pyxis_v2/src/application/global/app_global_state/app_global_cubi
 import 'package:pyxis_v2/src/application/global/app_global_state/app_global_state.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/utils/copy.dart';
@@ -12,6 +13,7 @@ import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/core/utils/toast.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_state.dart';
 import 'package:pyxis_v2/src/presentation/widgets/yeti_bot_message_widget.dart';
+import 'package:wallet_core/wallet_core.dart';
 import 'generate_wallet_cubit.dart';
 import 'generate_wallet_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/app_button.dart';
@@ -39,26 +41,6 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
     _cubit.generateWallet();
   }
 
-  void _insertMessage(int delayMs, String messageKey,
-      {int groupId = 0, int type = 0, String? object}) async {
-    final localization = AppLocalizationManager.of(context);
-    await Future.delayed(Duration(milliseconds: delayMs));
-
-    final message = YetiBotMessageObject(
-      data: localization.translate(messageKey),
-      groupId: groupId,
-      type: type,
-      object: object,
-    );
-
-    setState(() {
-      _messages.insert(0, message);
-    });
-
-    _messageKey.currentState
-        ?.insertItem(0, duration: const Duration(milliseconds: 300));
-  }
-
   void _addContent() async {
     final localization = AppLocalizationManager.of(context);
     const messageDelays = [
@@ -80,8 +62,14 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
           groupId: i == messageDelays.length - 1 ? 2 : i,
           type: i == messageDelays.length - 1 ? 1 : 0,
           object: i == messageDelays.length - 1
-              ? _cubit.state.wallet?.address
-              : null,
+              ? [
+                  bech32.convertEthAddressToBech32Address(
+                    AppLocalConstant.auraPrefix,
+                    _cubit.state.wallet?.address ?? '',
+                  ),
+                  _cubit.state.wallet?.address ?? '',
+                ]
+              : [],
         ),
       );
       _messageKey.currentState
@@ -125,7 +113,7 @@ class _GenerateWalletScreenState extends State<GenerateWalletScreen>
                     appTheme: appTheme,
                     messageObject: _messages[index],
                     nextGroup: _messages.getIndex(index + 1)?.groupId,
-                    onCopy: () => copy(_messages[index].object),
+                    onCopy: (value) => copy(value),
                     localization: localization,
                     lastGroup: _messages.getIndex(index - 1)?.groupId,
                   ),

@@ -11,16 +11,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
   @override
   Future<AccountDto> add<P>(P param) async {
     final AddAccountRequestDto p = param as AddAccountRequestDto;
-    AccountDb accountDb = AccountDb(
-      aName: p.name,
-      aEvmAddress: p.evmAddress,
-      aKeyStoreId: p.keyStoreId,
-      aCosmosAddress: p.cosmosAddress,
-      aCreateType: p.createType,
-      aType: p.type,
-      aControllerKeyType: p.controllerKeyType,
-      aIndex: p.index,
-    );
+    AccountDb accountDb = p.mapRequestToDb;
 
     await _database.writeTxn(
       () async {
@@ -72,10 +63,10 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
     if (accountDb != null) {
       accountDb = accountDb.copyWith(
         name: p.name,
-        evmAddress: p.evmAddress,
-        cosmosAddress: p.cosmosAddress,
         keyStoreId: p.keyStoreId,
         index: p.index,
+        aEvmInfoDb: p.updateAEvmInfoRequest?.mapRequestToDb,
+        aCosmosInfoDb: p.updateACosmosInfoRequest?.mapRequestToDb,
       );
 
       await _database.writeTxn(

@@ -20,9 +20,9 @@ extension AppNetworkExtension on AppNetwork{
   String getAddress(Account account){
     switch(type){
       case AppNetworkType.cosmos:
-        return account.cosmosAddress ?? '';
+        return account.aCosmosInfo.address;
       case AppNetworkType.evm:
-        return account.evmAddress;
+        return account.aEvmInfo.address;
       case AppNetworkType.other:
         return '';
     }

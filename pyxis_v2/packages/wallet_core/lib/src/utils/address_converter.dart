@@ -1,6 +1,8 @@
 import 'package:bech32/bech32.dart';
 import 'package:web3dart/crypto.dart' as evmCrypto;
 
+export 'package:bech32/bech32.dart';
+
 extension Bech32Extension on List<int> {
   List<int> toBech32Words() {
     final words = <int>[];

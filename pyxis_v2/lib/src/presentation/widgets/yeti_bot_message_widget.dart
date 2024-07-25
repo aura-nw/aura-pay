@@ -8,6 +8,7 @@ import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
+import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 
 final class YetiBotMessageObject<T> {
   final int groupId;
@@ -89,65 +90,71 @@ final class YetiBotTextMessageWidget extends YetiBotMessageWidget {
 
 final class YetiBotAddressMessageWidget extends YetiBotMessageWidget {
   final String text;
-  final String address;
-  final VoidCallback? opCopy;
+  final List<String> addresses;
+  final void Function(String)? opCopy;
 
   const YetiBotAddressMessageWidget({
     required super.appTheme,
     required this.text,
-    required this.address,
+    required this.addresses,
     this.opCopy,
     super.key,
   });
 
   @override
   Widget child(BuildContext context) {
-    return GestureDetector(
-      onTap: opCopy,
-      behavior: HitTestBehavior.opaque,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            text,
-            style: AppTypoGraPhy.textSmRegular.copyWith(
-              color: appTheme.textPrimary,
-            ),
-            textAlign: TextAlign.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          text,
+          style: AppTypoGraPhy.textSmRegular.copyWith(
+            color: appTheme.textPrimary,
           ),
-          const SizedBox(
-            height: BoxSize.boxSize04,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Spacing.spacing03,
-              vertical: Spacing.spacing02,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                BorderRadiusSize.borderRadius03,
-              ),
-              color: appTheme.bgSecondary,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Text(
-                    address.addressView,
+          textAlign: TextAlign.start,
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize04,
+        ),
+        Column(
+          children: addresses.map((address) {
+            return GestureDetector(
+              onTap: () =>  opCopy?.call(address),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Spacing.spacing03,
+                  vertical: Spacing.spacing02,
+                ),
+                margin: const EdgeInsets.only(
+                  bottom: Spacing.spacing03,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    BorderRadiusSize.borderRadius03,
                   ),
+                  color: appTheme.bgSecondary,
                 ),
-                const SizedBox(
-                  width: BoxSize.boxSize04,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        address.addressView,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: BoxSize.boxSize04,
+                    ),
+                    SvgPicture.asset(
+                      AssetIconPath.icCommonCopy,
+                    ),
+                  ],
                 ),
-                SvgPicture.asset(
-                  AssetIconPath.icCommonCopy,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+              ),
+            );
+          },).toList(),
+        ),
+      ],
     );
   }
 }
@@ -158,7 +165,7 @@ final class YetiBotMessageBuilder extends StatelessWidget {
   final YetiBotMessageObject messageObject;
   final int? nextGroup;
   final int? lastGroup;
-  final VoidCallback? onCopy;
+  final void Function(String)? onCopy;
 
   const YetiBotMessageBuilder({
     required this.appTheme,
@@ -235,7 +242,7 @@ final class YetiBotMessageBuilder extends StatelessWidget {
     return YetiBotAddressMessageWidget(
       appTheme: appTheme,
       text: messageObject.data,
-      address: messageObject.object.toString(),
+      addresses: messageObject.object,
       opCopy: onCopy,
     );
   }

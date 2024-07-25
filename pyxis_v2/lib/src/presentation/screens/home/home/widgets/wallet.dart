@@ -53,9 +53,9 @@ class HomePageWalletCardWidget extends StatelessWidget {
               return WalletMultiAddressInfoWidget(
                 appTheme: appTheme,
                 title: account?.name ?? '',
-                address: account?.evmAddress ?? '',
+                address: account?.aEvmInfo.address ?? '',
                 avatarAsset: avatarAsset,
-                cosmosAddress: account?.cosmosAddress ?? '',
+                cosmosAddress: account?.aCosmosInfo.address ?? '',
               );
             },
           ),
