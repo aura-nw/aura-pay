@@ -1,6 +1,4 @@
 class Constants {
-  static const String derivationPathEthereum = "m/49'/60'/0'/0/0";
-  static const String derivationPathCosmos = "m/44'/118'/0'/0/0";
+  static const String derivationPathEthereum = "m/44'/60'/0'/0/0";
   static const int defaultCoinType = 60;
-  static const int cosmosCoinType = 118;
 }
