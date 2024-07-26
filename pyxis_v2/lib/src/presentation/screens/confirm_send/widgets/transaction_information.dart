@@ -143,24 +143,14 @@ final class TransactionInformationWidget extends StatelessWidget {
         const SizedBox(
           height: BoxSize.boxSize02,
         ),
-        // SendTransactionConfirmationAmountSelector(
-        //   builder: (amount) {
-        //     double amountD = double.tryParse(amount) ?? 0;
-        //     return SendTransactionConfirmationFeeSelector(
-        //       builder: (fee) {
-        //         double feeD = double.tryParse(fee.formatAura) ?? 0;
-        //         return Text(
-        //           '${(amountD + feeD).formatAuraNumber} ${localization.translate(
-        //             LanguageKey.commonAura,
-        //           )}',
-        //           style: AppTypoGraPhy.displayXsBold.copyWith(
-        //             color: appTheme.textBrandPrimary,
-        //           ),
-        //         );
-        //       },
-        //     );
-        //   },
-        // ),
+        Text(
+          '${(amount)} ${localization.translate(
+            LanguageKey.commonAura,
+          )}',
+          style: AppTypoGraPhy.displayXsBold.copyWith(
+            color: appTheme.textBrandPrimary,
+          ),
+        ),
         const SizedBox(
           height: BoxSize.boxSize06,
         ),

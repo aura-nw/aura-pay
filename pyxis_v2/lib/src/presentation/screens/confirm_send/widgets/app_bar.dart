@@ -55,14 +55,6 @@ final class ConfirmSendScreenAppBar extends StatelessWidget {
                 color: appTheme.textPrimary,
               ),
             ),
-            const SizedBox(
-              width: BoxSize.boxSize02,
-            ),
-            SvgPicture.asset(
-              AssetIconPath.icCommonArrowDown,
-              width: BoxSize.boxSize04,
-              height: BoxSize.boxSize04,
-            ),
           ],
         ),
       ],

@@ -8,6 +8,7 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/network.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
+import 'package:pyxis_v2/src/navigator.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_selector.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_state.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/widgets/app_bar.dart';
@@ -115,6 +116,16 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
                   LanguageKey.sendScreenNext,
                 ),
                 isDisable: !already,
+                onPress: () {
+                  final state = _bloc.state;
+                  AppNavigator.push(RoutePath.confirmSend, {
+                    'appNetwork': state.selectedNetwork,
+                    'account': state.account,
+                    'amount': state.amountToSend,
+                    'recipient': state.toAddress,
+                    'balance': state.selectedToken,
+                  });
+                },
               );
             },
           ),

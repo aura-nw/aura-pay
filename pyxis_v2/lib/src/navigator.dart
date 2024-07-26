@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/core/app_routes.dart';
+import 'package:pyxis_v2/src/presentation/screens/confirm_send/confirm_send_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_creen.dart';
 import 'package:pyxis_v2/src/presentation/screens/get_started/get_started_screen.dart';
@@ -29,6 +30,7 @@ sealed class RoutePath {
   static const String home = '${_base}home';
 
   static const String send = '$home/send';
+  static const String confirmSend = '$send/confirm';
 }
 
 sealed class AppNavigator {
@@ -99,6 +101,20 @@ sealed class AppNavigator {
       case RoutePath.send:
         return _defaultRoute(
           const SendScreen(),
+          settings,
+        );
+
+      case RoutePath.confirmSend:
+        final Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        return _defaultRoute(
+          ConfirmSendScreen(
+            appNetwork: arguments['appNetwork'],
+            account: arguments['account'],
+            amount: arguments['amount'],
+            recipient: arguments['recipient'],
+            balance: arguments['balance'],
+          ),
           settings,
         );
       default:

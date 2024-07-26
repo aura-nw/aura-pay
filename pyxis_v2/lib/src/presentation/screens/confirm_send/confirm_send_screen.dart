@@ -15,12 +15,14 @@ final class ConfirmSendScreen extends StatefulWidget {
   final Account account;
   final String amount;
   final String recipient;
+  final Balance balance;
 
   const ConfirmSendScreen({
     required this.appNetwork,
     required this.account,
     required this.amount,
     required this.recipient,
+    required this.balance,
     super.key,
   });
 
@@ -47,9 +49,7 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
                   ),
                   recipient: widget.recipient,
                   appTheme: appTheme,
-                  onEditFee: () {
-
-                  },
+                  onEditFee: () {},
                   localization: localization,
                 ),
               ],
