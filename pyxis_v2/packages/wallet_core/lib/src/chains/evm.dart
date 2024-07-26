@@ -60,7 +60,6 @@ class EvmChainClient {
 
   Future<Uint8List> createTransaction({
     required AWallet wallet,
-    required String toAddress,
     required BigInt amount,
     required BigInt gasLimit,
     required String recipient,
@@ -78,6 +77,41 @@ class EvmChainClient {
       transaction: Ethereum.Transaction(
         transfer: Ethereum.Transaction_Transfer(
           amount: amount.toUin8List(),
+        ),
+      ),
+    );
+
+    final Uint8List signBytes = AnySigner.sign(
+      signingInput.writeToBuffer(),
+      TWCoinType.TWCoinTypeEthereum,
+    );
+
+    final outPut = Ethereum.SigningOutput.fromBuffer(signBytes);
+
+    return Uint8List.fromList(outPut.encoded);
+  }
+
+  Future<Uint8List> createErc20Transaction({
+    required AWallet wallet,
+    required BigInt amount,
+    required BigInt gasLimit,
+    required String contractAddress,
+    required String recipient,
+  }) async {
+    final BigInt chainId = await _web3client.getChainId();
+
+    final EtherAmount gasPrice = await _web3client.getGasPrice();
+
+    Ethereum.SigningInput signingInput = Ethereum.SigningInput(
+      toAddress: contractAddress,
+      privateKey: wallet.privateKeyData,
+      chainId: chainId.toUin8List(),
+      gasPrice: gasPrice.getInWei.toUin8List(),
+      gasLimit: gasLimit.toUin8List(),
+      transaction: Ethereum.Transaction(
+        erc20Transfer: Ethereum.Transaction_ERC20Transfer(
+          amount: amount.toUin8List(),
+          to: recipient,
         ),
       ),
     );

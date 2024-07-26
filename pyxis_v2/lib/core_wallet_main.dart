@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:wallet_core/wallet_core.dart';
 
@@ -209,12 +211,16 @@ class _MyHomePageState extends State<MyHomePage> {
           WalletCore.walletManagement.importWalletWithPrivateKey("");
 
       EvmChainClient evmChains = EvmChainClient(ChainList.auraEuphoria);
-      var txHash = evmChains.sendTransaction(
+
+      Uint8List tx = await evmChains.createTransaction(
         wallet: wallet,
-        toAddress: '',
         amount: BigInt.parse('0348bca5a16000', radix: 16),
-        gasPrice: BigInt.parse('d693a400', radix: 16),
         gasLimit: BigInt.parse('5208', radix: 16),
+        recipient: ''
+      );
+
+      var txHash = evmChains.sendTransaction(
+        rawTransaction: tx
       );
 
       print('Transaction hash: $txHash');
