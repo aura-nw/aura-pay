@@ -1,10 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:http/http.dart';
-import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as Ethereum;
-import 'package:wallet_core/src/extensions/bigint_extension.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as Ethereum;
 
 class EvmChainClient {
   final ChainInfo chainInfo;
@@ -58,7 +57,7 @@ class EvmChainClient {
     }
   }
 
-  Future<Uint8List> createTransaction({
+  Future<Ethereum.SigningOutput> createTransferTransaction({
     required AWallet wallet,
     required BigInt amount,
     required BigInt gasLimit,
@@ -79,31 +78,18 @@ class EvmChainClient {
       ),
     );
 
-    Ethereum.SigningInput signingInput = Ethereum.SigningInput(
-      toAddress: recipient,
+    return createEvmTransferTransaction(
       privateKey: wallet.privateKeyData,
-      chainId: chainId.toUin8List(),
-      gasPrice: gasPrice.toUin8List(),
-      gasLimit: gasLimit.toUin8List(),
-      nonce: BigInt.from(nonce).toUin8List(),
-      transaction: Ethereum.Transaction(
-        transfer: Ethereum.Transaction_Transfer(
-          amount: amount.toUin8List(),
-        ),
-      ),
+      chainId: chainId,
+      amount: amount,
+      gasLimit: gasLimit,
+      recipient: recipient,
+      gasPrice: gasPrice,
+      nonce: BigInt.from(nonce),
     );
-
-    final Uint8List signBytes = AnySigner.sign(
-      signingInput.writeToBuffer(),
-      TWCoinType.TWCoinTypeEthereum,
-    );
-
-    final outPut = Ethereum.SigningOutput.fromBuffer(signBytes);
-
-    return Uint8List.fromList(outPut.encoded);
   }
 
-  Future<Uint8List> createErc20Transaction({
+  Future<Ethereum.SigningOutput> createErc20Transaction({
     required AWallet wallet,
     required BigInt amount,
     required BigInt gasLimit,
@@ -125,36 +111,23 @@ class EvmChainClient {
       ),
     );
 
-    Ethereum.SigningInput signingInput = Ethereum.SigningInput(
-      toAddress: contractAddress,
+    return createErc20TransferTransaction(
       privateKey: wallet.privateKeyData,
-      chainId: chainId.toUin8List(),
-      gasPrice: gasPrice.toUin8List(),
-      gasLimit: gasLimit.toUin8List(),
-      nonce: BigInt.from(nonce).toUin8List(),
-      transaction: Ethereum.Transaction(
-        erc20Transfer: Ethereum.Transaction_ERC20Transfer(
-          amount: amount.toUin8List(),
-          to: recipient,
-        ),
-      ),
+      chainId: chainId,
+      amount: amount,
+      gasLimit: gasLimit,
+      contractAddress: contractAddress,
+      recipient: recipient,
+      gasPrice: gasPrice,
+      nonce: BigInt.from(nonce),
     );
-
-    final Uint8List signBytes = AnySigner.sign(
-      signingInput.writeToBuffer(),
-      TWCoinType.TWCoinTypeEthereum,
-    );
-
-    final outPut = Ethereum.SigningOutput.fromBuffer(signBytes);
-
-    return Uint8List.fromList(outPut.encoded);
   }
 
   Future<BigInt> estimateGas({
     required String sender,
     required BigInt amount,
     required String recipient,
-    Uint8List ?data,
+    Uint8List? data,
   }) async {
     return _web3client.estimateGas(
       to: EthereumAddress.fromHex(recipient),

@@ -15,13 +15,15 @@ class ConfirmSendState with _$ConfirmSendState {
   const factory ConfirmSendState({
     @Default(ConfirmSendStatus.init) ConfirmSendStatus status,
     String? error,
-    @Default('0') String fee,
-    @Default('0') String highFee,
-    @Default('0') String lowFee,
+    @Default(false) bool isShowFullMsg,
+    @Default({}) Map<String,dynamic> msg,
     required AppNetwork appNetwork,
     required Account account,
     required String amount,
     required String recipient,
     required Balance balance,
+    required BigInt gasEstimation,
+    required BigInt gasPrice,
+    required BigInt gasPriceToSend,
   }) = _ConfirmSendState;
 }

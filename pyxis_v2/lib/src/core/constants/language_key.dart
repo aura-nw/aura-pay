@@ -136,6 +136,7 @@ sealed class LanguageKey {
   static const String confirmSendScreenAppBarTitle = 'confirm_send_screen_app_bar_title';
   static const String confirmSendScreenMessages = 'confirm_send_screen_messages';
   static const String confirmSendScreenViewData = 'confirm_send_screen_view_data';
+  static const String confirmSendScreenViewCompile = 'confirm_send_screen_view_compile';
   static const String confirmSendScreenSend = 'confirm_send_screen_send';
   static const String confirmSendScreenTo = 'confirm_send_screen_to';
   static const String confirmSendScreenTotal = 'confirm_send_screen_total';
@@ -150,5 +151,7 @@ sealed class LanguageKey {
   static const String confirmSendScreenSendEditFeeFaster = 'confirm_send_screen_edit_fee_slower';
   static const String confirmSendScreenSendEditFeeConfirm = 'confirm_send_screen_edit_fee_confirm';
   static const String confirmSendScreenConfirmSend = 'confirm_send_screen_confirm_send';
+  static const String confirmSendScreenMemo = 'confirm_send_screen_memo';
+  static const String confirmSendScreenMemoHint = 'confirm_send_screen_memo_hint';
   
 }

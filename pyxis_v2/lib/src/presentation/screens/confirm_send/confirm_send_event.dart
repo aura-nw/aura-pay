@@ -9,5 +9,6 @@ class ConfirmSendEvent with _$ConfirmSendEvent {
   const factory ConfirmSendEvent.onChangeFee({required String fee}) =
       ConfirmSendOnChangeFeeEvent;
 
+  const factory ConfirmSendEvent.onChangeIsShowedMessage() = ConfirmSendOnChangeIsShowedMessageEvent;
   const factory ConfirmSendEvent.onSubmit() = ConfirmSendOnSubmitEvent;
 }

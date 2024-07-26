@@ -64,10 +64,13 @@ sealed class AssetIconPath {
   static const String icCommonShare = '${_baseIconPath}ic_common_share.svg';
   static const String icCommonFeeEdit = '${_baseIconPath}ic_common_edit_fee.svg';
   static const String icCommonSearch = '${_baseIconPath}ic_common_search.svg';
+  static const String icCommonSignMessage = '${_baseIconPath}ic_common_sign_message.svg';
 
   static const String icHomeScreenBottomNavigationBarBrowser = '${_baseIconPath}ic_home_screen_bottom_navigation_bar_browser.svg';
   static const String icHomeScreenBottomNavigationBarWallet = '${_baseIconPath}ic_home_screen_bottom_navigator_bar_wallet.svg';
   static const String icHomeScreenBottomNavigationBarHistory = '${_baseIconPath}ic_home_screen_bottom_navigation_bar_history.svg';
   static const String icHomeScreenBottomNavigationBarSetting= '${_baseIconPath}ic_home_screen_bottom_navigation_bar_setting.svg';
   static const String icHomeScreenBottomNavigationBarHome= '${_baseIconPath}ic_home_screen_bottom_navigation_bar_home.svg';
+
+  static const String icConfirmSendScreenViewMessage = '${_baseIconPath}ic_confirm_send_screen_view_message.svg';
 }

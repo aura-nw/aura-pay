@@ -7,6 +7,9 @@ import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/utils/app_util.dart';
+import 'package:pyxis_v2/src/presentation/screens/confirm_send/widgets/message_form.dart';
+import 'package:pyxis_v2/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_provider.dart';
+import 'package:pyxis_v2/src/presentation/widgets/change_fee_form_widget.dart';
 import 'confirm_send_bloc.dart';
 import 'confirm_send_event.dart';
 import 'widgets/app_bar.dart';
@@ -65,28 +68,41 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
     return Column(
       children: [
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TransactionInformationWidget(
-                  accountName: widget.account.name,
-                  amount: widget.amount,
-                  from: widget.appNetwork.getAddress(
-                    widget.account,
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: ConfirmSendScreenMessageFormWidget(
+                    appTheme: appTheme,
+                    localization: localization,
+                    onChangeIsShowedMsg: _onChangeIsShowedMsg,
+                    amount: widget.amount,
+                    tokenName: 'tokenName',
+                    recipient: widget.recipient,
+                    networkType: widget.appNetwork.type,
                   ),
-                  recipient: widget.recipient,
-                  appTheme: appTheme,
-                  onEditFee: () {},
-                  localization: localization,
                 ),
-              ],
-            ),
+              ),
+              TransactionInformationWidget(
+                accountName: widget.account.name,
+                amount: widget.amount,
+                from: widget.appNetwork.getAddress(
+                  widget.account,
+                ),
+                recipient: widget.recipient,
+                appTheme: appTheme,
+                onEditFee: () {},
+                localization: localization,
+                balance: widget.balance,
+              ),
+            ],
           ),
         ),
         PrimaryAppButton(
           text: localization.translate(
             LanguageKey.confirmSendScreenConfirmSend,
           ),
+          onPress: _onSubmit,
         ),
       ],
     );
@@ -110,6 +126,48 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
         ),
         body: child,
       ),
+    );
+  }
+
+  void _onChangeIsShowedMsg() {
+    _bloc.add(
+      const ConfirmSendOnChangeIsShowedMessageEvent(),
+    );
+  }
+
+  void _onEditFee(
+    AppTheme appTheme,
+    AppLocalizationManager localization,
+    double max,
+    double min,
+    double currentValue,
+  ) async {
+    final gasPrice = await AppBottomSheetProvider.showFullScreenDialog<double?>(
+      context,
+      child: ChangeFeeFormWidget(
+        max: max,
+        min: min,
+        currentValue: currentValue,
+        appTheme: appTheme,
+        localization: localization,
+      ),
+      appTheme: appTheme,
+    );
+
+    print(gasPrice);
+
+    if (gasPrice != null) {
+      // _bloc.add(
+      //   ConfirmSendOnChangeFeeEvent(
+      //     fee: gasPrice.,
+      //   ),
+      // );
+    }
+  }
+
+  void _onSubmit() {
+    _bloc.add(
+      const ConfirmSendOnSubmitEvent(),
     );
   }
 }

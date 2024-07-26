@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
@@ -7,6 +8,7 @@ import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
+import 'package:pyxis_v2/src/presentation/screens/confirm_send/confirm_send_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/divider_widget.dart';
 
 abstract class _TransactionInformationBaseWidget extends StatelessWidget {
@@ -65,9 +67,11 @@ abstract class _TransactionInformationBaseWidget extends StatelessWidget {
 final class _TransactionInformationFeeWidget
     extends _TransactionInformationBaseWidget {
   final VoidCallback onEditFee;
+  final AppLocalizationManager localization;
 
   const _TransactionInformationFeeWidget({
     required this.onEditFee,
+    required this.localization,
     required super.title,
     required super.information,
     required super.appTheme,
@@ -89,8 +93,23 @@ final class _TransactionInformationFeeWidget
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: onEditFee,
-          child: SvgPicture.asset(
-            AssetIconPath.icCommonFeeEdit,
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                AssetIconPath.icCommonFeeEdit,
+              ),
+              const SizedBox(
+                width: BoxSize.boxSize03,
+              ),
+              Text(
+                localization.translate(
+                  LanguageKey.confirmSendScreenSendEdit,
+                ),
+                style: AppTypoGraPhy.textSmSemiBold.copyWith(
+                  color: appTheme.textBrandPrimary,
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -115,6 +134,7 @@ final class TransactionInformationWidget extends StatelessWidget {
   final AppTheme appTheme;
   final VoidCallback onEditFee;
   final AppLocalizationManager localization;
+  final Balance balance;
 
   const TransactionInformationWidget({
     required this.accountName,
@@ -124,6 +144,7 @@ final class TransactionInformationWidget extends StatelessWidget {
     required this.appTheme,
     required this.onEditFee,
     required this.localization,
+    required this.balance,
     super.key,
   });
 
@@ -132,6 +153,12 @@ final class TransactionInformationWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        DividerSeparator(
+          appTheme: appTheme,
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize06,
+        ),
         Text(
           localization.translate(
             LanguageKey.confirmSendScreenTotal,
@@ -143,13 +170,30 @@ final class TransactionInformationWidget extends StatelessWidget {
         const SizedBox(
           height: BoxSize.boxSize02,
         ),
-        Text(
-          '${(amount)} ${localization.translate(
-            LanguageKey.commonAura,
-          )}',
-          style: AppTypoGraPhy.displayXsBold.copyWith(
-            color: appTheme.textBrandPrimary,
-          ),
+        ConfirmSendGasEstimationSelector(
+          builder: (gasEstimation) {
+            return ConfirmSendGasPriceSelector(
+              builder: (gasPrice) {
+                final BigInt fee = gasEstimation * gasPrice;
+
+                String feeS = balance.type.formatBalance(
+                  fee.toString(),
+                  customDecimal: balance.decimal,
+                );
+
+                String total = (double.parse(feeS) + double.parse(amount)).toString();
+
+                return Text(
+                  '${(total)} ${localization.translate(
+                    LanguageKey.commonAura,
+                  )}',
+                  style: AppTypoGraPhy.displayXsBold.copyWith(
+                    color: appTheme.textBrandPrimary,
+                  ),
+                );
+              }
+            );
+          }
         ),
         const SizedBox(
           height: BoxSize.boxSize06,
@@ -183,18 +227,29 @@ final class TransactionInformationWidget extends StatelessWidget {
           )}',
           appTheme: appTheme,
         ),
-        // SendTransactionConfirmationFeeSelector(
-        //   builder: (fee) {
-        //     return _TransactionInformationFeeWidget(
-        //       onEditFee: onEditFee,
-        //       titleKey: LanguageKey.sendTransactionConfirmationScreenFee,
-        //       information: '${fee.formatAura} ${localization.translate(
-        //         LanguageKey.commonAura,
-        //       )}',
-        //       appTheme: appTheme,
-        //     );
-        //   },
-        // )
+        ConfirmSendGasEstimationSelector(
+          builder: (gasEstimation) {
+            return ConfirmSendGasPriceSelector(
+              builder: (gasPrice) {
+                final BigInt fee = gasEstimation * gasPrice;
+                return _TransactionInformationFeeWidget(
+                  onEditFee: onEditFee,
+                  localization: localization,
+                  title: localization.translate(
+                    LanguageKey.confirmSendScreenSendFee,
+                  ),
+                  information: '${balance.type.formatBalance(
+                    fee.toString(),
+                    customDecimal: balance.decimal,
+                  )} ${localization.translate(
+                    LanguageKey.commonAura,
+                  )}',
+                  appTheme: appTheme,
+                );
+              },
+            );
+          },
+        )
       ],
     );
   }

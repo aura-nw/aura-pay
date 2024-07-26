@@ -212,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       EvmChainClient evmChains = EvmChainClient(ChainList.auraEuphoria);
 
-      Uint8List tx = await evmChains.createTransaction(
+      final msg = await evmChains.createTransferTransaction(
         wallet: wallet,
         amount: BigInt.parse('0348bca5a16000', radix: 16),
         gasLimit: BigInt.parse('5208', radix: 16),
@@ -220,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
       var txHash = evmChains.sendTransaction(
-        rawTransaction: tx
+        rawTransaction: Uint8List.fromList(msg.encoded)
       );
 
       print('Transaction hash: $txHash');

@@ -121,13 +121,16 @@
   "confirm_send_screen_app_bar_title" : "Send",
   "confirm_send_screen_messages" : "Messages",
   "confirm_send_screen_view_data" : "View data",
+  "confirm_send_screen_view_compile" : "View compile",
   "confirm_send_screen_send" : "Send",
   "confirm_send_screen_to" : "to",
   "confirm_send_screen_total" : "Total",
-  "confirm_send_screen_from" : "from",
+  "confirm_send_screen_from" : "From",
   "confirm_send_screen_recipient" : "Recipient",
   "confirm_send_screen_send_amount" : "Send amount",
   "confirm_send_screen_send_fee" : "Transaction fee",
   "confirm_send_screen_send_edit" : "Edit",
-  "confirm_send_screen_confirm_send" : "Confirm Send"
+  "confirm_send_screen_confirm_send" : "Confirm Send",
+  "confirm_send_screen_memo" : "Memo",
+  "confirm_send_screen_memo_hint" : "Input memo..."
 }
