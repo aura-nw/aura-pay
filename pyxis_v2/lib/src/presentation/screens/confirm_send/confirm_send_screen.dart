@@ -1,9 +1,14 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_v2/app_configs/di.dart';
+import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/utils/app_util.dart';
+import 'confirm_send_bloc.dart';
+import 'confirm_send_event.dart';
 import 'widgets/app_bar.dart';
 import 'widgets/transaction_information.dart';
 import 'package:pyxis_v2/src/presentation/widgets/app_bar_widget.dart';
@@ -32,6 +37,28 @@ final class ConfirmSendScreen extends StatefulWidget {
 
 class _ConfirmSendScreenState extends State<ConfirmSendScreen>
     with StateFulBaseScreen {
+  final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
+  late ConfirmSendBloc _bloc;
+
+  @override
+  void initState() {
+    _bloc = getIt.get<ConfirmSendBloc>(
+      param1: _config,
+      param2: {
+        'network': widget.appNetwork,
+        'account': widget.account,
+        'amount': widget.amount,
+        'recipient': widget.recipient,
+        'balance': widget.balance,
+      },
+    );
+
+    _bloc.add(
+      const ConfirmSendOnInitEvent(),
+    );
+    super.initState();
+  }
+
   @override
   Widget child(BuildContext context, AppTheme appTheme,
       AppLocalizationManager localization) {
@@ -68,18 +95,21 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
   @override
   Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
       AppLocalizationManager localization) {
-    return Scaffold(
-      backgroundColor: appTheme.bgPrimary,
-      appBar: AppBarDefault(
-        appTheme: appTheme,
-        localization: localization,
-        title: ConfirmSendScreenAppBar(
+    return BlocProvider.value(
+      value: _bloc,
+      child: Scaffold(
+        backgroundColor: appTheme.bgPrimary,
+        appBar: AppBarDefault(
           appTheme: appTheme,
           localization: localization,
-          appNetwork: widget.appNetwork,
+          title: ConfirmSendScreenAppBar(
+            appTheme: appTheme,
+            localization: localization,
+            appNetwork: widget.appNetwork,
+          ),
         ),
+        body: child,
       ),
-      body: child,
     );
   }
 }

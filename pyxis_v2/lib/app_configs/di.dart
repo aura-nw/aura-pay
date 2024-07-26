@@ -18,6 +18,7 @@ import 'package:pyxis_v2/src/application/provider/service/balance/balance_servic
 import 'package:pyxis_v2/src/application/provider/service/nft/nft_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/service/token_market/remote_token_market_service_impl.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_v2/src/presentation/screens/confirm_send/confirm_send_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/get_started/get_started_cubit.dart';
@@ -332,7 +333,7 @@ Future<void> initDependency(
   );
 
   getIt.registerFactory<HomeBloc>(
-        () => HomeBloc(
+    () => HomeBloc(
       getIt.get<AccountUseCase>(),
     ),
   );
@@ -352,6 +353,19 @@ Future<void> initDependency(
       getIt.get<BalanceUseCase>(),
       getIt.get<TokenMarketUseCase>(),
       appNetworks: networks,
+    ),
+  );
+
+  getIt.registerFactoryParam<ConfirmSendBloc, PyxisMobileConfig,
+      Map<String, dynamic>>(
+    (config, arguments) => ConfirmSendBloc(
+      getIt.get<KeyStoreUseCase>(),
+      config: config,
+      recipient: arguments['recipient'],
+      balance: arguments['balance'],
+      amount: arguments['amount'],
+      account: arguments['account'],
+      appNetwork: arguments['network'],
     ),
   );
 }

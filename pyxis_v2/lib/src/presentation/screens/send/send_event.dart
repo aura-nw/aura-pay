@@ -9,7 +9,6 @@ class SendEvent with _$SendEvent {
 
   const factory SendEvent.onChangeTo({
     required String address,
-    required String ?addressName,
   }) = SendOnChangeToEvent;
 
   const factory SendEvent.onChangeAmount({
@@ -19,4 +18,7 @@ class SendEvent with _$SendEvent {
   const factory SendEvent.changeSaved() = SendOnChangeSavedEvent;
 
   const factory SendEvent.onChangeNetwork(AppNetwork network) = SendOnChangeNetworkEvent;
+
+
+  const factory SendEvent.onChangeToken(Balance token) = SendOnChangeTokenEvent;
 }

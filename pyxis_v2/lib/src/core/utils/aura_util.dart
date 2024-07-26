@@ -25,6 +25,11 @@ extension AddressExtension on String? {
 
 extension FormatAuraByType on TokenType{
   String formatBalance(String balance,{int ?customDecimal}){
+
+    if(customDecimal != null){
+      customDecimal = pow(10, customDecimal).toInt();
+    }
+
     int decimal = 1000000000000000000;
     switch(this){
       case TokenType.native:
@@ -42,6 +47,31 @@ extension FormatAuraByType on TokenType{
     String auraString = (auraD / decimal).toStringAsFixed(6);
 
     return _replaceDot(auraString);
+  }
+
+  BigInt formatBalanceToInt(String balance,{int ?customDecimal}){
+
+    if(customDecimal != null){
+      customDecimal = pow(10, customDecimal).toInt();
+    }
+
+    int decimal = 1000000000000000000;
+    switch(this){
+      case TokenType.native:
+        break;
+      case TokenType.erc20:
+        decimal = customDecimal ?? decimal;
+        break;
+      case TokenType.cw20:
+        decimal = customDecimal ?? decimal;
+        break;
+    }
+
+    double auraD = double.tryParse(balance) ?? 0;
+
+    String auraString = (auraD * decimal).toStringAsFixed(6);
+
+    return BigInt.parse(_replaceDot(auraString));
   }
 }
 
@@ -77,6 +107,14 @@ extension AuraNumberFormatter on num {
     String price = toStringAsFixed(4);
 
     return _replaceDot(price);
+  }
+
+  String get formatBalance{
+    if (this == 0) return '0';
+
+    String balance = toStringAsFixed(6);
+
+    return _replaceDot(balance);
   }
 }
 

@@ -1,3 +1,5 @@
+import 'package:wallet_core/wallet_core.dart';
+
 enum PyxisEnvironment {
   serenity,
   staging,
@@ -16,6 +18,16 @@ extension PyxisEnvironmentMapper on PyxisEnvironment {
     }
   }
 
+  ChainInfo get evmChainInfo{
+    switch (this) {
+      case PyxisEnvironment.serenity:
+        return ChainList.auraSerenity;
+      case PyxisEnvironment.staging:
+        return ChainList.auraEuphoria;
+      case PyxisEnvironment.production:
+        return ChainList.auraEVM;
+    }
+  }
 }
 
 /// Represents the entire configuration for the Pyxis Wallet app.
@@ -47,6 +59,29 @@ final class AppConfig {
   }
 }
 
+/// Represents the configuration for chain gas price.
+final class GasPriceStep {
+  final double low;
+  final double average;
+  final double high;
+
+  /// Constructor for creating a [GasPriceStep] instance.
+  const GasPriceStep({
+    required this.low,
+    required this.average,
+    required this.high,
+  });
+
+  /// Factory method for creating a [GasPriceStep] instance from a JSON object.
+  factory GasPriceStep.fromJson(Map<String, dynamic> json) {
+    return GasPriceStep(
+      low: json['low'],
+      average: json['average'],
+      high: json['high'],
+    );
+  }
+}
+
 /// Represents the configuration for the Cosmos chain.
 final class CosmosInfoConfig {
   final String symbol;
@@ -55,6 +90,7 @@ final class CosmosInfoConfig {
   final int decimals;
   final String chainName;
   final String rpc;
+  final GasPriceStep gasPriceStep;
 
   /// Constructor for creating a [CosmosInfoConfig] instance.
   CosmosInfoConfig({
@@ -64,6 +100,7 @@ final class CosmosInfoConfig {
     required this.decimals,
     required this.chainName,
     required this.rpc,
+    required this.gasPriceStep,
   });
 
   /// Factory method for creating a [CosmosInfoConfig] instance from a JSON object.
@@ -75,6 +112,9 @@ final class CosmosInfoConfig {
       decimals: json['decimals'],
       chainName: json['chainName'],
       rpc: json['rpc'],
+      gasPriceStep: GasPriceStep.fromJson(
+        json['gasPrice'],
+      ),
     );
   }
 }
@@ -87,6 +127,7 @@ final class EvmInfoConfig {
   final int decimals;
   final String chainName;
   final String rpc;
+  final GasPriceStep gasPriceStep;
 
   /// Constructor for creating an [EvmInfoConfig] instance.
   EvmInfoConfig({
@@ -96,6 +137,7 @@ final class EvmInfoConfig {
     required this.decimals,
     required this.chainName,
     required this.rpc,
+    required this.gasPriceStep,
   });
 
   /// Factory method for creating an [EvmInfoConfig] instance from a JSON object.
@@ -107,6 +149,9 @@ final class EvmInfoConfig {
       decimals: json['decimals'],
       chainName: json['chainName'],
       rpc: json['rpc'],
+      gasPriceStep: GasPriceStep.fromJson(
+        json['gasPrice'],
+      ),
     );
   }
 }

@@ -90,7 +90,7 @@ final class _TransactionInformationFeeWidget
           behavior: HitTestBehavior.opaque,
           onTap: onEditFee,
           child: SvgPicture.asset(
-            AssetIconPath.commonFeeEdit,
+            AssetIconPath.icCommonFeeEdit,
           ),
         ),
       ],

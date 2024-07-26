@@ -243,7 +243,7 @@ final class HomePageTokensWidget extends StatelessWidget {
                       final amount = double.tryParse(
                             balance.type.formatBalance(
                               balance.balance,
-                              customDecimal: token?.decimal,
+                              customDecimal: balance.decimal ?? token?.decimal,
                             ),
                           ) ??
                           0;

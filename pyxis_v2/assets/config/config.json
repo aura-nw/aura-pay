@@ -6,7 +6,12 @@
     "chainId": "aura_6322-2",
     "decimals" : 6,
     "chainName": "Aura COSMOS",
-    "rpc" : "https://grpc.aura.network"
+    "rpc" : "https://grpc.aura.network",
+    "gasPrice": {
+      "low": 0.001,
+      "average": 0.0025,
+      "high": 0.004
+    }
   },
   "EVM_INFO" : {
     "symbol" : "AURA",
@@ -14,7 +19,12 @@
     "chainId" : 6322,
     "decimals" : 18,
     "chainName": "Aura EVM",
-    "rpc" : "https://jsonrpc.aura.network"
+    "rpc" : "https://jsonrpc.aura.network",
+    "gasPrice": {
+      "low": 0.00001,
+      "average": 0.000025,
+      "high": 0.00004
+    }
   },
   "API" : {
     "v1" : {

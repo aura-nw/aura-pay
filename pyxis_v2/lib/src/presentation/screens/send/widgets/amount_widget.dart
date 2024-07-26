@@ -1,10 +1,14 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_selector.dart';
@@ -15,12 +19,14 @@ import 'package:pyxis_v2/src/presentation/widgets/text_input_base/text_input_man
 class SendScreenAmountToSendWidget extends StatelessWidget {
   final AppLocalizationManager localization;
   final AppTheme appTheme;
-  final void Function(String,bool) onChanged;
+  final void Function(String, bool) onChanged;
+  final void Function(Balance, List<TokenMarket>, List<Balance>) onSelectToken;
 
   const SendScreenAmountToSendWidget({
     required this.appTheme,
     required this.localization,
     required this.onChanged,
+    required this.onSelectToken,
     super.key,
   });
 
@@ -38,6 +44,7 @@ class SendScreenAmountToSendWidget extends StatelessWidget {
           hintText: '0.00',
           keyBoardType: TextInputType.number,
           onChanged: onChanged,
+          onSelectToken: onSelectToken,
           constraintManager: ConstraintManager()
             ..custom(
               errorMessage: localization.translate(
@@ -69,6 +76,7 @@ class SendScreenAmountToSendWidget extends StatelessWidget {
 
 final class _TextInputAmountWidget extends TextInputWidgetBase {
   final AppLocalizationManager localization;
+  final void Function(Balance, List<TokenMarket>, List<Balance>) onSelectToken;
 
   const _TextInputAmountWidget({
     super.obscureText,
@@ -94,6 +102,7 @@ final class _TextInputAmountWidget extends TextInputWidgetBase {
     super.boxConstraints,
     required super.appTheme,
     required this.localization,
+    required this.onSelectToken,
   });
 
   @override
@@ -161,10 +170,10 @@ class _TextInputAmountWidgetState
                         Expanded(
                           child: child,
                         ),
-                        GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          child: SendTokenMarketsSelector(
-                            builder: (tokenMarkets) {
+                        SendTokenMarketsSelector(
+                          builder: (tokenMarkets) {
+                            return SendSelectedNetworkSelector(
+                                builder: (network) {
                               return SendAccountBalanceSelector(
                                 builder: (balance) {
                                   return SendSelectedBalanceSelector(
@@ -173,37 +182,58 @@ class _TextInputAmountWidgetState
                                           tokenMarkets.firstWhereOrNull(
                                         (m) => m.id == token?.tokenId,
                                       );
-                                      return Row(
-                                        children: [
-                                          const SizedBox(
-                                            width: BoxSize.boxSize03,
-                                          ),
-                                          NetworkImageWidget(
-                                            url: AppLocalConstant.auraLogo,
-                                            appTheme: theme,
-                                            width: BoxSize.boxSize05,
-                                            height: BoxSize.boxSize05,
-                                          ),
-                                          const SizedBox(
-                                            width: BoxSize.boxSize04,
-                                          ),
-                                          Text(
-                                            tokenMarket?.symbol ??
-                                                token?.symbol ??
-                                                '',
-                                            style: AppTypoGraPhy.textSmSemiBold
-                                                .copyWith(
-                                              color: theme.textPrimary,
+                                      return GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () {
+                                          widget.onSelectToken(
+                                              token!,
+                                              tokenMarkets,
+                                              network.tokenWithType(
+                                                balance?.balances ?? [],
+                                              ));
+                                        },
+                                        child: Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: BoxSize.boxSize03,
                                             ),
-                                          ),
-                                        ],
+                                            NetworkImageWidget(
+                                              url: tokenMarket?.image ??
+                                                  AppLocalConstant.auraLogo,
+                                              appTheme: theme,
+                                              width: BoxSize.boxSize05,
+                                              height: BoxSize.boxSize05,
+                                            ),
+                                            const SizedBox(
+                                              width: BoxSize.boxSize03,
+                                            ),
+                                            Text(
+                                              tokenMarket?.symbol ??
+                                                  token?.symbol ??
+                                                  '',
+                                              style: AppTypoGraPhy
+                                                  .textSmSemiBold
+                                                  .copyWith(
+                                                color: theme.textPrimary,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: BoxSize.boxSize03,
+                                            ),
+                                            SvgPicture.asset(
+                                              AssetIconPath.icCommonArrowDown,
+                                              width: BoxSize.boxSize05,
+                                              height: BoxSize.boxSize05,
+                                            ),
+                                          ],
+                                        ),
                                       );
                                     },
                                   );
                                 },
                               );
-                            },
-                          ),
+                            });
+                          },
                         ),
                       ],
                     ),

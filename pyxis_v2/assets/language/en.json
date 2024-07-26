@@ -5,6 +5,12 @@
   "common_select_network" : "Select network",
   "common_aura" : "AURA",
 
+  "common_change_fee_transaction_title" : "Speed up transaction",
+  "common_change_fee_transaction_content" : "Estimated transaction fee:",
+  "common_change_fee_transaction_slower" : "Slower",
+  "common_change_fee_transaction_faster" : "Faster",
+  "common_change_fee_transaction_confirm" : "Confirm",
+
   "get_started_screen_create_new_wallet": "Create New Wallet",
   "get_started_screen_add_wallet": "Add Existing Wallet",
   "get_started_screen_or_continue_with": "Or continue with",
@@ -109,6 +115,8 @@
   "send_screen_invalid_address" : "Invalid address.",
   "send_screen_search_token" : "Search token",
   "send_screen_amount_invalid" : "Insufficient balance",
+  "send_screen_select_token_title" : "Select token",
+  "send_screen_select_token_search_hint" : "Search token...",
 
   "confirm_send_screen_app_bar_title" : "Send",
   "confirm_send_screen_messages" : "Messages",
@@ -121,10 +129,5 @@
   "confirm_send_screen_send_amount" : "Send amount",
   "confirm_send_screen_send_fee" : "Transaction fee",
   "confirm_send_screen_send_edit" : "Edit",
-  "confirm_send_screen_edit_fee_title" : "Speed up transaction",
-  "confirm_send_screen_edit_fee_content" : "Estimated transaction fee:",
-  "confirm_send_screen_edit_fee_slower" : "Slower",
-  "confirm_send_screen_edit_fee_faster" : "Faster",
-  "confirm_send_screen_edit_fee_confirm" : "Confirm",
   "confirm_send_screen_confirm_send" : "Confirm Send"
 }

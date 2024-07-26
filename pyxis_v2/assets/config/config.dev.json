@@ -6,7 +6,12 @@
     "chainId": "auradev_1236-2",
     "decimals" : 6,
     "chainName": "Aura COSMOS Serenity",
-    "rpc" : "http://grpc.serenity.aura.network:9092"
+    "rpc" : "http://grpc.serenity.aura.network:9092",
+    "gasPrice": {
+      "low": 0.001,
+      "average": 0.0025,
+      "high": 0.004
+    }
   },
   "EVM_INFO" : {
     "symbol" : "AURA",
@@ -14,7 +19,12 @@
     "chainId" : 6322,
     "decimals" : 18,
     "chainName": "Aura EVM Serenity",
-    "rpc" : "https://jsonrpc.serenity.aura.network"
+    "rpc" : "https://jsonrpc.serenity.aura.network",
+    "gasPrice": {
+      "low": 0.00001,
+      "average": 0.000025,
+      "high": 0.00004
+    }
   },
   "API" : {
     "v1" : {

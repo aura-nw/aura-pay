@@ -2,10 +2,10 @@ import 'package:domain/domain.dart';
 import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:wallet_core/wallet_core.dart';
 
-extension AppNetworkExtension on AppNetwork{
+extension AppNetworkExtension on AppNetwork {
   String get logo {
     String logo = AssetIconPath.icCommonAuraCosmos;
-    switch(type){
+    switch (type) {
       case AppNetworkType.cosmos:
         break;
       case AppNetworkType.evm:
@@ -20,7 +20,7 @@ extension AppNetworkExtension on AppNetwork{
 
   int get coinType {
     // Change later
-    switch(type){
+    switch (type) {
       case AppNetworkType.cosmos:
         return TWCoinType.TWCoinTypeEthereum;
       case AppNetworkType.evm:
@@ -30,14 +30,33 @@ extension AppNetworkExtension on AppNetwork{
     }
   }
 
-  String getAddress(Account account){
-    switch(type){
+  String getAddress(Account account) {
+    switch (type) {
       case AppNetworkType.cosmos:
         return account.aCosmosInfo.address;
       case AppNetworkType.evm:
         return account.aEvmInfo.address;
       case AppNetworkType.other:
         return '';
+    }
+  }
+
+  List<Balance> tokenWithType(List<Balance> tokens) {
+    switch (type) {
+      case AppNetworkType.cosmos:
+        return tokens
+            .where(
+              (e) => e.type == TokenType.cw20 || e.type == TokenType.native,
+            )
+            .toList();
+      case AppNetworkType.evm:
+        return tokens
+            .where(
+              (e) => e.type == TokenType.erc20 || e.type == TokenType.native,
+            )
+            .toList();
+      case AppNetworkType.other:
+        return [];
     }
   }
 }

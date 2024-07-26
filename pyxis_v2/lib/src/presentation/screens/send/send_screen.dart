@@ -12,6 +12,7 @@ import 'package:pyxis_v2/src/navigator.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_selector.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_state.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/widgets/app_bar.dart';
+import 'package:pyxis_v2/src/presentation/screens/send/widgets/select_token.dart';
 import 'package:pyxis_v2/src/presentation/widgets/app_loading_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_provider.dart';
 import 'package:pyxis_v2/src/presentation/widgets/select_network_widget.dart';
@@ -96,6 +97,15 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
                                 appTheme: appTheme,
                                 localization: localization,
                                 onChanged: _onChangeAmount,
+                                onSelectToken: (token, tokenMarkets, tokens) {
+                                  _onSelectTokens(
+                                    token,
+                                    tokenMarkets,
+                                    tokens,
+                                    appTheme,
+                                    localization,
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -174,7 +184,7 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
   ) async {
     if (account == null) return;
 
-    final network = await AppBottomSheetProvider.showFullScreenDialog(
+    final network = await AppBottomSheetProvider.showFullScreenDialog<AppNetwork?>(
       context,
       child: SelectNetworkAccountWidget(
         appTheme: appTheme,
@@ -184,11 +194,14 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
       ),
       appTheme: appTheme,
     );
-    // _bloc.add(
-    //   SendOnChangeNetworkEvent(
-    //     network,
-    //   ),
-    // );
+
+    if(network != null){
+      _bloc.add(
+        SendOnChangeNetworkEvent(
+          network,
+        ),
+      );
+    }
   }
 
   void _onAddressChanged(String address, bool isValid) {
@@ -205,5 +218,35 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
         amount: amount,
       ),
     );
+  }
+
+  void _onSelectTokens(
+    Balance token,
+    List<TokenMarket> tokenMarkets,
+    List<Balance> tokens,
+    AppTheme appTheme,
+    AppLocalizationManager localization,
+  ) async {
+    final selectedToken =
+        await AppBottomSheetProvider.showFullScreenDialog<Balance?>(
+      context,
+      child: SendSelectTokensWidget(
+        appTheme: appTheme,
+        localization: localization,
+        tokens: tokens,
+        tokenMarkets: tokenMarkets,
+        currentToken: token,
+      ),
+      appTheme: appTheme,
+    );
+
+    if (selectedToken != null) {
+      _bloc.add(
+        SendOnChangeTokenEvent(
+          selectedToken,
+        ),
+      );
+      print(selectedToken.type);
+    }
   }
 }

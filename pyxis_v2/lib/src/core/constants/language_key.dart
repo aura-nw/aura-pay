@@ -6,6 +6,13 @@ sealed class LanguageKey {
   static const String commonSelectNetwork = 'common_select_network';
   static const String commonAura = 'common_aura';
 
+
+  static const String commonChangeFeeTransactionTitle = 'common_change_fee_transaction_title';
+  static const String commonChangeFeeTransactionContent = 'common_change_fee_transaction_content';
+  static const String commonChangeFeeTransactionSlower = 'common_change_fee_transaction_slower';
+  static const String commonChangeFeeTransactionFaster = 'common_change_fee_transaction_faster';
+  static const String commonChangeFeeTransactionConfirm = 'common_change_fee_transaction_confirm';
+
   // Get started screen
   static const String getStartedScreenCreateNewWallet = 'get_started_screen_create_new_wallet';
   static const String getStartedScreenAddWallet = 'get_started_screen_add_wallet';
@@ -121,6 +128,8 @@ sealed class LanguageKey {
   static const String sendScreenInvalidAddress= 'send_screen_invalid_address';
   static const String sendScreenSearchToken= 'send_screen_search_token';
   static const String sendScreenAmountInvalid= 'send_screen_amount_invalid';
+  static const String sendScreenSelectTokenTitle= 'send_screen_select_token_title';
+  static const String sendScreenSelectTokenHint= 'send_screen_select_token_search_hint';
 
 
   // Confirm send screen

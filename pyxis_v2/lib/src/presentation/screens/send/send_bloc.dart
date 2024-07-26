@@ -28,6 +28,7 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
     on(_onChangeNetwork);
     on(_onChangeAddress);
     on(_onChangeAmount);
+    on(_onChangeToken);
   }
 
   void _onInit(SendOnInitEvent event, Emitter<SendState> emit) async {
@@ -95,6 +96,12 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
     emit(
       state.copyWith(
         selectedNetwork: event.network,
+        toAddress: '',
+        selectedToken: state.accountBalance?.balances.firstWhereOrNull(
+          (b) => b.type == TokenType.native,
+        ),
+        amountToSend: '',
+        already: false,
       ),
     );
   }
@@ -109,6 +116,7 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
         already: _isReady(
           event.address,
           state.amountToSend,
+          state.selectedToken,
         ),
       ),
     );
@@ -124,16 +132,17 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
         already: _isReady(
           state.toAddress,
           event.amount,
+          state.selectedToken,
         ),
       ),
     );
   }
 
-  bool _isReady(String address, String amount,) {
+  bool _isReady(String address, String amount, Balance? selectedToken) {
     try {
-      double total = double.tryParse(state.selectedToken?.type.formatBalance(
-                  state.selectedToken?.balance ?? '',
-                  customDecimal: state.selectedToken?.decimal) ??
+      double total = double.tryParse(selectedToken?.type.formatBalance(
+                  selectedToken.balance ?? '',
+                  customDecimal: selectedToken.decimal) ??
               '') ??
           0.0;
       // Parse the amount as a double
@@ -149,5 +158,21 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
       // Return false if there's an exception (e.g., amount cannot be parsed as a double)
       return false;
     }
+  }
+
+  void _onChangeToken(
+    SendOnChangeTokenEvent event,
+    Emitter<SendState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedToken: event.token,
+        already: _isReady(
+          state.toAddress,
+          state.amountToSend,
+          event.token,
+        ),
+      ),
+    );
   }
 }

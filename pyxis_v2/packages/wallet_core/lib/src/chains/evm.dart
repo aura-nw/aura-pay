@@ -63,17 +63,29 @@ class EvmChainClient {
     required BigInt amount,
     required BigInt gasLimit,
     required String recipient,
+    BigInt? gasPrice,
   }) async {
     final BigInt chainId = await _web3client.getChainId();
 
-    final EtherAmount gasPrice = await _web3client.getGasPrice();
+    if (gasPrice == null) {
+      final EtherAmount remoteGasPrice = await _web3client.getGasPrice();
+
+      gasPrice = remoteGasPrice.getInWei;
+    }
+
+    final nonce = await _web3client.getTransactionCount(
+      EthereumAddress.fromHex(
+        wallet.address,
+      ),
+    );
 
     Ethereum.SigningInput signingInput = Ethereum.SigningInput(
       toAddress: recipient,
       privateKey: wallet.privateKeyData,
       chainId: chainId.toUin8List(),
-      gasPrice: gasPrice.getInWei.toUin8List(),
+      gasPrice: gasPrice.toUin8List(),
       gasLimit: gasLimit.toUin8List(),
+      nonce: BigInt.from(nonce).toUin8List(),
       transaction: Ethereum.Transaction(
         transfer: Ethereum.Transaction_Transfer(
           amount: amount.toUin8List(),
@@ -97,17 +109,29 @@ class EvmChainClient {
     required BigInt gasLimit,
     required String contractAddress,
     required String recipient,
+    BigInt? gasPrice,
   }) async {
     final BigInt chainId = await _web3client.getChainId();
 
-    final EtherAmount gasPrice = await _web3client.getGasPrice();
+    if (gasPrice == null) {
+      final EtherAmount remoteGasPrice = await _web3client.getGasPrice();
+
+      gasPrice = remoteGasPrice.getInWei;
+    }
+
+    final nonce = await _web3client.getTransactionCount(
+      EthereumAddress.fromHex(
+        wallet.address,
+      ),
+    );
 
     Ethereum.SigningInput signingInput = Ethereum.SigningInput(
       toAddress: contractAddress,
       privateKey: wallet.privateKeyData,
       chainId: chainId.toUin8List(),
-      gasPrice: gasPrice.getInWei.toUin8List(),
+      gasPrice: gasPrice.toUin8List(),
       gasLimit: gasLimit.toUin8List(),
+      nonce: BigInt.from(nonce).toUin8List(),
       transaction: Ethereum.Transaction(
         erc20Transfer: Ethereum.Transaction_ERC20Transfer(
           amount: amount.toUin8List(),
@@ -126,9 +150,28 @@ class EvmChainClient {
     return Uint8List.fromList(outPut.encoded);
   }
 
-  Future<BigInt> estimateGas({required Uint8List rawTransaction}) async {
+  Future<BigInt> estimateGas({
+    required String sender,
+    required BigInt amount,
+    required String recipient,
+    Uint8List ?data,
+  }) async {
     return _web3client.estimateGas(
-      data: rawTransaction,
+      to: EthereumAddress.fromHex(recipient),
+      sender: EthereumAddress.fromHex(
+        sender,
+      ),
+      value: EtherAmount.fromBigInt(
+        EtherUnit.wei,
+        amount,
+      ),
+      data: data,
     );
+  }
+
+  Future<BigInt> getGasPrice() async {
+    final gasPrice = await _web3client.getGasPrice();
+
+    return gasPrice.getInWei;
   }
 }

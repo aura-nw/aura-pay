@@ -8,6 +8,7 @@ import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
+import 'package:pyxis_v2/src/navigator.dart';
 import 'package:pyxis_v2/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_base.dart';
 
 final class SelectNetworkWidget extends AppBottomSheetBase {
@@ -231,12 +232,18 @@ class _SelectNetworkAccountWidgetState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: widget.networks.map(
         (e) {
-          return AccountNetworkWidget(
-            logo: e.logo,
-            network: e.name,
-            appTheme: appTheme,
-            address: e.getAddress(
-              widget.account,
+          return GestureDetector(
+            onTap: () {
+              AppNavigator.pop(e);
+            },
+            behavior: HitTestBehavior.opaque,
+            child: AccountNetworkWidget(
+              logo: e.logo,
+              network: e.name,
+              appTheme: appTheme,
+              address: e.getAddress(
+                widget.account,
+              ),
             ),
           );
         },
