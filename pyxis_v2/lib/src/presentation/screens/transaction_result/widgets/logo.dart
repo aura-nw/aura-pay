@@ -32,7 +32,7 @@ class TransactionResultLogoWidget extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             appTheme.utilityBrand100,
-            appTheme.utilityBrand50,
+            appTheme.bgPrimary,
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

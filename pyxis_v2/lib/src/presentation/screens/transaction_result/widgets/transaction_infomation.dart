@@ -82,9 +82,9 @@ final class _TransactionInformationHashWidget
       child: Row(
         children: [
           Text(
-            information,
+            information.addressView,
             style: AppTypoGraPhy.textSmSemiBold.copyWith(
-              color: appTheme.textPrimary,
+              color: appTheme.textBrandPrimary,
             ),
           ),
           const SizedBox(
@@ -154,9 +154,9 @@ final class TransactionResultInformationWidget extends StatelessWidget {
         ),
         _TransactionInformationHashWidget(
           title: localization.translate(
-            LanguageKey.transactionResultScreenTime,
+            LanguageKey.transactionResultScreenHash,
           ),
-          information: time,
+          information: hash,
           appTheme: appTheme,
           onHashClick: (hash) {
             AppLauncher.launch(

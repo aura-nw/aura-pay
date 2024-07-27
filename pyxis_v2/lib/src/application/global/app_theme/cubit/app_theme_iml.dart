@@ -952,7 +952,7 @@ final class AppDarkTheme implements AppTheme {
   Color fgWarningSecondary = AppColor.gray500;
 
   @override
-  Color fgWhite = AppColor.gray500;
+  Color fgWhite = AppColor.grayWhite;
 
   @override
   Color textBrandPrimary = AppColor.cyan500;

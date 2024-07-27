@@ -23,5 +23,5 @@ sealed class AuraScan{
  static const String _domainProduction = 'https://aurascan.io/';
 
  static String account(String address) => '${_domain}account/$address';
- static String transaction(String hash) => '${_domain}transaction/$hash';
+ static String transaction(String hash) => '${_domain}tx/$hash';
 }

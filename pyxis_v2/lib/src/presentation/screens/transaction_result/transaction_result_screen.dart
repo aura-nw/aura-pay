@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/presentation/screens/transaction_result/widgets/transaction_infomation.dart';
 import 'widgets/button_form.dart';
 import 'widgets/logo.dart';
@@ -70,9 +71,16 @@ class _TransactionResultScreenState extends State<TransactionResultScreen>
         ),
         Padding(
           padding: defaultPadding(),
-          child: TransactionResultButtonFormWidget(
-            appTheme: appTheme,
-            localization: localization,
+          child: Column(
+            children: [
+              TransactionResultButtonFormWidget(
+                appTheme: appTheme,
+                localization: localization,
+              ),
+              const SizedBox(
+                height: BoxSize.boxSize07,
+              ),
+            ],
           ),
         ),
       ],
