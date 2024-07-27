@@ -74,12 +74,6 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
 
       Map<String, dynamic> msg = {};
 
-      emit(
-        state.copyWith(
-          msg: msg,
-        ),
-      );
-
       switch (state.appNetwork.type) {
         case AppNetworkType.evm:
           gasPrice = await _evmChainClient.getGasPrice();
@@ -96,6 +90,12 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
                 nonce: BigInt.zero,
               ).writeToJsonMap();
 
+              emit(
+                state.copyWith(
+                  msg: msg,
+                ),
+              );
+
               gasEstimation = await _evmChainClient.estimateGas(
                 sender: aWallet.address,
                 recipient: state.recipient,
@@ -103,16 +103,34 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
               );
               break;
             case TokenType.erc20:
-              msg = createErc20TransferTransaction(
+              final erc20Tran = createErc20TransferTransaction(
                 privateKey: aWallet!.privateKeyData,
                 chainId: BigInt.from(config.config.evmInfo.chainId),
                 amount: amount,
-                gasLimit: BigInt.from(21000),
+                gasLimit: BigInt.from(65000),
                 recipient: state.recipient,
                 gasPrice: gasPrice,
                 nonce: BigInt.zero,
-                contractAddress: '',
-              ).writeToJsonMap();
+                contractAddress: state.balance.contract,
+              );
+
+              msg = erc20Tran.writeToJsonMap();
+
+              emit(
+                state.copyWith(
+                  msg: msg,
+                ),
+              );
+
+              gasEstimation = await _evmChainClient.estimateGas(
+                sender: aWallet.address,
+                recipient: state.recipient,
+                amount: amount,
+                data: erc20Tran.writeToBuffer(),
+              );
+
+
+
               break;
             case TokenType.cw20:
               break;
@@ -178,30 +196,64 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
     try {
       switch (state.appNetwork.type) {
         case AppNetworkType.evm:
-          final evmTransaction =
+
+          switch(state.balance.type){
+            case TokenType.native:
+              final evmTransaction =
               await _evmChainClient.createTransferTransaction(
-            wallet: aWallet!,
-            amount: state.balance.type.formatBalanceToInt(
-              state.amount,
-              customDecimal: state.balance.decimal,
-            ),
-            gasLimit: _transformEvmTransferGasLimit(),
-            recipient: state.recipient,
-            gasPrice: state.gasPriceToSend,
-          );
+                wallet: aWallet!,
+                amount: state.balance.type.formatBalanceToInt(
+                  state.amount,
+                  customDecimal: state.balance.decimal,
+                ),
+                gasLimit: BigInt.from(21000),
+                recipient: state.recipient,
+                gasPrice: state.gasPriceToSend,
+              );
 
-          final String hash = await _evmChainClient.sendTransaction(
-            rawTransaction: Uint8List.fromList(evmTransaction.encoded),
-          );
+              final String hash = await _evmChainClient.sendTransaction(
+                rawTransaction: Uint8List.fromList(evmTransaction.encoded),
+              );
 
-          LogProvider.log('receive hash $hash');
+              LogProvider.log('receive hash $hash');
 
-          await _evmChainClient.verifyTransaction(hash: hash);
+              await _evmChainClient.verifyTransaction(hash: hash);
 
-          emit(state.copyWith(
-            status: ConfirmSendStatus.sent,
-            hash: hash,
-          ));
+              emit(state.copyWith(
+                status: ConfirmSendStatus.sent,
+                hash: hash,
+              ));
+              break;
+            case TokenType.erc20:
+              final erc20Transaction =
+              await _evmChainClient.createErc20Transaction(
+                wallet: aWallet!,
+                amount: state.balance.type.formatBalanceToInt(
+                  state.amount,
+                  customDecimal: state.balance.decimal,
+                ),
+                gasLimit: BigInt.from(21000),
+                recipient: state.recipient,
+                gasPrice: state.gasPriceToSend,
+                contractAddress: state.balance.contract,
+              );
+
+              final String hash = await _evmChainClient.sendTransaction(
+                rawTransaction: Uint8List.fromList(erc20Transaction.encoded),
+              );
+
+              LogProvider.log('receive hash $hash');
+
+              await _evmChainClient.verifyTransaction(hash: hash);
+
+              emit(state.copyWith(
+                status: ConfirmSendStatus.sent,
+                hash: hash,
+              ));
+              break;
+            case TokenType.cw20:
+              break;
+          }
           break;
         case AppNetworkType.cosmos:
           break;
@@ -215,16 +267,6 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
       ));
       LogProvider.log('Confirm send submit transaction error ${e.toString()}');
     }
-  }
-
-  BigInt _transformEvmTransferGasLimit(){
-    final gasLimit = (state.gasEstimation).toDouble() * 1.5;
-
-    if(gasLimit < BigInt.from(21000).toDouble()){
-      return BigInt.from(21000);
-    }
-
-    return BigInt.from(gasLimit);
   }
 
   BigInt _transformGasPrice(BigInt gasPrice) {
