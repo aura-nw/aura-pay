@@ -19,6 +19,7 @@ final class Balance {
   final String? name;
   final int? decimal;
   final String? symbol;
+  final String contract;
 
   const Balance({
     required this.balance,
@@ -27,6 +28,7 @@ final class Balance {
     this.name,
     this.decimal,
     this.symbol,
+    required this.contract,
   });
 
   TokenType get type {

@@ -102,6 +102,7 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
         ),
         amountToSend: '',
         already: false,
+        status: SendStatus.reNetwork,
       ),
     );
   }
@@ -172,6 +173,7 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
           state.amountToSend,
           event.token,
         ),
+        status: SendStatus.reToken,
       ),
     );
   }

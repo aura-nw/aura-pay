@@ -20,6 +20,7 @@ final class SendScreenToWidget extends StatelessWidget {
   final AppTheme appTheme;
   final void Function(bool) onChangeSaved;
   final void Function(String,bool) onAddressChanged;
+  final TextEditingController recipientController;
 
   const SendScreenToWidget({
     required this.appTheme,
@@ -28,6 +29,7 @@ final class SendScreenToWidget extends StatelessWidget {
     required this.onChangeSaved,
     required this.onScanTap,
     required this.onAddressChanged,
+    required this.recipientController,
     super.key,
   });
 
@@ -44,6 +46,7 @@ final class SendScreenToWidget extends StatelessWidget {
           onContactTap: onContactTap,
           onScanTap: onScanTap,
           onChanged: onAddressChanged,
+          controller: recipientController,
           constraintManager: ConstraintManager()
             ..custom(
               errorMessage: localization.translate(

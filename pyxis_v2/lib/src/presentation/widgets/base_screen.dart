@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
@@ -6,16 +8,17 @@ import 'package:pyxis_v2/src/application/global/localization/app_localization_pr
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 
-mixin StatelessBaseScreen on StatelessWidget {
+import 'app_loading_widget.dart';
 
-  EdgeInsets defaultPadding(){
+mixin StatelessBaseScreen on StatelessWidget {
+  EdgeInsets defaultPadding() {
     return const EdgeInsets.symmetric(
       vertical: Spacing.spacing05,
       horizontal: Spacing.spacing07,
     );
   }
 
-  EdgeInsets ? padding(){
+  EdgeInsets? padding() {
     return null;
   }
 
@@ -42,15 +45,43 @@ mixin StatelessBaseScreen on StatelessWidget {
 }
 
 mixin StateFulBaseScreen<T extends StatefulWidget> on State<T> {
+  final loadingController = StreamController<bool>();
 
-  EdgeInsets defaultPadding(){
+  Widget _buildLoader(AppTheme appTheme) {
+    return Container(
+      color: appTheme.alphaBlack30,
+      alignment: Alignment.center,
+      child: AppThemeBuilder(
+        builder: (appTheme) => AppLoadingWidget(
+          appTheme: appTheme,
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    loadingController.close();
+
+    super.dispose();
+  }
+
+  void showLoading() {
+    loadingController.add(true);
+  }
+
+  void hideLoading() {
+    loadingController.add(false);
+  }
+
+  EdgeInsets defaultPadding() {
     return const EdgeInsets.symmetric(
       vertical: Spacing.spacing05,
       horizontal: Spacing.spacing07,
     );
   }
 
-  EdgeInsets ? padding(){
+  EdgeInsets? padding() {
     return null;
   }
 
@@ -90,15 +121,30 @@ mixin StateFulBaseScreen<T extends StatefulWidget> on State<T> {
       builder: (appTheme) {
         return AppLocalizationProvider(
           builder: (localization) {
-            return wrapBuild(
-              context,
-              buildSpace(
-                context,
-                appTheme,
-                localization,
-              ),
-              appTheme,
-              localization,
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                wrapBuild(
+                  context,
+                  buildSpace(
+                    context,
+                    appTheme,
+                    localization,
+                  ),
+                  appTheme,
+                  localization,
+                ),
+                StreamBuilder(
+                  stream: loadingController.stream,
+                  builder: (_, snapshot) => snapshot.data == true
+                      ? Positioned.fill(
+                          child: _buildLoader(
+                            appTheme,
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
+              ],
             );
           },
         );

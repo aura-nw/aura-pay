@@ -202,6 +202,9 @@ final class WalletInfoWithCustomActionsWidget extends WalletInfoWidget {
 
   @override
   Widget avatar(BuildContext context) {
+    if(avatarAsset.endsWith('svg')){
+      return SvgPicture.asset(avatarAsset);
+    }
     return CircleAvatarWidget(
       image: AssetImage(
         avatarAsset,

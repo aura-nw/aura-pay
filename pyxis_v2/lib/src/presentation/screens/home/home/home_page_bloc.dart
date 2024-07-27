@@ -425,6 +425,10 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
             balance: nativeAmount,
             tokenId: nativeToken?.id,
             type: TokenType.native.name,
+            contract: '',
+            decimal: nativeToken?.decimal,
+            name: nativeToken?.name,
+            symbol: nativeToken?.symbol,
           ),
         );
       }
@@ -435,17 +439,20 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       // Add erc token
       for (final erc in ercTokenBalances) {
         final ercToken = state.tokenMarkets.firstWhereOrNull(
-          (token) => token.symbol == erc.denom,
+          (token) => token.denom == erc.denom,
         );
 
-          requests.add(AddBalanceRequest(
+        requests.add(
+          AddBalanceRequest(
             balance: erc.amount,
             tokenId: ercToken?.id,
             type: TokenType.erc20.name,
             symbol: ercToken?.symbol,
             name: ercToken?.name,
-            decimal: ercToken?.decimal
-          ));
+            decimal: ercToken?.decimal,
+            contract: erc.denom,
+          ),
+        );
       }
 
       // Add cw 20 token
@@ -457,14 +464,18 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           (token) => token.symbol == cw.contract.symbol,
         );
 
-        requests.add(AddBalanceRequest(
-          balance: cw.amount,
-          tokenId: cwToken?.id,
-          type: TokenType.cw20.name,
-          name: cwToken?.name ?? cw.contract.name,
-          symbol: cwToken?.symbol ?? cw.contract.symbol,
-          decimal: cwToken?.decimal ?? int.tryParse(cw.contract.decimal ?? ''),
-        ));
+        requests.add(
+          AddBalanceRequest(
+            balance: cw.amount,
+            tokenId: cwToken?.id,
+            type: TokenType.cw20.name,
+            name: cwToken?.name ?? cw.contract.name,
+            symbol: cwToken?.symbol ?? cw.contract.symbol,
+            decimal:
+                cwToken?.decimal ?? int.tryParse(cw.contract.decimal ?? ''),
+            contract: cw.contract.smartContract.address,
+          ),
+        );
       }
 
       if (state.accountBalance != null) {

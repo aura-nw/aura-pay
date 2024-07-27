@@ -6,6 +6,8 @@ enum SendStatus{
   loading,
   loaded,
   error,
+  reNetwork,
+  reToken,
 }
 
 

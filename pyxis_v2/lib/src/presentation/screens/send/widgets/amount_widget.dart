@@ -19,14 +19,18 @@ import 'package:pyxis_v2/src/presentation/widgets/text_input_base/text_input_man
 class SendScreenAmountToSendWidget extends StatelessWidget {
   final AppLocalizationManager localization;
   final AppTheme appTheme;
+  final void Function(String) onMaxTap;
   final void Function(String, bool) onChanged;
   final void Function(Balance, List<TokenMarket>, List<Balance>) onSelectToken;
+  final TextEditingController amountController;
 
   const SendScreenAmountToSendWidget({
     required this.appTheme,
     required this.localization,
     required this.onChanged,
     required this.onSelectToken,
+    required this.onMaxTap,
+    required this.amountController,
     super.key,
   });
 
@@ -54,6 +58,8 @@ class SendScreenAmountToSendWidget extends StatelessWidget {
                 return _checkValidAmount(amount, total);
               },
             ),
+          controller: amountController,
+          onMaxTap: onMaxTap,
         );
       },
     );
@@ -77,6 +83,7 @@ class SendScreenAmountToSendWidget extends StatelessWidget {
 final class _TextInputAmountWidget extends TextInputWidgetBase {
   final AppLocalizationManager localization;
   final void Function(Balance, List<TokenMarket>, List<Balance>) onSelectToken;
+  final void Function(String) onMaxTap;
 
   const _TextInputAmountWidget({
     super.obscureText,
@@ -103,6 +110,7 @@ final class _TextInputAmountWidget extends TextInputWidgetBase {
     required super.appTheme,
     required this.localization,
     required this.onSelectToken,
+    required this.onMaxTap,
   });
 
   @override
@@ -270,46 +278,50 @@ class _TextInputAmountWidgetState
                     ),
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      child: Text(
-                        localization.translate(
-                          LanguageKey.sendScreenMax,
+                child: SendSelectedBalanceSelector(builder: (token) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () => widget.onMaxTap(
+                          token?.type.formatBalance(
+                            token.balance,
+                            customDecimal: token.decimal,
+                          ) ?? '0',
                         ),
-                        style: AppTypoGraPhy.textSmSemiBold.copyWith(
-                          color: theme.textBrandPrimary,
+                        child: Text(
+                          localization.translate(
+                            LanguageKey.sendScreenMax,
+                          ),
+                          style: AppTypoGraPhy.textSmSemiBold.copyWith(
+                            color: theme.textBrandPrimary,
+                          ),
                         ),
                       ),
-                    ),
-                    SendSelectedBalanceSelector(
-                      builder: (token) {
-                        return RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: '${localization.translate(
-                                  LanguageKey.sendScreenBalance,
-                                )}: ',
-                                style: AppTypoGraPhy.textXsRegular.copyWith(
-                                  color: theme.textSecondary,
-                                ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${localization.translate(
+                                LanguageKey.sendScreenBalance,
+                              )}: ',
+                              style: AppTypoGraPhy.textXsRegular.copyWith(
+                                color: theme.textSecondary,
                               ),
-                              TextSpan(
-                                text: token?.type.formatBalance(token.balance,
-                                    customDecimal: token.decimal),
-                                style: AppTypoGraPhy.textXsSemiBold.copyWith(
-                                  color: theme.textPrimary,
-                                ),
+                            ),
+                            TextSpan(
+                              text: token?.type.formatBalance(token.balance,
+                                  customDecimal: token.decimal),
+                              style: AppTypoGraPhy.textXsSemiBold.copyWith(
+                                color: theme.textPrimary,
                               ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                }),
               ),
             ],
           ),

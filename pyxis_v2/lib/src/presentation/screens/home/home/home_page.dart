@@ -397,16 +397,7 @@ class _HomePageState extends State<HomePage>
   }
 
   void _onSwapTap() {
-    AppNavigator.push(
-      RoutePath.transactionResult,
-      {
-        'from': '0xfE217e810FfbeFBD8cB4132d3e8aDFCBE0234262',
-        'to' : '0xeC552cFb5Ad7d7f8FB6aA5D832487Fcf1C2f04EB',
-        'amount' : '1.5',
-        'time' : '',
-        'hash' : '0xf0d97820f4f46c867dc038dfee01dfea42e93aee6214086eff9de066b77747af',
-      },
-    );
+
   }
 
   void _onStakingTap() {}

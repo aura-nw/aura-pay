@@ -19,6 +19,7 @@ extension AddBalanceRequestMapper on AddBalanceRequest {
         decimal: decimal,
         name: name,
         symbol: symbol,
+        contract: contract,
       );
 }
 
@@ -39,6 +40,7 @@ final class AddBalanceRequestDto {
   final String? name;
   final int? decimal;
   final String? symbol;
+  final String contract;
 
   const AddBalanceRequestDto({
     required this.balance,
@@ -47,5 +49,6 @@ final class AddBalanceRequestDto {
     this.name,
     this.decimal,
     this.symbol,
+    required this.contract,
   });
 }

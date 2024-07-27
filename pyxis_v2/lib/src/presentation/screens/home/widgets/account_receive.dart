@@ -10,12 +10,16 @@ final class HomeWalletReceiveWidget extends StatelessWidget {
   final String type;
   final String address;
   final AppTheme appTheme;
+  final void Function(String) onCopy;
+  final void Function(String) onShare;
 
   const HomeWalletReceiveWidget({
     required this.appTheme,
     required this.type,
     required this.address,
     required this.logo,
+    required this.onCopy,
+    required this.onShare,
     super.key,
   });
 
@@ -27,15 +31,31 @@ final class HomeWalletReceiveWidget extends StatelessWidget {
       title: type,
       address: address,
       action: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset(
-            AssetIconPath.icCommonShare,
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => onShare(address),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.spacing04,
+              ),
+              child: SvgPicture.asset(
+                AssetIconPath.icCommonShare,
+              ),
+            ),
           ),
-          const SizedBox(
-            width: BoxSize.boxSize04,
-          ),
-          SvgPicture.asset(
-            AssetIconPath.icCommonCopy,
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => onCopy(address),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.spacing04,
+              ),
+              child: SvgPicture.asset(
+                AssetIconPath.icCommonCopy,
+              ),
+            ),
           ),
         ],
       ),

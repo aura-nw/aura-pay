@@ -40,8 +40,8 @@ class _AppLoadingWidgetState extends State<AppLoadingWidget>
       ),
     );
     _animation = ColorTween(
-      begin: widget.appTheme.utilityCyan100,
-      end: widget.appTheme.utilityPurple500,
+      begin: widget.appTheme.utilityBrand300,
+      end: widget.appTheme.utilityIndigo500,
     ).animate(_controller);
 
     _controller.repeat();

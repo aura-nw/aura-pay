@@ -19,9 +19,10 @@ class ReceiveTokenWidget extends StatelessWidget {
   final Account ?account;
   final AppTheme theme;
   final VoidCallback onSwipeUp;
-  final VoidCallback onShareAddress;
+  final void Function(String) onShareAddress;
   final void Function(String) onCopyAddress;
   final AppLocalizationManager localization;
+  final void Function() onDownload;
 
   const ReceiveTokenWidget({
     required this.network,
@@ -31,6 +32,7 @@ class ReceiveTokenWidget extends StatelessWidget {
     required this.onShareAddress,
     required this.onCopyAddress,
     required this.localization,
+    required this.onDownload,
     super.key,
   });
 
@@ -106,6 +108,8 @@ class ReceiveTokenWidget extends StatelessWidget {
                     type: network.name,
                     appTheme: theme,
                     logo: network.logo,
+                    onCopy: onCopyAddress,
+                    onShare: onShareAddress,
                   ),
                   const SizedBox(
                     height: BoxSize.boxSize07,
@@ -118,7 +122,7 @@ class ReceiveTokenWidget extends StatelessWidget {
                     text: localization.translate(
                       LanguageKey.homeScreenSaveImageToDevice,
                     ),
-                    onPress: onShareAddress,
+                    onPress: onDownload,
                   )
                 ],
               ),

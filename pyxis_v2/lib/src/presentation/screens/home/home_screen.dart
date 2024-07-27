@@ -8,6 +8,7 @@ import 'package:pyxis_v2/src/application/global/app_theme/app_theme_builder.dart
 import 'package:pyxis_v2/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/network.dart';
+import 'package:pyxis_v2/src/core/helpers/share_network.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
 import 'package:pyxis_v2/src/core/utils/copy.dart';
 import 'package:pyxis_v2/src/core/utils/toast.dart';
@@ -176,8 +177,11 @@ class _HomeScreenState extends State<HomeScreen>
                                 _receiveWidgetController.reset();
                               }
                             },
-                            onShareAddress: () {},
+                            onShareAddress:_onShareAddress,
                             onCopyAddress: _onCopy,
+                            onDownload: () {
+                              
+                            },
                           );
                         }
                       ),
@@ -200,5 +204,9 @@ class _HomeScreenState extends State<HomeScreen>
         ),
       ),
     );
+  }
+
+  void _onShareAddress(String address){
+    ShareNetWork.shareText(address);
   }
 }

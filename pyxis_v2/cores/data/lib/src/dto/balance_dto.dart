@@ -8,6 +8,7 @@ extension BalanceDtoMapper on BalanceDto {
         decimal: decimal,
         name: name,
         symbol: symbol,
+        contract: contract,
       );
 }
 
@@ -71,6 +72,7 @@ class BalanceDto {
   final String? name;
   final int? decimal;
   final String? symbol;
+  final String contract;
 
   const BalanceDto({
     required this.balance,
@@ -79,6 +81,7 @@ class BalanceDto {
     this.name,
     this.decimal,
     this.symbol,
+    required this.contract,
   });
 }
 

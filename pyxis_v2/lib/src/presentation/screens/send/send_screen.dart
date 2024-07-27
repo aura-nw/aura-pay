@@ -8,6 +8,7 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/network.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
+import 'package:pyxis_v2/src/core/utils/toast.dart';
 import 'package:pyxis_v2/src/navigator.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_selector.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_state.dart';
@@ -33,9 +34,13 @@ class SendScreen extends StatefulWidget {
   State<SendScreen> createState() => _SendScreenState();
 }
 
-class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
+class _SendScreenState extends State<SendScreen>
+    with StateFulBaseScreen, CustomFlutterToast {
   final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
   late SendBloc _bloc;
+
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _recipientController = TextEditingController();
 
   @override
   void initState() {
@@ -54,6 +59,13 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
   }
 
   @override
+  void dispose() {
+    _recipientController.dispose();
+    _amountController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget child(BuildContext context, AppTheme appTheme,
       AppLocalizationManager localization) {
     return Column(
@@ -69,6 +81,8 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
                     ),
                   );
                 case SendStatus.loaded:
+                case SendStatus.reNetwork:
+                case SendStatus.reToken:
                 case SendStatus.error:
                   return SingleChildScrollView(
                     child: Column(
@@ -89,6 +103,7 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
                                 onScanTap: () {},
                                 onChangeSaved: _onChangeSaved,
                                 onAddressChanged: _onAddressChanged,
+                                recipientController: _recipientController,
                               ),
                               const SizedBox(
                                 height: BoxSize.boxSize07,
@@ -106,6 +121,11 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
                                     localization,
                                   );
                                 },
+                                onMaxTap: (amount) {
+                                  _onChangeAmount(amount, true);
+                                  _amountController.text = amount;
+                                },
+                                amountController: _amountController,
                               ),
                             ],
                           ),
@@ -126,16 +146,7 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
                   LanguageKey.sendScreenNext,
                 ),
                 isDisable: !already,
-                onPress: () {
-                  final state = _bloc.state;
-                  AppNavigator.push(RoutePath.confirmSend, {
-                    'appNetwork': state.selectedNetwork,
-                    'account': state.account,
-                    'amount': state.amountToSend,
-                    'recipient': state.toAddress,
-                    'balance': state.selectedToken,
-                  });
-                },
+                onPress: _onSubmit,
               );
             },
           ),
@@ -149,23 +160,42 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
       AppLocalizationManager localization) {
     return BlocProvider.value(
       value: _bloc,
-      child: Scaffold(
-        backgroundColor: appTheme.bgPrimary,
-        appBar: AppBarDefault(
-          appTheme: appTheme,
-          localization: localization,
-          title: SendAppBar(
+      child: BlocListener<SendBloc, SendState>(
+        listener: (context, state) {
+          switch (state.status) {
+            case SendStatus.loading:
+              break;
+            case SendStatus.loaded:
+              break;
+            case SendStatus.error:
+              break;
+            case SendStatus.reNetwork:
+              _amountController.text = '';
+              _recipientController.text = '';
+              break;
+            case SendStatus.reToken:
+              _recipientController.text = '';
+              break;
+          }
+        },
+        child: Scaffold(
+          backgroundColor: appTheme.bgPrimary,
+          appBar: AppBarDefault(
             appTheme: appTheme,
             localization: localization,
-            onSelectNetwork: (networks, account) => _onChangeNetwork(
-              appTheme,
-              localization,
-              networks,
-              account,
+            title: SendAppBar(
+              appTheme: appTheme,
+              localization: localization,
+              onSelectNetwork: (networks, account) => _onChangeNetwork(
+                appTheme,
+                localization,
+                networks,
+                account,
+              ),
             ),
           ),
+          body: child,
         ),
-        body: child,
       ),
     );
   }
@@ -184,7 +214,8 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
   ) async {
     if (account == null) return;
 
-    final network = await AppBottomSheetProvider.showFullScreenDialog<AppNetwork?>(
+    final network =
+        await AppBottomSheetProvider.showFullScreenDialog<AppNetwork?>(
       context,
       child: SelectNetworkAccountWidget(
         appTheme: appTheme,
@@ -195,7 +226,7 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
       appTheme: appTheme,
     );
 
-    if(network != null){
+    if (network != null) {
       _bloc.add(
         SendOnChangeNetworkEvent(
           network,
@@ -246,7 +277,23 @@ class _SendScreenState extends State<SendScreen> with StateFulBaseScreen {
           selectedToken,
         ),
       );
-      print(selectedToken.type);
     }
+  }
+
+  void _onSubmit(){
+    final state = _bloc.state;
+
+    if(state.selectedNetwork.type != AppNetworkType.evm){
+      showToast('This version does not support sending Cosmos transaction. This notification is for testing purposes only');
+      return;
+    }
+
+    AppNavigator.push(RoutePath.confirmSend, {
+      'appNetwork': state.selectedNetwork,
+      'account': state.account,
+      'amount': state.amountToSend,
+      'recipient': state.toAddress,
+      'balance': state.selectedToken,
+    });
   }
 }

@@ -10,6 +10,7 @@ import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/toast.dart';
 import 'package:pyxis_v2/src/navigator.dart';
+import 'confirm_send_selector.dart';
 import 'confirm_send_state.dart';
 import 'widgets/message_form.dart';
 import 'package:pyxis_v2/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_provider.dart';
@@ -111,11 +112,16 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
             ],
           ),
         ),
-        PrimaryAppButton(
-          text: localization.translate(
-            LanguageKey.confirmSendScreenConfirmSend,
-          ),
-          onPress: _onSubmit,
+        ConfirmSendStatusSelector(
+          builder: (status) {
+            return PrimaryAppButton(
+              text: localization.translate(
+                LanguageKey.confirmSendScreenConfirmSend,
+              ),
+              onPress: _onSubmit,
+              loading: status == ConfirmSendStatus.sending,
+            );
+          }
         ),
       ],
     );
@@ -124,46 +130,52 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
   @override
   Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
       AppLocalizationManager localization) {
-    return BlocProvider.value(
-      value: _bloc,
-      child: BlocListener<ConfirmSendBloc, ConfirmSendState>(
-        listener: (context, state) {
-          switch (state.status) {
-            case ConfirmSendStatus.init:
-              break;
-            case ConfirmSendStatus.sending:
-              break;
-            case ConfirmSendStatus.sent:
-              AppNavigator.push(
-                RoutePath.transactionResult,
-                {
-                  'from': widget.appNetwork.getAddress(
-                    widget.account,
-                  ),
-                  'to' : widget.recipient,
-                  'amount' : widget.amount,
-                  'time' : state.timeStamp,
-                  'hash' : state.hash,
-                },
-              );
-              break;
-            case ConfirmSendStatus.error:
-              showToast(state.error ?? '');
-              break;
-          }
-        },
-        child: Scaffold(
-          backgroundColor: appTheme.bgPrimary,
-          appBar: AppBarDefault(
-            appTheme: appTheme,
-            localization: localization,
-            title: ConfirmSendScreenAppBar(
+    return PopScope(
+      canPop: false,
+      child: BlocProvider.value(
+        value: _bloc,
+        child: BlocListener<ConfirmSendBloc, ConfirmSendState>(
+          listener: (context, state) {
+            switch (state.status) {
+              case ConfirmSendStatus.init:
+                break;
+              case ConfirmSendStatus.sending:
+                showLoading();
+                break;
+              case ConfirmSendStatus.sent:
+                hideLoading();
+                AppNavigator.push(
+                  RoutePath.transactionResult,
+                  {
+                    'from': widget.appNetwork.getAddress(
+                      widget.account,
+                    ),
+                    'to' : widget.recipient,
+                    'amount' : widget.amount,
+                    'time' : state.timeStamp,
+                    'hash' : state.hash,
+                  },
+                );
+                break;
+              case ConfirmSendStatus.error:
+                hideLoading();
+                showToast(state.error ?? '');
+                break;
+            }
+          },
+          child: Scaffold(
+            backgroundColor: appTheme.bgPrimary,
+            appBar: AppBarDefault(
               appTheme: appTheme,
               localization: localization,
-              appNetwork: widget.appNetwork,
+              title: ConfirmSendScreenAppBar(
+                appTheme: appTheme,
+                localization: localization,
+                appNetwork: widget.appNetwork,
+              ),
             ),
+            body: child,
           ),
-          body: child,
         ),
       ),
     );
@@ -210,7 +222,7 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
     }
   }
 
-  void _onSubmit() {
+  void _onSubmit() async{
     _bloc.add(
       const ConfirmSendOnSubmitEvent(),
     );

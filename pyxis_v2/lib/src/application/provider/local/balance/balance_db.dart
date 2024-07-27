@@ -33,6 +33,7 @@ extension AddBalanceRequestDtoMapper on AddBalanceRequestDto {
         bSymbol: symbol,
         bName: name,
         bDecimal: decimal,
+        bContract: contract,
       );
 }
 
@@ -57,6 +58,7 @@ extension BalanceDbExtension on BalanceDb {
     String? name,
     int? decimal,
     String? symbol,
+    String? contract,
   }) {
     return BalanceDb(
       bTokenId: tokenId ?? bTokenId,
@@ -65,6 +67,7 @@ extension BalanceDbExtension on BalanceDb {
       bDecimal: decimal ?? bDecimal,
       bName: name ?? bName,
       bSymbol: symbol ?? bSymbol,
+      bContract: contract ?? bContract,
     );
   }
 }
@@ -94,20 +97,23 @@ class BalanceDb extends BalanceDto {
   final String? bName;
   final int? bDecimal;
   final String? bSymbol;
+  final String bContract;
 
-  const BalanceDb({
-    this.bBalance = '0',
-    this.bTokenId,
-    this.bTokenType = 'Native',
-    this.bDecimal,
-    this.bName,
-    this.bSymbol,
-  }) : super(
+  const BalanceDb(
+      {this.bBalance = '0',
+      this.bTokenId,
+      this.bTokenType = 'native',
+      this.bDecimal,
+      this.bName,
+      this.bSymbol,
+      this.bContract = ''})
+      : super(
           balance: bBalance,
           tokenId: bTokenId,
           tokenType: bTokenType,
           decimal: bDecimal,
           symbol: bSymbol,
           name: bName,
+          contract: bContract,
         );
 }

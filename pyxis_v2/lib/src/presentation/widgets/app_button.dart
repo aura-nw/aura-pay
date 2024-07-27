@@ -80,7 +80,9 @@ class _AppButton extends StatelessWidget {
             child: loading
                 ? SizedBox.square(
                     dimension: 19.2,
-                    child: CircularProgressIndicator(color: textStyle.color),
+                    child: CircularProgressIndicator(
+                      color: theme.utilityBrand500,
+                    ),
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -212,7 +214,7 @@ final class TextAppButton extends StatelessWidget {
   final double? minWidth;
   final Widget? leading;
   final Widget? suffix;
-  final TextStyle ?style;
+  final TextStyle? style;
 
   const TextAppButton({
     super.key,
@@ -235,9 +237,10 @@ final class TextAppButton extends StatelessWidget {
           onPress: onPress,
           color: theme.bgPrimary,
           minWidth: minWidth,
-          textStyle: style ?? AppTypoGraPhy.textSmSemiBold.copyWith(
-            color: theme.textSecondary,
-          ),
+          textStyle: style ??
+              AppTypoGraPhy.textSmSemiBold.copyWith(
+                color: theme.textSecondary,
+              ),
           theme: theme,
           suffix: suffix,
           leading: leading,

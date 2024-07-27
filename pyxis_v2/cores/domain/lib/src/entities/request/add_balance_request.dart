@@ -16,6 +16,7 @@ final class AddBalanceRequest {
   final String? name;
   final int? decimal;
   final String? symbol;
+  final String contract;
 
   const AddBalanceRequest({
     required this.balance,
@@ -24,5 +25,6 @@ final class AddBalanceRequest {
     this.name,
     this.decimal,
     this.symbol,
+    required this.contract,
   });
 }

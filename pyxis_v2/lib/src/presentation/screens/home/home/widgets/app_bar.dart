@@ -70,19 +70,8 @@ final class HomeAppBar extends StatelessWidget {
           BorderRadiusSize.borderRadius04,
         ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            AssetIconPath.icCommonAllNetwork,
-          ),
-          const SizedBox(
-            width: BoxSize.boxSize04,
-          ),
-          SvgPicture.asset(
-            AssetIconPath.icCommonArrowDown,
-          ),
-        ],
+      child: SvgPicture.asset(
+        AssetIconPath.icCommonAllNetwork,
       ),
     );
   }
@@ -108,12 +97,6 @@ final class HomeAppBar extends StatelessWidget {
           style: AppTypoGraPhy.textSmSemiBold.copyWith(
             color: appTheme.textPrimary,
           ),
-        ),
-        const SizedBox(
-          width: BoxSize.boxSize04,
-        ),
-        SvgPicture.asset(
-          AssetIconPath.icCommonArrowDown,
         ),
       ],
     );
