@@ -132,5 +132,13 @@
   "confirm_send_screen_send_edit" : "Edit",
   "confirm_send_screen_confirm_send" : "Confirm Send",
   "confirm_send_screen_memo" : "Memo",
-  "confirm_send_screen_memo_hint" : "Input memo..."
+  "confirm_send_screen_memo_hint" : "Input memo...",
+
+  "transaction_result_screen_title" : "Transaction successful!",
+  "transaction_result_screen_from" : "From",
+  "transaction_result_screen_to" : "Recipient",
+  "transaction_result_screen_time" : "Time",
+  "transaction_result_screen_tx" : "Transaction",
+  "transaction_result_screen_back_to_home" : "Back to homepage",
+  "transaction_result_screen_back_to_done" : "Done"
 }

@@ -132,7 +132,7 @@ final class TransactionInformationWidget extends StatelessWidget {
   final String recipient;
   final String amount;
   final AppTheme appTheme;
-  final VoidCallback onEditFee;
+  final void Function(BigInt,BigInt) onEditFee;
   final AppLocalizationManager localization;
   final Balance balance;
 
@@ -172,9 +172,9 @@ final class TransactionInformationWidget extends StatelessWidget {
         ),
         ConfirmSendGasEstimationSelector(
           builder: (gasEstimation) {
-            return ConfirmSendGasPriceSelector(
-              builder: (gasPrice) {
-                final BigInt fee = gasEstimation * gasPrice;
+            return ConfirmSendGasPriceToSendSelector(
+              builder: (gasPriceToSend) {
+                final BigInt fee = gasEstimation * gasPriceToSend;
 
                 String feeS = balance.type.formatBalance(
                   fee.toString(),
@@ -231,20 +231,26 @@ final class TransactionInformationWidget extends StatelessWidget {
           builder: (gasEstimation) {
             return ConfirmSendGasPriceSelector(
               builder: (gasPrice) {
-                final BigInt fee = gasEstimation * gasPrice;
-                return _TransactionInformationFeeWidget(
-                  onEditFee: onEditFee,
-                  localization: localization,
-                  title: localization.translate(
-                    LanguageKey.confirmSendScreenSendFee,
-                  ),
-                  information: '${balance.type.formatBalance(
-                    fee.toString(),
-                    customDecimal: balance.decimal,
-                  )} ${localization.translate(
-                    LanguageKey.commonAura,
-                  )}',
-                  appTheme: appTheme,
+                return ConfirmSendGasPriceToSendSelector(
+                  builder: (gasPriceToSend) {
+                    final BigInt fee = gasEstimation * gasPriceToSend;
+                    return _TransactionInformationFeeWidget(
+                      onEditFee: () {
+                        onEditFee(gasPrice,gasEstimation);
+                      },
+                      localization: localization,
+                      title: localization.translate(
+                        LanguageKey.confirmSendScreenSendFee,
+                      ),
+                      information: '${balance.type.formatBalance(
+                        fee.toString(),
+                        customDecimal: balance.decimal,
+                      )} ${localization.translate(
+                        LanguageKey.commonAura,
+                      )}',
+                      appTheme: appTheme,
+                    );
+                  }
                 );
               },
             );

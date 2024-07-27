@@ -13,6 +13,7 @@ class ChangeFeeFormWidget extends AppBottomSheetBase {
   final double currentValue;
   final double max;
   final double min;
+  final String Function(double value) convertFee;
 
   const ChangeFeeFormWidget({
     super.key,
@@ -20,6 +21,7 @@ class ChangeFeeFormWidget extends AppBottomSheetBase {
     required this.max,
     required this.min,
     required this.currentValue,
+    required this.convertFee,
     required super.appTheme,
     required super.localization,
   });
@@ -40,13 +42,20 @@ class _ChangeFeeFormWidgetState
 
   @override
   Widget bottomBuilder(BuildContext context) {
-    return PrimaryAppButton(
-      text: localization.translate(
-        LanguageKey.commonChangeFeeTransactionConfirm,
-      ),
-      onPress: () {
-        AppNavigator.pop(_value);
-      },
+    return Column(
+      children: [
+        PrimaryAppButton(
+          text: localization.translate(
+            LanguageKey.commonChangeFeeTransactionConfirm,
+          ),
+          onPress: () {
+            AppNavigator.pop(_value);
+          },
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize05,
+        ),
+      ],
     );
   }
 
@@ -103,7 +112,7 @@ class _ChangeFeeFormWidgetState
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(
-          height: BoxSize.boxSize02,
+          height: BoxSize.boxSize07,
         ),
         RichText(
           text: TextSpan(children: [
@@ -117,7 +126,7 @@ class _ChangeFeeFormWidgetState
             ),
             TextSpan(
                 text:
-                    ' ${_value.formatBalance} ${localization.translate(
+                    ' ${widget.convertFee(_value)} ${localization.translate(
                   LanguageKey.commonAura,
                 )}',
                 style: AppTypoGraPhy.textSmMedium.copyWith(
@@ -126,7 +135,7 @@ class _ChangeFeeFormWidgetState
           ]),
         ),
         const SizedBox(
-          height: BoxSize.boxSize06,
+          height: BoxSize.boxSize07,
         ),
       ],
     );

@@ -45,6 +45,8 @@ class EvmChainClient {
         throw Exception('Transaction execute failed');
       }
 
+      print(tx.toString());
+
       return tx;
     } catch (e) {
       if (times == 5) {

@@ -205,44 +205,44 @@ final class BorderAppButton extends StatelessWidget {
   }
 }
 
-// final class TextAppButton extends StatelessWidget {
-//   final String text;
-//   final bool? isDisable;
-//   final VoidCallback? onPress;
-//   final double? minWidth;
-//   final Widget? leading;
-//   final Widget? suffix;
-//   final TextStyle ?style;
-//
-//   const TextAppButton({
-//     super.key,
-//     required this.text,
-//     this.style,
-//     this.isDisable,
-//     this.onPress,
-//     this.minWidth,
-//     this.leading,
-//     this.suffix,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return AppThemeBuilder(
-//       builder: (theme) {
-//         return _AppButton(
-//           text: text,
-//           disabled: isDisable,
-//           onPress: onPress,
-//           color: theme.bodyColorBackground,
-//           minWidth: minWidth,
-//           textStyle: style ?? AppTypoGraPhy.bodyMedium03.copyWith(
-//             color: theme.contentColor700,
-//           ),
-//           theme: theme,
-//           suffix: suffix,
-//           leading: leading,
-//         );
-//       },
-//     );
-//   }
-// }
+final class TextAppButton extends StatelessWidget {
+  final String text;
+  final bool? isDisable;
+  final VoidCallback? onPress;
+  final double? minWidth;
+  final Widget? leading;
+  final Widget? suffix;
+  final TextStyle ?style;
+
+  const TextAppButton({
+    super.key,
+    required this.text,
+    this.style,
+    this.isDisable,
+    this.onPress,
+    this.minWidth,
+    this.leading,
+    this.suffix,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppThemeBuilder(
+      builder: (theme) {
+        return _AppButton(
+          text: text,
+          disabled: isDisable,
+          onPress: onPress,
+          color: theme.bgPrimary,
+          minWidth: minWidth,
+          textStyle: style ?? AppTypoGraPhy.textSmSemiBold.copyWith(
+            color: theme.textSecondary,
+          ),
+          theme: theme,
+          suffix: suffix,
+          leading: leading,
+        );
+      },
+    );
+  }
+}

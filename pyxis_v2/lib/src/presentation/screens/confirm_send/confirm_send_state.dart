@@ -17,6 +17,8 @@ class ConfirmSendState with _$ConfirmSendState {
     String? error,
     @Default(false) bool isShowFullMsg,
     @Default({}) Map<String,dynamic> msg,
+    @Default('') String hash,
+    @Default('') String timeStamp,
     required AppNetwork appNetwork,
     required Account account,
     required String amount,

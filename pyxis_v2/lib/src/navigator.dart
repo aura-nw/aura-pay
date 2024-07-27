@@ -11,6 +11,7 @@ import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_screen.dart'
 import 'package:pyxis_v2/src/presentation/screens/send/send_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/social_login_yeti_bot/social_login_yeti_bot_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/splash/spash_screen.dart';
+import 'package:pyxis_v2/src/presentation/screens/transaction_result/transaction_result_screen.dart';
 import 'package:wallet_core/wallet_core.dart';
 
 sealed class RoutePath {
@@ -31,6 +32,7 @@ sealed class RoutePath {
 
   static const String send = '$home/send';
   static const String confirmSend = '$send/confirm';
+  static const String transactionResult = '$home/transaction_result';
 }
 
 sealed class AppNavigator {
@@ -114,6 +116,20 @@ sealed class AppNavigator {
             amount: arguments['amount'],
             recipient: arguments['recipient'],
             balance: arguments['balance'],
+          ),
+          settings,
+        );
+
+      case RoutePath.transactionResult:
+        final Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        return _defaultRoute(
+          TransactionResultScreen(
+            time: arguments['time'],
+            amount: arguments['amount'],
+            from: arguments['from'],
+            hash: arguments['hash'],
+            to: arguments['to'],
           ),
           settings,
         );

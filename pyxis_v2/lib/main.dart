@@ -13,6 +13,7 @@ import 'package:pyxis_v2/src/application/provider/local/key_store/key_store_db.d
 import 'package:pyxis_v2/src/application/provider/local/token_market/token_market_db.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/asset_path.dart';
+import 'package:pyxis_v2/src/core/constants/aura_scan.dart';
 import 'package:pyxis_v2/src/pyxis_application.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'package:path_provider/path_provider.dart';
@@ -61,6 +62,8 @@ void main() async {
   LogProvider.init(
     LogProviderImpl(),
   );
+
+  AuraScan.init(environment);
 
   final Map<String, dynamic> config = await _loadConfig();
 

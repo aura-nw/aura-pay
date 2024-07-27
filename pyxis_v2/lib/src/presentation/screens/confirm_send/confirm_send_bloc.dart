@@ -44,8 +44,6 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
 
   final EvmChainClient _evmChainClient;
 
-  Uint8List _transaction = Uint8List(0);
-
   void _onInit(
     ConfirmSendOnInitEvent event,
     Emitter<ConfirmSendState> emit,
@@ -133,6 +131,7 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
         state.copyWith(
           gasEstimation: gasEstimation,
           gasPrice: gasPrice,
+          gasPriceToSend: gasPrice,
           msg: msg,
         ),
       );
@@ -144,7 +143,13 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
   void _onChangeFee(
     ConfirmSendOnChangeFeeEvent event,
     Emitter<ConfirmSendState> emit,
-  ) async {}
+  ) async {
+    emit(
+      state.copyWith(
+        gasPriceToSend: BigInt.from(event.gasPrice),
+      ),
+    );
+  }
 
   void _onChangeIsShowedMsg(
     ConfirmSendOnChangeIsShowedMessageEvent event,
@@ -180,7 +185,7 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
               state.amount,
               customDecimal: state.balance.decimal,
             ),
-            gasLimit: BigInt.from(21000),
+            gasLimit: _transformEvmTransferGasLimit(),
             recipient: state.recipient,
             gasPrice: state.gasPriceToSend,
           );
@@ -195,6 +200,7 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
 
           emit(state.copyWith(
             status: ConfirmSendStatus.sent,
+            hash: hash,
           ));
           break;
         case AppNetworkType.cosmos:
@@ -209,6 +215,16 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
       ));
       LogProvider.log('Confirm send submit transaction error ${e.toString()}');
     }
+  }
+
+  BigInt _transformEvmTransferGasLimit(){
+    final gasLimit = (state.gasEstimation).toDouble() * 1.5;
+
+    if(gasLimit < BigInt.from(21000).toDouble()){
+      return BigInt.from(21000);
+    }
+
+    return BigInt.from(gasLimit);
   }
 
   BigInt _transformGasPrice(BigInt gasPrice) {

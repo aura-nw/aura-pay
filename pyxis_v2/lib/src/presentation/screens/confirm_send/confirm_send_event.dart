@@ -6,7 +6,7 @@ part 'confirm_send_event.freezed.dart';
 class ConfirmSendEvent with _$ConfirmSendEvent {
   const factory ConfirmSendEvent.init() = ConfirmSendOnInitEvent;
 
-  const factory ConfirmSendEvent.onChangeFee({required String fee}) =
+  const factory ConfirmSendEvent.onChangeFee({required double gasPrice,}) =
       ConfirmSendOnChangeFeeEvent;
 
   const factory ConfirmSendEvent.onChangeIsShowedMessage() = ConfirmSendOnChangeIsShowedMessageEvent;

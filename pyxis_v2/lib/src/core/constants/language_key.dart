@@ -153,5 +153,14 @@ sealed class LanguageKey {
   static const String confirmSendScreenConfirmSend = 'confirm_send_screen_confirm_send';
   static const String confirmSendScreenMemo = 'confirm_send_screen_memo';
   static const String confirmSendScreenMemoHint = 'confirm_send_screen_memo_hint';
-  
+
+
+  // Transaction result
+  static const String transactionResultScreenTitle = 'transaction_result_screen_title';
+  static const String transactionResultScreenFrom = 'transaction_result_screen_from';
+  static const String transactionResultScreenTo = 'transaction_result_screen_to';
+  static const String transactionResultScreenTime = 'transaction_result_screen_time';
+  static const String transactionResultScreenHash = 'transaction_result_screen_tx';
+  static const String transactionResultScreenBackToHome = 'transaction_result_screen_back_to_home';
+  static const String transactionResultScreenDone = 'transaction_result_screen_back_to_done';
 }

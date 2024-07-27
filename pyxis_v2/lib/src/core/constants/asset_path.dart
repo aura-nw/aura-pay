@@ -19,6 +19,7 @@ sealed class AssetConfigPath{
 sealed class AssetLogoPath {
   static const String _baseLogoPath = '${_baseAsset}logo/';
   static const String logo = '${_baseLogoPath}logo.svg';
+  static const String logo2 = '${_baseLogoPath}logo_2.svg';
 }
 
 sealed class AssetImagePath {
@@ -65,6 +66,7 @@ sealed class AssetIconPath {
   static const String icCommonFeeEdit = '${_baseIconPath}ic_common_edit_fee.svg';
   static const String icCommonSearch = '${_baseIconPath}ic_common_search.svg';
   static const String icCommonSignMessage = '${_baseIconPath}ic_common_sign_message.svg';
+  static const String icCommonViewHash = '${_baseIconPath}ic_common_view_hash.svg';
 
   static const String icHomeScreenBottomNavigationBarBrowser = '${_baseIconPath}ic_home_screen_bottom_navigation_bar_browser.svg';
   static const String icHomeScreenBottomNavigationBarWallet = '${_baseIconPath}ic_home_screen_bottom_navigator_bar_wallet.svg';
