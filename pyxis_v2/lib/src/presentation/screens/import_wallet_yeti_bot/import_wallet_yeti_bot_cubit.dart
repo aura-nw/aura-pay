@@ -13,9 +13,11 @@ final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
     this._accountUseCase,
     this._keyStoreUseCase, {
     required AWallet wallet,
+    required AppNetwork appNetwork,
   }) : super(
           ImportWalletYetiBotState(
             wallet: wallet,
+            appNetwork: appNetwork,
           ),
         );
 
@@ -40,29 +42,49 @@ final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
 
     ControllerKeyType controllerKeyType = ControllerKeyType.passPhrase;
 
-    if(state.wallet.wallet == null){
+    if (state.wallet.wallet == null) {
       controllerKeyType = ControllerKeyType.privateKey;
     }
 
-    final String evmAddress = state.wallet.address;
+    late AddACosmosInfoRequest addACosmosInfoRequest;
+    late AddAEvmInfoRequest addAEvmInfoRequest;
 
-    final String cosmosAddress = bech32.convertEthAddressToBech32Address(
-      AppLocalConstant.auraPrefix,
-      evmAddress,
-    );
-
+    switch (state.appNetwork.type) {
+      case AppNetworkType.cosmos:
+        addACosmosInfoRequest = AddACosmosInfoRequest(
+          address: state.wallet.address,
+          isActive: true,
+        );
+        addAEvmInfoRequest = AddAEvmInfoRequest(
+          address: bech32.convertBech32AddressToEthAddress(
+            AppLocalConstant.auraPrefix,
+            state.wallet.address,
+          ),
+          isActive: false,
+        );
+        break;
+      case AppNetworkType.evm:
+        addACosmosInfoRequest = AddACosmosInfoRequest(
+          address: bech32.convertEthAddressToBech32Address(
+            AppLocalConstant.auraPrefix,
+            state.wallet.address,
+          ),
+          isActive: false,
+        );
+        addAEvmInfoRequest = AddAEvmInfoRequest(
+          address: state.wallet.address,
+          isActive: true,
+        );
+        break;
+      case AppNetworkType.other:
+        throw UnimplementedError('Pick wallet does not support other network for this version');
+    }
 
     await _accountUseCase.add(
       AddAccountRequest(
         name: PyxisAccountConstant.defaultNormalWalletName,
-        addACosmosInfoRequest: AddACosmosInfoRequest(
-          address: cosmosAddress,
-          isActive: false,
-        ),
-        addAEvmInfoRequest: AddAEvmInfoRequest(
-          address: evmAddress,
-          isActive: true,
-        ),
+        addACosmosInfoRequest: addACosmosInfoRequest,
+        addAEvmInfoRequest: addAEvmInfoRequest,
         keyStoreId: keyStore.id,
         controllerKeyType: controllerKeyType,
         createType: AccountCreateType.import,

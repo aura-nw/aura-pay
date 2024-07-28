@@ -22,24 +22,55 @@ mixin StatelessBaseScreen on StatelessWidget {
     return null;
   }
 
-  Widget buildSpace(BuildContext context) {
+  Widget buildSpace(
+      BuildContext context,
+      AppTheme appTheme,
+      AppLocalizationManager localization,
+      ) {
     return SafeArea(
       child: Padding(
         padding: padding() ?? defaultPadding(),
-        child: child(context),
+        child: child(
+          context,
+          appTheme,
+          localization,
+        ),
       ),
     );
   }
 
-  Widget child(BuildContext context);
+  Widget child(
+      BuildContext context,
+      AppTheme appTheme,
+      AppLocalizationManager localization,
+      );
 
-  Widget wrapBuild(BuildContext context, Widget child);
+  Widget wrapBuild(
+      BuildContext context,
+      Widget child,
+      AppTheme appTheme,
+      AppLocalizationManager localization,
+      );
 
   @override
   Widget build(BuildContext context) {
-    return wrapBuild(
-      context,
-      buildSpace(context),
+    return AppThemeBuilder(
+      builder: (appTheme) {
+        return AppLocalizationProvider(
+          builder: (localization) {
+            return wrapBuild(
+              context,
+              buildSpace(
+                context,
+                appTheme,
+                localization,
+              ),
+              appTheme,
+              localization,
+            );
+          },
+        );
+      },
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_v2/app_configs/di.dart';
@@ -22,9 +23,11 @@ import 'package:wallet_core/wallet_core.dart';
 
 class ImportWalletYetiBotScreen extends StatefulWidget {
   final AWallet aWallet;
+  final AppNetwork appNetwork;
 
   const ImportWalletYetiBotScreen({
     required this.aWallet,
+    required this.appNetwork,
     super.key,
   });
 
@@ -42,7 +45,10 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
 
   @override
   void initState() {
-    _cubit = getIt.get<ImportWalletYetiBotCubit>(param1: widget.aWallet);
+    _cubit = getIt.get<ImportWalletYetiBotCubit>(
+      param1: widget.aWallet,
+      param2: widget.appNetwork,
+    );
     super.initState();
   }
 
@@ -53,6 +59,12 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
   }
 
   Future<void> _addContent() async {
+    String displayAddress = _cubit.state.wallet.address;
+
+    if(widget.appNetwork.type == AppNetworkType.cosmos){
+
+    }
+
     final localization = AppLocalizationManager.of(context);
     const messageDelays = [
       LanguageKey.importWalletYetiBotScreenBotContentOne,
@@ -73,7 +85,7 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
           type: i == messageDelays.length - 1 ? 1 : 0,
           object: i == messageDelays.length - 1
               ? [
-                  _cubit.state.wallet.address ?? '',
+                  _cubit.state.wallet.address,
                 ]
               : [],
         ),

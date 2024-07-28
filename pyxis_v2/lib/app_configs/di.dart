@@ -18,6 +18,7 @@ import 'package:pyxis_v2/src/application/provider/service/balance/balance_servic
 import 'package:pyxis_v2/src/application/provider/service/nft/nft_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/service/token_market/remote_token_market_service_impl.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_v2/src/core/observer/home_page_observer.dart';
 import 'package:pyxis_v2/src/presentation/screens/confirm_send/confirm_send_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/generate_wallet/generate_wallet_cubit.dart';
@@ -94,6 +95,11 @@ Future<void> initDependency(
       network: Network.sapphire_devnet,
       redirectUrl: redirectUrl,
     ),
+  );
+
+  // Register observers
+  getIt.registerLazySingleton<HomePageObserver>(
+    () => HomePageObserver(),
   );
 
   // Register generator
@@ -306,15 +312,18 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactory(
-    () => ImportWalletBloc(),
+  getIt.registerFactoryParam<ImportWalletBloc, AppNetwork, dynamic>(
+    (appNetwork, _) => ImportWalletBloc(
+      appNetwork: appNetwork,
+    ),
   );
 
-  getIt.registerFactoryParam<ImportWalletYetiBotCubit, AWallet, dynamic>(
-    (wallet, _) => ImportWalletYetiBotCubit(
+  getIt.registerFactoryParam<ImportWalletYetiBotCubit, AWallet, AppNetwork>(
+    (wallet, network) => ImportWalletYetiBotCubit(
       getIt.get<AccountUseCase>(),
       getIt.get<KeyStoreUseCase>(),
       wallet: wallet,
+      appNetwork: network,
     ),
   );
 

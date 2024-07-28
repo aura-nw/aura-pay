@@ -6,6 +6,7 @@ import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
+import 'package:pyxis_v2/src/core/observer/home_page_observer.dart';
 import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/toast.dart';
@@ -46,6 +47,7 @@ final class ConfirmSendScreen extends StatefulWidget {
 class _ConfirmSendScreenState extends State<ConfirmSendScreen>
     with StateFulBaseScreen, CustomFlutterToast {
   final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
+  final HomePageObserver _homePageObserver = getIt.get<HomePageObserver>();
   late ConfirmSendBloc _bloc;
 
   @override
@@ -112,17 +114,15 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
             ],
           ),
         ),
-        ConfirmSendStatusSelector(
-          builder: (status) {
-            return PrimaryAppButton(
-              text: localization.translate(
-                LanguageKey.confirmSendScreenConfirmSend,
-              ),
-              onPress: _onSubmit,
-              loading: status == ConfirmSendStatus.sending,
-            );
-          }
-        ),
+        ConfirmSendStatusSelector(builder: (status) {
+          return PrimaryAppButton(
+            text: localization.translate(
+              LanguageKey.confirmSendScreenConfirmSend,
+            ),
+            onPress: _onSubmit,
+            loading: status == ConfirmSendStatus.sending,
+          );
+        }),
       ],
     );
   }
@@ -143,6 +143,12 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
                 showLoading();
                 break;
               case ConfirmSendStatus.sent:
+                _homePageObserver.emit(
+                  emitParam: HomePageEmitParam(
+                    event: HomePageObserver.onSendTokenDone,
+                    data: state.balance.type,
+                  ),
+                );
                 hideLoading();
                 AppNavigator.push(
                   RoutePath.transactionResult,
@@ -150,10 +156,10 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
                     'from': widget.appNetwork.getAddress(
                       widget.account,
                     ),
-                    'to' : widget.recipient,
-                    'amount' : widget.amount,
-                    'time' : state.timeStamp,
-                    'hash' : state.hash,
+                    'to': widget.recipient,
+                    'amount': widget.amount,
+                    'time': state.timeStamp,
+                    'hash': state.hash,
                   },
                 );
                 break;
@@ -222,7 +228,7 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
     }
   }
 
-  void _onSubmit() async{
+  void _onSubmit() async {
     _bloc.add(
       const ConfirmSendOnSubmitEvent(),
     );

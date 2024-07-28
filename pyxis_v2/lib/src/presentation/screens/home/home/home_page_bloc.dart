@@ -37,6 +37,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on(_onUpdateAccountBalance);
     on(_onUpdateNFTs);
     on(_onChangeEnableToken);
+    on(_onRefreshTokenBalance);
   }
 
   final List<AppNetwork> _allNetworks = List.empty(growable: true);
@@ -619,5 +620,16 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       totalBalance,
       totalValueYesterday,
     ];
+  }
+
+  void _onRefreshTokenBalance(HomePageOnRefreshTokenBalanceEvent event, Emitter<HomePageState> emit,){
+    switch(event.tokenType){
+      case TokenType.native:
+        break;
+      case TokenType.cw20:
+        break;
+      case TokenType.erc20:
+        break;
+    }
   }
 }

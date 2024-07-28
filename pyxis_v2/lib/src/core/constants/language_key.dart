@@ -38,6 +38,9 @@ sealed class LanguageKey {
   static const String generateWalletScreenBotContentFive = 'generate_wallet_screen_bot_content_five';
   static const String generateWalletScreenBotContentSix = 'generate_wallet_screen_bot_content_six';
 
+  // Select network screen
+  static const String selectNetworkScreen = 'select_network_screen_app_bar_title';
+
   // Import wallet screen
   static const String importWalletScreenAppBarTitle = "import_wallet_screen_app_bar_title";
   static const String importWalletScreenSeedPhrase = "import_wallet_screen_seed_phrase";

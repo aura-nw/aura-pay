@@ -6,6 +6,7 @@ import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
+import 'package:pyxis_v2/src/core/observer/home_page_observer.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
 import 'package:pyxis_v2/src/navigator.dart';
@@ -39,6 +40,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with StateFulBaseScreen, SingleTickerProviderStateMixin {
+  final HomePageObserver _homePageObserver = getIt.get<HomePageObserver>();
+
   late HomePageBloc _bloc;
 
   final String avatarAsset = randomAvatar();
@@ -150,6 +153,8 @@ class _HomePageState extends State<HomePage>
 
     _pageController = PageController();
     _createScrollController();
+
+    _homePageObserver.addListener(_homePageListener);
     super.initState();
   }
 
@@ -157,6 +162,7 @@ class _HomePageState extends State<HomePage>
   void dispose() {
     _controller.dispose();
     _disposeController();
+    _homePageObserver.removeListener(_homePageListener);
     super.dispose();
   }
 
@@ -164,6 +170,20 @@ class _HomePageState extends State<HomePage>
   void didChangeDependencies() {
     paddingTop = context.statusBar;
     super.didChangeDependencies();
+  }
+
+  void _homePageListener(HomePageEmitParam param){
+    final String event = param.event;
+    final data = param.data;
+
+    switch(event){
+      case HomePageObserver.onSendTokenDone:
+        // Refresh balance home page
+        break;
+      default:
+        break;
+    }
+
   }
 
   @override

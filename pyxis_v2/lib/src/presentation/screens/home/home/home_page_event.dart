@@ -1,3 +1,4 @@
+import 'package:domain/core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,12 +15,17 @@ class HomePageEvent with _$HomePageEvent {
   }) = HomePageOnUpdateTokenMarketEvent;
 
   const factory HomePageEvent.updateAccountBalance({
-    required Map<TokenType,dynamic> balanceMap,
+    required Map<TokenType, dynamic> balanceMap,
   }) = HomePageOnUpdateAccountBalanceEvent;
 
   const factory HomePageEvent.updateNFTs({
     required List<NFTInformation> nftS,
   }) = HomePageOnUpdateNFTsEvent;
 
-  const factory HomePageEvent.changeEnable() = HomePageOnUpdateEnableTotalTokenEvent;
+  const factory HomePageEvent.changeEnable() =
+      HomePageOnUpdateEnableTotalTokenEvent;
+
+  const factory HomePageEvent.refreshTokenBalance({
+    required TokenType tokenType,
+  }) = HomePageOnRefreshTokenBalanceEvent;
 }

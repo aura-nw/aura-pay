@@ -148,13 +148,13 @@ class _GetStartedScreenState extends State<GetStartedScreen>
 
   void _onReplacePasscodeToAddExistingWallet(BuildContext context) {
     AppNavigator.replaceWith(
-      RoutePath.importWallet,
+      RoutePath.selectNetwork,
     );
   }
 
   void _onPushToAddExistingWallet() {
     AppNavigator.push(
-      RoutePath.importWallet,
+      RoutePath.selectNetwork,
     );
   }
 

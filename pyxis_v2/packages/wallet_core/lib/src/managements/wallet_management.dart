@@ -49,7 +49,19 @@ class WalletManagement {
       final bytes = hex.decode(privateKey); // Decode the hex string to bytes
       final pk = PrivateKey.createWithData(
           Uint8List.fromList(bytes)); // Create a PrivateKey object
-      final publicKey = pk.getPublicKeySecp256k1(false); // Get the public key
+
+      PublicKey publicKey;
+
+      switch(coinType){
+        case Constants.defaultCoinType:
+          publicKey = pk.getPublicKeySecp256k1(false); // Get the public key
+        case Constants.cosmosCoinType:
+          publicKey = pk.getPublicKeySecp256k1(true);
+        default:
+          publicKey = pk.getPublicKeySecp256k1(false); // Get the public key
+          break;
+      }
+
       final anyAddress = AnyAddress.createWithPublicKey(
           publicKey, coinType); // Create an AnyAddress object
       final address = anyAddress.description(); // Get the address description

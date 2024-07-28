@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/src/core/app_routes.dart';
 import 'package:pyxis_v2/src/presentation/screens/confirm_send/confirm_send_screen.dart';
@@ -8,6 +9,7 @@ import 'package:pyxis_v2/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_screen.dart';
+import 'package:pyxis_v2/src/presentation/screens/select_network/select_network_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/social_login_yeti_bot/social_login_yeti_bot_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/splash/spash_screen.dart';
@@ -23,6 +25,7 @@ sealed class RoutePath {
   static const String getStarted = '$_onBoarding/get_started';
   static const String setPasscode = '$_onBoarding/set_passcode';
   static const String createWallet = '$_onBoarding/create_wallet';
+  static const String selectNetwork = '$_onBoarding/select_network';
   static const String importWallet = '$_onBoarding/import_wallet';
   static const String importWalletYetiBot =
       '$_onBoarding/import_wallet_yeti_bot';
@@ -79,16 +82,25 @@ sealed class AppNavigator {
           const HomeScreen(),
           settings,
         );
-      case RoutePath.importWallet:
+      case RoutePath.selectNetwork:
         return _defaultRoute(
-          const ImportWalletScreen(),
+          SelectNetworkScreen(),
+          settings,
+        );
+      case RoutePath.importWallet:
+        final AppNetwork appNetwork = settings.arguments as AppNetwork;
+        return _defaultRoute(
+          ImportWalletScreen(
+            appNetwork: appNetwork,
+          ),
           settings,
         );
       case RoutePath.importWalletYetiBot:
-        final AWallet aWallet = settings.arguments as AWallet;
+        final Map<String,dynamic> arguments = settings.arguments as Map<String,dynamic>;
         return _defaultRoute(
           ImportWalletYetiBotScreen(
-            aWallet: aWallet,
+            aWallet: arguments['wallet'],
+            appNetwork: arguments['network'],
           ),
           settings,
         );

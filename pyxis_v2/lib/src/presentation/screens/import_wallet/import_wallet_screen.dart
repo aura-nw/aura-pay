@@ -23,7 +23,12 @@ import 'package:pyxis_v2/src/presentation/widgets/app_button.dart';
 import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
 
 class ImportWalletScreen extends StatefulWidget {
-  const ImportWalletScreen({super.key});
+  final AppNetwork appNetwork;
+
+  const ImportWalletScreen({
+    required this.appNetwork,
+    super.key,
+  });
 
   @override
   State<ImportWalletScreen> createState() => _ImportWalletScreenState();
@@ -31,11 +36,19 @@ class ImportWalletScreen extends StatefulWidget {
 
 class _ImportWalletScreenState extends State<ImportWalletScreen>
     with StateFulBaseScreen {
-  final ImportWalletBloc _bloc = getIt.get<ImportWalletBloc>();
+  late ImportWalletBloc _bloc;
 
   final TextEditingController _privateKeyController = TextEditingController();
 
   final GlobalKey<FillWordsWidgetState> _passPhraseFormKey = GlobalKey();
+
+  @override
+  void initState() {
+    _bloc = getIt.get<ImportWalletBloc>(
+      param1: widget.appNetwork,
+    );
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -76,7 +89,8 @@ class _ImportWalletScreenState extends State<ImportWalletScreen>
                                       fillWordKey: _passPhraseFormKey,
                                       isValid: _bloc.isValidControllerKey,
                                       wordCount: count,
-                                      onChangeWordClick: () => _onChangeWordClick(
+                                      onChangeWordClick: () =>
+                                          _onChangeWordClick(
                                         appTheme,
                                         localization,
                                         count,
@@ -136,7 +150,10 @@ class _ImportWalletScreenState extends State<ImportWalletScreen>
             case ImportWalletStatus.imported:
               AppNavigator.push(
                 RoutePath.importWalletYetiBot,
-                state.aWallet,
+                {
+                  'wallet': state.aWallet,
+                  'network': widget.appNetwork,
+                },
               );
               break;
           }

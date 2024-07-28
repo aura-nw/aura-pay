@@ -6,9 +6,12 @@ import 'import_wallet_state.dart';
 
 final class ImportWalletBloc
     extends Bloc<ImportWalletEvent, ImportWalletState> {
-  ImportWalletBloc()
-      : super(
-          const ImportWalletState(),
+  ImportWalletBloc({
+    required AppNetwork appNetwork,
+  }) : super(
+          ImportWalletState(
+            appNetwork: appNetwork,
+          ),
         ) {
     on(_onChangeType);
     on(_onChangeWordCount);
@@ -72,15 +75,29 @@ final class ImportWalletBloc
 
     AWallet wallet;
 
+    int coinType = TWCoinType.TWCoinTypeEthereum;
+
+    switch(state.appNetwork.type){
+      case AppNetworkType.cosmos:
+        coinType = TWCoinType.TWCoinTypeCosmos;
+        break;
+      case AppNetworkType.evm:
+        break;
+      case AppNetworkType.other:
+        break;
+    }
+
     switch (state.controllerType) {
       case ControllerKeyType.passPhrase:
         wallet = WalletCore.walletManagement.importWallet(
           state.controllerKey,
+          coinType: coinType,
         );
         break;
       case ControllerKeyType.privateKey:
         wallet = WalletCore.walletManagement.importWalletWithPrivateKey(
           state.controllerKey,
+          coinType: coinType,
         );
         break;
     }
@@ -109,9 +126,20 @@ final class ImportWalletBloc
           );
           break;
         case ControllerKeyType.privateKey:
-          WalletCore.walletManagement.importWalletWithPrivateKey(
-            key,
-          );
+          switch (state.appNetwork.type) {
+            case AppNetworkType.evm:
+              WalletCore.walletManagement.importWalletWithPrivateKey(
+                key,
+              );
+              break;
+            case AppNetworkType.cosmos:
+              WalletCore.walletManagement.importWalletWithPrivateKey(
+                key,
+                coinType: TWCoinType.TWCoinTypeCosmos,
+              );
+            case AppNetworkType.other:
+              break;
+          }
           break;
       }
 

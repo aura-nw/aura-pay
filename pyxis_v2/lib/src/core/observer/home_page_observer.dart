@@ -1,24 +1,25 @@
 import 'observer_base.dart';
 
-typedef HomeListener = void Function(HomeScreenEmitParam data);
+typedef HomePageListener = void Function(HomePageEmitParam data);
 
-final class HomeScreenEmitParam<T> {
+final class HomePageEmitParam<T> {
   final String event;
   final T ?data;
 
-  const HomeScreenEmitParam({
+  const HomePageEmitParam({
     required this.event,
     this.data,
   });
 }
 
-final class HomeScreenObserver
-    extends ObserverBase<HomeListener, HomeScreenEmitParam> {
+final class HomePageObserver
+    extends ObserverBase<HomePageListener, HomePageEmitParam> {
 
+  static const String onSendTokenDone = 'HOME_PAGE_ON_SEND_TOKEN_DONE';
 
   @override
   void emit({
-    required HomeScreenEmitParam emitParam,
+    required HomePageEmitParam emitParam,
   }) {
     for (final listener in listeners) {
       listener.call(emitParam);

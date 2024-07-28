@@ -33,6 +33,8 @@
   "generate_wallet_screen_bot_content_five": "Xong rồi, ví Pyxis của bạn đã sẵn sàng \uD83E\uDD73\uD83C\uDF89\uD83C\uDF89",
   "generate_wallet_screen_bot_content_six": "Địa chỉ ví của bạn",
 
+  "select_network_screen_app_bar_title" : "Select network",
+
   "import_wallet_screen_app_bar_title": "Thêm Ví Hiện Có",
   "import_wallet_screen_seed_phrase": "Cụm từ khôi phục",
   "import_wallet_screen_private_key": "Khóa Riêng Tư",
