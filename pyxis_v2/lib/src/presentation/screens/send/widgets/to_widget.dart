@@ -7,6 +7,7 @@ import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/helpers/address_validator.dart';
+import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/switch_widget.dart';
@@ -37,28 +38,33 @@ final class SendScreenToWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _TextInputSendToWidget(
-          appTheme: appTheme,
-          localization: localization,
-          hintText: localization.translate(
-            LanguageKey.sendScreenToHint,
-          ),
-          onContactTap: onContactTap,
-          onScanTap: onScanTap,
-          onChanged: onAddressChanged,
-          controller: recipientController,
-          constraintManager: ConstraintManager()
-            ..custom(
-              errorMessage: localization.translate(
-                LanguageKey.sendScreenInvalidAddress,
+        SendSelectedNetworkSelector(
+          builder: (network) {
+            return _TextInputSendToWidget(
+              appTheme: appTheme,
+              localization: localization,
+              hintText: localization.translate(
+                LanguageKey.sendScreenToHint,
               ),
-              customValid: (address) {
-                // Change later
-                return addressInValid(
-                  address: address,
-                );
-              },
-            ),
+              onContactTap: onContactTap,
+              onScanTap: onScanTap,
+              onChanged: onAddressChanged,
+              controller: recipientController,
+              constraintManager: ConstraintManager()
+                ..custom(
+                  errorMessage: localization.translate(
+                    LanguageKey.sendScreenInvalidAddress,
+                  ),
+                  customValid: (address) {
+                    // Change later
+                    return addressInValid(
+                      address: address,
+                      coinType: network.coinType,
+                    );
+                  },
+                ),
+            );
+          }
         ),
         const SizedBox(
           height: BoxSize.boxSize05,

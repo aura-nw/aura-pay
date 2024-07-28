@@ -4,6 +4,7 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/divider_widget.dart';
@@ -44,11 +45,20 @@ final class SendScreenFromWidget extends StatelessWidget {
               ),
               SendFromSelector(
                   builder: (account) {
-                    return DefaultWalletInfoWidget(
-                      avatarAsset: randomAvatar(),
-                      appTheme: appTheme,
-                      title: account?.name ?? '',
-                      address: account?.aEvmInfo.address ?? '',
+                    return SendSelectedNetworkSelector(
+                      builder: (network) {
+                        String sender = '';
+
+                        if(account != null){
+                          sender = network.getAddress(account);
+                        }
+                        return DefaultWalletInfoWidget(
+                          avatarAsset: randomAvatar(),
+                          appTheme: appTheme,
+                          title: account?.name ?? '',
+                          address: sender,
+                        );
+                      }
                     );
                   }
               ),
