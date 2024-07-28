@@ -118,6 +118,16 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text('Run Test'), // Nhãn nút
             ),
+
+            ElevatedButton(
+              onPressed: () {
+                test1();
+                test2();
+                test3();
+                test4();
+              },
+              child: const Text('Run Test 1'), // Nhãn nút
+            ),
           ],
         ),
       ),

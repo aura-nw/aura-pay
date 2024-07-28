@@ -26,16 +26,23 @@ class WalletManagement {
   ///
   /// [mnemonic] is the mnemonic phrase of the wallet.
   /// Returns the AWallet containing the HDWallet and address.
-  AWallet importWallet(String mnemonic,
-      {int coinType = Constants.cosmosCoinType}) {
+  AWallet importWallet(
+    String mnemonic, {
+    int coinType = Constants.defaultCoinType,
+    String derivationPath = Constants.derivationPathEthereum,
+  }) {
     final wallet = HDWallet.createWithMnemonic(mnemonic);
     final address = wallet.getAddressForCoin(coinType);
-    
+
     return AWallet(
-        wallet: wallet,
-        address: address,
-        privateKey: wallet.getKey(coinType, Constants.derivationPathCosmos),
-        coinType: coinType);
+      wallet: wallet,
+      address: address,
+      privateKey: wallet.getKey(
+        coinType,
+        derivationPath,
+      ),
+      coinType: coinType,
+    );
   }
 
   /// Imports a wallet using a private key.
@@ -43,8 +50,10 @@ class WalletManagement {
   /// [privateKey] is the private key in hex format.
   /// [coinType] specifies the type of the coin.
   /// Returns the AWallet containing the address and private key.
-  AWallet importWalletWithPrivateKey(String privateKey,
-      {int coinType = Constants.defaultCoinType}) {
+  AWallet importWalletWithPrivateKey(
+    String privateKey, {
+    int coinType = Constants.defaultCoinType,
+  }) {
     try {
       final bytes = hex.decode(privateKey); // Decode the hex string to bytes
       final pk = PrivateKey.createWithData(
@@ -52,7 +61,7 @@ class WalletManagement {
 
       PublicKey publicKey;
 
-      switch(coinType){
+      switch (coinType) {
         case Constants.defaultCoinType:
           publicKey = pk.getPublicKeySecp256k1(false); // Get the public key
         case Constants.cosmosCoinType:
@@ -81,7 +90,7 @@ class WalletManagement {
   AWallet createWalletWithMnemonic(String mnemonic,
       {int coinType = Constants.defaultCoinType}) {
     final wallet = HDWallet.createWithMnemonic(mnemonic);
-    
+
     final address = wallet.getAddressForCoin(coinType);
 
     return AWallet(
