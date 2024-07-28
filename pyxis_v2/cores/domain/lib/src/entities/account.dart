@@ -42,6 +42,13 @@ final class AEvmInfo {
     required this.address,
     required this.isActive,
   });
+
+  String get displayAddress{
+    if(isActive){
+      return address;
+    }
+    return '';
+  }
 }
 
 final class ACosmosInfo {
@@ -52,4 +59,11 @@ final class ACosmosInfo {
     required this.address,
     required this.isActive,
   });
+
+  String get displayAddress{
+    if(isActive){
+      return address;
+    }
+    return '';
+  }
 }

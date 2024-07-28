@@ -32,7 +32,11 @@ final class GetStartedCubit extends Cubit<GetStartedState> {
       final String privateKey = await _web3authUseCase.getPrivateKey();
 
       // Import wallet by private key
-      final AWallet aWallet = WalletCore.walletManagement.importWalletWithPrivateKey(privateKey);
+      final AWallet aWallet =
+          WalletCore.walletManagement.importWalletWithPrivateKey(
+        privateKey,
+        coinType: TWCoinType.TWCoinTypeEthereum,
+      );
 
       // Expired current session
       await _web3authUseCase.logout();
@@ -43,7 +47,6 @@ final class GetStartedCubit extends Cubit<GetStartedState> {
           wallet: aWallet,
         ),
       );
-
     } catch (e) {
       String errMsg = e.toString();
       if (e is PlatformException) {

@@ -8,6 +8,7 @@ import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
+import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:pyxis_v2/src/core/utils/copy.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/core/utils/toast.dart';
@@ -62,7 +63,9 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
     String displayAddress = _cubit.state.wallet.address;
 
     if(widget.appNetwork.type == AppNetworkType.cosmos){
-
+      displayAddress = widget.appNetwork.type.getAuraCosmosAddressByCreateType(displayAddress);
+    }else{
+      displayAddress = widget.appNetwork.type.getAuraEvmAddressByCreateType(displayAddress);
     }
 
     final localization = AppLocalizationManager.of(context);
@@ -85,7 +88,7 @@ class _ImportWalletYetiBotScreenState extends State<ImportWalletYetiBotScreen>
           type: i == messageDelays.length - 1 ? 1 : 0,
           object: i == messageDelays.length - 1
               ? [
-                  _cubit.state.wallet.address,
+            displayAddress,
                 ]
               : [],
         ),

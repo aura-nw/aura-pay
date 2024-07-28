@@ -50,12 +50,14 @@ class HomePageWalletCardWidget extends StatelessWidget {
         children: [
           HomePageActiveAccountSelector(
             builder: (account) {
+              final cosmosAddress = account?.aCosmosInfo.displayAddress  ?? '';
+              final evmAddress = account?.aEvmInfo.displayAddress  ?? '';
               return WalletMultiAddressInfoWidget(
                 appTheme: appTheme,
                 title: account?.name ?? '',
-                address: account?.aEvmInfo.address ?? '',
+                address: evmAddress,
                 avatarAsset: avatarAsset,
-                cosmosAddress: account?.aCosmosInfo.address ?? '',
+                cosmosAddress: cosmosAddress,
               );
             },
           ),

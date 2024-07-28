@@ -2,6 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/pyxis_account_constant.dart';
+import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'social_login_yeti_bot_state.dart';
 
@@ -46,10 +47,7 @@ final class SocialLoginYetiBotCubit extends Cubit<SocialLoginYetiBotState> {
 
     final String evmAddress = state.wallet.address;
 
-    final String cosmosAddress = bech32.convertEthAddressToBech32Address(
-      AppLocalConstant.auraPrefix,
-      evmAddress,
-    );
+    final String cosmosAddress = AppNetworkType.evm.getAuraCosmosAddressByCreateType(evmAddress);
 
     await _accountUseCase.add(
       AddAccountRequest(

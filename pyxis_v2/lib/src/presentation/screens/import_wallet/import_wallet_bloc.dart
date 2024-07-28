@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'import_wallet_event.dart';
 import 'import_wallet_state.dart';
@@ -75,17 +76,7 @@ final class ImportWalletBloc
 
     AWallet wallet;
 
-    int coinType = TWCoinType.TWCoinTypeEthereum;
-
-    switch(state.appNetwork.type){
-      case AppNetworkType.cosmos:
-        coinType = TWCoinType.TWCoinTypeCosmos;
-        break;
-      case AppNetworkType.evm:
-        break;
-      case AppNetworkType.other:
-        break;
-    }
+    int coinType = state.appNetwork.coinType;
 
     switch (state.controllerType) {
       case ControllerKeyType.passPhrase:
@@ -118,28 +109,20 @@ final class ImportWalletBloc
   }
 
   bool isValidControllerKey(String key) {
+    final coinType = state.appNetwork.coinType;
     try {
       switch (state.controllerType) {
         case ControllerKeyType.passPhrase:
           WalletCore.walletManagement.importWallet(
             key,
+            coinType: coinType,
           );
           break;
         case ControllerKeyType.privateKey:
-          switch (state.appNetwork.type) {
-            case AppNetworkType.evm:
-              WalletCore.walletManagement.importWalletWithPrivateKey(
-                key,
-              );
-              break;
-            case AppNetworkType.cosmos:
-              WalletCore.walletManagement.importWalletWithPrivateKey(
-                key,
-                coinType: TWCoinType.TWCoinTypeCosmos,
-              );
-            case AppNetworkType.other:
-              break;
-          }
+          WalletCore.walletManagement.importWalletWithPrivateKey(
+              key,
+              coinType: coinType
+          );
           break;
       }
 

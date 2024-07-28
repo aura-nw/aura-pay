@@ -22,7 +22,7 @@ extension AppNetworkExtension on AppNetwork {
     // Change later
     switch (type) {
       case AppNetworkType.cosmos:
-        return TWCoinType.TWCoinTypeEthereum;
+        return TWCoinType.TWCoinTypeCosmos;
       case AppNetworkType.evm:
         return TWCoinType.TWCoinTypeEthereum;
       case AppNetworkType.other:
@@ -33,9 +33,9 @@ extension AppNetworkExtension on AppNetwork {
   String getAddress(Account account) {
     switch (type) {
       case AppNetworkType.cosmos:
-        return account.aCosmosInfo.address;
+        return account.aCosmosInfo.displayAddress;
       case AppNetworkType.evm:
-        return account.aEvmInfo.address;
+        return account.aEvmInfo.displayAddress;
       case AppNetworkType.other:
         return '';
     }
@@ -57,6 +57,31 @@ extension AppNetworkExtension on AppNetwork {
             .toList();
       case AppNetworkType.other:
         return [];
+    }
+  }
+}
+
+extension AppNetworkTypeExtension on AppNetworkType{
+  String getAuraCosmosAddressByCreateType(String address){
+    switch (this) {
+      case AppNetworkType.cosmos:
+        final data = bech32.makeBech32Decoder('cosmos', address);
+        return bech32.makeBech32Encoder('aura', data);
+      case AppNetworkType.evm:
+        return bech32.convertEthAddressToBech32Address('aura', address);
+      case AppNetworkType.other:
+        return bech32.convertEthAddressToBech32Address('aura', address);
+    }
+  }
+
+  String getAuraEvmAddressByCreateType(String address){
+    switch (this) {
+      case AppNetworkType.cosmos:
+        return bech32.convertBech32AddressToEthAddress('cosmos', address);
+      case AppNetworkType.evm:
+        return address;
+      case AppNetworkType.other:
+        return address;
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/pyxis_account_constant.dart';
+import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'import_wallet_yeti_bot_state.dart';
 
@@ -49,30 +50,27 @@ final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
     late AddACosmosInfoRequest addACosmosInfoRequest;
     late AddAEvmInfoRequest addAEvmInfoRequest;
 
+    final String auraCosmosAddress = state.appNetwork.type.getAuraCosmosAddressByCreateType(state.wallet.address);
+    final String auraEvmAddress = state.appNetwork.type.getAuraEvmAddressByCreateType(state.wallet.address);
+
     switch (state.appNetwork.type) {
       case AppNetworkType.cosmos:
         addACosmosInfoRequest = AddACosmosInfoRequest(
-          address: state.wallet.address,
+          address: auraCosmosAddress,
           isActive: true,
         );
         addAEvmInfoRequest = AddAEvmInfoRequest(
-          address: bech32.convertBech32AddressToEthAddress(
-            AppLocalConstant.auraPrefix,
-            state.wallet.address,
-          ),
+          address: auraEvmAddress,
           isActive: false,
         );
         break;
       case AppNetworkType.evm:
         addACosmosInfoRequest = AddACosmosInfoRequest(
-          address: bech32.convertEthAddressToBech32Address(
-            AppLocalConstant.auraPrefix,
-            state.wallet.address,
-          ),
+          address: auraCosmosAddress,
           isActive: false,
         );
         addAEvmInfoRequest = AddAEvmInfoRequest(
-          address: state.wallet.address,
+          address: auraEvmAddress,
           isActive: true,
         );
         break;

@@ -42,6 +42,16 @@ void test3(){
 
   final anyAddress = AnyAddress.createWithPublicKey(publicKey, type1);
 
+  print('test 3 ${anyAddress.description()}');
+
+  final data = bech32.makeBech32Decoder('cosmos', anyAddress.description());
+
+  print('test 3 ${bech32.convertBech32AddressToEthAddress('cosmos', anyAddress.description())}');
+
+  print('test 3 ${bech32.makeBech32Encoder('aura', data)}');
+
+
+
   print('add ${bech32.makeBech32Encoder('aura', anyAddress.data())}');
 
 
@@ -59,4 +69,14 @@ void test4(){
 
   print('test 4 ${anyAddress.description()}');
 
+}
+
+void test5(){
+  final wallet = HDWallet.createWithMnemonic(mnemonic);
+
+  final privateKey = wallet.getKeyForCoin(TWCoinType.TWCoinTypeEthereum);
+
+  print('test 5 = ${hex.encode(privateKey.data())}');
+
+  print('test 5 ${wallet.getAddressForCoin(TWCoinType.TWCoinTypeEthereum)}');
 }

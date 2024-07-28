@@ -29,7 +29,6 @@ class WalletManagement {
   AWallet importWallet(
     String mnemonic, {
     int coinType = Constants.defaultCoinType,
-    String derivationPath = Constants.derivationPathEthereum,
   }) {
     final wallet = HDWallet.createWithMnemonic(mnemonic);
     final address = wallet.getAddressForCoin(coinType);
@@ -37,9 +36,8 @@ class WalletManagement {
     return AWallet(
       wallet: wallet,
       address: address,
-      privateKey: wallet.getKey(
+      privateKey: wallet.getKeyForCoin(
         coinType,
-        derivationPath,
       ),
       coinType: coinType,
     );
@@ -81,23 +79,6 @@ class WalletManagement {
       // Handle potential errors
       throw Exception('Invalid private key or unsupported coin type');
     }
-  }
-
-  /// Creates a wallet using a mnemonic phrase.
-  ///
-  /// [mnemonic] is the mnemonic phrase of the wallet.
-  /// Returns the AWallet containing the HDWallet and address.
-  AWallet createWalletWithMnemonic(String mnemonic,
-      {int coinType = Constants.defaultCoinType}) {
-    final wallet = HDWallet.createWithMnemonic(mnemonic);
-
-    final address = wallet.getAddressForCoin(coinType);
-
-    return AWallet(
-        wallet: wallet,
-        address: address,
-        privateKey: wallet.getKeyForCoin(coinType),
-        coinType: coinType);
   }
 
   /// Retrieves the private key for a specific coin type.
