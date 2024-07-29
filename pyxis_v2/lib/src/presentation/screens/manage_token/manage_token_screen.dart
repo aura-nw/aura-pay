@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
+import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
+import 'package:pyxis_v2/src/core/constants/asset_path.dart';
+import 'package:pyxis_v2/src/core/constants/language_key.dart';
+import 'package:pyxis_v2/src/core/constants/size_constant.dart';
+import 'package:pyxis_v2/src/presentation/screens/manage_token/widgets/hide_balance.dart';
+import 'package:pyxis_v2/src/presentation/widgets/app_bar_widget.dart';
+import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
+
+class ManageTokenScreen extends StatefulWidget {
+  const ManageTokenScreen({super.key});
+
+  @override
+  State<ManageTokenScreen> createState() => _ManageTokenScreenState();
+}
+
+class _ManageTokenScreenState extends State<ManageTokenScreen>
+    with StateFulBaseScreen {
+
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  Widget child(BuildContext context, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return Column(
+      children: [
+        ManageTokenScreenHideSmallBalanceWidget(
+          appTheme: appTheme,
+          localization: localization,
+          searchController: _searchController,
+        ),
+
+      ],
+    );
+  }
+
+  @override
+  Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return Scaffold(
+      backgroundColor: appTheme.bgPrimary,
+      appBar: AppBarDefault(
+        appTheme: appTheme,
+        localization: localization,
+        titleKey: LanguageKey.manageTokenScreenAppBarTitle,
+        actions: [
+          Container(
+            padding: const EdgeInsets.all(
+              Spacing.spacing04,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                BorderRadiusSize.borderRadiusRound,
+              ),
+              color: appTheme.utilityGray200,
+            ),
+            child: SvgPicture.asset(
+              AssetIconPath.icCommonAdd,
+            ),
+          ),
+          const SizedBox(
+            width: BoxSize.boxSize04,
+          ),
+        ],
+      ),
+      body: child,
+    );
+  }
+}

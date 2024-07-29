@@ -142,5 +142,26 @@
   "transaction_result_screen_time" : "Time",
   "transaction_result_screen_tx" : "Transaction",
   "transaction_result_screen_back_to_home" : "Back to homepage",
-  "transaction_result_screen_back_to_done" : "Done"
+  "transaction_result_screen_back_to_done" : "Done",
+
+  "manage_token_screen_app_bar_title" : "Manage tokens",
+  "manage_token_screen_search_hint" : "Search by token name",
+  "manage_token_screen_show_title" : "Show/Hide tokens on Homepage",
+  "manage_token_screen_custom_token" : "Custom token",
+  "manage_token_screen_enable_token" : "Enable token",
+  "manage_token_screen_disable_token" : "Disable token",
+  "manage_token_screen_hide_small_balance" : "Hide small balance",
+  "manage_token_screen_hide_small_balance_explanation" : "Hide tokens with a total value < $0.00001",
+  "manage_token_screen_select_token_show" : "Select token show",
+
+  "add_custom_token_screen_app_bar_title" : "Add custom token",
+  "add_custom_token_screen_contract_address" : "Contract address",
+  "add_custom_token_screen_token_name" : "Name",
+  "add_custom_token_screen_token_name_hint" : "Enter token name",
+  "add_custom_token_screen_symbol" : "Symbol",
+  "add_custom_token_screen_symbol_hint" : "Enter token symbol",
+  "add_custom_token_screen_decimal" : "Decimals",
+  "add_custom_token_screen_decimal_hint" : "Enter a number",
+  "add_custom_token_screen_add_to_list" : "Add to list",
+  "add_custom_token_screen_contract_invalid" : "Unable to validate this token"
 }

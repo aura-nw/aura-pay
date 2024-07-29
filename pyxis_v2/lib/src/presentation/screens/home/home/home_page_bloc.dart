@@ -282,7 +282,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       final erc20TokenBalances = await balanceUseCase.getErc20TokenBalance(
         request: QueryERC20BalanceRequest(
-          address: account.aEvmInfo.address,
+          address: account.aCosmosInfo.address,
           environment: environment,
         ),
       );

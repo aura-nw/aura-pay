@@ -166,4 +166,28 @@ sealed class LanguageKey {
   static const String transactionResultScreenHash = 'transaction_result_screen_tx';
   static const String transactionResultScreenBackToHome = 'transaction_result_screen_back_to_home';
   static const String transactionResultScreenDone = 'transaction_result_screen_back_to_done';
+
+  // Manage token screen
+  static const manageTokenScreenAppBarTitle = 'manage_token_screen_app_bar_title';
+  static const manageTokenScreenSearchHint = 'manage_token_screen_search_hint';
+  static const manageTokenScreenShowTitle = 'manage_token_screen_show_title';
+  static const manageTokenScreenCustomToken = 'manage_token_screen_custom_token';
+  static const manageTokenScreenEnableToken = 'manage_token_screen_enable_token';
+  static const manageTokenScreenDisableToken = 'manage_token_screen_disable_token';
+  static const manageTokenScreenHideSmallBalance = 'manage_token_screen_hide_small_balance';
+  static const manageTokenScreenHideSmallBalanceExplanation = 'manage_token_screen_hide_small_balance_explanation';
+  static const manageTokenScreenSelectTokenShow = 'manage_token_screen_select_token_show';
+
+
+  // Add custom token screen
+  static const addCustomTokenScreenAppBarTitle = 'add_custom_token_screen_app_bar_title';
+  static const addCustomTokenScreenContractAddress = 'add_custom_token_screen_contract_address';
+  static const addCustomTokenScreenTokenName = 'add_custom_token_screen_token_name';
+  static const addCustomTokenScreenTokenNameHint = 'add_custom_token_screen_token_name_hint';
+  static const addCustomTokenScreenSymbol = 'add_custom_token_screen_symbol';
+  static const addCustomTokenScreenSymbolHint = 'add_custom_token_screen_symbol_hint';
+  static const addCustomTokenScreenDecimal = 'add_custom_token_screen_decimal';
+  static const addCustomTokenScreenDecimalHint = 'add_custom_token_screen_decimal_hint';
+  static const addCustomTokenScreenAddToList = 'add_custom_token_screen_add_to_list';
+  static const addCustomTokenScreenContractInValid = 'add_custom_token_screen_contract_invalid';
 }

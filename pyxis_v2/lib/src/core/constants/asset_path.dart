@@ -67,6 +67,9 @@ sealed class AssetIconPath {
   static const String icCommonSearch = '${_baseIconPath}ic_common_search.svg';
   static const String icCommonSignMessage = '${_baseIconPath}ic_common_sign_message.svg';
   static const String icCommonViewHash = '${_baseIconPath}ic_common_view_hash.svg';
+  static const String icCommonAdd = '${_baseIconPath}ic_common_add.svg';
+  static const String icCommonInformation = '${_baseIconPath}ic_common_information.svg';
+  static const String icCommonFilter = '${_baseIconPath}ic_common_filter.svg';
 
   static const String icHomeScreenBottomNavigationBarBrowser = '${_baseIconPath}ic_home_screen_bottom_navigation_bar_browser.svg';
   static const String icHomeScreenBottomNavigationBarWallet = '${_baseIconPath}ic_home_screen_bottom_navigator_bar_wallet.svg';
