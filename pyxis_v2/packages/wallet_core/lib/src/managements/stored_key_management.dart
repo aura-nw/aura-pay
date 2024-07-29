@@ -39,7 +39,8 @@ class StoredManagement {
   /// [storedKey] is the JSON representation of the stored key.
   /// [password] is the password for the stored key.
   /// Returns the imported AWallet or null if import fails.
-  AWallet? fromSavedJson(String storedKey, String password,{int coinType = Constants.defaultCoinType}) {
+  AWallet? fromSavedJson(String storedKey, String password,
+      {int coinType = Constants.defaultCoinType}) {
     try {
       StoredKey? storedWallet = StoredKey.importJson(storedKey);
       if (storedWallet == null) {
@@ -51,7 +52,10 @@ class StoredManagement {
         if (hdWallet == null) {
           return null;
         }
-        return WalletCore.walletManagement.importWallet(hdWallet.mnemonic());
+        return WalletCore.walletManagement.importWallet(
+          hdWallet.mnemonic(),
+          coinType: coinType,
+        );
       }
 
       PrivateKey? privateKey = storedWallet.privateKey(

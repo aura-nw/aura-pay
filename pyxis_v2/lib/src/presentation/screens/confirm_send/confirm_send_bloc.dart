@@ -44,6 +44,19 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
 
   final EvmChainClient _evmChainClient;
 
+  int _getCoinType() {
+    int coinType = TWCoinType.TWCoinTypeEthereum;
+    bool evmActive = state.account.aEvmInfo.isActive;
+
+    bool cosmosActive = state.account.aCosmosInfo.isActive;
+
+    if (!evmActive && cosmosActive) {
+      coinType = TWCoinType.TWCoinTypeCosmos;
+    }
+
+    return coinType;
+  }
+
   void _onInit(
     ConfirmSendOnInitEvent event,
     Emitter<ConfirmSendState> emit,
@@ -64,8 +77,11 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
       final KeyStore? keyStore =
           await _keyStoreUseCase.get(state.account.keyStoreId);
 
-      final AWallet? aWallet =
-          WalletCore.storedManagement.fromSavedJson(keyStore?.key ?? '', '');
+      final AWallet? aWallet = WalletCore.storedManagement.fromSavedJson(
+        keyStore?.key ?? '',
+        '',
+        coinType: _getCoinType(),
+      );
 
       final BigInt amount = state.balance.type.formatBalanceToInt(state.amount,
           customDecimal: state.balance.decimal);
@@ -129,8 +145,6 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
                 data: erc20Tran.writeToBuffer(),
               );
 
-
-
               break;
             case TokenType.cw20:
               break;
@@ -190,17 +204,19 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
     final KeyStore? keyStore =
         await _keyStoreUseCase.get(state.account.keyStoreId);
 
-    final AWallet? aWallet =
-        WalletCore.storedManagement.fromSavedJson(keyStore?.key ?? '', '');
+    final AWallet? aWallet = WalletCore.storedManagement.fromSavedJson(
+      keyStore?.key ?? '',
+      '',
+      coinType: _getCoinType(),
+    );
 
     try {
       switch (state.appNetwork.type) {
         case AppNetworkType.evm:
-
-          switch(state.balance.type){
+          switch (state.balance.type) {
             case TokenType.native:
               final evmTransaction =
-              await _evmChainClient.createTransferTransaction(
+                  await _evmChainClient.createTransferTransaction(
                 wallet: aWallet!,
                 amount: state.balance.type.formatBalanceToInt(
                   state.amount,
@@ -226,7 +242,7 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
               break;
             case TokenType.erc20:
               final erc20Transaction =
-              await _evmChainClient.createErc20Transaction(
+                  await _evmChainClient.createErc20Transaction(
                 wallet: aWallet!,
                 amount: state.balance.type.formatBalanceToInt(
                   state.amount,
