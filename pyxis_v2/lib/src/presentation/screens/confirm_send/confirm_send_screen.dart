@@ -84,7 +84,8 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
                     localization: localization,
                     onChangeIsShowedMsg: _onChangeIsShowedMsg,
                     amount: widget.amount,
-                    tokenName: widget.balance.name ?? '',
+                    // tokenName: widget.balance.name ?? '',
+                    tokenName: '',
                     recipient: widget.recipient,
                     networkType: widget.appNetwork.type,
                   ),
@@ -143,12 +144,12 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
                 showLoading();
                 break;
               case ConfirmSendStatus.sent:
-                _homePageObserver.emit(
-                  emitParam: HomePageEmitParam(
-                    event: HomePageObserver.onSendTokenDone,
-                    data: state.balance.type,
-                  ),
-                );
+                // _homePageObserver.emit(
+                //   emitParam: HomePageEmitParam(
+                //     event: HomePageObserver.onSendTokenDone,
+                //     data: state.balance.type,
+                //   ),
+                // );
                 hideLoading();
                 AppNavigator.push(
                   RoutePath.transactionResult,
@@ -210,10 +211,11 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
         appTheme: appTheme,
         localization: localization,
         convertFee: (value) {
-          return widget.balance.type.formatBalance(
-            (value * estimationGas).toString(),
-            customDecimal: widget.balance.decimal,
-          );
+          return 0.toString();
+          // return widget.balance.type.formatBalance(
+          //   (value * estimationGas).toString(),
+          //   customDecimal: widget.balance.decimal,
+          // );
         },
       ),
       appTheme: appTheme,

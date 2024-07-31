@@ -6,7 +6,6 @@ import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
-import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/widgets/action.dart';
 import 'package:pyxis_v2/src/presentation/widgets/circle_avatar_widget.dart';
 
@@ -42,20 +41,12 @@ final class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomePageNetworksSelector(
-      builder: (networks) {
-        return HomePageIsAllNetworkSelector(
-          builder: (isAllNetwork) {
-            if (showAppBarSmall) {
-              return _appBarSmall();
-            } else if (showTitleAndWallet) {
-              return _appBarWithWalletCardSmall();
-            }
-            return _defaultAppBar();
-          },
-        );
-      },
-    );
+    if (showAppBarSmall) {
+      return _appBarSmall();
+    } else if (showTitleAndWallet) {
+      return _appBarWithWalletCardSmall();
+    }
+    return _defaultAppBar();
   }
 
   Widget _buildSmallTitle() {

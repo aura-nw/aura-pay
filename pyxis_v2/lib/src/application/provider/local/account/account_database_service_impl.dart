@@ -23,7 +23,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
       },
     );
 
-    return accountDb;
+    return accountDb.toDto;
   }
 
   @override
@@ -36,13 +36,17 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
   }
 
   @override
-  Future<AccountDto?> get(int id) {
-    return _database.accountDbs.get(id);
+  Future<AccountDto?> get(int id) async{
+    final aDb = await _database.accountDbs.get(id);
+
+    return aDb?.toDto;
   }
 
   @override
-  Future<List<AccountDto>> getAll() {
-    return _database.accountDbs.where().findAll();
+  Future<List<AccountDto>> getAll() async{
+    final aDbs = await _database.accountDbs.where().findAll();
+
+    return aDbs.map((e) => e.toDto,).toList();
   }
 
   @override
@@ -75,15 +79,17 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
         },
       );
 
-      return accountDb;
+      return accountDb.toDto;
     }
 
     throw Exception('Account is not found');
   }
 
   @override
-  Future<AccountDto?> getFirstAccount() {
-    return _database.accountDbs.filter().aIndexEqualTo(0).findFirst();
+  Future<AccountDto?> getFirstAccount() async{
+    final aDb = await _database.accountDbs.filter().indexEqualTo(0).findFirst();
+
+    return aDb?.toDto;
   }
 
   @override
@@ -100,7 +106,7 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
     AccountDb? account = await _database.accountDbs.get(id);
 
     final AccountDb? currentAccount =
-    await _database.accountDbs.filter().aIndexEqualTo(0).findFirst();
+    await _database.accountDbs.filter().indexEqualTo(0).findFirst();
 
     if (account == null || currentAccount == null) return;
 

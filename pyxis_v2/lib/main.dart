@@ -10,6 +10,7 @@ import 'package:pyxis_v2/src/application/global/localization/localization_manage
 import 'package:pyxis_v2/src/application/provider/local/account/account_db.dart';
 import 'package:pyxis_v2/src/application/provider/local/balance/balance_db.dart';
 import 'package:pyxis_v2/src/application/provider/local/key_store/key_store_db.dart';
+import 'package:pyxis_v2/src/application/provider/local/token/token_db.dart';
 import 'package:pyxis_v2/src/application/provider/local/token_market/token_market_db.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/asset_path.dart';
@@ -56,6 +57,26 @@ Future<Map<String, dynamic>> _loadConfig() async {
   return jsonDecode(loader);
 }
 
+Future<void> _saveAuraToken(String name, String symbol) async {
+  final TokenUseCase tokenUseCase = di.getIt.get<TokenUseCase>();
+  final nativeAura = await tokenUseCase.getByName(
+    name: name,
+  );
+
+  if (nativeAura == null) {
+    await tokenUseCase.add(
+      AddTokenRequest(
+        logo: AppLocalConstant.auraLogo,
+        tokenName: name,
+        type: TokenType.native,
+        symbol: symbol,
+        contractAddress: '',
+        isEnable: true,
+      ),
+    );
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -79,6 +100,7 @@ void main() async {
         KeyStoreDbSchema,
         AccountBalanceDbSchema,
         TokenMarketDbSchema,
+        TokenDbSchema,
       ],
       directory: path,
       name: AppLocalConstant.localDbName,
@@ -89,13 +111,20 @@ void main() async {
     isar = Isar.getInstance(AppLocalConstant.localDbName)!;
   }
 
+  final pickWalletConfig = PyxisMobileConfig(
+    configs: config,
+    environment: environment,
+  );
+
   // Init dependencies
   await di.initDependency(
-    PyxisMobileConfig(
-      configs: config,
-      environment: environment,
-    ),
+    pickWalletConfig,
     isar,
+  );
+
+  await _saveAuraToken(
+    pickWalletConfig.config.nativeCoin.name,
+    pickWalletConfig.config.nativeCoin.symbol,
   );
 
   // Load language

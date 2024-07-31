@@ -1,5 +1,9 @@
 {
   "APP_NAME": "Pyxis Wallet",
+  "NATIVE_COIN" : {
+    "name" : "Aura Euphoria testnet",
+    "symbol" : "EAURA"
+  },
   "COSMOS_INFO": {
     "symbol": "EAURA",
     "denom": "ueaura",

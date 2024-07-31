@@ -8,11 +8,13 @@ import 'send_event.dart';
 import 'send_state.dart';
 
 final class SendBloc extends Bloc<SendEvent, SendState> {
+  final TokenUseCase _tokenUseCase;
   final TokenMarketUseCase _tokenMarketUseCase;
   final BalanceUseCase _balanceUseCase;
   final AccountUseCase _accountUseCase;
 
   SendBloc(
+    this._tokenUseCase,
     this._accountUseCase,
     this._balanceUseCase,
     this._tokenMarketUseCase, {
@@ -38,6 +40,8 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
       ),
     );
 
+    final List<Token> tokens = List.empty(growable: true);
+
     try {
       final account = await _accountUseCase.getFirstAccount();
 
@@ -52,13 +56,27 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
         accountId: account!.id,
       );
 
+      Balance ?selectedToken;
+
+      if(accountBalance != null){
+        for(final balance in accountBalance.balances){
+          final token = await _tokenUseCase.get(balance.tokenId);
+
+          if(token != null){
+            if(token.type == TokenType.native){
+              selectedToken = balance;
+            }
+            tokens.add(token);
+          }
+        }
+      }
+
       emit(
         state.copyWith(
           status: SendStatus.loaded,
           accountBalance: accountBalance,
-          selectedToken: accountBalance?.balances.firstWhereOrNull(
-            (b) => b.type == TokenType.native,
-          ),
+          selectedToken: selectedToken,
+          tokens: tokens,
         ),
       );
 
@@ -93,12 +111,14 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
 
   void _onChangeNetwork(
       SendOnChangeNetworkEvent event, Emitter<SendState> emit) {
+    final token = state.tokens.firstWhereOrNull((token)  => token.type == TokenType.native,);
+
     emit(
       state.copyWith(
         selectedNetwork: event.network,
         toAddress: '',
         selectedToken: state.accountBalance?.balances.firstWhereOrNull(
-          (b) => b.type == TokenType.native,
+          (b) => b.tokenId == token?.id,
         ),
         amountToSend: '',
         already: false,
@@ -141,9 +161,14 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
 
   bool _isReady(String address, String amount, Balance? selectedToken) {
     try {
-      double total = double.tryParse(selectedToken?.type.formatBalance(
+
+      if(selectedToken == null) return false;
+
+      final token = state.tokens.firstWhereOrNull((t) => t.id == selectedToken.tokenId,);
+
+      double total = double.tryParse(token?.type.formatBalance(
                   selectedToken.balance ?? '',
-                  customDecimal: selectedToken.decimal) ??
+                  customDecimal: token.decimal) ??
               '') ??
           0.0;
       // Parse the amount as a double

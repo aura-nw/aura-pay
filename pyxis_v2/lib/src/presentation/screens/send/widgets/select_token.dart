@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
-import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
@@ -127,9 +126,14 @@ class _SendSelectTokenWidget extends StatelessWidget {
 }
 
 final class SendSelectTokensWidget extends AppBottomSheetBase {
-  final List<Balance> tokens;
+  // List token. It can provide token info.
+  final List<Token> tokens;
+  // List token market. Display price
   final List<TokenMarket> tokenMarkets;
+  // Selected balance
   final Balance currentToken;
+  // Display balance with account type
+  final List<Balance> balances;
 
   const SendSelectTokensWidget({
     required super.appTheme,
@@ -137,6 +141,7 @@ final class SendSelectTokensWidget extends AppBottomSheetBase {
     required this.tokens,
     required this.tokenMarkets,
     required this.currentToken,
+    required this.balances,
     super.key,
   });
 
@@ -146,17 +151,15 @@ final class SendSelectTokensWidget extends AppBottomSheetBase {
 
 final class _SendSelectTokensWidgetState
     extends AppBottomSheetBaseState<SendSelectTokensWidget> {
-  TokenMarket? currentTokenMarket;
-
   List<Balance> displayTokens = List.empty(growable: true);
+
+  Token ? _selectedToken;
 
   @override
   void initState() {
-    currentTokenMarket = widget.tokenMarkets.firstWhereOrNull(
-      (m) => m.id == widget.currentToken.tokenId,
-    );
+    _selectedToken = widget.tokens.firstWhereOrNull((e) => e.id == widget.currentToken.tokenId,);
     displayTokens.addAll(
-      widget.tokens,
+      widget.balances,
     );
     super.initState();
   }
@@ -184,38 +187,34 @@ final class _SendSelectTokensWidgetState
         onRefresh: () {},
         onLoadMore: () {},
         data: displayTokens,
-        builder: (token, _) {
-          final tokenMarket = widget.tokenMarkets.firstWhereOrNull(
-            (m) => m.id == token.tokenId,
-          );
+        builder: (balance, _) {
 
-          bool isSelected = false;
+          final token = widget.tokens.firstWhereOrNull((token) => token.id == balance.tokenId);
 
-          if (currentTokenMarket != null) {
-            isSelected = currentTokenMarket!.id == tokenMarket?.id ||
-                currentTokenMarket!.name == token.name;
-          } else {
-            isSelected = token.name == widget.currentToken.name;
-          }
+          // final tokenMarket = widget.tokenMarkets.firstWhereOrNull(
+          //   (m) => m.name == token.tokenName,
+          // );
+
+          bool isSelected = _selectedToken?.id == token?.id;
 
           return GestureDetector(
             onTap: () {
               if (!isSelected) {
-                AppNavigator.pop(token);
+                AppNavigator.pop(balance);
               }
             },
             child: _SendSelectTokenWidget(
               isSelected: isSelected,
               appTheme: appTheme,
               localization: localization,
-              amount: token.type.formatBalance(
-                token.balance,
-                customDecimal: token.decimal ?? tokenMarket?.decimal,
-              ),
-              avatar: tokenMarket?.image ?? AppLocalConstant.auraLogo,
+              amount: token?.type.formatBalance(
+                balance.balance,
+                customDecimal: token.decimal,
+              ) ?? '0',
+              avatar: token?.logo ?? '',
               value: 0,
-              tokenName: tokenMarket?.name ?? token.name ?? '',
-              symbol: tokenMarket?.symbol ?? token.symbol ?? '',
+              tokenName: token?.tokenName ?? '',
+              symbol: token?.symbol ?? '',
             ),
           );
         },
@@ -251,15 +250,15 @@ final class _SendSelectTokensWidgetState
     displayTokens.clear();
 
     if (name.isEmpty) {
-      displayTokens.addAll(widget.tokens);
+      displayTokens.addAll(widget.balances);
     } else {
-      final List<Balance> filterList = widget.tokens
-          .where(
-            (e) => e.name?.contains(name) ?? false,
-          )
-          .toList();
-
-      displayTokens.addAll(filterList);
+      // final List<Balance> filterList = widget.tokens
+      //     .where(
+      //       (e) => e.name?.contains(name) ?? false,
+      //     )
+      //     .toList();
+      //
+      // displayTokens.addAll(filterList);
     }
 
     setState(() {

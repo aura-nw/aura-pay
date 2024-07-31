@@ -27,17 +27,6 @@ final class HomePageAccountBalanceSelector
         );
 }
 
-final class HomePageNetworksSelector
-    extends BlocSelector<HomePageBloc, HomePageState, List<AppNetwork>> {
-  HomePageNetworksSelector({
-    super.key,
-    required Widget Function(List<AppNetwork>) builder,
-  }) : super(
-          selector: (state) => state.activeNetworks,
-          builder: (context, networks) => builder(networks),
-        );
-}
-
 final class HomePageTokenMarketsSelector
     extends BlocSelector<HomePageBloc, HomePageState, List<TokenMarket>> {
   HomePageTokenMarketsSelector({
@@ -104,13 +93,13 @@ final class HomePageTotalValueYesterdaySelector
         );
 }
 
-final class HomePageIsAllNetworkSelector
-    extends BlocSelector<HomePageBloc, HomePageState, bool> {
-  HomePageIsAllNetworkSelector({
+final class HomePageTokensSelector
+    extends BlocSelector<HomePageBloc, HomePageState, List<Token>> {
+  HomePageTokensSelector({
     super.key,
-    required Widget Function(bool) builder,
+    required Widget Function(List<Token>) builder,
   }) : super(
-          selector: (state) => state.isAllNetwork,
-          builder: (context, isAllNetwork) => builder(isAllNetwork),
+          selector: (state) => state.tokens,
+          builder: (context, tokens) => builder(tokens),
         );
 }

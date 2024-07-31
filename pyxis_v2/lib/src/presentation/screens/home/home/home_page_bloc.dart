@@ -5,7 +5,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:isar/isar.dart';
 import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
-import 'package:pyxis_v2/src/core/constants/network.dart';
+import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
 import 'package:pyxis_v2/src/core/factory_creator/account_balance.dart';
 import 'package:pyxis_v2/src/core/factory_creator/dio.dart';
 import 'package:pyxis_v2/src/core/factory_creator/isar.dart';
@@ -22,8 +22,10 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   final BalanceUseCase _balanceUseCase;
   final AccountUseCase _accountUseCase;
   final PyxisMobileConfig config;
+  final TokenUseCase _tokenUseCase;
 
   HomePageBloc(
+    this._tokenUseCase,
     this._accountUseCase,
     this._tokenMarketUseCase,
     this._balanceUseCase, {
@@ -39,8 +41,6 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on(_onChangeEnableToken);
     on(_onRefreshTokenBalance);
   }
-
-  final List<AppNetwork> _allNetworks = List.empty(growable: true);
 
   late Isolate _balanceIsolate;
   SendPort? _balanceSendPort;
@@ -350,27 +350,20 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     Emitter<HomePageState> emit,
   ) async {
     try {
-      final List<AppNetwork> networks = createNetwork(config);
-
-      _allNetworks.addAll(networks);
-
-      emit(
-        state.copyWith(
-          activeNetworks: networks,
-        ),
-      );
+      final tokens = await _tokenUseCase.getAll();
 
       final activeAccount = await _accountUseCase.getFirstAccount();
 
       emit(
         state.copyWith(
           activeAccount: activeAccount,
+          tokens: tokens,
         ),
       );
 
-      _sendMessageFetchAccountBalance();
+      _sendMessageFetchAccountBalance(activeAccount);
 
-      _sendMessageFetchNFTs();
+      _sendMessageFetchNFTs(activeAccount);
 
       final tokenMarkets = await _tokenMarketUseCase.getAll();
 
@@ -417,19 +410,25 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       final nativeAmount = event.balanceMap[TokenType.native];
       if (nativeAmount != null) {
-        final nativeToken = state.tokenMarkets.firstWhereOrNull(
-          (token) => token.symbol == config.config.evmInfo.symbol,
+        Token? token = state.tokens.firstWhereOrNull(
+          (token) => token.type == TokenType.native,
         );
+
+        token ??= await _tokenUseCase.add(
+            AddTokenRequest(
+              logo: AppLocalConstant.auraLogo,
+              tokenName: config.config.nativeCoin.name,
+              type: TokenType.native,
+              symbol: config.config.nativeCoin.symbol,
+              contractAddress: '',
+              isEnable: true,
+            ),
+          );
 
         requests.add(
           AddBalanceRequest(
             balance: nativeAmount,
-            tokenId: nativeToken?.id,
-            type: TokenType.native.name,
-            contract: '',
-            decimal: nativeToken?.decimal,
-            name: nativeToken?.name,
-            symbol: nativeToken?.symbol,
+            tokenId: token.id,
           ),
         );
       }
@@ -439,19 +438,32 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       // Add erc token
       for (final erc in ercTokenBalances) {
-        final ercToken = state.tokenMarkets.firstWhereOrNull(
-          (token) => token.denom == erc.denom,
+        Token? token = state.tokens.firstWhereOrNull(
+          (token) => token.contractAddress == erc.denom,
         );
+
+        if (token == null) {
+          final tokenMarket = state.tokenMarkets.firstWhereOrNull(
+            (token) => token.denom == erc.denom,
+          );
+
+          token = await _tokenUseCase.add(
+            AddTokenRequest(
+              logo: tokenMarket?.image ?? AppLocalConstant.auraLogo,
+              tokenName: tokenMarket?.name ?? '',
+              type: TokenType.erc20,
+              symbol: tokenMarket?.symbol ?? '',
+              contractAddress: erc.denom,
+              isEnable: true,
+              decimal: tokenMarket?.decimal,
+            ),
+          );
+        }
 
         requests.add(
           AddBalanceRequest(
             balance: erc.amount,
-            tokenId: ercToken?.id,
-            type: TokenType.erc20.name,
-            symbol: ercToken?.symbol,
-            name: ercToken?.name,
-            decimal: ercToken?.decimal,
-            contract: erc.denom,
+            tokenId: token.id,
           ),
         );
       }
@@ -461,20 +473,33 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           event.balanceMap[TokenType.cw20] ?? <Cw20TokenBalance>[];
 
       for (final cw in cwTokenBalances) {
-        final cwToken = state.tokenMarkets.firstWhereOrNull(
-          (token) => token.symbol == cw.contract.symbol,
+        Token? token = state.tokens.firstWhereOrNull(
+          (token) => token.contractAddress == cw.contract.smartContract.address,
         );
+
+        if (token == null) {
+          final tokenMarket = state.tokenMarkets.firstWhereOrNull(
+            (token) => token.symbol == cw.contract.symbol,
+          );
+
+          token = await _tokenUseCase.add(
+            AddTokenRequest(
+              logo: tokenMarket?.image ?? AppLocalConstant.auraLogo,
+              tokenName: tokenMarket?.name ?? cw.contract.name,
+              type: TokenType.erc20,
+              symbol: tokenMarket?.symbol ?? cw.contract.symbol ,
+              contractAddress: cw.contract.smartContract.address,
+              isEnable: true,
+              decimal: int.tryParse(cw.contract.decimal ?? '') ??
+                  tokenMarket?.decimal,
+            ),
+          );
+        }
 
         requests.add(
           AddBalanceRequest(
             balance: cw.amount,
-            tokenId: cwToken?.id,
-            type: TokenType.cw20.name,
-            name: cwToken?.name ?? cw.contract.name,
-            symbol: cwToken?.symbol ?? cw.contract.symbol,
-            decimal:
-                cwToken?.decimal ?? int.tryParse(cw.contract.decimal ?? ''),
-            contract: cw.contract.smartContract.address,
+            tokenId: token.id,
           ),
         );
       }
@@ -492,12 +517,15 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         ),
       );
 
+      final tokens = await _tokenUseCase.getAll();
+
       emit(
         state.copyWith(
           accountBalance: accountBalance,
           totalTokenValue: _calculateBalance(accountBalance)[0],
           totalValue: _calculateBalance(accountBalance)[0],
           totalValueYesterday: _calculateBalance(accountBalance)[1],
+          tokens: tokens,
         ),
       );
     } catch (e) {
@@ -547,17 +575,17 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     });
   }
 
-  void _sendMessageFetchAccountBalance() {
+  void _sendMessageFetchAccountBalance(Account ?activeAccount) {
     _balanceSendPort?.send({
-      'account': state.activeAccount!,
+      'account': activeAccount ?? state.activeAccount!,
       'base_url_v2': config.config.api.v2.url,
       'environment': config.environment.environmentString,
     });
   }
 
-  void _sendMessageFetchNFTs() {
+  void _sendMessageFetchNFTs(Account ?activeAccount) {
     _nftSendPort?.send({
-      'account': state.activeAccount!,
+      'account': activeAccount ?? state.activeAccount!,
       'base_url_v2': config.config.api.v2.url,
       'environment': config.environment.environmentString,
     });
@@ -584,25 +612,30 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     // Iterate over each balance in the accountBalance.
     for (final balance in accountBalance.balances) {
       // Find the corresponding token information using tokenId.
-      final token = state.tokenMarkets.firstWhereOrNull(
+      final token = state.tokens.firstWhereOrNull(
         (e) => e.id == balance.tokenId,
+      );
+
+      final tokenMarket = state.tokenMarkets.firstWhereOrNull(
+        (e) => e.symbol == token?.symbol,
       );
 
       // Parse the amount of the token balance using a custom decimal format if provided.
       final amount = double.tryParse(
-            balance.type.formatBalance(
+            token?.type.formatBalance(
               balance.balance,
-              customDecimal: token?.decimal,
-            ),
+              customDecimal: token.decimal,
+            ) ?? '',
           ) ??
           0;
 
       // Parse the current price of the token, default to 0 if the price is null or not parsable.
-      double currentPrice = double.tryParse(token?.currentPrice ?? '0') ?? 0;
+      double currentPrice =
+          double.tryParse(tokenMarket?.currentPrice ?? '0') ?? 0;
 
       // Calculate the price of the token yesterday.
-      double priceYesterday =
-          currentPrice / (1 + (token?.priceChangePercentage24h ?? 0) / 100);
+      double priceYesterday = currentPrice /
+          (1 + (tokenMarket?.priceChangePercentage24h ?? 0) / 100);
 
       // If the amount or priceYesterday is not zero, add to the total value of yesterday.
       if (amount != 0 || priceYesterday != 0) {
@@ -622,8 +655,11 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     ];
   }
 
-  void _onRefreshTokenBalance(HomePageOnRefreshTokenBalanceEvent event, Emitter<HomePageState> emit,){
-    switch(event.tokenType){
+  void _onRefreshTokenBalance(
+    HomePageOnRefreshTokenBalanceEvent event,
+    Emitter<HomePageState> emit,
+  ) {
+    switch (event.tokenType) {
       case TokenType.native:
         break;
       case TokenType.cw20:

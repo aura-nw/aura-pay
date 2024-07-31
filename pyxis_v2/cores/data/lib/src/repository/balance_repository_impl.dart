@@ -1,7 +1,6 @@
 import 'package:data/src/dto/balance_dto.dart';
 import 'package:data/src/dto/request/add_balance_request_dto.dart';
 import 'package:data/src/dto/request/query_balance_request_dto.dart';
-import 'package:data/src/dto/request/update_balance_request_dto.dart';
 import 'package:data/src/resource/local/balance_database_service.dart';
 import 'package:data/src/resource/remote/balance_service.dart';
 import 'package:domain/domain.dart';
@@ -52,11 +51,7 @@ final class BalanceRepositoryImpl implements BalanceRepository {
 
   @override
   Future<AccountBalance> update<P>(P param) async {
-    final balanceDto = await _balanceDatabaseService.update(
-      (param as UpdateAccountBalanceRequest).mapRequest,
-    );
-
-    return balanceDto.toEntity;
+    throw UnimplementedError();
   }
 
   @override

@@ -103,3 +103,14 @@ final class SendTokenMarketsSelector
           builder: (context, tokenMarkets) => builder(tokenMarkets),
         );
 }
+
+final class SendTokenTokensSelector
+    extends BlocSelector<SendBloc, SendState, List<Token>> {
+  SendTokenTokensSelector({
+    super.key,
+    required Widget Function(List<Token>) builder,
+  }) : super(
+    selector: (state) => state.tokens,
+    builder: (context, tokens) => builder(tokens),
+  );
+}

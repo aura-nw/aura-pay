@@ -23,7 +23,7 @@ final class BalanceDatabaseServiceImpl implements BalanceDatabaseService {
       },
     );
 
-    return balanceDb;
+    return balanceDb.toDto;
   }
 
   @override
@@ -45,48 +45,31 @@ final class BalanceDatabaseServiceImpl implements BalanceDatabaseService {
   }
 
   @override
-  Future<AccountBalanceDto?> get(int id) {
-    return _database.accountBalanceDbs.get(id);
+  Future<AccountBalanceDto?> get(int id) async{
+    final aDb = await _database.accountBalanceDbs.get(id);
+
+    return aDb?.toDto;
   }
 
   @override
-  Future<List<AccountBalanceDto>> getAll() {
-    return _database.accountBalanceDbs.where().findAll();
+  Future<List<AccountBalanceDto>> getAll() async{
+    final aBalanceDb = await  _database.accountBalanceDbs.where().findAll();
+
+    return aBalanceDb.map((e) => e.toDto,).toList();
   }
 
   @override
   Future<AccountBalanceDto> update<P>(P param) async {
-    param as UpdateAccountBalanceRequestDto;
-
-    AccountBalanceDb? accountBalanceDb =
-        await _database.accountBalanceDbs.get(param.id);
-
-    if (accountBalanceDb != null) {
-      accountBalanceDb = accountBalanceDb.copyWith(
-        balances: param.balances
-            ?.map(
-              (e) => e.mapRequestToDb,
-            )
-            .toList(),
-      );
-
-      await _database.writeTxn(
-        () async {
-          await _database.accountBalanceDbs.put(accountBalanceDb!);
-        },
-      );
-
-      return accountBalanceDb;
-    }
-
-    throw Exception('Account balance is not found');
+    throw UnimplementedError();
   }
 
   @override
-  Future<AccountBalanceDto?> getByAccountID({required int accountId}) {
-    return _database.accountBalanceDbs
+  Future<AccountBalanceDto?> getByAccountID({required int accountId}) async{
+    final aDb = await _database.accountBalanceDbs
         .filter()
-        .aAccountIdEqualTo(accountId)
+        .accountIdEqualTo(accountId)
         .findFirst();
+
+    return aDb?.toDto;
   }
 }

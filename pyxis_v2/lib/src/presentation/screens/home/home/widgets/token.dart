@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
@@ -178,15 +179,13 @@ final class HomePageTokensWidget extends StatelessWidget {
                 const SizedBox(
                   height: BoxSize.boxSize02,
                 ),
-                HomePageTotalTokenValueSelector(
-                  builder: (totalTokenBalance) {
-                    return Text(
-                      '${localization.translate(LanguageKey.commonBalancePrefix)}${totalTokenBalance.formatPrice}',
-                      style: AppTypoGraPhy.textXlBold
-                          .copyWith(color: appTheme.textPrimary),
-                    );
-                  }
-                ),
+                HomePageTotalTokenValueSelector(builder: (totalTokenBalance) {
+                  return Text(
+                    '${localization.translate(LanguageKey.commonBalancePrefix)}${totalTokenBalance.formatPrice}',
+                    style: AppTypoGraPhy.textXlBold
+                        .copyWith(color: appTheme.textPrimary),
+                  );
+                }),
               ],
             ),
             BoxBorderTextWidget(
@@ -207,79 +206,84 @@ final class HomePageTokensWidget extends StatelessWidget {
         ),
         HomePageTokenMarketsSelector(
           builder: (tokenMarkets) {
-            return HomePageAccountBalanceSelector(
-              builder: (accountBalance) {
-                if (accountBalance == null) {
-                  return _HomePageTokenInfoWidget(
-                    avatar: AppLocalConstant.auraLogo,
-                    symbol: config.config.evmInfo.symbol,
-                    tokenName: config.config.cosmosInfo.chainName,
-                    percentChange24h: 0,
-                    amount: 0,
-                    value: 0,
-                    appTheme: appTheme,
-                    localization: localization,
+            return HomePageTokensSelector(builder: (tokens) {
+              return HomePageAccountBalanceSelector(
+                builder: (accountBalance) {
+                  if (tokens.isEmpty) {
+                    return _HomePageTokenInfoWidget(
+                      avatar: AppLocalConstant.auraLogo,
+                      symbol: config.config.evmInfo.symbol,
+                      tokenName: config.config.cosmosInfo.chainName,
+                      percentChange24h: 0,
+                      amount: 0,
+                      value: 0,
+                      appTheme: appTheme,
+                      localization: localization,
+                    );
+                  }
+
+                  final List<Balance> balances = accountBalance?.balances ?? [];
+
+                  return SizedBox(
+                    height: context.bodyHeight * 0.5,
+                    child: CombinedListView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      onRefresh: () {
+                        //
+                      },
+                      onLoadMore: () {
+                        //
+                      },
+                      data: tokens,
+                      builder: (token, index) {
+                        final tokenMarket = tokenMarkets.firstWhereOrNull(
+                          (t) => t.name == token.tokenName,
+                        );
+
+                        final balance = balances.firstWhereOrNull(
+                          (b) => b.tokenId == token.id,
+                        );
+
+                        final amount = double.tryParse(
+                              token.type.formatBalance(
+                                (balance?.balance ?? ''),
+                                customDecimal: token.decimal,
+                              ),
+                            ) ??
+                            0;
+
+                        double currentPrice =
+                            double.tryParse(tokenMarket?.currentPrice ?? '0') ?? 0;
+
+                        double value = 0;
+                        if (amount == 0 && currentPrice == 0) {
+                          value = 0;
+                        } else {
+                          value = amount * currentPrice;
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: Spacing.spacing05,
+                          ),
+                          child: _HomePageTokenInfoWidget(
+                            avatar: token.logo,
+                            symbol: token.symbol,
+                            tokenName: token.tokenName,
+                            percentChange24h:
+                                tokenMarket?.priceChangePercentage24h ?? 0,
+                            amount: amount,
+                            value: value,
+                            appTheme: appTheme,
+                            localization: localization,
+                          ),
+                        );
+                      },
+                      canLoadMore: false,
+                    ),
                   );
-                }
-
-                final balances = accountBalance.balances;
-
-                return SizedBox(
-                  height:  context.bodyHeight * 0.5,
-                  child: CombinedListView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    onRefresh: () {
-                      //
-                    },
-                    onLoadMore: () {
-                      //
-                    },
-                    data: balances,
-                    builder: (balance, index) {
-                      final token = tokenMarkets.firstWhereOrNull(
-                        (t) => t.id == balance.tokenId,
-                      );
-
-                      final amount = double.tryParse(
-                            balance.type.formatBalance(
-                              balance.balance,
-                              customDecimal: balance.decimal ?? token?.decimal,
-                            ),
-                          ) ??
-                          0;
-
-                      double currentPrice =
-                          double.tryParse(token?.currentPrice ?? '0') ?? 0;
-
-                      double value = 0;
-                      if (amount == 0 && currentPrice == 0) {
-                        value = 0;
-                      } else {
-                        value = amount * currentPrice;
-                      }
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: Spacing.spacing05,
-                        ),
-                        child: _HomePageTokenInfoWidget(
-                          avatar: token?.image ??
-                              AppLocalConstant.auraLogo,
-                          symbol: token?.symbol ?? balance.symbol ?? '',
-                          tokenName: token?.name ?? balance.name ?? '',
-                          percentChange24h:
-                              token?.priceChangePercentage24h ?? 0,
-                          amount: amount,
-                          value: value,
-                          appTheme: appTheme,
-                          localization: localization,
-                        ),
-                      );
-                    },
-                    canLoadMore: false,
-                  ),
-                );
-              },
-            );
+                },
+              );
+            });
           },
         ),
       ],

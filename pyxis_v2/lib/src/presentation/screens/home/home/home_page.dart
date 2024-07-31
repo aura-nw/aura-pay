@@ -40,6 +40,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with StateFulBaseScreen, SingleTickerProviderStateMixin {
+
+  final List<AppNetwork> _networks = getIt.get<List<AppNetwork>>();
+
   final HomePageObserver _homePageObserver = getIt.get<HomePageObserver>();
 
   late HomePageBloc _bloc;
@@ -262,26 +265,22 @@ class _HomePageState extends State<HomePage>
                 const SizedBox(
                   height: BoxSize.boxSize07,
                 ),
-                HomePageNetworksSelector(
-                  builder: (networks) {
-                    return HomePageActiveAccountSelector(
-                      builder: (account) {
-                        return HomePageActionsWidget(
-                          appTheme: appTheme,
-                          localization: localization,
-                          onSendTap: _onSendTap,
-                          onReceiveTap: () {
-                            _onReceiveTap(
-                              account!,
-                              networks,
-                              appTheme,
-                              localization,
-                            );
-                          },
-                          onStakingTap: _onStakingTap,
-                          onSwapTap: _onSwapTap,
+                HomePageActiveAccountSelector(
+                  builder: (account) {
+                    return HomePageActionsWidget(
+                      appTheme: appTheme,
+                      localization: localization,
+                      onSendTap: _onSendTap,
+                      onReceiveTap: () {
+                        _onReceiveTap(
+                          account!,
+                          _networks,
+                          appTheme,
+                          localization,
                         );
                       },
+                      onStakingTap: _onStakingTap,
+                      onSwapTap: _onSwapTap,
                     );
                   },
                 ),
@@ -335,30 +334,26 @@ class _HomePageState extends State<HomePage>
           localization: localization,
           leading: const SizedBox.shrink(),
           leadingWidth: 0,
-          title: HomePageNetworksSelector(
-            builder: (networks) {
-              return HomePageActiveAccountSelector(
-                builder: (account) {
-                  return HomeAppBar(
-                    appTheme: appTheme,
-                    localization: localization,
-                    onActionClick: _onActionClick,
-                    showActions: _showActions,
-                    showWallet: _showWalletCard,
-                    avatarAsset: avatarAsset,
-                    onSendTap: _onSendTap,
-                    onReceiveTap: () {
-                      _onReceiveTap(
-                        account!,
-                        networks,
-                        appTheme,
-                        localization,
-                      );
-                    },
-                    onStakingTap: _onStakingTap,
-                    onSwapTap: _onSwapTap,
+          title: HomePageActiveAccountSelector(
+            builder: (account) {
+              return HomeAppBar(
+                appTheme: appTheme,
+                localization: localization,
+                onActionClick: _onActionClick,
+                showActions: _showActions,
+                showWallet: _showWalletCard,
+                avatarAsset: avatarAsset,
+                onSendTap: _onSendTap,
+                onReceiveTap: () {
+                  _onReceiveTap(
+                    account!,
+                    _networks,
+                    appTheme,
+                    localization,
                   );
                 },
+                onStakingTap: _onStakingTap,
+                onSwapTap: _onSwapTap,
               );
             },
           ),

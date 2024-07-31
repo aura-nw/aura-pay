@@ -1,6 +1,5 @@
 import 'package:domain/src/entities/balance.dart';
 import 'package:domain/src/entities/request/query_balance_request.dart';
-import 'package:domain/src/entities/request/update_balance_request.dart';
 import 'package:domain/src/repository/balance_repository.dart';
 
 import 'package:domain/src/entities/request/add_balance_request.dart';
@@ -52,9 +51,5 @@ final class BalanceUseCase {
     required int accountId,
   }) {
     return _balanceRepository.getByAccountID(accountId: accountId);
-  }
-
-  Future<AccountBalance> update(UpdateAccountBalanceRequest param) {
-    return _balanceRepository.update(param);
   }
 }

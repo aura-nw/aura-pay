@@ -11,20 +11,10 @@ final class AddAccountBalanceRequest {
 
 final class AddBalanceRequest {
   final String balance;
-  final int ?tokenId;
-  final String type;
-  final String? name;
-  final int? decimal;
-  final String? symbol;
-  final String contract;
+  final int tokenId;
 
   const AddBalanceRequest({
     required this.balance,
-    this.tokenId,
-    required this.type,
-    this.name,
-    this.decimal,
-    this.symbol,
-    required this.contract,
+    required this.tokenId,
   });
 }

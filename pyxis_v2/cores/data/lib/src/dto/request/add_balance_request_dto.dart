@@ -15,11 +15,6 @@ extension AddBalanceRequestMapper on AddBalanceRequest {
   AddBalanceRequestDto get mapRequest => AddBalanceRequestDto(
         balance: balance,
         tokenId: tokenId,
-        type: type,
-        decimal: decimal,
-        name: name,
-        symbol: symbol,
-        contract: contract,
       );
 }
 
@@ -35,20 +30,10 @@ final class AddAccountBalanceRequestDto {
 
 final class AddBalanceRequestDto {
   final String balance;
-  final int? tokenId;
-  final String type;
-  final String? name;
-  final int? decimal;
-  final String? symbol;
-  final String contract;
+  final int tokenId;
 
   const AddBalanceRequestDto({
     required this.balance,
-    this.tokenId,
-    required this.type,
-    this.name,
-    this.decimal,
-    this.symbol,
-    required this.contract,
+    required this.tokenId,
   });
 }

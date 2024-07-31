@@ -176,12 +176,12 @@ final class TransactionInformationWidget extends StatelessWidget {
               builder: (gasPriceToSend) {
                 final BigInt fee = gasEstimation * gasPriceToSend;
 
-                String feeS = balance.type.formatBalance(
-                  fee.toString(),
-                  customDecimal: balance.decimal,
-                );
+                // String feeS = balance.type.formatBalance(
+                //   fee.toString(),
+                //   customDecimal: balance.decimal,
+                // );
 
-                String total = (double.parse(feeS) + double.parse(amount)).toString();
+                String total = (double.parse('feeS') + double.parse(amount)).toString();
 
                 return Text(
                   '${(total)} ${localization.translate(
@@ -242,12 +242,13 @@ final class TransactionInformationWidget extends StatelessWidget {
                       title: localization.translate(
                         LanguageKey.confirmSendScreenSendFee,
                       ),
-                      information: '${balance.type.formatBalance(
-                        fee.toString(),
-                        customDecimal: balance.decimal,
-                      )} ${localization.translate(
-                        LanguageKey.commonAura,
-                      )}',
+                      // information: '${balance.type.formatBalance(
+                      //   fee.toString(),
+                      //   customDecimal: balance.decimal,
+                      // )} ${localization.translate(
+                      //   LanguageKey.commonAura,
+                      // )}',
+                      information: '',
                       appTheme: appTheme,
                     );
                   }

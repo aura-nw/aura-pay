@@ -6,3 +6,4 @@ export 'key_store_use_case.dart';
 export 'token_market_use_case.dart';
 export 'balance_use_case.dart';
 export 'nft_use_case.dart';
+export 'token_use_case.dart';

@@ -4,11 +4,6 @@ extension BalanceDtoMapper on BalanceDto {
   Balance get toEntity => Balance(
         balance: balance,
         tokenId: tokenId,
-        tokenType: tokenType,
-        decimal: decimal,
-        name: name,
-        symbol: symbol,
-        contract: contract,
       );
 }
 
@@ -67,21 +62,11 @@ class AccountBalanceDto {
 
 class BalanceDto {
   final String balance;
-  final int? tokenId;
-  final String tokenType;
-  final String? name;
-  final int? decimal;
-  final String? symbol;
-  final String contract;
+  final int tokenId;
 
   const BalanceDto({
     required this.balance,
-    this.tokenId,
-    required this.tokenType,
-    this.name,
-    this.decimal,
-    this.symbol,
-    required this.contract,
+    required this.tokenId,
   });
 }
 

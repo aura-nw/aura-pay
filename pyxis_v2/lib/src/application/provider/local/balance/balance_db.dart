@@ -3,21 +3,10 @@ import 'package:isar/isar.dart';
 
 part 'balance_db.g.dart';
 
-extension UpdateBalanceRequestDtoMapper on UpdateBalanceRequestDto {
-  BalanceDb get mapRequestToDb => BalanceDb(
-        bBalance: balance,
-        bTokenId: tokenId,
-        bTokenType: type,
-        bSymbol: symbol,
-        bName: name,
-        bDecimal: decimal,
-      );
-}
-
 extension AddAccountBalanceRequestDtoMapper on AddAccountBalanceRequestDto {
   AccountBalanceDb get mapRequestToDb => AccountBalanceDb(
-        aAccountId: accountId,
-        aBalances: balances
+        accountId: accountId,
+        balances: balances
             .map(
               (e) => e.mapRequestToDb,
             )
@@ -27,13 +16,8 @@ extension AddAccountBalanceRequestDtoMapper on AddAccountBalanceRequestDto {
 
 extension AddBalanceRequestDtoMapper on AddBalanceRequestDto {
   BalanceDb get mapRequestToDb => BalanceDb(
-        bBalance: balance,
-        bTokenId: tokenId,
-        bTokenType: type,
-        bSymbol: symbol,
-        bName: name,
-        bDecimal: decimal,
-        bContract: contract,
+        balance: balance,
+        tokenId: tokenId,
       );
 }
 
@@ -43,77 +27,60 @@ extension AccountBalanceDbExtension on AccountBalanceDb {
     List<BalanceDb>? balances,
   }) {
     return AccountBalanceDb(
-      aId: id ?? aId,
-      aAccountId: aAccountId,
-      aBalances: balances ?? aBalances,
+      id: id ?? this.id,
+      accountId: accountId,
+      balances: balances ?? this.balances,
     );
   }
+
+  AccountBalanceDto get toDto => AccountBalanceDto(
+        id: id,
+        accountId: accountId,
+        balances: balances
+            .map(
+              (e) => e.toDto,
+            )
+            .toList(),
+      );
 }
 
 extension BalanceDbExtension on BalanceDb {
   BalanceDb copyWith({
     int? tokenId,
     String? balance,
-    String? type,
-    String? name,
-    int? decimal,
-    String? symbol,
-    String? contract,
   }) {
     return BalanceDb(
-      bTokenId: tokenId ?? bTokenId,
-      bBalance: balance ?? bBalance,
-      bTokenType: type ?? bTokenType,
-      bDecimal: decimal ?? bDecimal,
-      bName: name ?? bName,
-      bSymbol: symbol ?? bSymbol,
-      bContract: contract ?? bContract,
+      tokenId: tokenId ?? this.tokenId,
+      balance: balance ?? this.balance,
     );
   }
+
+  BalanceDto get toDto => BalanceDto(
+        balance: balance,
+        tokenId: tokenId,
+      );
 }
 
 @Collection(inheritance: false)
-class AccountBalanceDb extends AccountBalanceDto {
-  final Id aId;
-  final int aAccountId;
-  final List<BalanceDb> aBalances;
+class AccountBalanceDb {
+  final Id id;
+  final int accountId;
+  final List<BalanceDb> balances;
 
   const AccountBalanceDb({
-    this.aId = Isar.autoIncrement,
-    required this.aAccountId,
-    required this.aBalances,
-  }) : super(
-          id: aId,
-          accountId: aAccountId,
-          balances: aBalances,
-        );
+    this.id = Isar.autoIncrement,
+    required this.accountId,
+    required this.balances,
+  });
 }
 
 @embedded
-class BalanceDb extends BalanceDto {
-  final String bBalance;
-  final int? bTokenId;
-  final String bTokenType;
-  final String? bName;
-  final int? bDecimal;
-  final String? bSymbol;
-  final String bContract;
+class BalanceDb {
+  final String balance;
+  final int tokenId;
 
-  const BalanceDb(
-      {this.bBalance = '0',
-      this.bTokenId,
-      this.bTokenType = 'native',
-      this.bDecimal,
-      this.bName,
-      this.bSymbol,
-      this.bContract = ''})
-      : super(
-          balance: bBalance,
-          tokenId: bTokenId,
-          tokenType: bTokenType,
-          decimal: bDecimal,
-          symbol: bSymbol,
-          name: bName,
-          contract: bContract,
-        );
+  const BalanceDb({
+    this.balance = '0',
+    this.tokenId = -9999,
+  });
 }

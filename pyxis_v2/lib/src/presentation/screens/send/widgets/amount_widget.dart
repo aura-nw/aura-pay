@@ -21,7 +21,8 @@ class SendScreenAmountToSendWidget extends StatelessWidget {
   final AppTheme appTheme;
   final void Function(String) onMaxTap;
   final void Function(String, bool) onChanged;
-  final void Function(Balance, List<TokenMarket>, List<Balance>) onSelectToken;
+  final void Function(List<Balance>, Balance, List<TokenMarket>, List<Token>)
+      onSelectToken;
   final TextEditingController amountController;
 
   const SendScreenAmountToSendWidget({
@@ -36,30 +37,39 @@ class SendScreenAmountToSendWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SendSelectedBalanceSelector(
-      builder: (token) {
-        double total = double.tryParse(token?.type.formatBalance(token.balance,
-                    customDecimal: token.decimal) ??
-                '') ??
-            0.0;
-        return _TextInputAmountWidget(
-          appTheme: appTheme,
-          localization: localization,
-          hintText: '0.00',
-          keyBoardType: TextInputType.number,
-          onChanged: onChanged,
-          onSelectToken: onSelectToken,
-          constraintManager: ConstraintManager()
-            ..custom(
-              errorMessage: localization.translate(
-                LanguageKey.sendScreenAmountInvalid,
-              ),
-              customValid: (amount) {
-                return _checkValidAmount(amount, total);
-              },
-            ),
-          controller: amountController,
-          onMaxTap: onMaxTap,
+    return SendTokenTokensSelector(
+      builder: (tokens) {
+        return SendSelectedBalanceSelector(
+          builder: (balance) {
+            final token = tokens.firstWhereOrNull(
+              (t) => t.id == balance?.tokenId,
+            );
+
+            double total = double.tryParse(token?.type.formatBalance(
+                        balance?.balance ?? '',
+                        customDecimal: token.decimal) ??
+                    '') ??
+                0.0;
+            return _TextInputAmountWidget(
+              appTheme: appTheme,
+              localization: localization,
+              hintText: '0.00',
+              keyBoardType: TextInputType.number,
+              onChanged: onChanged,
+              onSelectToken: onSelectToken,
+              constraintManager: ConstraintManager()
+                ..custom(
+                  errorMessage: localization.translate(
+                    LanguageKey.sendScreenAmountInvalid,
+                  ),
+                  customValid: (amount) {
+                    return _checkValidAmount(amount, total);
+                  },
+                ),
+              controller: amountController,
+              onMaxTap: onMaxTap,
+            );
+          },
         );
       },
     );
@@ -82,7 +92,8 @@ class SendScreenAmountToSendWidget extends StatelessWidget {
 
 final class _TextInputAmountWidget extends TextInputWidgetBase {
   final AppLocalizationManager localization;
-  final void Function(Balance, List<TokenMarket>, List<Balance>) onSelectToken;
+  final void Function(List<Balance>, Balance, List<TokenMarket>, List<Token>)
+      onSelectToken;
   final void Function(String) onMaxTap;
 
   const _TextInputAmountWidget({
@@ -181,66 +192,72 @@ class _TextInputAmountWidgetState
                         SendTokenMarketsSelector(
                           builder: (tokenMarkets) {
                             return SendSelectedNetworkSelector(
-                                builder: (network) {
-                              return SendAccountBalanceSelector(
-                                builder: (balance) {
-                                  return SendSelectedBalanceSelector(
-                                    builder: (token) {
-                                      final tokenMarket =
-                                          tokenMarkets.firstWhereOrNull(
-                                        (m) => m.id == token?.tokenId,
-                                      );
-                                      return GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () {
-                                          widget.onSelectToken(
-                                              token!,
-                                              tokenMarkets,
-                                              network.tokenWithType(
-                                                balance?.balances ?? [],
-                                              ));
-                                        },
-                                        child: Row(
-                                          children: [
-                                            const SizedBox(
-                                              width: BoxSize.boxSize03,
-                                            ),
-                                            NetworkImageWidget(
-                                              url: tokenMarket?.image ??
-                                                  AppLocalConstant.auraLogo,
-                                              appTheme: theme,
-                                              width: BoxSize.boxSize05,
-                                              height: BoxSize.boxSize05,
-                                            ),
-                                            const SizedBox(
-                                              width: BoxSize.boxSize03,
-                                            ),
-                                            Text(
-                                              tokenMarket?.symbol ??
-                                                  token?.symbol ??
-                                                  '',
-                                              style: AppTypoGraPhy
-                                                  .textSmSemiBold
-                                                  .copyWith(
-                                                color: theme.textPrimary,
+                              builder: (network) {
+                                return SendAccountBalanceSelector(
+                                  builder: (accountBalance) {
+                                    return SendTokenTokensSelector(
+                                      builder: (tokens) {
+                                        return SendSelectedBalanceSelector(
+                                          builder: (balance) {
+                                            final token =
+                                                tokens.firstWhereOrNull(
+                                              (t) => t.id == balance?.tokenId,
+                                            );
+                                            return GestureDetector(
+                                              behavior: HitTestBehavior.opaque,
+                                              onTap: () {
+                                                widget.onSelectToken(
+                                                  accountBalance?.balances ??
+                                                      [],
+                                                  balance!,
+                                                  tokenMarkets,
+                                                  tokens,
+                                                );
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  const SizedBox(
+                                                    width: BoxSize.boxSize03,
+                                                  ),
+                                                  NetworkImageWidget(
+                                                    url: token?.logo ??
+                                                        AppLocalConstant
+                                                            .auraLogo,
+                                                    appTheme: theme,
+                                                    width: BoxSize.boxSize05,
+                                                    height: BoxSize.boxSize05,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: BoxSize.boxSize03,
+                                                  ),
+                                                  Text(
+                                                    token?.symbol ?? '',
+                                                    style: AppTypoGraPhy
+                                                        .textSmSemiBold
+                                                        .copyWith(
+                                                      color: theme.textPrimary,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: BoxSize.boxSize03,
+                                                  ),
+                                                  SvgPicture.asset(
+                                                    AssetIconPath
+                                                        .icCommonArrowDown,
+                                                    width: BoxSize.boxSize05,
+                                                    height: BoxSize.boxSize05,
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                            const SizedBox(
-                                              width: BoxSize.boxSize03,
-                                            ),
-                                            SvgPicture.asset(
-                                              AssetIconPath.icCommonArrowDown,
-                                              width: BoxSize.boxSize05,
-                                              height: BoxSize.boxSize05,
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            });
+                                            );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            );
                           },
                         ),
                       ],
@@ -278,48 +295,57 @@ class _TextInputAmountWidgetState
                     ),
                   ),
                 ),
-                child: SendSelectedBalanceSelector(builder: (token) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () => widget.onMaxTap(
-                          token?.type.formatBalance(
-                            token.balance,
-                            customDecimal: token.decimal,
-                          ) ?? '0',
-                        ),
-                        child: Text(
-                          localization.translate(
-                            LanguageKey.sendScreenMax,
-                          ),
-                          style: AppTypoGraPhy.textSmSemiBold.copyWith(
-                            color: theme.textBrandPrimary,
-                          ),
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: '${localization.translate(
-                                LanguageKey.sendScreenBalance,
-                              )}: ',
-                              style: AppTypoGraPhy.textXsRegular.copyWith(
-                                color: theme.textSecondary,
+                child: SendTokenTokensSelector(builder: (tokens) {
+                  return SendSelectedBalanceSelector(
+                    builder: (balance) {
+                      final token = tokens.firstWhereOrNull(
+                        (t) => t.id == balance?.tokenId,
+                      );
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () => widget.onMaxTap(
+                              token?.type.formatBalance(
+                                    balance?.balance ?? '',
+                                    customDecimal: token.decimal,
+                                  ) ??
+                                  '0',
+                            ),
+                            child: Text(
+                              localization.translate(
+                                LanguageKey.sendScreenMax,
+                              ),
+                              style: AppTypoGraPhy.textSmSemiBold.copyWith(
+                                color: theme.textBrandPrimary,
                               ),
                             ),
-                            TextSpan(
-                              text: token?.type.formatBalance(token.balance,
-                                  customDecimal: token.decimal),
-                              style: AppTypoGraPhy.textXsSemiBold.copyWith(
-                                color: theme.textPrimary,
-                              ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: '${localization.translate(
+                                    LanguageKey.sendScreenBalance,
+                                  )}: ',
+                                  style: AppTypoGraPhy.textXsRegular.copyWith(
+                                    color: theme.textSecondary,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: token?.type.formatBalance(
+                                      balance?.balance ?? '',
+                                      customDecimal: token.decimal),
+                                  style: AppTypoGraPhy.textXsSemiBold.copyWith(
+                                    color: theme.textPrimary,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
+                          ),
+                        ],
+                      );
+                    },
                   );
                 }),
               ),

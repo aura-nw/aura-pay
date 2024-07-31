@@ -1,11 +1,9 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:pyxis_v2/app_configs/di.dart';
-import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
-import 'package:pyxis_v2/src/core/constants/network.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/navigator.dart';
 import 'widgets/network.dart';
@@ -14,13 +12,9 @@ import 'package:pyxis_v2/src/presentation/widgets/base_screen.dart';
 
 final class SelectNetworkScreen extends StatelessWidget
     with StatelessBaseScreen {
-  late final List<AppNetwork> networks;
+  final List<AppNetwork> networks = getIt.get<List<AppNetwork>>();
 
-  SelectNetworkScreen({super.key}) {
-    final config = getIt.get<PyxisMobileConfig>();
-
-    networks = createNetwork(config);
-  }
+  SelectNetworkScreen({super.key});
 
   @override
   Widget child(BuildContext context, AppTheme appTheme,

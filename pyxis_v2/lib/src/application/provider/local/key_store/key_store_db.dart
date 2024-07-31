@@ -6,27 +6,29 @@ part 'key_store_db.g.dart';
 extension KeyStoreDbExtension on KeyStoreDb {
   KeyStoreDb copyWith({
     String? keyName,
-    int ?id,
+    int? id,
   }) {
     return KeyStoreDb(
-      keyName: keyName ?? this.keyName,
-      keyId: id ?? keyId,
+      key: keyName ?? key,
+      id: id ?? this.id,
     );
   }
+
+  KeyStoreDto get toDto => KeyStoreDto(
+        key: key,
+        id: id,
+      );
 }
 
 @Collection(
   inheritance: false,
 )
-final class KeyStoreDb extends KeyStoreDto {
-  final Id keyId;
-  final String keyName;
+final class KeyStoreDb {
+  final Id id;
+  final String key;
 
   KeyStoreDb({
-    required this.keyName,
-    this.keyId = Isar.autoIncrement,
-  }) : super(
-          id: keyId,
-          key: keyName,
-        );
+    required this.key,
+    this.id = Isar.autoIncrement,
+  });
 }

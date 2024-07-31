@@ -1,5 +1,3 @@
-import 'package:domain/core/enum.dart';
-
 final class AccountBalance {
   final int id;
   final int accountId;
@@ -14,35 +12,12 @@ final class AccountBalance {
 
 final class Balance {
   final String balance;
-  final int? tokenId;
-  final String tokenType;
-  final String? name;
-  final int? decimal;
-  final String? symbol;
-  final String contract;
+  final int tokenId;
 
   const Balance({
     required this.balance,
-    this.tokenId,
-    required this.tokenType,
-    this.name,
-    this.decimal,
-    this.symbol,
-    required this.contract,
+    required this.tokenId,
   });
-
-  TokenType get type {
-    switch (tokenType) {
-      case 'native':
-        return TokenType.native;
-      case 'cw20':
-        return TokenType.cw20;
-      case 'erc20':
-        return TokenType.erc20;
-      default:
-        return TokenType.native;
-    }
-  }
 }
 
 // Remote fetch balance

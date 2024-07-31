@@ -2,12 +2,10 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pyxis_v2/app_configs/di.dart';
-import 'package:pyxis_v2/app_configs/pyxis_mobile_config.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme.dart';
 import 'package:pyxis_v2/src/application/global/app_theme/app_theme_builder.dart';
 import 'package:pyxis_v2/src/application/global/localization/app_localization_provider.dart';
 import 'package:pyxis_v2/src/application/global/localization/localization_manager.dart';
-import 'package:pyxis_v2/src/core/constants/network.dart';
 import 'package:pyxis_v2/src/core/helpers/share_network.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
 import 'package:pyxis_v2/src/core/utils/copy.dart';
@@ -46,13 +44,11 @@ class _HomeScreenState extends State<HomeScreen>
 
   final HomeBloc _bloc = getIt.get<HomeBloc>();
 
-  final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
-
   late AppNetwork appNetwork;
 
   @override
   void initState() {
-    appNetwork = createNetwork(_config)[0];
+    appNetwork = getIt.get<List<AppNetwork>>()[0];
     currentSection = HomeScreenSection.home;
     _receiveWidgetController = AnimationController(
       vsync: this,

@@ -11,6 +11,7 @@ import 'package:pyxis_v2/src/application/provider/local/key_store/key_store_data
 import 'package:pyxis_v2/src/application/provider/local/localization_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/normal_storage_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/secure_storage_service_impl.dart';
+import 'package:pyxis_v2/src/application/provider/local/token/token_database_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/local/token_market/token_market_database_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/provider/biometric_provider.dart';
 import 'package:pyxis_v2/src/application/provider/provider/web3_auth_provider.dart';
@@ -18,6 +19,7 @@ import 'package:pyxis_v2/src/application/provider/service/balance/balance_servic
 import 'package:pyxis_v2/src/application/provider/service/nft/nft_service_impl.dart';
 import 'package:pyxis_v2/src/application/provider/service/token_market/remote_token_market_service_impl.dart';
 import 'package:pyxis_v2/src/core/constants/app_local_constant.dart';
+import 'package:pyxis_v2/src/core/constants/network.dart';
 import 'package:pyxis_v2/src/core/observer/home_page_observer.dart';
 import 'package:pyxis_v2/src/presentation/screens/confirm_send/confirm_send_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/create_passcode/create_passcode_cubit.dart';
@@ -95,6 +97,12 @@ Future<void> initDependency(
       network: Network.sapphire_devnet,
       redirectUrl: redirectUrl,
     ),
+  );
+
+  final appNetwork = createNetwork(config);
+
+  getIt.registerLazySingleton<List<AppNetwork>>(
+    () => appNetwork,
   );
 
   // Register observers
@@ -183,6 +191,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<TokenDatabaseService>(
+    () => TokenDatabaseServiceImpl(
+      isar,
+    ),
+  );
+
   // Register repository
   getIt.registerLazySingleton<LocalizationRepository>(
     () => LocalizationRepositoryImpl(
@@ -235,6 +249,12 @@ Future<void> initDependency(
     ),
   );
 
+  getIt.registerLazySingleton<TokenRepository>(
+    () => TokenRepositoryImpl(
+      getIt.get<TokenDatabaseService>(),
+    ),
+  );
+
   // Register use case
   getIt.registerLazySingleton<LocalizationUseCase>(
     () => LocalizationUseCase(
@@ -281,6 +301,12 @@ Future<void> initDependency(
   getIt.registerLazySingleton<NftUseCase>(
     () => NftUseCase(
       getIt.get<NftRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<TokenUseCase>(
+    () => TokenUseCase(
+      getIt.get<TokenRepository>(),
     ),
   );
 
@@ -349,6 +375,7 @@ Future<void> initDependency(
 
   getIt.registerFactoryParam<HomePageBloc, PyxisMobileConfig, dynamic>(
     (config, _) => HomePageBloc(
+      getIt.get<TokenUseCase>(),
       getIt.get<AccountUseCase>(),
       getIt.get<TokenMarketUseCase>(),
       getIt.get<BalanceUseCase>(),
@@ -356,12 +383,13 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<SendBloc, List<AppNetwork>, dynamic>(
-    (networks, _) => SendBloc(
+  getIt.registerFactory<SendBloc>(
+    () => SendBloc(
+      getIt.get<TokenUseCase>(),
       getIt.get<AccountUseCase>(),
       getIt.get<BalanceUseCase>(),
       getIt.get<TokenMarketUseCase>(),
-      appNetworks: networks,
+      appNetworks: getIt.get<List<AppNetwork>>(),
     ),
   );
 

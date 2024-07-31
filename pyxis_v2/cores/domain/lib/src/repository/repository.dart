@@ -6,3 +6,4 @@ export 'key_store_repository.dart';
 export 'token_market_repository.dart';
 export 'balance_repository.dart';
 export 'nft_repository.dart';
+export 'token_repository.dart';

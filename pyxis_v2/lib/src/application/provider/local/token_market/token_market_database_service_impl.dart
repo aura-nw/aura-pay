@@ -33,13 +33,17 @@ final class TokenMarketDatabaseServiceImpl
   }
 
   @override
-  Future<TokenMarketDto?> get(int id) {
-    return _database.tokenMarketDbs.get(id);
+  Future<TokenMarketDto?> get(int id) async{
+    final token = await _database.tokenMarketDbs.get(id);
+
+    return token?.toDto;
   }
 
   @override
-  Future<List<TokenMarketDto>> getAll() {
-    return _database.tokenMarketDbs.where().findAll();
+  Future<List<TokenMarketDto>> getAll() async{
+    final tokens = await _database.tokenMarketDbs.where().findAll();
+
+    return tokens.map((e) => e.toDto,).toList();
   }
 
   @override

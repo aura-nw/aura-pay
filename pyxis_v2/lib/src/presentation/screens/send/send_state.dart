@@ -24,6 +24,7 @@ class SendState with _$SendState {
     @Default('') String toAddress,
     @Default('') String amountToSend,
     @Default(false) bool isSaved,
+    @Default([]) List<Token> tokens,
     required List<AppNetwork> appNetworks,
     required AppNetwork selectedNetwork,
   }) = _SendState;

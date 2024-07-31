@@ -44,17 +44,19 @@ extension AppNetworkExtension on AppNetwork {
   List<Balance> tokenWithType(List<Balance> tokens) {
     switch (type) {
       case AppNetworkType.cosmos:
-        return tokens
-            .where(
-              (e) => e.type == TokenType.cw20 || e.type == TokenType.native,
-            )
-            .toList();
+        // return tokens
+        //     .where(
+        //       (e) => e.type == TokenType.cw20 || e.type == TokenType.native,
+        //     )
+        //     .toList();
+        return [];
       case AppNetworkType.evm:
-        return tokens
-            .where(
-              (e) => e.type == TokenType.erc20 || e.type == TokenType.native,
-            )
-            .toList();
+        // return tokens
+        //     .where(
+        //       (e) => e.type == TokenType.erc20 || e.type == TokenType.native,
+        //     )
+        //     .toList();
+        return [];
       case AppNetworkType.other:
         return [];
     }

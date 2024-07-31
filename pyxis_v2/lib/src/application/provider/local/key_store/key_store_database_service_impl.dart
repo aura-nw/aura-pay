@@ -11,7 +11,7 @@ final class KeyStoreDatabaseServiceImpl implements KeyStoreDatabaseService {
   Future<KeyStoreDto> add<P>(P param) async {
     final AddKeyStoreRequestDto p = param as AddKeyStoreRequestDto;
     KeyStoreDb keyStoreDb = KeyStoreDb(
-      keyName: p.keyName,
+      key: p.keyName,
     );
     await _database.writeTxn(
       () async {
@@ -23,7 +23,7 @@ final class KeyStoreDatabaseServiceImpl implements KeyStoreDatabaseService {
       },
     );
 
-    return keyStoreDb;
+    return keyStoreDb.toDto;
   }
 
   @override
@@ -36,13 +36,17 @@ final class KeyStoreDatabaseServiceImpl implements KeyStoreDatabaseService {
   }
 
   @override
-  Future<KeyStoreDto?> get(int id) {
-    return _database.keyStoreDbs.get(id);
+  Future<KeyStoreDto?> get(int id) async{
+    final key = await _database.keyStoreDbs.get(id);
+
+    return key?.toDto;
   }
 
   @override
   Future<List<KeyStoreDto>> getAll() async {
-    return _database.keyStoreDbs.where().findAll();
+    final keyDbs = await _database.keyStoreDbs.where().findAll();
+
+    return keyDbs.map((e) => e.toDto,).toList();
   }
 
   @override
@@ -63,7 +67,7 @@ final class KeyStoreDatabaseServiceImpl implements KeyStoreDatabaseService {
         },
       );
 
-      return keyStoreDb;
+      return keyStoreDb.toDto;
     }
 
     throw Exception('Key store is not found');

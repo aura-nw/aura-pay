@@ -36,7 +36,6 @@ class SendScreen extends StatefulWidget {
 
 class _SendScreenState extends State<SendScreen>
     with StateFulBaseScreen, CustomFlutterToast {
-  final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
   late SendBloc _bloc;
 
   final TextEditingController _amountController = TextEditingController();
@@ -44,9 +43,7 @@ class _SendScreenState extends State<SendScreen>
 
   @override
   void initState() {
-    _bloc = getIt.get<SendBloc>(
-      param1: createNetwork(_config),
-    );
+    _bloc = getIt.get<SendBloc>();
     _bloc.add(
       const SendOnInitEvent(),
     );
@@ -112,9 +109,10 @@ class _SendScreenState extends State<SendScreen>
                                 appTheme: appTheme,
                                 localization: localization,
                                 onChanged: _onChangeAmount,
-                                onSelectToken: (token, tokenMarkets, tokens) {
+                                onSelectToken: (balances, selectedBalance,  tokenMarkets, tokens) {
                                   _onSelectTokens(
-                                    token,
+                                    balances,
+                                    selectedBalance,
                                     tokenMarkets,
                                     tokens,
                                     appTheme,
@@ -252,9 +250,10 @@ class _SendScreenState extends State<SendScreen>
   }
 
   void _onSelectTokens(
-    Balance token,
+    List<Balance> balances,
+    Balance balance,
     List<TokenMarket> tokenMarkets,
-    List<Balance> tokens,
+    List<Token> tokens,
     AppTheme appTheme,
     AppLocalizationManager localization,
   ) async {
@@ -266,7 +265,8 @@ class _SendScreenState extends State<SendScreen>
         localization: localization,
         tokens: tokens,
         tokenMarkets: tokenMarkets,
-        currentToken: token,
+        currentToken: balance,
+        balances: balances,
       ),
       appTheme: appTheme,
     );

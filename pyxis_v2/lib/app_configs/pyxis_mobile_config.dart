@@ -18,7 +18,7 @@ extension PyxisEnvironmentMapper on PyxisEnvironment {
     }
   }
 
-  ChainInfo get evmChainInfo{
+  ChainInfo get evmChainInfo {
     switch (this) {
       case PyxisEnvironment.serenity:
         return ChainList.auraSerenity;
@@ -33,6 +33,7 @@ extension PyxisEnvironmentMapper on PyxisEnvironment {
 /// Represents the entire configuration for the Pyxis Wallet app.
 final class AppConfig {
   final String appName;
+  final NativeCoin nativeCoin;
   final CosmosInfoConfig cosmosInfo;
   final EvmInfoConfig evmInfo;
   final ApiConfig api;
@@ -41,6 +42,7 @@ final class AppConfig {
   /// Constructor for creating a [PyxisWalletConfig] instance.
   const AppConfig({
     required this.appName,
+    required this.nativeCoin,
     required this.cosmosInfo,
     required this.evmInfo,
     required this.api,
@@ -51,10 +53,33 @@ final class AppConfig {
   factory AppConfig.fromJson(Map<String, dynamic> json) {
     return AppConfig(
       appName: json['APP_NAME'],
+      nativeCoin: NativeCoin.fromJson(
+        json['NATIVE_COIN'],
+      ),
       cosmosInfo: CosmosInfoConfig.fromJson(json['COSMOS_INFO']),
       evmInfo: EvmInfoConfig.fromJson(json['EVM_INFO']),
       api: ApiConfig.fromJson(json['API']),
       web3Auth: Web3AuthConfig.fromJson(json['WEB_3_AUTH']),
+    );
+  }
+}
+
+/// Represents the configuration for native coin
+final class NativeCoin {
+  final String name;
+  final String symbol;
+
+  /// Constructor for creating a [NativeCoin] instance.
+  const NativeCoin({
+    required this.name,
+    required this.symbol,
+  });
+
+  /// Factory method for creating a [NativeCoin] instance from a JSON object.
+  factory NativeCoin.fromJson(Map<String, dynamic> json) {
+    return NativeCoin(
+      name: json['name'],
+      symbol: json['symbol'],
     );
   }
 }
