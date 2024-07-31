@@ -10,6 +10,7 @@ import 'package:pyxis_v2/src/core/constants/typography.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
 import 'package:pyxis_v2/src/core/utils/context_extension.dart';
 import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
+import 'package:pyxis_v2/src/navigator.dart';
 import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_selector.dart';
 import 'package:pyxis_v2/src/presentation/widgets/box_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/combine_list_view.dart';
@@ -192,6 +193,9 @@ final class HomePageTokensWidget extends StatelessWidget {
               text: localization.translate(
                 LanguageKey.homePageManage,
               ),
+              onTap: () {
+                AppNavigator.push(RoutePath.manageToken);
+              },
               borderColor: appTheme.borderSecondary,
               padding: const EdgeInsets.all(
                 Spacing.spacing03,

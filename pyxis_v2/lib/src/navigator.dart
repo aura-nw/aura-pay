@@ -8,6 +8,7 @@ import 'package:pyxis_v2/src/presentation/screens/get_started/get_started_screen
 import 'package:pyxis_v2/src/presentation/screens/home/home_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_screen.dart';
+import 'package:pyxis_v2/src/presentation/screens/manage_token/manage_token_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/select_network/select_network_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_screen.dart';
@@ -36,6 +37,8 @@ sealed class RoutePath {
   static const String send = '$home/send';
   static const String confirmSend = '$send/confirm';
   static const String transactionResult = '$home/transaction_result';
+
+  static const String manageToken = '$home/manage_token';
 }
 
 sealed class AppNavigator {
@@ -96,7 +99,8 @@ sealed class AppNavigator {
           settings,
         );
       case RoutePath.importWalletYetiBot:
-        final Map<String,dynamic> arguments = settings.arguments as Map<String,dynamic>;
+        final Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
         return _defaultRoute(
           ImportWalletYetiBotScreen(
             aWallet: arguments['wallet'],
@@ -144,6 +148,11 @@ sealed class AppNavigator {
             hash: arguments['hash'],
             to: arguments['to'],
           ),
+          settings,
+        );
+      case RoutePath.manageToken:
+        return _defaultRoute(
+          const ManageTokenScreen(),
           settings,
         );
       default:

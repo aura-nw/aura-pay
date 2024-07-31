@@ -6,10 +6,13 @@ import 'package:pyxis_v2/src/core/constants/asset_path.dart';
 import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/constants/size_constant.dart';
 import 'package:pyxis_v2/src/core/constants/typography.dart';
+import 'package:pyxis_v2/src/presentation/screens/manage_token/manage_token_selector.dart';
+import 'package:pyxis_v2/src/presentation/widgets/combine_list_view.dart';
 import 'package:pyxis_v2/src/presentation/widgets/divider_widget.dart';
+import 'package:pyxis_v2/src/presentation/widgets/network_image_widget.dart';
 import 'package:pyxis_v2/src/presentation/widgets/switch_widget.dart';
 
-final class ManageTokenScreenTokenWidget extends StatelessWidget {
+final class _ManageTokenScreenTokenWidget extends StatelessWidget {
   final String logo;
   final String name;
   final String networkName;
@@ -17,7 +20,7 @@ final class ManageTokenScreenTokenWidget extends StatelessWidget {
   final void Function(bool) onChanged;
   final AppTheme appTheme;
 
-  const ManageTokenScreenTokenWidget({
+  const _ManageTokenScreenTokenWidget({
     required this.name,
     required this.logo,
     required this.networkName,
@@ -30,15 +33,21 @@ final class ManageTokenScreenTokenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            NetworkImageWidget(
+              url: logo,
+              appTheme: appTheme,
+            ),
             const SizedBox(
               width: BoxSize.boxSize04,
             ),
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     name,
@@ -115,6 +124,31 @@ class ManageTokenScreenTokensWidget extends StatelessWidget {
               AssetIconPath.icCommonFilter,
             ),
           ],
+        ),
+        const SizedBox(
+          height: BoxSize.boxSize05,
+        ),
+        Expanded(
+          child: ManageTokenTokensSelector(
+            builder: (tokens) {
+              return CombinedListView(
+                onRefresh: () {},
+                onLoadMore: () {},
+                data: tokens,
+                builder: (token, _) {
+                  return _ManageTokenScreenTokenWidget(
+                    name: token.tokenName,
+                    logo: token.logo,
+                    networkName: 'networkName',
+                    onChanged: (value) {},
+                    isEnable: token.isEnable,
+                    appTheme: appTheme,
+                  );
+                },
+                canLoadMore: false,
+              );
+            },
+          ),
         ),
       ],
     );

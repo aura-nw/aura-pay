@@ -29,6 +29,7 @@ import 'package:pyxis_v2/src/presentation/screens/home/home/home_page_bloc.dart'
 import 'package:pyxis_v2/src/presentation/screens/home/home_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet/import_wallet_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_cubit.dart';
+import 'package:pyxis_v2/src/presentation/screens/manage_token/manage_token_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/re_login/re_login_cubit.dart';
 import 'package:pyxis_v2/src/presentation/screens/send/send_bloc.dart';
 import 'package:pyxis_v2/src/presentation/screens/social_login_yeti_bot/social_login_yeti_bot_cubit.dart';
@@ -395,15 +396,19 @@ Future<void> initDependency(
 
   getIt.registerFactoryParam<ConfirmSendBloc, PyxisMobileConfig,
       Map<String, dynamic>>(
-    (config, arguments) => ConfirmSendBloc(
-      getIt.get<KeyStoreUseCase>(),
-      config: config,
-      recipient: arguments['recipient'],
-      balance: arguments['balance'],
-      amount: arguments['amount'],
-      account: arguments['account'],
-      appNetwork: arguments['network'],
-      tokens: arguments['tokens']
+    (config, arguments) => ConfirmSendBloc(getIt.get<KeyStoreUseCase>(),
+        config: config,
+        recipient: arguments['recipient'],
+        balance: arguments['balance'],
+        amount: arguments['amount'],
+        account: arguments['account'],
+        appNetwork: arguments['network'],
+        tokens: arguments['tokens']),
+  );
+
+  getIt.registerFactory<ManageTokenBloc>(
+    () => ManageTokenBloc(
+      getIt.get<TokenUseCase>(),
     ),
   );
 }
