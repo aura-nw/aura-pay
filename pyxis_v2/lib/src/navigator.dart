@@ -128,6 +128,7 @@ sealed class AppNavigator {
             amount: arguments['amount'],
             recipient: arguments['recipient'],
             balance: arguments['balance'],
+            tokens: arguments['tokens'],
           ),
           settings,
         );

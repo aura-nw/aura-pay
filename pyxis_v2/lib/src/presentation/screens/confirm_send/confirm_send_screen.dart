@@ -9,6 +9,7 @@ import 'package:pyxis_v2/src/core/constants/language_key.dart';
 import 'package:pyxis_v2/src/core/observer/home_page_observer.dart';
 import 'package:pyxis_v2/src/core/utils/app_util.dart';
 import 'package:pyxis_v2/src/core/utils/aura_util.dart';
+import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:pyxis_v2/src/core/utils/toast.dart';
 import 'package:pyxis_v2/src/navigator.dart';
 import 'confirm_send_selector.dart';
@@ -30,6 +31,7 @@ final class ConfirmSendScreen extends StatefulWidget {
   final String amount;
   final String recipient;
   final Balance balance;
+  final List<Token> tokens;
 
   const ConfirmSendScreen({
     required this.appNetwork,
@@ -37,6 +39,7 @@ final class ConfirmSendScreen extends StatefulWidget {
     required this.amount,
     required this.recipient,
     required this.balance,
+    required this.tokens,
     super.key,
   });
 
@@ -50,8 +53,13 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
   final HomePageObserver _homePageObserver = getIt.get<HomePageObserver>();
   late ConfirmSendBloc _bloc;
 
+  Token? token;
+
   @override
   void initState() {
+    token = widget.tokens.firstWhereOrNull(
+      (t) => t.id == widget.balance.tokenId,
+    );
     _bloc = getIt.get<ConfirmSendBloc>(
       param1: _config,
       param2: {
@@ -60,6 +68,7 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
         'amount': widget.amount,
         'recipient': widget.recipient,
         'balance': widget.balance,
+        'tokens': widget.tokens,
       },
     );
 
@@ -84,8 +93,7 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
                     localization: localization,
                     onChangeIsShowedMsg: _onChangeIsShowedMsg,
                     amount: widget.amount,
-                    // tokenName: widget.balance.name ?? '',
-                    tokenName: '',
+                    tokenName: token?.tokenName ?? '',
                     recipient: widget.recipient,
                     networkType: widget.appNetwork.type,
                   ),
@@ -99,6 +107,7 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
                 ),
                 recipient: widget.recipient,
                 appTheme: appTheme,
+                token: token!,
                 onEditFee: (gasPrice, gasEstimation) {
                   _onEditFee(
                     appTheme,
@@ -107,6 +116,7 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
                     gasPrice.toDouble() * 0.75,
                     gasPrice.toDouble(),
                     gasEstimation.toDouble(),
+                    token!,
                   );
                 },
                 localization: localization,
@@ -144,12 +154,12 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
                 showLoading();
                 break;
               case ConfirmSendStatus.sent:
-                // _homePageObserver.emit(
-                //   emitParam: HomePageEmitParam(
-                //     event: HomePageObserver.onSendTokenDone,
-                //     data: state.balance.type,
-                //   ),
-                // );
+                _homePageObserver.emit(
+                  emitParam: HomePageEmitParam(
+                    event: HomePageObserver.onSendTokenDone,
+                    data: token!.type,
+                  ),
+                );
                 hideLoading();
                 AppNavigator.push(
                   RoutePath.transactionResult,
@@ -201,6 +211,7 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
     double min,
     double currentValue,
     double estimationGas,
+    Token token,
   ) async {
     final gasPrice = await AppBottomSheetProvider.showFullScreenDialog<double?>(
       context,
@@ -211,11 +222,10 @@ class _ConfirmSendScreenState extends State<ConfirmSendScreen>
         appTheme: appTheme,
         localization: localization,
         convertFee: (value) {
-          return 0.toString();
-          // return widget.balance.type.formatBalance(
-          //   (value * estimationGas).toString(),
-          //   customDecimal: widget.balance.decimal,
-          // );
+          return token.type.formatBalance(
+            (value * estimationGas).toString(),
+            customDecimal: token.decimal,
+          );
         },
       ),
       appTheme: appTheme,

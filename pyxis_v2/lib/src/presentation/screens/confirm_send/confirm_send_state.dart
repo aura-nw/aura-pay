@@ -19,6 +19,7 @@ class ConfirmSendState with _$ConfirmSendState {
     @Default({}) Map<String,dynamic> msg,
     @Default('') String hash,
     @Default('') String timeStamp,
+    @Default([]) List<Token> tokens,
     required AppNetwork appNetwork,
     required Account account,
     required String amount,

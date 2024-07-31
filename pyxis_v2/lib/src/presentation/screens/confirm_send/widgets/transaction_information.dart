@@ -135,6 +135,7 @@ final class TransactionInformationWidget extends StatelessWidget {
   final void Function(BigInt,BigInt) onEditFee;
   final AppLocalizationManager localization;
   final Balance balance;
+  final Token token;
 
   const TransactionInformationWidget({
     required this.accountName,
@@ -145,6 +146,7 @@ final class TransactionInformationWidget extends StatelessWidget {
     required this.onEditFee,
     required this.localization,
     required this.balance,
+    required this.token,
     super.key,
   });
 
@@ -176,12 +178,12 @@ final class TransactionInformationWidget extends StatelessWidget {
               builder: (gasPriceToSend) {
                 final BigInt fee = gasEstimation * gasPriceToSend;
 
-                // String feeS = balance.type.formatBalance(
-                //   fee.toString(),
-                //   customDecimal: balance.decimal,
-                // );
+                String feeS = token.type.formatBalance(
+                  fee.toString(),
+                  customDecimal: token.decimal,
+                );
 
-                String total = (double.parse('feeS') + double.parse(amount)).toString();
+                String total = (double.parse(feeS) + double.parse(amount)).toString();
 
                 return Text(
                   '${(total)} ${localization.translate(
@@ -242,13 +244,12 @@ final class TransactionInformationWidget extends StatelessWidget {
                       title: localization.translate(
                         LanguageKey.confirmSendScreenSendFee,
                       ),
-                      // information: '${balance.type.formatBalance(
-                      //   fee.toString(),
-                      //   customDecimal: balance.decimal,
-                      // )} ${localization.translate(
-                      //   LanguageKey.commonAura,
-                      // )}',
-                      information: '',
+                      information: '${token.type.formatBalance(
+                        fee.toString(),
+                        customDecimal: token.decimal,
+                      )} ${localization.translate(
+                        LanguageKey.commonAura,
+                      )}',
                       appTheme: appTheme,
                     );
                   }

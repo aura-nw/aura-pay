@@ -403,6 +403,7 @@ Future<void> initDependency(
       amount: arguments['amount'],
       account: arguments['account'],
       appNetwork: arguments['network'],
+      tokens: arguments['tokens']
     ),
   );
 }

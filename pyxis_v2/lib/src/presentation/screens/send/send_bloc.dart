@@ -105,6 +105,7 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
     emit(
       state.copyWith(
         isSaved: !state.isSaved,
+        status: SendStatus.none,
       ),
     );
   }
@@ -139,6 +140,7 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
           state.amountToSend,
           state.selectedToken,
         ),
+        status: SendStatus.none,
       ),
     );
   }
@@ -155,6 +157,7 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
           event.amount,
           state.selectedToken,
         ),
+        status: SendStatus.none,
       ),
     );
   }

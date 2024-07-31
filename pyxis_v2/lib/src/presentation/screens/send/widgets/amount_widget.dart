@@ -207,8 +207,11 @@ class _TextInputAmountWidgetState
                                               behavior: HitTestBehavior.opaque,
                                               onTap: () {
                                                 widget.onSelectToken(
-                                                  accountBalance?.balances ??
-                                                      [],
+                                                  network.tokenWithType(
+                                                    accountBalance?.balances ??
+                                                        [],
+                                                    tokens,
+                                                  ),
                                                   balance!,
                                                   tokenMarkets,
                                                   tokens,

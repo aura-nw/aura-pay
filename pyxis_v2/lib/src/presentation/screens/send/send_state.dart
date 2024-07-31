@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'send_state.freezed.dart';
 
 enum SendStatus{
+  none,
   loading,
   loaded,
   error,

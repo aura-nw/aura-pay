@@ -486,7 +486,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
             AddTokenRequest(
               logo: tokenMarket?.image ?? AppLocalConstant.auraLogo,
               tokenName: tokenMarket?.name ?? cw.contract.name,
-              type: TokenType.erc20,
+              type: TokenType.cw20,
               symbol: tokenMarket?.symbol ?? cw.contract.symbol ,
               contractAddress: cw.contract.smartContract.address,
               isEnable: true,

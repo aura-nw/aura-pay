@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:pyxis_v2/src/core/constants/asset_path.dart';
+import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'package:wallet_core/wallet_core.dart';
 
 extension AppNetworkExtension on AppNetwork {
@@ -41,22 +42,26 @@ extension AppNetworkExtension on AppNetwork {
     }
   }
 
-  List<Balance> tokenWithType(List<Balance> tokens) {
+  List<Balance> tokenWithType(List<Balance> balances,List<Token> tokens) {
     switch (type) {
       case AppNetworkType.cosmos:
-        // return tokens
-        //     .where(
-        //       (e) => e.type == TokenType.cw20 || e.type == TokenType.native,
-        //     )
-        //     .toList();
-        return [];
+        return balances
+            .where(
+              (e) {
+                final token = tokens.firstWhereOrNull((t) => t.id == e.tokenId,);
+                return token?.type == TokenType.cw20 || token?.type == TokenType.native;
+              },
+            )
+            .toList();
       case AppNetworkType.evm:
-        // return tokens
-        //     .where(
-        //       (e) => e.type == TokenType.erc20 || e.type == TokenType.native,
-        //     )
-        //     .toList();
-        return [];
+        return balances
+            .where(
+              (e) {
+                final token = tokens.firstWhereOrNull((t) => t.id == e.tokenId,);
+                return token?.type == TokenType.erc20 || token?.type == TokenType.native;
+              },
+            )
+            .toList();
       case AppNetworkType.other:
         return [];
     }

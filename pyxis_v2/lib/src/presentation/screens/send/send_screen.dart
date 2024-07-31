@@ -78,6 +78,7 @@ class _SendScreenState extends State<SendScreen>
                     ),
                   );
                 case SendStatus.loaded:
+                case SendStatus.none:
                 case SendStatus.reNetwork:
                 case SendStatus.reToken:
                 case SendStatus.error:
@@ -162,6 +163,8 @@ class _SendScreenState extends State<SendScreen>
         listener: (context, state) {
           switch (state.status) {
             case SendStatus.loading:
+              break;
+            case SendStatus.none:
               break;
             case SendStatus.loaded:
               break;
@@ -294,6 +297,7 @@ class _SendScreenState extends State<SendScreen>
       'amount': state.amountToSend,
       'recipient': state.toAddress,
       'balance': state.selectedToken,
+      'tokens' : state.tokens,
     });
   }
 }
