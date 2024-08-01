@@ -17,9 +17,10 @@ import 'package:pyxis_v2/src/presentation/screens/splash/spash_screen.dart';
 import 'package:pyxis_v2/src/presentation/screens/transaction_result/transaction_result_screen.dart';
 import 'package:wallet_core/wallet_core.dart';
 
+// This class contains static route paths for the application.
 sealed class RoutePath {
   static const String _base = '/';
-  static const String splash = _base;
+  static const String splash = _base; // Root path for splash screen
 
   static const String _onBoarding = '${_base}onboarding';
   static const String reLogin = '$_onBoarding/re_login';
@@ -28,11 +29,10 @@ sealed class RoutePath {
   static const String createWallet = '$_onBoarding/create_wallet';
   static const String selectNetwork = '$_onBoarding/select_network';
   static const String importWallet = '$_onBoarding/import_wallet';
-  static const String importWalletYetiBot =
-      '$_onBoarding/import_wallet_yeti_bot';
+  static const String importWalletYetiBot = '$_onBoarding/import_wallet_yeti_bot';
   static const String socialLoginYetiBot = '$_onBoarding/social_login_yeti_bot';
 
-  static const String home = '${_base}home';
+  static const String home = '${_base}home'; // Home path
 
   static const String send = '$home/send';
   static const String confirmSend = '$send/confirm';
@@ -41,9 +41,11 @@ sealed class RoutePath {
   static const String manageToken = '$home/manage_token';
 }
 
+// This class handles navigation within the application.
 sealed class AppNavigator {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
+  // This function handles route generation based on the route settings.
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RoutePath.splash:
@@ -58,9 +60,9 @@ sealed class AppNavigator {
         );
       case RoutePath.setPasscode:
         final Map<String, dynamic> argument =
-            settings.arguments as Map<String, dynamic>;
+        settings.arguments as Map<String, dynamic>;
         final void Function(BuildContext context) onCreatePasscodeDone =
-            argument['callback'] as void Function(BuildContext);
+        argument['callback'] as void Function(BuildContext);
 
         final bool canBack = argument['canBack'] as bool? ?? true;
         return _defaultRoute(
@@ -100,7 +102,7 @@ sealed class AppNavigator {
         );
       case RoutePath.importWalletYetiBot:
         final Map<String, dynamic> arguments =
-            settings.arguments as Map<String, dynamic>;
+        settings.arguments as Map<String, dynamic>;
         return _defaultRoute(
           ImportWalletYetiBotScreen(
             aWallet: arguments['wallet'],
@@ -124,7 +126,7 @@ sealed class AppNavigator {
 
       case RoutePath.confirmSend:
         final Map<String, dynamic> arguments =
-            settings.arguments as Map<String, dynamic>;
+        settings.arguments as Map<String, dynamic>;
         return _defaultRoute(
           ConfirmSendScreen(
             appNetwork: arguments['appNetwork'],
@@ -139,7 +141,7 @@ sealed class AppNavigator {
 
       case RoutePath.transactionResult:
         final Map<String, dynamic> arguments =
-            settings.arguments as Map<String, dynamic>;
+        settings.arguments as Map<String, dynamic>;
         return _defaultRoute(
           TransactionResultScreen(
             time: arguments['time'],
@@ -163,29 +165,37 @@ sealed class AppNavigator {
     }
   }
 
+  // Pushes a named route onto the navigator.
   static Future? push<T>(String route, [T? arguments]) =>
       state?.pushNamed(route, arguments: arguments);
 
+  // Replaces the current route with a new one.
   static Future? replaceWith<T>(String route, [T? arguments]) =>
       state?.pushReplacementNamed(route, arguments: arguments);
 
+  // Pops the top-most route off the navigator.
   static void pop<T>([T? arguments]) => state?.pop(arguments);
 
+  // Pops routes until the specified route is reached.
   static void popUntil(String routeName) => state?.popUntil(
         (route) => route.settings.name == routeName,
-      );
+  );
 
+  // Pops all routes until the first one.
   static void popToFirst() => state?.popUntil((route) => route.isFirst);
 
+  // Replaces all routes with the specified route.
   static void replaceAllWith(String route) =>
       state?.pushNamedAndRemoveUntil(route, (route) => false);
 
+  // Gets the current state of the navigator.
   static NavigatorState? get state => navigatorKey.currentState;
 
+  // Creates a default route with a slide transition.
   static Route _defaultRoute(
-    Widget child,
-    RouteSettings settings,
-  ) {
+      Widget child,
+      RouteSettings settings,
+      ) {
     return SlideRoute(
       page: child,
       settings: settings,
