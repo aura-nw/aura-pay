@@ -17,6 +17,7 @@ import 'package:pyxis_v2/src/core/utils/dart_core_extension.dart';
 import 'home_page_event.dart';
 import 'home_page_state.dart';
 
+// Bloc for handling state management in the HomePage
 final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   final TokenMarketUseCase _tokenMarketUseCase;
   final BalanceUseCase _balanceUseCase;
@@ -24,6 +25,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   final PyxisMobileConfig config;
   final TokenUseCase _tokenUseCase;
 
+// Constructor initializing use cases and setting up event handlers
   HomePageBloc(
     this._tokenUseCase,
     this._accountUseCase,
@@ -42,6 +44,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on(_onRefreshTokenBalance);
   }
 
+  // Isolates and SendPorts for handling concurrent tasks
   late Isolate _balanceIsolate;
   SendPort? _balanceSendPort;
 
@@ -55,7 +58,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   late ReceivePort _mainBalanceReceivePort;
   late ReceivePort _mainNFTReceivePort;
 
-  /// init multi thread
+  /// Initialize multiple threads (isolates) for different tasks
   void _initMultiThread() async {
     _mainTokenReceivePort = ReceivePort();
     _mainBalanceReceivePort = ReceivePort();
@@ -70,15 +73,15 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     _nftIsolate =
         await Isolate.spawn(_backgroundFetchNFT, _mainNFTReceivePort.sendPort);
 
-    // Listen to the stream only once
+    // Listens for messages from the token thread
     _mainTokenReceivePort.listen(
       (message) {
         if (message is Map<String, dynamic>) {
           if (message.containsKey('token_market_port')) {
-            // receive isolateSendPort from token thread
+            // Receive SendPort from token thread
             _tokenSendPort = message['token_market_port'] as SendPort;
 
-            // Only first run
+            // Fetch token market data
             _sendMessageFetchTokenMarket();
           } else if (message.containsKey('token_market')) {
             add(
@@ -93,7 +96,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       },
     );
 
-    // Listen to the stream only once
+    // Listens for messages from the balance thread
     _mainBalanceReceivePort.listen(
       (message) {
         if (message is Map<String, dynamic>) {
@@ -112,7 +115,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       },
     );
 
-    // Listen to the stream only one
+    // Listens for messages from the NFT thread
     _mainNFTReceivePort.listen(
       (message) {
         if (message is Map<String, dynamic>) {
@@ -136,6 +139,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     );
   }
 
+  // Fetch token market data in a separate thread
   static void _backgroundFetchTokenMarket(SendPort sendPort) async {
     ReceivePort receivePort = ReceivePort();
 
@@ -168,6 +172,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
+  // Fetch balance data in a separate thread
   static void _backgroundFetchBalance(SendPort sendPort) async {
     ReceivePort receivePort = ReceivePort();
 
@@ -199,6 +204,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
+  // Fetch NFT data in a separate thread
   static void _backgroundFetchNFT(SendPort sendPort) async {
     ReceivePort receivePort = ReceivePort();
 
@@ -228,6 +234,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
+  // Fetch token market data from the server
   static Future<void> _fetchTokenMarket(
     TokenMarketUseCase tokenMarketUseCase,
     SendPort sendPort,
@@ -262,6 +269,8 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
+
+  // Fetch balance data from the server
   static Future<void> _fetchBalance(
     BalanceUseCase balanceUseCase,
     SendPort sendPort,
@@ -307,6 +316,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
+  // Fetch NFT data from the server
   static Future<void> _fetchNFT(
     NftUseCase nftUseCase,
     SendPort sendPort,
@@ -569,12 +579,14 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     ));
   }
 
+  // Send a message to fetch token market data
   void _sendMessageFetchTokenMarket() {
     _tokenSendPort?.send({
       'base_url_v1': config.config.api.v1.url,
     });
   }
 
+  // Send a message to fetch account balance data
   void _sendMessageFetchAccountBalance(Account ?activeAccount) {
     _balanceSendPort?.send({
       'account': activeAccount ?? state.activeAccount!,
@@ -583,6 +595,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     });
   }
 
+  // Send a message to fetch NFT data
   void _sendMessageFetchNFTs(Account ?activeAccount) {
     _nftSendPort?.send({
       'account': activeAccount ?? state.activeAccount!,
