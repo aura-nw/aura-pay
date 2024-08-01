@@ -20,20 +20,25 @@ import 'package:wallet_core/wallet_core.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:developer' as developer;
 
-// Change this one if you want to change environment
+// Define the current environment for the application.
+// Change this constant to switch between different environments.
 const PyxisEnvironment environment = PyxisEnvironment.staging;
 
+// Implementation of the LogProvider interface for handling log messages.
 class LogProviderImpl implements LogProvider {
   @override
   void printLog(String message) {
+    // Use the developer log to print messages with a specific tag.
     developer.log(message, name: 'pyxis_mobile');
   }
 }
 
+// Load configuration settings based on the current environment.
 Future<Map<String, dynamic>> _loadConfig() async {
   String loader;
   String path;
 
+  // Determine the path to the configuration file based on the environment.
   switch (environment) {
     case PyxisEnvironment.serenity:
       path = AssetConfigPath.configDev;
@@ -46,23 +51,31 @@ Future<Map<String, dynamic>> _loadConfig() async {
       break;
   }
   try {
+    // Load the configuration file as a string.
     loader = await rootBundle.loadString(
       path,
     );
   } catch (e) {
     loader = '';
+    // Handle errors in loading the configuration file.
     LogProvider.log('can\'t load config ${e.toString()}');
   }
 
+  // Parse the loaded configuration file as JSON and return it.
   return jsonDecode(loader);
 }
 
+// Save a specific token in the local database if it doesn't already exist.
 Future<void> _saveAuraToken(String name, String symbol) async {
+  // Get the TokenUseCase instance for interacting with tokens.
   final TokenUseCase tokenUseCase = di.getIt.get<TokenUseCase>();
+
+  // Check if the token with the specified name already exists.
   final nativeAura = await tokenUseCase.getByName(
     name: name,
   );
 
+  // If the token does not exist, add it to the database.
   if (nativeAura == null) {
     await tokenUseCase.add(
       AddTokenRequest(
@@ -78,20 +91,25 @@ Future<void> _saveAuraToken(String name, String symbol) async {
 }
 
 void main() async {
+  // Ensure that widget binding is initialized before any asynchronous operations.
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize the logging system.
   LogProvider.init(
     LogProviderImpl(),
   );
 
+  // Initialize the AuraScan library with the current environment.
   AuraScan.init(environment);
 
+  // Load the application configuration.
   final Map<String, dynamic> config = await _loadConfig();
 
-  // Get the path to the application documents directory
+  // Get the path to the application's documents directory for storing data.
   final path = (await getApplicationDocumentsDirectory()).path;
 
   late Isar isar;
+  // Check if the Isar database instance already exists.
   if (Isar.instanceNames.isEmpty) {
     // Open the Isar database with the specified schema, directory, name, and maximum size
     isar = await Isar.open(
@@ -111,6 +129,7 @@ void main() async {
     isar = Isar.getInstance(AppLocalConstant.localDbName)!;
   }
 
+  // Initialize the application's configuration and dependencies.
   final pickWalletConfig = PyxisMobileConfig(
     configs: config,
     environment: environment,
@@ -122,14 +141,16 @@ void main() async {
     isar,
   );
 
+  // Save the Aura token in the local database.
   await _saveAuraToken(
     pickWalletConfig.config.nativeCoin.name,
     pickWalletConfig.config.nativeCoin.symbol,
   );
 
-  // Load language
+  // Load localization settings for the application.
   await AppLocalizationManager.instance.load();
 
+  // Initialize the Trust Wallet Core for blockchain interactions.
   FlutterTrustWalletCore.init();
 
   runApp(
