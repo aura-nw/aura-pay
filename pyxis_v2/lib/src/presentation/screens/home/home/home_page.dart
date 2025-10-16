@@ -209,42 +209,45 @@ class _HomePageState extends State<HomePage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        HomePageStoryWidget(
-                          thumbnail:
-                              'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
-                          title: 'Create passcode',
-                          appTheme: appTheme,
-                        ),
-                        const SizedBox(
-                          width: BoxSize.boxSize05,
-                        ),
-                        HomePageStoryWidget(
-                          thumbnail:
-                              'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
-                          title: 'Punka event',
-                          appTheme: appTheme,
-                        ),
-                        const SizedBox(
-                          width: BoxSize.boxSize05,
-                        ),
-                        HomePageStoryWidget(
-                          thumbnail:
-                              'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
-                          title: 'Create passcode',
-                          appTheme: appTheme,
-                        ),
-                        const SizedBox(
-                          width: BoxSize.boxSize05,
-                        ),
-                        HomePageStoryWidget(
-                          thumbnail:
-                              'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
-                          title: 'Punka event',
-                          appTheme: appTheme,
-                        ),
-                      ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          HomePageStoryWidget(
+                            thumbnail:
+                                'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
+                            title: 'Create passcode',
+                            appTheme: appTheme,
+                          ),
+                          const SizedBox(
+                            width: BoxSize.boxSize05,
+                          ),
+                          HomePageStoryWidget(
+                            thumbnail:
+                                'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
+                            title: 'Punka event',
+                            appTheme: appTheme,
+                          ),
+                          const SizedBox(
+                            width: BoxSize.boxSize05,
+                          ),
+                          HomePageStoryWidget(
+                            thumbnail:
+                                'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
+                            title: 'Create passcode',
+                            appTheme: appTheme,
+                          ),
+                          const SizedBox(
+                            width: BoxSize.boxSize05,
+                          ),
+                          HomePageStoryWidget(
+                            thumbnail:
+                                'https://cdn.pixabay.com/photo/2022/11/30/20/48/turtle-7627773_1280.jpg',
+                            title: 'Punka event',
+                            appTheme: appTheme,
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: BoxSize.boxSize07,
