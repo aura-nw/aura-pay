@@ -94,33 +94,36 @@ final class WalletMultiAddressInfoWidget extends WalletInfoWidget {
         const SizedBox(
           height: BoxSize.boxSize02,
         ),
-        IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                address.addressView,
-                style: AppTypoGraPhy.textSmMedium.copyWith(
-                  color: appTheme.textSecondary,
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: IntrinsicHeight(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  address.addressView,
+                  style: AppTypoGraPhy.textSmMedium.copyWith(
+                    color: appTheme.textSecondary,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: BoxSize.boxSize02,
-              ),
-              VerticalDivider(
-                color: appTheme.borderSecondary,
-                thickness: DividerSize.divider01,
-              ),
-              const SizedBox(
-                width: BoxSize.boxSize02,
-              ),
-              Text(
-                cosmosAddress.addressView,
-                style: AppTypoGraPhy.textSmMedium.copyWith(
-                  color: appTheme.textSecondary,
+                const SizedBox(
+                  width: BoxSize.boxSize02,
                 ),
-              ),
-            ],
+                VerticalDivider(
+                  color: appTheme.borderSecondary,
+                  thickness: DividerSize.divider01,
+                ),
+                const SizedBox(
+                  width: BoxSize.boxSize02,
+                ),
+                Text(
+                  cosmosAddress.addressView,
+                  style: AppTypoGraPhy.textSmMedium.copyWith(
+                    color: appTheme.textSecondary,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
