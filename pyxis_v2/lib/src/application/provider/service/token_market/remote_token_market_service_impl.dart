@@ -1,4 +1,3 @@
-import 'package:data/core/base_response.dart';
 import 'package:data/data.dart';
 import 'package:dio/dio.dart';
 import 'package:pyxis_v2/src/application/provider/service/api_service_path.dart';

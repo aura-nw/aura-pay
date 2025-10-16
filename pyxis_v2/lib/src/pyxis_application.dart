@@ -81,11 +81,10 @@ class _PyxisApplicationState extends State<PyxisApplication>
         theme: ThemeData(
           useMaterial3: true,
           fontFamily: AppTypoGraPhy.mulish,
-          tabBarTheme: const TabBarTheme(
+          tabBarTheme: const TabBarThemeData(
             labelPadding: EdgeInsets.only(
               right: Spacing.spacing05,
             ),
-
           )
         ),
         onGenerateRoute: AppNavigator.onGenerateRoute,

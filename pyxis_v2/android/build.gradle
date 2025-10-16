@@ -13,6 +13,17 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
+// Solution for namespace not specified error
+allprojects {
+    plugins.withId('com.android.library') {
+        android {
+            if (namespace == null) {
+                namespace project.group
+            }
+        }
+    }
+}
+
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
