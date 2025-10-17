@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// [AppTheme] defines pyxis mobile application's design system.
+/// [AppTheme] defines AuraPay application's design system.
 interface class AppTheme {
   // Text color
   late Color textPrimary;

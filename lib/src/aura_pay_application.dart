@@ -67,7 +67,7 @@ class _AuraPayApplicationState extends State<AuraPayApplication>
     Locale systemLocale = ui.PlatformDispatcher.instance.locale;
     AppLocalizationManager.instance
         .updateDeviceLocale(systemLocale.languageCode);
-    print('PyxisApplication systemLocale: $systemLocale');
+    print('AuraPayApplication systemLocale: $systemLocale');
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {

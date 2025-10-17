@@ -1,4 +1,4 @@
-/// [_SizeBase] defines constant size be used in Pyxis mobile application
+/// [_SizeBase] defines constant size be used in AuraPay application
 sealed class _SizeBase {
   static const double unit0 = 0;
   static const double unit1 = 1;
