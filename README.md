@@ -282,12 +282,12 @@ flutter run
 #### Staging (Euphoria)
 Change environment in `lib/main.dart`:
 ```dart
-const PyxisEnvironment environment = PyxisEnvironment.staging;
+const AuraPayEnvironment environment = AuraPayEnvironment.staging;
 ```
 
 #### Production
 ```dart
-const PyxisEnvironment environment = PyxisEnvironment.production;
+const AuraPayEnvironment environment = AuraPayEnvironment.production;
 ```
 
 ### Build
@@ -327,6 +327,33 @@ The app uses JSON configuration files for different environments:
   "API": { "v1": { "url": "..." }, "v2": { "url": "..." } },
   "WEB_3_AUTH": { "client_id": "...", ... }
 }
+```
+
+---
+
+## 🔑 Core Classes & Configuration
+
+### Main Configuration Classes
+
+- **`AuraPayConfig`** - Main app configuration class (in `lib/app_configs/aura_pay_config.dart`)
+  - Manages environment configs
+  - Provides access to AppConfig instance
+  
+- **`AuraPayEnvironment`** - Environment enum
+  - `AuraPayEnvironment.serenity` - Development/Testnet
+  - `AuraPayEnvironment.staging` - Staging/Euphoria
+  - `AuraPayEnvironment.production` - Production/Mainnet
+
+- **`AuraPayAccountConstant`** - Account-related constants (in `lib/src/core/constants/aura_pay_account_constant.dart`)
+  - Default wallet names
+  - Account prefixes
+
+### Configuration Files
+
+```
+lib/app_configs/
+├── aura_pay_config.dart    # Main config classes
+└── di.dart                 # Dependency injection setup
 ```
 
 ---

@@ -282,12 +282,12 @@ flutter run
 #### Staging (Euphoria)
 Thay đổi môi trường trong `lib/main.dart`:
 ```dart
-const PyxisEnvironment environment = PyxisEnvironment.staging;
+const AuraPayEnvironment environment = AuraPayEnvironment.staging;
 ```
 
 #### Production
 ```dart
-const PyxisEnvironment environment = PyxisEnvironment.production;
+const AuraPayEnvironment environment = AuraPayEnvironment.production;
 ```
 
 ### Build
@@ -327,6 +327,33 @@ flutter build ios --release
   "API": { "v1": { "url": "..." }, "v2": { "url": "..." } },
   "WEB_3_AUTH": { "client_id": "...", ... }
 }
+```
+
+---
+
+## 🔑 Core Classes & Cấu hình
+
+### Các lớp cấu hình chính
+
+- **`AuraPayConfig`** - Lớp cấu hình chính của ứng dụng (trong `lib/app_configs/aura_pay_config.dart`)
+  - Quản lý cấu hình môi trường
+  - Cung cấp truy cập đến instance AppConfig
+  
+- **`AuraPayEnvironment`** - Enum môi trường
+  - `AuraPayEnvironment.serenity` - Development/Testnet
+  - `AuraPayEnvironment.staging` - Staging/Euphoria
+  - `AuraPayEnvironment.production` - Production/Mainnet
+
+- **`AuraPayAccountConstant`** - Constants liên quan đến tài khoản (trong `lib/src/core/constants/aura_pay_account_constant.dart`)
+  - Tên ví mặc định
+  - Tiền tố tài khoản
+
+### File cấu hình
+
+```
+lib/app_configs/
+├── aura_pay_config.dart    # Các class config chính
+└── di.dart                 # Thiết lập dependency injection
 ```
 
 ---
