@@ -1,0 +1,109 @@
+PODS:
+  - BigInt (5.2.0)
+  - curvelib.swift (2.0.0)
+  - Flutter (1.0.0)
+  - flutter_secure_storage (6.0.0):
+    - Flutter
+  - fluttertoast (0.0.2):
+    - Flutter
+  - isar_flutter_libs (1.0.0):
+    - Flutter
+  - KeychainSwift (20.0.0)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - share_plus (0.0.1):
+    - Flutter
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - SwiftProtobuf (1.32.0)
+  - TorusSessionManager (6.0.2):
+    - curvelib.swift (~> 2.0.0)
+    - KeychainSwift (~> 20.0.0)
+  - trust_wallet_core (0.0.1):
+    - Flutter
+    - TrustWalletCore (= 3.1.18)
+  - TrustWalletCore (3.1.18):
+    - TrustWalletCore/Core (= 3.1.18)
+  - TrustWalletCore/Core (3.1.18):
+    - TrustWalletCore/Types
+  - TrustWalletCore/Types (3.1.18):
+    - SwiftProtobuf
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - Web3Auth (11.1.0):
+    - BigInt (~> 5.2.0)
+    - curvelib.swift (~> 2.0.0)
+    - KeychainSwift (~> 20.0.0)
+    - TorusSessionManager (~> 6.0.2)
+  - web3auth_flutter (2.0.1):
+    - Flutter
+    - Web3Auth (~> 11.1.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - isar_flutter_libs (from `.symlinks/plugins/isar_flutter_libs/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - trust_wallet_core (from `.symlinks/plugins/trust_wallet_core/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - web3auth_flutter (from `.symlinks/plugins/web3auth_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - BigInt
+    - curvelib.swift
+    - KeychainSwift
+    - SwiftProtobuf
+    - TorusSessionManager
+    - TrustWalletCore
+    - Web3Auth
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+  isar_flutter_libs:
+    :path: ".symlinks/plugins/isar_flutter_libs/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  trust_wallet_core:
+    :path: ".symlinks/plugins/trust_wallet_core/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+  web3auth_flutter:
+    :path: ".symlinks/plugins/web3auth_flutter/ios"
+
+SPEC CHECKSUMS:
+  BigInt: f668a80089607f521586bbe29513d708491ef2f7
+  curvelib.swift: b9223e5cac801effed8a5fe8968e952b3fe427a5
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
+  fluttertoast: 2c67e14dce98bbdb200df9e1acf610d7a6264ea1
+  isar_flutter_libs: 9fc2cfb928c539e1b76c481ba5d143d556d94920
+  KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
+  SwiftProtobuf: 81e341191afbddd64aa031bd12862dccfab2f639
+  TorusSessionManager: 3c47c2a4c4d6173a10006eb0af4b86317ee45ff8
+  trust_wallet_core: 8d0e8857056ecc22f3289145a5b2afcc63b70253
+  TrustWalletCore: fabbb38652ab559ee25c864af8836e6481a7e22b
+  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
+  Web3Auth: fa82260fa6dacdcf647b333d85a923530d045051
+  web3auth_flutter: ecf03bfbcb9ebf1ed8edb24642b5dac6d6b6a980
+
+PODFILE CHECKSUM: 6c01055ff966e40e8862373e66668a0fbf0b7ba8
+
+COCOAPODS: 1.16.2
