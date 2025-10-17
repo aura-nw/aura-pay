@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:aurapay/src/core/constants/language_key.dart';
 import 'package:aurapay/src/core/constants/size_constant.dart';
 import 'package:aurapay/src/core/constants/typography.dart';
-import 'package:aurapay/src/core/utils/aura_util.dart';
 import 'package:aurapay/src/navigator.dart';
 
 import 'app_button.dart';

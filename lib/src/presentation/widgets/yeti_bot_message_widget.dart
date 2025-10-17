@@ -8,7 +8,6 @@ import 'package:aurapay/src/core/constants/size_constant.dart';
 import 'package:aurapay/src/core/constants/typography.dart';
 import 'package:aurapay/src/core/utils/context_extension.dart';
 import 'package:aurapay/src/core/utils/aura_util.dart';
-import 'package:aurapay/src/core/utils/dart_core_extension.dart';
 
 final class YetiBotMessageObject<T> {
   final int groupId;

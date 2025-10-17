@@ -1,7 +1,4 @@
-import 'dart:typed_data';
-
 import 'package:http/http.dart'; //You can also import the browser version
-import 'package:wallet_core/wallet_core.dart';
 import 'package:web3dart/web3dart.dart';
 
 abstract class ChainInfo {

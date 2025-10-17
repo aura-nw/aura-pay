@@ -3,17 +3,13 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:flutter/foundation.dart';
-import 'package:wallet_core/src/objects/chain_info.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as Ethereum;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
-import 'package:flutter/material.dart';
 import 'package:trust_wallet_core/flutter_trust_wallet_core.dart';
 import 'package:trust_wallet_core/protobuf/Tron.pb.dart' as Tron;
 import 'package:trust_wallet_core/trust_wallet_core_ffi.dart';
-import 'package:web3dart/crypto.dart';
-import 'package:web3dart/web3dart.dart';
 
 /// Class to hold wallet information.
 class AWallet {

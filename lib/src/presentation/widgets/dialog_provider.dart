@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
 import 'package:aurapay/src/core/constants/size_constant.dart';
 
-import 'app_loading_widget.dart';
-
 abstract interface class _DialogProviderWidget extends StatelessWidget {
   final AppTheme appTheme;
 
