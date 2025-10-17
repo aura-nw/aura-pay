@@ -40,12 +40,12 @@ import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
 import 'package:web3auth_flutter/web3auth_flutter.dart';
 
-import 'pyxis_mobile_config.dart';
+import 'aura_pay_config.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> initDependency(
-  PyxisMobileConfig config,
+  AuraPayConfig config,
   Isar isar,
 ) async {
   final Dio dio = Dio(
@@ -61,7 +61,7 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerLazySingleton<PyxisMobileConfig>(
+  getIt.registerLazySingleton<AuraPayConfig>(
     () => config,
   );
 
@@ -374,7 +374,7 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<HomePageBloc, PyxisMobileConfig, dynamic>(
+  getIt.registerFactoryParam<HomePageBloc, AuraPayConfig, dynamic>(
     (config, _) => HomePageBloc(
       getIt.get<TokenUseCase>(),
       getIt.get<AccountUseCase>(),
@@ -394,7 +394,7 @@ Future<void> initDependency(
     ),
   );
 
-  getIt.registerFactoryParam<ConfirmSendBloc, PyxisMobileConfig,
+  getIt.registerFactoryParam<ConfirmSendBloc, AuraPayConfig,
       Map<String, dynamic>>(
     (config, arguments) => ConfirmSendBloc(getIt.get<KeyStoreUseCase>(),
         config: config,

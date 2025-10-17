@@ -1,6 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:aurapay/src/core/constants/pyxis_account_constant.dart';
+import 'package:aurapay/src/core/constants/aura_pay_account_constant.dart';
 import 'package:aurapay/src/core/utils/app_util.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'import_wallet_yeti_bot_state.dart';
@@ -29,7 +29,7 @@ final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
     );
 
     final String? key = WalletCore.storedManagement.saveWallet(
-      PyxisAccountConstant.defaultNormalWalletName,
+      AuraPayAccountConstant.defaultNormalWalletName,
       '',
       state.wallet,
     );
@@ -79,7 +79,7 @@ final class ImportWalletYetiBotCubit extends Cubit<ImportWalletYetiBotState> {
 
     await _accountUseCase.add(
       AddAccountRequest(
-        name: PyxisAccountConstant.defaultNormalWalletName,
+        name: AuraPayAccountConstant.defaultNormalWalletName,
         addACosmosInfoRequest: addACosmosInfoRequest,
         addAEvmInfoRequest: addAEvmInfoRequest,
         keyStoreId: keyStore.id,

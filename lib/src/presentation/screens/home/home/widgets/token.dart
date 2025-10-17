@@ -1,6 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:aurapay/app_configs/pyxis_mobile_config.dart';
+import 'package:aurapay/app_configs/aura_pay_config.dart';
 import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
 import 'package:aurapay/src/application/global/localization/localization_manager.dart';
 import 'package:aurapay/src/core/constants/app_local_constant.dart';
@@ -150,7 +150,7 @@ final class _HomePageTokenInfoWidget extends StatelessWidget {
 final class HomePageTokensWidget extends StatelessWidget {
   final AppTheme appTheme;
   final AppLocalizationManager localization;
-  final PyxisMobileConfig config;
+  final AuraPayConfig config;
 
   const HomePageTokensWidget({
     required this.appTheme,

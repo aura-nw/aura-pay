@@ -1,6 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:aurapay/src/core/constants/pyxis_account_constant.dart';
+import 'package:aurapay/src/core/constants/aura_pay_account_constant.dart';
 import 'package:aurapay/src/core/utils/app_util.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'social_login_yeti_bot_state.dart';
@@ -27,7 +27,7 @@ final class SocialLoginYetiBotCubit extends Cubit<SocialLoginYetiBotState> {
     );
 
     final String? key = WalletCore.storedManagement.saveWallet(
-      PyxisAccountConstant.defaultNormalWalletName,
+      AuraPayAccountConstant.defaultNormalWalletName,
       '',
       state.wallet,
     );
@@ -50,7 +50,7 @@ final class SocialLoginYetiBotCubit extends Cubit<SocialLoginYetiBotState> {
 
     await _accountUseCase.add(
       AddAccountRequest(
-        name: PyxisAccountConstant.defaultNormalWalletName,
+        name: AuraPayAccountConstant.defaultNormalWalletName,
         addACosmosInfoRequest: AddACosmosInfoRequest(
           address: cosmosAddress,
           isActive: false,

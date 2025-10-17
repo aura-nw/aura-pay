@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
 import 'package:aurapay/app_configs/di.dart' as di;
-import 'package:aurapay/app_configs/pyxis_mobile_config.dart';
+import 'package:aurapay/app_configs/aura_pay_config.dart';
 import 'package:aurapay/src/application/global/localization/localization_manager.dart';
 import 'package:aurapay/src/application/provider/local/account/account_db.dart';
 import 'package:aurapay/src/application/provider/local/balance/balance_db.dart';
@@ -21,7 +21,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:developer' as developer;
 
 // Change this one if you want to change environment
-const PyxisEnvironment environment = PyxisEnvironment.staging;
+const AuraPayEnvironment environment = AuraPayEnvironment.staging;
 
 class LogProviderImpl implements LogProvider {
   @override
@@ -35,13 +35,13 @@ Future<Map<String, dynamic>> _loadConfig() async {
   String path;
 
   switch (environment) {
-    case PyxisEnvironment.serenity:
+    case AuraPayEnvironment.serenity:
       path = AssetConfigPath.configDev;
       break;
-    case PyxisEnvironment.staging:
+    case AuraPayEnvironment.staging:
       path = AssetConfigPath.configStaging;
       break;
-    case PyxisEnvironment.production:
+    case AuraPayEnvironment.production:
       path = AssetConfigPath.config;
       break;
   }
@@ -111,7 +111,7 @@ void main() async {
     isar = Isar.getInstance(AppLocalConstant.localDbName)!;
   }
 
-  final pickWalletConfig = PyxisMobileConfig(
+  final pickWalletConfig = AuraPayConfig(
     configs: config,
     environment: environment,
   );

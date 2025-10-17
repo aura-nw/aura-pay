@@ -1,18 +1,18 @@
 
 
-import 'package:aurapay/app_configs/pyxis_mobile_config.dart';
+import 'package:aurapay/app_configs/aura_pay_config.dart';
 
 sealed class AuraScan{
  static String _domain = _domainSerenity;
- static void init(PyxisEnvironment environment){
+ static void init(AuraPayEnvironment environment){
   switch(environment){
-   case PyxisEnvironment.serenity:
+   case AuraPayEnvironment.serenity:
     _domain = _domainSerenity;
     break;
-   case PyxisEnvironment.staging:
+   case AuraPayEnvironment.staging:
     _domain = _domainEuphoria;
     break;
-   case PyxisEnvironment.production:
+   case AuraPayEnvironment.production:
     _domain = _domainProduction;
     break;
   }

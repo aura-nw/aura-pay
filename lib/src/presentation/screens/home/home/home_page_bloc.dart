@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:isar/isar.dart';
-import 'package:aurapay/app_configs/pyxis_mobile_config.dart';
+import 'package:aurapay/app_configs/aura_pay_config.dart';
 import 'package:aurapay/src/core/constants/app_local_constant.dart';
 import 'package:aurapay/src/core/factory_creator/account_balance.dart';
 import 'package:aurapay/src/core/factory_creator/dio.dart';
@@ -21,7 +21,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   final TokenMarketUseCase _tokenMarketUseCase;
   final BalanceUseCase _balanceUseCase;
   final AccountUseCase _accountUseCase;
-  final PyxisMobileConfig config;
+  final AuraPayConfig config;
   final TokenUseCase _tokenUseCase;
 
   HomePageBloc(

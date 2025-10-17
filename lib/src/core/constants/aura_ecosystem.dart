@@ -1,5 +1,5 @@
 // import 'package:domain/domain.dart';
-// import 'package:pyxis_mobile/app_configs/pyxis_mobile_config.dart';
+// import 'package:pyxis_mobile/app_configs/aura_pay_config.dart';
 //
 //
 // /// Halo trade
@@ -138,10 +138,10 @@
 // sealed class AuraEcosystem{
 //   static late List<BookMark> auraEcosystems;
 //
-//   static void init(PyxisEnvironment pyxisEnvironment){
+//   static void init(AuraPayEnvironment pyxisEnvironment){
 //     auraEcosystems = List.empty(growable: true);
 //     switch(pyxisEnvironment){
-//       case PyxisEnvironment.dev:
+//       case AuraPayEnvironment.dev:
 //         auraEcosystems.addAll([
 //           haloTradeDev,
 //           seekHypeDev,
@@ -149,7 +149,7 @@
 //           auraScanDev,
 //         ]);
 //         break;
-//       case PyxisEnvironment.serenity:
+//       case AuraPayEnvironment.serenity:
 //         auraEcosystems.addAll([
 //           haloTradeSerenity,
 //           seekHypeSerenity,
@@ -157,7 +157,7 @@
 //           auraScanSerenity,
 //         ]);
 //         break;
-//       case PyxisEnvironment.staging:
+//       case AuraPayEnvironment.staging:
 //         auraEcosystems.addAll([
 //           haloTradeEuphoria,
 //           seekHypeStaging,
@@ -165,7 +165,7 @@
 //           auraScanEuphoria,
 //         ]);
 //         break;
-//       case PyxisEnvironment.production:
+//       case AuraPayEnvironment.production:
 //         auraEcosystems.addAll([
 //           haloTrade,
 //           seekHype,

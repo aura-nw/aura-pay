@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:aurapay/app_configs/pyxis_mobile_config.dart';
+import 'package:aurapay/app_configs/aura_pay_config.dart';
 import 'package:aurapay/src/core/utils/aura_util.dart';
 import 'package:aurapay/src/core/utils/dart_core_extension.dart';
 import 'package:wallet_core/wallet_core.dart';
@@ -11,7 +11,7 @@ import 'confirm_send_event.dart';
 import 'confirm_send_state.dart';
 
 final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
-  final PyxisMobileConfig config;
+  final AuraPayConfig config;
   final KeyStoreUseCase _keyStoreUseCase;
 
   ConfirmSendBloc(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:aurapay/app_configs/di.dart';
-import 'package:aurapay/app_configs/pyxis_mobile_config.dart';
+import 'package:aurapay/app_configs/aura_pay_config.dart';
 import 'package:aurapay/src/application/global/app_global_state/app_global_cubit.dart';
 import 'package:aurapay/src/application/global/app_global_state/app_global_state.dart';
 import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
@@ -24,7 +24,7 @@ final class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with StateFulBaseScreen {
-  final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
+  final AuraPayConfig _config = getIt.get<AuraPayConfig>();
   final SplashCubit _cubit = getIt.get<SplashCubit>();
 
   @override

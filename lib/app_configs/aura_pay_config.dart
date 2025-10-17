@@ -1,30 +1,30 @@
 import 'package:wallet_core/wallet_core.dart';
 
-enum PyxisEnvironment {
+enum AuraPayEnvironment {
   serenity,
   staging,
   production,
 }
 
-extension PyxisEnvironmentMapper on PyxisEnvironment {
+extension AuraPayEnvironmentMapper on AuraPayEnvironment {
   String get environmentString {
     switch (this) {
-      case PyxisEnvironment.serenity:
+      case AuraPayEnvironment.serenity:
         return 'serenity';
-      case PyxisEnvironment.staging:
+      case AuraPayEnvironment.staging:
         return 'euphoria';
-      case PyxisEnvironment.production:
+      case AuraPayEnvironment.production:
         return 'xstaxy';
     }
   }
 
   ChainInfo get evmChainInfo {
     switch (this) {
-      case PyxisEnvironment.serenity:
+      case AuraPayEnvironment.serenity:
         return ChainList.auraSerenity;
-      case PyxisEnvironment.staging:
+      case AuraPayEnvironment.staging:
         return ChainList.auraEuphoria;
-      case PyxisEnvironment.production:
+      case AuraPayEnvironment.production:
         return ChainList.auraEVM;
     }
   }
@@ -256,13 +256,13 @@ final class Web3AuthConfig {
   }
 }
 
-class PyxisMobileConfig {
+class AuraPayConfig {
   final Map<String, dynamic> configs;
-  final PyxisEnvironment environment;
+  final AuraPayEnvironment environment;
 
-  PyxisMobileConfig({
+  AuraPayConfig({
     required this.configs,
-    this.environment = PyxisEnvironment.serenity,
+    this.environment = AuraPayEnvironment.serenity,
   });
 
   AppConfig get config => AppConfig.fromJson(

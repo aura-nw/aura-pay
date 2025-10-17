@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:aurapay/app_configs/di.dart';
-import 'package:aurapay/app_configs/pyxis_mobile_config.dart';
+import 'package:aurapay/app_configs/aura_pay_config.dart';
 import 'package:aurapay/src/application/global/app_global_state/app_global_cubit.dart';
 import 'package:aurapay/src/application/global/app_global_state/app_global_state.dart';
 import 'package:aurapay/src/application/global/app_theme/cubit/app_theme_cubit.dart';
@@ -23,7 +23,7 @@ final class AuraPayApplication extends StatefulWidget {
 
 class _AuraPayApplicationState extends State<AuraPayApplication>
     with WidgetsBindingObserver {
-  final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
+  final AuraPayConfig _config = getIt.get<AuraPayConfig>();
 
   @override
   void initState() {

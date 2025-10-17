@@ -2,7 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:aurapay/app_configs/di.dart';
-import 'package:aurapay/app_configs/pyxis_mobile_config.dart';
+import 'package:aurapay/app_configs/aura_pay_config.dart';
 import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
 import 'package:aurapay/src/application/global/localization/localization_manager.dart';
 import 'package:aurapay/src/core/constants/language_key.dart';
@@ -49,7 +49,7 @@ final class ConfirmSendScreen extends StatefulWidget {
 
 class _ConfirmSendScreenState extends State<ConfirmSendScreen>
     with StateFulBaseScreen, CustomFlutterToast {
-  final PyxisMobileConfig _config = getIt.get<PyxisMobileConfig>();
+  final AuraPayConfig _config = getIt.get<AuraPayConfig>();
   final HomePageObserver _homePageObserver = getIt.get<HomePageObserver>();
   late ConfirmSendBloc _bloc;
 

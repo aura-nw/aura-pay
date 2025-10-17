@@ -1,7 +1,7 @@
 import 'package:domain/domain.dart';
-import 'package:aurapay/app_configs/pyxis_mobile_config.dart';
+import 'package:aurapay/app_configs/aura_pay_config.dart';
 
-List<AppNetwork> createNetwork(PyxisMobileConfig config){
+List<AppNetwork> createNetwork(AuraPayConfig config){
   return [
     AppNetwork(
       id: 1,
