@@ -1,3 +1,0 @@
-library cache_network_image_extended;
-
-export 'src/cache_network_image_extended_builder/cache_network_image_extended_builder.dart';
