@@ -237,7 +237,9 @@ aurapay/
 - **Flutter SDK**: 3.35.0 or higher
 - **Dart SDK**: 3.9.0 or higher
 - **iOS**: Xcode 14+ (for iOS development)
-- **Android**: Android Studio with SDK 21+ (for Android development)
+- **Android**: Android Studio with **SDK 26+ (Android 8.0+)** for Android development
+  - ⚠️ **Note:** Minimum SDK updated from 24 to 26 to support Web3Auth and TrustWalletCore
+  - See [TrustWallet Crash Fix](./docs/fixes/trustwallet-crash/) for details
 
 ### Installation
 
@@ -360,10 +362,21 @@ lib/app_configs/
 
 ## 📚 Documentation
 
+### General Documentation
+- [Documentation Index](./docs/README.md) - Complete documentation index
 - [Vietnamese Documentation](./docs/README_VI.md) - Tài liệu tiếng Việt
-- [Architecture Details](./docs/ARCHITECTURE.md) - Coming soon
-- [API Documentation](./docs/API.md) - Coming soon
-- [Contributing Guide](./docs/CONTRIBUTING.md) - Coming soon
+
+### Troubleshooting & Fixes
+- [Bug Fixes Documentation](./docs/fixes/README.md) - All bug fixes and troubleshooting guides
+- [TrustWallet Crash Fix](./docs/fixes/trustwallet-crash/) - Fix for SIGSEGV crash on Android
+  - [Technical Documentation](./docs/fixes/trustwallet-crash/TRUSTWALLETCORE_CRASH_FIX.md) (English)
+  - [Quick Summary](./docs/fixes/trustwallet-crash/CRASH_FIX_SUMMARY_VI.md) (Vietnamese)
+  - [Implementation Guide](./docs/fixes/trustwallet-crash/NEXT_STEPS.md) (Vietnamese)
+
+### Coming Soon
+- Architecture Details - Coming soon
+- API Documentation - Coming soon
+- Contributing Guide - Coming soon
 
 ---
 

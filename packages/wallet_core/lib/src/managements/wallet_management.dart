@@ -1,25 +1,82 @@
 import 'dart:typed_data';
+import 'dart:io';
 import 'package:convert/convert.dart';
 import 'package:wallet_core/src/constants/constants.dart';
 import 'package:wallet_core/wallet_core.dart';
 
 class WalletManagement {
-  /// Generates a random mnemonic phrase.
+  /// Generates a random mnemonic phrase with error handling for TrustWalletCore stability.
   ///
   /// [strength] determines the strength of the mnemonic phrase.
   /// [passphrase] is an optional passphrase to use with the mnemonic.
+  /// [waitForCryptoInit] if true, waits for crypto initialization on Android (recommended)
   /// Returns the generated mnemonic phrase.
-  String randomMnemonic({int strength = 128, String passphrase = ''}) {
-    return HDWallet(strength: strength, passphrase: passphrase).mnemonic();
+  /// 
+  /// Throws an exception if wallet generation fails.
+  String randomMnemonic({
+    int strength = 128, 
+    String passphrase = '',
+    bool waitForCryptoInit = true,
+  }) {
+    try {
+      // On Android, add a small delay to ensure entropy pool is ready
+      if (Platform.isAndroid && waitForCryptoInit) {
+        // Synchronous delay using busy-wait (not ideal but necessary for sync method)
+        final stopwatch = Stopwatch()..start();
+        while (stopwatch.elapsedMilliseconds < 200) {
+          // Small delay to let native crypto initialize
+        }
+      }
+      
+      final wallet = HDWallet(strength: strength, passphrase: passphrase);
+      final mnemonic = wallet.mnemonic();
+      
+      // Validate that mnemonic is not empty
+      if (mnemonic.isEmpty) {
+        throw Exception('Generated mnemonic is empty');
+      }
+      
+      return mnemonic;
+    } catch (e) {
+      throw Exception('Failed to generate mnemonic: $e. This may be due to TrustWalletCore initialization issues. Please try restarting the app.');
+    }
   }
 
-  /// Generates a random HDWallet.
+  /// Generates a random HDWallet with error handling for TrustWalletCore stability.
   ///
   /// [strength] determines the strength of the mnemonic phrase.
   /// [passphrase] is an optional passphrase to use with the mnemonic.
+  /// [waitForCryptoInit] if true, waits for crypto initialization on Android (recommended)
   /// Returns the generated HDWallet.
-  HDWallet randomWallet({int strength = 128, String passphrase = ''}) {
-    return HDWallet(strength: strength, passphrase: passphrase);
+  /// 
+  /// Throws an exception if wallet generation fails.
+  HDWallet randomWallet({
+    int strength = 128, 
+    String passphrase = '',
+    bool waitForCryptoInit = true,
+  }) {
+    try {
+      // On Android, add a small delay to ensure entropy pool is ready
+      if (Platform.isAndroid && waitForCryptoInit) {
+        // Synchronous delay using busy-wait (not ideal but necessary for sync method)
+        final stopwatch = Stopwatch()..start();
+        while (stopwatch.elapsedMilliseconds < 200) {
+          // Small delay to let native crypto initialize
+        }
+      }
+      
+      final wallet = HDWallet(strength: strength, passphrase: passphrase);
+      
+      // Validate wallet by attempting to get mnemonic
+      final mnemonic = wallet.mnemonic();
+      if (mnemonic.isEmpty) {
+        throw Exception('Generated wallet has empty mnemonic');
+      }
+      
+      return wallet;
+    } catch (e) {
+      throw Exception('Failed to generate wallet: $e. This may be due to TrustWalletCore initialization issues. Please try restarting the app.');
+    }
   }
 
   /// Imports a wallet using a mnemonic phrase.
