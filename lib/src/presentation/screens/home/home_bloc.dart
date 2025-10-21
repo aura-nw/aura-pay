@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:aurapay/src/core/error/error.dart';
 
 import 'home_event.dart';
 import 'home_state.dart';
@@ -26,8 +27,12 @@ final class HomeBloc extends Bloc<HomeEvent, HomeState> {
           activeAccount: activeAccount,
         ),
       );
-    } catch (e) {
-      LogProvider.log('Home screen fetch account error ${e.toString()}');
+    } catch (e, stackTrace) {
+      AppErrorHandler.handle(
+        e,
+        stackTrace: stackTrace,
+        customMessage: 'Failed to load account information',
+      );
     }
   }
 }
