@@ -1,0 +1,53 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Development (Serenity)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": [
+        "--dart-define=ENV=development"
+      ]
+    },
+    {
+      "name": "Staging (Euphoria)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": [
+        "--dart-define=ENV=staging"
+      ]
+    },
+    {
+      "name": "Production (Aura EVM)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": [
+        "--dart-define=ENV=production"
+      ]
+    },
+    {
+      "name": "Development (Profile)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "profile",
+      "args": [
+        "--dart-define=ENV=development"
+      ]
+    },
+    {
+      "name": "Production (Profile)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "profile",
+      "args": [
+        "--dart-define=ENV=production"
+      ]
+    }
+  ]
+}
+

@@ -18,6 +18,11 @@
 
 **AuraPay** is a feature-rich, secure cryptocurrency wallet application supporting both **EVM** and **Cosmos** chains within the Aura Network ecosystem. Built with Flutter for cross-platform compatibility (iOS & Android), it provides a seamless experience for managing digital assets, NFTs, and blockchain interactions.
 
+> 📖 **Quick Links:**  
+> - [Build Environments Guide](docs/BUILD_ENVIRONMENTS.md) - How to build for different environments
+> - [Code Improvement Checklist](docs/CODE_IMPROVEMENT_CHECKLIST.md) - Development roadmap
+> - [Vietnamese Documentation](docs/README_VI.md)
+
 ### Supported Networks
 
 - **Aura EVM Chain** (Ethereum-compatible)
@@ -276,35 +281,67 @@ cd ..
 
 ### Running the App
 
-#### Development (Serenity Testnet)
+#### Development (Serenity Testnet - Default)
 ```bash
 flutter run
+# or explicitly
+flutter run --dart-define=ENV=development
 ```
 
 #### Staging (Euphoria)
-Change environment in `lib/main.dart`:
-```dart
-const AuraPayEnvironment environment = AuraPayEnvironment.staging;
+```bash
+flutter run --dart-define=ENV=staging
 ```
 
 #### Production
-```dart
-const AuraPayEnvironment environment = AuraPayEnvironment.production;
+```bash
+flutter run --dart-define=ENV=production
+```
+
+#### Using Scripts (Recommended)
+```bash
+# Run with specific environment
+./scripts/run.sh development
+./scripts/run.sh staging
+./scripts/run.sh production
 ```
 
 ### Build
 
 #### Android
 ```bash
-flutter build apk --release
-# or
-flutter build appbundle --release
+# Development
+flutter build apk --dart-define=ENV=development
+
+# Staging
+flutter build apk --dart-define=ENV=staging
+
+# Production (Release)
+flutter build apk --dart-define=ENV=production --release
+# or App Bundle for Google Play
+flutter build appbundle --dart-define=ENV=production --release
 ```
 
 #### iOS
 ```bash
-flutter build ios --release
+# Development
+flutter build ios --dart-define=ENV=development
+
+# Staging
+flutter build ios --dart-define=ENV=staging
+
+# Production (Release)
+flutter build ios --dart-define=ENV=production --release
 ```
+
+#### Using Build Scripts (Recommended)
+```bash
+# Build with script
+./scripts/build.sh production android release
+./scripts/build.sh staging ios debug
+```
+
+📖 **For detailed build instructions, see [Build Environments Guide](docs/BUILD_ENVIRONMENTS.md)**
 
 ---
 
@@ -365,6 +402,8 @@ lib/app_configs/
 ### General Documentation
 - [Documentation Index](./docs/README.md) - Complete documentation index
 - [Vietnamese Documentation](./docs/README_VI.md) - Tài liệu tiếng Việt
+- [Build Environments Guide](./docs/BUILD_ENVIRONMENTS.md) - Multi-environment build guide
+- [Code Improvement Checklist](./docs/CODE_IMPROVEMENT_CHECKLIST.md) - Development roadmap & improvements
 
 ### Troubleshooting & Fixes
 - [Bug Fixes Documentation](./docs/fixes/README.md) - All bug fixes and troubleshooting guides

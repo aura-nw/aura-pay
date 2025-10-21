@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
 import 'package:aurapay/app_configs/di.dart' as di;
 import 'package:aurapay/app_configs/aura_pay_config.dart';
+import 'package:aurapay/app_configs/environment_config.dart';
 import 'package:aurapay/src/application/global/localization/localization_manager.dart';
 import 'package:aurapay/src/application/provider/local/account/account_db.dart';
 import 'package:aurapay/src/application/provider/local/balance/balance_db.dart';
@@ -20,9 +21,6 @@ import 'package:wallet_core/wallet_core.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:developer' as developer;
 
-// Change this one if you want to change environment
-const AuraPayEnvironment environment = AuraPayEnvironment.staging;
-
 class LogProviderImpl implements LogProvider {
   @override
   void printLog(String message) {
@@ -31,6 +29,9 @@ class LogProviderImpl implements LogProvider {
 }
 
 Future<Map<String, dynamic>> _loadConfig() async {
+  // Get environment từ EnvironmentConfig
+  final environment = EnvironmentConfig.environment;
+  
   String loader;
   String path;
 
@@ -83,6 +84,12 @@ void main() async {
   LogProvider.init(
     LogProviderImpl(),
   );
+
+  // Get environment từ EnvironmentConfig
+  final environment = EnvironmentConfig.environment;
+  
+  // Print environment info cho debugging
+  EnvironmentConfig.printEnvironmentInfo();
 
   AuraScan.init(environment);
 
