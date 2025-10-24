@@ -29,10 +29,13 @@ class BottomNavigatorBarWidget extends StatefulWidget {
 class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
   @override
   Widget build(BuildContext context) {
+    // Get bottom safe area padding for Android navigation bar
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    
     return Container(
-      padding: const EdgeInsets.only(
+      padding: EdgeInsets.only(
         top: Spacing.spacing05,
-        bottom: Spacing.spacing07,
+        bottom: Spacing.spacing04 + bottomPadding, // Add safe area padding
       ), // Padding for the container
       decoration: BoxDecoration(
         color: widget.appTheme.bgPrimary, // Background color
