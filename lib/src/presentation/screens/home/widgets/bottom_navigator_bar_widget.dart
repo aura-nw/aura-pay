@@ -170,6 +170,12 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
             isSelected
                 ? activeIconPath
                 : iconPath, // Display active icon if the item is selected, otherwise display normal icon
+            colorFilter: ColorFilter.mode(
+              isSelected
+                  ? widget.appTheme.textBrandPrimary // Brand color for selected
+                  : widget.appTheme.textQuaternary,  // Muted color for normal
+              BlendMode.srcIn,
+            ),
           ),
           const SizedBox(
             height: BoxSize.boxSize04, // Spacer height
@@ -181,9 +187,9 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
             style: AppTypoGraPhy.textXsSemiBold.copyWith(
               color: isSelected
                   ? widget.appTheme
-                  .textTertiary // Text color for selected item
+                  .textBrandPrimary // Text color for selected item - use brand color
                   : widget.appTheme
-                  .textTertiary, // Text color for normal item
+                  .textQuaternary, // Text color for normal item - use muted color
             ),
           ),
         ],
