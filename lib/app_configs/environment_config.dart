@@ -53,14 +53,21 @@ class EnvironmentConfig {
 
   /// Print environment info (for debugging)
   static void printEnvironmentInfo() {
-    print('================================');
-    print('Environment Configuration');
-    print('================================');
-    print('Environment: $environmentName');
-    print('Is Production: $isProduction');
-    print('Is Staging: $isStaging');
-    print('Is Development: $isDevelopment');
-    print('================================');
+    final info = [
+      '================================',
+      'Environment Configuration',
+      '================================',
+      'Environment: $environmentName',
+      'Is Production: $isProduction',
+      'Is Staging: $isStaging',
+      'Is Development: $isDevelopment',
+      '================================',
+    ].join('\n');
+    
+    // Use print for environment info as it's critical startup information
+    // that should be visible in all build modes
+    // ignore: avoid_print
+    print(info);
   }
 }
 

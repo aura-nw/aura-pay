@@ -50,14 +50,6 @@ final class AccountDatabaseServiceImpl implements AccountDatabaseService {
   }
 
   @override
-  Future<List<AccountDto>> queryByAddress({
-    required String address,
-  }) {
-    // TODO: implement queryByAddress
-    throw UnimplementedError();
-  }
-
-  @override
   Future<AccountDto> update<P>(P param) async {
     final UpdateAccountRequestDto p = param as UpdateAccountRequestDto;
     AccountDb? accountDb = await _database.accountDbs.get(

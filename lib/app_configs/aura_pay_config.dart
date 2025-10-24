@@ -201,8 +201,8 @@ final class ApiConfig {
     return ApiConfig(
       v1: ApiConfigVersion.fromJson(json['v1']),
       v2: ApiConfigVersion.fromJson(json['v2']),
-      seekHypeEvm: ApiConfigVersion.fromJson(json['seek_hype_evm']),
-      seekHypeCosmos: ApiConfigVersion.fromJson(json['seek_hype_cosmos']),
+      seekHypeEvm: ApiConfigVersion.fromJson(json['seek_hype_evm'] ?? json['seek_hype'] ?? {}),
+      seekHypeCosmos: ApiConfigVersion.fromJson(json['seek_hype_cosmos'] ?? json['seek_hype'] ?? {}),
     );
   }
 }
@@ -225,7 +225,7 @@ final class ApiConfigVersion {
   /// Factory method for creating an [ApiConfigVersion] instance from a JSON object.
   factory ApiConfigVersion.fromJson(Map<String, dynamic> json) {
     return ApiConfigVersion(
-      url: json['url'],
+      url: json['url'] ?? '',
       graphql: json['graphql'],
       rest: json['rest'],
       chain: json['chain'],

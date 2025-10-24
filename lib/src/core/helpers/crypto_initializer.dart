@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:domain/domain.dart';
 import 'package:flutter/services.dart';
 
 /// Helper class to ensure crypto systems are initialized before using TrustWalletCore
@@ -18,7 +19,7 @@ class CryptoInitializer {
       final bool isReady = await _channel.invokeMethod('isCryptoReady');
       return isReady;
     } catch (e) {
-      print('Error checking crypto readiness: $e');
+      LogProvider.log('Error checking crypto readiness: $e');
       return false;
     }
   }
@@ -36,19 +37,19 @@ class CryptoInitializer {
     }
 
     try {
-      print('Waiting for crypto system to initialize...');
+      LogProvider.log('Waiting for crypto system to initialize...');
       final bool isReady = await _channel.invokeMethod('waitForCryptoReady');
       
       if (isReady) {
         _isInitialized = true;
-        print('Crypto system initialized successfully');
+        LogProvider.log('Crypto system initialized successfully');
       } else {
-        print('Crypto system initialization timeout');
+        LogProvider.log('Crypto system initialization timeout');
       }
       
       return isReady;
     } catch (e) {
-      print('Error waiting for crypto readiness: $e');
+      LogProvider.log('Error waiting for crypto readiness: $e');
       // Assume ready to not block the app
       _isInitialized = true;
       return true;
@@ -65,7 +66,7 @@ class CryptoInitializer {
     
     if (!isReady) {
       // Fallback: Add a delay to give the system more time
-      print('Applying fallback delay for crypto initialization...');
+      LogProvider.log('Applying fallback delay for crypto initialization...');
       await Future.delayed(const Duration(milliseconds: 1000));
     }
     

@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -67,7 +68,7 @@ class _AuraPayApplicationState extends State<AuraPayApplication>
     Locale systemLocale = ui.PlatformDispatcher.instance.locale;
     AppLocalizationManager.instance
         .updateDeviceLocale(systemLocale.languageCode);
-    print('AuraPayApplication systemLocale: $systemLocale');
+    LogProvider.log('AuraPayApplication systemLocale: $systemLocale');
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {

@@ -24,12 +24,6 @@ final class AccountUseCase {
     return _accountRepository.getAll();
   }
 
-  Future<List<Account>> queryByAddress({required String address}) {
-    return _accountRepository.queryByAddress(
-      address: address,
-    );
-  }
-
   Future<Account> update(UpdateAccountRequest param) async {
     return _accountRepository.update<UpdateAccountRequest>(param);
   }

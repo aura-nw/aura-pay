@@ -38,12 +38,6 @@ final class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<List<Account>> queryByAddress({required String address}) {
-    // TODO: implement queryByAddress
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Account> update<P>(P param) async {
     final accountDto = await _accountDatabaseService.update(
       (param as UpdateAccountRequest).mapRequest,
