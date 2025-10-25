@@ -40,7 +40,9 @@ fi
 # Load environment variables if .env exists
 if [ -f ".env" ]; then
     echo "📄 Loading environment variables from .env..."
-    export $(cat .env | grep -v '^#' | xargs)
+    set -a
+    source .env
+    set +a
 fi
 
 # Check if required env vars are set

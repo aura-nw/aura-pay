@@ -25,7 +25,9 @@ echo -e "${YELLOW}Environment:${NC} $ENV"
 # Load environment variables if .env exists
 if [ -f ".env" ]; then
     echo -e "${BLUE}Loading environment variables...${NC}"
-    export $(cat .env | grep -v '^#' | xargs)
+    set -a
+    source .env
+    set +a
 fi
 
 # Generate config if needed

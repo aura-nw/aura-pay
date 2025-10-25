@@ -66,4 +66,5 @@ packages/aura_wallet_core
 # Generated config files (keep templates only)
 assets/config/config.dev.json
 assets/config/config.staging.json
+assets/config/config.production.json
 assets/config/config.json
