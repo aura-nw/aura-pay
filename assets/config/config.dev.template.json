@@ -1,16 +1,16 @@
 {
   "APP_NAME": "AuraPay Wallet",
   "NATIVE_COIN" : {
-    "name" : "Aura Network",
+    "name" : "Aura serenity testnet",
     "symbol" : "AURA"
   },
   "COSMOS_INFO": {
     "symbol": "AURA",
     "denom": "uaura",
-    "chainId": "aura_6322-2",
+    "chainId": "auradev_1236-2",
     "decimals" : 6,
-    "chainName": "Aura COSMOS",
-    "rpc" : "https://grpc.aura.network",
+    "chainName": "Aura COSMOS Serenity",
+    "rpc" : "http://grpc.serenity.aura.network:9092",
     "gasPrice": {
       "low": 0.001,
       "average": 0.0025,
@@ -22,8 +22,8 @@
     "denom" : "uaura",
     "chainId" : 6322,
     "decimals" : 18,
-    "chainName": "Aura EVM",
-    "rpc" : "https://jsonrpc.aura.network",
+    "chainName": "Aura EVM Serenity",
+    "rpc" : "https://jsonrpc.serenity.aura.network",
     "gasPrice": {
       "low": 0.000000001,
       "average": 0.0000000025,
@@ -32,20 +32,24 @@
   },
   "API" : {
     "v1" : {
-      "url" : "https://api.aurascan.io/api/v1"
+      "url" : "https://serenity-api.aurascan.io/api/v1"
     },
     "v2" : {
-      "url" : "https://horoscope.aura.network/api",
+      "url" : "https://indexer-v2.dev.aurascan.io/api",
       "graphql": "/v2/graphql",
       "rest": "/v2",
       "chain": "x-"
     },
-    "seek_hype" : {
-
+    "seek_hype_evm" : {
+      "url" : "https://indexer.serenity.seekhype.io"
+    },
+    "seek_hype_cosmos" : {
+      "url" : "https://dev.seekhype.io",
+      "graphql" : "v1/graphql"
     }
   },
   "WEB_3_AUTH" : {
-    "client_id": "BCz90RUtKV5gkiwCJYQY6oeGeyEnsMjPhzShWFs_j82F5iwlt0fhUiQsBMHeV_96VACY00YtCwfwCWL9zv-jV7c",
+    "client_id": "${WEB3AUTH_CLIENT_ID}",
     "ios_redirect_url": "app://aura.aurapay.mobile",
     "android_redirect_url": "app://com.aura.network.aurapay"
   }

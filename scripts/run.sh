@@ -22,6 +22,20 @@ echo -e "${BLUE}================================${NC}"
 echo ""
 echo -e "${YELLOW}Environment:${NC} $ENV"
 
+# Load environment variables if .env exists
+if [ -f ".env" ]; then
+    echo -e "${BLUE}Loading environment variables...${NC}"
+    export $(cat .env | grep -v '^#' | xargs)
+fi
+
+# Generate config if needed
+CONFIG_FILE="assets/config/config.$ENV.json"
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo -e "${YELLOW}Config file not found: $CONFIG_FILE${NC}"
+    echo -e "${BLUE}Generating config...${NC}"
+    ./scripts/generate-config.sh $ENV
+fi
+
 # Get dependencies
 echo -e "${BLUE}Getting dependencies...${NC}"
 flutter pub get

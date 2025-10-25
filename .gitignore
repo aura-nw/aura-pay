@@ -57,3 +57,13 @@ phyxis_mobile_dev.iml
 *.g.dart
 
 packages/aura_wallet_core
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Generated config files (keep templates only)
+assets/config/config.dev.json
+assets/config/config.staging.json
+assets/config/config.json
