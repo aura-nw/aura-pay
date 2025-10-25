@@ -7,6 +7,8 @@ import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
 import 'package:aurapay/src/application/global/localization/localization_manager.dart';
 import 'package:aurapay/src/core/constants/app_local_constant.dart';
 import 'package:aurapay/src/core/constants/size_constant.dart';
+import 'package:aurapay/src/core/error/error.dart';
+import 'package:aurapay/src/core/helpers/app_launcher.dart';
 import 'package:aurapay/src/core/utils/toast.dart';
 import 'package:aurapay/src/navigator.dart';
 import 'get_started_state.dart';
@@ -53,7 +55,7 @@ class _GetStartedScreenState extends State<GetStartedScreen>
             _onCheckHasPasscode(_onPushToAddExistingWallet,
                 _onReplacePasscodeToAddExistingWallet);
           },
-          onTermClick: () {},
+          onTermClick: _onTermsOfServiceClick,
           onGoogleTap: () {
             _onSocialClick(
               Web3AuthLoginProvider.google,
@@ -160,5 +162,19 @@ class _GetStartedScreenState extends State<GetStartedScreen>
 
   void _onSocialClick(Web3AuthLoginProvider provider) {
     _cubit.onLogin(provider);
+  }
+
+  /// Open Terms of Service URL
+  void _onTermsOfServiceClick() async {
+    try {
+      await AppLauncher.launch(AppLocalConstant.termsOfServiceUrl);
+      LogProvider.log('Opened Terms of Service');
+    } catch (e, stackTrace) {
+      AppErrorHandler.handle(
+        e,
+        stackTrace: stackTrace,
+        customMessage: 'Failed to open Terms of Service',
+      );
+    }
   }
 }

@@ -16,6 +16,9 @@ sealed class AppLocalConstant {
   static const String auraPrefix = 'aura';
   static const String auraLogo = 'https://aurascan.io/assets/images/logo/title-logo.png';
 
+  // Legal & Policy URLs
+  static const String termsOfServiceUrl = 'https://docs.google.com/document/d/1nhCmp6nLyopVCkBC4fUhdMKl9fspMl1i/edit';
+
   static const List<String> avatars = [
     AssetImagePath.defaultAvatar1,
     AssetImagePath.defaultAvatar2,
