@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:isolate';
 
 import 'package:dio/dio.dart';
@@ -17,6 +18,20 @@ import 'package:aurapay/src/core/utils/dart_core_extension.dart';
 import 'home_page_event.dart';
 import 'home_page_state.dart';
 
+final class _BackgroundThreadParam {
+  final String type;
+  final Map<String, dynamic> message;
+
+  const _BackgroundThreadParam({required this.message, required this.type});
+}
+
+final class _BackgroundThreadResultData {
+  final String type;
+  final dynamic result;
+
+  const _BackgroundThreadResultData({required this.type, required this.result});
+}
+
 final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   final TokenMarketUseCase _tokenMarketUseCase;
   final BalanceUseCase _balanceUseCase;
@@ -30,9 +45,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     this._tokenMarketUseCase,
     this._balanceUseCase, {
     required this.config,
-  }) : super(
-          const HomePageState(),
-        ) {
+  }) : super(const HomePageState()) {
     _initMultiThread();
     on(_loadStorageData);
     on(_onUpdateTokenMarket);
@@ -42,188 +55,123 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on(_onRefreshTokenBalance);
   }
 
-  late Isolate _balanceIsolate;
-  SendPort? _balanceSendPort;
+  static const String fetchAccountBalance = 'fetch_account_balance';
+  static const String fetchAccountNft = 'fetch_account_nft';
+  static const String fetchTokenMarket = 'fetch_token_market';
 
-  late Isolate _tokenIsolate;
-  SendPort? _tokenSendPort;
+  bool _isTokenMarketMsg(String type) => type == fetchTokenMarket;
 
-  late Isolate _nftIsolate;
-  SendPort? _nftSendPort;
+  bool _isAccountNftMsg(String type) => type == fetchAccountNft;
 
-  late ReceivePort _mainTokenReceivePort;
-  late ReceivePort _mainBalanceReceivePort;
-  late ReceivePort _mainNFTReceivePort;
+  bool _isAccountBalanceMsg(String type) => type == fetchAccountBalance;
+
+  late Isolate _isolate;
+  late ReceivePort _mainReceivePort;
+  late SendPort? _mainSendPort;
+  StreamSubscription? _subscription;
 
   /// init multi thread
   void _initMultiThread() async {
-    _mainTokenReceivePort = ReceivePort();
-    _mainBalanceReceivePort = ReceivePort();
-    _mainNFTReceivePort = ReceivePort();
+    _mainReceivePort = ReceivePort();
 
-    _tokenIsolate = await Isolate.spawn(
-        _backgroundFetchTokenMarket, _mainTokenReceivePort.sendPort);
-
-    _balanceIsolate = await Isolate.spawn(
-        _backgroundFetchBalance, _mainBalanceReceivePort.sendPort);
-
-    _nftIsolate =
-        await Isolate.spawn(_backgroundFetchNFT, _mainNFTReceivePort.sendPort);
-
+    _isolate = await Isolate.spawn(_backgroundFetch, _mainReceivePort.sendPort);
     // Listen to the stream only once
-    _mainTokenReceivePort.listen(
-      (message) {
-        if (message is Map<String, dynamic>) {
-          if (message.containsKey('token_market_port')) {
-            // receive isolateSendPort from token thread
-            _tokenSendPort = message['token_market_port'] as SendPort;
+    _subscription = _mainReceivePort.listen((message) {
+      if (message is Map<String, dynamic>) {
+        if (message.containsKey('send_port')) {
+          // receive isolateSendPort from token thread
+          _mainSendPort = message['send_port'] as SendPort;
 
-            // Only first run
-            _sendMessageFetchTokenMarket();
-          } else if (message.containsKey('token_market')) {
-            add(
-              HomePageOnUpdateTokenMarketEvent(
-                tokenMarkets: message['token_market'],
-              ),
-            );
-          } else {
-            LogProvider.log('fetch market token error ${message['error']}');
-          }
+          add(const HomePageOnGetStorageDataEvent());
+
+          _sendMsgs([fetchTokenMarket]);
+        } else {
+          LogProvider.log('fetch market token error ${message['error']}');
         }
-      },
-    );
+      }
 
-    // Listen to the stream only once
-    _mainBalanceReceivePort.listen(
-      (message) {
-        if (message is Map<String, dynamic>) {
-          if (message.containsKey('balance_port')) {
-            _balanceSendPort = message['balance_port'] as SendPort;
-          } else if (message.containsKey('balanceMap')) {
-            add(
-              HomePageOnUpdateAccountBalanceEvent(
-                balanceMap: message['balanceMap'],
-              ),
-            );
-          } else {
-            LogProvider.log('fetch balance error ${message['error']}');
-          }
+      if(message is _BackgroundThreadResultData){
+        if(_isTokenMarketMsg(message.type)){
+          add(
+            HomePageOnUpdateTokenMarketEvent(
+              tokenMarkets: message.result,
+            ),
+          );
         }
-      },
-    );
 
-    // Listen to the stream only one
-    _mainNFTReceivePort.listen(
-      (message) {
-        if (message is Map<String, dynamic>) {
-          if (message.containsKey('nft_port')) {
-            _nftSendPort = message['nft_port'] as SendPort;
-
-            add(
-              const HomePageOnGetStorageDataEvent(),
-            );
-          } else if (message.containsKey('nftS')) {
-            add(
-              HomePageOnUpdateNFTsEvent(
-                nftS: message['nftS'],
-              ),
-            );
-          } else {
-            LogProvider.log('fetch nft error ${message['error']}');
-          }
+        if(_isAccountNftMsg(message.type)){
+          add(HomePageOnUpdateNFTsEvent(nftS: message.result));
         }
-      },
-    );
+
+        if(_isAccountBalanceMsg(message.type)){
+          add(
+            HomePageOnUpdateAccountBalanceEvent(
+              balanceMap: message.result,
+            ),
+          );
+        }
+      }
+    });
   }
 
-  static void _backgroundFetchTokenMarket(SendPort sendPort) async {
+  static void _backgroundFetch(SendPort sendPort) async {
     ReceivePort receivePort = ReceivePort();
 
-    sendPort.send({
-      'token_market_port': receivePort.sendPort,
-    });
+    sendPort.send({'send_port': receivePort.sendPort});
 
-    await for (final message in receivePort) {
-      if (message is Map<String, dynamic>) {
-        try {
-          final String urlV1 = message['base_url_v1'];
-          final Dio dio = dioFactory(urlV1);
+    Future<void> handleMsgs(List<_BackgroundThreadParam> params) async{
+      for(final param in params){
+        final type = param.type;
 
-          final Isar isar = await getIsar();
+        final Map<String,dynamic> message = param.message;
 
-          final TokenMarketUseCase tokenMarketUseCase = tokenMarketFactory(
-            dio,
-            isar,
-          );
+        try{
+          if(type == HomePageBloc.fetchTokenMarket){
+            final String urlV1 = message['base_url_v1'];
+            final Dio dio = dioFactory(urlV1);
 
-          _fetchTokenMarket(
-            tokenMarketUseCase,
-            sendPort,
-          );
-        } catch (error) {
-          // Send the error back to the main isolate
+            final Isar isar = await getIsar();
+
+            final TokenMarketUseCase tokenMarketUseCase = tokenMarketFactory(
+              dio,
+              isar,
+            );
+
+            await _fetchTokenMarket(tokenMarketUseCase, sendPort);
+
+            continue;
+          }
+
+          if(type == HomePageBloc.fetchAccountBalance){
+            final Isar isar = await getIsar();
+
+            final Dio dio = dioFactory(message['base_url_v2']);
+
+            final BalanceUseCase balanceUseCase = balanceFactory(isar, dio);
+
+            await _fetchBalance(balanceUseCase, sendPort, message);
+
+            continue;
+          }
+
+          if(type == HomePageBloc.fetchAccountNft){
+            final Dio dio = dioFactory(message['base_url_v2']);
+
+            final NftUseCase nftUseCase = nftUseCaseFactory(dio);
+
+            await _fetchNFT(nftUseCase, sendPort, message);
+
+            continue;
+          }
+        }catch(error){
           sendPort.send({'error': error.toString()});
         }
       }
     }
-  }
-
-  static void _backgroundFetchBalance(SendPort sendPort) async {
-    ReceivePort receivePort = ReceivePort();
-
-    sendPort.send({
-      'balance_port': receivePort.sendPort,
-    });
 
     await for (final message in receivePort) {
-      if (message is Map<String, dynamic>) {
-        try {
-          final Isar isar = await getIsar();
-
-          final Dio dio = dioFactory(
-            message['base_url_v2'],
-          );
-
-          final BalanceUseCase balanceUseCase = balanceFactory(isar, dio);
-
-          await _fetchBalance(
-            balanceUseCase,
-            sendPort,
-            message,
-          );
-        } catch (error) {
-          // Send the error back to the main isolate
-          sendPort.send({'error': error.toString()});
-        }
-      }
-    }
-  }
-
-  static void _backgroundFetchNFT(SendPort sendPort) async {
-    ReceivePort receivePort = ReceivePort();
-
-    sendPort.send({
-      'nft_port': receivePort.sendPort,
-    });
-
-    await for (final message in receivePort) {
-      if (message is Map<String, dynamic>) {
-        try {
-          final Dio dio = dioFactory(
-            message['base_url_v2'],
-          );
-
-          final NftUseCase nftUseCase = nftUseCaseFactory(dio);
-
-          await _fetchNFT(
-            nftUseCase,
-            sendPort,
-            message,
-          );
-        } catch (error) {
-          // Send the error back to the main isolate
-          sendPort.send({'error': error.toString()});
-        }
+      if (message is List<_BackgroundThreadParam>) {
+        await handleMsgs(message);
       }
     }
   }
@@ -235,9 +183,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     try {
       final tokenMarkets = await tokenMarketUseCase.getRemoteTokenMarket();
 
-      sendPort.send({
-        'token_market': tokenMarkets,
-      });
+      sendPort.send(_BackgroundThreadResultData(type: fetchTokenMarket, result: tokenMarkets));
 
       await tokenMarketUseCase.putAll(
         request: tokenMarkets
@@ -298,9 +244,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       result[TokenType.cw20] = cw20TokenBalances;
 
-      sendPort.send({
-        'balanceMap': result,
-      });
+      sendPort.send(_BackgroundThreadResultData(type: fetchAccountBalance, result: result));
     } catch (e) {
       // Send the error back to the main isolate
       sendPort.send({'error': e.toString()});
@@ -333,12 +277,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         ),
       );
 
-      sendPort.send({
-        'nftS': [
-          ...erc721s,
-          ...cw721s,
-        ],
-      });
+      sendPort.send(_BackgroundThreadResultData(type: fetchAccountNft, result: [...erc721s, ...cw721s]));
     } catch (e) {
       // Send the error back to the main isolate
       sendPort.send({'error': e.toString()});
@@ -354,24 +293,13 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       final activeAccount = await _accountUseCase.getFirstAccount();
 
-      emit(
-        state.copyWith(
-          activeAccount: activeAccount,
-          tokens: tokens,
-        ),
-      );
+      emit(state.copyWith(activeAccount: activeAccount, tokens: tokens));
 
-      _sendMessageFetchAccountBalance(activeAccount);
-
-      _sendMessageFetchNFTs(activeAccount);
+      _sendMsgs([fetchAccountBalance,fetchAccountNft], activeAccount: activeAccount);
 
       final tokenMarkets = await _tokenMarketUseCase.getAll();
 
-      emit(
-        state.copyWith(
-          tokenMarkets: tokenMarkets,
-        ),
-      );
+      emit(state.copyWith(tokenMarkets: tokenMarkets));
 
       final accountBalance = await _balanceUseCase.getByAccountID(
         accountId: activeAccount!.id,
@@ -394,11 +322,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     HomePageOnUpdateTokenMarketEvent event,
     Emitter<HomePageState> emit,
   ) {
-    emit(
-      state.copyWith(
-        tokenMarkets: event.tokenMarkets,
-      ),
-    );
+    emit(state.copyWith(tokenMarkets: event.tokenMarkets));
   }
 
   void _onUpdateAccountBalance(
@@ -415,21 +339,18 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         );
 
         token ??= await _tokenUseCase.add(
-            AddTokenRequest(
-              logo: AppLocalConstant.auraLogo,
-              tokenName: config.config.nativeCoin.name,
-              type: TokenType.native,
-              symbol: config.config.nativeCoin.symbol,
-              contractAddress: '',
-              isEnable: true,
-            ),
-          );
+          AddTokenRequest(
+            logo: AppLocalConstant.auraLogo,
+            tokenName: config.config.nativeCoin.name,
+            type: TokenType.native,
+            symbol: config.config.nativeCoin.symbol,
+            contractAddress: '',
+            isEnable: true,
+          ),
+        );
 
         requests.add(
-          AddBalanceRequest(
-            balance: nativeAmount,
-            tokenId: token.id,
-          ),
+          AddBalanceRequest(balance: nativeAmount, tokenId: token.id),
         );
       }
 
@@ -460,12 +381,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           );
         }
 
-        requests.add(
-          AddBalanceRequest(
-            balance: erc.amount,
-            tokenId: token.id,
-          ),
-        );
+        requests.add(AddBalanceRequest(balance: erc.amount, tokenId: token.id));
       }
 
       // Add cw 20 token
@@ -487,27 +403,21 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
               logo: tokenMarket?.image ?? AppLocalConstant.auraLogo,
               tokenName: tokenMarket?.name ?? cw.contract.name,
               type: TokenType.cw20,
-              symbol: tokenMarket?.symbol ?? cw.contract.symbol ,
+              symbol: tokenMarket?.symbol ?? cw.contract.symbol,
               contractAddress: cw.contract.smartContract.address,
               isEnable: true,
-              decimal: int.tryParse(cw.contract.decimal ?? '') ??
+              decimal:
+                  int.tryParse(cw.contract.decimal ?? '') ??
                   tokenMarket?.decimal,
             ),
           );
         }
 
-        requests.add(
-          AddBalanceRequest(
-            balance: cw.amount,
-            tokenId: token.id,
-          ),
-        );
+        requests.add(AddBalanceRequest(balance: cw.amount, tokenId: token.id));
       }
 
       if (state.accountBalance != null) {
-        await _balanceUseCase.delete(
-          state.accountBalance!.id,
-        );
+        await _balanceUseCase.delete(state.accountBalance!.id);
       }
 
       final accountBalance = await _balanceUseCase.add(
@@ -541,64 +451,79 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
     nftS.addAll(event.nftS);
 
-    nftS.sort(
-      (a, b) {
-        return a.lastUpdatedHeight - b.lastUpdatedHeight;
-      },
-    );
+    nftS.sort((a, b) {
+      return a.lastUpdatedHeight - b.lastUpdatedHeight;
+    });
 
     if (nftS.length >= 4) {
-      emit(
-        state.copyWith(
-          nftS: nftS.getRange(0, 3).toList(),
-        ),
-      );
+      emit(state.copyWith(nftS: nftS.getRange(0, 3).toList()));
     } else {
-      emit(
-        state.copyWith(
-          nftS: nftS,
-        ),
-      );
+      emit(state.copyWith(nftS: nftS));
     }
   }
 
-  void _onChangeEnableToken(HomePageOnUpdateEnableTotalTokenEvent event,
-      Emitter<HomePageState> emit) {
-    emit(state.copyWith(
-      enableToken: !state.enableToken,
-    ));
+  void _onChangeEnableToken(
+    HomePageOnUpdateEnableTotalTokenEvent event,
+    Emitter<HomePageState> emit,
+  ) {
+    emit(state.copyWith(enableToken: !state.enableToken));
   }
 
-  void _sendMessageFetchTokenMarket() {
-    _tokenSendPort?.send({
-      'base_url_v1': config.config.api.v1.url,
-    });
-  }
+  void _sendMsgs(List<String> msgs,{ Account? activeAccount}) {
+    final List<_BackgroundThreadParam> params = [];
 
-  void _sendMessageFetchAccountBalance(Account ?activeAccount) {
-    _balanceSendPort?.send({
-      'account': activeAccount ?? state.activeAccount!,
-      'base_url_v2': config.config.api.v2.url,
-      'environment': config.environment.environmentString,
-    });
-  }
+    for (final msg in msgs) {
+      if (_isTokenMarketMsg(msg)) {
+        params.add(
+          _BackgroundThreadParam(
+            message: {'base_url_v1': config.config.api.v1.url},
+            type: msg,
+          ),
+        );
+        continue;
+      }
 
-  void _sendMessageFetchNFTs(Account ?activeAccount) {
-    _nftSendPort?.send({
-      'account': activeAccount ?? state.activeAccount!,
-      'base_url_v2': config.config.api.v2.url,
-      'environment': config.environment.environmentString,
-    });
+      if (_isAccountBalanceMsg(msg)) {
+        params.add(
+          _BackgroundThreadParam(
+            message: {
+              'account': activeAccount ?? state.activeAccount!,
+              'base_url_v2': config.config.api.v2.url,
+              'environment': config.environment.environmentString,
+            },
+            type: msg,
+          ),
+        );
+        continue;
+      }
+
+      if (_isAccountNftMsg(msg)) {
+        params.add(
+          _BackgroundThreadParam(
+            message: {
+              'account': activeAccount ?? state.activeAccount!,
+              'base_url_v2': config.config.api.v2.url,
+              'environment': config.environment.environmentString,
+            },
+            type: msg,
+          ),
+        );
+        continue;
+      }
+    }
+
+    if(params.isNotEmpty){
+      _mainSendPort?.send(params);
+    }
   }
 
   @override
   Future<void> close() {
-    _mainTokenReceivePort.close();
-    _mainBalanceReceivePort.close();
-    _mainNFTReceivePort.close();
-    _tokenIsolate.kill();
-    _balanceIsolate.kill();
-    _nftIsolate.kill();
+    _subscription?.cancel();
+    _subscription = null;
+    _mainSendPort = null;
+    _mainReceivePort.close();
+    _isolate.kill();
     return super.close();
   }
 
@@ -621,11 +546,13 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       );
 
       // Parse the amount of the token balance using a custom decimal format if provided.
-      final amount = double.tryParse(
+      final amount =
+          double.tryParse(
             token?.type.formatBalance(
-              balance.balance,
-              customDecimal: token.decimal,
-            ) ?? '',
+                  balance.balance,
+                  customDecimal: token.decimal,
+                ) ??
+                '',
           ) ??
           0;
 
@@ -634,7 +561,8 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           double.tryParse(tokenMarket?.currentPrice ?? '0') ?? 0;
 
       // Calculate the price of the token yesterday.
-      double priceYesterday = currentPrice /
+      double priceYesterday =
+          currentPrice /
           (1 + (tokenMarket?.priceChangePercentage24h ?? 0) / 100);
 
       // If the amount or priceYesterday is not zero, add to the total value of yesterday.
@@ -649,10 +577,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
 
     // Return a list with total balance for today and total value for yesterday.
-    return [
-      totalBalance,
-      totalValueYesterday,
-    ];
+    return [totalBalance, totalValueYesterday];
   }
 
   void _onRefreshTokenBalance(
