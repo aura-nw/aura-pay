@@ -85,22 +85,30 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           add(const HomePageOnGetStorageDataEvent());
 
           _sendMsgs([fetchTokenMarket]);
-        } else if (message.containsKey('token_market')) {
-          add(
-            HomePageOnUpdateTokenMarketEvent(
-              tokenMarkets: message['token_market'],
-            ),
-          );
-        } else if (message.containsKey('balanceMap')) {
-          add(
-            HomePageOnUpdateAccountBalanceEvent(
-              balanceMap: message['balanceMap'],
-            ),
-          );
-        } else if (message.containsKey('nftS')) {
-          add(HomePageOnUpdateNFTsEvent(nftS: message['nftS']));
         } else {
           LogProvider.log('fetch market token error ${message['error']}');
+        }
+      }
+
+      if(message is _BackgroundThreadResultData){
+        if(_isTokenMarketMsg(message.type)){
+          add(
+            HomePageOnUpdateTokenMarketEvent(
+              tokenMarkets: message.result,
+            ),
+          );
+        }
+
+        if(_isAccountNftMsg(message.type)){
+          add(HomePageOnUpdateNFTsEvent(nftS: message.result));
+        }
+
+        if(_isAccountBalanceMsg(message.type)){
+          add(
+            HomePageOnUpdateAccountBalanceEvent(
+              balanceMap: message.result,
+            ),
+          );
         }
       }
     });
@@ -175,7 +183,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     try {
       final tokenMarkets = await tokenMarketUseCase.getRemoteTokenMarket();
 
-      sendPort.send({'token_market': tokenMarkets});
+      sendPort.send(_BackgroundThreadResultData(type: fetchTokenMarket, result: tokenMarkets));
 
       await tokenMarketUseCase.putAll(
         request: tokenMarkets
@@ -236,7 +244,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       result[TokenType.cw20] = cw20TokenBalances;
 
-      sendPort.send({'balanceMap': result});
+      sendPort.send(_BackgroundThreadResultData(type: fetchAccountBalance, result: result));
     } catch (e) {
       // Send the error back to the main isolate
       sendPort.send({'error': e.toString()});
@@ -269,9 +277,7 @@ final class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         ),
       );
 
-      sendPort.send({
-        'nftS': [...erc721s, ...cw721s],
-      });
+      sendPort.send(_BackgroundThreadResultData(type: fetchAccountNft, result: [...erc721s, ...cw721s]));
     } catch (e) {
       // Send the error back to the main isolate
       sendPort.send({'error': e.toString()});
