@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
 import 'package:aurapay/src/application/global/localization/localization_manager.dart';
 import 'package:aurapay/src/core/constants/asset_path.dart';
@@ -9,6 +10,13 @@ import 'package:aurapay/src/core/constants/typography.dart';
 import 'package:aurapay/src/presentation/screens/get_started/widgets/box_icon.dart';
 import 'package:aurapay/src/presentation/widgets/app_button.dart';
 
+/// Action buttons widget for Get Started screen.
+///
+/// Displays:
+/// - Create new wallet button
+/// - Import existing wallet button
+/// - Social login options (Google, Twitter, Apple)
+/// - Terms of Service link
 class GetStartedButtonFormWidget extends StatelessWidget {
   final AppLocalizationManager localization;
   final AppTheme appTheme;
@@ -35,35 +43,30 @@ class GetStartedButtonFormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // Primary action - Create new wallet
         PrimaryAppButton(
-          text: localization.translate(
-            LanguageKey.getStartedScreenCreateNewWallet,
-          ),
+          text: localization.translate(LanguageKey.getStartedScreenCreateNewWallet),
           onPress: onCreateNewWallet,
         ),
-        const SizedBox(
-          height: BoxSize.boxSize05,
-        ),
+        const SizedBox(height: BoxSize.boxSize05),
+        
+        // Secondary action - Import existing wallet
         BorderAppButton(
-          text: localization.translate(
-            LanguageKey.getStartedScreenAddWallet,
-          ),
+          text: localization.translate(LanguageKey.getStartedScreenAddWallet),
           onPress: onImportExistingWallet,
         ),
-        const SizedBox(
-          height: BoxSize.boxSize07,
-        ),
+        const SizedBox(height: BoxSize.boxSize07),
+        
+        // Social login section
         Text(
-          localization.translate(
-            LanguageKey.getStartedScreenOrContinueWith,
-          ),
+          localization.translate(LanguageKey.getStartedScreenOrContinueWith),
           style: AppTypoGraPhy.textXsRegular.copyWith(
             color: appTheme.textTertiary,
           ),
         ),
-        const SizedBox(
-          height: BoxSize.boxSize05,
-        ),
+        const SizedBox(height: BoxSize.boxSize05),
+        
+        // Social login provider icons
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -72,17 +75,13 @@ class GetStartedButtonFormWidget extends StatelessWidget {
               icPath: AssetIconPath.icCommonGoogle,
               appTheme: appTheme,
             ),
-            const SizedBox(
-              width: BoxSize.boxSize04,
-            ),
+            const SizedBox(width: BoxSize.boxSize04),
             GetStartedBoxIconWidget(
               onTap: onTwitterTap,
               icPath: AssetIconPath.icCommonTwitter,
               appTheme: appTheme,
             ),
-            const SizedBox(
-              width: BoxSize.boxSize04,
-            ),
+            const SizedBox(width: BoxSize.boxSize04),
             GetStartedBoxIconWidget(
               onTap: onAppleTap,
               icPath: AssetIconPath.icCommonApple,
@@ -90,9 +89,9 @@ class GetStartedButtonFormWidget extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(
-          height: BoxSize.boxSize07,
-        ),
+        const SizedBox(height: BoxSize.boxSize07),
+        
+        // Terms of Service text
         RichText(
           text: TextSpan(
             style: AppTypoGraPhy.textXsRegular.copyWith(
@@ -105,13 +104,14 @@ class GetStartedButtonFormWidget extends StatelessWidget {
                 )} ',
               ),
               TextSpan(
-                  text: localization.translate(
-                    LanguageKey.getStartedScreenTermRegionTwo,
-                  ),
-                  style: AppTypoGraPhy.textXsRegular.copyWith(
-                    color: appTheme.textBrandPrimary,
-                  ),
-                  recognizer: TapGestureRecognizer()..onTap = onTermClick),
+                text: localization.translate(
+                  LanguageKey.getStartedScreenTermRegionTwo,
+                ),
+                style: AppTypoGraPhy.textXsRegular.copyWith(
+                  color: appTheme.textBrandPrimary,
+                ),
+                recognizer: TapGestureRecognizer()..onTap = onTermClick,
+              ),
             ],
           ),
         ),
@@ -119,3 +119,4 @@ class GetStartedButtonFormWidget extends StatelessWidget {
     );
   }
 }
+

@@ -1,7 +1,10 @@
+import 'dart:ui' as ui;
+
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:aurapay/app_configs/di.dart';
 import 'package:aurapay/app_configs/aura_pay_config.dart';
 import 'package:aurapay/src/application/global/app_global_state/app_global_cubit.dart';
@@ -12,9 +15,11 @@ import 'package:aurapay/src/application/global/localization/localization_manager
 import 'package:aurapay/src/core/constants/size_constant.dart';
 import 'package:aurapay/src/core/constants/typography.dart';
 import 'package:aurapay/src/navigator.dart';
-import 'dart:ui' as ui;
 
-// Define the AuraPayApplication widget
+/// Root widget of the AuraPay application.
+///
+/// Sets up the MaterialApp with theming, localization, navigation,
+/// and global state management using BLoC pattern.
 final class AuraPayApplication extends StatefulWidget {
   const AuraPayApplication({super.key});
 
@@ -29,6 +34,7 @@ class _AuraPayApplicationState extends State<AuraPayApplication>
   @override
   void initState() {
     super.initState();
+    // Observe app lifecycle changes (paused, resumed, etc.)
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -37,61 +43,70 @@ class _AuraPayApplicationState extends State<AuraPayApplication>
     super.didChangeAppLifecycleState(state);
 
     // Handle different app lifecycle states
+    // Currently using switch for future extensibility
     switch (state) {
-      case AppLifecycleState.inactive:
-        // Handle inactive state
-        break;
       case AppLifecycleState.resumed:
-        // Handle resumed state
+        // App is visible and responding to user input
+        // TODO: Refresh data or resume operations if needed
         break;
-      case AppLifecycleState.detached:
-        // Handle detached state
+      case AppLifecycleState.inactive:
+        // App is inactive (e.g., phone call, system dialog)
         break;
       case AppLifecycleState.paused:
-        // Handle paused state
+        // App is not visible to user (background)
+        // TODO: Pause operations, save state if needed
+        break;
+      case AppLifecycleState.detached:
+        // App is still in memory but not visible
         break;
       case AppLifecycleState.hidden:
-        // Handle hidden state
+        // App is hidden from user
         break;
     }
   }
 
   @override
   void dispose() {
+    // Remove lifecycle observer to prevent memory leaks
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Lấy ngôn ngữ hiện tại của thiết bị (ngôn ngữ hệ thống)
-    Locale systemLocale = ui.PlatformDispatcher.instance.locale;
-    AppLocalizationManager.instance
-        .updateDeviceLocale(systemLocale.languageCode);
+    // Get device's system locale and update localization manager
+    final systemLocale = ui.PlatformDispatcher.instance.locale;
+    AppLocalizationManager.instance.updateDeviceLocale(systemLocale.languageCode);
     LogProvider.log('AuraPayApplication systemLocale: $systemLocale');
+    
     return GestureDetector(
+      // Dismiss keyboard when tapping outside of text fields
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        if (WidgetsBinding.instance.focusManager.primaryFocus?.hasFocus ??
-            false) {
-          WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+        final currentFocus = WidgetsBinding.instance.focusManager.primaryFocus;
+        if (currentFocus?.hasFocus ?? false) {
+          currentFocus?.unfocus();
         }
       },
       child: MaterialApp(
         navigatorKey: AppNavigator.navigatorKey,
+        title: _config.config.appName,
+        debugShowCheckedModeBanner: false,
+        
+        // Theme configuration
         theme: ThemeData(
           useMaterial3: true,
           fontFamily: AppTypoGraPhy.mulish,
           tabBarTheme: const TabBarThemeData(
-            labelPadding: EdgeInsets.only(
-              right: Spacing.spacing05,
-            ),
-          )
+            labelPadding: EdgeInsets.only(right: Spacing.spacing05),
+          ),
         ),
+        
+        // Navigation configuration
         onGenerateRoute: AppNavigator.onGenerateRoute,
         initialRoute: RoutePath.splash,
-        debugShowCheckedModeBanner: false,
-        title: _config.config.appName,
+        
+        // Localization configuration
         locale: AppLocalizationManager.instance.getAppLocale(),
         localizationsDelegates: const [
           AppTranslationsDelegate(),
@@ -100,41 +115,36 @@ class _AuraPayApplicationState extends State<AuraPayApplication>
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: AppLocalizationManager.instance.supportedLang
-            .map(
-              (e) => Locale(e),
-            )
+            .map((lang) => Locale(lang))
             .toList(),
+        
+        // App-wide state management and listeners
         builder: (_, child) {
           return MultiBlocProvider(
+            // Provide global BLoCs
             providers: [
-              BlocProvider(
-                create: (__) => AppThemeCubit(),
-              ),
-              BlocProvider(
-                create: (_) => AppGlobalCubit(),
-              ),
+              BlocProvider(create: (_) => AppThemeCubit()),
+              BlocProvider(create: (_) => AppGlobalCubit()),
             ],
             child: Builder(
-              builder: (builderContext) {
+              builder: (context) {
                 return MultiBlocListener(
+                  // Listen to global state changes
                   listeners: [
                     BlocListener<AppGlobalCubit, AppGlobalState>(
+                      // Only listen when authentication status changes
                       listenWhen: (previous, current) =>
                           current.status != previous.status,
                       listener: (context, state) {
-                        // Listen to changes in AppGlobalState status
+                        // Navigate based on authentication status
                         switch (state.status) {
                           case AppGlobalStatus.authorized:
-                            // If the user is authorized, navigate to the home screen
-                            AppNavigator.replaceAllWith(
-                              RoutePath.home,
-                            );
+                            // User is authenticated, go to home
+                            AppNavigator.replaceAllWith(RoutePath.home);
                             break;
                           case AppGlobalStatus.unauthorized:
-                            // If the user is unauthorized, navigate to the get started screen
-                            AppNavigator.replaceAllWith(
-                              RoutePath.getStarted,
-                            );
+                            // User is not authenticated, go to onboarding
+                            AppNavigator.replaceAllWith(RoutePath.getStarted);
                             break;
                         }
                       },
@@ -143,9 +153,7 @@ class _AuraPayApplicationState extends State<AuraPayApplication>
                   child: Overlay(
                     initialEntries: [
                       OverlayEntry(
-                        builder: (context) {
-                          return child ?? const SizedBox.shrink();
-                        },
+                        builder: (context) => child ?? const SizedBox.shrink(),
                       ),
                     ],
                   ),
@@ -158,3 +166,4 @@ class _AuraPayApplicationState extends State<AuraPayApplication>
     );
   }
 }
+
