@@ -13,20 +13,13 @@ import 'package:aurapay/src/application/provider/local/balance/balance_db.dart';
 import 'package:aurapay/src/application/provider/local/key_store/key_store_db.dart';
 import 'package:aurapay/src/application/provider/local/token/token_db.dart';
 import 'package:aurapay/src/application/provider/local/token_market/token_market_db.dart';
+import 'package:aurapay/src/application/provider/provider/log_provider_impl.dart';
 import 'package:aurapay/src/core/constants/app_local_constant.dart';
 import 'package:aurapay/src/core/constants/asset_path.dart';
 import 'package:aurapay/src/core/constants/aura_scan.dart';
 import 'package:aurapay/src/aura_pay_application.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'package:path_provider/path_provider.dart';
-import 'dart:developer' as developer;
-
-class LogProviderImpl implements LogProvider {
-  @override
-  void printLog(String message) {
-    developer.log(message, name: 'aurapay');
-  }
-}
 
 Future<Map<String, dynamic>> _loadConfig() async {
   // Get environment từ EnvironmentConfig
