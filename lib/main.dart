@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
 import 'package:aurapay/app_configs/di.dart' as di;
 import 'package:aurapay/app_configs/aura_pay_config.dart';
+import 'package:aurapay/app_configs/config_loader.dart';
 import 'package:aurapay/app_configs/environment_config.dart';
 import 'package:aurapay/src/application/global/localization/localization_manager.dart';
 import 'package:aurapay/src/application/provider/local/account/account_db.dart';
@@ -15,41 +13,10 @@ import 'package:aurapay/src/application/provider/local/token/token_db.dart';
 import 'package:aurapay/src/application/provider/local/token_market/token_market_db.dart';
 import 'package:aurapay/src/application/provider/provider/log_provider_impl.dart';
 import 'package:aurapay/src/core/constants/app_local_constant.dart';
-import 'package:aurapay/src/core/constants/asset_path.dart';
 import 'package:aurapay/src/core/constants/aura_scan.dart';
 import 'package:aurapay/src/aura_pay_application.dart';
 import 'package:wallet_core/wallet_core.dart';
 import 'package:path_provider/path_provider.dart';
-
-Future<Map<String, dynamic>> _loadConfig() async {
-  // Get environment từ EnvironmentConfig
-  final environment = EnvironmentConfig.environment;
-  
-  String loader;
-  String path;
-
-  switch (environment) {
-    case AuraPayEnvironment.serenity:
-      path = AssetConfigPath.configDev;
-      break;
-    case AuraPayEnvironment.staging:
-      path = AssetConfigPath.configStaging;
-      break;
-    case AuraPayEnvironment.production:
-      path = AssetConfigPath.config;
-      break;
-  }
-  try {
-    loader = await rootBundle.loadString(
-      path,
-    );
-  } catch (e) {
-    loader = '';
-    LogProvider.log('can\'t load config ${e.toString()}');
-  }
-
-  return jsonDecode(loader);
-}
 
 Future<void> _saveAuraToken(String name, String symbol) async {
   final TokenUseCase tokenUseCase = di.getIt.get<TokenUseCase>();
@@ -86,7 +53,7 @@ void main() async {
 
   AuraScan.init(environment);
 
-  final Map<String, dynamic> config = await _loadConfig();
+  final Map<String, dynamic> config = await ConfigLoader.loadConfig(environment);
 
   // Get the path to the application documents directory
   final path = (await getApplicationDocumentsDirectory()).path;
