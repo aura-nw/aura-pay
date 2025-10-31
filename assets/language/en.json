@@ -163,5 +163,10 @@
   "add_custom_token_screen_decimal" : "Decimals",
   "add_custom_token_screen_decimal_hint" : "Enter a number",
   "add_custom_token_screen_add_to_list" : "Add to list",
-  "add_custom_token_screen_contract_invalid" : "Unable to validate this token"
+  "add_custom_token_screen_contract_invalid" : "Unable to validate this token",
+
+  "history_page_title" : "History",
+  "history_page_search_hint" : "Search transaction,...",
+  "history_page_all_transactions" : "All transactions",
+  "history_page_no_transactions" : "No transactions found"
 }
