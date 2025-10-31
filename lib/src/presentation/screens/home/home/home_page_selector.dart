@@ -5,6 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home_page_bloc.dart';
 import 'home_page_state.dart';
 
+/// BLoC selectors for the home page to optimize widget rebuilds.
+///
+/// Each selector listens to specific state properties and only rebuilds
+/// when that property changes.
+
+/// Selects the active account from home page state.
 final class HomePageActiveAccountSelector
     extends BlocSelector<HomePageBloc, HomePageState, Account?> {
   HomePageActiveAccountSelector({
@@ -16,6 +22,7 @@ final class HomePageActiveAccountSelector
         );
 }
 
+/// Selects the account balance from home page state.
 final class HomePageAccountBalanceSelector
     extends BlocSelector<HomePageBloc, HomePageState, AccountBalance?> {
   HomePageAccountBalanceSelector({
@@ -27,6 +34,7 @@ final class HomePageAccountBalanceSelector
         );
 }
 
+/// Selects token market data (prices, changes) from home page state.
 final class HomePageTokenMarketsSelector
     extends BlocSelector<HomePageBloc, HomePageState, List<TokenMarket>> {
   HomePageTokenMarketsSelector({
@@ -38,6 +46,7 @@ final class HomePageTokenMarketsSelector
         );
 }
 
+/// Selects NFT collection from home page state.
 final class HomePageNFTsSelector
     extends BlocSelector<HomePageBloc, HomePageState, List<NFTInformation>> {
   HomePageNFTsSelector({
@@ -49,6 +58,7 @@ final class HomePageNFTsSelector
         );
 }
 
+/// Selects whether token value display is enabled.
 final class HomePageEnableTokenSelector
     extends BlocSelector<HomePageBloc, HomePageState, bool> {
   HomePageEnableTokenSelector({
@@ -60,6 +70,7 @@ final class HomePageEnableTokenSelector
         );
 }
 
+/// Selects total token value from home page state.
 final class HomePageTotalTokenValueSelector
     extends BlocSelector<HomePageBloc, HomePageState, double> {
   HomePageTotalTokenValueSelector({
@@ -71,6 +82,7 @@ final class HomePageTotalTokenValueSelector
         );
 }
 
+/// Selects total portfolio value (tokens + NFTs) from home page state.
 final class HomePageTotalValueSelector
     extends BlocSelector<HomePageBloc, HomePageState, double> {
   HomePageTotalValueSelector({
@@ -82,6 +94,7 @@ final class HomePageTotalValueSelector
         );
 }
 
+/// Selects yesterday's total value for comparison.
 final class HomePageTotalValueYesterdaySelector
     extends BlocSelector<HomePageBloc, HomePageState, double> {
   HomePageTotalValueYesterdaySelector({
@@ -93,6 +106,7 @@ final class HomePageTotalValueYesterdaySelector
         );
 }
 
+/// Selects the list of tokens from home page state.
 final class HomePageTokensSelector
     extends BlocSelector<HomePageBloc, HomePageState, List<Token>> {
   HomePageTokensSelector({
@@ -103,3 +117,4 @@ final class HomePageTokensSelector
           builder: (context, tokens) => builder(tokens),
         );
 }
+

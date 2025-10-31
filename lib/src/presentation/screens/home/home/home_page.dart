@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:aurapay/app_configs/di.dart';
 import 'package:aurapay/app_configs/aura_pay_config.dart';
 import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
@@ -10,24 +11,35 @@ import 'package:aurapay/src/core/observer/home_page_observer.dart';
 import 'package:aurapay/src/core/utils/aura_util.dart';
 import 'package:aurapay/src/core/utils/context_extension.dart';
 import 'package:aurapay/src/navigator.dart';
-import 'home_page_selector.dart';
-import 'widgets/app_bar.dart';
-import 'widgets/nft.dart';
-import 'home_page_event.dart';
-import 'widgets/action.dart';
-import 'widgets/story.dart';
-import 'widgets/tab.dart';
-import 'widgets/token.dart';
-import 'widgets/wallet.dart';
 import 'package:aurapay/src/presentation/widgets/app_bar_widget.dart';
 import 'package:aurapay/src/presentation/widgets/base_screen.dart';
 
 import 'home_page_bloc.dart';
+import 'home_page_event.dart';
+import 'home_page_selector.dart';
+import 'widgets/action.dart';
+import 'widgets/app_bar.dart';
+import 'widgets/nft.dart';
+import 'widgets/story.dart';
+import 'widgets/tab.dart';
+import 'widgets/token.dart';
+import 'widgets/wallet.dart';
 
+/// Home page displaying wallet overview, tokens, NFTs, and portfolio value.
+///
+/// Features:
+/// - Animated wallet card that scales and fades on scroll
+/// - Token and NFT tabs
+/// - Quick actions (Send, Receive, Swap, etc.)
+/// - Story/promotional cards
+/// - Real-time balance and market data
 class HomePage extends StatefulWidget {
   final void Function(
-          Account, List<AppNetwork>, AppTheme, AppLocalizationManager)
-      onReceivedTap;
+    Account,
+    List<AppNetwork>,
+    AppTheme,
+    AppLocalizationManager,
+  ) onReceivedTap;
 
   const HomePage({
     required this.onReceivedTap,
@@ -40,29 +52,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with StateFulBaseScreen, SingleTickerProviderStateMixin {
-
+  // Dependencies
   final List<AppNetwork> _networks = getIt.get<List<AppNetwork>>();
-
   final HomePageObserver _homePageObserver = getIt.get<HomePageObserver>();
-
+  final AuraPayConfig _config = getIt.get<AuraPayConfig>();
   late HomePageBloc _bloc;
 
   final String avatarAsset = randomAvatar();
 
-  /// Region declare controller
-  final AuraPayConfig _config = getIt.get<AuraPayConfig>();
+  // Controllers
   late TabController _controller;
   late PageController _pageController;
-
   late ScrollController _scrollController;
 
-  /// Endregion
-
-  ///Region init animation card
-  final Duration _animatedDuration = const Duration(
-    milliseconds: 300,
-  );
-
+  // Animation properties
+  final Duration _animatedDuration = const Duration(milliseconds: 300);
+  
   final GlobalKey _walletActionKey = GlobalKey();
   double _walletActionOffset = 0;
 
@@ -78,87 +83,97 @@ class _HomePageState extends State<HomePage>
   bool _showWalletCard = false;
   bool _showActions = false;
 
-  ///endregion
-
+  /// Creates and configures the scroll controller with listener.
   void _createScrollController() {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
   }
 
+  /// Disposes the scroll controller and removes listeners.
   void _disposeController() {
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
   }
 
+  /// Handles scroll events to trigger card animations.
   void _scrollListener() {
     _scrollPosition = _scrollController.offset;
 
-    setState(
-      () {
-        _detectScrollOverWalletCard();
-        _detectScrollOverAction();
-      },
-    );
+    setState(() {
+      _detectScrollOverWalletCard();
+      _detectScrollOverAction();
+    });
   }
 
+  /// Detects if user has scrolled past the action buttons.
+  ///
+  /// Shows actions in app bar when scrolled past their position.
   void _detectScrollOverAction() {
+    // Calculate action offset on first scroll
     if (_walletActionOffset == 0) {
-      final RenderBox? renderBox =
+      final renderBox =
           _walletActionKey.currentContext?.findRenderObject() as RenderBox?;
       if (renderBox != null) {
-        Offset position = renderBox.localToGlobal(Offset.zero);
+        final position = renderBox.localToGlobal(Offset.zero);
         _walletActionOffset =
             position.dy + 0.5 * renderBox.size.height - kToolbarHeight;
       }
     }
 
-    if (_scrollPosition + kToolbarHeight + paddingTop >= _walletActionOffset) {
-      _showActions = true;
-    } else {
-      _showActions = false;
-    }
+    // Toggle action visibility based on scroll position
+    _showActions =
+        _scrollPosition + kToolbarHeight + paddingTop >= _walletActionOffset;
   }
 
+  /// Detects scroll position relative to wallet card for animations.
+  ///
+  /// Scales and fades the wallet card as user scrolls, and shows
+  /// a compact version in the app bar when scrolled past.
   void _detectScrollOverWalletCard() {
+    // Calculate wallet card offset on first scroll
     if (_walletCardOffset == 0) {
-      final RenderBox? renderBox =
+      final renderBox =
           _walletCardKey.currentContext?.findRenderObject() as RenderBox?;
       if (renderBox != null) {
-        Offset position = renderBox.localToGlobal(Offset.zero);
+        final position = renderBox.localToGlobal(Offset.zero);
         _walletCardOffset =
             position.dy + 0.85 * renderBox.size.height - kToolbarHeight;
       }
     }
 
+    // Calculate scale and opacity based on scroll position
     if (_scrollPosition < _walletCardOffset) {
       _walletCardScale = 1 - (_scrollPosition / _walletCardOffset);
-
       _walletCardOpacity = 1 - (_scrollPosition / _walletCardOffset);
     }
 
+    // Clamp values to valid range
     _walletCardScale = _walletCardScale.clamp(0.0, 1.0);
-
     _walletCardOpacity = _walletCardOpacity.clamp(0.0, 1.0);
 
-    if (_scrollPosition + kToolbarHeight + paddingTop >= _walletCardOffset) {
-      _showWalletCard = true;
-    } else {
-      _showWalletCard = false;
-    }
+    // Toggle wallet card visibility in app bar
+    _showWalletCard =
+        _scrollPosition + kToolbarHeight + paddingTop >= _walletCardOffset;
   }
 
   @override
   void initState() {
-    _bloc = getIt.get<HomePageBloc>(
-      param1: _config,
-    );
+    super.initState();
+    
+    // Initialize BLoC with configuration
+    _bloc = getIt.get<HomePageBloc>(param1: _config);
+    
+    // Setup tab controller for Token/NFT tabs
     _controller = TabController(length: 2, vsync: this);
-
+    
+    // Setup page controller
     _pageController = PageController();
+    
+    // Setup scroll controller with listener
     _createScrollController();
 
+    // Listen to home page events (e.g., send token completed)
     _homePageObserver.addListener(_homePageListener);
-    super.initState();
   }
 
   @override
@@ -171,22 +186,22 @@ class _HomePageState extends State<HomePage>
 
   @override
   void didChangeDependencies() {
-    paddingTop = context.statusBar;
     super.didChangeDependencies();
+    paddingTop = context.statusBar;
   }
 
-  void _homePageListener(HomePageEmitParam param){
-    final String event = param.event;
-    final data = param.data;
+  /// Handles home page events from observer.
+  void _homePageListener(HomePageEmitParam param) {
+    final event = param.event;
+    // final data = param.data; // Reserved for future use
 
-    switch(event){
+    switch (event) {
       case HomePageObserver.onSendTokenDone:
-        // Refresh balance home page
+        // TODO: Refresh balance after token send
         break;
       default:
         break;
     }
-
   }
 
   @override
