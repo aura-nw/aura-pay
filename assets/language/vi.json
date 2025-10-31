@@ -167,5 +167,16 @@
   "history_page_title" : "Lịch sử",
   "history_page_search_hint" : "Tìm kiếm giao dịch,...",
   "history_page_all_transactions" : "Tất cả giao dịch",
-  "history_page_no_transactions" : "Không tìm thấy giao dịch"
+  "history_page_no_transactions" : "Không tìm thấy giao dịch",
+  "history_page_error_occurred" : "Đã xảy ra lỗi",
+
+  "transaction_type_send" : "Gửi",
+  "transaction_type_receive" : "Nhận",
+  "transaction_type_call_contract" : "Gọi hợp đồng",
+  "transaction_type_stake" : "Stake",
+  "transaction_type_swap" : "Hoán đổi",
+
+  "transaction_status_pending" : "Đang xử lý",
+  "transaction_status_success" : "Thành công",
+  "transaction_status_failed" : "Thất bại"
 }

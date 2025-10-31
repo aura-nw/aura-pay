@@ -33,6 +33,34 @@ class TransactionHistoryModel {
     this.hash,
   });
 
+  // For display with localization
+  String getTypeDisplayName(String Function(String) translate) {
+    switch (type) {
+      case TransactionType.send:
+        return translate('transaction_type_send');
+      case TransactionType.receive:
+        return translate('transaction_type_receive');
+      case TransactionType.callContract:
+        return translate('transaction_type_call_contract');
+      case TransactionType.stake:
+        return translate('transaction_type_stake');
+      case TransactionType.swap:
+        return translate('transaction_type_swap');
+    }
+  }
+
+  String getStatusDisplayName(String Function(String) translate) {
+    switch (status) {
+      case TransactionStatus.pending:
+        return translate('transaction_status_pending');
+      case TransactionStatus.success:
+        return translate('transaction_status_success');
+      case TransactionStatus.failed:
+        return translate('transaction_status_failed');
+    }
+  }
+
+  // For internal search purposes (English only)
   String get typeDisplayName {
     switch (type) {
       case TransactionType.send:

@@ -138,7 +138,7 @@ class _HistoryPageState extends State<HistoryPage> with StateFulBaseScreen {
     if (state.status == HistoryStatus.error) {
       return Center(
         child: Text(
-          state.errorMessage ?? 'An error occurred',
+          state.errorMessage ?? localization.translate('history_page_error_occurred'),
           style: AppTypoGraPhy.textMdRegular.copyWith(
             color: appTheme.textErrorPrimary,
           ),
@@ -198,7 +198,7 @@ class _HistoryPageState extends State<HistoryPage> with StateFulBaseScreen {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    transaction.typeDisplayName,
+                    transaction.getTypeDisplayName(localization.translate),
                     style: AppTypoGraPhy.textMdSemiBold.copyWith(
                       color: appTheme.textPrimary,
                     ),
@@ -224,7 +224,7 @@ class _HistoryPageState extends State<HistoryPage> with StateFulBaseScreen {
                 ),
                 const SizedBox(height: Spacing.spacing01),
                 Text(
-                  transaction.statusDisplayName,
+                  transaction.getStatusDisplayName(localization.translate),
                   style: AppTypoGraPhy.textSmRegular.copyWith(
                     color: _getStatusColor(transaction.status, appTheme),
                   ),

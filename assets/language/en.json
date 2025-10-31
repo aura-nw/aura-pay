@@ -168,5 +168,16 @@
   "history_page_title" : "History",
   "history_page_search_hint" : "Search transaction,...",
   "history_page_all_transactions" : "All transactions",
-  "history_page_no_transactions" : "No transactions found"
+  "history_page_no_transactions" : "No transactions found",
+  "history_page_error_occurred" : "An error occurred",
+
+  "transaction_type_send" : "Send",
+  "transaction_type_receive" : "Receive",
+  "transaction_type_call_contract" : "Call contract",
+  "transaction_type_stake" : "Stake",
+  "transaction_type_swap" : "Swap",
+
+  "transaction_status_pending" : "Pending",
+  "transaction_status_success" : "Success",
+  "transaction_status_failed" : "Failed"
 }
