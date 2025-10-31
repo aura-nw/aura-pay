@@ -51,7 +51,7 @@ class _HistoryPageState extends State<HistoryPage> with StateFulBaseScreen {
 
             // Section title
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Spacing.spacing05),
+              padding: const EdgeInsets.symmetric(horizontal: Spacing.spacing0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -77,9 +77,9 @@ class _HistoryPageState extends State<HistoryPage> with StateFulBaseScreen {
   Widget _buildSearchBar(
       AppTheme appTheme, AppLocalizationManager localization) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Spacing.spacing05),
+      padding: const EdgeInsets.symmetric(horizontal: Spacing.spacing0),
       child: Container(
-        height: 48,
+        height: 40,
         decoration: BoxDecoration(
           color: appTheme.bgSecondary,
           borderRadius: BorderRadius.circular(BorderRadiusSize.borderRadius03),
@@ -89,6 +89,7 @@ class _HistoryPageState extends State<HistoryPage> with StateFulBaseScreen {
           style: AppTypoGraPhy.textMdRegular.copyWith(
             color: appTheme.textPrimary,
           ),
+          textAlignVertical: TextAlignVertical.center,
           onChanged: (value) {
             _bloc.add(HistoryOnSearchEvent(value));
           },
@@ -98,11 +99,11 @@ class _HistoryPageState extends State<HistoryPage> with StateFulBaseScreen {
               color: appTheme.textPlaceholder,
             ),
             prefixIcon: Padding(
-              padding: const EdgeInsets.all(Spacing.spacing04),
+              padding: const EdgeInsets.all(Spacing.spacing03),
               child: SvgPicture.asset(
                 'assets/icon/ic_common_search.svg',
-                width: 20,
-                height: 20,
+                width: 18,
+                height: 18,
                 colorFilter: ColorFilter.mode(
                   appTheme.fgQuaternary,
                   BlendMode.srcIn,
@@ -110,9 +111,10 @@ class _HistoryPageState extends State<HistoryPage> with StateFulBaseScreen {
               ),
             ),
             border: InputBorder.none,
+            isDense: true,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: Spacing.spacing04,
-              vertical: Spacing.spacing04,
+              vertical: Spacing.spacing03,
             ),
           ),
         ),
@@ -163,7 +165,7 @@ class _HistoryPageState extends State<HistoryPage> with StateFulBaseScreen {
       },
       color: appTheme.fgBrandPrimary,
       child: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: Spacing.spacing05),
+        padding: const EdgeInsets.symmetric(horizontal: Spacing.spacing0),
         itemCount: state.filteredTransactions.length,
         separatorBuilder: (context, index) => Divider(
           height: 1,
