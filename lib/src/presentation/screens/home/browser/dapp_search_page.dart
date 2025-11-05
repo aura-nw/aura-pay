@@ -5,6 +5,7 @@ import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
 import 'package:aurapay/src/application/global/localization/localization_manager.dart';
 import 'package:aurapay/src/core/constants/size_constant.dart';
 import 'package:aurapay/src/core/constants/typography.dart';
+import 'package:aurapay/src/core/helpers/app_launcher.dart';
 import 'package:aurapay/src/presentation/widgets/base_screen.dart';
 import 'package:aurapay/src/navigator.dart';
 import 'dapp_search_bloc.dart';
@@ -162,9 +163,10 @@ class _DAppSearchPageState extends State<DAppSearchPage>
     AppLocalizationManager localization,
   ) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         _bloc.add(DAppSearchOnVisitEvent(app));
-        // TODO: Navigate to DApp
+        // Open URL in external browser
+        await AppLauncher.launch(app.url);
       },
       child: Container(
         width: 80,
@@ -279,9 +281,10 @@ class _DAppSearchPageState extends State<DAppSearchPage>
     AppLocalizationManager localization,
   ) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         _bloc.add(DAppSearchOnVisitEvent(app));
-        // TODO: Navigate to DApp
+        // Open URL in external browser
+        await AppLauncher.launch(app.url);
       },
       child: Row(
         children: [

@@ -5,6 +5,7 @@ import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
 import 'package:aurapay/src/application/global/localization/localization_manager.dart';
 import 'package:aurapay/src/core/constants/size_constant.dart';
 import 'package:aurapay/src/core/constants/typography.dart';
+import 'package:aurapay/src/core/helpers/app_launcher.dart';
 import 'package:aurapay/src/presentation/widgets/base_screen.dart';
 import 'package:aurapay/src/navigator.dart';
 import 'browser_bloc.dart';
@@ -339,9 +340,10 @@ class _BrowserPageState extends State<BrowserPage> with StateFulBaseScreen {
 
           // Visit Button
           InkWell(
-            onTap: () {
+            onTap: () async {
               _bloc.add(BrowserOnVisitDAppEvent(dapp.id, dapp.url));
-              // TODO: Navigate to webview or external browser
+              // Open URL in external browser
+              await AppLauncher.launch(dapp.url);
             },
             child: Container(
               padding: const EdgeInsets.symmetric(
