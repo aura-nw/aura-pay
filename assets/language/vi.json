@@ -178,5 +178,12 @@
 
   "transaction_status_pending" : "Đang xử lý",
   "transaction_status_success" : "Thành công",
-  "transaction_status_failed" : "Thất bại"
+  "transaction_status_failed" : "Thất bại",
+
+  "browser_page_title" : "Trình duyệt",
+  "browser_page_search_hint" : "Tìm kiếm DApps, NFTs, và nhiều hơn...",
+  "browser_page_popular_dapps" : "DApps phổ biến",
+  "browser_page_no_dapps" : "Không tìm thấy DApps",
+  "browser_page_error_occurred" : "Đã xảy ra lỗi",
+  "browser_page_visit" : "Truy cập"
 }

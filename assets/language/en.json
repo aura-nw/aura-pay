@@ -179,5 +179,12 @@
 
   "transaction_status_pending" : "Pending",
   "transaction_status_success" : "Success",
-  "transaction_status_failed" : "Failed"
+  "transaction_status_failed" : "Failed",
+
+  "browser_page_title" : "Browser",
+  "browser_page_search_hint" : "Search DApps, NFTs, and more...",
+  "browser_page_popular_dapps" : "Popular DApps",
+  "browser_page_no_dapps" : "No DApps found",
+  "browser_page_error_occurred" : "An error occurred",
+  "browser_page_visit" : "Visit"
 }
