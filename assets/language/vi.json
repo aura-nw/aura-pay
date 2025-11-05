@@ -185,5 +185,11 @@
   "browser_page_popular_dapps" : "DApps phổ biến",
   "browser_page_no_dapps" : "Không tìm thấy DApps",
   "browser_page_error_occurred" : "Đã xảy ra lỗi",
-  "browser_page_visit" : "Truy cập"
+  "browser_page_visit" : "Truy cập",
+
+  "dapp_search_title" : "Tìm kiếm và lịch sử DApp",
+  "dapp_search_hint" : "Tìm kiếm DApps, NFTs, và nhiều hơn...",
+  "dapp_search_trending_apps" : "Ứng dụng thịnh hành",
+  "dapp_search_recent" : "Gần đây",
+  "dapp_search_no_recent" : "Không có DApps gần đây"
 }

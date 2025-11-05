@@ -6,6 +6,7 @@ import 'package:aurapay/src/presentation/screens/create_passcode/create_passcode
 import 'package:aurapay/src/presentation/screens/generate_wallet/generate_wallet_creen.dart';
 import 'package:aurapay/src/presentation/screens/get_started/get_started_screen.dart';
 import 'package:aurapay/src/presentation/screens/home/home_screen.dart';
+import 'package:aurapay/src/presentation/screens/home/browser/dapp_search_page.dart';
 import 'package:aurapay/src/presentation/screens/import_wallet/import_wallet_screen.dart';
 import 'package:aurapay/src/presentation/screens/import_wallet_yeti_bot/import_wallet_yeti_bot_screen.dart';
 import 'package:aurapay/src/presentation/screens/manage_token/manage_token_screen.dart';
@@ -39,6 +40,7 @@ sealed class RoutePath {
   static const String transactionResult = '$home/transaction_result';
 
   static const String manageToken = '$home/manage_token';
+  static const String dappSearch = '$home/dapp_search';
 }
 
 sealed class AppNavigator {
@@ -153,6 +155,11 @@ sealed class AppNavigator {
       case RoutePath.manageToken:
         return _defaultRoute(
           const ManageTokenScreen(),
+          settings,
+        );
+      case RoutePath.dappSearch:
+        return _defaultRoute(
+          const DAppSearchPage(),
           settings,
         );
       default:

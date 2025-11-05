@@ -6,6 +6,7 @@ import 'package:aurapay/src/application/global/localization/localization_manager
 import 'package:aurapay/src/core/constants/size_constant.dart';
 import 'package:aurapay/src/core/constants/typography.dart';
 import 'package:aurapay/src/presentation/widgets/base_screen.dart';
+import 'package:aurapay/src/navigator.dart';
 import 'browser_bloc.dart';
 import 'browser_event.dart';
 import 'browser_state.dart';
@@ -146,43 +147,49 @@ class _BrowserPageState extends State<BrowserPage> with StateFulBaseScreen {
 
   Widget _buildSearchBar(
       AppTheme appTheme, AppLocalizationManager localization) {
-    return Container(
-      height: 48,
-      decoration: BoxDecoration(
-        color: appTheme.bgSecondary,
-        borderRadius: BorderRadius.circular(BorderRadiusSize.borderRadius03),
-      ),
-      child: TextField(
-        controller: _searchController,
-        style: AppTypoGraPhy.textMdRegular.copyWith(
-          color: appTheme.textPrimary,
+    return GestureDetector(
+      onTap: () {
+        // Navigate to DApp search page
+        AppNavigator.push(RoutePath.dappSearch);
+      },
+      child: Container(
+        height: 48,
+        decoration: BoxDecoration(
+          color: appTheme.bgSecondary,
+          borderRadius: BorderRadius.circular(BorderRadiusSize.borderRadius03),
         ),
-        textAlignVertical: TextAlignVertical.center,
-        onChanged: (value) {
-          _bloc.add(BrowserOnSearchEvent(value));
-        },
-        decoration: InputDecoration(
-          hintText: localization.translate('browser_page_search_hint'),
-          hintStyle: AppTypoGraPhy.textMdRegular.copyWith(
-            color: appTheme.textPlaceholder,
-          ),
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(Spacing.spacing04),
-            child: SvgPicture.asset(
-              'assets/icon/ic_common_search.svg',
-              width: 20,
-              height: 20,
-              colorFilter: ColorFilter.mode(
-                appTheme.fgQuaternary,
-                BlendMode.srcIn,
+        child: AbsorbPointer(
+          child: TextField(
+            controller: _searchController,
+            style: AppTypoGraPhy.textMdRegular.copyWith(
+              color: appTheme.textPrimary,
+            ),
+            textAlignVertical: TextAlignVertical.center,
+            readOnly: true,
+            decoration: InputDecoration(
+              hintText: localization.translate('browser_page_search_hint'),
+              hintStyle: AppTypoGraPhy.textMdRegular.copyWith(
+                color: appTheme.textPlaceholder,
+              ),
+              prefixIcon: Padding(
+                padding: const EdgeInsets.all(Spacing.spacing04),
+                child: SvgPicture.asset(
+                  'assets/icon/ic_common_search.svg',
+                  width: 20,
+                  height: 20,
+                  colorFilter: ColorFilter.mode(
+                    appTheme.fgQuaternary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+              border: InputBorder.none,
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: Spacing.spacing04,
+                vertical: Spacing.spacing04,
               ),
             ),
-          ),
-          border: InputBorder.none,
-          isDense: true,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: Spacing.spacing04,
-            vertical: Spacing.spacing04,
           ),
         ),
       ),
@@ -201,8 +208,8 @@ class _BrowserPageState extends State<BrowserPage> with StateFulBaseScreen {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            appTheme.bgBrandSecondary,
-            appTheme.bgBrandPrimary,
+            const Color(0xFF7B3FF2), // Purple
+            const Color(0xFF4A5EE8), // Blue
           ],
         ),
         borderRadius: BorderRadius.circular(BorderRadiusSize.borderRadius04),
@@ -215,7 +222,7 @@ class _BrowserPageState extends State<BrowserPage> with StateFulBaseScreen {
             top: 20,
             bottom: 20,
             child: Opacity(
-              opacity: 0.2,
+              opacity: 0.15,
               child: Icon(
                 Icons.currency_bitcoin,
                 size: 120,
@@ -224,7 +231,7 @@ class _BrowserPageState extends State<BrowserPage> with StateFulBaseScreen {
             ),
           ),
 
-          // Text content
+          // Text content with shadow for better readability
           Positioned(
             left: Spacing.spacing05,
             bottom: Spacing.spacing05,
@@ -237,13 +244,27 @@ class _BrowserPageState extends State<BrowserPage> with StateFulBaseScreen {
                   banner.title,
                   style: AppTypoGraPhy.textXlBold.copyWith(
                     color: appTheme.textWhite,
+                    shadows: [
+                      Shadow(
+                        offset: const Offset(0, 1),
+                        blurRadius: 2,
+                        color: Colors.black.withOpacity(0.25),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: Spacing.spacing02),
                 Text(
                   banner.subtitle,
                   style: AppTypoGraPhy.textSmRegular.copyWith(
-                    color: appTheme.textWhite.withOpacity(0.9),
+                    color: appTheme.textWhite,
+                    shadows: [
+                      Shadow(
+                        offset: const Offset(0, 1),
+                        blurRadius: 2,
+                        color: Colors.black.withOpacity(0.2),
+                      ),
+                    ],
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
