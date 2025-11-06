@@ -91,8 +91,7 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
       );
 
       final BigInt amount = token.type
-              .formatBalanceToInt(state.amount, customDecimal: token.decimal) ??
-          BigInt.zero;
+              .formatBalanceToInt(state.amount, customDecimal: token.decimal);
 
       BigInt gasEstimation = BigInt.zero;
 
@@ -139,14 +138,14 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
                 recipient: state.recipient,
                 gasPrice: gasPrice,
                 nonce: BigInt.zero,
-                contractAddress: token?.contractAddress ?? '',
+                contractAddress: token.contractAddress,
               );
 
               gasEstimation = await _evmChainClient.estimateGas(
                 sender: aWallet.address,
                 recipient: state.recipient,
                 amount: amount,
-                data: hexToBytes(token?.contractAddress ?? ''),
+                data: hexToBytes(token.contractAddress),
               );
 
               msg = erc20Tran.writeToJsonMap();
@@ -159,8 +158,6 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
 
               break;
             case TokenType.cw20:
-              break;
-            default:
               break;
           }
           break;
@@ -286,8 +283,6 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
               ));
               break;
             case TokenType.cw20:
-              break;
-            default:
               break;
           }
           break;
