@@ -17,7 +17,6 @@ abstract class _TransactionInformationBaseWidget extends StatelessWidget {
   final AppTheme appTheme;
 
   const _TransactionInformationBaseWidget({
-    super.key,
     required this.title,
     required this.information,
     required this.appTheme,

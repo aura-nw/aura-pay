@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
 import 'package:aurapay/src/application/global/localization/localization_manager.dart';
-import 'package:aurapay/src/core/constants/enum.dart';
 import 'package:aurapay/src/core/constants/language_key.dart';
 import 'package:aurapay/src/core/constants/size_constant.dart';
 import 'package:aurapay/src/core/constants/typography.dart';
@@ -19,7 +18,6 @@ class _HomePageNFTCardWidget extends StatelessWidget {
   final String price;
   final String id;
   final AppTheme appTheme;
-  final MediaType mediaType;
 
   const _HomePageNFTCardWidget({
     required this.id,
@@ -28,8 +26,6 @@ class _HomePageNFTCardWidget extends StatelessWidget {
     required this.price,
     required this.thumbnail,
     required this.appTheme,
-    this.mediaType = MediaType.image,
-    super.key,
   });
 
   @override

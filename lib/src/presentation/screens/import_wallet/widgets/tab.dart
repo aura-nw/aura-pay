@@ -18,7 +18,6 @@ final class _ImportWalletTabWidget extends StatelessWidget {
     required this.appTheme,
     required this.text,
     this.onTap,
-    super.key,
   });
 
   bool get _isSelected => index == selectedIndex;

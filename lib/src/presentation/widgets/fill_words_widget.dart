@@ -9,31 +9,10 @@ import 'text_input_base/text_input_manager.dart';
 
 /// Extends input base
 final class _FillWordInputWidget extends TextInputWidgetBase {
-  final EdgeInsets? padding;
-
   const _FillWordInputWidget({
-    super.obscureText,
-    super.autoFocus,
-    super.constraintManager,
-    super.scrollController,
-    super.enable,
-    super.inputFormatter,
-    super.focusNode,
-    super.controller,
-    super.hintText,
-    super.scrollPadding,
-    super.keyBoardType,
-    super.maxLength,
-    super.onSubmit,
     super.maxLine,
-    super.minLine,
     super.onChanged,
-    super.physics,
     super.key,
-    super.enableClear,
-    super.onClear,
-    super.boxConstraints,
-    this.padding,
     required super.appTheme,
   });
 
@@ -51,10 +30,9 @@ final class _FillWordInputWidgetState
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: widget.padding ??
-          const EdgeInsets.symmetric(
-            horizontal: Spacing.spacing03,
-          ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: Spacing.spacing03,
+      ),
       decoration: BoxDecoration(
         color: widget.appTheme.bgPrimary,
         borderRadius: BorderRadius.circular(

@@ -28,7 +28,6 @@ class _AppButton extends StatelessWidget {
   final Color? borderColor;
 
   _AppButton({
-    super.key,
     required this.text,
     this.onPress,
     this.color,

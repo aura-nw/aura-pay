@@ -27,7 +27,6 @@ final class _ManageTokenScreenTokenWidget extends StatelessWidget {
     required this.onChanged,
     required this.isEnable,
     required this.appTheme,
-    super.key,
   });
 
   @override

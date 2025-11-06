@@ -34,7 +34,6 @@ class _SendSelectTokenWidget extends StatelessWidget {
     required this.value,
     required this.tokenName,
     required this.symbol,
-    super.key,
   });
 
   @override

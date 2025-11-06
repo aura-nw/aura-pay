@@ -7,7 +7,6 @@ abstract interface class _DialogProviderWidget extends StatelessWidget {
 
   const _DialogProviderWidget({
     required this.appTheme,
-    super.key,
   });
 
   @override

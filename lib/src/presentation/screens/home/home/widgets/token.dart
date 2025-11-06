@@ -36,7 +36,6 @@ final class _HomePageTokenInfoWidget extends StatelessWidget {
     required this.value,
     required this.appTheme,
     required this.localization,
-    super.key,
   });
 
   Color valueChangeColor() {
