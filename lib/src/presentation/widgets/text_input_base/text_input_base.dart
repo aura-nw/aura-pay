@@ -270,7 +270,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
         spreadRadius: 3,
         offset: const Offset(0, 0),
         blurStyle: BlurStyle.solid,
-        color: appTheme.borderBrand.withOpacity(0.14),
+        color: appTheme.borderBrand.withValues(alpha: 0.14),
       );
     }
 
@@ -284,7 +284,7 @@ class TextInputWidgetBaseState<T extends TextInputWidgetBase> extends State<T> {
         spreadRadius: 3,
         offset: const Offset(0, 0),
         blurStyle: BlurStyle.solid,
-        color: appTheme.borderErrorSolid.withOpacity(0.24),
+        color: appTheme.borderErrorSolid.withValues(alpha: 0.24),
       );
 
       boxShadows?.add(boxShadow);

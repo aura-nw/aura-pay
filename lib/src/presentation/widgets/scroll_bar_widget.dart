@@ -24,7 +24,7 @@ class ScrollBarWidget extends StatelessWidget {
         BorderRadiusSize.borderRadiusRound,
       ),
       thickness: thickness,
-      thumbColor: appTheme.alphaBlack40.withOpacity(
+      thumbColor: appTheme.alphaBlack40.withValues(alpha: 
         0.4,
       ),
       interactive: true,

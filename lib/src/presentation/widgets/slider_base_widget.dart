@@ -108,7 +108,7 @@ class _CustomSingleSliderState
         activeColor: appTheme.bgBrandSolid,
         max: widget.maxValue,
         min: widget.minValue,
-        inactiveColor: appTheme.utilityBrand50.withOpacity(
+        inactiveColor: appTheme.utilityBrand50.withValues(alpha: 
           0.16,
         ),
       ),

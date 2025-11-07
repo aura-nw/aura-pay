@@ -23,7 +23,7 @@ class AppBottomSheetProvider extends StatelessWidget {
           AppNavigator.pop();
         },
         child: Scaffold(
-          backgroundColor: appTheme.alphaBlack70.withOpacity(
+          backgroundColor: appTheme.alphaBlack70.withValues(alpha: 
             0.7,
           ),
           body: Stack(

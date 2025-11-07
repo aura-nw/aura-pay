@@ -6,70 +6,70 @@ final class AppLightTheme implements AppTheme {
   AppLightTheme();
 
   @override
-  Color alphaBlack10 = AppColor.grayBlack.withOpacity(0.1);
+  Color alphaBlack10 = AppColor.grayBlack.withValues(alpha: 0.1);
 
   @override
-  Color alphaBlack20 = AppColor.grayBlack.withOpacity(0.2);
+  Color alphaBlack20 = AppColor.grayBlack.withValues(alpha: 0.2);
 
   @override
-  Color alphaBlack30 = AppColor.grayBlack.withOpacity(0.3);
+  Color alphaBlack30 = AppColor.grayBlack.withValues(alpha: 0.3);
 
   @override
-  Color alphaBlack4 = AppColor.grayBlack.withOpacity(0.04);
+  Color alphaBlack4 = AppColor.grayBlack.withValues(alpha: 0.04);
 
   @override
-  Color alphaBlack40 = AppColor.grayBlack.withOpacity(0.4);
+  Color alphaBlack40 = AppColor.grayBlack.withValues(alpha: 0.4);
 
   @override
-  Color alphaBlack50 = AppColor.grayBlack.withOpacity(0.5);
+  Color alphaBlack50 = AppColor.grayBlack.withValues(alpha: 0.5);
 
   @override
-  Color alphaBlack60 = AppColor.grayBlack.withOpacity(0.6);
+  Color alphaBlack60 = AppColor.grayBlack.withValues(alpha: 0.6);
 
   @override
-  Color alphaBlack70 = AppColor.grayBlack.withOpacity(0.7);
+  Color alphaBlack70 = AppColor.grayBlack.withValues(alpha: 0.7);
 
   @override
-  Color alphaBlack8 = AppColor.grayBlack.withOpacity(0.08);
+  Color alphaBlack8 = AppColor.grayBlack.withValues(alpha: 0.08);
 
   @override
-  Color alphaBlack80 = AppColor.grayBlack.withOpacity(0.8);
+  Color alphaBlack80 = AppColor.grayBlack.withValues(alpha: 0.8);
 
   @override
-  Color alphaBlack90 = AppColor.grayBlack.withOpacity(0.9);
+  Color alphaBlack90 = AppColor.grayBlack.withValues(alpha: 0.9);
 
   @override
-  Color alphaWhite10 = AppColor.grayWhite.withOpacity(0.1);
+  Color alphaWhite10 = AppColor.grayWhite.withValues(alpha: 0.1);
 
   @override
-  Color alphaWhite20 = AppColor.grayWhite.withOpacity(0.2);
+  Color alphaWhite20 = AppColor.grayWhite.withValues(alpha: 0.2);
 
   @override
-  Color alphaWhite30 = AppColor.grayWhite.withOpacity(0.3);
+  Color alphaWhite30 = AppColor.grayWhite.withValues(alpha: 0.3);
 
   @override
-  Color alphaWhite4 = AppColor.grayWhite.withOpacity(0.04);
+  Color alphaWhite4 = AppColor.grayWhite.withValues(alpha: 0.04);
 
   @override
-  Color alphaWhite40 = AppColor.grayWhite.withOpacity(0.4);
+  Color alphaWhite40 = AppColor.grayWhite.withValues(alpha: 0.4);
 
   @override
-  Color alphaWhite50 = AppColor.grayWhite.withOpacity(0.5);
+  Color alphaWhite50 = AppColor.grayWhite.withValues(alpha: 0.5);
 
   @override
-  Color alphaWhite60 = AppColor.grayWhite.withOpacity(0.6);
+  Color alphaWhite60 = AppColor.grayWhite.withValues(alpha: 0.6);
 
   @override
-  Color alphaWhite70 = AppColor.grayWhite.withOpacity(0.7);
+  Color alphaWhite70 = AppColor.grayWhite.withValues(alpha: 0.7);
 
   @override
-  Color alphaWhite8 = AppColor.grayWhite.withOpacity(0.08);
+  Color alphaWhite8 = AppColor.grayWhite.withValues(alpha: 0.08);
 
   @override
-  Color alphaWhite80 = AppColor.grayWhite.withOpacity(0.8);
+  Color alphaWhite80 = AppColor.grayWhite.withValues(alpha: 0.8);
 
   @override
-  Color alphaWhite90 = AppColor.grayWhite.withOpacity(0.9);
+  Color alphaWhite90 = AppColor.grayWhite.withValues(alpha: 0.9);
 
   @override
   Color bgActive = AppColor.gray50;
@@ -120,7 +120,7 @@ final class AppLightTheme implements AppTheme {
   Color bgInfoSolid = AppColor.blue500;
 
   @override
-  Color bgOverlay = AppColor.grayBlack.withOpacity(0.7);
+  Color bgOverlay = AppColor.grayBlack.withValues(alpha: 0.7);
 
   @override
   Color bgPrimary = AppColor.grayWhite;
@@ -646,70 +646,70 @@ final class AppDarkTheme implements AppTheme {
   AppDarkTheme();
 
   @override
-  Color alphaBlack10 = AppColor.grayBlack.withOpacity(0.1);
+  Color alphaBlack10 = AppColor.grayBlack.withValues(alpha: 0.1);
 
   @override
-  Color alphaBlack20 = AppColor.grayBlack.withOpacity(0.2);
+  Color alphaBlack20 = AppColor.grayBlack.withValues(alpha: 0.2);
 
   @override
-  Color alphaBlack30 = AppColor.grayBlack.withOpacity(0.3);
+  Color alphaBlack30 = AppColor.grayBlack.withValues(alpha: 0.3);
 
   @override
-  Color alphaBlack4 = AppColor.grayBlack.withOpacity(0.04);
+  Color alphaBlack4 = AppColor.grayBlack.withValues(alpha: 0.04);
 
   @override
-  Color alphaBlack40 = AppColor.grayBlack.withOpacity(0.4);
+  Color alphaBlack40 = AppColor.grayBlack.withValues(alpha: 0.4);
 
   @override
-  Color alphaBlack50 = AppColor.grayBlack.withOpacity(0.5);
+  Color alphaBlack50 = AppColor.grayBlack.withValues(alpha: 0.5);
 
   @override
-  Color alphaBlack60 = AppColor.grayBlack.withOpacity(0.6);
+  Color alphaBlack60 = AppColor.grayBlack.withValues(alpha: 0.6);
 
   @override
-  Color alphaBlack70 = AppColor.grayBlack.withOpacity(0.7);
+  Color alphaBlack70 = AppColor.grayBlack.withValues(alpha: 0.7);
 
   @override
-  Color alphaBlack8 = AppColor.grayBlack.withOpacity(0.08);
+  Color alphaBlack8 = AppColor.grayBlack.withValues(alpha: 0.08);
 
   @override
-  Color alphaBlack80 = AppColor.grayBlack.withOpacity(0.8);
+  Color alphaBlack80 = AppColor.grayBlack.withValues(alpha: 0.8);
 
   @override
-  Color alphaBlack90 = AppColor.grayBlack.withOpacity(0.9);
+  Color alphaBlack90 = AppColor.grayBlack.withValues(alpha: 0.9);
 
   @override
-  Color alphaWhite10 = AppColor.grayWhite.withOpacity(0.1);
+  Color alphaWhite10 = AppColor.grayWhite.withValues(alpha: 0.1);
 
   @override
-  Color alphaWhite20 = AppColor.grayWhite.withOpacity(0.2);
+  Color alphaWhite20 = AppColor.grayWhite.withValues(alpha: 0.2);
 
   @override
-  Color alphaWhite30 = AppColor.grayWhite.withOpacity(0.3);
+  Color alphaWhite30 = AppColor.grayWhite.withValues(alpha: 0.3);
 
   @override
-  Color alphaWhite4 = AppColor.grayWhite.withOpacity(0.04);
+  Color alphaWhite4 = AppColor.grayWhite.withValues(alpha: 0.04);
 
   @override
-  Color alphaWhite40 = AppColor.grayWhite.withOpacity(0.4);
+  Color alphaWhite40 = AppColor.grayWhite.withValues(alpha: 0.4);
 
   @override
-  Color alphaWhite50 = AppColor.grayWhite.withOpacity(0.5);
+  Color alphaWhite50 = AppColor.grayWhite.withValues(alpha: 0.5);
 
   @override
-  Color alphaWhite60 = AppColor.grayWhite.withOpacity(0.6);
+  Color alphaWhite60 = AppColor.grayWhite.withValues(alpha: 0.6);
 
   @override
-  Color alphaWhite70 = AppColor.grayWhite.withOpacity(0.7);
+  Color alphaWhite70 = AppColor.grayWhite.withValues(alpha: 0.7);
 
   @override
-  Color alphaWhite8 = AppColor.grayWhite.withOpacity(0.08);
+  Color alphaWhite8 = AppColor.grayWhite.withValues(alpha: 0.08);
 
   @override
-  Color alphaWhite80 = AppColor.grayWhite.withOpacity(0.8);
+  Color alphaWhite80 = AppColor.grayWhite.withValues(alpha: 0.8);
 
   @override
-  Color alphaWhite90 = AppColor.grayWhite.withOpacity(0.9);
+  Color alphaWhite90 = AppColor.grayWhite.withValues(alpha: 0.9);
 
   @override
   Color bgActive = AppColor.gray50;
@@ -760,7 +760,7 @@ final class AppDarkTheme implements AppTheme {
   Color bgInfoSolid = AppColor.blue500;
 
   @override
-  Color bgOverlay = AppColor.grayBlack.withOpacity(0.7);
+  Color bgOverlay = AppColor.grayBlack.withValues(alpha: 0.7);
 
   @override
   Color bgPrimary = AppColor.grayWhite;

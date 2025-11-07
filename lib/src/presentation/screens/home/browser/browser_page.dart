@@ -249,7 +249,7 @@ class _BrowserPageState extends State<BrowserPage> with StateFulBaseScreen {
                       Shadow(
                         offset: const Offset(0, 1),
                         blurRadius: 2,
-                        color: Colors.black.withOpacity(0.25),
+                        color: Colors.black.withValues(alpha: 0.25),
                       ),
                     ],
                   ),
@@ -263,7 +263,7 @@ class _BrowserPageState extends State<BrowserPage> with StateFulBaseScreen {
                       Shadow(
                         offset: const Offset(0, 1),
                         blurRadius: 2,
-                        color: Colors.black.withOpacity(0.2),
+                        color: Colors.black.withValues(alpha: 0.2),
                       ),
                     ],
                   ),

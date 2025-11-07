@@ -170,7 +170,7 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
       final token = state.tokens.firstWhereOrNull((t) => t.id == selectedToken.tokenId,);
 
       double total = double.tryParse(token?.type.formatBalance(
-                  selectedToken.balance ?? '',
+                  selectedToken.balance,
                   customDecimal: token.decimal) ??
               '') ??
           0.0;

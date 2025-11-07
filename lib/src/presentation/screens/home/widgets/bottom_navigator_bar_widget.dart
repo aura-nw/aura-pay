@@ -42,7 +42,7 @@ class _BottomNavigatorBarWidgetState extends State<BottomNavigatorBarWidget> {
         boxShadow: [
           BoxShadow(
             offset: const Offset(0, 0),
-            color: Colors.black.withOpacity(0.1), // Shadow color
+            color: Colors.black.withValues(alpha: 0.1), // Shadow color
             blurRadius: 16, // Shadow blur radius
             spreadRadius: 0,
           ),

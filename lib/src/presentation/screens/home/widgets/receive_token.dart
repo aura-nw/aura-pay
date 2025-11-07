@@ -53,7 +53,7 @@ class ReceiveTokenWidget extends StatelessWidget {
         color: Colors.transparent,
         child: Container(
           // Overlay color with opacity
-          color: theme.alphaBlack70.withOpacity(0.7),
+          color: theme.alphaBlack70.withValues(alpha: 0.7),
           width: context.w,
           height: context.h,
           alignment: Alignment.center,
