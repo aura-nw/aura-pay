@@ -3,10 +3,6 @@ part of flutter_trust_wallet_core;
 class BitcoinScript {
   late Pointer<Void> _pointer;
 
-  BitcoinScript._(Pointer<Void> pointer) {
-    _pointer = pointer;
-  }
-
   BitcoinScript() {
     _pointer = TWBitcoinScriptImpl.create();
     if (_pointer.hashCode == 0) throw Exception(["BitcoinScript nativehandle is null"]);

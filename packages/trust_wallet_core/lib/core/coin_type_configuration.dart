@@ -1,12 +1,6 @@
 part of flutter_trust_wallet_core;
 
 class CoinTypeConfiguration {
-  late Pointer<Void> _pointer;
-
-  CoinTypeConfiguration._(Pointer<Void> pointer) {
-    _pointer = pointer;
-  }
-
   static String getSymbol(int type) {
     return TWCoinTypeConfigurationImpl.getSymbol(type);
   }

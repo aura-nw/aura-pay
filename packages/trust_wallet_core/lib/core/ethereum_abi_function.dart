@@ -3,10 +3,6 @@ part of flutter_trust_wallet_core;
 class EthereumAbiFunction {
   late Pointer<Void> _pointer;
 
-  EthereumAbiFunction._(Pointer<Void> pointer) {
-    _pointer = pointer;
-  }
-
   EthereumAbiFunction.createWithString(String name) {
     _pointer = TWEthereumAbiFunctionImpl.createWithString(name);
     if (_pointer.hashCode == 0) throw Exception(["EthereumAbiFunction nativehandle is null"]);

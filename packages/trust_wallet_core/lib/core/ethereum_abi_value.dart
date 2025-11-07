@@ -1,11 +1,7 @@
 part of flutter_trust_wallet_core;
 
-class EhereumAbiValue {
-  late Pointer<Void> _pointer;
-
-  EhereumAbiValue._(Pointer<Void> pointer) {
-    _pointer = pointer;
-  }
+class EthereumAbiValue {
+  EthereumAbiValue._();
 
   static Uint8List encodeBool(bool value) {
     return TWEthereumAbiValueImpl.encodeBool(value);

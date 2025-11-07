@@ -1,0 +1,20 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - lib/protobuf/**
+    - gen/**
+    - lib/dart_impl/**
+    - lib/ffi_impl/**
+  errors:
+    non_constant_identifier_names: ignore
+    unnecessary_late: ignore
+    dangling_library_doc_comments: ignore
+    no_leading_underscores_for_local_identifiers: ignore
+    use_string_in_part_of_directives: ignore
+    constant_identifier_names: ignore
+
+linter:
+  rules:
+    avoid_print: false
+

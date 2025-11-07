@@ -1,11 +1,7 @@
 part of flutter_trust_wallet_core;
 
 class EthereumAbi {
-  late Pointer<Void> _pointer;
-
-  EthereumAbi._(Pointer<Void> pointer) {
-    _pointer = pointer;
-  }
+  EthereumAbi._();
 
   static Uint8List encode(EthereumAbiFunction fn) {
     return TWEthereumAbiImpl.encode(fn._pointer);
