@@ -1,5 +1,5 @@
-name: wallet_core
-description: "A new Flutter package project."
+name: wallet_services
+description: "Pyxis wallet domain services built on Trust Wallet Core."
 version: 0.0.1
 homepage:
 
@@ -11,8 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   trust_wallet_core:
-    git:
-      url: https://github.com/ToanBarcelona1998/flutter_trust_wallet_core
+    path: ../trust_wallet_core
   convert: ^3.0.1
   web3dart: ^2.7.3
   http: ^1.2.1
