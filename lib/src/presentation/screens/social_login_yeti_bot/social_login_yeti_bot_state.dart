@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 part 'social_login_yeti_bot_state.freezed.dart';
 

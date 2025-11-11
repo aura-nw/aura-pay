@@ -35,7 +35,7 @@ import 'package:aurapay/src/presentation/screens/send/send_bloc.dart';
 import 'package:aurapay/src/presentation/screens/social_login_yeti_bot/social_login_yeti_bot_cubit.dart';
 import 'package:aurapay/src/presentation/screens/splash/splash_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 import 'package:web3auth_flutter/enums.dart';
 import 'package:web3auth_flutter/input.dart';
 import 'package:web3auth_flutter/web3auth_flutter.dart';
@@ -69,7 +69,7 @@ Future<void> initDependency(
     () => dio,
   );
 
-  WalletCore.init();
+  WalletServices.init();
 
   const FlutterSecureStorage secureStorage = FlutterSecureStorage(
     aOptions: AndroidOptions(

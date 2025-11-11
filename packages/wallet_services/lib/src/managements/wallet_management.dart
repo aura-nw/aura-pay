@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 import 'dart:io';
 import 'package:convert/convert.dart';
-import 'package:wallet_core/src/constants/constants.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/src/constants/constants.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 class WalletManagement {
   /// Generates a random mnemonic phrase with error handling for TrustWalletCore stability.

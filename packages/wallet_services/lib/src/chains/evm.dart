@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:http/http.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as Ethereum;
 

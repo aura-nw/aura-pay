@@ -1,4 +1,4 @@
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 class Constants {
   static const String derivationPathEthereum = "m/49'/60'/0'/0/0";

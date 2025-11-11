@@ -2,7 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 import 'package:aurapay/app_configs/di.dart' as di;
 import 'package:aurapay/app_configs/aura_pay_config.dart';

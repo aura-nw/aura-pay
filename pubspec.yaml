@@ -35,8 +35,8 @@ dependencies:
     sdk: flutter
 
   # Local packages
-  wallet_core:
-    path: packages/wallet_core
+  wallet_services:
+    path: packages/wallet_services
   domain:
     path: cores/domain
   data:

@@ -1,7 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:aurapay/src/core/constants/asset_path.dart';
 import 'package:aurapay/src/core/utils/dart_core_extension.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 extension AppNetworkExtension on AppNetwork {
   String get logo {

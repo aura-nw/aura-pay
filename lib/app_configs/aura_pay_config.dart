@@ -1,4 +1,4 @@
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 enum AuraPayEnvironment {
   serenity,

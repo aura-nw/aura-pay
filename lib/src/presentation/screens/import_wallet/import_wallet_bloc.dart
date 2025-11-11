@@ -1,7 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:aurapay/src/core/utils/app_util.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 import 'import_wallet_event.dart';
 import 'import_wallet_state.dart';
 
@@ -80,13 +80,13 @@ final class ImportWalletBloc
 
     switch (state.controllerType) {
       case ControllerKeyType.passPhrase:
-        wallet = WalletCore.walletManagement.importWallet(
+        wallet = WalletServices.walletManagement.importWallet(
           state.controllerKey,
           coinType: coinType,
         );
         break;
       case ControllerKeyType.privateKey:
-        wallet = WalletCore.walletManagement.importWalletWithPrivateKey(
+        wallet = WalletServices.walletManagement.importWalletWithPrivateKey(
           state.controllerKey,
           coinType: coinType,
         );
@@ -113,13 +113,13 @@ final class ImportWalletBloc
     try {
       switch (state.controllerType) {
         case ControllerKeyType.passPhrase:
-          WalletCore.walletManagement.importWallet(
+          WalletServices.walletManagement.importWallet(
             key,
             coinType: coinType,
           );
           break;
         case ControllerKeyType.privateKey:
-          WalletCore.walletManagement.importWalletWithPrivateKey(
+          WalletServices.walletManagement.importWalletWithPrivateKey(
               key,
               coinType: coinType
           );

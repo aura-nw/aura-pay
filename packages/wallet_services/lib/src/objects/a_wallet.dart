@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:flutter/foundation.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as Ethereum;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;

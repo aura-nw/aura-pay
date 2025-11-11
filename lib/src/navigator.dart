@@ -16,7 +16,7 @@ import 'package:aurapay/src/presentation/screens/send/send_screen.dart';
 import 'package:aurapay/src/presentation/screens/social_login_yeti_bot/social_login_yeti_bot_screen.dart';
 import 'package:aurapay/src/presentation/screens/splash/spash_screen.dart';
 import 'package:aurapay/src/presentation/screens/transaction_result/transaction_result_screen.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 sealed class RoutePath {
   static const String _base = '/';

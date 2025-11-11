@@ -1,4 +1,4 @@
-import 'package:wallet_core/src/objects/chain_info.dart';
+import 'package:wallet_services/src/objects/chain_info.dart';
 
 class ChainList {
   static ChainInfo auraSerenity = EvmChainInfo(

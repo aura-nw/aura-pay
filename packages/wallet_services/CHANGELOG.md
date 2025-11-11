@@ -1,3 +1,4 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* Rename package from `wallet_core` to `wallet_services`.
+* Switch dependency on local `trust_wallet_core` path.

@@ -13,7 +13,7 @@ import 'package:aurapay/src/core/utils/dart_core_extension.dart';
 import 'package:aurapay/src/core/utils/toast.dart';
 import 'package:aurapay/src/presentation/screens/generate_wallet/generate_wallet_state.dart';
 import 'package:aurapay/src/presentation/widgets/yeti_bot_message_widget.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 import 'generate_wallet_cubit.dart';
 import 'generate_wallet_selector.dart';
 import 'package:aurapay/src/presentation/widgets/app_button.dart';

@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:trust_wallet_core/flutter_trust_wallet_core.dart';
 import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as Ethereum;
 import 'package:trust_wallet_core/trust_wallet_core_ffi.dart';
-import 'package:wallet_core/src/extensions/bigint_extension.dart';
+import 'package:wallet_services/src/extensions/bigint_extension.dart';
 
 Ethereum.SigningOutput evmSigner(Uint8List bytes){
   final Uint8List signBytes = AnySigner.sign(

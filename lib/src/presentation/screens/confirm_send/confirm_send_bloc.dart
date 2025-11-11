@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:aurapay/app_configs/aura_pay_config.dart';
 import 'package:aurapay/src/core/utils/aura_util.dart';
 import 'package:aurapay/src/core/utils/dart_core_extension.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 import 'confirm_send_event.dart';
 import 'confirm_send_state.dart';
@@ -84,7 +84,7 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
       final KeyStore? keyStore =
           await _keyStoreUseCase.get(state.account.keyStoreId);
 
-      final AWallet? aWallet = WalletCore.storedManagement.fromSavedJson(
+      final AWallet? aWallet = WalletServices.storedManagement.fromSavedJson(
         keyStore?.key ?? '',
         '',
         coinType: _getCoinType(),
@@ -215,7 +215,7 @@ final class ConfirmSendBloc extends Bloc<ConfirmSendEvent, ConfirmSendState> {
     final KeyStore? keyStore =
         await _keyStoreUseCase.get(state.account.keyStoreId);
 
-    final AWallet? aWallet = WalletCore.storedManagement.fromSavedJson(
+    final AWallet? aWallet = WalletServices.storedManagement.fromSavedJson(
       keyStore?.key ?? '',
       '',
       coinType: _getCoinType(),

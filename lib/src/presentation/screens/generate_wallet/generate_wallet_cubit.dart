@@ -4,7 +4,7 @@ import 'package:aurapay/src/core/constants/app_local_constant.dart';
 import 'package:aurapay/src/core/constants/aura_pay_account_constant.dart';
 import 'package:aurapay/src/core/helpers/crypto_initializer.dart';
 import 'package:aurapay/src/core/error/error.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 import 'generate_wallet_state.dart';
 
 final class GenerateWalletCubit extends Cubit<GenerateWalletState> {
@@ -31,10 +31,10 @@ final class GenerateWalletCubit extends Cubit<GenerateWalletState> {
       // Add additional safety delay for Android
       await Future.delayed(const Duration(milliseconds: 500));
       
-      final String mnemonic = WalletCore.walletManagement.randomMnemonic();
+      final String mnemonic = WalletServices.walletManagement.randomMnemonic();
       LogProvider.log('[GenerateWallet] Mnemonic generated successfully');
 
-      final AWallet aWallet = WalletCore.walletManagement.importWallet(mnemonic);
+      final AWallet aWallet = WalletServices.walletManagement.importWallet(mnemonic);
       LogProvider.log('[GenerateWallet] Wallet imported successfully');
 
       emit(state.copyWith(
@@ -63,7 +63,7 @@ final class GenerateWalletCubit extends Cubit<GenerateWalletState> {
       ),
     );
 
-    final String? key = WalletCore.storedManagement.saveWallet(
+    final String? key = WalletServices.storedManagement.saveWallet(
       AuraPayAccountConstant.defaultNormalWalletName,
       '',
       state.wallet!,

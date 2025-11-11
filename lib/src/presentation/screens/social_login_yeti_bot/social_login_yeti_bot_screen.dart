@@ -18,7 +18,7 @@ import 'social_login_yeti_bot_selector.dart';
 import 'widgets/app_bar_title.dart';
 import 'package:aurapay/src/presentation/widgets/app_bar_widget.dart';
 import 'package:aurapay/src/presentation/widgets/base_screen.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 class SocialLoginYetiBotScreen extends StatefulWidget {
   final AWallet aWallet;

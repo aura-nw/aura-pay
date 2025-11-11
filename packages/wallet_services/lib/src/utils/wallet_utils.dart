@@ -4,8 +4,8 @@ import 'package:bech32/bech32.dart';
 import 'package:convert/convert.dart';
 import 'package:trust_wallet_core/flutter_trust_wallet_core.dart';
 import 'package:trust_wallet_core/trust_wallet_core_ffi.dart';
-import 'package:wallet_core/src/constants/constants.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/src/constants/constants.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 String mnemonic = 'hen cat bread cry obey wrist click tunnel certain decade resemble muscle';
 

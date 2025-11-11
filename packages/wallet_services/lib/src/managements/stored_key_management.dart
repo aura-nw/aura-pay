@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
-import 'package:wallet_core/src/constants/constants.dart';
-import 'package:wallet_core/src/objects/wallet_exception.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/src/constants/constants.dart';
+import 'package:wallet_services/src/objects/wallet_exception.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 class StoredManagement {
   /// Saves a wallet, either mnemonic or private key based.
@@ -52,7 +52,7 @@ class StoredManagement {
         if (hdWallet == null) {
           return null;
         }
-        return WalletCore.walletManagement.importWallet(
+        return WalletServices.walletManagement.importWallet(
           hdWallet.mnemonic(),
           coinType: coinType,
         );
@@ -65,7 +65,7 @@ class StoredManagement {
       }
 
       String privateKeyHex = hex.encode(privateKey.data());
-      return WalletCore.walletManagement
+      return WalletServices.walletManagement
           .importWalletWithPrivateKey(privateKeyHex);
     } catch (e) {
       throw WalletException('Failed to import wallet from JSON: $e');

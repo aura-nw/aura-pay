@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:domain/domain.dart';
-import 'package:wallet_core/wallet_core.dart';
+import 'package:wallet_services/wallet_services.dart';
 
 import 'get_started_state.dart';
 
@@ -37,7 +37,7 @@ final class GetStartedCubit extends Cubit<GetStartedState> {
       final privateKey = await _web3authUseCase.getPrivateKey();
 
       // Create wallet instance from private key
-      final wallet = WalletCore.walletManagement.importWalletWithPrivateKey(
+      final wallet = WalletServices.walletManagement.importWalletWithPrivateKey(
         privateKey,
         coinType: TWCoinType.TWCoinTypeEthereum,
       );

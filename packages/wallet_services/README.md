@@ -1,4 +1,6 @@
-# Android
+# Wallet Services
+
+## Android
 Add 
 ```
 class MainActivity: FlutterActivity() {
@@ -16,10 +18,10 @@ minSdk require >=23
 min ios platform support >=13.0
 
 
-# dart part
-before use wallet_core, call below function once.
+## Dart usage
+Before using the package, call the initializer once:
 ```
- WalletCore.init();
+ WalletServices.init();
 ```
 
 Then you are ready to run.
