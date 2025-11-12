@@ -101,10 +101,6 @@ final class AccountDb {
   final Id id;
   final int index;
   final String name;
-  @Deprecated('Replace by AEvmInfoDto')
-  final String evmAddress;
-  @Deprecated('Replace by ACosmosInfoDto')
-  final String? cosmosAddress;
   final int keyStoreId;
   @enumerated
   final AccountType type;
@@ -120,8 +116,6 @@ final class AccountDb {
     this.id = Isar.autoIncrement,
     required this.index,
     required this.name,
-    @Deprecated('Replace by AEvmInfoDto') this.evmAddress = '',
-    this.cosmosAddress,
     required this.keyStoreId,
     this.type = AccountType.normal,
     this.createType = AccountCreateType.normal,
