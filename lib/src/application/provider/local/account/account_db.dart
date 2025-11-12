@@ -22,7 +22,6 @@ extension AddAccountRequestDtoMapper on AddAccountRequestDto {
   AccountDb get mapRequestToDb => AccountDb(
         index: index,
         name: name,
-        evmAddress: '',
         keyStoreId: keyStoreId,
         aCosmosInfo: addACosmosInfoRequest.mapRequestToDb,
         aEvmInfo: addAEvmInfoRequest.mapRequestToDb,
@@ -67,15 +66,13 @@ extension AccountDbExtension on AccountDb {
         controllerKeyType: controllerKeyType ?? this.controllerKeyType,
         index: index ?? this.index,
         aEvmInfo: aEvmInfoDb ?? aEvmInfo,
-        aCosmosInfo: aCosmosInfoDb ?? aCosmosInfo,
-        evmAddress: '');
+        aCosmosInfo: aCosmosInfoDb ?? aCosmosInfo);
   }
 
   AccountDto get toDto => AccountDto(
         id: id,
         index: index,
         name: name,
-        evmAddress: evmAddress,
         keyStoreId: keyStoreId,
         aEvmInfo: aEvmInfo.toDto,
         aCosmosInfo: aCosmosInfo.toDto,
@@ -123,7 +120,7 @@ final class AccountDb {
     this.id = Isar.autoIncrement,
     required this.index,
     required this.name,
-    required this.evmAddress,
+    @Deprecated('Replace by AEvmInfoDto') this.evmAddress = '',
     this.cosmosAddress,
     required this.keyStoreId,
     this.type = AccountType.normal,

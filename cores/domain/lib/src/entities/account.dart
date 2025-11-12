@@ -6,10 +6,6 @@ final class Account {
   // 0 -> active 1. normal
   final int index;
   final String name;
-  @Deprecated('Replace by AEvmInfo')
-  final String evmAddress;
-  @Deprecated('Replace by ACosmosInfo')
-  final String? cosmosAddress;
   final int keyStoreId;
   final AccountType type;
   final AccountCreateType createType;
@@ -21,8 +17,6 @@ final class Account {
     required this.id,
     required this.index,
     required this.name,
-    required this.evmAddress,
-    this.cosmosAddress,
     required this.keyStoreId,
     this.type = AccountType.normal,
     this.createType = AccountCreateType.normal,
@@ -30,6 +24,15 @@ final class Account {
     required this.aCosmosInfo,
     required this.aEvmInfo,
   });
+
+  @Deprecated('Replace by AEvmInfo')
+  String get evmAddress => aEvmInfo.displayAddress;
+
+  @Deprecated('Replace by ACosmosInfo')
+  String? get cosmosAddress {
+    final displayAddress = aCosmosInfo.displayAddress;
+    return displayAddress.isEmpty ? null : displayAddress;
+  }
 
   bool get isAbstractAccount => type == AccountType.abstraction;
 }
