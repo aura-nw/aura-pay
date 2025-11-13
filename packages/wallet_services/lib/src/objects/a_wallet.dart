@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'dart:developer' as developer;
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
-import 'package:flutter/foundation.dart';
 import 'package:wallet_services/wallet_services.dart';
 import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as Ethereum;
 
@@ -66,18 +66,18 @@ class AWallet {
       BigInt gasLimit) async {}
 
   Uint8List? addressList() {
-    print('getAddressForCoin = ${wallet!.getAddressForCoin(coinType)}');
-    print('address = $address');
+    logger.d('getAddressForCoin = ${wallet!.getAddressForCoin(coinType)}');
+    logger.d('address = $address');
     final addressList =
         Base58.base58DecodeNoCheck(wallet!.getAddressForCoin(coinType));
     if (addressList == null) {
-      print("addressList null !!!");
+      logger.d('addressList null !!!');
       return null;
     }
-    print("addressList = $addressList");
+    logger.d('addressList = $addressList');
     String hexaaddress = hex.encode(addressList);
 
-    print("hexAddress = $hexaaddress");
+    logger.d('hexAddress = $hexaaddress');
     return addressList;
   }
 
@@ -90,12 +90,12 @@ class AWallet {
     String nowBlock =
         '{"blockID":"00000000011918071ecc35c6178f7cea6abf0a0747cf1084b43c9660bd02eb24","block_header":{"raw_data":{"number":18421767,"txTrieRoot":"0000000000000000000000000000000000000000000000000000000000000000","witness_address":"41839d08f05ade5b365e81d1a66c20af13ebb2991d","parentHash":"0000000001191806eeaac4f94195754bab81a6da304f839f15f12ba874e57884","version":22,"timestamp":1631928606000},"witness_signature":"8c0f92f8880521a21c2d9ecf7b1b58cffbaa6ce739c465cb1118328dcd901b0f699d669d3b3382150c4823cab64d644517d92f378dbbbcd2ae1bb535ac08799500"}}';
     Map blockHeader = json.decode(nowBlock)['block_header']['raw_data'];
-    print(blockHeader);
+    logger.d('blockHeader: $blockHeader');
     logger.d(wallet!.getAddressForCoin(coin));
     final addressList =
         Base58.base58DecodeNoCheck(wallet!.getAddressForCoin(coin));
     if (addressList == null) {
-      print("addressList null !!!");
+      logger.d('addressList null !!!');
       return;
     }
     String hexaaddress = hex.encode(addressList);
@@ -126,7 +126,7 @@ class AWallet {
     final output = Tron.SigningOutput.fromBuffer(
         AnySigner.sign(input.writeToBuffer(), coin).toList());
     logger.d(output.json);
-    print(output.json);
+    logger.d(output.json);
 
     Tron.Transaction tr = Tron.Transaction(
         freezeBalance: Tron.FreezeBalanceContract(
@@ -150,7 +150,7 @@ class AWallet {
     );
     final freezeOutput = Tron.SigningOutput.fromBuffer(
         AnySigner.sign(freeze.writeToBuffer(), coin).toList());
-    print(freezeOutput.json);
+    logger.d(freezeOutput.json);
   }
 
   void ethereumExample() {
@@ -194,7 +194,10 @@ class AWallet {
 }
 
 class Logger {
-  void d(String message) {
-    print(message);
+  void d(Object? message) {
+    developer.log(
+      message?.toString() ?? '',
+      name: 'wallet_services',
+    );
   }
 }

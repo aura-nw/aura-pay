@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'dart:typed_data';
 
 import 'package:bech32/bech32.dart';
@@ -54,5 +55,8 @@ List<int>? convertBits(List<int> data, int from, int to, bool pad) {
 void main() {
   var cosmosAddress = "cosmos1y9y4vajtazvnm8purz27u3037478vvcnpnhha4";
   var ethAddress = cosmosToEthAddress(cosmosAddress);
-  print('Ethereum Address: $ethAddress');
+  developer.log(
+    'Ethereum Address: $ethAddress',
+    name: 'wallet_core_test',
+  );
 }

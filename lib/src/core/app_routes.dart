@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class FadeRoute extends PageRouteBuilder {
   FadeRoute({required this.page, required RouteSettings settings})
       : super(
-          pageBuilder: (_, __, ___) => page,
+          pageBuilder: (context,animation, secondaryAnimation) => page,
           settings: settings,
-          transitionsBuilder: (_, animation, __, child) => FadeTransition(
+          transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
             opacity: animation,
             child: child,
           ),
@@ -17,9 +17,9 @@ class FadeRoute extends PageRouteBuilder {
 class SlideRoute extends PageRouteBuilder {
   SlideRoute({required this.page, required RouteSettings settings})
       : super(
-          pageBuilder: (_, __, ___) => page,
+          pageBuilder: (context,animation, secondaryAnimation) => page,
           settings: settings,
-          transitionsBuilder: (_, animation, __, child){
+          transitionsBuilder: (context, animation, secondaryAnimation, child){
             const begin = Offset(1.0, 0.0);
             const end = Offset.zero;
             const curve = Curves.ease;

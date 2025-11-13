@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'dart:typed_data';
 
 import 'package:http/http.dart';
@@ -45,7 +46,10 @@ class EvmChainClient {
         throw Exception('Transaction execute failed');
       }
 
-      print(tx.toString());
+      developer.log(
+        tx.toString(),
+        name: 'EvmChainClient',
+      );
 
       return tx;
     } catch (e) {

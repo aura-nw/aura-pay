@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'dart:typed_data';
 
 import 'package:bech32/bech32.dart';
@@ -20,9 +21,14 @@ void test1(){
 
   final privateKey = wallet.getKeyForCoin(type1);
 
-  print('private key 1 = ${hex.encode(privateKey.data())}');
-
-  print('address 1 ${wallet.getAddressForCoin(type1)}');
+  developer.log(
+    'private key 1 = ${hex.encode(privateKey.data())}',
+    name: 'WalletUtils',
+  );
+  developer.log(
+    'address 1 ${wallet.getAddressForCoin(type1)}',
+    name: 'WalletUtils',
+  );
 }
 
 void test2(){
@@ -30,9 +36,14 @@ void test2(){
 
   final privateKey = wallet.getKey(type1,Constants.derivationPathCosmos);
 
-  print('private key 2 = ${hex.encode(privateKey.data())}');
-
-  print('address 2 ${wallet.getAddressForCoin(type1)}');
+  developer.log(
+    'private key 2 = ${hex.encode(privateKey.data())}',
+    name: 'WalletUtils',
+  );
+  developer.log(
+    'address 2 ${wallet.getAddressForCoin(type1)}',
+    name: 'WalletUtils',
+  );
 }
 
 void test3(){
@@ -42,20 +53,32 @@ void test3(){
 
   final anyAddress = AnyAddress.createWithPublicKey(publicKey, type1);
 
-  print('test 3 ${anyAddress.description()}');
+  developer.log(
+    'test 3 ${anyAddress.description()}',
+    name: 'WalletUtils',
+  );
 
   final data = bech32.makeBech32Decoder('cosmos', anyAddress.description());
 
-  print('test 3 ${bech32.convertBech32AddressToEthAddress('cosmos', anyAddress.description())}');
+  developer.log(
+    'test 3 ${bech32.convertBech32AddressToEthAddress('cosmos', anyAddress.description())}',
+    name: 'WalletUtils',
+  );
+  developer.log(
+    'test 3 ${bech32.makeBech32Encoder('aura', data)}',
+    name: 'WalletUtils',
+  );
 
-  print('test 3 ${bech32.makeBech32Encoder('aura', data)}');
 
 
-
-  print('add ${bech32.makeBech32Encoder('aura', anyAddress.data())}');
-
-
-  print('address ${bech32.convertBech32AddressToEthAddress('aura',bech32.makeBech32Encoder('aura', anyAddress.data()))}');
+  developer.log(
+    'add ${bech32.makeBech32Encoder('aura', anyAddress.data())}',
+    name: 'WalletUtils',
+  );
+  developer.log(
+    'address ${bech32.convertBech32AddressToEthAddress('aura',bech32.makeBech32Encoder('aura', anyAddress.data()))}',
+    name: 'WalletUtils',
+  );
 }
 
 void test4(){
@@ -65,9 +88,14 @@ void test4(){
 
   final anyAddress = AnyAddress.createWithPublicKey(publicKey, TWCoinType.TWCoinTypeEthereum);
 
-  print('test 4 ${bech32.makeBech32Encoder('aura', anyAddress.data())}');
-
-  print('test 4 ${anyAddress.description()}');
+  developer.log(
+    'test 4 ${bech32.makeBech32Encoder('aura', anyAddress.data())}',
+    name: 'WalletUtils',
+  );
+  developer.log(
+    'test 4 ${anyAddress.description()}',
+    name: 'WalletUtils',
+  );
 
 }
 
@@ -76,7 +104,12 @@ void test5(){
 
   final privateKey = wallet.getKeyForCoin(TWCoinType.TWCoinTypeEthereum);
 
-  print('test 5 = ${hex.encode(privateKey.data())}');
-
-  print('test 5 ${wallet.getAddressForCoin(TWCoinType.TWCoinTypeEthereum)}');
+  developer.log(
+    'test 5 = ${hex.encode(privateKey.data())}',
+    name: 'WalletUtils',
+  );
+  developer.log(
+    'test 5 ${wallet.getAddressForCoin(TWCoinType.TWCoinTypeEthereum)}',
+    name: 'WalletUtils',
+  );
 }

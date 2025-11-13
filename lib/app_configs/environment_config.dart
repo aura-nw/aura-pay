@@ -1,4 +1,5 @@
 import 'package:aurapay/app_configs/aura_pay_config.dart';
+import 'package:domain/domain.dart';
 
 /// Environment configuration class để quản lý environments
 /// Sử dụng Dart-define để set environment tại build time
@@ -64,10 +65,7 @@ class EnvironmentConfig {
       '================================',
     ].join('\n');
     
-    // Use print for environment info as it's critical startup information
-    // that should be visible in all build modes
-    // ignore: avoid_print
-    print(info);
+    LogProvider.log(info);
   }
 }
 

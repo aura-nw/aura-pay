@@ -2,7 +2,6 @@ import 'package:data/core/base_response.dart';
 import 'package:data/data.dart';
 import 'package:dio/dio.dart';
 import 'package:aurapay/src/application/provider/service/api_service_path.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'nft_service_impl.g.dart';
