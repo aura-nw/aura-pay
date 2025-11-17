@@ -36,73 +36,101 @@ class _ManageWalletScreenState extends State<ManageWalletScreen>
   }
 
   Future<void> _loadWallets() async {
-    setState(() {
-      _isLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
 
     try {
+      // Load all accounts from database
       final accounts = await _accountUseCase.getAll();
+      
+      if (accounts.isEmpty) {
+        if (mounted) {
+          setState(() {
+            _allAccounts = [];
+            _accountBalances = {};
+            _isLoading = false;
+          });
+        }
+        return;
+      }
+
+      // Load tokens and token markets for balance calculation
       final tokens = await _tokenUseCase.getAll();
       final tokenMarkets = await _tokenMarketUseCase.getAll();
 
       final Map<int, double> balances = {};
 
+      // Calculate balance for each account
       for (final account in accounts) {
-        final accountBalance = await _balanceUseCase.getByAccountID(
-          accountId: account.id,
-        );
+        try {
+          final accountBalance = await _balanceUseCase.getByAccountID(
+            accountId: account.id,
+          );
 
-        if (accountBalance != null) {
-          double totalBalance = 0;
+          if (accountBalance != null && accountBalance.balances.isNotEmpty) {
+            double totalBalance = 0;
 
-          for (final balance in accountBalance.balances) {
-            final token = tokens.firstWhereOrNull(
-              (e) => e.id == balance.tokenId,
-            );
+            for (final balance in accountBalance.balances) {
+              final token = tokens.firstWhereOrNull(
+                (e) => e.id == balance.tokenId,
+              );
 
-            if (token == null) continue;
+              if (token == null) continue;
 
-            final tokenMarket = tokenMarkets.firstWhereOrNull(
-              (e) => e.symbol == token.symbol,
-            );
+              final tokenMarket = tokenMarkets.firstWhereOrNull(
+                (e) => e.symbol == token.symbol,
+              );
 
-            final amount = double.tryParse(
-                  token.type.formatBalance(
-                    balance.balance,
-                    customDecimal: token.decimal,
-                  ),
-                ) ??
-                0;
+              final amount = double.tryParse(
+                    token.type.formatBalance(
+                      balance.balance,
+                      customDecimal: token.decimal,
+                    ),
+                  ) ??
+                  0;
 
-            double currentPrice =
-                double.tryParse(tokenMarket?.currentPrice ?? '0') ?? 0;
+              double currentPrice =
+                  double.tryParse(tokenMarket?.currentPrice ?? '0') ?? 0;
 
-            if (amount != 0 && currentPrice != 0) {
-              totalBalance += amount * currentPrice;
+              if (amount != 0 && currentPrice != 0) {
+                totalBalance += amount * currentPrice;
+              }
             }
-          }
 
-          balances[account.id] = totalBalance;
-        } else {
+            balances[account.id] = totalBalance;
+          } else {
+            balances[account.id] = 0.0;
+          }
+        } catch (e) {
+          // If error loading balance for an account, set to 0
           balances[account.id] = 0.0;
         }
       }
 
-      setState(() {
-        _allAccounts = accounts;
-        _accountBalances = balances;
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _allAccounts = accounts;
+          _accountBalances = balances;
+          _isLoading = false;
+        });
+      }
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
   List<Account> get _mainWallets {
     return _allAccounts
-        .where((account) => account.createType == AccountCreateType.normal)
+        .where((account) => 
+            account.createType == AccountCreateType.normal ||
+            account.createType == AccountCreateType.social)
         .toList();
   }
 
@@ -126,40 +154,73 @@ class _ManageWalletScreenState extends State<ManageWalletScreen>
       );
     }
 
+    if (_allAccounts.isEmpty) {
+      return Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.account_balance_wallet_outlined,
+                    size: 64,
+                    color: appTheme.textTertiary,
+                  ),
+                  const SizedBox(height: Spacing.spacing04),
+                  Text(
+                    'No wallets found',
+                    style: AppTypoGraPhy.textLgMedium.copyWith(
+                      color: appTheme.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          _buildAddButton(context, appTheme, localization),
+        ],
+      );
+    }
+
     return Column(
       children: [
         Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(BoxSize.boxSize04),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (_mainWallets.isNotEmpty) ...[
-                  _buildSectionHeader(
-                    localization.translate(LanguageKey.manageWalletScreenMainWallets),
-                    appTheme,
-                  ),
-                  const SizedBox(height: Spacing.spacing03),
-                  ..._mainWallets.map((account) => _buildWalletItem(
-                        account: account,
-                        appTheme: appTheme,
-                        isMain: true,
-                      )),
-                  const SizedBox(height: Spacing.spacing05),
+          child: RefreshIndicator(
+            onRefresh: _loadWallets,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(BoxSize.boxSize04),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (_mainWallets.isNotEmpty) ...[
+                    _buildSectionHeader(
+                      localization.translate(LanguageKey.manageWalletScreenMainWallets),
+                      appTheme,
+                    ),
+                    const SizedBox(height: Spacing.spacing03),
+                    ..._mainWallets.map((account) => _buildWalletItem(
+                          account: account,
+                          appTheme: appTheme,
+                          isMain: true,
+                        )),
+                    const SizedBox(height: Spacing.spacing05),
+                  ],
+                  if (_importedWallets.isNotEmpty) ...[
+                    _buildSectionHeader(
+                      localization.translate(LanguageKey.manageWalletScreenImportedWallets),
+                      appTheme,
+                    ),
+                    const SizedBox(height: Spacing.spacing03),
+                    ..._importedWallets.map((account) => _buildWalletItem(
+                          account: account,
+                          appTheme: appTheme,
+                          isMain: false,
+                        )),
+                  ],
                 ],
-                if (_importedWallets.isNotEmpty) ...[
-                  _buildSectionHeader(
-                    localization.translate(LanguageKey.manageWalletScreenImportedWallets),
-                    appTheme,
-                  ),
-                  const SizedBox(height: Spacing.spacing03),
-                  ..._importedWallets.map((account) => _buildWalletItem(
-                        account: account,
-                        appTheme: appTheme,
-                        isMain: false,
-                      )),
-                ],
-              ],
+              ),
             ),
           ),
         ),
