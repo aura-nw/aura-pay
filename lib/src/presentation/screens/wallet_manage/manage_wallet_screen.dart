@@ -1,0 +1,315 @@
+import 'package:domain/domain.dart';
+import 'package:flutter/material.dart';
+import 'package:aurapay/app_configs/di.dart';
+import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
+import 'package:aurapay/src/application/global/localization/localization_manager.dart';
+import 'package:aurapay/src/core/constants/language_key.dart';
+import 'package:aurapay/src/core/constants/size_constant.dart';
+import 'package:aurapay/src/core/constants/typography.dart';
+import 'package:aurapay/src/core/utils/aura_util.dart';
+import 'package:aurapay/src/core/utils/dart_core_extension.dart';
+import 'package:aurapay/src/presentation/widgets/app_bar_widget.dart';
+import 'package:aurapay/src/presentation/widgets/base_screen.dart';
+
+class ManageWalletScreen extends StatefulWidget {
+  const ManageWalletScreen({super.key});
+
+  @override
+  State<ManageWalletScreen> createState() => _ManageWalletScreenState();
+}
+
+class _ManageWalletScreenState extends State<ManageWalletScreen>
+    with StateFulBaseScreen {
+  final AccountUseCase _accountUseCase = getIt.get<AccountUseCase>();
+  final BalanceUseCase _balanceUseCase = getIt.get<BalanceUseCase>();
+  final TokenUseCase _tokenUseCase = getIt.get<TokenUseCase>();
+  final TokenMarketUseCase _tokenMarketUseCase = getIt.get<TokenMarketUseCase>();
+
+  List<Account> _allAccounts = [];
+  Map<int, double> _accountBalances = {};
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadWallets();
+  }
+
+  Future<void> _loadWallets() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final accounts = await _accountUseCase.getAll();
+      final tokens = await _tokenUseCase.getAll();
+      final tokenMarkets = await _tokenMarketUseCase.getAll();
+
+      final Map<int, double> balances = {};
+
+      for (final account in accounts) {
+        final accountBalance = await _balanceUseCase.getByAccountID(
+          accountId: account.id,
+        );
+
+        if (accountBalance != null) {
+          double totalBalance = 0;
+
+          for (final balance in accountBalance.balances) {
+            final token = tokens.firstWhereOrNull(
+              (e) => e.id == balance.tokenId,
+            );
+
+            if (token == null) continue;
+
+            final tokenMarket = tokenMarkets.firstWhereOrNull(
+              (e) => e.symbol == token.symbol,
+            );
+
+            final amount = double.tryParse(
+                  token.type.formatBalance(
+                    balance.balance,
+                    customDecimal: token.decimal,
+                  ),
+                ) ??
+                0;
+
+            double currentPrice =
+                double.tryParse(tokenMarket?.currentPrice ?? '0') ?? 0;
+
+            if (amount != 0 && currentPrice != 0) {
+              totalBalance += amount * currentPrice;
+            }
+          }
+
+          balances[account.id] = totalBalance;
+        } else {
+          balances[account.id] = 0.0;
+        }
+      }
+
+      setState(() {
+        _allAccounts = accounts;
+        _accountBalances = balances;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  List<Account> get _mainWallets {
+    return _allAccounts
+        .where((account) => account.createType == AccountCreateType.normal)
+        .toList();
+  }
+
+  List<Account> get _importedWallets {
+    return _allAccounts
+        .where((account) => account.createType == AccountCreateType.import)
+        .toList();
+  }
+
+  String _formatBalance(int accountId) {
+    final balance = _accountBalances[accountId] ?? 0.0;
+    return '\$${balance.formatPrice}';
+  }
+
+  @override
+  Widget child(BuildContext context, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    if (_isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(BoxSize.boxSize04),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (_mainWallets.isNotEmpty) ...[
+                  _buildSectionHeader(
+                    localization.translate(LanguageKey.manageWalletScreenMainWallets),
+                    appTheme,
+                  ),
+                  const SizedBox(height: Spacing.spacing03),
+                  ..._mainWallets.map((account) => _buildWalletItem(
+                        account: account,
+                        appTheme: appTheme,
+                        isMain: true,
+                      )),
+                  const SizedBox(height: Spacing.spacing05),
+                ],
+                if (_importedWallets.isNotEmpty) ...[
+                  _buildSectionHeader(
+                    localization.translate(LanguageKey.manageWalletScreenImportedWallets),
+                    appTheme,
+                  ),
+                  const SizedBox(height: Spacing.spacing03),
+                  ..._importedWallets.map((account) => _buildWalletItem(
+                        account: account,
+                        appTheme: appTheme,
+                        isMain: false,
+                      )),
+                ],
+              ],
+            ),
+          ),
+        ),
+        _buildAddButton(context, appTheme, localization),
+      ],
+    );
+  }
+
+  Widget _buildSectionHeader(String title, AppTheme appTheme) {
+    return Text(
+      title,
+      style: AppTypoGraPhy.textLgBold.copyWith(
+        color: appTheme.textPrimary,
+      ),
+    );
+  }
+
+  Widget _buildWalletItem({
+    required Account account,
+    required AppTheme appTheme,
+    required bool isMain,
+  }) {
+    final address = account.aEvmInfo.displayAddress.isNotEmpty
+        ? account.aEvmInfo.displayAddress
+        : account.aCosmosInfo.displayAddress;
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: Spacing.spacing03),
+      padding: const EdgeInsets.all(Spacing.spacing04),
+      decoration: BoxDecoration(
+        color: appTheme.bgSecondary,
+        borderRadius: BorderRadius.circular(BorderRadiusSize.borderRadius04),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: isMain
+                  ? const Color(0xFFE3F2FD)
+                  : const Color(0xFFE8F5E9),
+              borderRadius: BorderRadius.circular(BorderRadiusSize.borderRadius03),
+            ),
+            child: Icon(
+              Icons.account_balance_wallet_outlined,
+              color: isMain
+                  ? const Color(0xFF1976D2)
+                  : const Color(0xFF388E3C),
+              size: 24,
+            ),
+          ),
+          const SizedBox(width: Spacing.spacing04),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  account.name,
+                  style: AppTypoGraPhy.textMdMedium.copyWith(
+                    color: appTheme.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: Spacing.spacing01),
+                Text(
+                  address.addressView,
+                  style: AppTypoGraPhy.textSmRegular.copyWith(
+                    color: appTheme.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: Spacing.spacing01),
+                Text(
+                  _formatBalance(account.id),
+                  style: AppTypoGraPhy.textMdMedium.copyWith(
+                    color: appTheme.textPrimary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: appTheme.fgPrimary,
+            ),
+            onPressed: () {
+              // TODO: Show wallet options menu
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAddButton(
+    BuildContext context,
+    AppTheme appTheme,
+    AppLocalizationManager localization,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(BoxSize.boxSize04),
+      decoration: BoxDecoration(
+        color: appTheme.bgPrimary,
+        border: Border(
+          top: BorderSide(
+            color: appTheme.borderSecondary,
+            width: 1,
+          ),
+        ),
+      ),
+      child: SafeArea(
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              // TODO: Navigate to add/import wallet screen
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: appTheme.bgBrandPrimary,
+              padding: const EdgeInsets.symmetric(vertical: Spacing.spacing04),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  BorderRadiusSize.borderRadius05,
+                ),
+              ),
+            ),
+            child: Text(
+              localization.translate(LanguageKey.manageWalletScreenAddOrImport),
+              style: AppTypoGraPhy.textMdMedium.copyWith(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget wrapBuild(BuildContext context, Widget child, AppTheme appTheme,
+      AppLocalizationManager localization) {
+    return Scaffold(
+      backgroundColor: appTheme.bgPrimary,
+      appBar: AppBarDefault(
+        appTheme: appTheme,
+        localization: localization,
+        titleKey: LanguageKey.manageWalletScreenAppBarTitle,
+      ),
+      body: child,
+    );
+  }
+}
+

@@ -10,6 +10,7 @@ import 'package:aurapay/src/core/constants/typography.dart';
 import 'package:aurapay/src/presentation/widgets/app_bar_widget.dart';
 import 'package:aurapay/src/presentation/widgets/base_screen.dart';
 import 'package:aurapay/src/core/constants/language_key.dart';
+import 'package:aurapay/src/presentation/screens/wallet_manage/manage_wallet_screen.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -67,6 +68,19 @@ class _SettingPageState extends State<SettingPage> with StateFulBaseScreen {
         _buildSectionHeader(
             localization.translate(LanguageKey.settingsPageSystemSection),
             appTheme),
+        _buildListTile(
+          context,
+          localization.translate(LanguageKey.settingsPageManageWallet),
+          Icons.account_balance_wallet,
+          appTheme,
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const ManageWalletScreen(),
+              ),
+            );
+          },
+        ),
         _buildListTile(
           context,
           localization.translate(LanguageKey.settingsPageResetOnboarding),

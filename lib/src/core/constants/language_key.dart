@@ -109,6 +109,7 @@ sealed class LanguageKey {
   static const String settingsPageLanguage = 'settings_page_language';
   static const String settingsPageNotifications = 'settings_page_notifications';
   static const String settingsPageSystemSection = 'settings_page_system_section';
+  static const String settingsPageManageWallet = 'settings_page_manage_wallet';
   static const String settingsPageResetOnboarding = 'settings_page_reset_onboarding';
   static const String settingsPageLogout = 'settings_page_logout';
 
@@ -178,6 +179,11 @@ sealed class LanguageKey {
   static const manageTokenScreenHideSmallBalanceExplanation = 'manage_token_screen_hide_small_balance_explanation';
   static const manageTokenScreenSelectTokenShow = 'manage_token_screen_select_token_show';
 
+  // Manage wallet screen
+  static const manageWalletScreenAppBarTitle = 'manage_wallet_screen_app_bar_title';
+  static const manageWalletScreenMainWallets = 'manage_wallet_screen_main_wallets';
+  static const manageWalletScreenImportedWallets = 'manage_wallet_screen_imported_wallets';
+  static const manageWalletScreenAddOrImport = 'manage_wallet_screen_add_or_import';
 
   // Add custom token screen
   static const addCustomTokenScreenAppBarTitle = 'add_custom_token_screen_app_bar_title';

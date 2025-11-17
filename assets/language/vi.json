@@ -97,8 +97,14 @@
   "settings_page_language": "Ngôn ngữ",
   "settings_page_notifications": "Thông báo",
   "settings_page_system_section": "Hệ thống",
+  "settings_page_manage_wallet": "Quản Lý Ví",
   "settings_page_reset_onboarding": "Thiết lập lại Onboarding",
   "settings_page_logout": "Đăng xuất",
+
+  "manage_wallet_screen_app_bar_title": "Quản lý ví",
+  "manage_wallet_screen_main_wallets": "Ví Chính",
+  "manage_wallet_screen_imported_wallets": "Ví Đã Nhập",
+  "manage_wallet_screen_add_or_import": "Thêm hoặc Nhập ví",
 
   "send_screen_app_bar_title" : "Send",
   "send_screen_from" : "From",

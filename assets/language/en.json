@@ -98,8 +98,14 @@
   "settings_page_language": "Language",
   "settings_page_notifications": "Notifications",
   "settings_page_system_section": "System",
+  "settings_page_manage_wallet": "Manage Wallet",
   "settings_page_reset_onboarding": "Reset Onboarding",
   "settings_page_logout": "Logout",
+
+  "manage_wallet_screen_app_bar_title": "Manage wallet",
+  "manage_wallet_screen_main_wallets": "Main Wallets",
+  "manage_wallet_screen_imported_wallets": "Imported Wallets",
+  "manage_wallet_screen_add_or_import": "Add or Import wallet",
 
   "send_screen_app_bar_title" : "Send",
   "send_screen_from" : "From",
