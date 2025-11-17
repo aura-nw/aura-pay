@@ -184,6 +184,9 @@ sealed class LanguageKey {
   static const manageWalletScreenMainWallets = 'manage_wallet_screen_main_wallets';
   static const manageWalletScreenImportedWallets = 'manage_wallet_screen_imported_wallets';
   static const manageWalletScreenAddOrImport = 'manage_wallet_screen_add_or_import';
+  static const manageWalletScreenMenuTitle = 'manage_wallet_screen_menu_title';
+  static const manageWalletScreenCreateNew = 'manage_wallet_screen_create_new';
+  static const manageWalletScreenAddExisting = 'manage_wallet_screen_add_existing';
 
   // Add custom token screen
   static const addCustomTokenScreenAppBarTitle = 'add_custom_token_screen_app_bar_title';

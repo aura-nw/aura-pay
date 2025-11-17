@@ -105,6 +105,9 @@
   "manage_wallet_screen_main_wallets": "Ví Chính",
   "manage_wallet_screen_imported_wallets": "Ví Đã Nhập",
   "manage_wallet_screen_add_or_import": "Thêm hoặc Nhập ví",
+  "manage_wallet_screen_menu_title": "Quản Lý Ví",
+  "manage_wallet_screen_create_new": "Tạo ví mới",
+  "manage_wallet_screen_add_existing": "Thêm ví hiện có",
 
   "send_screen_app_bar_title" : "Send",
   "send_screen_from" : "From",

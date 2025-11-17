@@ -106,6 +106,9 @@
   "manage_wallet_screen_main_wallets": "Main Wallets",
   "manage_wallet_screen_imported_wallets": "Imported Wallets",
   "manage_wallet_screen_add_or_import": "Add or Import wallet",
+  "manage_wallet_screen_menu_title": "Manage Wallets",
+  "manage_wallet_screen_create_new": "Create new wallet",
+  "manage_wallet_screen_add_existing": "Add existing wallet",
 
   "send_screen_app_bar_title" : "Send",
   "send_screen_from" : "From",

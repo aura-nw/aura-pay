@@ -8,8 +8,11 @@ import 'package:aurapay/src/core/constants/size_constant.dart';
 import 'package:aurapay/src/core/constants/typography.dart';
 import 'package:aurapay/src/core/utils/aura_util.dart';
 import 'package:aurapay/src/core/utils/dart_core_extension.dart';
+import 'package:aurapay/src/navigator.dart';
 import 'package:aurapay/src/presentation/widgets/app_bar_widget.dart';
 import 'package:aurapay/src/presentation/widgets/base_screen.dart';
+import 'package:aurapay/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_provider.dart';
+import 'package:aurapay/src/presentation/screens/wallet_manage/widgets/add_wallet_menu_bottom_sheet.dart';
 
 class ManageWalletScreen extends StatefulWidget {
   const ManageWalletScreen({super.key});
@@ -143,6 +146,31 @@ class _ManageWalletScreenState extends State<ManageWalletScreen>
   String _formatBalance(int accountId) {
     final balance = _accountBalances[accountId] ?? 0.0;
     return '\$${balance.formatPrice}';
+  }
+
+  void _showAddWalletMenu(
+    BuildContext context,
+    AppTheme appTheme,
+    AppLocalizationManager localization,
+  ) {
+    AppBottomSheetProvider.showFullScreenDialog(
+      context,
+      appTheme: appTheme,
+      child: AddWalletMenuBottomSheet(
+        appTheme: appTheme,
+        localization: localization,
+        onCreateNewWallet: () {
+          Navigator.of(context).pop(); // Close bottom sheet
+          Navigator.of(context).pop(); // Close manage wallet screen
+          AppNavigator.push(RoutePath.createWallet);
+        },
+        onAddExistingWallet: () {
+          Navigator.of(context).pop(); // Close bottom sheet
+          Navigator.of(context).pop(); // Close manage wallet screen
+          AppNavigator.push(RoutePath.selectNetwork);
+        },
+      ),
+    );
   }
 
   @override
@@ -336,7 +364,7 @@ class _ManageWalletScreenState extends State<ManageWalletScreen>
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
-              // TODO: Navigate to add/import wallet screen
+              _showAddWalletMenu(context, appTheme, localization);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: appTheme.bgBrandPrimary,
