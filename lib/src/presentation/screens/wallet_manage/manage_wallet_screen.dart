@@ -229,6 +229,7 @@ class _ManageWalletScreenState extends State<ManageWalletScreen>
                     ),
                     const SizedBox(height: Spacing.spacing03),
                     ..._mainWallets.map((account) => _buildWalletItem(
+                          key: ValueKey('main_wallet_${account.id}'),
                           account: account,
                           appTheme: appTheme,
                           isMain: true,
@@ -242,6 +243,7 @@ class _ManageWalletScreenState extends State<ManageWalletScreen>
                     ),
                     const SizedBox(height: Spacing.spacing03),
                     ..._importedWallets.map((account) => _buildWalletItem(
+                          key: ValueKey('imported_wallet_${account.id}'),
                           account: account,
                           appTheme: appTheme,
                           isMain: false,
@@ -267,6 +269,7 @@ class _ManageWalletScreenState extends State<ManageWalletScreen>
   }
 
   Widget _buildWalletItem({
+    Key? key,
     required Account account,
     required AppTheme appTheme,
     required bool isMain,
@@ -276,6 +279,7 @@ class _ManageWalletScreenState extends State<ManageWalletScreen>
         : account.aCosmosInfo.displayAddress;
 
     return Container(
+      key: key,
       margin: const EdgeInsets.only(bottom: Spacing.spacing03),
       padding: const EdgeInsets.all(Spacing.spacing04),
       decoration: BoxDecoration(

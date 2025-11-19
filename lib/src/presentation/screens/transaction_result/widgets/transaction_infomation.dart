@@ -115,7 +115,7 @@ final class TransactionResultInformationWidget extends StatelessWidget {
   final AppTheme appTheme;
   final AppLocalizationManager localization;
 
-  const TransactionResultInformationWidget({
+  const TransactionResultInformationWidget({super.key, 
     required this.from,
     required this.recipient,
     required this.appTheme,
