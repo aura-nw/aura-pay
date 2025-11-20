@@ -1,5 +1,5 @@
 import 'package:bech32/bech32.dart';
-import 'package:web3dart/crypto.dart' as evmCrypto;
+import 'package:web3dart/crypto.dart' as evm_crypto;
 
 export 'package:bech32/bech32.dart';
 
@@ -84,7 +84,7 @@ extension Bech32CodeSpecExtension on Bech32Codec {
 
 // Convert Ethereum address to Bech32 address
   String convertEthAddressToBech32Address(String prefix, String ethAddress) {
-    final ethData = evmCrypto.hexToBytes(ethAddress);
+    final ethData = evm_crypto.hexToBytes(ethAddress);
     return makeBech32Encoder(prefix, ethData);
   }
 }

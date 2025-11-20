@@ -4,11 +4,11 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:wallet_services/wallet_services.dart';
-import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as Ethereum;
+import 'package:trust_wallet_core/protobuf/Ethereum.pb.dart' as ethereum;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
-import 'package:trust_wallet_core/flutter_trust_wallet_core.dart';
-import 'package:trust_wallet_core/protobuf/Tron.pb.dart' as Tron;
+
+import 'package:trust_wallet_core/protobuf/Tron.pb.dart' as tron;
 import 'package:trust_wallet_core/trust_wallet_core_ffi.dart';
 
 /// Class to hold wallet information.
@@ -101,9 +101,9 @@ class AWallet {
     String hexaaddress = hex.encode(addressList);
     logger.d("hexAddress = $hexaaddress");
 
-    final input = Tron.SigningInput(
-        transaction: Tron.Transaction(
-          transfer: Tron.TransferContract(
+    final input = tron.SigningInput(
+        transaction: tron.Transaction(
+          transfer: tron.TransferContract(
             ownerAddress: wallet!.getAddressForCoin(coin),
             toAddress: 'TD3QZkapTC2Uuq1Tn6tv4TfzagDHxr7gxz',
             amount: $fixnum.Int64.parseInt('200000'),
@@ -112,7 +112,7 @@ class AWallet {
               $fixnum.Int64.parseInt(now.millisecondsSinceEpoch.toString()),
           expiration: $fixnum.Int64.parseInt(
               '${now.millisecondsSinceEpoch + 10 * 60 * 60 * 1000}'),
-          blockHeader: Tron.BlockHeader(
+          blockHeader: tron.BlockHeader(
             timestamp:
                 $fixnum.Int64.parseInt(blockHeader['timestamp'].toString()),
             txTrieRoot: hex.decode(blockHeader['txTrieRoot']),
@@ -123,19 +123,19 @@ class AWallet {
           ),
         ),
         privateKey: wallet!.getKeyForCoin(coin).data().toList());
-    final output = Tron.SigningOutput.fromBuffer(
+    final output = tron.SigningOutput.fromBuffer(
         AnySigner.sign(input.writeToBuffer(), coin).toList());
     logger.d(output.json);
     logger.d(output.json);
 
-    Tron.Transaction tr = Tron.Transaction(
-        freezeBalance: Tron.FreezeBalanceContract(
+    tron.Transaction tr = tron.Transaction(
+        freezeBalance: tron.FreezeBalanceContract(
           ownerAddress: "TUQuaXCjDhLQsJbUeCN42PTZzQQnGh7SQP",
           frozenBalance: $fixnum.Int64.parseInt("4900000"),
           frozenDuration: $fixnum.Int64.parseInt("3"),
           resource: "ENERGY",
         ),
-        blockHeader: Tron.BlockHeader(
+        blockHeader: tron.BlockHeader(
           timestamp:
               $fixnum.Int64.parseInt(blockHeader['timestamp'].toString()),
           txTrieRoot: hex.decode(blockHeader['txTrieRoot']),
@@ -144,11 +144,11 @@ class AWallet {
           witnessAddress: hex.decode(blockHeader['witness_address']),
           version: blockHeader['version'],
         ));
-    final freeze = Tron.SigningInput(
+    final freeze = tron.SigningInput(
       transaction: tr,
       privateKey: wallet!.getKeyForCoin(coin).data().toList(),
     );
-    final freezeOutput = Tron.SigningOutput.fromBuffer(
+    final freezeOutput = tron.SigningOutput.fromBuffer(
         AnySigner.sign(freeze.writeToBuffer(), coin).toList());
     logger.d(freezeOutput.json);
   }
@@ -162,21 +162,21 @@ class AWallet {
     final gasLimit = BigInt.parse('21000');
     final nonce = BigInt.parse('0'); // Replace with actual nonce
 
-    final signingInput = Ethereum.SigningInput(
+    final signingInput = ethereum.SigningInput(
       chainId: _bigIntToBytes(BigInt.from(1)), // Mainnet
       nonce: _bigIntToBytes(nonce),
       gasPrice: _bigIntToBytes(gasPrice),
       gasLimit: _bigIntToBytes(gasLimit),
       toAddress: toAddress,
       privateKey: wallet!.getKeyForCoin(coin).data().toList(),
-      transaction: Ethereum.Transaction(
-        transfer: Ethereum.Transaction_Transfer(
+      transaction: ethereum.Transaction(
+        transfer: ethereum.Transaction_Transfer(
           amount: _bigIntToBytes(amount),
         ),
       ),
     );
 
-    final output = Ethereum.SigningOutput.fromBuffer(
+    final output = ethereum.SigningOutput.fromBuffer(
       AnySigner.sign(signingInput.writeToBuffer(), coin).toList(),
     );
 

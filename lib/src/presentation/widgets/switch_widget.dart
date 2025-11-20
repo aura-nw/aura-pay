@@ -18,8 +18,8 @@ class SwitchWidget extends StatelessWidget {
     return CupertinoSwitch(
       value: isSelected,
       onChanged: onChanged,
-      activeColor: appTheme.bgBrandSolid,
-      trackColor: appTheme.bgQuaternary,
+      activeTrackColor: appTheme.bgBrandSolid,
+      inactiveTrackColor: appTheme.bgQuaternary,
       thumbColor: appTheme.bgPrimary,
       offLabelColor: appTheme.bgQuaternary,
     );
