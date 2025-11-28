@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:aurapay/src/application/global/app_theme/app_theme.dart';
-import 'package:aurapay/src/application/global/localization/localization_manager.dart';
 import 'package:aurapay/src/core/constants/language_key.dart';
 import 'package:aurapay/src/core/constants/size_constant.dart';
 import 'package:aurapay/src/core/constants/typography.dart';
 import 'package:aurapay/src/navigator.dart';
 import 'package:aurapay/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_base.dart';
-import 'package:aurapay/src/presentation/widgets/bottom_sheet_base/app_bottom_sheet_provider.dart';
 
 final class AddWalletMenuBottomSheet extends AppBottomSheetBase {
   final VoidCallback? onCreateNewWallet;
