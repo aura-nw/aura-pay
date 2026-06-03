@@ -1,6 +1,6 @@
 # 🛡️ Error Handling Guide
 
-Hướng dẫn sử dụng centralized error handling trong Pyxis Mobile app.
+Hướng dẫn sử dụng centralized error handling trong AuraPay app.
 
 ---
 
@@ -25,7 +25,7 @@ import 'package:aurapay/src/core/error/error.dart';
 try {
   await someOperation();
 } catch (e, stackTrace) {
-  ErrorHandler.handle(e, stackTrace: stackTrace);
+  AppErrorHandler.handle(e, stackTrace: stackTrace);
 }
 ```
 
@@ -35,7 +35,7 @@ try {
 try {
   await fetchData();
 } catch (e, stackTrace) {
-  ErrorHandler.handle(
+  AppErrorHandler.handle(
     e,
     stackTrace: stackTrace,
     customMessage: 'Failed to load data. Please try again.',
@@ -49,7 +49,7 @@ try {
 try {
   await backgroundTask();
 } catch (e, stackTrace) {
-  ErrorHandler.handle(
+  AppErrorHandler.handle(
     e,
     stackTrace: stackTrace,
     showToUser: false, // Chỉ log, không show toast
@@ -148,14 +148,14 @@ throw StorageException.deleteFailed('tempData');
 try {
   await operation();
 } catch (e, stackTrace) {
-  ErrorHandler.handle(e, stackTrace: stackTrace);
+  AppErrorHandler.handle(e, stackTrace: stackTrace);
 }
 
 ❌ BAD:
 try {
   await operation();
 } catch (e) {
-  ErrorHandler.handle(e); // Missing stackTrace!
+  AppErrorHandler.handle(e); // Missing stackTrace!
 }
 ```
 
@@ -180,7 +180,7 @@ if (balance < amount) {
 try {
   await sendTransaction();
 } catch (e, stackTrace) {
-  ErrorHandler.handle(
+  AppErrorHandler.handle(
     e,
     stackTrace: stackTrace,
     customMessage: 'Failed to send AURA tokens',
@@ -191,7 +191,7 @@ try {
 try {
   await sendTransaction();
 } catch (e, stackTrace) {
-  ErrorHandler.handle(e, stackTrace: stackTrace);
+  AppErrorHandler.handle(e, stackTrace: stackTrace);
   // Will show generic message
 }
 ```
@@ -203,7 +203,7 @@ try {
 try {
   await operation();
 } catch (e, stackTrace) {
-  ErrorHandler.handle(e, stackTrace: stackTrace);
+  AppErrorHandler.handle(e, stackTrace: stackTrace);
   rethrow; // Why handle if you rethrow?
 }
 
@@ -212,7 +212,7 @@ try {
   await operation();
 } catch (e, stackTrace) {
   await cleanup();
-  ErrorHandler.handle(e, stackTrace: stackTrace);
+  AppErrorHandler.handle(e, stackTrace: stackTrace);
 }
 ```
 
@@ -223,7 +223,7 @@ try {
 try {
   await backgroundSync();
 } catch (e, stackTrace) {
-  ErrorHandler.handle(
+  AppErrorHandler.handle(
     e,
     stackTrace: stackTrace,
     showToUser: false,
@@ -255,7 +255,7 @@ final class SendBloc extends Bloc<SendEvent, SendState> {
       
       ToastHelper.showSuccess('Transaction sent successfully!');
     } catch (e, stackTrace) {
-      ErrorHandler.handle(
+      AppErrorHandler.handle(
         e,
         stackTrace: stackTrace,
         customMessage: 'Failed to send transaction',
@@ -335,8 +335,8 @@ class SendScreen extends StatelessWidget {
       // Show validation errors in form
       _showValidationErrors(e.fieldErrors);
     } catch (e, stackTrace) {
-      // Let ErrorHandler show toast
-      ErrorHandler.handle(e, stackTrace: stackTrace);
+      // Let AppErrorHandler show toast
+      AppErrorHandler.handle(e, stackTrace: stackTrace);
     }
   }
 }
@@ -388,9 +388,9 @@ ToastHelper.showInfo('Info message');
 try {
   await operation();
 } catch (e, stackTrace) {
-  ErrorHandler.handle(e, stackTrace: stackTrace);
+  AppErrorHandler.handle(e, stackTrace: stackTrace);
   
-  if (ErrorHandler.isCriticalError(e)) {
+  if (AppErrorHandler.isCriticalError(e)) {
     // Navigate to login or show critical error screen
     Navigator.pushReplacementNamed(context, '/login');
   }
@@ -403,10 +403,10 @@ try {
 try {
   await operation();
 } catch (e, stackTrace) {
-  final errorCode = ErrorHandler.getErrorCode(e);
+  final errorCode = AppErrorHandler.getErrorCode(e);
   LogProvider.log('Error code: $errorCode');
   
-  ErrorHandler.handle(e, stackTrace: stackTrace);
+  AppErrorHandler.handle(e, stackTrace: stackTrace);
 }
 ```
 
@@ -417,7 +417,7 @@ Future<void> someMethod() async {
   try {
     await riskyOperation();
   } catch (e, stackTrace) {
-    final appException = ErrorHandler.toAppException(e, stackTrace: stackTrace);
+    final appException = AppErrorHandler.toAppException(e, stackTrace: stackTrace);
     
     // Now you can check specific exception types
     if (appException is NetworkException) {
@@ -470,7 +470,7 @@ try {
   final account = await _accountUseCase.getFirstAccount();
   emit(state.copyWith(account: account));
 } catch (e, stackTrace) {
-  ErrorHandler.handle(
+  AppErrorHandler.handle(
     e,
     stackTrace: stackTrace,
     customMessage: 'Failed to load account',
@@ -487,9 +487,9 @@ Khi update existing BLoC để dùng ErrorHandler:
 - [ ] Import `'package:aurapay/src/core/error/error.dart'`
 - [ ] Replace `print()` với `LogProvider.log()`
 - [ ] Thêm `stackTrace` parameter vào catch blocks
-- [ ] Sử dụng `ErrorHandler.handle()` thay vì manual logging
+- [ ] Sử dụng `AppErrorHandler.handle()` thay vì manual logging
 - [ ] Consider custom message cho better UX
-- [ ] Remove manual Toast.show() calls (ErrorHandler handles it)
+- [ ] Remove manual Toast.show() calls (AppErrorHandler handles it)
 - [ ] Use specific exception types khi throw errors
 
 ---

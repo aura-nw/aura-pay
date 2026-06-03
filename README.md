@@ -20,7 +20,7 @@
 
 > 📖 **Quick Links:**  
 > - [Build Environments Guide](docs/BUILD_ENVIRONMENTS.md) - How to build for different environments
-> - [Code Improvement Checklist](docs/CODE_IMPROVEMENT_CHECKLIST.md) - Development roadmap
+> - [Error Handling Guide](docs/ERROR_HANDLING_GUIDE.md) - Centralized error handling
 > - [Vietnamese Documentation](docs/README_VI.md)
 
 ### Supported Networks
@@ -178,8 +178,8 @@ aurapay/
 │   ├── domain/             # Domain layer
 │   └── data/               # Data layer
 ├── packages/               # Local packages
-│   ├── wallet_core/        # Blockchain core
-│   ├── aura_wallet_core/   # Aura-specific features
+│   ├── wallet_services/    # Blockchain core (EVM, Cosmos, TrustWalletCore)
+│   ├── trust_wallet_core/  # TrustWallet native library
 │   └── cache_network_image_extended/
 ├── lib/
 │   ├── app_configs/        # DI & configuration
@@ -214,12 +214,10 @@ aurapay/
 - `retrofit: ^4.1.0` - Type-safe REST client
 
 ### Blockchain & Crypto
-- `wallet_core` (custom) - Multi-chain wallet functionality
+- `wallet_services` (local) - Multi-chain wallet functionality (EVM + Cosmos)
 - `web3auth_flutter: ^6.3.0` - Social authentication
-- `web3dart: ^2.7.3` - Ethereum library
-- `trust_wallet_core` - Wallet core library
+- `trust_wallet_core` (local) - TrustWallet native library
 - `crypto: ^3.0.3` - Cryptographic functions
-- `bech32: ^0.2.2` - Bech32 encoding
 
 ### UI Components
 - `flutter_svg: ^2.0.10+1` - SVG rendering
@@ -263,7 +261,7 @@ flutter pub get
 ```bash
 cd cores/domain && flutter pub get && cd ../..
 cd cores/data && flutter pub get && cd ../..
-cd packages/wallet_core && flutter pub get && cd ../..
+cd packages/wallet_services && flutter pub get && cd ../..
 cd packages/cache_network_image_extended && flutter pub get && cd ../..
 ```
 
@@ -403,7 +401,7 @@ lib/app_configs/
 - [Documentation Index](./docs/README.md) - Complete documentation index
 - [Vietnamese Documentation](./docs/README_VI.md) - Tài liệu tiếng Việt
 - [Build Environments Guide](./docs/BUILD_ENVIRONMENTS.md) - Multi-environment build guide
-- [Code Improvement Checklist](./docs/CODE_IMPROVEMENT_CHECKLIST.md) - Development roadmap & improvements
+- [Error Handling Guide](./docs/ERROR_HANDLING_GUIDE.md) - AppErrorHandler usage and exception types
 
 ### Troubleshooting & Fixes
 - [Bug Fixes Documentation](./docs/fixes/README.md) - All bug fixes and troubleshooting guides

@@ -30,7 +30,7 @@ App bị crash với lỗi **SIGSEGV (null pointer dereference)** khi tạo HD W
 - Chỉ áp dụng cho Android (iOS không bị issue này)
 
 ### 3. Package Layer - WalletManagement
-**File:** `packages/wallet_core/lib/src/managements/wallet_management.dart`
+**File:** `packages/wallet_services/lib/src/managements/wallet_management.dart`
 
 - Thêm delay 200ms trước khi tạo HDWallet trên Android
 - Platform detection tự động
@@ -113,7 +113,7 @@ adb logcat | grep -E "(MainActivity|GenerateWallet|TrustWallet)"
 1. ✅ `android/app/src/main/kotlin/com/aura/network/pay/aurapay/MainActivity.kt` - NEW implementation
 2. ✅ `android/app/build.gradle.kts` - Added coroutines dependency
 3. ✅ `lib/src/core/helpers/crypto_initializer.dart` - NEW file
-4. ✅ `packages/wallet_core/lib/src/managements/wallet_management.dart` - Added delays
+4. ✅ `packages/wallet_services/lib/src/managements/wallet_management.dart` - Added delays
 5. ✅ `lib/src/presentation/screens/generate_wallet/generate_wallet_cubit.dart` - Added initialization wait
 
 ## 📚 Tài Liệu Chi Tiết

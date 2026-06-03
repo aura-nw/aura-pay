@@ -60,7 +60,7 @@ Created a dedicated helper class for managing crypto initialization:
 - `ensureCryptoReady()`: Ensures crypto is ready with fallback delay
 
 ### 3. Enhanced WalletManagement with Delays ✅✅ (UPDATED)
-**File:** `packages/wallet_core/lib/src/managements/wallet_management.dart`
+**File:** `packages/wallet_services/lib/src/managements/wallet_management.dart`
 
 Enhanced with:
 - **Platform detection**: Uses `dart:io` to detect Android
@@ -152,7 +152,7 @@ final mnemonic = WalletCore.walletManagement.randomMnemonic();
 Check if there's a newer version of the `trust_wallet_core` Flutter package that might have fixed this issue:
 
 ```yaml
-# In packages/wallet_core/pubspec.yaml
+# In packages/wallet_services/pubspec.yaml
 trust_wallet_core:
   git:
     url: https://github.com/ToanBarcelona1998/flutter_trust_wallet_core

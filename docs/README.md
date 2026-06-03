@@ -8,19 +8,22 @@ Welcome to the AuraPay documentation! This folder contains all technical documen
 docs/
 ├── README.md                           # This file - Documentation index
 ├── README_VI.md                        # Vietnamese project documentation
+├── BUILD_ENVIRONMENTS.md               # Multi-environment build guide
+├── ERROR_HANDLING_GUIDE.md             # Centralized error handling guide
 └── fixes/                              # Bug fixes & troubleshooting
     ├── README.md                       # Fixes index
     └── trustwallet-crash/              # TrustWallet crash fix
         ├── README.md                   # Fix overview
         ├── TRUSTWALLETCORE_CRASH_FIX.md       # Technical docs (EN)
-        ├── CRASH_FIX_SUMMARY_VI.md            # Summary (VI)
-        └── NEXT_STEPS.md                      # Testing guide (VI)
+        └── CRASH_FIX_SUMMARY_VI.md            # Summary (VI)
 ```
 
 ## 📖 Documentation Structure
 
 ### General Documentation
 - [README_VI.md](README_VI.md) - Vietnamese README for the project
+- [BUILD_ENVIRONMENTS.md](BUILD_ENVIRONMENTS.md) - How to build for development/staging/production
+- [ERROR_HANDLING_GUIDE.md](ERROR_HANDLING_GUIDE.md) - How to use `AppErrorHandler` and custom exception types
 
 ### Bug Fixes & Troubleshooting
 - [TrustWallet Crash Fix](fixes/trustwallet-crash/) - Comprehensive documentation for fixing TrustWalletCore SIGSEGV crashes on Android
@@ -29,6 +32,8 @@ docs/
 
 ### For Developers
 - **Setting up the project**: See main [README.md](../README.md)
+- **Build environments**: See [BUILD_ENVIRONMENTS.md](BUILD_ENVIRONMENTS.md)
+- **Error handling**: See [ERROR_HANDLING_GUIDE.md](ERROR_HANDLING_GUIDE.md)
 - **Troubleshooting crashes**: See [fixes/](fixes/)
 - **Vietnamese documentation**: See [README_VI.md](README_VI.md)
 
@@ -57,7 +62,6 @@ Each bug fix folder should contain:
 ### Fixes
 - [TrustWallet Crash Fix](fixes/trustwallet-crash/TRUSTWALLETCORE_CRASH_FIX.md) - Detailed technical documentation
   - [Summary (Vietnamese)](fixes/trustwallet-crash/CRASH_FIX_SUMMARY_VI.md)
-  - [Next Steps Guide](fixes/trustwallet-crash/NEXT_STEPS.md)
 
 ---
 

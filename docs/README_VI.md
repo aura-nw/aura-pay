@@ -104,7 +104,6 @@
 ### 🚀 Tính năng dự kiến
 - Hoán đổi token
 - Chức năng staking
-- Trình duyệt DApp
 - Lịch sử giao dịch nâng cao
 - Quản lý đa tài khoản
 
@@ -173,8 +172,8 @@ aurapay/
 │   ├── domain/             # Tầng domain
 │   └── data/               # Tầng data
 ├── packages/               # Packages local
-│   ├── wallet_core/        # Blockchain core
-│   ├── aura_wallet_core/   # Tính năng Aura-specific
+│   ├── wallet_services/    # Blockchain core (EVM, Cosmos, TrustWalletCore)
+│   ├── trust_wallet_core/  # TrustWallet native library
 │   └── cache_network_image_extended/
 ├── lib/
 │   ├── app_configs/        # DI & cấu hình
@@ -209,12 +208,10 @@ aurapay/
 - `retrofit: ^4.1.0` - Type-safe REST client
 
 ### Blockchain & Crypto
-- `wallet_core` (tùy chỉnh) - Chức năng ví đa chuỗi
+- `wallet_services` (local) - Chức năng ví đa chuỗi (EVM + Cosmos)
 - `web3auth_flutter: ^6.3.0` - Xác thực xã hội
-- `web3dart: ^2.7.3` - Thư viện Ethereum
-- `trust_wallet_core` - Thư viện wallet core
+- `trust_wallet_core` (local) - TrustWallet native library
 - `crypto: ^3.0.3` - Hàm mã hóa
-- `bech32: ^0.2.2` - Mã hóa Bech32
 
 ### Thành phần UI
 - `flutter_svg: ^2.0.10+1` - Hiển thị SVG
@@ -237,7 +234,8 @@ aurapay/
 - **Flutter SDK**: 3.35.0 trở lên
 - **Dart SDK**: 3.9.0 trở lên
 - **iOS**: Xcode 14+ (cho phát triển iOS)
-- **Android**: Android Studio với SDK 21+ (cho phát triển Android)
+- **Android**: Android Studio với **SDK 26+ (Android 8.0+)** cho phát triển Android
+  - ⚠️ **Lưu ý:** minSdkVersion là 26 (yêu cầu bởi Web3Auth và TrustWalletCore)
 
 ### Cài đặt
 
@@ -256,7 +254,7 @@ flutter pub get
 ```bash
 cd cores/domain && flutter pub get && cd ../..
 cd cores/data && flutter pub get && cd ../..
-cd packages/wallet_core && flutter pub get && cd ../..
+cd packages/wallet_services && flutter pub get && cd ../..
 cd packages/cache_network_image_extended && flutter pub get && cd ../..
 ```
 
@@ -274,34 +272,35 @@ cd ..
 
 ### Chạy ứng dụng
 
-#### Development (Serenity Testnet)
+#### Development (Serenity Testnet - Mặc định)
 ```bash
 flutter run
+# hoặc explicit set environment
+flutter run --dart-define=ENV=development
 ```
 
 #### Staging (Euphoria)
-Thay đổi môi trường trong `lib/main.dart`:
-```dart
-const AuraPayEnvironment environment = AuraPayEnvironment.staging;
+```bash
+flutter run --dart-define=ENV=staging
 ```
 
 #### Production
-```dart
-const AuraPayEnvironment environment = AuraPayEnvironment.production;
+```bash
+flutter run --dart-define=ENV=production
 ```
 
 ### Build
 
 #### Android
 ```bash
-flutter build apk --release
-# hoặc
-flutter build appbundle --release
+flutter build apk --dart-define=ENV=production --release
+# hoặc App Bundle cho Google Play
+flutter build appbundle --dart-define=ENV=production --release
 ```
 
 #### iOS
 ```bash
-flutter build ios --release
+flutter build ios --dart-define=ENV=production --release
 ```
 
 ---
@@ -339,10 +338,10 @@ flutter build ios --release
   - Quản lý cấu hình môi trường
   - Cung cấp truy cập đến instance AppConfig
   
-- **`AuraPayEnvironment`** - Enum môi trường
-  - `AuraPayEnvironment.serenity` - Development/Testnet
-  - `AuraPayEnvironment.staging` - Staging/Euphoria
-  - `AuraPayEnvironment.production` - Production/Mainnet
+- **`AuraPayEnvironment`** - Enum môi trường (trong `cores/domain/`)
+  - `AuraPayEnvironment.serenity` - Development/Testnet (default khi không set `--dart-define=ENV`)
+  - `AuraPayEnvironment.staging` - Staging/Euphoria (`--dart-define=ENV=staging`)
+  - `AuraPayEnvironment.production` - Production/Mainnet (`--dart-define=ENV=production`)
 
 - **`AuraPayAccountConstant`** - Constants liên quan đến tài khoản (trong `lib/src/core/constants/aura_pay_account_constant.dart`)
   - Tên ví mặc định
@@ -602,7 +601,7 @@ flutter pub run build_runner build --delete-conflicting-outputs
 ## 📱 Phiên bản tối thiểu
 
 - **iOS**: 12.0+
-- **Android**: API 21 (Android 5.0)+
+- **Android**: API 26 (Android 8.0)+
 
 ---
 
@@ -658,21 +657,20 @@ Dự án này là nội bộ và độc quyền. Mọi quyền được bảo l�
 
 ## 🌟 Features Highlights
 
-### Wallet Core Package
-Package `wallet_core` cung cấp:
+### Wallet Services Package
+Package `wallet_services` cung cấp:
 - Tạo HD wallet từ mnemonic
-- Quản lý multiple chains
+- Quản lý multiple chains (EVM + Cosmos)
 - Signing transactions
 - Address derivation
-- Message creation
-- Tích hợp TrustWallet Core
+- Key management qua TrustWallet Core
+- EVM integration (web3dart)
 
-### Aura Wallet Core Package
-Package `aura_wallet_core` cung cấp:
-- Aura-specific implementations
-- Environment configurations
-- Internal storage management
-- Biometric authentication helpers
+### Trust Wallet Core Package
+Package `trust_wallet_core` cung cấp:
+- Native TrustWallet Core binaries
+- HDWallet creation và key derivation
+- Mnemonic generation với entropy pool management
 
 ---
 
