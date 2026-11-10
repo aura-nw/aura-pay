@@ -68,3 +68,5 @@ assets/config/config.dev.json
 assets/config/config.staging.json
 assets/config/config.production.json
 assets/config/config.json
+# Local scratch notes (not committed)
+tmp/

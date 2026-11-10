@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:aurapay/src/core/app_routes.dart';
 import 'package:aurapay/src/presentation/screens/confirm_send/confirm_send_screen.dart';
 import 'package:aurapay/src/presentation/screens/create_passcode/create_passcode_screen.dart';
-import 'package:aurapay/src/presentation/screens/generate_wallet/generate_wallet_creen.dart';
+import 'package:aurapay/src/presentation/screens/generate_wallet/generate_wallet_screen.dart';
 import 'package:aurapay/src/presentation/screens/get_started/get_started_screen.dart';
 import 'package:aurapay/src/presentation/screens/home/home_screen.dart';
 import 'package:aurapay/src/presentation/screens/home/browser/dapp_search_page.dart';
@@ -14,7 +14,7 @@ import 'package:aurapay/src/presentation/screens/re_login/re_login_screen.dart';
 import 'package:aurapay/src/presentation/screens/select_network/select_network_screen.dart';
 import 'package:aurapay/src/presentation/screens/send/send_screen.dart';
 import 'package:aurapay/src/presentation/screens/social_login_yeti_bot/social_login_yeti_bot_screen.dart';
-import 'package:aurapay/src/presentation/screens/splash/spash_screen.dart';
+import 'package:aurapay/src/presentation/screens/splash/splash_screen.dart';
 import 'package:aurapay/src/presentation/screens/transaction_result/transaction_result_screen.dart';
 import 'package:wallet_services/wallet_services.dart';
 
